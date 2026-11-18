@@ -1,0 +1,25 @@
+node_modules/
+dist/
+.vite/
+coverage/
+
+# Zrzuty i nagrania z playtestu
+.shots/
+
+# Surowe wyniki z ComfyUI (do przejrzenia, nie do repo)
+assets-raw/
+
+# Lokalna konfiguracja (adres ComfyUI itp.)
+.env.local
+*.local
+
+# Capacitor: buildy natywne
+games/*/ios/App/Pods/
+games/*/ios/App/build/
+games/*/android/.gradle/
+games/*/android/app/build/
+games/*/android/build/
+games/*/android/local.properties
+
+.DS_Store
+*.log

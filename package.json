@@ -1,0 +1,25 @@
+{
+  "name": "funfactory",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@9.15.0",
+  "engines": {
+    "node": ">=22.18"
+  },
+  "scripts": {
+    "dev": "pnpm --filter @funfactory/lab dev",
+    "typecheck": "pnpm -r --parallel typecheck && tsc -p tools",
+    "test": "vitest run",
+    "check": "pnpm typecheck && pnpm test",
+    "shot": "node tools/playtest/shot.ts",
+    "new-game": "node tools/new-game/new-game.ts",
+    "comfy": "node $HOME/.claude/skills/comfyui/comfy.ts"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.65.1",
+    "@types/node": "^22.15.0",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.8",
+    "vitest": "^5.1.1"
+  }
+}

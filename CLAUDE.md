@@ -1,0 +1,74 @@
+# Funfactory: zasady pracy
+
+Monorepo do tworzenia mobilnych gier 2D (iOS + Android). Claude projektuje, koduje i weryfikuje gry sam. Właściciel decyduje, co budujemy.
+
+## Stack
+
+- TypeScript + Vite, pnpm workspaces, Node ≥ 22.18 (skrypty `.ts` uruchamiane bezpośrednio przez `node`)
+- Renderowanie 2D: PixiJS v8 (WebGL)
+- Natywnie: Capacitor 8 (iOS w Xcode, Android w Android Studio / Gradle)
+- Testy: Vitest (logika), Playwright (zrzuty i gesty w emulowanym telefonie)
+- Grafika: SVG z kodu (`@funfactory/art`), paczki CC0, ComfyUI z Flux 2 na Legionie (skill `comfyui`, w repo: `pnpm comfy`)
+
+## Układ
+
+```
+packages/core     logika niezależna od renderera: Loop, Tweens, Spring, Rng, Emitter, Timers, SaveStore, haptics, Sound
+packages/art      kolory (OKLab), palety, builder SVG, szum. Bez zależności od Pixi
+packages/kit2d    Pixi: Game (skalowanie, safe area), Scene/SceneManager, juice, Particles, Button, gestures, svgTexture
+lab/              stanowisko testowe zestawu (nie gra). Tu sprawdzamy nowe elementy kit2d
+templates/game/   szablon dla `pnpm new-game`
+games/<slug>/     gry. Każda to aplikacja Vite + Capacitor
+tools/            playtest (shot.ts), new-game
+```
+
+## Zasady
+
+1. **Nie twórz gier bez ustaleń z właścicielem.** Koncepcję gry planujemy osobno przed kodowaniem.
+2. **Kod gry trzymaj w `games/<slug>/`.** Do `packages/` przenoś tylko rzeczy, których potrzebują co najmniej dwie gry albo które są ewidentnie ogólne. Pakiety nie mogą importować z gier ani z lab.
+3. **Projektuj w jednostkach gry:** szerokość 720, wysokość zmienna (`game.view.height`). UI przyklejaj do krawędzi z uwzględnieniem `view.safe`. Pola dotyku mają minimum 88 jednostek.
+4. **Animacje w scenie robią `this.tweens` i `this.timers`**, nie `setTimeout`. Wtedy działają pauza, slow-motion i sprzątanie przy zmianie sceny. W `enter()` nie czekaj na `tween.done`.
+5. **Losowość tylko przez `game.rng`** (seed z `?seed=`), żeby playtesty były powtarzalne.
+6. **Każda scena woła `this.game.markReady()`**, gdy jest gotowa do zrzutu.
+7. **Zapis gry przez `SaveStore`**, haptyka przez `haptics`. Nie wołaj Capacitora bezpośrednio w grach.
+
+## Pętla weryfikacji (obowiązkowa)
+
+Po każdej zmianie wizualnej albo w rozgrywce:
+
+```sh
+pnpm check                                   # typecheck wszystkiego + testy jednostkowe
+pnpm shot <lab|games/slug> --steps "..."     # zrzuty do .shots/<nazwa>/, potem obejrzyj je (Read)
+pnpm shot games/slug --browser webkit        # silnik Safari: łapie błędy specyficzne dla iOS
+```
+
+Kroki: `wait:<ms>`, `shot:<nazwa>`, `tap:x:y`, `drag:x1:y1:x2:y2`, `swipe:x1:y1:x2:y2` (współrzędne w jednostkach gry). Jeśli shot kończy się kodem 1, to na stronie był błąd JS albo scena nie zgłosiła gotowości. Nie zgłaszaj, że coś działa, dopóki nie obejrzysz zrzutu. Pamiętaj, że gest startujący w polu przycisku trafia do przycisku.
+
+Natywnie:
+
+```sh
+pnpm --filter @funfactory-game/<slug> ios       # build + sync + otwiera Xcode
+pnpm --filter @funfactory-game/<slug> apk       # debug APK (Gradle z JDK 21 z Android Studio)
+xcodebuild -project games/<slug>/ios/App/App.xcodeproj -scheme App -sdk iphonesimulator CODE_SIGNING_ALLOWED=NO build
+```
+
+Capacitor 8 wymaga JDK 21. Systemowa Java to 17, więc buildy Gradle z CLI muszą mieć `JAVA_HOME` ustawione na JBR z Android Studio (skrypt `apk` robi to sam).
+
+## Grafika
+
+Kolejność wyboru:
+
+1. **SVG z kodu**: postaci składane z części (ciało, oczy, kończyny jako osobne sprite'y), animowane w kodzie. Wzorzec: `lab/src/blob-character.ts`. Tekstury renderuj przez `svgTexture(markup, game.pixelRatio)`.
+2. **Proceduralnie**: tła i tekstury z `Noise2D`, cząsteczki, Graphics.
+3. **Paczki CC0** (Kenney, Quaternius, KayKit itp.): tylko CC0 albo licencje wprost pozwalające na użycie komercyjne. Każde źródło wpisz do `games/<slug>/CREDITS.md`.
+4. **ComfyUI / Flux 2** (`pnpm comfy gen`, workflow `flux2`, `flux2-sprite`, `flux2-klein`): sprite'y z przezroczystym tłem, tła, ilustracje, ikony, grafiki do sklepu. Po sesji `pnpm comfy free`. Surowe wyniki trafiają do `assets-raw/` (ignorowane). Wybrane pliki kopiuj do `games/<slug>/public/` razem z plikiem `.json` z promptem i seedem.
+
+Jedna gra ma jedną paletę (`palettes` albo własna w tym samym formacie). Grafika z każdego źródła ma się do niej stosować.
+
+## Juice: minimum dla każdej interakcji
+
+Reakcja wizualna (squash/pop/pulse), dźwięk, haptyka, a przy mocnych zdarzeniach cząsteczki i trzęsienie (`Shaker`) albo `game.hitstop()`. Gra bez tego wydaje się martwa.
+
+## Język
+
+Kod i identyfikatory po angielsku. Komentarze, dokumentacja i teksty w grach po polsku, chyba że gra ma inną lokalizację.

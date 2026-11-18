@@ -1,0 +1,17 @@
+{
+  "name": "@funfactory/kit2d",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc -p ."
+  },
+  "dependencies": {
+    "@funfactory/core": "workspace:*",
+    "@funfactory/art": "workspace:*",
+    "pixi.js": "^8.23.0"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "@funfactory/lab",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "vite build",
+    "typecheck": "tsc -p ."
+  },
+  "dependencies": {
+    "@funfactory/art": "workspace:*",
+    "@funfactory/core": "workspace:*",
+    "@funfactory/kit2d": "workspace:*",
+    "pixi.js": "^8.23.0"
+  }
+}
