@@ -44,7 +44,11 @@ pnpm shot <lab|games/slug> --steps "..."     # zrzuty do .shots/<nazwa>/, potem 
 pnpm shot games/slug --browser webkit        # silnik Safari: łapie błędy specyficzne dla iOS
 ```
 
-Kroki: `wait:<ms>`, `shot:<nazwa>`, `tap:x:y`, `drag:x1:y1:x2:y2`, `swipe:x1:y1:x2:y2` (współrzędne w jednostkach gry). Jeśli shot kończy się kodem 1, to na stronie był błąd JS albo scena nie zgłosiła gotowości. Nie zgłaszaj, że coś działa, dopóki nie obejrzysz zrzutu. Pamiętaj, że gest startujący w polu przycisku trafia do przycisku.
+Kroki: `wait:<ms>`, `shot:<nazwa>`, `tap:x:y`, `drag:x1:y1:x2:y2`, `swipe:x1:y1:x2:y2`, `hold:x1:y1:x2:y2` + `release` (współrzędne w jednostkach gry). `--query diag` dokleja parametry do URL. Jeśli shot kończy się kodem 1, to na stronie był błąd JS albo scena nie zgłosiła gotowości. Nie zgłaszaj, że coś działa, dopóki nie obejrzysz zrzutu. Pamiętaj, że gest startujący w polu przycisku trafia do przycisku.
+
+**Emulacja nie zastępuje telefonu.** Playwright i symulator iOS nie odtwarzają wszystkich błędów prawdziwego iPhone'a. Przykład: wgranie dużego canvasa do WebGL dawało na urządzeniu przezroczystą teksturę. Dlatego:
+- tekstur nie twórz przez `Texture.from(canvas)`; rysuj na canvasie i przekazuj piksele przez `pixelsToTexture` (ImageBitmap); `svgTexture` robi to sam,
+- gdy coś nie wygląda dobrze tylko na telefonie, poproś o `?diag` (tryb diagnostyczny gry) i zrzut ekranu, zamiast zgadywać.
 
 Natywnie:
 
