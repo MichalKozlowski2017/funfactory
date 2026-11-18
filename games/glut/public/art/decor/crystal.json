@@ -1,0 +1,13 @@
+{
+  "workflow": "flux2-sprite.json",
+  "PROMPT": "a cluster of pastel pink and mint sugar crystals growing from a rock, cute candy-land mobile game art, flat vector style, clean thick dark outline, soft cel shading, pastel pink lavender and mint palette, single object, centered, plain light gray background, no text",
+  "NEGATIVE": "",
+  "SEED": 401,
+  "WIDTH": 1024,
+  "HEIGHT": 1024,
+  "PREFIX": "crystal",
+  "STEPS": 20,
+  "GUIDANCE": 4,
+  "created": "2026-11-18T16:16:49.000Z",
+  "post": "trim alpha, fit 200px"
+}

@@ -32,6 +32,8 @@ const { values, positionals } = parseArgs({
     out: { type: 'string' },
     video: { type: 'boolean', default: false },
     seed: { type: 'string', default: '1' },
+    /** Dodatkowe parametry URL, np. "diag" albo "diag&foo=1". */
+    query: { type: 'string', default: '' },
     timeout: { type: 'string', default: '15000' },
   },
 });
@@ -64,7 +66,7 @@ const server = await createServer({
 await server.listen();
 const address = server.httpServer?.address();
 const port = typeof address === 'object' && address ? address.port : 5173;
-const url = `http://127.0.0.1:${port}/?seed=${values.seed}`;
+const url = `http://127.0.0.1:${port}/?seed=${values.seed}${values.query ? `&${values.query}` : ''}`;
 
 const engine = values.browser === 'webkit' ? webkit : chromium;
 const browser = await engine.launch();

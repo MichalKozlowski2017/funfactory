@@ -1,0 +1,13 @@
+{
+  "workflow": "flux2-sprite.json",
+  "PROMPT": "a small golden crown with three pink gems, accessory item seen from the front, no character, cute candy-land mobile game art, flat vector style, clean thick dark outline, soft cel shading, pastel pink lavender and mint palette, single object, centered, plain light gray background, no text",
+  "NEGATIVE": "",
+  "SEED": 310,
+  "WIDTH": 1024,
+  "HEIGHT": 1024,
+  "PREFIX": "hat310",
+  "STEPS": 20,
+  "GUIDANCE": 4,
+  "created": "2026-11-18T16:07:55.278Z",
+  "post": "trim alpha, fit 200px"
+}

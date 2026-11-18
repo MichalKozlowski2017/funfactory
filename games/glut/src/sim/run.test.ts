@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { playBot } from './bot.ts';
 import { Run, SYRUP } from './run.ts';
-import { generateChunk, Shaft, SHAFT } from './shaft.ts';
+import { generateCandies, generateChunk, Shaft, SHAFT } from './shaft.ts';
+import { contact } from './physics.ts';
 
 describe('generator', () => {
   it('is deterministic per seed and chunk, regardless of order', () => {
@@ -32,6 +33,33 @@ describe('generator', () => {
     const change = shaft.update(-10 * SHAFT.chunk, -8 * SHAFT.chunk);
     expect(change.added).toContain(12);
     expect(change.removed).toContain(0);
+  });
+});
+
+describe('candies', () => {
+  it('never spawn inside blocks and are deterministic', () => {
+    for (let k = 0; k < 10; k++) {
+      const blocks = generateChunk(5, k);
+      const candies = generateCandies(5, k, blocks);
+      expect(candies).toEqual(generateCandies(5, k, blocks));
+      for (const c of candies) for (const b of blocks) expect(contact(c.x, c.y, 30, b)).toBeNull();
+    }
+  });
+
+  it('get collected on contact, once', () => {
+    const run = new Run(3);
+    const all = [...run.shaft.candies.values()].flat();
+    const c = all[0];
+    expect(c).toBeDefined();
+    if (!c) return;
+    run.slime.state = 'stuck';
+    run.slime.x = c.x;
+    run.slime.y = c.y;
+    const r1 = run.step(1 / 60);
+    const r2 = run.step(1 / 60);
+    expect(r1.collected?.map((x) => x.id)).toContain(c.id);
+    expect(r2.collected ?? []).not.toContain(c);
+    expect(run.candies).toBeGreaterThanOrEqual(1);
   });
 });
 

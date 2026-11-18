@@ -1,5 +1,15 @@
 import { Rng } from '@funfactory/core';
-import type { Block, Surface } from './physics.ts';
+import { contact, type Block, type Surface } from './physics.ts';
+
+export interface Candy {
+  id: string;
+  x: number;
+  y: number;
+  taken: boolean;
+}
+
+/** Promień cukierka do zbierania (dodawany do promienia slime'a). */
+export const CANDY_RADIUS = 30;
 
 /** Wymiary studni. Ściany wchodzą w ekran na `wall` jednostek. */
 export const SHAFT = { width: 720, wall: 40, chunk: 1200 } as const;
@@ -85,10 +95,41 @@ export function generateChunk(seed: number, chunk: number): Block[] {
 }
 
 /**
+ * Cukierki kawałka: nad półkami (nagroda za lądowanie) i w powietrzu między nimi (nagroda za odważny lot).
+ * Osobny strumień losowy, więc zmiany w cukierkach nie zmieniają układu półek.
+ */
+export function generateCandies(seed: number, chunk: number, blocks: Block[]): Candy[] {
+  const rng = new Rng(chunkSeed(seed ^ 0x5eed, chunk));
+  const candies: Candy[] = [];
+  const free = (x: number, y: number) => blocks.every((b) => !contact(x, y, CANDY_RADIUS + 8, b));
+  const put = (x: number, y: number) => {
+    if (free(x, y)) candies.push({ id: `${chunk}:${candies.length}`, x, y, taken: false });
+  };
+  for (const b of blocks) {
+    if (b.h !== 36 || b.surface === 'spikes') continue;
+    if (!rng.chance(0.6)) continue;
+    const n = rng.int(1, 3);
+    for (let i = 0; i < n; i++) put(b.x + ((i + 1) * b.w) / (n + 1), b.y - 70);
+  }
+  // Łuk cukierków w powietrzu.
+  if (chunk > 0 && rng.chance(0.7)) {
+    const cx = rng.range(200, SHAFT.width - 200);
+    const cy = -chunk * SHAFT.chunk - rng.range(200, SHAFT.chunk - 200);
+    const n = rng.int(3, 5);
+    for (let i = 0; i < n; i++) {
+      const t = i / (n - 1) - 0.5;
+      put(cx + t * 260, cy + t * t * 220 - 40);
+    }
+  }
+  return candies;
+}
+
+/**
  * Studnia dogrywana kawałkami w miarę wspinaczki i sprzątana poniżej (tam i tak jest syrop).
  */
 export class Shaft {
   readonly chunks = new Map<number, Block[]>();
+  readonly candies = new Map<number, Candy[]>();
   blocks: Block[] = [];
   readonly seed: number;
 
@@ -103,13 +144,16 @@ export class Shaft {
     const wantTop = Math.floor(-y / SHAFT.chunk) + 2;
     for (let k = 0; k <= wantTop; k++) {
       if (this.chunks.has(k)) continue;
-      this.chunks.set(k, generateChunk(this.seed, k));
+      const blocks = generateChunk(this.seed, k);
+      this.chunks.set(k, blocks);
+      this.candies.set(k, generateCandies(this.seed, k, blocks));
       added.push(k);
     }
     const keepFrom = Math.floor(-belowY / SHAFT.chunk) - 1;
     for (const k of this.chunks.keys()) {
       if (k < keepFrom) {
         this.chunks.delete(k);
+        this.candies.delete(k);
         removed.push(k);
       }
     }

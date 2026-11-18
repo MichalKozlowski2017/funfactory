@@ -1,5 +1,5 @@
 import { PHYS, World, type StepResult } from './physics.ts';
-import { difficulty, Shaft, SHAFT, START } from './shaft.ts';
+import { CANDY_RADIUS, difficulty, Shaft, SHAFT, START, type Candy } from './shaft.ts';
 
 export const SYRUP = {
   /** Start syropu pod dnem studni. */
@@ -15,6 +15,8 @@ export const SYRUP = {
 export interface RunStep extends StepResult {
   /** Syrop dogonił slime'a. */
   drowned?: boolean;
+  /** Cukierki zebrane w tym kroku. */
+  collected?: Candy[];
   /** Zmiany kawałków studni (dla widoku). */
   added?: number[];
   removed?: number[];
@@ -33,6 +35,7 @@ export class Run {
   /** Najwyższy osiągnięty punkt (najmniejsze y). */
   peakY: number;
   time = 0;
+  candies = 0;
 
   constructor(seed: number) {
     this.shaft = new Shaft(seed);
@@ -60,7 +63,10 @@ export class Run {
     if (this.over) return {};
     const result: RunStep = this.world.step(dt);
     const s = this.world.slime;
-    if (s.state !== 'dead') this.peakY = Math.min(this.peakY, s.y);
+    if (s.state !== 'dead') {
+      this.peakY = Math.min(this.peakY, s.y);
+      this.collect(result);
+    }
 
     if (this.started) {
       this.time += dt;
@@ -84,5 +90,19 @@ export class Run {
       result.removed = changes.removed;
     }
     return result;
+  }
+
+  private collect(result: RunStep): void {
+    const s = this.world.slime;
+    const reach = (s.r + CANDY_RADIUS) ** 2;
+    const k = Math.floor(-s.y / SHAFT.chunk);
+    for (const chunk of [k - 1, k, k + 1]) {
+      for (const c of this.shaft.candies.get(chunk) ?? []) {
+        if (c.taken || (c.x - s.x) ** 2 + (c.y - s.y) ** 2 > reach) continue;
+        c.taken = true;
+        this.candies++;
+        (result.collected ??= []).push(c);
+      }
+    }
   }
 }

@@ -1,0 +1,13 @@
+{
+  "workflow": "flux2.json",
+  "PROMPT": "seamless vertical background texture of a dreamy candy cave wall interior, soft muted purple and dusky pink rock made of sugar crystals and marshmallow, low contrast, darker tones, subtle details, no characters, no text, flat vector game background",
+  "NEGATIVE": "",
+  "SEED": 101,
+  "WIDTH": 768,
+  "HEIGHT": 1344,
+  "PREFIX": "bg",
+  "STEPS": 20,
+  "GUIDANCE": 4,
+  "created": "2026-11-18T15:59:02.631Z",
+  "post": "crop 30%-68% height (vertical cave walls only), resize to 720 wide, jpg q86; mirror-tiled + tinted in game"
+}
