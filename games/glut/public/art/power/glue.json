@@ -1,0 +1,12 @@
+{
+  "workflow": "flux2-sprite.json",
+  "PROMPT": "a sticky green gummy hand with goo dripping, cute candy-land mobile game power-up icon, flat vector style, clean thick dark outline, soft cel shading, pastel pink lavender and mint palette, glossy, single object, centered, plain light gray background, no text",
+  "NEGATIVE": "",
+  "SEED": 650,
+  "WIDTH": 1024,
+  "HEIGHT": 1024,
+  "PREFIX": "glue",
+  "STEPS": 20,
+  "GUIDANCE": 4,
+  "created": "2026-11-18T18:52:58.586Z"
+}

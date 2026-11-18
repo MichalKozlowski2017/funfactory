@@ -1,0 +1,12 @@
+{
+  "workflow": "flux2-sprite.json",
+  "PROMPT": "a horseshoe magnet made of pink and white striped candy, cute candy-land mobile game power-up icon, flat vector style, clean thick dark outline, soft cel shading, pastel pink lavender and mint palette, glossy, single object, centered, plain light gray background, no text",
+  "NEGATIVE": "",
+  "SEED": 620,
+  "WIDTH": 1024,
+  "HEIGHT": 1024,
+  "PREFIX": "magnet",
+  "STEPS": 20,
+  "GUIDANCE": 4,
+  "created": "2026-11-18T18:45:19.317Z"
+}

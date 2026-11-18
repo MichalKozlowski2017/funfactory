@@ -1,0 +1,12 @@
+{
+  "workflow": "flux2-sprite.json",
+  "PROMPT": "a pair of small fluffy white angel wings with a mint sparkle, cute candy-land mobile game power-up icon, flat vector style, clean thick dark outline, soft cel shading, pastel pink lavender and mint palette, glossy, single object, centered, plain light gray background, no text",
+  "NEGATIVE": "",
+  "SEED": 610,
+  "WIDTH": 1024,
+  "HEIGHT": 1024,
+  "PREFIX": "breath",
+  "STEPS": 20,
+  "GUIDANCE": 4,
+  "created": "2026-11-18T18:42:46.204Z"
+}

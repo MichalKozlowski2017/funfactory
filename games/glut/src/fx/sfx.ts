@@ -25,3 +25,18 @@ export const SFX = {
   ],
   tap: [{ wave: 'triangle', freq: 660, freqEnd: 880, duration: 0.06, volume: 0.15 }],
 } satisfies Record<string, SynthLayer[]>;
+
+/** Dźwięki power-upów. */
+export const POWER_SFX = {
+  pickup: [523, 784, 1047, 1568].map((freq, i) => ({ wave: 'triangle', freq, duration: 0.12, volume: 0.16, delay: i * 0.05 })),
+  shield: [
+    { wave: 'sine', freq: 180, freqEnd: 720, duration: 0.25, volume: 0.35 },
+    { wave: 'triangle', freq: 1200, freqEnd: 600, duration: 0.15, volume: 0.12, delay: 0.05 },
+  ],
+  rocket: [
+    { wave: 'noise', freq: 400, filter: 'bandpass', filterFreq: 300, filterFreqEnd: 1800, duration: 1.3, volume: 0.3, attack: 0.05 },
+    { wave: 'sawtooth', freq: 90, freqEnd: 220, duration: 1.3, volume: 0.08, filter: 'lowpass', filterFreq: 600 },
+  ],
+  frost: [1568, 2093, 2637].map((freq, i) => ({ wave: 'sine', freq, duration: 0.35, volume: 0.12, delay: i * 0.07 })),
+  air: [{ wave: 'noise', freq: 1200, filter: 'highpass', filterFreq: 1500, filterFreqEnd: 4000, duration: 0.18, volume: 0.22 }],
+} satisfies Record<string, SynthLayer[]>;

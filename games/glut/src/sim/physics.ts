@@ -31,6 +31,9 @@ export const PHYS = {
   iceSlide: 150,
 } as const;
 
+/** Prędkość lotu rakietą (jednostki/s w górę). */
+export const ROCKET_SPEED = 1700;
+
 export interface Contact {
   nx: number;
   ny: number;
@@ -84,6 +87,18 @@ export interface StepResult {
   died?: boolean;
   /** Zsunął się z krawędzi lodu i spada. */
   slipped?: boolean;
+  /** Skorupka odbiła slime'a od kolców (i się zużyła). */
+  shielded?: boolean;
+}
+
+/** Modyfikatory fizyki od power-upów (ustawia je Run). */
+export interface Mods {
+  /** Kolce odbijają zamiast zabijać. */
+  shell: boolean;
+  /** Lód klei jak lukier (także sufity). */
+  glue: boolean;
+  /** Lot rakietą: w górę przez wszystko, bez kolizji. */
+  rocket: boolean;
 }
 
 export interface Prediction {
@@ -116,6 +131,7 @@ export class Slime {
 export class World {
   readonly slime: Slime;
   blocks: Block[];
+  mods: Mods = { shell: false, glue: false, rocket: false };
 
   constructor(blocks: Block[], start: { x: number; y: number }) {
     this.blocks = blocks;
@@ -132,9 +148,10 @@ export class World {
     for (let i = 0; i < 600 && s.state === 'flying'; i++) this.step(1 / 60);
   }
 
-  launch(vx: number, vy: number): boolean {
+  /** Strzał. `air` = strzał w locie (power-up „drugi oddech”). */
+  launch(vx: number, vy: number, air = false): boolean {
     const s = this.slime;
-    if (s.state !== 'stuck') return false;
+    if (s.state === 'dead' || (s.state === 'flying' && !air)) return false;
     s.state = 'flying';
     s.vx = vx;
     s.vy = vy;
@@ -145,6 +162,16 @@ export class World {
   step(dt: number): StepResult {
     const s = this.slime;
     if (s.state === 'dead') return {};
+    if (this.mods.rocket) {
+      // Rakieta: prosto w górę przez wszystko; kolizje wracają po jej końcu.
+      s.state = 'flying';
+      s.stuckTo = null;
+      s.vx *= Math.exp(-4 * dt);
+      s.vy = -ROCKET_SPEED;
+      s.x += s.vx * dt;
+      s.y += s.vy * dt;
+      return {};
+    }
     if (s.state === 'stuck') return this.stepStuck(dt);
     return this.stepFlying(s, dt);
   }
@@ -158,6 +185,7 @@ export class World {
     const points: { x: number; y: number }[] = [];
     for (let i = 1; i <= maxSteps; i++) {
       const result = this.stepFlying(ghost, 1 / 60, true);
+      if (result.shielded && i % every !== 0) points.push({ x: ghost.x, y: ghost.y });
       if (result.landed || result.died) {
         points.push({ x: ghost.x, y: ghost.y });
         if (result.died) return { points, end: 'death' };
@@ -181,6 +209,16 @@ export class World {
         const c = contact(s.x, s.y, s.r, b);
         if (!c) continue;
         if (b.surface === 'spikes') {
+          if (this.mods.shell) {
+            // Skorupka: odbicie od kolców z utratą części prędkości.
+            s.x += c.nx * (c.depth + 2);
+            s.y += c.ny * (c.depth + 2);
+            const into = s.vx * c.nx + s.vy * c.ny;
+            const bounce = Math.max(500, -into * 0.7);
+            s.vx = s.vx - into * c.nx + c.nx * bounce;
+            s.vy = s.vy - into * c.ny + c.ny * bounce;
+            return { shielded: true };
+          }
           if (!dry) this.kill();
           return { died: true };
         }
@@ -188,7 +226,7 @@ export class World {
         s.y += c.ny * c.depth;
         const into = s.vx * c.nx + s.vy * c.ny;
         if (into >= 0) continue; // oddala się od powierzchni (np. tuż po strzale)
-        if (b.surface === 'ice' && c.ny > 0.5) {
+        if (b.surface === 'ice' && c.ny > 0.5 && !this.mods.glue) {
           // Lodowy sufit: nie trzyma, tylko zatrzymuje ruch w górę.
           s.vx -= into * c.nx;
           s.vy -= into * c.ny;
@@ -210,7 +248,7 @@ export class World {
   private stepStuck(dt: number): StepResult {
     const s = this.slime;
     const b = s.stuckTo;
-    if (!b || b.surface !== 'ice' || s.ny < -0.5) return {};
+    if (!b || b.surface !== 'ice' || s.ny < -0.5 || this.mods.glue) return {};
     // Lód na ścianie: powolne zjeżdżanie w dół.
     s.y += PHYS.iceSlide * dt;
     for (const other of this.blocks) {
@@ -218,6 +256,14 @@ export class World {
       const c = contact(s.x, s.y, s.r, other);
       if (!c) continue;
       if (other.surface === 'spikes') {
+        if (this.mods.shell) {
+          // Zjechał na kolce w skorupce: odbija się w powietrze.
+          s.state = 'flying';
+          s.stuckTo = null;
+          s.vx = c.nx * 500;
+          s.vy = c.ny * 500 - 300;
+          return { shielded: true };
+        }
         this.kill();
         return { died: true };
       }

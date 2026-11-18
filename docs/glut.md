@@ -1,7 +1,9 @@
 # Glut: projekt gry (smoke test)
 
-Status (2026-11-18): **smoke test zakończony po kroku 3.** Gotowe: prototyp, pętla gry z syropem, grafika, dźwięk, cukierki.
-Odłożone: krok 4 (ekran startowy, sklep z czapkami; czapki są już w `public/art/hats/`) i buildy natywne.
+Status (2026-11-18): **kroki 1–4 gotowe.** Prototyp, pętla gry z syropem, grafika, dźwięk, cukierki, ekran startowy i sklep z czapkami.
+Odłożone: buildy natywne (testujemy w przeglądarce).
+
+Ceny czapek (bot w ludzkim tempie zbiera ok. 15 cukierków na bieg): imprezowa 30, kucharska 60, korona 120, czarodzieja 200.
 
 ## Cel
 
@@ -95,6 +97,21 @@ Buildy natywne (iOS, Android), powierzchnie odbijające i ruchome, bossy, misje,
 - `pnpm check` przechodzi, a testy obejmują deterministyczny generator i fizykę (brak przelatywania przez ściany).
 - Scenariusze `pnpm shot` (start, strzał, lądowanie, śmierć, restart) przechodzą w Chromium i WebKit.
 - Wszystkie grafiki z Flux mają w repo obok siebie plik `.json` z promptem i seedem.
+
+## Krok 5: power-upy
+
+Power-upy zdobywa się w trakcie biegu: świecące bańki w studni, rzadsze od cukierków, często w ryzykownych miejscach. **Każdy działa od razu po zebraniu** (decyzja: większa dynamika).
+
+| Power-up | Działanie |
+| --- | --- |
+| Gumowa skorupka | 10 s ochrony: uderzenie w kolce odbija slime'a zamiast zabić (zużywa skorupkę) |
+| Drugi oddech | Ładunek strzału w powietrzu; podczas celowania w locie czas zwalnia |
+| Magnes | 10 s: cukierki z dużego promienia lecą do slime'a |
+| Lodowy oddech | Syrop zamarza na 6 s i opada o 4 m |
+| Pieprzowa rakieta | 1,4 s lotu w górę przez wszystko, bez obrażeń |
+| Lepkie łapki | 10 s: lód klei zamiast ślizgać się, także lodowe sufity |
+
+Otwarte: ulepszenia power-upów za cukierki oraz start z power-upem za cukierki (decyzja po teście samych power-upów).
 
 ## Decyzje
 

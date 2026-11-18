@@ -5,6 +5,8 @@
  *   pnpm shot lab
  *   pnpm shot games/foo --device "Pixel 8" --steps "shot:start,tap:360:900,wait:400,shot:after"
  *   pnpm shot lab --video
+ *   pnpm shot games/glut --gpu --query bot --steps "rec:start,wait:60000,rec:save:gameplay"
+ *   pnpm shot games/foo --init "localStorage.setItem('save', '{...}')"
  *
  * Kroki (współrzędne w jednostkach gry, szerokość 720):
  *   wait:<ms>                 czekaj
@@ -14,10 +16,13 @@
  *   swipe:<x1>:<y1>:<x2>:<y2> szybkie przeciągnięcie (80 ms)
  *   hold:<x1>:<y1>:<x2>:<y2>  przeciągnij i trzymaj palec (np. celowanie), potem `release`
  *   release                   puść palec po `hold`
+ *   eval:<kod JS>             wykonaj kod w stronie, np. eval:__glut.run.activate('rocket')
+ *                             (kod z przecinkami: rozdzielaj kroki nowymi liniami zamiast przecinków)
  *
  * Kod wyjścia 1, gdy na stronie wystąpił błąd JS albo gra nie zgłosiła gotowości.
  */
-import { mkdir, rm } from 'node:fs/promises';
+import { spawnSync } from 'node:child_process';
+import { mkdir, rm, writeFile } from 'node:fs/promises';
 import { basename, resolve } from 'node:path';
 import { parseArgs } from 'node:util';
 import { chromium, devices, webkit, type Page } from '@playwright/test';
@@ -34,7 +39,11 @@ const { values, positionals } = parseArgs({
     seed: { type: 'string', default: '1' },
     /** Dodatkowe parametry URL, np. "diag" albo "diag&foo=1". */
     query: { type: 'string', default: '' },
+    /** Skrypt JS uruchamiany przed załadowaniem strony, np. przygotowanie zapisu w localStorage. */
+    init: { type: 'string' },
     timeout: { type: 'string', default: '15000' },
+    /** Chromium z GPU (ANGLE/Metal): ~60 kl./s zamiast ~20 przy renderowaniu programowym. Do nagrań. */
+    gpu: { type: 'boolean', default: false },
   },
 });
 
@@ -69,12 +78,15 @@ const port = typeof address === 'object' && address ? address.port : 5173;
 const url = `http://127.0.0.1:${port}/?seed=${values.seed}${values.query ? `&${values.query}` : ''}`;
 
 const engine = values.browser === 'webkit' ? webkit : chromium;
-const browser = await engine.launch();
+const browser = await engine.launch(
+  values.gpu && engine === chromium ? { args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'] } : {},
+);
 const { defaultBrowserType: _ignored, ...deviceOpts } = device;
 const context = await browser.newContext({
   ...deviceOpts,
   ...(values.video ? { recordVideo: { dir: outDir, size: deviceOpts.viewport } } : {}),
 });
+if (values.init) await context.addInitScript(values.init);
 const page = await context.newPage();
 const errors: string[] = [];
 page.on('pageerror', (e) => errors.push(`pageerror: ${e.message}`));
@@ -87,7 +99,9 @@ const saved: string[] = [];
 try {
   await page.goto(url);
   await page.waitForFunction(() => window.__ff?.ready === true, undefined, { timeout: Number(values.timeout) });
-  for (const step of values.steps.split(',').map((s) => s.trim()).filter(Boolean)) {
+  // Kroki rozdzielane przecinkami albo (gdy kod w eval zawiera przecinki) nowymi liniami.
+  const sep = values.steps.includes('\n') ? '\n' : ',';
+  for (const step of values.steps.split(sep).map((s) => s.trim()).filter(Boolean)) {
     await runStep(page, step);
   }
   const hookErrors = await page.evaluate(() => window.__ff?.errors ?? []);
@@ -116,6 +130,11 @@ if (errors.length) {
 process.exit(failed || errors.length ? 1 : 0);
 
 async function runStep(page: Page, step: string): Promise<void> {
+  if (step.startsWith('eval:')) {
+    const out = await page.evaluate(step.slice(5));
+    if (out !== undefined) console.log(`eval: ${JSON.stringify(out)}`);
+    return;
+  }
   const [kind, ...args] = step.split(':');
   const nums = args.map(Number);
   switch (kind) {
@@ -146,6 +165,10 @@ async function runStep(page: Page, step: string): Promise<void> {
       await gesture(page, [x1, y1], [x2, y2], 300, false);
       return;
     }
+    case 'rec':
+      if (args[0] === 'start') return startRecording(page);
+      if (args[0] === 'save') return saveRecording(page, args[1] || 'gameplay');
+      throw new Error(`Nieznany krok "${step}" (rec:start | rec:save:nazwa)`);
     case 'release':
       await page.evaluate(() => {
         const held = (window as unknown as { __ffHeld?: [number, number] }).__ffHeld;
@@ -211,4 +234,44 @@ async function toScreen(page: Page, x: number, y: number): Promise<[number, numb
     return game ? game.app.screen.width / game.designWidth : 1;
   });
   return [x * scale, y * scale];
+}
+
+/**
+ * Nagrywanie samego canvasa (MediaRecorder) w jego natywnej rozdzielczości, bez rozmycia
+ * wideo z Playwrighta (to ma rozmiar ekranu w punktach CSS). Bez dźwięku.
+ */
+async function startRecording(page: Page): Promise<void> {
+  await page.evaluate(() => {
+    const canvas = document.querySelector('canvas');
+    if (!canvas) throw new Error('no canvas');
+    const type = ['video/webm;codecs=vp9', 'video/webm;codecs=vp8', 'video/webm'].find((t) => MediaRecorder.isTypeSupported(t));
+    const rec = new MediaRecorder(canvas.captureStream(60), { mimeType: type, videoBitsPerSecond: 12_000_000 });
+    const chunks: Blob[] = [];
+    rec.ondataavailable = (e) => chunks.push(e.data);
+    rec.start(1000);
+    (window as unknown as { __ffRec?: { rec: MediaRecorder; chunks: Blob[] } }).__ffRec = { rec, chunks };
+  });
+}
+
+async function saveRecording(page: Page, name: string): Promise<void> {
+  const b64 = await page.evaluate(async () => {
+    const r = (window as unknown as { __ffRec?: { rec: MediaRecorder; chunks: Blob[] } }).__ffRec;
+    if (!r) throw new Error('rec:save bez rec:start');
+    await new Promise<void>((done) => {
+      r.rec.onstop = () => done();
+      r.rec.stop();
+    });
+    const bytes = new Uint8Array(await new Blob(r.chunks, { type: 'video/webm' }).arrayBuffer());
+    let bin = '';
+    for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
+    return btoa(bin);
+  });
+  const webm = resolve(outDir, `${name}.webm`);
+  await writeFile(webm, Buffer.from(b64, 'base64'));
+  saved.push(webm);
+  // mp4 (H.264) odtwarza się wszędzie, także na iPhonie. Stała liczba klatek wyrównuje zacięcia nagrania.
+  const mp4 = resolve(outDir, `${name}.mp4`);
+  const ff = spawnSync('ffmpeg', ['-y', '-loglevel', 'error', '-i', webm, '-vf', 'crop=trunc(iw/2)*2:trunc(ih/2)*2', '-r', '60', '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-crf', '20', '-movflags', '+faststart', mp4]);
+  if (ff.status === 0) saved.push(mp4);
+  else console.warn('ffmpeg niedostępny albo błąd: zostaje sam .webm');
 }
