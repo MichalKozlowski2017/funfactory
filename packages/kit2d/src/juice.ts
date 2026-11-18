@@ -80,10 +80,12 @@ export class Shaker {
   private readonly base = { x: 0, y: 0, rotation: 0 };
   private time = 0;
 
-  constructor(
-    private readonly target: Container,
-    private readonly rng?: Rng,
-  ) {
+  private readonly target: Container;
+  private readonly rng: Rng | undefined;
+
+  constructor(target: Container, rng?: Rng) {
+    this.target = target;
+    this.rng = rng;
     this.base = { x: target.x, y: target.y, rotation: target.rotation };
   }
 

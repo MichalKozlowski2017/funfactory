@@ -20,11 +20,10 @@ export class Loop {
   /** Czas gry w sekundach (uwzględnia timeScale i pauzę). */
   time = 0;
   private acc = 0;
+  private readonly cb: LoopCallbacks;
 
-  constructor(
-    private readonly cb: LoopCallbacks,
-    fixedHz = 60,
-  ) {
+  constructor(cb: LoopCallbacks, fixedHz = 60) {
+    this.cb = cb;
     this.fixedStep = 1 / fixedHz;
   }
 

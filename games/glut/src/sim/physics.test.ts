@@ -87,7 +87,8 @@ describe('World', () => {
   it('predict ends where the real flight lands', () => {
     const wall = box(600, -2000, 40, 4000);
     const world = new World([box(-100, 0, 1000, 100), wall], { x: 200, y: -50 });
-    const path = world.predict(900, -900);
+    const { points: path, end: kind } = world.predict(900, -900);
+    expect(kind).toBe('land');
     const end = path[path.length - 1];
     world.launch(900, -900);
     for (let i = 0; i < 120 && world.slime.state === 'flying'; i++) world.step(1 / 60);

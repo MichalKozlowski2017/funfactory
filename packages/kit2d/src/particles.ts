@@ -49,10 +49,13 @@ export class Particles {
   private live: Live[] = [];
   private pool: Particle[] = [];
 
-  constructor(
-    private readonly texture: Texture,
-    private readonly rng: Rng,
-  ) {}
+  private readonly texture: Texture;
+  private readonly rng: Rng;
+
+  constructor(texture: Texture, rng: Rng) {
+    this.texture = texture;
+    this.rng = rng;
+  }
 
   burst(x: number, y: number, cfg: BurstConfig): void {
     const r = this.rng;

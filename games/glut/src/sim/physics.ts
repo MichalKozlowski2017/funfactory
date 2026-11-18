@@ -11,6 +11,8 @@ export interface Block {
   w: number;
   h: number;
   surface: Surface;
+  /** Numer kawałka studni (generator), do sprzątania i rysowania. */
+  chunk?: number;
 }
 
 export type SlimeState = 'stuck' | 'flying' | 'dead';
@@ -84,6 +86,15 @@ export interface StepResult {
   slipped?: boolean;
 }
 
+export interface Prediction {
+  points: { x: number; y: number }[];
+  /** Czym kończy się lot w zasięgu podglądu: lądowanie, śmierć albo nic (lot trwa dalej). */
+  end: 'land' | 'death' | null;
+  /** Normalna powierzchni w miejscu lądowania (gdy end === 'land'). */
+  nx?: number;
+  ny?: number;
+}
+
 export class Slime {
   x: number;
   y: number;
@@ -139,7 +150,7 @@ export class World {
   }
 
   /** Tor lotu dla podglądu celowania: punkty co `every` kroków aż do pierwszego kontaktu. */
-  predict(vx: number, vy: number, maxSteps = 80, every = 3): { x: number; y: number }[] {
+  predict(vx: number, vy: number, maxSteps = 80, every = 3): Prediction {
     const ghost = new Slime(this.slime.x, this.slime.y);
     ghost.state = 'flying';
     ghost.vx = vx;
@@ -149,11 +160,12 @@ export class World {
       const result = this.stepFlying(ghost, 1 / 60, true);
       if (result.landed || result.died) {
         points.push({ x: ghost.x, y: ghost.y });
-        break;
+        if (result.died) return { points, end: 'death' };
+        return { points, end: 'land', nx: ghost.nx, ny: ghost.ny };
       }
       if (i % every === 0) points.push({ x: ghost.x, y: ghost.y });
     }
-    return points;
+    return { points, end: null };
   }
 
   private stepFlying(s: Slime, dt: number, dry = false): StepResult {
@@ -227,7 +239,7 @@ export class World {
     return {};
   }
 
-  private kill(): void {
+  kill(): void {
     const s = this.slime;
     s.state = 'dead';
     s.vx = 0;

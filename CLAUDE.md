@@ -31,6 +31,8 @@ tools/            playtest (shot.ts), new-game
 5. **Losowość tylko przez `game.rng`** (seed z `?seed=`), żeby playtesty były powtarzalne.
 6. **Każda scena woła `this.game.markReady()`**, gdy jest gotowa do zrzutu.
 7. **Zapis gry przez `SaveStore`**, haptyka przez `haptics`. Nie wołaj Capacitora bezpośrednio w grach.
+8. **Tylko składnia „wymazywalna” TypeScriptu** (`erasableSyntaxOnly`): bez `enum` i bez właściwości w parametrach konstruktora. Dzięki temu logikę gier (symulacje, boty do strojenia) da się uruchomić wprost przez `node plik.ts`.
+9. **Logikę gry trzymaj w czystym TS bez Pixi** (`games/<slug>/src/sim/`): testy Vitest, a do strojenia trudności bot grający w symulację (wzór: `games/glut/src/sim/bot.ts`).
 
 ## Pętla weryfikacji (obowiązkowa)
 

@@ -47,7 +47,11 @@ export class SceneManager {
   private busy = false;
   private readonly curtain = new Graphics();
 
-  constructor(private readonly game: Game) {}
+  private readonly game: Game;
+
+  constructor(game: Game) {
+    this.game = game;
+  }
 
   async go(next: Scene, opts: GoOptions = {}): Promise<void> {
     if (this.busy) return;

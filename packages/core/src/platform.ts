@@ -45,10 +45,13 @@ export const haptics = {
  * w przeglądarce localStorage.
  */
 export class SaveStore<T extends object> {
-  constructor(
-    private readonly key: string,
-    private readonly defaults: T,
-  ) {}
+  private readonly key: string;
+  private readonly defaults: T;
+
+  constructor(key: string, defaults: T) {
+    this.key = key;
+    this.defaults = defaults;
+  }
 
   async load(): Promise<T> {
     try {

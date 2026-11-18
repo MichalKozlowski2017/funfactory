@@ -22,10 +22,13 @@ export class FollowCamera {
   y = 0;
   private readonly layers: { layer: Container; factor: number; baseY: number; baseX: number }[] = [];
 
-  constructor(
-    private readonly world: Container,
-    public opts: FollowCameraOptions = {},
-  ) {}
+  private readonly world: Container;
+  opts: FollowCameraOptions;
+
+  constructor(world: Container, opts: FollowCameraOptions = {}) {
+    this.world = world;
+    this.opts = opts;
+  }
 
   /** Natychmiast ustaw kamerę. */
   snap(x: number, y: number): void {

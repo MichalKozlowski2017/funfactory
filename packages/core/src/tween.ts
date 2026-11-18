@@ -29,7 +29,10 @@ export class Tween<T extends object = object> {
   killed = false;
   finished = false;
 
-  constructor(target: T, props: TweenProps<T>, private readonly opts: TweenOptions) {
+  private readonly opts: TweenOptions;
+
+  constructor(target: T, props: TweenProps<T>, opts: TweenOptions) {
+    this.opts = opts;
     this.target = target;
     this.to = new Map(Object.entries(props) as [string, number][]);
     this.easeFn = typeof opts.ease === 'function' ? opts.ease : eases[opts.ease ?? 'quadOut'];

@@ -58,7 +58,10 @@ export class Game {
   pixelRatio = 1;
   private safeProbe: HTMLDivElement | null = null;
 
-  constructor(private readonly opts: GameOptions = {}) {
+  private readonly opts: GameOptions;
+
+  constructor(opts: GameOptions = {}) {
+    this.opts = opts;
     this.designWidth = opts.designWidth ?? 720;
     const urlSeed = Number(new URLSearchParams(location.search).get('seed'));
     this.rng = new Rng(opts.seed ?? (Number.isFinite(urlSeed) && urlSeed > 0 ? urlSeed : Date.now()));
