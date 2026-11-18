@@ -1,0 +1,29 @@
+{
+  "name": "@funfactory-game/ostatnia-brama",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "vite build",
+    "typecheck": "tsc -p .",
+    "native:sync": "vite build && cap sync",
+    "ios": "vite build && cap sync ios && cap open ios",
+    "android": "vite build && cap sync android && cap open android",
+    "apk": "vite build && cap sync android && cd android && JAVA_HOME=\"${JAVA_HOME_21:-/Applications/Android Studio.app/Contents/jbr/Contents/Home}\" ./gradlew assembleDebug"
+  },
+  "dependencies": {
+    "@capacitor/android": "^8.6.2",
+    "@capacitor/core": "^8.6.2",
+    "@capacitor/haptics": "^8.0.2",
+    "@capacitor/ios": "^8.6.2",
+    "@capacitor/preferences": "^8.0.1",
+    "@funfactory/art": "workspace:*",
+    "@funfactory/core": "workspace:*",
+    "@funfactory/kit2d": "workspace:*",
+    "pixi.js": "^8.23.0"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^8.6.2"
+  }
+}

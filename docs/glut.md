@@ -1,6 +1,7 @@
 # Glut: projekt gry (smoke test)
 
-Status: **zatwierdzony** (2026-11-18). Testujemy w przeglądarce, buildy natywne odłożone.
+Status (2026-11-18): **smoke test zakończony po kroku 3.** Gotowe: prototyp, pętla gry z syropem, grafika, dźwięk, cukierki.
+Odłożone: krok 4 (ekran startowy, sklep z czapkami; czapki są już w `public/art/hats/`) i buildy natywne.
 
 ## Cel
 
