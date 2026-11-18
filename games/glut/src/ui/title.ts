@@ -10,6 +10,8 @@ export interface TitleOptions {
   pixelRatio: number;
   onStart: () => void;
   onShop: () => void;
+  /** Przełączenie trybu sterowania (eksperyment). */
+  onControls: () => void;
 }
 
 /**
@@ -26,6 +28,7 @@ export class TitleOverlay extends Container {
   private readonly bank: Text;
   private readonly icon: Sprite;
   private readonly shop: Button;
+  private readonly controls: Button;
   private time = 0;
 
   constructor(o: TitleOptions) {
@@ -51,9 +54,15 @@ export class TitleOverlay extends Container {
     this.icon.scale.set(54 / Math.max(o.candyTex.width, o.candyTex.height));
     this.shop = new Button({ label: 'Czapki', color: '#9b8cff', width: 300, height: 100, fontSize: 40, resolution: o.pixelRatio, onTap: o.onShop });
 
+    this.controls = new Button({ label: 'Sterowanie', color: '#5fc8e8', width: 380, height: 88, fontSize: 32, resolution: o.pixelRatio, onTap: o.onControls });
+
     this.tap.eventMode = 'static';
     this.tap.on('pointertap', () => o.onStart());
-    this.addChild(this.shade, this.tap, this.logo, this.prompt, this.best, this.icon, this.bank, this.shop);
+    this.addChild(this.shade, this.tap, this.logo, this.prompt, this.best, this.icon, this.bank, this.shop, this.controls);
+  }
+
+  setControls(name: string): void {
+    this.controls.setLabel(`Sterowanie: ${name}`);
   }
 
   setStats(best: number, candies: number): void {
@@ -82,11 +91,13 @@ export class TitleOverlay extends Container {
     this.icon.position.set(view.width - 130, view.safe.top + 58);
     this.bank.position.set(view.width - 96, view.safe.top + 58);
     this.shop.position.set(cx, view.height * 0.55);
+    this.controls.position.set(cx, view.height * 0.55 + 120);
   }
 
   tick(dt: number): void {
     this.time += dt;
     this.shop.tick(dt);
+    this.controls.tick(dt);
     this.logo.rotation = Math.sin(this.time * 1.6) * 0.035;
     this.logo.scale.set(1 + Math.sin(this.time * 3.2) * 0.025, 1 - Math.sin(this.time * 3.2) * 0.025);
     this.prompt.alpha = 0.55 + 0.45 * Math.abs(Math.sin(this.time * 2.4));

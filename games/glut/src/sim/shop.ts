@@ -1,3 +1,4 @@
+import { CONTROL_MODES, type ControlMode } from './controls.ts';
 /**
  * Czapki i sklep: czysta logika zapisu (bez Pixi), żeby dało się ją testować.
  */
@@ -28,9 +29,10 @@ export interface Save {
   candies: number;
   owned: string[];
   hat: string | null;
+  controls: ControlMode;
 }
 
-export const NEW_SAVE: Save = { best: 0, candies: 0, owned: [], hat: null };
+export const NEW_SAVE: Save = { best: 0, candies: 0, owned: [], hat: null, controls: 'drag' };
 
 export type ShopResult =
   | { ok: true; save: Save; action: 'bought' | 'equipped' | 'removed' }
@@ -64,5 +66,6 @@ export function normalizeSave(raw: Partial<Save>): Save {
     candies: Number(raw.candies) || 0,
     owned: Array.isArray(raw.owned) ? raw.owned.filter((id) => HATS.some((h) => h.id === id)) : [],
     hat: typeof raw.hat === 'string' && HATS.some((h) => h.id === raw.hat) ? raw.hat : null,
+    controls: CONTROL_MODES.includes(raw.controls as ControlMode) ? (raw.controls as ControlMode) : 'drag',
   };
 }

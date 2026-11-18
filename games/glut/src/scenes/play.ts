@@ -21,6 +21,7 @@ import { candyWord, milestoneBanner, StreakHud, streakTier } from '../fx/streak-
 import { bodyScale, bodySprite, SlimeFace, slimeTextures } from '../fx/slime-art.ts';
 import { drawBlock, SURFACE } from '../fx/surfaces.ts';
 import { botCanShoot, chooseShot, type BotShot } from '../sim/bot.ts';
+import { CONTROL_MODES, CONTROL_NAMES, dragToTap, tapToDrag, type ControlMode } from '../sim/controls.ts';
 import { launchVelocity, PHYS } from '../sim/physics.ts';
 import { AIR, airPower, Run, STREAK, type RunStep } from '../sim/run.ts';
 import { SHAFT, type Candy, type PowerKind, type PowerUp } from '../sim/shaft.ts';
@@ -100,6 +101,13 @@ export class PlayScene extends Scene {
   /** Celowanie w locie (drugi oddech): zwolniony czas. */
   private airAim = false;
   private readonly dotsG = new Graphics();
+  /** Tryb sterowania (eksperyment, zapisywany). */
+  private controls: ControlMode = 'drag';
+  /** Tap: gdzie jest palec (jednostki ekranu), póki trzymany. */
+  private tapPoint: { x: number; y: number } | null = null;
+  /** Swipe: ślad palca jak cięcie we Fruit Ninja (punkty z wiekiem w sekundach rzeczywistych). */
+  private readonly trail: { x: number; y: number; age: number }[] = [];
+  private readonly trailG = new Graphics();
   /** Celowanie kończy się na kolcach (do jednorazowej wibracji ostrzegawczej). */
   private aimDanger = false;
   /** Ostrzeżenie o kolcach tuż nad kadrem. */
@@ -158,6 +166,7 @@ export class PlayScene extends Scene {
     this.bank = saved.candies;
     this.owned = saved.owned;
     this.hatId = saved.hat;
+    this.controls = saved.controls;
     const pr = this.game.pixelRatio;
 
     const [slimeTex, bgTex, candyArt, crystal, lolly] = await Promise.all([
@@ -206,27 +215,48 @@ export class PlayScene extends Scene {
     this.candyIcon.scale.set(54 / Math.max(this.candyTex.width, this.candyTex.height));
     this.hint = this.makeText(34, pal.surface);
     this.hint.anchor.set(0.5);
-    this.hint.text = 'Przeciągnij w dół i puść';
+    this.hint.text = this.hintText('start');
     this.syrupWarn = this.makeText(28, '#ffc2d4');
     this.syrupWarn.anchor.set(0.5, 1);
     this.powerHud = new PowerHud(this.powerTex);
     this.streakHud = new StreakHud(this.tweens, this.game.pixelRatio);
-    this.hud.addChild(this.dangerG, this.glow, this.powerHud, this.heightText, this.bestText, this.streakHud, this.candyIcon, this.candyText, this.hint, this.syrupWarn, this.fx);
+    this.hud.addChild(this.trailG, this.dangerG, this.glow, this.powerHud, this.heightText, this.bestText, this.streakHud, this.candyIcon, this.candyText, this.hint, this.syrupWarn, this.fx);
 
     const input = gestures(this.input, { dragThreshold: 10 });
+    // Proca i swipe: przeciągnięcie w dowolnym miejscu ekranu.
     input.on('dragStart', ({ x, y }) => {
-      if (this.mode !== 'play' || this.autopilot) return;
-      if (!this.run.canAim) return;
-      this.aiming = { sx: x, sy: y, power: 0, dx: 0, dy: -1 };
-      this.aimDanger = false;
-      if (this.run.slime.state === 'flying') {
-        // Drugi oddech: celowanie w locie w zwolnionym tempie.
-        this.airAim = true;
-        this.game.loop.timeScale = 0.25;
-      }
+      if (this.controls === 'tap' || this.autopilot) return;
+      this.beginAim(x, y);
+      if (this.controls === 'swipe') this.trail.push({ x, y, age: 0 });
     });
-    input.on('drag', ({ x, y }) => !this.autopilot && this.aim(x, y));
-    input.on('dragEnd', ({ x, y }) => !this.autopilot && this.release(x, y));
+    input.on('drag', ({ x, y }) => {
+      if (this.controls === 'tap' || this.autopilot) return;
+      if (this.controls === 'swipe') this.trail.push({ x, y, age: 0 });
+      this.aim(x, y);
+    });
+    input.on('dragEnd', ({ x, y }) => this.controls !== 'tap' && !this.autopilot && this.release(x, y));
+    // Tap: stuknięcie wskazuje cel, odległość od slime'a to siła. Trzymanie pokazuje tor (w locie slow-motion).
+    this.input.on('pointerdown', (e) => {
+      if (this.controls !== 'tap' || this.autopilot) return;
+      const p = this.input.toLocal(e.global);
+      if (!this.beginAim(0, 0)) return;
+      this.tapPoint = { x: p.x, y: p.y };
+      this.ripple(p.x, p.y);
+      this.aimTap();
+    });
+    this.input.on('pointermove', (e) => {
+      if (!this.tapPoint) return;
+      const p = this.input.toLocal(e.global);
+      this.tapPoint = { x: p.x, y: p.y };
+    });
+    const tapUp = () => {
+      if (!this.tapPoint) return;
+      const d = this.tapDrag();
+      this.tapPoint = null;
+      this.release(d?.x ?? 0, d?.y ?? 0);
+    };
+    this.input.on('pointerup', tapUp);
+    this.input.on('pointerupoutside', tapUp);
     if (PILOT_MODE) {
       this.autopilot = { wait: PILOT.start, shot: null, t: 0, hold: 0, sx: 0, sy: 0 };
       this.finger.circle(0, 0, 30).fill({ color: 0xffffff, alpha: 0.35 }).circle(0, 0, 30).stroke({ color: 0xffffff, width: 4, alpha: 0.8 });
@@ -279,6 +309,8 @@ export class PlayScene extends Scene {
   override update(dt: number): void {
     this.time += dt;
     this.pilot(dt);
+    if (this.tapPoint && this.aiming) this.aimTap(); // slime w locie się rusza, cel względem niego też
+    this.drawTrail(dt / (this.game.loop.timeScale || 1));
     const s = this.run.slime;
     const view = this.game.view;
     if (s.state !== 'dead') {
@@ -323,7 +355,7 @@ export class PlayScene extends Scene {
     // Podpowiedź skoku w locie w pierwszych biegach: przy pierwszym opadaniu.
     if (this.mode === 'play' && this.runs <= 3 && !this.airHinted && s.state === 'flying' && this.run.canAim && s.vy > 200 && !this.aiming) {
       this.airHinted = true;
-      this.hint.text = 'W locie przeciągnij jeszcze raz!';
+      this.hint.text = this.hintText('air');
       this.hint.visible = true;
       void popIn(this.tweens, this.hint, 0.3);
     }
@@ -338,11 +370,11 @@ export class PlayScene extends Scene {
   }
 
   private persist(): Promise<void> {
-    return this.store.save({ best: this.best, candies: this.bank + this.run.candies, owned: this.owned, hat: this.hatId });
+    return this.store.save(this.snapshot());
   }
 
   private snapshot(): Save {
-    return { best: this.best, candies: this.bank + this.run.candies, owned: this.owned, hat: this.hatId };
+    return { best: this.best, candies: this.bank + this.run.candies, owned: this.owned, hat: this.hatId, controls: this.controls };
   }
 
   // --- ekran startowy i sklep ---
@@ -356,7 +388,9 @@ export class PlayScene extends Scene {
       pixelRatio: this.game.pixelRatio,
       onStart: () => this.startPlaying(),
       onShop: () => this.openShop(),
+      onControls: () => this.cycleControls(),
     });
+    this.title.setControls(CONTROL_NAMES[this.controls]);
     this.title.setStats(this.best, this.bank + this.run.candies);
     this.overlay.addChild(this.title);
     this.title.layout(this.game.view);
@@ -454,7 +488,7 @@ export class PlayScene extends Scene {
     this.bestAtStart = this.best;
     this.streakHud.set(0);
     this.airHinted = false;
-    this.hint.text = 'Przeciągnij w dół i puść';
+    this.hint.text = this.hintText('start');
     for (const view of this.chunkViews.values()) view.destroy({ children: true });
     this.chunkViews.clear();
     for (const v of this.candyViews.values()) v.sprite.destroy();
@@ -481,13 +515,87 @@ export class PlayScene extends Scene {
 
   // --- sterowanie ---
 
+  /** Początek celowania (wspólny dla trybów). W locie zwalnia czas. */
+  private beginAim(x: number, y: number): boolean {
+    if (this.mode !== 'play' || !this.run.canAim) return false;
+    this.aiming = { sx: x, sy: y, power: 0, dx: 0, dy: -1 };
+    this.aimDanger = false;
+    if (this.run.slime.state === 'flying') {
+      this.airAim = true;
+      this.game.loop.timeScale = 0.25;
+    }
+    return true;
+  }
+
+  /** Tap: przeciągnięcie procy z położenia palca względem slime'a (na ekranie). */
+  private tapDrag(): { x: number; y: number } | null {
+    if (!this.tapPoint) return null;
+    const s = this.run.slime;
+    return tapToDrag(s.x, s.y - this.camera.y, this.tapPoint.x, this.tapPoint.y);
+  }
+
+  private aimTap(): void {
+    const d = this.tapDrag();
+    if (d) this.aim(d.x, d.y);
+    else this.dotsG.clear();
+  }
+
+  /** Świecąca smuga za palcem w trybie swipe: zwęża się ku końcowi i gaśnie w 0,18 s. */
+  private drawTrail(real: number): void {
+    const life = 0.18;
+    for (const p of this.trail) p.age += real;
+    while (this.trail.length && this.trail[0]!.age > life) this.trail.shift();
+    if (this.trail.length > 24) this.trail.splice(0, this.trail.length - 24);
+    const g = this.trailG.clear();
+    const n = this.trail.length;
+    for (let i = 1; i < n; i++) {
+      const a = this.trail[i - 1]!;
+      const b = this.trail[i]!;
+      const k = (1 - b.age / life) * (i / n);
+      g.moveTo(a.x, a.y).lineTo(b.x, b.y).stroke({ color: 0xff9ebb, width: 6 + 40 * k, alpha: 0.45 * k, cap: 'round' });
+      g.moveTo(a.x, a.y).lineTo(b.x, b.y).stroke({ color: 0xffffff, width: 3 + 14 * k, alpha: 0.95 * k, cap: 'round' });
+    }
+  }
+
+  private ripple(x: number, y: number): void {
+    const r = new Graphics().circle(0, 0, 26).stroke({ color: 0xffffff, width: 5, alpha: 0.8 });
+    r.position.set(x, y);
+    this.fx.addChild(r);
+    this.tweens.to(r.scale, { x: 2.2, y: 2.2 }, { duration: 0.3, ease: 'quadOut' });
+    this.tweens.to(r, { alpha: 0 }, { duration: 0.3 });
+    this.timers.after(0.32, () => {
+      this.tweens.killOf(r);
+      this.tweens.killOf(r.scale);
+      r.destroy();
+    });
+  }
+
+  private hintText(kind: 'start' | 'air'): string {
+    const texts: Record<ControlMode, [string, string]> = {
+      drag: ['Przeciągnij w dół i puść', 'W locie przeciągnij jeszcze raz!'],
+      swipe: ['Przesuń palcem w stronę skoku', 'W locie przesuń jeszcze raz!'],
+      tap: ['Stuknij tam, gdzie chcesz skoczyć', 'W locie stuknij jeszcze raz!'],
+    };
+    return texts[this.controls][kind === 'start' ? 0 : 1];
+  }
+
+  private cycleControls(): void {
+    this.controls = CONTROL_MODES[(CONTROL_MODES.indexOf(this.controls) + 1) % CONTROL_MODES.length]!;
+    this.game.sound.synth(SFX.tap);
+    haptics.tap();
+    this.title?.setControls(CONTROL_NAMES[this.controls]);
+    this.hint.text = this.hintText('start');
+    void this.persist();
+  }
+
   private aim(x: number, y: number): void {
     if (!this.aiming || !this.run.canAim) {
       this.endAirAim();
       this.dotsG.clear();
       return;
     }
-    const v = launchVelocity(x - this.aiming.sx, y - this.aiming.sy);
+    const k = this.controls === 'swipe' ? -1 : 1; // swipe: w stronę skoku, proca: przeciwnie
+    const v = launchVelocity(k * (x - this.aiming.sx), k * (y - this.aiming.sy));
     this.dotsG.clear();
     this.aiming.power = v?.power ?? 0;
     if (!v) return;
@@ -532,7 +640,8 @@ export class PlayScene extends Scene {
     const inAir = this.airAim;
     this.endAirAim();
     if (!aiming) return;
-    const v = launchVelocity(x - aiming.sx, y - aiming.sy);
+    const k = this.controls === 'swipe' ? -1 : 1;
+    const v = launchVelocity(k * (x - aiming.sx), k * (y - aiming.sy));
     if (!v || !this.run.launch(v.vx, v.vy)) return;
     if (inAir) {
       const n = this.run.airJumps;
@@ -686,10 +795,22 @@ export class PlayScene extends Scene {
       }
       p.t = Math.min(1, p.t + real / PILOT.aimTime);
       const e = 1 - (1 - p.t) ** 3;
-      const x = p.sx + p.shot.dragX * e;
-      const y = p.sy + p.shot.dragY * e;
+      let x: number;
+      let y: number;
+      if (this.controls === 'tap') {
+        x = p.shot.dragX;
+        y = p.shot.dragY;
+        const sl = this.run.slime;
+        const t = dragToTap(sl.x, sl.y - this.camera.y, x, y);
+        this.finger.position.set(t.x, t.y);
+      } else {
+        const k = this.controls === 'swipe' ? -1 : 1;
+        x = p.sx + k * p.shot.dragX * e;
+        y = p.sy + k * p.shot.dragY * e;
+        this.finger.position.set(x, y);
+        if (this.controls === 'swipe') this.trail.push({ x, y, age: 0 });
+      }
       this.aim(x, y);
-      this.finger.position.set(x, y);
       this.finger.visible = true;
       if (p.t < 1) return;
       p.hold -= real;
@@ -712,8 +833,11 @@ export class PlayScene extends Scene {
     const view = this.game.view;
     const s = this.run.slime;
     const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
-    p.sx = clamp(s.x, 50 - Math.min(0, shot.dragX), view.width - 50 - Math.max(0, shot.dragX));
-    p.sy = clamp(s.y - this.camera.y, view.safe.top + 160 - Math.min(0, shot.dragY), view.height - 50 - Math.max(0, shot.dragY));
+    const k = this.controls === 'swipe' ? -1 : 1;
+    const mx = k * shot.dragX;
+    const my = k * shot.dragY;
+    p.sx = this.controls === 'tap' ? 0 : clamp(s.x, 50 - Math.min(0, mx), view.width - 50 - Math.max(0, mx));
+    p.sy = this.controls === 'tap' ? 0 : clamp(s.y - this.camera.y, view.safe.top + 160 - Math.min(0, my), view.height - 50 - Math.max(0, my));
     p.shot = shot;
     p.t = 0;
     p.hold = PILOT.hold;
