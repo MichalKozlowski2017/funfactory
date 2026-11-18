@@ -111,7 +111,9 @@ Power-upy zdobywa się w trakcie biegu: świecące bańki w studni, rzadsze od c
 | Pieprzowa rakieta | 1,4 s lotu w górę przez wszystko, bez obrażeń |
 | Lepkie łapki | 10 s: lód klei zamiast ślizgać się, także lodowe sufity |
 
-Otwarte: ulepszenia power-upów za cukierki oraz start z power-upem za cukierki (decyzja po teście samych power-upów).
+## Rywalizacja: zasady równe dla wszystkich
+
+Decyzja właściciela: rozgrywka ma być kompetytywna i zawsze taka sama, bo planujemy leaderboard. Za cukierki kupuje się **tylko kosmetykę** (czapki, później ubranka i inne dodatki), nigdy nic, co wpływa na grę: bez ulepszeń power-upów, bez boosterów na start. Wypróbowane ulepszenia leżą na gałęzi `archiwum-ulepszenia`.
 
 ## Krok 6: serie
 
