@@ -40,3 +40,38 @@ export const POWER_SFX = {
   frost: [1568, 2093, 2637].map((freq, i) => ({ wave: 'sine', freq, duration: 0.35, volume: 0.12, delay: i * 0.07 })),
   air: [{ wave: 'noise', freq: 1200, filter: 'highpass', filterFreq: 1500, filterFreqEnd: 4000, duration: 0.18, volume: 0.22 }],
 } satisfies Record<string, SynthLayer[]>;
+
+/** Dźwięki serii. Rytm gra kolejne nuty pentatoniki, więc dobra seria brzmi jak melodia. */
+export const STREAK_SFX = {
+  beat: [
+    { wave: 'triangle', freq: 523, duration: 0.14, volume: 0.2 },
+    { wave: 'sine', freq: 1046, duration: 0.09, volume: 0.07 },
+  ],
+  milestone: [
+    ...[523, 659, 784, 1047, 1319].map((freq, i) => ({ wave: 'square' as const, freq, duration: 0.18, volume: 0.09, delay: i * 0.06, filter: 'lowpass' as const, filterFreq: 3200 })),
+    { wave: 'triangle', freq: 1047, duration: 0.5, volume: 0.16, delay: 0.3 },
+    { wave: 'triangle', freq: 1568, duration: 0.5, volume: 0.1, delay: 0.3 },
+    { wave: 'noise', freq: 3000, filter: 'highpass', filterFreq: 3000, filterFreqEnd: 8000, duration: 0.6, volume: 0.08, delay: 0.25, attack: 0.05 },
+  ],
+  lost: [
+    { wave: 'triangle', freq: 440, freqEnd: 170, duration: 0.38, volume: 0.18 },
+    { wave: 'sine', freq: 220, freqEnd: 100, duration: 0.32, volume: 0.14, delay: 0.06 },
+  ],
+  combo: [1319, 1568, 2093].map((freq, i) => ({ wave: 'triangle' as const, freq, duration: 0.1, volume: 0.14, delay: i * 0.045 })),
+  coin: [{ wave: 'triangle', freq: 1760, freqEnd: 2200, duration: 0.06, volume: 0.1 }],
+  /** Ratunek: szybki wznoszący się glissando + dzwoneczki. */
+  rescue: [
+    { wave: 'sine', freq: 330, freqEnd: 1320, duration: 0.3, volume: 0.22 },
+    ...[1047, 1319, 1568, 2093].map((freq, i) => ({ wave: 'triangle' as const, freq, duration: 0.14, volume: 0.13, delay: 0.18 + i * 0.05 })),
+  ],
+  acrobat: [784, 1175, 1568].map((freq, i) => ({ wave: 'triangle' as const, freq, duration: 0.12, volume: 0.14, delay: i * 0.06 })),
+} satisfies Record<string, SynthLayer[]>;
+
+const PENTATONIC = [0, 2, 4, 7, 9];
+
+/** Wysokość nuty dla n-tego skoku serii: pentatonika, co kamień milowy oktawa wyżej (maks. 2). */
+export function beatPitch(streak: number): number {
+  const i = Math.max(0, streak - 1);
+  const semis = PENTATONIC[i % 5]! + 12 * Math.min(2, Math.floor(i / 5));
+  return 2 ** (semis / 12);
+}

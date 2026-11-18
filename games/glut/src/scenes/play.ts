@@ -16,12 +16,13 @@ import {
   type View,
 } from '@funfactory/kit2d';
 import { fallbackIcon, POWER_INFO, POWER_KINDS, PowerBubble, PowerHud } from '../fx/power-fx.ts';
-import { POWER_SFX, SFX } from '../fx/sfx.ts';
+import { beatPitch, POWER_SFX, SFX, STREAK_SFX } from '../fx/sfx.ts';
+import { candyWord, milestoneBanner, StreakHud, streakTier } from '../fx/streak-fx.ts';
 import { bodyScale, bodySprite, SlimeFace, slimeTextures } from '../fx/slime-art.ts';
 import { drawBlock, SURFACE } from '../fx/surfaces.ts';
 import { botCanShoot, chooseShot, type BotShot } from '../sim/bot.ts';
 import { launchVelocity, PHYS } from '../sim/physics.ts';
-import { Run, type RunStep } from '../sim/run.ts';
+import { Run, STREAK, type RunStep } from '../sim/run.ts';
 import { SHAFT, type Candy, type PowerKind, type PowerUp } from '../sim/shaft.ts';
 import { HATS, NEW_SAVE, normalizeSave, tapHat, type Save } from '../sim/shop.ts';
 import { ShopPanel } from '../ui/shop-panel.ts';
@@ -89,9 +90,22 @@ export class PlayScene extends Scene {
   private powerHud!: PowerHud;
   /** Efekty power-upów wokół slime'a (nie obracają się z ciałem). */
   private readonly aura = new Graphics();
+  /** Warstwa ekranu na banery serii i lecące do licznika cukierki-premie. */
+  private readonly fx = new Container();
+  private streakHud!: StreakHud;
+  /** Ile cukierków-premii jest jeszcze w locie do licznika (licznik dolicza je po dotarciu). */
+  private flying = 0;
+  /** Podpowiedź skoku w locie pokazana w tym biegu. */
+  private airHinted = false;
   /** Celowanie w locie (drugi oddech): zwolniony czas. */
   private airAim = false;
   private readonly dotsG = new Graphics();
+  /** Celowanie kończy się na kolcach (do jednorazowej wibracji ostrzegawczej). */
+  private aimDanger = false;
+  /** Ostrzeżenie o kolcach tuż nad kadrem. */
+  private readonly dangerG = new Graphics();
+  /** 0..1: jak bardzo kamera wyprzedza szybki lot w górę. */
+  private lookAhead = 0;
   private readonly syrupG = new Graphics();
   private readonly slime = new Container();
   private readonly body = new Container();
@@ -196,13 +210,15 @@ export class PlayScene extends Scene {
     this.syrupWarn = this.makeText(28, '#ffc2d4');
     this.syrupWarn.anchor.set(0.5, 1);
     this.powerHud = new PowerHud(this.powerTex);
-    this.hud.addChild(this.glow, this.powerHud, this.heightText, this.bestText, this.candyIcon, this.candyText, this.hint, this.syrupWarn);
+    this.streakHud = new StreakHud(this.tweens, this.game.pixelRatio);
+    this.hud.addChild(this.dangerG, this.glow, this.powerHud, this.heightText, this.bestText, this.streakHud, this.candyIcon, this.candyText, this.hint, this.syrupWarn, this.fx);
 
     const input = gestures(this.input, { dragThreshold: 10 });
     input.on('dragStart', ({ x, y }) => {
       if (this.mode !== 'play' || this.autopilot) return;
       if (!this.run.canAim) return;
       this.aiming = { sx: x, sy: y, power: 0, dx: 0, dy: -1 };
+      this.aimDanger = false;
       if (this.run.slime.state === 'flying') {
         // Drugi oddech: celowanie w locie w zwolnionym tempie.
         this.airAim = true;
@@ -229,6 +245,7 @@ export class PlayScene extends Scene {
     this.input.hitArea = new Rectangle(0, 0, view.width, view.height);
     this.heightText.position.set(view.width / 2, view.safe.top + 24);
     this.bestText.position.set(view.width / 2, view.safe.top + 92);
+    this.streakHud.position.set(view.width / 2, view.safe.top + 150);
     this.candyIcon.position.set(view.width - 52, view.safe.top + 58);
     this.candyText.position.set(view.width - 90, view.safe.top + 58);
     this.powerHud.position.set(52, view.safe.top + 58);
@@ -267,8 +284,14 @@ export class PlayScene extends Scene {
     if (s.state !== 'dead') {
       // Normalnie slime na 60% wysokości ekranu. Gdy syrop jest w zasięgu, kamera kadruje tak,
       // żeby jego powierzchnia była widoczna u dołu, ale slime zostaje co najmniej 30% od góry.
-      let target = s.y - view.height * 0.6;
-      if (this.run.started) target = Math.max(target, Math.min(this.run.syrupY - view.height + 170, s.y - view.height * 0.3));
+      // W szybkim locie w górę kamera wyprzedza: slime niżej na ekranie, więcej widać nad nim
+      // (wtedy syrop może na chwilę wyjechać z kadru; ostrzeżenie „▼ syrop” zostaje).
+      const rising = s.state === 'flying' ? Math.min(1, Math.max(0, -s.vy / 1500)) : 0;
+      this.lookAhead += (rising - this.lookAhead) * (1 - Math.exp(-(rising > this.lookAhead ? 10 : 2.5) * dt));
+      const la = this.lookAhead;
+      let target = s.y - view.height * (0.6 + 0.15 * la);
+      if (this.run.started) target = Math.max(target, Math.min(this.run.syrupY - view.height + 170, s.y - view.height * (0.3 + 0.4 * la)));
+      this.camera.opts.lambda = 5 + 5 * la;
       this.camera.follow(0, target, dt);
     }
     if (this.bg) this.bg.tilePosition.y = -this.camera.y * 0.35;
@@ -294,8 +317,18 @@ export class PlayScene extends Scene {
     }
     this.heightText.text = `${meters} m`;
     this.bestText.text = `rekord ${this.best} m`;
-    this.candyText.text = `${this.run.candies}`;
+    this.candyText.text = `${Math.max(0, this.run.candies - this.flying)}`;
+    this.streakHud.tick(dt);
 
+    // Podpowiedź skoku w locie w pierwszych biegach: przy pierwszym opadaniu.
+    if (this.mode === 'play' && this.runs <= 3 && !this.airHinted && s.state === 'flying' && this.run.air > 0 && s.vy > 200 && !this.aiming) {
+      this.airHinted = true;
+      this.hint.text = 'W locie przeciągnij jeszcze raz!';
+      this.hint.visible = true;
+      void popIn(this.tweens, this.hint, 0.3);
+    }
+    if (this.airHinted && this.hint.visible && s.state === 'stuck') this.hint.visible = false;
+    this.drawDanger();
     const below = this.run.syrupY - (this.camera.y + view.height);
     this.syrupWarn.visible = this.run.started && !this.run.over && below > 0;
     if (this.syrupWarn.visible) {
@@ -419,6 +452,9 @@ export class PlayScene extends Scene {
     this.runs++;
     this.run = new Run(this.game.rng.int(1, 2 ** 31 - 1));
     this.bestAtStart = this.best;
+    this.streakHud.set(0);
+    this.airHinted = false;
+    this.hint.text = 'Przeciągnij w dół i puść';
     for (const view of this.chunkViews.values()) view.destroy({ children: true });
     this.chunkViews.clear();
     for (const v of this.candyViews.values()) v.sprite.destroy();
@@ -458,13 +494,35 @@ export class PlayScene extends Scene {
     const speed = Math.hypot(v.vx, v.vy);
     this.aiming.dx = v.vx / speed;
     this.aiming.dy = v.vy / speed;
-    const p = this.run.world.predict(v.vx, v.vy);
-    p.points.forEach((pt, i) => {
+    const sv = this.run.shotVelocity(v.vx, v.vy); // skok w locie jest słabszy
+    // Kropki pokazują ok. 1,3 s lotu (jak dotąd), ale śmierć wykrywamy dalej (2,5 s), żeby kolce poza kadrem nie zaskakiwały.
+    const p = this.run.world.predict(sv.vx, sv.vy, 150, 3);
+    const visible = 27;
+    const death = p.end === 'death';
+    const shown = p.points.slice(0, visible);
+    const g = this.dotsG;
+    shown.forEach((pt, i) => {
       const last = i === p.points.length - 1;
-      const t = i / Math.max(1, p.points.length - 1);
-      const color = last && p.end === 'death' ? COLORS.danger : COLORS.dot;
-      this.dotsG.circle(pt.x, pt.y, last && p.end ? 10 : 9 - t * 5).fill({ color, alpha: last ? 0.95 : 0.85 - t * 0.5 });
+      const t = i / Math.max(1, shown.length - 1);
+      const color = death ? COLORS.danger : COLORS.dot;
+      g.circle(pt.x, pt.y, last && p.end ? 10 : 9 - t * 5).fill({ color, alpha: last ? 0.95 : 0.85 - t * 0.5 });
     });
+    const end = p.points[p.points.length - 1];
+    if (death && end) {
+      const top = this.camera.y + this.game.view.safe.top + 190;
+      if (end.y < top) {
+        // Śmierć poza kadrem: czerwona strzałka z „!” u góry nad miejscem kolców.
+        const x = Math.max(70, Math.min(SHAFT.width - 70, end.x));
+        g.moveTo(x, top - 46).lineTo(x - 30, top - 6).lineTo(x + 30, top - 6).closePath().fill({ color: COLORS.danger }).stroke({ color: 0x1e1530, width: 4 });
+        g.roundRect(x - 5, top - 34, 10, 17, 4).fill({ color: 0xffffff });
+        g.circle(x, top - 11, 4).fill({ color: 0xffffff });
+      } else {
+        // Krzyżyk w miejscu śmierci.
+        for (const k of [1, -1]) g.moveTo(end.x - 14, end.y - 14 * k).lineTo(end.x + 14, end.y + 14 * k).stroke({ color: COLORS.danger, width: 7, cap: 'round' });
+      }
+    }
+    if (death && !this.aimDanger) haptics.tap();
+    this.aimDanger = death;
   }
 
   private release(x: number, y: number): void {
@@ -519,12 +577,42 @@ export class PlayScene extends Scene {
     this.timers.after(1.7, () => t.destroy());
   }
 
+  /** Kolce tuż nad kadrem: czerwone ząbki przy górnej krawędzi, mocniejsze, im bliżej. */
+  private drawDanger(): void {
+    const g = this.dangerG.clear();
+    if (this.mode !== 'play' || this.run.over) return;
+    const top = this.camera.y;
+    const range = 900;
+    const y0 = this.game.view.safe.top;
+    for (const b of this.run.world.blocks) {
+      if (b.surface !== 'spikes') continue;
+      const d = top - (b.y + b.h);
+      if (d < 0 || d > range) continue;
+      const a = (0.4 + 0.6 * (1 - d / range)) * (0.7 + 0.3 * Math.abs(Math.sin(this.time * 8)));
+      const x0 = Math.max(SHAFT.wall, b.x);
+      const x1 = Math.min(SHAFT.width - SHAFT.wall, b.x + b.w);
+      g.rect(x0, y0, x1 - x0, 8).fill({ color: COLORS.danger, alpha: a });
+      for (let x = x0 + 16; x < x1 - 8; x += 32) {
+        g.moveTo(x - 13, y0 + 8).lineTo(x + 13, y0 + 8).lineTo(x, y0 + 32).closePath().fill({ color: COLORS.danger, alpha: a }).stroke({ color: 0x1e1530, width: 2, alpha: a });
+      }
+    }
+  }
+
   /** Efekty aktywnych power-upów wokół slime'a. */
   private drawAura(dt: number): void {
     const run = this.run;
     const s = run.slime;
     const g = this.aura.clear();
     const pulse = 1 + Math.sin(this.time * 6) * 0.05;
+    // Rytm: kurczący się pierścień pokazuje, ile czasu zostało na kolejny skok.
+    if (run.streak >= 2 && s.state === 'stuck' && !run.over) {
+      const left = Math.max(0, 1 - run.sinceLand / STREAK.window);
+      const urgent = left < 0.35;
+      const color = urgent ? 0xff6f8f : streakTier(run.streak).color;
+      const alpha = urgent ? 0.6 + 0.4 * Math.abs(Math.sin(this.time * 18)) : 0.9;
+      g.circle(0, 0, 66).stroke({ color: 0x1e1530, width: 10, alpha: 0.35 });
+      if (left > 0) g.arc(0, 0, 66, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * left).stroke({ color, width: 7, alpha, cap: 'round' });
+    }
     if (run.timers.shell > 0) {
       const fade = run.timers.shell < 2 ? 0.4 + 0.4 * Math.abs(Math.sin(this.time * 10)) : 0.8;
       g.circle(0, 0, 54 * pulse).fill({ color: POWER_INFO.shell.color, alpha: 0.18 * fade }).stroke({ color: 0xffffff, width: 4, alpha: fade });
@@ -534,11 +622,15 @@ export class PlayScene extends Scene {
       const r = 300 * (0.92 + 0.08 * Math.sin(this.time * 4));
       g.circle(0, 0, r).stroke({ color: POWER_INFO.magnet.color, width: 3, alpha: 0.25 });
     }
-    if (run.air > 0) {
-      // Skrzydełka: ładunek drugiego oddechu.
+    if (run.air > 0 && s.state === 'flying' && run.timers.rocket <= 0) {
+      // Skrzydełka: w tym locie można jeszcze skoczyć (z drugim oddechem dwie pary).
       const flap = Math.sin(this.time * 12) * 0.25;
-      for (const side of [-1, 1]) {
-        g.ellipse(side * 44, -10 + flap * 10, 18, 10).fill({ color: 0xffffff, alpha: 0.85 }).stroke({ color: 0x1e1530, width: 3 });
+      for (let k = 0; k < run.air; k++) {
+        for (const side of [-1, 1]) {
+          g.ellipse(side * (44 + k * 16), -10 - k * 14 + flap * 10, 18 - k * 3, 10 - k * 2)
+            .fill({ color: k === 0 ? 0xffffff : 0xc8f5ff, alpha: 0.85 })
+            .stroke({ color: 0x1e1530, width: 3 });
+        }
       }
     }
     this.body.tint = run.timers.glue > 0 ? 0xc8ffd0 : 0xffffff;
@@ -601,7 +693,7 @@ export class PlayScene extends Scene {
       if (p.hold > 0) return;
       this.release(x, y);
       p.shot = null;
-      p.wait = PILOT.reaction;
+      p.wait = this.game.rng.range(0.25, 0.65) // jak człowiek: raz szybko, raz z wahaniem (czasem zrywa rytm);
       this.finger.visible = false;
       return;
     }
@@ -675,8 +767,143 @@ export class PlayScene extends Scene {
       }
       if (strength > 0.6) this.shaker.add(0.25);
     }
+    if (r.trick) this.onTrick(r.trick.kind, r.trick.reward);
+    if (r.streak) this.onStreak(r.streak);
+    if (r.milestone) this.onMilestone(r.milestone.streak, r.milestone.reward);
+    if (r.airCombo) this.onAirCombo(r.airCombo.count, r.airCombo.reward);
+    if (r.streakBroken) this.onStreakLost(r.streakBroken);
     if (r.died) this.die('spikes');
     if (r.drowned) this.die('syrup');
+  }
+
+  // --- serie ---
+
+  private onStreak(streak: number): void {
+    this.streakHud.set(streak);
+    if (streak < 2) return;
+    this.game.sound.synth(STREAK_SFX.beat, { pitch: beatPitch(streak), volume: 0.8 + Math.min(streak, 20) * 0.02 });
+    const tier = streakTier(streak);
+    const s = this.run.slime;
+    this.sparks.burst(s.x, s.y, { count: 6 + tier.level * 4, speed: [80, 260], life: [0.3, 0.5], scale: [0.4, 0.8], colors: tier.colors });
+  }
+
+  private onMilestone(streak: number, reward: number): void {
+    const tier = streakTier(streak);
+    const s = this.run.slime;
+    this.game.sound.synth(STREAK_SFX.milestone, { pitch: 2 ** ((tier.level * 2) / 12) });
+    haptics.success();
+    this.shaker.add(0.3 + tier.level * 0.1);
+    this.game.hitstop(0.05);
+    // Fala uderzeniowa i konfetti wokół slime'a.
+    for (let i = 0; i < 1 + Math.min(tier.level, 2); i++) {
+      const ring = new Graphics().circle(0, 0, 40).stroke({ color: tier.colors[i % tier.colors.length] ?? 0xffffff, width: 8 });
+      ring.position.set(s.x, s.y);
+      this.world.addChild(ring);
+      this.tweens.to(ring.scale, { x: 6, y: 6 }, { duration: 0.6, delay: i * 0.12, ease: 'expoOut' });
+      this.tweens.to(ring, { alpha: 0 }, { duration: 0.6, delay: i * 0.12, ease: 'quadIn' });
+      this.timers.after(0.8 + i * 0.12, () => {
+        this.tweens.killOf(ring);
+        this.tweens.killOf(ring.scale);
+        ring.destroy();
+      });
+    }
+    this.sparks.burst(s.x, s.y, {
+      count: 40 + tier.level * 20,
+      speed: [300, 900 + tier.level * 150],
+      life: [0.6, 1.1],
+      scale: [0.6, 1.5],
+      endScale: 0.4,
+      gravity: 1400,
+      drag: 1.2,
+      spin: [-8, 8],
+      colors: tier.colors,
+    });
+    milestoneBanner(this.fx, {
+      tweens: this.tweens,
+      timers: this.timers,
+      view: this.game.view,
+      pixelRatio: this.game.pixelRatio,
+      streak,
+      reward,
+      time: () => this.time,
+    });
+    this.flyCandies(reward, 0.35);
+  }
+
+  /** Udany skok w locie: ratunek przed syropem albo akrobacja wyżej niż start. */
+  private onTrick(kind: 'rescue' | 'acrobat', reward: number): void {
+    const s = this.run.slime;
+    if (kind === 'rescue') {
+      this.game.sound.synth(STREAK_SFX.rescue);
+      haptics.success();
+      this.shaker.add(0.25);
+      this.floatText(s.x, s.y - 80, `Ratunek! +${reward}`, '#8ee3a1');
+      const ring = new Graphics().circle(0, 0, 40).stroke({ color: 0x8ee3a1, width: 8 });
+      ring.position.set(s.x, s.y);
+      this.world.addChild(ring);
+      this.tweens.to(ring.scale, { x: 4, y: 4 }, { duration: 0.5, ease: 'expoOut' });
+      this.tweens.to(ring, { alpha: 0 }, { duration: 0.5, ease: 'quadIn' });
+      this.timers.after(0.6, () => {
+        this.tweens.killOf(ring);
+        this.tweens.killOf(ring.scale);
+        ring.destroy();
+      });
+      this.sparks.burst(s.x, s.y, { count: 26, speed: [200, 600], life: [0.4, 0.8], scale: [0.5, 1.2], gravity: 900, colors: [0x8ee3a1, 0xffffff, 0xc8f5ff] });
+    } else {
+      this.game.sound.synth(STREAK_SFX.acrobat);
+      haptics.tap();
+      this.floatText(s.x, s.y - 80, `Akrobacja! +${reward}`, '#c8f5ff');
+      this.sparks.burst(s.x, s.y, { count: 14, speed: [150, 420], life: [0.3, 0.6], scale: [0.4, 1], colors: [0xffffff, 0xc8f5ff] });
+    }
+    this.flyCandies(reward, 0.15);
+  }
+
+  private onAirCombo(count: number, reward: number): void {
+    if (reward <= 0) return;
+    const s = this.run.slime;
+    this.game.sound.synth(STREAK_SFX.combo);
+    this.floatText(s.x, s.y - 70, `Combo ×${count}! +${reward}`, '#ffd166');
+    this.flyCandies(reward, 0.1);
+  }
+
+  private onStreakLost(streak: number): void {
+    this.streakHud.lose(streak);
+    if (streak < 3) return;
+    this.game.sound.synth(STREAK_SFX.lost);
+    haptics.tap();
+  }
+
+  /** Cukierki-premie wyskakują ze slime'a i lecą łukiem do licznika w rogu. */
+  private flyCandies(n: number, delay: number): void {
+    const from = this.fx.toLocal(this.slime.getGlobalPosition());
+    const to = this.candyIcon.position;
+    const size = 46 / Math.max(this.candyTex.width, this.candyTex.height);
+    for (let i = 0; i < n; i++) {
+      this.flying++;
+      const c = new Sprite({ texture: this.candyTex, anchor: 0.5 });
+      c.scale.set(0);
+      c.position.copyFrom(from);
+      this.fx.addChild(c);
+      const a = this.game.rng.range(0, Math.PI * 2);
+      const r = this.game.rng.range(70, 150);
+      const wait = delay + i * 0.06;
+      this.tweens.to(c.scale, { x: size, y: size }, { duration: 0.2, delay: wait, ease: 'backOut' });
+      this.tweens.to(c, { x: from.x + Math.cos(a) * r, y: from.y + Math.sin(a) * r }, { duration: 0.25, delay: wait, ease: 'quadOut' });
+      // Łuk: x i y z różnymi krzywymi.
+      const fly = 0.5;
+      const start = wait + 0.3;
+      this.tweens.to(c, { x: to.x }, { duration: fly, delay: start, ease: 'quadIn' });
+      this.tweens.to(c, { y: to.y }, { duration: fly, delay: start, ease: 'cubicIn' });
+      this.tweens.to(c, { rotation: 6 }, { duration: fly + 0.3, delay: wait, ease: 'linear' });
+      this.timers.after(start + fly, () => {
+        this.tweens.killOf(c);
+        this.tweens.killOf(c.scale);
+        c.destroy();
+        this.flying = Math.max(0, this.flying - 1);
+        this.game.sound.synth(STREAK_SFX.coin, { pitch: 1 + (i % 8) * 0.06 });
+        void pulse(this.tweens, this.candyIcon, 0.3);
+      });
+    }
   }
 
   private collectCandy(c: Candy): void {
@@ -684,6 +911,7 @@ export class PlayScene extends Scene {
     const sprite = this.candyViews.get(c.id)?.sprite;
     this.candyViews.delete(c.id);
     this.game.sound.synth(SFX.candy, { pitch: 1 + Math.min(this.combo - 1, 8) * 0.12 });
+    if (this.combo >= 2 && this.run.slime.state === 'flying') this.comboPop(c.x, c.y, this.combo);
     this.sparks.burst(c.x, c.y, {
       count: 10,
       speed: [120, 380],
@@ -698,6 +926,18 @@ export class PlayScene extends Scene {
         .to(sprite.scale, { x: sprite.scale.x * 1.8, y: sprite.scale.y * 1.8 }, { duration: 0.25, ease: 'backOut' })
         .done.then(() => sprite.destroy());
     }
+  }
+
+  /** Małe „×3” przy kolejnych cukierkach w jednym locie. */
+  private comboPop(x: number, y: number, n: number): void {
+    const t = this.makeText(30 + Math.min(n, 6) * 4, n >= 3 ? '#ffd166' : '#ffffff');
+    t.text = `×${n}`;
+    t.anchor.set(0.5);
+    t.position.set(x, y - 40);
+    this.world.addChild(t);
+    void popIn(this.tweens, t, 0.2);
+    this.tweens.to(t, { y: y - 100, alpha: 0 }, { duration: 0.5, delay: 0.25, ease: 'quadIn' });
+    this.timers.after(0.8, () => t.destroy());
   }
 
   private die(cause: 'spikes' | 'syrup'): void {
@@ -739,8 +979,11 @@ export class PlayScene extends Scene {
     const sub = this.makeText(34, record ? pal.accent : pal.surface);
     sub.text = record ? 'Nowy rekord!' : `rekord ${this.best} m`;
     const sweets = this.makeText(30, pal.surface);
-    sweets.text = `+${this.run.candies} cukierków (razem ${this.bank + this.run.candies})`;
-    for (const t of [title, score, sub, sweets]) t.anchor.set(0.5);
+    sweets.text = `+${this.run.candies} ${candyWord(this.run.candies)} (razem ${this.bank + this.run.candies})`;
+    const rhythm = this.makeText(28, '#ffd166');
+    rhythm.text = this.run.bestStreak >= 2 ? `najlepszy rytm ×${this.run.bestStreak}${this.run.bonus ? ` · premie +${this.run.bonus}` : ''}` : '';
+    rhythm.position.set(0, 76);
+    for (const t of [title, score, sub, sweets, rhythm]) t.anchor.set(0.5);
     title.position.set(0, -250);
     score.position.set(0, -130);
     sub.position.set(0, -30);
@@ -772,7 +1015,7 @@ export class PlayScene extends Scene {
     });
     menu.position.set(0, 300);
     this.menuButton = menu;
-    panel.addChild(title, score, sub, sweets, again, menu);
+    panel.addChild(title, score, sub, sweets, rhythm, again, menu);
     panel.label = 'panel';
     this.overlay.addChild(dim, panel);
     this.layoutOverlay();

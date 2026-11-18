@@ -77,7 +77,6 @@ export class PowerHud extends Container {
     for (const kind of Object.keys(run.timers) as TimedPower[]) {
       if (run.timers[kind] > 0) active.push({ kind, left: run.timers[kind] / POWER[kind] });
     }
-    if (run.air > 0) active.push({ kind: 'breath', left: 1 });
     const keep = new Set(active.map((a) => a.kind));
     for (const [kind, slot] of this.slots) {
       if (!keep.has(kind)) {

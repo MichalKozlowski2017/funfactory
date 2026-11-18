@@ -105,7 +105,7 @@ Power-upy zdobywa się w trakcie biegu: świecące bańki w studni, rzadsze od c
 | Power-up | Działanie |
 | --- | --- |
 | Gumowa skorupka | 10 s ochrony: uderzenie w kolce odbija slime'a zamiast zabić (zużywa skorupkę) |
-| Drugi oddech | Ładunek strzału w powietrzu; podczas celowania w locie czas zwalnia |
+| Drugi oddech | Przez 10 s dwa skoki w każdym locie zamiast jednego |
 | Magnes | 10 s: cukierki z dużego promienia lecą do slime'a |
 | Lodowy oddech | Syrop zamarza na 6 s i opada o 4 m |
 | Pieprzowa rakieta | 1,4 s lotu w górę przez wszystko, bez obrażeń |
@@ -113,7 +113,17 @@ Power-upy zdobywa się w trakcie biegu: świecące bańki w studni, rzadsze od c
 
 Otwarte: ulepszenia power-upów za cukierki oraz start z power-upem za cukierki (decyzja po teście samych power-upów).
 
-## Decyzje
+## Krok 6: serie
+
+Premie idą w cukierki, rekord zostaje w metrach (decyzja właściciela).
+
+- **Rytm:** strzał w ciągu 1 s od lądowania i lądowanie wyżej (min. 60 jednostek) podbija serię. Skoki w bok jej nie zrywają, zawahanie tak. Pierścień wokół slime'a pokazuje pozostały czas. Każdy skok gra kolejną nutę pentatoniki, co 5 skoków oktawa wyżej.
+- **Kamienie milowe** co 5: premia 3 / 5 / 8 / maks. 10, baner z promieniami, błysk, fala, konfetti, cukierki lecą do licznika. Poziomy: Rytm (róż), Super rytm od 10 (złoto), Szał od 15 (mięta), Cukrowy szał od 20 (tęcza).
+- **Combo w locie:** „×2”, „×3” przy kolejnych cukierkach w jednym skoku; od 3 premia n−2.
+- **Skok w locie:** każdy lot ma jeden (60% siły strzału z półki), odnawia się po lądowaniu; skrzydełka przy slime'ie pokazują, że jest dostępny. Ratunek (skok przy opadaniu, syrop bliżej niż 5 m, potem bezpieczne lądowanie) +2, akrobacja (po skoku w locie lądowanie wyżej niż start) +1. Drugi oddech daje teraz przez 10 s dwa skoki na lot. Syrop lekko szybszy (50–165).
+- Strojenie botem (120 biegów, reakcja 0,4–1,4 s; ze skokiem w locie mediana 114 → 141 m): seria 5 w 72% biegów, 10 w 12%; premie ok. +40% cukierków (wolniejszy gracz ok. +20%).
+
+
 
 - Nazwa: Glut.
 - Celowanie: przeciąganie w dowolnym miejscu ekranu.

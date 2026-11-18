@@ -22,7 +22,8 @@ export function chooseShot(run: Run, rng: Rng, samples = 24, seek = true): BotSh
     const dragY = Math.sin(angle) * len;
     const v = launchVelocity(dragX, dragY);
     if (!v) continue;
-    const p = run.world.predict(v.vx, v.vy, 150, 1);
+    const sv = run.shotVelocity(v.vx, v.vy);
+    const p = run.world.predict(sv.vx, sv.vy, 150, 1);
     const end = p.points[p.points.length - 1];
     if (p.end !== 'land' || !end) continue;
     // Lądowanie w tym samym miejscu nic nie daje; sufit to pułapka (trudno z niego iść w górę).
@@ -52,6 +53,10 @@ export interface BotResult {
   time: number;
   cause: 'spikes' | 'syrup' | 'stuck' | 'limit';
   powers: number;
+  candies: number;
+  /** Premie z serii (wliczone w `candies`). */
+  bonus: number;
+  bestStreak: number;
 }
 
 /**
@@ -60,7 +65,14 @@ export interface BotResult {
  */
 export function playBot(
   seed: number,
-  opts: { maxTime?: number; samples?: number; reaction?: number; seekPowers?: boolean } = {},
+  opts: {
+    maxTime?: number;
+    samples?: number;
+    reaction?: number;
+    /** Górna granica losowej reakcji (jak u człowieka: raz szybko, raz z wahaniem). Domyślnie stała `reaction`. */
+    reactionMax?: number;
+    seekPowers?: boolean;
+  } = {},
 ): BotResult {
   const run = new Run(seed);
   const rng = new Rng(seed * 7 + 1);
@@ -70,14 +82,18 @@ export function playBot(
   let shots = 0;
   let powers = 0;
   const seek = opts.seekPowers ?? true;
-  let wait = reaction;
+  const react = () => (opts.reactionMax ? rng.range(reaction, opts.reactionMax) : reaction);
+  const stats = () => ({ meters: run.meters, shots, powers, candies: run.candies, bonus: run.bonus, bestStreak: run.bestStreak });
+  let wait = react();
   let t = 0;
   while (t < maxTime) {
     const r = run.step(dt);
     t += dt;
     if (r.powered) powers++;
-    if (r.died) return { meters: run.meters, shots, time: t, cause: 'spikes', powers };
-    if (r.drowned) return { meters: run.meters, shots, time: t, cause: 'syrup', powers };
+    // Człowiek reaguje od lądowania (nie odlicza w locie czasu na kolejny strzał z półki).
+    if (r.landed) wait = react();
+    if (r.died) return { ...stats(), time: t, cause: 'spikes' };
+    if (r.drowned) return { ...stats(), time: t, cause: 'syrup' };
     // Drugi oddech: gdy slime zaczyna spadać, bot strzela jeszcze raz w locie.
     if (!botCanShoot(run)) continue;
     wait -= dt;
@@ -89,7 +105,7 @@ export function playBot(
     }
     run.launch(best.vx, best.vy);
     shots++;
-    wait = reaction;
+    wait = react();
   }
-  return { meters: run.meters, shots, time: t, cause: 'limit', powers };
+  return { ...stats(), time: t, cause: 'limit' };
 }
