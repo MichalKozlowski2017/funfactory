@@ -1,0 +1,17 @@
+{
+  "workflow": "flux2.json",
+  "PROMPT": "wide game banner illustration, a cute pink jelly slime blob leaping upward inside a tall candy cave shaft with pink frosting ledges, sugar crystals, wrapped candies floating, glowing pink syrup rising at the bottom, dreamy purple atmosphere, leave empty space on the left side for a title, cute candy-land mobile game art, flat vector style, clean thick dark outline, soft cel shading, pastel pink lavender and mint palette, glossy, no text, no letters",
+  "NEGATIVE": "",
+  "SEED": 1300,
+  "WIDTH": 1536,
+  "HEIGHT": 752,
+  "PREFIX": "feature",
+  "STEPS": 20,
+  "GUIDANCE": 4,
+  "BPM": 100,
+  "DURATION": 60,
+  "KEY": "A minor",
+  "LYRICS": "[Instrumental]",
+  "created": "2026-11-18T22:28:49.697Z",
+  "post": "resize 1024 szer., crop 1024x500, logo „Glut” i podtytuł (ImageMagick)"
+}

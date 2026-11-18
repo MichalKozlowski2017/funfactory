@@ -1,0 +1,17 @@
+{
+  "workflow": "flux2.json",
+  "PROMPT": "mobile game app icon, a cute round pink jelly slime blob with big shiny dark eyes, rosy blush and a happy smile, sticking to a ledge of pink frosting with candy drips, deep purple background with soft glow, bold simple centered composition filling the frame, cute candy-land mobile game art, flat vector style, clean thick dark outline, soft cel shading, pastel pink lavender and mint palette, glossy, no text, no letters",
+  "NEGATIVE": "",
+  "SEED": 1200,
+  "WIDTH": 1024,
+  "HEIGHT": 1024,
+  "PREFIX": "icon",
+  "STEPS": 20,
+  "GUIDANCE": 4,
+  "BPM": 100,
+  "DURATION": 60,
+  "KEY": "A minor",
+  "LYRICS": "[Instrumental]",
+  "created": "2026-11-18T22:23:29.460Z",
+  "post": "crop 836x836 center (bez zaokrąglonych rogów), resize 1024; 512 dla Google Play"
+}

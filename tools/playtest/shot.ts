@@ -44,6 +44,8 @@ const { values, positionals } = parseArgs({
     timeout: { type: 'string', default: '15000' },
     /** Chromium z GPU (ANGLE/Metal): ~60 kl./s zamiast ~20 przy renderowaniu programowym. Do nagrań. */
     gpu: { type: 'boolean', default: false },
+    /** Własny rozmiar ekranu „SZERxWYS@skala” (punkty CSS), np. 440x956@3 = zrzut 1320×2868 (sklep). */
+    size: { type: 'string' },
   },
 });
 
@@ -82,6 +84,12 @@ const browser = await engine.launch(
   values.gpu && engine === chromium ? { args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'] } : {},
 );
 const { defaultBrowserType: _ignored, ...deviceOpts } = device;
+if (values.size) {
+  const m = /^(\d+)x(\d+)(?:@(\d+(?:\.\d+)?))?$/.exec(values.size);
+  if (!m) throw new Error(`--size: oczekiwano SZERxWYS@skala, np. 440x956@3`);
+  deviceOpts.viewport = { width: Number(m[1]), height: Number(m[2]) };
+  deviceOpts.deviceScaleFactor = Number(m[3] ?? 1);
+}
 const context = await browser.newContext({
   ...deviceOpts,
   ...(values.video ? { recordVideo: { dir: outDir, size: deviceOpts.viewport } } : {}),

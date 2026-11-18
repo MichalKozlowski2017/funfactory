@@ -69,8 +69,11 @@ export class Sound {
     for (const type of ['pointerdown', 'touchend', 'click', 'keydown']) {
       window.addEventListener(type, unlock, { capture: true, passive: true });
     }
+    // W tle (zminimalizowana aplikacja, zablokowany ekran) dźwięk śpi; po powrocie wraca.
     document.addEventListener('visibilitychange', () => {
-      if (!document.hidden && this.ctx && this.ctx.state !== 'running') void this.ctx.resume();
+      if (!this.ctx) return;
+      if (document.hidden) void this.ctx.suspend();
+      else if (this.ctx.state !== 'running') void this.ctx.resume();
     });
   }
 

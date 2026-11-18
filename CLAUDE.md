@@ -44,7 +44,7 @@ pnpm shot <lab|games/slug> --steps "..."     # zrzuty do .shots/<nazwa>/, potem 
 pnpm shot games/slug --browser webkit        # silnik Safari: łapie błędy specyficzne dla iOS
 ```
 
-Kroki: `wait:<ms>`, `shot:<nazwa>`, `tap:x:y`, `drag:x1:y1:x2:y2`, `swipe:x1:y1:x2:y2`, `hold:x1:y1:x2:y2` + `release` (współrzędne w jednostkach gry). `--query diag` dokleja parametry do URL. Jeśli shot kończy się kodem 1, to na stronie był błąd JS albo scena nie zgłosiła gotowości. Nie zgłaszaj, że coś działa, dopóki nie obejrzysz zrzutu. Pamiętaj, że gest startujący w polu przycisku trafia do przycisku.
+Opcje: `--gpu` (płynnie, do nagrań), `--size 440x956@3` (dokładny rozmiar ekranu, np. zrzuty do sklepu 1320×2868). Kroki dodatkowe: `eval:<js>`, `rec:start` / `rec:save:<nazwa>` (nagranie mp4). Kroki: `wait:<ms>`, `shot:<nazwa>`, `tap:x:y`, `drag:x1:y1:x2:y2`, `swipe:x1:y1:x2:y2`, `hold:x1:y1:x2:y2` + `release` (współrzędne w jednostkach gry). `--query diag` dokleja parametry do URL. Jeśli shot kończy się kodem 1, to na stronie był błąd JS albo scena nie zgłosiła gotowości. Nie zgłaszaj, że coś działa, dopóki nie obejrzysz zrzutu. Pamiętaj, że gest startujący w polu przycisku trafia do przycisku.
 
 **Emulacja nie zastępuje telefonu.** Playwright i symulator iOS nie odtwarzają wszystkich błędów prawdziwego iPhone'a. Przykład: wgranie dużego canvasa do WebGL dawało na urządzeniu przezroczystą teksturę. Dlatego:
 - tekstur nie twórz przez `Texture.from(canvas)`; rysuj na canvasie i przekazuj piksele przez `pixelsToTexture` (ImageBitmap); `svgTexture` robi to sam,
@@ -58,6 +58,8 @@ IOS_DEVICE="<nazwa|UDID>" pnpm --filter @funfactory-game/<slug> ios:device   # b
 pnpm --filter @funfactory-game/<slug> apk       # debug APK (Gradle z JDK 21 z Android Studio)
 xcodebuild -project games/<slug>/ios/App/App.xcodeproj -scheme App -sdk iphonesimulator CODE_SIGNING_ALLOWED=NO build
 ```
+
+Wydanie do sklepów (podpisany AAB, archiwum iOS, grafiki, teksty, kroki dla właściciela): `docs/release.md`. `pnpm --filter @funfactory-game/<slug> aab` buduje podpisany pakiet dla Google Play (klucz uploadu poza repo, w `~/.funfactory-keys/`).
 
 Capacitor 8 wymaga JDK 21. Systemowa Java to 17, więc buildy Gradle z CLI muszą mieć `JAVA_HOME` ustawione na JBR z Android Studio (skrypt `apk` robi to sam).
 
