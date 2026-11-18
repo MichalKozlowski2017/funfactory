@@ -104,6 +104,18 @@ describe('Loop', () => {
     expect(frames).toBe(1);
   });
 
+  it('slow motion steps every frame with shorter steps (no stutter)', () => {
+    const steps: number[] = [];
+    const loop = new Loop({ fixedUpdate: (dt) => steps.push(dt) }, 60);
+    loop.timeScale = 0.25;
+    for (let i = 0; i < 4; i++) loop.tick(1 / 60 + 1e-9);
+    expect(steps.length).toBe(4);
+    for (const dt of steps) expect(dt).toBeCloseTo(1 / 240);
+    loop.timeScale = 0; // hitstop: czas stoi
+    loop.tick(1 / 60);
+    expect(steps.length).toBe(4);
+  });
+
   it('pause stops time', () => {
     const loop = new Loop({});
     loop.paused = true;

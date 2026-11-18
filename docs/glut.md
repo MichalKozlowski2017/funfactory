@@ -31,7 +31,7 @@ Strzał możliwy jest tylko wtedy, gdy slime jest przyklejony, więc nie da się
 - **Powierzchnie (MVP):**
   - **lukier**: zwykła, klei się
   - **lód cukrowy**: slime powoli zjeżdża w dół, trzeba szybko strzelić
-  - **kolce z karmelu**: śmierć
+  - **kolce z karmelu**: śmierć. Tylko na ścianach (kolce pod półkami usunięte po testach na telefonie: zabijały zza kadru)
 - Trudność rośnie z wysokością: większe odstępy, więcej lodu i kolców, szybszy syrop.
 
 ## Ekrany
@@ -105,7 +105,7 @@ Power-upy zdobywa się w trakcie biegu: świecące bańki w studni, rzadsze od c
 | Power-up | Działanie |
 | --- | --- |
 | Gumowa skorupka | 10 s ochrony: uderzenie w kolce odbija slime'a zamiast zabić (zużywa skorupkę) |
-| Drugi oddech | Przez 10 s dwa skoki w każdym locie zamiast jednego |
+| Drugi oddech | Przez 10 s skoki w locie nie słabną |
 | Magnes | 10 s: cukierki z dużego promienia lecą do slime'a |
 | Lodowy oddech | Syrop zamarza na 6 s i opada o 4 m |
 | Pieprzowa rakieta | 1,4 s lotu w górę przez wszystko, bez obrażeń |
@@ -120,8 +120,8 @@ Premie idą w cukierki, rekord zostaje w metrach (decyzja właściciela).
 - **Rytm:** strzał w ciągu 1 s od lądowania i lądowanie wyżej (min. 60 jednostek) podbija serię. Skoki w bok jej nie zrywają, zawahanie tak. Pierścień wokół slime'a pokazuje pozostały czas. Każdy skok gra kolejną nutę pentatoniki, co 5 skoków oktawa wyżej.
 - **Kamienie milowe** co 5: premia 3 / 5 / 8 / maks. 10, baner z promieniami, błysk, fala, konfetti, cukierki lecą do licznika. Poziomy: Rytm (róż), Super rytm od 10 (złoto), Szał od 15 (mięta), Cukrowy szał od 20 (tęcza).
 - **Combo w locie:** „×2”, „×3” przy kolejnych cukierkach w jednym skoku; od 3 premia n−2.
-- **Skok w locie:** każdy lot ma jeden (60% siły strzału z półki), odnawia się po lądowaniu; skrzydełka przy slime'ie pokazują, że jest dostępny. Ratunek (skok przy opadaniu, syrop bliżej niż 5 m, potem bezpieczne lądowanie) +2, akrobacja (po skoku w locie lądowanie wyżej niż start) +1. Drugi oddech daje teraz przez 10 s dwa skoki na lot. Syrop lekko szybszy (50–165).
-- Strojenie botem (120 biegów, reakcja 0,4–1,4 s; ze skokiem w locie mediana 114 → 141 m): seria 5 w 72% biegów, 10 w 12%; premie ok. +40% cukierków (wolniejszy gracz ok. +20%).
+- **Skoki w locie:** bez limitu, ale każdy kolejny w tym samym locie słabszy (60% strzału z półki, potem ×0,8 za każdy następny), po lądowaniu siła wraca; skrzydełka pokazują siłę następnego skoku. Nagrody po bezpiecznym lądowaniu: akrobacja (wyżej niż start) = liczba skoków, ratunek (skok przy opadaniu, syrop bliżej niż 5 m) = liczba skoków + 1, maks. 6. Drugi oddech: przez 10 s skoki w locie nie słabną. Syrop 50–165. Slow-motion płynny (krok symulacji skalowany co klatkę zamiast co kilka klatek).
+- Strojenie botem (120 biegów, reakcja 0,4–1,4 s; bez skoków w locie mediana 114 m, z jednym 141 m, bez limitu ok. 175 m przy szybkiej reakcji w slow-motion): seria 5 w 72% biegów, 10 w 12%; premie ok. +40% cukierków (wolniejszy gracz ok. +20%).
 
 
 

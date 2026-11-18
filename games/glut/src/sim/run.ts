@@ -12,24 +12,29 @@ export const POWER = {
   frostDrop: 400,
   rocket: 1.4,
   glue: 10,
-  /** Drugi oddech: przez ten czas w każdym locie są dwa skoki zamiast jednego. */
+  /** Drugi oddech: przez ten czas skoki w locie nie słabną. */
   breath: 10,
 } as const;
 
 /**
- * Skok w locie: każdy lot ma jeden (z drugim oddechem dwa), odnawia się po lądowaniu.
- * Nagrody: ratunek (skok przy opadaniu, gdy syrop jest blisko, i bezpieczne lądowanie)
- * oraz akrobacja (po skoku w locie lądowanie wyżej niż start).
+ * Skoki w locie: bez limitu, ale każdy kolejny w tym samym locie słabszy (`decay`), po lądowaniu
+ * siła wraca. Dzięki temu seria skoków ratuje i wynosi wyżej, ale nie zastępuje półek.
+ * Nagrody po bezpiecznym lądowaniu: akrobacja (wyżej niż start) = liczba skoków,
+ * ratunek (skok przy opadaniu, gdy syrop był blisko) = liczba skoków + 1. Obie z limitem.
  */
 export const AIR = {
-  jumps: 1,
-  breathJumps: 2,
-  /** Skok w locie jest słabszy niż z półki: ratuje, ale nie zastępuje strzału. */
+  /** Pierwszy skok w locie względem strzału z półki. */
   power: 0.6,
+  /** Mnożnik siły każdego kolejnego skoku w tym samym locie (drugi oddech go wyłącza). */
+  decay: 0.8,
   rescueGap: 500,
-  rescueReward: 2,
-  acrobatReward: 1,
+  maxReward: 6,
 } as const;
+
+/** Siła n-tego skoku w locie (od 0) względem strzału z półki. */
+export function airPower(n: number, breath: boolean): number {
+  return AIR.power * (breath ? 1 : AIR.decay ** n);
+}
 
 /** Power-upy z czasem działania. */
 export type TimedPower = 'shell' | 'magnet' | 'frost' | 'rocket' | 'glue' | 'breath';
@@ -70,7 +75,7 @@ export interface RunStep extends StepResult {
   /** Kilka cukierków w jednym skoku i premia. */
   airCombo?: { count: number; reward: number };
   /** Udane lądowanie po skoku w locie: ratunek albo akrobacja, z premią. */
-  trick?: { kind: 'rescue' | 'acrobat'; reward: number };
+  trick?: { kind: 'rescue' | 'acrobat'; jumps: number; reward: number };
   /** Syrop dogonił slime'a. */
   drowned?: boolean;
   /** Cukierki zebrane w tym kroku. */
@@ -98,9 +103,8 @@ export class Run {
   candies = 0;
   /** Pozostały czas power-upów (s). */
   readonly timers: Record<TimedPower, number> = { shell: 0, magnet: 0, frost: 0, rocket: 0, glue: 0, breath: 0 };
-  /** Pozostałe skoki w tym locie. */
-  air = 0;
-  private usedAir = false;
+  /** Skoki w locie wykonane w tym locie (zerowane po lądowaniu). */
+  airJumps = 0;
   private rescue = false;
   /** Seria w rytmie, najlepsza seria biegu i suma premii (już wliczona w `candies`). */
   streak = 0;
@@ -123,10 +127,6 @@ export class Run {
     return this.world.slime;
   }
 
-  /** Skoki w locie na jeden lot. */
-  get maxAir(): number {
-    return this.timers.breath > 0 ? AIR.breathJumps : AIR.jumps;
-  }
 
   /** Wysokość w metrach (100 jednostek = 1 m). */
   get meters(): number {
@@ -137,12 +137,12 @@ export class Run {
   get canAim(): boolean {
     const s = this.world.slime;
     if (this.over || this.timers.rocket > 0) return false;
-    return s.state === 'stuck' || (s.state === 'flying' && this.air > 0);
+    return s.state === 'stuck' || s.state === 'flying';
   }
 
   /** Prędkość strzału z uwzględnieniem słabszego skoku w locie (do celowania i przewidywania toru). */
   shotVelocity(vx: number, vy: number): { vx: number; vy: number } {
-    const k = this.world.slime.state === 'flying' ? AIR.power : 1;
+    const k = this.world.slime.state === 'flying' ? airPower(this.airJumps, this.timers.breath > 0) : 1;
     return { vx: vx * k, vy: vy * k };
   }
 
@@ -150,17 +150,14 @@ export class Run {
     if (this.over || this.timers.rocket > 0) return false;
     const inAir = this.world.slime.state === 'flying';
     ({ vx, vy } = this.shotVelocity(vx, vy));
-    if (inAir && this.air <= 0) return false;
     const s = this.world.slime;
     const falling = s.vy > 0 && this.syrupY - s.y < AIR.rescueGap;
     if (!this.world.launch(vx, vy, inAir)) return false;
     if (inAir) {
-      this.air--;
-      this.usedAir = true;
+      this.airJumps++;
       if (falling) this.rescue = true;
     } else {
-      this.air = this.maxAir;
-      this.usedAir = false;
+      this.airJumps = 0;
       this.rescue = false;
       this.launchQuick = this.sinceLand <= STREAK.window;
       this.launchY = s.y;
@@ -221,14 +218,16 @@ export class Run {
     if (result.landed) {
       this.sinceLand = 0;
       const climbed = this.started && s.y < this.launchY - STREAK.minClimb;
-      if (this.usedAir && this.started && (this.rescue || climbed)) {
-        const trick = this.rescue ? { kind: 'rescue' as const, reward: AIR.rescueReward } : { kind: 'acrobat' as const, reward: AIR.acrobatReward };
+      const n = this.airJumps;
+      if (n > 0 && this.started && (this.rescue || climbed)) {
+        const trick = this.rescue
+          ? { kind: 'rescue' as const, jumps: n, reward: Math.min(AIR.maxReward, n + 1) }
+          : { kind: 'acrobat' as const, jumps: n, reward: Math.min(AIR.maxReward, n) };
         this.give(trick.reward);
         result.trick = trick;
       }
-      this.usedAir = false;
+      this.airJumps = 0;
       this.rescue = false;
-      this.air = this.maxAir; // zejście z półki bez strzału też daje skok w locie
       if (climbed) {
         this.streak = this.launchQuick ? this.streak + 1 : 1;
         this.launchY = s.y; // kolejne lądowania z tego samego lotu (np. zjazd po lodzie) nie liczą się podwójnie
@@ -298,7 +297,6 @@ export class Run {
     switch (kind) {
       case 'breath':
         this.timers.breath = POWER.breath;
-        this.air = Math.max(this.air, AIR.breathJumps);
         break;
       case 'frost':
         this.timers.frost = POWER.frost;

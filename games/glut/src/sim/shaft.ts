@@ -116,8 +116,7 @@ export function generateChunk(seed: number, chunk: number): Block[] {
     else x = SHAFT.wall + rng.range(inner * 0.2, inner * 0.8 - w);
     const surface: Surface = chunk > 1 && rng.chance(lerp(0.05, 0.3, d)) ? 'ice' : 'sticky';
     add(x, y, w, 36, surface);
-    // Kolce pod półką: nie wolno w nią uderzyć od dołu.
-    if (chunk >= 2 && rng.chance(lerp(0.1, 0.45, d))) add(x, y + 36, w, 18, 'spikes');
+    // Bez kolców pod półkami: karały za strzał w górę zza kadru (decyzja po testach na telefonie).
     side = side === 'C' ? (rng.chance(0.5) ? 'L' : 'R') : rng.chance(0.25) ? 'C' : side === 'L' ? 'R' : 'L';
   }
   return blocks;

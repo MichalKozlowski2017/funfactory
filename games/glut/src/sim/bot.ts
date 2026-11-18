@@ -41,10 +41,10 @@ export function chooseShot(run: Run, rng: Rng, samples = 24, seek = true): BotSh
   return best;
 }
 
-/** Czy bot (albo autopilot w grze) powinien teraz celować: stoi albo spada z ładunkiem drugiego oddechu. */
+/** Czy bot (albo autopilot w grze) powinien teraz celować: stoi albo spada (skok w locie). */
 export function botCanShoot(run: Run): boolean {
   const s = run.slime;
-  return s.state === 'stuck' || (s.state === 'flying' && run.air > 0 && s.vy > 0);
+  return run.canAim && (s.state === 'stuck' || s.vy > 0);
 }
 
 export interface BotResult {
@@ -71,6 +71,8 @@ export function playBot(
     reaction?: number;
     /** Górna granica losowej reakcji (jak u człowieka: raz szybko, raz z wahaniem). Domyślnie stała `reaction`. */
     reactionMax?: number;
+    /** Reakcja na skok w locie [min, max] w czasie gry. Gracz celuje wtedy w slow-motion, więc szybciej. */
+    airReaction?: [number, number];
     seekPowers?: boolean;
   } = {},
 ): BotResult {
@@ -85,6 +87,8 @@ export function playBot(
   const react = () => (opts.reactionMax ? rng.range(reaction, opts.reactionMax) : reaction);
   const stats = () => ({ meters: run.meters, shots, powers, candies: run.candies, bonus: run.bonus, bestStreak: run.bestStreak });
   let wait = react();
+  const [airLo, airHi] = opts.airReaction ?? [0.25, 0.6];
+  let airArmed = false;
   let t = 0;
   while (t < maxTime) {
     const r = run.step(dt);
@@ -94,8 +98,12 @@ export function playBot(
     if (r.landed) wait = react();
     if (r.died) return { ...stats(), time: t, cause: 'spikes' };
     if (r.drowned) return { ...stats(), time: t, cause: 'syrup' };
-    // Drugi oddech: gdy slime zaczyna spadać, bot strzela jeszcze raz w locie.
+    // Skok w locie: gdy slime zaczyna spadać, bot może strzelić jeszcze raz (w slow-motion, więc szybko).
     if (!botCanShoot(run)) continue;
+    if (run.slime.state === 'flying' && !airArmed) {
+      airArmed = true;
+      wait = Math.min(wait, rng.range(airLo, airHi));
+    }
     wait -= dt;
     if (wait > 0) continue;
     const best = chooseShot(run, rng, opts.samples ?? 24, seek);
@@ -106,6 +114,7 @@ export function playBot(
     run.launch(best.vx, best.vy);
     shots++;
     wait = react();
+    airArmed = false;
   }
   return { ...stats(), time: t, cause: 'limit' };
 }

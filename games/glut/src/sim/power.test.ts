@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { contact, World, type Block } from './physics.ts';
-import { AIR, POWER, Run, SYRUP } from './run.ts';
+import { AIR, airPower, POWER, Run, SYRUP } from './run.ts';
 import { generateChunk, generatePowerUps, POWER_RADIUS } from './shaft.ts';
 
 const box = (x: number, y: number, w: number, h: number, surface: Block['surface'] = 'sticky'): Block => ({ x, y, w, h, surface });
@@ -67,52 +67,44 @@ describe('glue', () => {
 });
 
 describe('air jump', () => {
-  it('every flight has one jump in the air, recharged on landing', () => {
+  it('is unlimited, but every next jump in the same flight is weaker', () => {
     const run = new Run(5);
     run.launch(0, -1500);
     run.step(1 / 60);
-    expect(run.slime.state).toBe('flying');
-    expect(run.canAim).toBe(true);
-    expect(run.launch(400, -1200)).toBe(true);
-    expect(run.canAim).toBe(false);
-    expect(run.launch(400, -1200)).toBe(false);
-  });
-
-  it('is weaker than a shot from a ledge', () => {
-    const run = new Run(5);
-    run.launch(0, -1500);
-    run.step(1 / 60);
-    run.launch(0, -1000);
-    expect(run.slime.vy).toBeCloseTo(-1000 * AIR.power);
-  });
-
-  it('rewards a rescue: jump while falling near the syrup, then land', () => {
-    const run = new Run(5);
-    run.launch(0, -900);
-    let r = run.step(1 / 60);
-    for (let i = 0; i < 600 && run.slime.vy <= 0; i++) r = run.step(1 / 60);
-    run.syrupY = run.slime.y + AIR.rescueGap - 50; // syrop tuż pod spadającym slime'em
-    expect(run.launch(0, -800)).toBe(true);
-    let trick: { kind: string; reward: number } | undefined;
-    for (let i = 0; i < 600 && !trick && !run.over; i++) {
-      run.syrupY = Math.max(run.syrupY, run.slime.y + 400); // nie dajemy mu utonąć w teście
-      trick = run.step(1 / 60).trick;
+    const vys: number[] = [];
+    for (let i = 0; i < 6; i++) {
+      expect(run.canAim).toBe(true);
+      expect(run.launch(0, -1000)).toBe(true);
+      vys.push(run.slime.vy);
     }
-    expect(trick).toEqual({ kind: 'rescue', reward: AIR.rescueReward });
-    void r;
+    expect(vys[0]).toBeCloseTo(-1000 * AIR.power);
+    for (let i = 1; i < vys.length; i++) expect(-vys[i]!).toBeLessThan(-vys[i - 1]!);
   });
-});
 
-describe('breath', () => {
-  it('gives two air jumps per flight for a while', () => {
+  it('breath keeps air jumps at full strength', () => {
     const run = new Run(5);
     run.activate('breath');
     run.launch(0, -1500);
     run.step(1 / 60);
-    expect(run.launch(400, -1200)).toBe(true);
-    expect(run.launch(-400, -1200)).toBe(true);
-    expect(run.launch(400, -1200)).toBe(false);
-    expect(run.timers.breath).toBeGreaterThan(0);
+    for (let i = 0; i < 4; i++) {
+      run.launch(0, -1000);
+      expect(run.slime.vy).toBeCloseTo(-1000 * airPower(0, true));
+    }
+  });
+
+  it('rewards a rescue: jumps while falling near the syrup, then land', () => {
+    const run = new Run(5);
+    run.launch(0, -900);
+    for (let i = 0; i < 600 && run.slime.vy <= 0; i++) run.step(1 / 60);
+    run.syrupY = run.slime.y + AIR.rescueGap - 50; // syrop tuż pod spadającym slime'em
+    expect(run.launch(0, -800)).toBe(true);
+    expect(run.launch(0, -800)).toBe(true);
+    let trick: { kind: string; jumps: number; reward: number } | undefined;
+    for (let i = 0; i < 600 && !trick && !run.over; i++) {
+      run.syrupY = Math.max(run.syrupY, run.slime.y + 400); // nie dajemy mu utonąć w teście
+      trick = run.step(1 / 60).trick;
+    }
+    expect(trick).toEqual({ kind: 'rescue', jumps: 2, reward: 3 });
   });
 });
 

@@ -32,12 +32,15 @@ export class Loop {
       this.cb.render?.(0);
       return;
     }
-    const dt = Math.min(realDt, 0.1) * this.timeScale;
+    const real = Math.min(realDt, 0.1);
+    const dt = real * this.timeScale;
     this.time += dt;
-    this.acc += dt;
+    // Akumulujemy czas rzeczywisty, a krok skalujemy: w slow-motion symulacja dalej rusza się
+    // co klatkę (krótszymi krokami), zamiast stać przez kilka klatek i skakać, co klatkowało.
+    this.acc += real;
     let steps = 0;
     while (this.acc >= this.fixedStep && steps < this.maxSteps) {
-      this.cb.fixedUpdate?.(this.fixedStep);
+      if (this.timeScale > 0) this.cb.fixedUpdate?.(this.fixedStep * this.timeScale);
       this.acc -= this.fixedStep;
       steps++;
     }

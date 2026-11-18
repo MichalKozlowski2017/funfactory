@@ -22,7 +22,7 @@ import { bodyScale, bodySprite, SlimeFace, slimeTextures } from '../fx/slime-art
 import { drawBlock, SURFACE } from '../fx/surfaces.ts';
 import { botCanShoot, chooseShot, type BotShot } from '../sim/bot.ts';
 import { launchVelocity, PHYS } from '../sim/physics.ts';
-import { Run, STREAK, type RunStep } from '../sim/run.ts';
+import { AIR, airPower, Run, STREAK, type RunStep } from '../sim/run.ts';
 import { SHAFT, type Candy, type PowerKind, type PowerUp } from '../sim/shaft.ts';
 import { HATS, NEW_SAVE, normalizeSave, tapHat, type Save } from '../sim/shop.ts';
 import { ShopPanel } from '../ui/shop-panel.ts';
@@ -321,7 +321,7 @@ export class PlayScene extends Scene {
     this.streakHud.tick(dt);
 
     // Podpowiedź skoku w locie w pierwszych biegach: przy pierwszym opadaniu.
-    if (this.mode === 'play' && this.runs <= 3 && !this.airHinted && s.state === 'flying' && this.run.air > 0 && s.vy > 200 && !this.aiming) {
+    if (this.mode === 'play' && this.runs <= 3 && !this.airHinted && s.state === 'flying' && this.run.canAim && s.vy > 200 && !this.aiming) {
       this.airHinted = true;
       this.hint.text = 'W locie przeciągnij jeszcze raz!';
       this.hint.visible = true;
@@ -535,7 +535,9 @@ export class PlayScene extends Scene {
     const v = launchVelocity(x - aiming.sx, y - aiming.sy);
     if (!v || !this.run.launch(v.vx, v.vy)) return;
     if (inAir) {
-      this.game.sound.synth(POWER_SFX.air);
+      const n = this.run.airJumps;
+      this.game.sound.synth(POWER_SFX.air, { pitch: 1 + Math.min(n - 1, 8) * 0.1 });
+      if (n >= 2) this.comboPop(this.run.slime.x, this.run.slime.y + 30, n);
       this.sparks.burst(this.run.slime.x, this.run.slime.y, { count: 14, speed: [150, 400], life: [0.3, 0.5], scale: [0.5, 1], colors: [0xffffff, 0xc8f5ff] });
     }
     this.hint.visible = false;
@@ -622,15 +624,16 @@ export class PlayScene extends Scene {
       const r = 300 * (0.92 + 0.08 * Math.sin(this.time * 4));
       g.circle(0, 0, r).stroke({ color: POWER_INFO.magnet.color, width: 3, alpha: 0.25 });
     }
-    if (run.air > 0 && s.state === 'flying' && run.timers.rocket <= 0) {
-      // Skrzydełka: w tym locie można jeszcze skoczyć (z drugim oddechem dwie pary).
-      const flap = Math.sin(this.time * 12) * 0.25;
-      for (let k = 0; k < run.air; k++) {
-        for (const side of [-1, 1]) {
-          g.ellipse(side * (44 + k * 16), -10 - k * 14 + flap * 10, 18 - k * 3, 10 - k * 2)
-            .fill({ color: k === 0 ? 0xffffff : 0xc8f5ff, alpha: 0.85 })
-            .stroke({ color: 0x1e1530, width: 3 });
-        }
+    if (s.state === 'flying' && run.timers.rocket <= 0 && !run.over) {
+      // Skrzydełka: wielkość = siła następnego skoku w locie (kurczą się z każdym skokiem), złote z drugim oddechem.
+      const breath = run.timers.breath > 0;
+      const k = airPower(run.airJumps, breath) / AIR.power;
+      const flap = Math.sin(this.time * (12 + run.airJumps * 3)) * 0.25;
+      const color = breath ? 0xffd166 : 0xffffff;
+      for (const side of [-1, 1]) {
+        g.ellipse(side * (34 + 12 * k), -10 + flap * 10, 8 + 12 * k, 5 + 6 * k)
+          .fill({ color, alpha: 0.5 + 0.4 * k })
+          .stroke({ color: 0x1e1530, width: 3 });
       }
     }
     this.body.tint = run.timers.glue > 0 ? 0xc8ffd0 : 0xffffff;
@@ -767,7 +770,7 @@ export class PlayScene extends Scene {
       }
       if (strength > 0.6) this.shaker.add(0.25);
     }
-    if (r.trick) this.onTrick(r.trick.kind, r.trick.reward);
+    if (r.trick) this.onTrick(r.trick.kind, r.trick.jumps, r.trick.reward);
     if (r.streak) this.onStreak(r.streak);
     if (r.milestone) this.onMilestone(r.milestone.streak, r.milestone.reward);
     if (r.airCombo) this.onAirCombo(r.airCombo.count, r.airCombo.reward);
@@ -831,13 +834,13 @@ export class PlayScene extends Scene {
   }
 
   /** Udany skok w locie: ratunek przed syropem albo akrobacja wyżej niż start. */
-  private onTrick(kind: 'rescue' | 'acrobat', reward: number): void {
+  private onTrick(kind: 'rescue' | 'acrobat', jumps: number, reward: number): void {
     const s = this.run.slime;
     if (kind === 'rescue') {
       this.game.sound.synth(STREAK_SFX.rescue);
       haptics.success();
       this.shaker.add(0.25);
-      this.floatText(s.x, s.y - 80, `Ratunek! +${reward}`, '#8ee3a1');
+      this.floatText(s.x, s.y - 80, `Ratunek${jumps > 1 ? ` ×${jumps}` : ''}! +${reward}`, '#8ee3a1');
       const ring = new Graphics().circle(0, 0, 40).stroke({ color: 0x8ee3a1, width: 8 });
       ring.position.set(s.x, s.y);
       this.world.addChild(ring);
@@ -852,7 +855,7 @@ export class PlayScene extends Scene {
     } else {
       this.game.sound.synth(STREAK_SFX.acrobat);
       haptics.tap();
-      this.floatText(s.x, s.y - 80, `Akrobacja! +${reward}`, '#c8f5ff');
+      this.floatText(s.x, s.y - 80, `Akrobacja${jumps > 1 ? ` ×${jumps}` : ''}! +${reward}`, '#c8f5ff');
       this.sparks.burst(s.x, s.y, { count: 14, speed: [150, 420], life: [0.3, 0.6], scale: [0.4, 1], colors: [0xffffff, 0xc8f5ff] });
     }
     this.flyCandies(reward, 0.15);
