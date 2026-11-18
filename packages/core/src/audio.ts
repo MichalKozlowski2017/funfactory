@@ -16,6 +16,14 @@ export interface SynthLayer {
   filter?: BiquadFilterType;
   filterFreq?: number;
   filterFreqEnd?: number;
+  /** Panorama stereo -1 (lewo) .. 1 (prawo). */
+  pan?: number;
+  /**
+   * Podtrzymanie (0..1 szczytu): dźwięk trzyma ten poziom do końca i wygasa w `release` sekund
+   * (pady, smyczki). Bez tego: od razu wykładnicze wygasanie (perkusja, dzwonki).
+   */
+  sustain?: number;
+  release?: number;
 }
 
 export interface PlayOptions {
@@ -105,12 +113,14 @@ export class Sound {
    * Syntezowany efekt bez plików audio.
    * `pitch` mnoży wszystkie częstotliwości (np. rosnące tony przy serii), `volume` skaluje głośność.
    */
-  synth(layers: SynthLayer[], opts: { pitch?: number; volume?: number } = {}): void {
+  synth(layers: SynthLayer[], opts: { pitch?: number; volume?: number; at?: number; output?: AudioNode } = {}): void {
     if (this.muted) return;
     const ctx = this.context();
     if (!ctx || !this.master || ctx.state !== 'running') return;
     const pitch = opts.pitch ?? 1;
-    const now = ctx.currentTime;
+    // `at`: czas kontekstu audio (np. następne uderzenie taktu muzyki); `output`: np. szyna muzyki.
+    const now = Math.max(ctx.currentTime, opts.at ?? 0);
+    const out = opts.output ?? this.master;
     for (const l of layers) {
       const t0 = now + (l.delay ?? 0);
       const t1 = t0 + l.duration;
@@ -119,6 +129,13 @@ export class Sound {
       const attack = l.attack ?? 0.005;
       gain.gain.setValueAtTime(0.0001, t0);
       gain.gain.exponentialRampToValueAtTime(Math.max(peak, 0.0002), t0 + attack);
+      if (l.sustain !== undefined) {
+        const release = Math.min(l.release ?? 0.3, l.duration * 0.5);
+        const hold = Math.max(peak * l.sustain, 0.0002);
+        const tRelease = Math.max(t0 + attack + 0.01, t1 - release);
+        gain.gain.exponentialRampToValueAtTime(hold, Math.min(tRelease, t0 + attack + 0.2));
+        gain.gain.setValueAtTime(hold, tRelease);
+      }
       gain.gain.exponentialRampToValueAtTime(0.0001, t1);
       let source: AudioScheduledSourceNode;
       if (l.wave === 'noise') {
@@ -142,7 +159,12 @@ export class Sound {
         node.connect(filter);
         node = filter;
       }
-      node.connect(gain).connect(this.master);
+      node.connect(gain);
+      if (l.pan && ctx.createStereoPanner) {
+        const panner = ctx.createStereoPanner();
+        panner.pan.value = Math.max(-1, Math.min(1, l.pan));
+        gain.connect(panner).connect(out);
+      } else gain.connect(out);
       source.start(t0);
       source.stop(t1 + 0.02);
     }
@@ -157,6 +179,27 @@ export class Sound {
     for (let i = 0; i < data.length; i++) data[i] = Math.random() * 2 - 1;
     this.noiseBuffer = buffer;
     return buffer;
+  }
+
+  /** Kontekst audio (null przed pierwszym dotknięciem albo bez Web Audio). Dla odtwarzacza muzyki. */
+  get audio(): AudioContext | null {
+    return this.ctx;
+  }
+
+  /** Wyjście główne (głośność całości). */
+  get output(): AudioNode | null {
+    this.context();
+    return this.master;
+  }
+
+  /** Bufor pliku (ładuje i dekoduje przy pierwszym użyciu). Null, gdy pliku nie ma albo nie da się go zdekodować. */
+  async buffer(name: string): Promise<AudioBuffer | null> {
+    try {
+      await this.decode(name);
+    } catch {
+      return null;
+    }
+    return this.buffers.get(name) ?? null;
   }
 
   stopMusic(): void {
@@ -183,5 +226,149 @@ export class Sound {
     if (!url || !ctx || this.buffers.has(name)) return;
     const data = await (await fetch(url)).arrayBuffer();
     this.buffers.set(name, await ctx.decodeAudioData(data));
+  }
+}
+
+/** Długość ciszy na początku bufora (maks. 0,2 s), np. opóźnienie kodera mp3. */
+export function leadingSilence(buffer: AudioBuffer, threshold = 0.0015): number {
+  const data = buffer.getChannelData(0);
+  const max = Math.min(data.length, Math.floor(buffer.sampleRate * 0.2));
+  for (let i = 0; i < max; i++) if (Math.abs(data[i]!) > threshold) return i / buffer.sampleRate;
+  return 0;
+}
+
+/** Pozycja w taktach: ile uderzeń minęło przy danym tempie (do kwantyzacji warstw muzyki). */
+export function beatsFor(seconds: number, bpm: number): number {
+  return (seconds * bpm) / 60;
+}
+
+/**
+ * Muzyka z pętlą, płynnym przejściem między utworami i efektami „na żywo”:
+ * tempo/wysokość jak taśma (slow-motion), filtr przytłumiający (niebezpieczeństwo) i zegar taktu,
+ * żeby dogrywane warstwy (np. combo) trafiały w rytm utworu.
+ */
+export class Music {
+  private readonly sound: Sound;
+  private bus: GainNode | null = null;
+  private filter: BiquadFilterNode | null = null;
+  private current: { name: string; src: AudioBufferSourceNode; gain: GainNode; bpm: number } | null = null;
+  private wanted: string | null = null;
+  private rate = 1;
+  /** Pozycja w uderzeniach (rośnie z czasem kontekstu i tempem odtwarzania). */
+  private beat = 0;
+  private last = 0;
+  volume = 0.55;
+
+  constructor(sound: Sound) {
+    this.sound = sound;
+  }
+
+  get bpm(): number {
+    return this.current?.bpm ?? 100;
+  }
+
+  /** Szyna muzyki (za filtrem), żeby warstwy syntezy brzmiały jak część utworu. */
+  get output(): AudioNode | null {
+    return this.ensure() ? this.filter : null;
+  }
+
+  /**
+   * Gra utwór w pętli. `loopBars`: długość pętli w taktach 4/4 od `startAt` sekund
+   * (pomija ciszę na początku pliku i daje pętlę bez szwu niezależnie od formatu).
+   */
+  async play(name: string, opts: { bpm: number; startAt?: number; loopBars?: number; fade?: number }): Promise<void> {
+    if (this.wanted === name) return;
+    this.wanted = name;
+    const buffer = await this.sound.buffer(name);
+    const ctx = this.sound.audio;
+    if (this.wanted !== name) return;
+    if (!buffer || !ctx || !this.ensure() || !this.filter) {
+      this.wanted = null; // spróbujemy ponownie przy kolejnym wywołaniu (np. po odblokowaniu dźwięku)
+      return;
+    }
+    const fade = opts.fade ?? 1.5;
+    const src = ctx.createBufferSource();
+    src.buffer = buffer;
+    src.loop = true;
+    // mp3 dokleja na początku kilkadziesiąt ms ciszy (opóźnienie kodera): pomijamy ją, żeby pętla nie miała przerwy.
+    const start = opts.startAt ?? leadingSilence(buffer);
+    const barSec = (60 / opts.bpm) * 4;
+    const bars = opts.loopBars ?? Math.max(1, Math.floor((buffer.duration - start) / barSec + 0.02));
+    src.loopStart = start;
+    src.loopEnd = Math.min(buffer.duration, start + bars * barSec);
+    src.playbackRate.value = this.rate;
+    const gain = ctx.createGain();
+    gain.gain.setValueAtTime(0.0001, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(1, ctx.currentTime + fade);
+    src.connect(gain).connect(this.filter);
+    src.start(ctx.currentTime, start);
+    this.fadeOut(fade);
+    this.current = { name, src, gain, bpm: opts.bpm };
+    this.beat = 0;
+    this.last = ctx.currentTime;
+  }
+
+  stop(fade = 0.8): void {
+    this.wanted = null;
+    this.fadeOut(fade);
+    this.current = null;
+  }
+
+  /** Taśma: tempo i wysokość razem (1 = normalnie). */
+  setRate(rate: number, seconds = 0.25): void {
+    this.advance();
+    this.rate = rate;
+    const ctx = this.sound.audio;
+    if (ctx && this.current) this.current.src.playbackRate.setTargetAtTime(rate, ctx.currentTime, seconds / 3);
+  }
+
+  /** Przytłumienie 0..1 (filtr dolnoprzepustowy od ~18 kHz do ~500 Hz). */
+  setMuffle(amount: number, seconds = 0.2): void {
+    const ctx = this.sound.audio;
+    if (!ctx || !this.ensure() || !this.filter) return;
+    const a = Math.min(1, Math.max(0, amount));
+    this.filter.frequency.setTargetAtTime(18000 * Math.pow(500 / 18000, a), ctx.currentTime, seconds / 3);
+  }
+
+  /** Czas kontekstu najbliższego podziału taktu (`division` = ułamek uderzenia, np. 0.5 = ósemki). */
+  nextBeat(division = 1): { time: number; index: number } {
+    const ctx = this.sound.audio;
+    this.advance();
+    const now = ctx?.currentTime ?? 0;
+    const step = division;
+    const index = Math.floor(this.beat / step) + 1;
+    const beatsLeft = index * step - this.beat;
+    return { time: now + (beatsLeft * 60) / (this.bpm * Math.max(0.05, this.rate)), index };
+  }
+
+  private advance(): void {
+    const ctx = this.sound.audio;
+    if (!ctx) return;
+    this.beat += beatsFor(ctx.currentTime - this.last, this.bpm) * this.rate;
+    this.last = ctx.currentTime;
+  }
+
+  private fadeOut(fade: number): void {
+    const ctx = this.sound.audio;
+    const old = this.current;
+    if (!ctx || !old) return;
+    old.gain.gain.cancelScheduledValues(ctx.currentTime);
+    old.gain.gain.setValueAtTime(Math.max(0.0001, old.gain.gain.value), ctx.currentTime);
+    old.gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + fade);
+    old.src.stop(ctx.currentTime + fade + 0.05);
+  }
+
+  private ensure(): boolean {
+    if (this.bus) return true;
+    const ctx = this.sound.audio;
+    const out = this.sound.output;
+    if (!ctx || !out) return false;
+    this.filter = ctx.createBiquadFilter();
+    this.filter.type = 'lowpass';
+    this.filter.frequency.value = 18000;
+    this.bus = ctx.createGain();
+    this.bus.gain.value = this.volume;
+    this.filter.connect(this.bus).connect(out);
+    return true;
   }
 }

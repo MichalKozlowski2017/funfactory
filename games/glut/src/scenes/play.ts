@@ -1,6 +1,7 @@
 import { Assets, Container, FillGradient, Graphics, Rectangle, Sprite, Text, Texture, TilingSprite } from 'pixi.js';
 import { circle, defs, ellipse, hexToNumber, palettes, path, radialGradient, svg } from '@funfactory/art';
-import { haptics, SaveStore, Spring } from '@funfactory/core';
+import { haptics, SaveStore, Spring, type SynthLayer } from '@funfactory/core';
+import { Score } from '../fx/score.ts';
 import {
   Button,
   dotTexture,
@@ -16,10 +17,12 @@ import {
   type View,
 } from '@funfactory/kit2d';
 import { fallbackIcon, POWER_INFO, POWER_KINDS, PowerBubble, PowerHud } from '../fx/power-fx.ts';
-import { beatPitch, POWER_SFX, SFX, STREAK_SFX } from '../fx/sfx.ts';
+import { POWER_SFX, SFX, STREAK_SFX } from '../fx/sfx.ts';
 import { candyWord, milestoneBanner, StreakHud, streakTier } from '../fx/streak-fx.ts';
 import { bodyScale, bodySprite, SlimeFace, slimeTextures } from '../fx/slime-art.ts';
 import { drawBlock, SURFACE } from '../fx/surfaces.ts';
+import { BIOME_LOOKS, mixColor, type BiomeLook } from '../fx/biome-look.ts';
+import { biomeBlend, biomeIndex, BIOMES, metersAt } from '../sim/biomes.ts';
 import { botCanShoot, chooseShot, type BotShot } from '../sim/bot.ts';
 import { CONTROL_MODES, CONTROL_NAMES, dragToTap, tapToDrag, type ControlMode } from '../sim/controls.ts';
 import { launchVelocity, PHYS } from '../sim/physics.ts';
@@ -40,6 +43,11 @@ const COLORS = {
 };
 
 const FONT = 'system-ui, -apple-system, sans-serif';
+/** Wejście do nowego świata: miękki akord z dzwoneczkiem. */
+const BIOME_SFX: SynthLayer[] = [
+  ...[392, 494, 587].map((freq) => ({ wave: 'triangle' as const, freq, duration: 0.9, volume: 0.09, attack: 0.05 })),
+  { wave: 'sine', freq: 1568, duration: 0.6, volume: 0.06, delay: 0.15 },
+];
 /** Autopilot (?bot): tempo „ludzkiego” bota do nagrań i pokazów. */
 const PILOT = { reaction: 0.35, aimTime: 0.32, hold: 0.12, start: 1.2, restart: 1.6 };
 const PILOT_MODE = new URLSearchParams(location.search).has('bot');
@@ -123,6 +131,28 @@ export class PlayScene extends Scene {
   private readonly overlay = new Container();
   private readonly glow = new Graphics();
   private bg: TilingSprite | null = null;
+  /** Tło następnego świata (przenikanie na ostatnich metrach). */
+  private bgNext: TilingSprite | null = null;
+  private biomeBg: Texture[] = [];
+  private biomeCandy: Texture[] = [];
+  /** Świat pokazany teraz przez tło (indeks) i do którego już doszliśmy w tym biegu (baner). */
+  private shownBiome = -1;
+  private reachedBiome = 0;
+  private syrupColor = COLORS.syrup;
+  private syrupTopColor = COLORS.syrupTop;
+  private ambientAcc = 0;
+  private flick = 1;
+  /** Mrok przy krawędziach ekranu (mroczne światy). */
+  private readonly shadeG = new Graphics();
+  /** Muzyka proceduralna: warstwy wg akcji, nuty akcji w harmonii. */
+  private score!: Score;
+  /** Światła w rytm muzyki: pasy na ścianach, błysk ekranu. */
+  private readonly lightL = new Graphics();
+  private readonly lightR = new Graphics();
+  private readonly flashG = new Graphics();
+  private beatGlow = 0;
+  private sideGlow = 0;
+  private dropGlow = 0;
   private candyTex!: Texture;
   private decor: (Texture | null)[] = [];
   run!: Run;
@@ -177,18 +207,43 @@ export class PlayScene extends Scene {
       optionalTexture('decor/lolly.png'),
     ]);
     this.decor = [crystal, lolly];
+    this.score = new Score(this.game.sound);
     const powerArt = await Promise.all(POWER_KINDS.map((k) => optionalTexture(`power/${k}.png`)));
     for (const [i, kind] of POWER_KINDS.entries()) this.powerTex.set(kind, powerArt[i] ?? (await fallbackIcon(kind, pr)));
     const hatTex = await Promise.all(HATS.map((h) => optionalTexture(h.file)));
     HATS.forEach((h, i) => this.hatTextures.set(h.id, hatTex[i] ?? null));
     this.candyTex = candyArt ?? (await svgTexture(candySvg(), pr));
+    // Światy: tło i cukierki (brak pliku = tło/cukierek pierwszego świata).
+    const biomeArt = await Promise.all(
+      BIOMES.slice(1).map((b) => Promise.all([optionalTexture(`biomes/${b.id}/bg.jpg`), optionalTexture(`biomes/${b.id}/candy.png`)])),
+    );
+    const baseBg = bgTex ? await mirrorTile(bgTex) : null;
+    if (baseBg) this.biomeBg.push(baseBg);
+    this.biomeCandy.push(this.candyTex);
+    for (const [bg, candy] of biomeArt) {
+      if (baseBg) this.biomeBg.push(bg ? await mirrorTile(bg) : baseBg);
+      this.biomeCandy.push(candy ?? this.candyTex);
+    }
 
     this.addChild(this.backdrop, this.shake, this.hud, this.input, this.overlay);
-    if (bgTex) {
-      this.bg = new TilingSprite({ texture: await mirrorTile(bgTex), width: SHAFT.width, height: 2000 });
-      this.bg.tileScale.set(SHAFT.width / bgTex.width);
-      this.bg.tint = 0x8e7ea0;
-      this.backdrop.addChild(this.bg);
+    if (bgTex && baseBg) {
+      const make = () => {
+        const t = new TilingSprite({ texture: baseBg, width: SHAFT.width, height: 2000 });
+        t.tileScale.set(SHAFT.width / bgTex.width);
+        t.tint = BIOME_LOOKS.crystal.bgTint;
+        return t;
+      };
+      this.bg = make();
+      this.bgNext = make();
+      this.bgNext.alpha = 0;
+      this.backdrop.addChild(this.bg, this.bgNext);
+    }
+    {
+      for (const g of [this.lightL, this.lightR, this.flashG]) {
+        g.blendMode = 'add';
+        g.alpha = 0;
+      }
+      this.backdrop.addChild(this.lightL, this.lightR, this.flashG);
     }
     this.shake.addChild(this.world);
     this.world.addChild(this.chunkLayer, this.decalLayer, this.candyLayer, this.dotsG, this.slime, this.syrupG);
@@ -220,7 +275,7 @@ export class PlayScene extends Scene {
     this.syrupWarn.anchor.set(0.5, 1);
     this.powerHud = new PowerHud(this.powerTex);
     this.streakHud = new StreakHud(this.tweens, this.game.pixelRatio);
-    this.hud.addChild(this.trailG, this.dangerG, this.glow, this.powerHud, this.heightText, this.bestText, this.streakHud, this.candyIcon, this.candyText, this.hint, this.syrupWarn, this.fx);
+    this.hud.addChild(this.shadeG, this.trailG, this.dangerG, this.glow, this.powerHud, this.heightText, this.bestText, this.streakHud, this.candyIcon, this.candyText, this.hint, this.syrupWarn, this.fx);
 
     const input = gestures(this.input, { dragThreshold: 10 });
     // Proca i swipe: przeciągnięcie w dowolnym miejscu ekranu.
@@ -282,6 +337,9 @@ export class PlayScene extends Scene {
     this.hint.position.set(view.width / 2, view.height * 0.3);
     this.syrupWarn.position.set(view.width / 2, view.height - view.safe.bottom - 24);
     if (this.bg) this.bg.height = view.height;
+    if (this.bgNext) this.bgNext.height = view.height;
+    this.drawShade(view);
+    this.drawLights(view);
     const glowH = view.height * 0.35;
     const gradient = new FillGradient({
       type: 'linear',
@@ -289,9 +347,9 @@ export class PlayScene extends Scene {
       end: { x: 0, y: 1 },
       textureSpace: 'local',
       colorStops: [
-        { offset: 0, color: 'rgba(255,143,177,0)' },
-        { offset: 0.7, color: 'rgba(255,143,177,0.35)' },
-        { offset: 1, color: 'rgba(255,120,160,0.85)' },
+        { offset: 0, color: 'rgba(255,255,255,0)' },
+        { offset: 0.7, color: 'rgba(255,255,255,0.35)' },
+        { offset: 1, color: 'rgba(255,240,245,0.85)' },
       ],
     });
     this.glow.clear().rect(0, view.height - glowH, view.width, glowH).fill(gradient);
@@ -327,6 +385,10 @@ export class PlayScene extends Scene {
       this.camera.follow(0, target, dt);
     }
     if (this.bg) this.bg.tilePosition.y = -this.camera.y * 0.35;
+    if (this.bgNext) this.bgNext.tilePosition.y = -this.camera.y * 0.35;
+    this.updateBiome(dt);
+    this.updateMusic();
+    this.updateLights(dt);
     this.shaker.update(dt);
     this.sparks.update(dt);
     this.againButton?.tick(dt);
@@ -487,6 +549,8 @@ export class PlayScene extends Scene {
     this.run = new Run(this.game.rng.int(1, 2 ** 31 - 1));
     this.bestAtStart = this.best;
     this.streakHud.set(0);
+    this.reachedBiome = 0;
+    this.score?.revive();
     this.airHinted = false;
     this.hint.text = this.hintText('start');
     for (const view of this.chunkViews.values()) view.destroy({ children: true });
@@ -646,13 +710,15 @@ export class PlayScene extends Scene {
     if (inAir) {
       const n = this.run.airJumps;
       this.game.sound.synth(POWER_SFX.air, { pitch: 1 + Math.min(n - 1, 8) * 0.1 });
+      this.score.airJump(n);
       if (n >= 2) this.comboPop(this.run.slime.x, this.run.slime.y + 30, n);
       this.sparks.burst(this.run.slime.x, this.run.slime.y, { count: 14, speed: [150, 400], life: [0.3, 0.5], scale: [0.5, 1], colors: [0xffffff, 0xc8f5ff] });
     }
     this.hint.visible = false;
     this.combo = 0;
     this.hatSwing.kick(-v.vx / 600);
-    this.game.sound.synth(SFX.launch, { pitch: 0.8 + v.power * 0.5 });
+    this.game.sound.synth(SFX.launch, { pitch: 0.8 + v.power * 0.5, volume: 0.6 });
+    this.score.launch(v.power);
     haptics.tap();
   }
 
@@ -890,6 +956,7 @@ export class PlayScene extends Scene {
         });
         this.splat(cx, cy, l.nx, l.ny, strength);
         this.game.sound.synth(SFX.land, { volume: 0.4 + strength * 0.6, pitch: 0.9 + this.game.rng.next() * 0.2 });
+        this.score.land(strength);
         haptics.hit();
       }
       if (strength > 0.6) this.shaker.add(0.25);
@@ -908,7 +975,9 @@ export class PlayScene extends Scene {
   private onStreak(streak: number): void {
     this.streakHud.set(streak);
     if (streak < 2) return;
-    this.game.sound.synth(STREAK_SFX.beat, { pitch: beatPitch(streak), volume: 0.8 + Math.min(streak, 20) * 0.02 });
+    this.score.streak(streak);
+    // Jeden skok przed premią: muzyka zaczyna narastać.
+    if ((streak + 1) % STREAK.every === 0) this.score.anticipate();
     const tier = streakTier(streak);
     const s = this.run.slime;
     this.sparks.burst(s.x, s.y, { count: 6 + tier.level * 4, speed: [80, 260], life: [0.3, 0.5], scale: [0.4, 0.8], colors: tier.colors });
@@ -945,6 +1014,7 @@ export class PlayScene extends Scene {
       spin: [-8, 8],
       colors: tier.colors,
     });
+    this.score.milestone();
     milestoneBanner(this.fx, {
       tweens: this.tweens,
       timers: this.timers,
@@ -960,6 +1030,7 @@ export class PlayScene extends Scene {
   /** Udany skok w locie: ratunek przed syropem albo akrobacja wyżej niż start. */
   private onTrick(kind: 'rescue' | 'acrobat', jumps: number, reward: number): void {
     const s = this.run.slime;
+    this.score.trick(jumps + (kind === 'rescue' ? 1 : 0));
     if (kind === 'rescue') {
       this.game.sound.synth(STREAK_SFX.rescue);
       haptics.success();
@@ -989,6 +1060,7 @@ export class PlayScene extends Scene {
     if (reward <= 0) return;
     const s = this.run.slime;
     this.game.sound.synth(STREAK_SFX.combo);
+    this.score.trick(count);
     this.floatText(s.x, s.y - 70, `Combo ×${count}! +${reward}`, '#ffd166');
     this.flyCandies(reward, 0.1);
   }
@@ -996,7 +1068,7 @@ export class PlayScene extends Scene {
   private onStreakLost(streak: number): void {
     this.streakHud.lose(streak);
     if (streak < 3) return;
-    this.game.sound.synth(STREAK_SFX.lost);
+    this.score.lost();
     haptics.tap();
   }
 
@@ -1037,7 +1109,7 @@ export class PlayScene extends Scene {
     this.combo++;
     const sprite = this.candyViews.get(c.id)?.sprite;
     this.candyViews.delete(c.id);
-    this.game.sound.synth(SFX.candy, { pitch: 1 + Math.min(this.combo - 1, 8) * 0.12 });
+    this.score.candy(this.combo);
     if (this.combo >= 2 && this.run.slime.state === 'flying') this.comboPop(c.x, c.y, this.combo);
     this.sparks.burst(c.x, c.y, {
       count: 10,
@@ -1069,6 +1141,7 @@ export class PlayScene extends Scene {
 
   private die(cause: 'spikes' | 'syrup'): void {
     const s = this.run.slime;
+    this.score.die();
     this.endAirAim();
     this.aiming = null;
     this.dotsG.clear();
@@ -1243,7 +1316,7 @@ export class PlayScene extends Scene {
     if (!blocks || this.chunkViews.has(k)) return;
     const view = new Container();
     const g = new Graphics();
-    for (const b of blocks) drawBlock(g, b);
+    for (const b of blocks) drawBlock(g, b, this.lookAt(b.y + b.h / 2).surface);
     view.addChild(g);
     if (k === 0) {
       // Dekoracje na dnie studni (tylko wygląd, bez kolizji).
@@ -1263,8 +1336,9 @@ export class PlayScene extends Scene {
     this.chunkLayer.addChild(view);
     for (const c of this.run.shaft.candies.get(k) ?? []) {
       if (c.taken) continue;
-      const sprite = new Sprite({ texture: this.candyTex, anchor: 0.5 });
-      sprite.scale.set(52 / Math.max(this.candyTex.width, this.candyTex.height));
+      const tex = this.biomeCandy[biomeIndex(metersAt(c.y))] ?? this.candyTex;
+      const sprite = new Sprite({ texture: tex, anchor: 0.5 });
+      sprite.scale.set(52 / Math.max(tex.width, tex.height));
       sprite.position.set(c.x, c.y);
       this.candyViews.set(c.id, { sprite, candy: c });
       this.candyLayer.addChild(sprite);
@@ -1332,14 +1406,206 @@ export class PlayScene extends Scene {
       wave.push(x, y + Math.sin(x * 0.02 + this.time * 3) * 8 + Math.sin(x * 0.045 - this.time * 2) * 5);
     }
     const frozen = this.run.timers.frost > 0;
-    g.poly([...wave, SHAFT.width + 40, bottom, -40, bottom]).fill({ color: frozen ? 0xa8dcf0 : COLORS.syrup, alpha: 0.92 });
+    g.poly([...wave, SHAFT.width + 40, bottom, -40, bottom]).fill({ color: frozen ? 0xa8dcf0 : this.syrupColor, alpha: 0.92 });
     const band: number[] = [...wave];
     for (let i = wave.length - 2; i >= 0; i -= 2) band.push(wave[i] as number, (wave[i + 1] as number) + 14);
-    g.poly(band).fill({ color: frozen ? 0xe8f8ff : COLORS.syrupTop, alpha: 0.9 });
+    g.poly(band).fill({ color: frozen ? 0xe8f8ff : this.syrupTopColor, alpha: 0.9 });
     if (frozen) {
       // Lodowe kryształki na zamarzniętej powierzchni.
       for (let x = 30; x < SHAFT.width; x += 70) g.poly([x - 10, y + 4, x, y - 18, x + 10, y + 4]).fill({ color: 0xffffff, alpha: 0.8 });
     }
+  }
+
+  // --- światy ---
+
+  private lookAt(y: number): BiomeLook {
+    return BIOME_LOOKS[BIOMES[biomeIndex(metersAt(y))]!.id];
+  }
+
+  /** Tło, kolory, cząsteczki i mrok według wysokości kamery; baner przy wejściu do nowego świata. */
+  private updateBiome(dt: number): void {
+    const view = this.game.view;
+    const { index, next, t } = biomeBlend(metersAt(this.camera.y + view.height * 0.5));
+    const a = BIOME_LOOKS[BIOMES[index]!.id];
+    const b = BIOME_LOOKS[BIOMES[next]!.id];
+    if (this.bg && this.bgNext) {
+      if (this.shownBiome !== index) {
+        this.shownBiome = index;
+        this.bg.texture = this.biomeBg[index] ?? this.bg.texture;
+        this.bgNext.texture = this.biomeBg[next] ?? this.bgNext.texture;
+      }
+      // Fabryka: lampy czasem przygasają.
+      const flicker = (t < 0.5 ? a : b).flicker;
+      if (flicker && this.game.rng.chance(dt * 1.2)) this.flick = 0.45 + this.game.rng.next() * 0.25;
+      this.flick += (1 - this.flick) * Math.min(1, dt * 6);
+      const dim = flicker ? this.flick : 1;
+      // W rytm: tło lekko rozjaśnia się na stopie i mocno przy dropie.
+      const boost = Math.min(0.4, this.beatGlow * 0.16 + this.dropGlow * 0.28);
+      this.bg.tint = mixColor(mixColor(0x000000, a.bgTint, dim), 0xffffff, boost);
+      this.bgNext.tint = mixColor(mixColor(0x000000, b.bgTint, dim), 0xffffff, boost);
+      this.bgNext.alpha = t;
+    }
+    this.syrupColor = mixColor(a.syrup, b.syrup, t);
+    this.syrupTopColor = mixColor(a.syrupTop, b.syrupTop, t);
+    this.glow.tint = this.syrupColor;
+    this.shadeG.alpha = a.dark + (b.dark - a.dark) * t;
+
+    // Cząsteczki w powietrzu (iskry, kurz, świetliki, żar).
+    const amb = (t < 0.5 ? a : b).ambient;
+    this.ambientAcc += amb.rate * dt;
+    while (this.ambientAcc >= 1) {
+      this.ambientAcc -= 1;
+      const rng = this.game.rng;
+      const vy = rng.range(amb.vy[0], amb.vy[1]);
+      this.sparks.burst(rng.range(SHAFT.wall + 20, SHAFT.width - SHAFT.wall - 20), this.camera.y + rng.range(0, view.height), {
+        count: 1,
+        speed: [Math.abs(vy), Math.abs(vy) + 10],
+        angle: vy < 0 ? -Math.PI / 2 : Math.PI / 2,
+        spread: 1.2,
+        life: [2.5, 4.5],
+        scale: amb.scale,
+        colors: amb.colors,
+      });
+    }
+
+    // Baner: pierwszy raz w tym biegu w nowym świecie.
+    if (this.mode === 'play' && !this.run.over) {
+      const reached = biomeIndex(this.run.meters);
+      if (reached > this.reachedBiome) {
+        this.reachedBiome = reached;
+        this.biomeBanner(reached);
+      }
+    }
+  }
+
+  /** Pasy światła przy ścianach (biały gradient, kolor nadaje tint) i błysk całego ekranu. */
+  private drawLights(view: View): void {
+    const strip = (x0: number, x1: number) =>
+      new FillGradient({
+        type: 'linear',
+        start: { x: x0, y: 0 },
+        end: { x: x1, y: 0 },
+        textureSpace: 'local',
+        colorStops: [
+          { offset: 0, color: 'rgba(255,255,255,0.9)' },
+          { offset: 1, color: 'rgba(255,255,255,0)' },
+        ],
+      });
+    const w = 170;
+    this.lightL.clear().rect(SHAFT.wall - 10, 0, w, view.height).fill(strip(0, 1));
+    this.lightR.clear().rect(SHAFT.width - SHAFT.wall - w + 10, 0, w, view.height).fill(strip(1, 0));
+    this.flashG.clear().rect(0, 0, view.width, view.height).fill({ color: 0xffffff });
+  }
+
+  /** Uderzenia muzyki -> światła, podskok slime'a, iskry. */
+  private updateLights(dt: number): void {
+    const real = Math.min(0.1, dt / (this.game.loop.timeScale || 1));
+    const level = this.score.intensity;
+    for (const p of this.score.takePulses()) {
+      if (p.kind === 'kick') {
+        this.beatGlow = Math.max(this.beatGlow, p.power);
+        if (this.mode === 'play' && this.run.slime.state === 'stuck' && !this.aiming) this.squash(0.04 + p.power * 0.05);
+      } else if (p.kind === 'snare') this.sideGlow = Math.max(this.sideGlow, p.power);
+      else if (p.kind === 'hit') {
+        this.beatGlow = Math.max(this.beatGlow, p.power);
+        this.sideGlow = Math.max(this.sideGlow, p.power);
+      } else if (p.kind === 'drop') this.dropGlow = 1;
+      else if (p.kind === 'bar' && level >= 3 && this.mode === 'play') {
+        const view = this.game.view;
+        const look = this.lookAt(this.camera.y + view.height * 0.5);
+        for (const x of [SHAFT.wall + 20, SHAFT.width - SHAFT.wall - 20]) {
+          this.sparks.burst(x, this.camera.y + view.height * (0.3 + this.game.rng.next() * 0.5), {
+            count: 6 + level * 2, speed: [150, 420], angle: x < 360 ? 0 : Math.PI, spread: 1.4, life: [0.4, 0.8], scale: [0.4, 0.9], colors: look.ambient.colors,
+          });
+        }
+      }
+    }
+    this.beatGlow *= Math.exp(-real * 7);
+    this.sideGlow *= Math.exp(-real * 9);
+    this.dropGlow *= Math.exp(-real * 3);
+    const view = this.game.view;
+    const color = this.lookAt(this.camera.y + view.height * 0.5).ambient.colors[0] ?? 0xffffff;
+    // Bazowa jasność rośnie z poziomem muzyki: w menu prawie nic, przy dużej serii wyraźne światła.
+    const base = [0, 0.06, 0.1, 0.16, 0.22][level] ?? 0.22;
+    const strength = level === 0 ? 0.3 : 1;
+    this.lightL.tint = color;
+    this.lightR.tint = color;
+    this.lightL.alpha = Math.min(0.85, base + (this.beatGlow * 0.35 + this.sideGlow * 0.3) * strength + this.dropGlow * 0.5);
+    this.lightR.alpha = this.lightL.alpha;
+    this.flashG.tint = color;
+    this.flashG.alpha = this.dropGlow * 0.28;
+  }
+
+  private updateMusic(): void {
+    const view = this.game.view;
+    const below = this.run.syrupY - (this.run.slime.y + view.height * 0.1);
+    const danger = this.run.started && !this.run.over ? Math.min(1, Math.max(0, 1 - below / 900)) : 0;
+    const k = this.run.streak;
+    const menu = this.mode === 'title' || !!this.shop;
+    this.score.setBiome(Math.max(0, this.shownBiome));
+    this.score.update({
+      intensity: menu ? 0 : 1 + (k >= 2 ? 1 : 0) + (k >= 5 ? 1 : 0) + (k >= 10 ? 1 : 0),
+      danger,
+      timeScale: this.game.loop.timeScale || 1,
+      dead: this.run.over,
+    });
+  }
+
+  private biomeBanner(index: number): void {
+    const view = this.game.view;
+    const root = new Container();
+    const name = this.makeText(60, '#ffffff');
+    name.anchor.set(0.5);
+    name.text = BIOMES[index]!.name;
+    name.style.dropShadow = { color: '#120a1e', distance: 6, angle: Math.PI / 2, blur: 0, alpha: 1 };
+    const fit = Math.min(1, (view.width - 60) / name.width);
+    name.scale.set(fit);
+    const sub = this.makeText(34, '#ffd166');
+    sub.anchor.set(0.5);
+    sub.text = `${index * 100} m`;
+    sub.y = -62;
+    root.addChild(sub, name);
+    const y = view.safe.top + 300;
+    root.position.set(view.width / 2, y - 60);
+    root.alpha = 0;
+    this.fx.addChild(root);
+    this.tweens.to(root, { y, alpha: 1 }, { duration: 0.5, ease: 'backOut' });
+    this.timers.after(2.4, () => this.tweens.to(root, { y: y - 50, alpha: 0 }, { duration: 0.6, ease: 'quadIn' }));
+    this.timers.after(3.1, () => {
+      this.tweens.killOf(root);
+      root.destroy({ children: true });
+    });
+    // Im mroczniejszy świat, tym niżej brzmi.
+    this.game.sound.synth(BIOME_SFX, { pitch: 2 ** (-index / 12) });
+    haptics.success();
+  }
+
+  /** Mrok: ciemne krawędzie ekranu (przezroczystość ustawia świat). */
+  private drawShade(view: View): void {
+    const side = (x0: number, x1: number) =>
+      new FillGradient({
+        type: 'linear',
+        start: { x: x0, y: 0 },
+        end: { x: x1, y: 0 },
+        textureSpace: 'local',
+        colorStops: [
+          { offset: 0, color: 'rgba(8,4,14,0.95)' },
+          { offset: 1, color: 'rgba(8,4,14,0)' },
+        ],
+      });
+    const top = new FillGradient({
+      type: 'linear',
+      start: { x: 0, y: 0 },
+      end: { x: 0, y: 1 },
+      textureSpace: 'local',
+      colorStops: [
+        { offset: 0, color: 'rgba(8,4,14,0.9)' },
+        { offset: 1, color: 'rgba(8,4,14,0)' },
+      ],
+    });
+    const w = 190;
+    this.shadeG.clear().rect(0, 0, w, view.height).fill(side(0, 1)).rect(view.width - w, 0, w, view.height).fill(side(1, 0)).rect(0, 0, view.width, view.height * 0.22).fill(top);
+    this.shadeG.alpha = 0;
   }
 
   private squash(amount: number): void {

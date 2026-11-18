@@ -1,0 +1,13 @@
+{
+  "workflow": "flux2.json",
+  "PROMPT": "seamless vertical background texture of a cotton candy cloud canyon at sunset, fluffy cotton candy clouds forming tall walls, soft peach, pink and lavender sunset tones, low contrast, darker tones, subtle details, no characters, no text, flat vector game background",
+  "NEGATIVE": "",
+  "SEED": 720,
+  "WIDTH": 768,
+  "HEIGHT": 1344,
+  "PREFIX": "bg-clouds",
+  "STEPS": 20,
+  "GUIDANCE": 4,
+  "created": "2026-11-18T21:14:28.956Z",
+  "post": "crop 30%-68% height, resize 720 wide, jpg q86; mirror-tiled + tinted in game"
+}

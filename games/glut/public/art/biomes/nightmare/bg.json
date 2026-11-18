@@ -1,0 +1,17 @@
+{
+  "workflow": "flux2.json",
+  "PROMPT": "seamless vertical background texture of a creepy candy nightmare cave, rotten melted sweets and dark cherry goo dripping on the walls, small glowing red eyes hiding in the darkness, spooky cartoon, near black, deep crimson and purple tones, low contrast, darker tones, subtle details, no characters, no text, flat vector game background",
+  "NEGATIVE": "",
+  "SEED": 760,
+  "WIDTH": 768,
+  "HEIGHT": 1344,
+  "PREFIX": "bg-nightmare",
+  "STEPS": 20,
+  "GUIDANCE": 4,
+  "BPM": 100,
+  "DURATION": 60,
+  "KEY": "A minor",
+  "LYRICS": "[Instrumental]",
+  "created": "2026-11-18T21:34:50.043Z",
+  "post": "crop 30%-68% height, resize 720 wide, jpg q86; mirror-tiled + tinted in game"
+}

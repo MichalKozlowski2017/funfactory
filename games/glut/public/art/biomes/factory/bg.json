@@ -1,0 +1,17 @@
+{
+  "workflow": "flux2.json",
+  "PROMPT": "seamless vertical background texture of an abandoned old candy factory shaft, rusty pipes, broken gears and dusty conveyor belts on the walls, a few dim flickering lamps, dark rust, grey and dim yellow tones, low contrast, darker tones, subtle details, no characters, no text, flat vector game background",
+  "NEGATIVE": "",
+  "SEED": 750,
+  "WIDTH": 768,
+  "HEIGHT": 1344,
+  "PREFIX": "bg-factory",
+  "STEPS": 20,
+  "GUIDANCE": 4,
+  "BPM": 100,
+  "DURATION": 60,
+  "KEY": "A minor",
+  "LYRICS": "[Instrumental]",
+  "created": "2026-11-18T21:29:45.951Z",
+  "post": "crop 30%-68% height, resize 720 wide, jpg q86; mirror-tiled + tinted in game"
+}

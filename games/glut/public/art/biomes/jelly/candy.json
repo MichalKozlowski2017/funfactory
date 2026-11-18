@@ -1,0 +1,13 @@
+{
+  "workflow": "flux2-sprite.json",
+  "PROMPT": "a single a cute translucent red gummy bear candy, raspberry red and orange palette, shiny collectible icon, cute candy-land mobile game art, flat vector style, clean thick dark outline, soft cel shading, single object, centered, plain light gray background, no text",
+  "NEGATIVE": "",
+  "SEED": 716,
+  "WIDTH": 1024,
+  "HEIGHT": 1024,
+  "PREFIX": "candy-jelly",
+  "STEPS": 20,
+  "GUIDANCE": 4,
+  "created": "2026-11-18T21:13:11.340Z",
+  "post": "trim alpha, fit 160px"
+}

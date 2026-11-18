@@ -111,6 +111,33 @@ Power-upy zdobywa się w trakcie biegu: świecące bańki w studni, rzadsze od c
 | Pieprzowa rakieta | 1,4 s lotu w górę przez wszystko, bez obrażeń |
 | Lepkie łapki | 10 s: lód klei zamiast ślizgać się, także lodowe sufity |
 
+## Światy co 100 m
+
+Glut wspina się przez Cukrową Wieżę: im wyżej, tym starsze i bardziej zapomniane piętra. Mrok dopiero od 400 m (większość biegów kończy się wcześniej; mrok to nagroda dla dobrych graczy). Światy są czysto wizualne (te same zasady gry), więc ranking zostaje uczciwy.
+
+| Od | Świat | Nastrój |
+|---|---|---|
+| 0 m | Kryształowa jaskinia | jasno, słodko |
+| 100 m | Czekoladowa kopalnia | ciepło |
+| 200 m | Żelkowy las | kolorowo |
+| 300 m | Chmury z waty cukrowej | zachód słońca |
+| 400 m | Spalony karmel | noc, żar, dym |
+| 500 m | Lukrecjowe bagno | czerń, mgła, zielone światełka |
+| 600 m | Opuszczona fabryka | rdza, migające lampy |
+| 700 m+ | Cukrowy koszmar | ciemność, wiśniowa galareta |
+
+Każdy świat: tło (`public/art/biomes/<id>/bg.jpg`, ten sam przepis co `bg.jpg`), cukierek (`candy.png`), paleta ścian i półek (lód i kolce wszędzie te same, dla czytelności), kolor syropu i poświaty, cząsteczki w powietrzu, mrok przy krawędziach, migotanie (fabryka). Na ostatnich 8 m tło przenika w następne; przy wejściu baner z nazwą i akord (niższy w mroczniejszych światach). Kod: `sim/biomes.ts` (granice), `fx/biome-look.ts` (wygląd).
+
+## Muzyka proceduralna (w duchu Tetris Effect)
+
+Muzyka składa się na żywo w kodzie (`src/fx/score.ts`), bez plików audio. Każdy świat ma tempo, kolejkę akordów (jasne np. Am–F–C–G, mroczne Am–Dm–E, Am–B♭–Am–E) i własne barwy (dzwonki, marimba, pady, bas, perkusja, pozytywka, metaliczne uderzenia). Wszystko w a-moll.
+
+- **Warstwy wg intensywności** (zmiana na początku taktu): menu = pad; bieg = bas i stopa; seria ×2 = hi-hat i arpeggio; ×5 = werbel, pełna perkusja, drugie arpeggio; ×10 = melodia.
+- **Akcje grają nuty z aktualnego akordu**: strzał (wyższa nuta = mocniejszy), cukierki w locie (wznosząca się melodia), seria (melodia w górę), skok w locie (błysk oktawę wyżej), lądowanie (pryma w basie), kamień milowy (przebieg w górę + talerz w takt), zerwanie serii (dwie opadające nuty), śmierć (akord rozpada się w dół).
+- **Napięcie**: syrop blisko = bicie serca, niepokojąca sekunda i zamknięty filtr; slow-motion zwalnia tempo i przytłumia.
+
+Próba z gotowymi utworami z ACE-Step 1.5 (Legion) odrzucona: nagrań nie da się rozebrać na ścieżki reagujące na grę. Model zostaje na Legionie (np. na muzykę do menu).
+
 ## Rywalizacja: zasady równe dla wszystkich
 
 Decyzja właściciela: rozgrywka ma być kompetytywna i zawsze taka sama, bo planujemy leaderboard. Za cukierki kupuje się **tylko kosmetykę** (czapki, później ubranka i inne dodatki), nigdy nic, co wpływa na grę: bez ulepszeń power-upów, bez boosterów na start. Wypróbowane ulepszenia leżą na gałęzi `archiwum-ulepszenia`.

@@ -1,0 +1,13 @@
+{
+  "workflow": "flux2-sprite.json",
+  "PROMPT": "a single a small golden sugar star candy with tiny sparkles, golden yellow and peach palette, shiny collectible icon, cute candy-land mobile game art, flat vector style, clean thick dark outline, soft cel shading, single object, centered, plain light gray background, no text",
+  "NEGATIVE": "",
+  "SEED": 726,
+  "WIDTH": 1024,
+  "HEIGHT": 1024,
+  "PREFIX": "candy-clouds",
+  "STEPS": 20,
+  "GUIDANCE": 4,
+  "created": "2026-11-18T21:18:15.420Z",
+  "post": "trim alpha, fit 160px"
+}

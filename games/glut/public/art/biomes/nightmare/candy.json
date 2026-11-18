@@ -1,0 +1,17 @@
+{
+  "workflow": "flux2-sprite.json",
+  "PROMPT": "a single a glossy cherry red hard candy shaped like a cute cartoon skull, deep cherry red palette, shiny collectible icon, cute candy-land mobile game art, flat vector style, clean thick dark outline, soft cel shading, single object, centered, plain light gray background, no text",
+  "NEGATIVE": "",
+  "SEED": 765,
+  "WIDTH": 1024,
+  "HEIGHT": 1024,
+  "PREFIX": "candy-nightmare",
+  "STEPS": 20,
+  "GUIDANCE": 4,
+  "BPM": 100,
+  "DURATION": 60,
+  "KEY": "A minor",
+  "LYRICS": "[Instrumental]",
+  "created": "2026-11-18T21:37:22.062Z",
+  "post": "trim alpha, fit 160px"
+}

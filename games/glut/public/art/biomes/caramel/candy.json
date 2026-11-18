@@ -1,0 +1,13 @@
+{
+  "workflow": "flux2-sprite.json",
+  "PROMPT": "a single a burnt caramel candy cube with glowing orange edges, amber and fiery orange palette, shiny collectible icon, cute candy-land mobile game art, flat vector style, clean thick dark outline, soft cel shading, single object, centered, plain light gray background, no text",
+  "NEGATIVE": "",
+  "SEED": 735,
+  "WIDTH": 1024,
+  "HEIGHT": 1024,
+  "PREFIX": "candy-caramel",
+  "STEPS": 20,
+  "GUIDANCE": 4,
+  "created": "2026-11-18T21:22:07.702Z",
+  "post": "trim alpha, fit 160px"
+}
