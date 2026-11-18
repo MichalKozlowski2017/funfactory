@@ -32,7 +32,7 @@ describe('shop', () => {
   });
 
   it('normalizes old or broken saves', () => {
-    expect(normalizeSave({ best: 12, candies: 7 })).toEqual({ best: 12, candies: 7, owned: [], hat: null, controls: 'drag' });
-    expect(normalizeSave({ owned: ['party', 'hacked'], hat: 'hacked' } as never)).toEqual({ best: 0, candies: 0, owned: ['party'], hat: null, controls: 'drag' });
+    expect(normalizeSave({ best: 12, candies: 7 })).toEqual({ best: 12, candies: 7, owned: [], hat: null, controls: 'swipe' });
+    expect(normalizeSave({ owned: ['party', 'hacked'], hat: 'hacked' } as never)).toEqual({ best: 0, candies: 0, owned: ['party'], hat: null, controls: 'swipe' });
   });
 });
