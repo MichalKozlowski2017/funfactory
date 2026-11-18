@@ -9,6 +9,7 @@
     "typecheck": "tsc -p .",
     "native:sync": "vite build && cap sync",
     "ios": "vite build && cap sync ios && cap open ios",
+    "ios:device": "vite build && cap sync ios && xcodebuild -project ios/App/App.xcodeproj -scheme App -configuration Debug -destination generic/platform=iOS -derivedDataPath ios/App/build -allowProvisioningUpdates -quiet build && xcrun devicectl device install app --device \"${IOS_DEVICE:?ustaw IOS_DEVICE: nazwa albo UDID z xcrun devicectl list devices}\" ios/App/build/Build/Products/Debug-iphoneos/App.app",
     "android": "vite build && cap sync android && cap open android",
     "apk": "vite build && cap sync android && cd android && JAVA_HOME=\"${JAVA_HOME_21:-/Applications/Android Studio.app/Contents/jbr/Contents/Home}\" ./gradlew assembleDebug"
   },

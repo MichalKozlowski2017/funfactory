@@ -54,6 +54,7 @@ Natywnie:
 
 ```sh
 pnpm --filter @funfactory-game/<slug> ios       # build + sync + otwiera Xcode
+IOS_DEVICE="<nazwa|UDID>" pnpm --filter @funfactory-game/<slug> ios:device   # build + instalacja na podłączonym iPhonie (bez Xcode)
 pnpm --filter @funfactory-game/<slug> apk       # debug APK (Gradle z JDK 21 z Android Studio)
 xcodebuild -project games/<slug>/ios/App/App.xcodeproj -scheme App -sdk iphonesimulator CODE_SIGNING_ALLOWED=NO build
 ```

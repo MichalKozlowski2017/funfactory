@@ -37,14 +37,36 @@ export class Sound {
   private music: AudioBufferSourceNode | null = null;
   muted = false;
 
+  private primed = false;
+
   constructor() {
     if (typeof window === 'undefined') return;
+    // iOS (WKWebView) odblokowuje dźwięk dopiero w geście typu touchend/click, a po wyjściu z aplikacji
+    // albo połączeniu przechodzi w stan 'interrupted'. Dlatego słuchamy stale i wznawiamy przy każdym dotyku.
     const unlock = () => {
-      this.context();
-      void this.ctx?.resume();
-      window.removeEventListener('pointerdown', unlock);
+      const ctx = this.context();
+      if (!ctx) return;
+      if (ctx.state !== 'running') void ctx.resume();
+      if (!this.primed) {
+        // Starszy WebKit naprawdę włącza wyjście dopiero, gdy w geście coś zagra (tu: 1 próbka ciszy).
+        const src = ctx.createBufferSource();
+        src.buffer = ctx.createBuffer(1, 1, 22050);
+        src.connect(ctx.destination);
+        src.start();
+        this.primed = true;
+      }
     };
-    window.addEventListener('pointerdown', unlock);
+    for (const type of ['pointerdown', 'touchend', 'click', 'keydown']) {
+      window.addEventListener(type, unlock, { capture: true, passive: true });
+    }
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden && this.ctx && this.ctx.state !== 'running') void this.ctx.resume();
+    });
+  }
+
+  /** Stan kontekstu audio (do diagnostyki): 'none' przed pierwszym dotknięciem. */
+  get state(): string {
+    return this.ctx?.state ?? 'none';
   }
 
   /** Rejestruje plik. Dekodowanie następuje przy `preload()` albo pierwszym `play()`. */

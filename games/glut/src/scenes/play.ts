@@ -1012,6 +1012,7 @@ export class PlayScene extends Scene {
       `body.pos ${this.body.x.toFixed(1)},${this.body.y.toFixed(1)}`,
       `bounds ${b.x.toFixed(0)},${b.y.toFixed(0)} ${b.width.toFixed(0)}x${b.height.toFixed(0)}`,
       `slime ${this.run.slime.state} n ${this.run.slime.nx.toFixed(2)},${this.run.slime.ny.toFixed(2)}`,
+      `audio ${this.game.sound.state} muted ${this.game.sound.muted}`,
       `ua ${navigator.userAgent.slice(-60)}`,
     ].join('\n');
   }
