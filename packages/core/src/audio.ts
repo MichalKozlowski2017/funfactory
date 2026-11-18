@@ -44,6 +44,8 @@ export class Sound {
   private pending = new Map<string, string>();
   private music: AudioBufferSourceNode | null = null;
   muted = false;
+  /** Wycisza tylko efekty (dźwięki bez własnego wyjścia); muzyka grana na własnej szynie gra dalej. */
+  sfxMuted = false;
 
   private primed = false;
 
@@ -114,7 +116,7 @@ export class Sound {
    * `pitch` mnoży wszystkie częstotliwości (np. rosnące tony przy serii), `volume` skaluje głośność.
    */
   synth(layers: SynthLayer[], opts: { pitch?: number; volume?: number; at?: number; output?: AudioNode } = {}): void {
-    if (this.muted) return;
+    if (this.muted || (this.sfxMuted && !opts.output)) return;
     const ctx = this.context();
     if (!ctx || !this.master || ctx.state !== 'running') return;
     const pitch = opts.pitch ?? 1;

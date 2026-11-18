@@ -8,3 +8,4 @@ export * from './loop.ts';
 export * from './timers.ts';
 export * from './platform.ts';
 export * from './audio.ts';
+export * from './ads.ts';

@@ -15,7 +15,7 @@ assets-raw/
 
 # Capacitor: buildy natywne
 games/*/ios/App/Pods/
-games/*/ios/App/build/
+games/*/ios/App/build*/
 games/*/android/.gradle/
 games/*/android/app/build/
 games/*/android/build/

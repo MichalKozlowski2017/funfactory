@@ -1,6 +1,8 @@
 import { Assets, Container, FillGradient, Graphics, Rectangle, Sprite, Text, Texture, TilingSprite } from 'pixi.js';
 import { circle, defs, ellipse, hexToNumber, palettes, path, radialGradient, svg } from '@funfactory/art';
-import { haptics, SaveStore, Spring, type SynthLayer } from '@funfactory/core';
+import { ads, haptics, SaveStore, Spring, type SynthLayer } from '@funfactory/core';
+import { ADS } from '../ads-config.ts';
+import { AdPolicy } from '../sim/ad-policy.ts';
 import { Score } from '../fx/score.ts';
 import {
   Button,
@@ -30,6 +32,7 @@ import { AIR, airPower, Run, STREAK, type RunStep } from '../sim/run.ts';
 import { SHAFT, type Candy, type PowerKind, type PowerUp } from '../sim/shaft.ts';
 import { HATS, NEW_SAVE, normalizeSave, tapHat, type Save } from '../sim/shop.ts';
 import { ShopPanel } from '../ui/shop-panel.ts';
+import { SettingsPanel } from '../ui/settings-panel.ts';
 import { TitleOverlay } from '../ui/title.ts';
 
 const pal = palettes.candy;
@@ -189,6 +192,13 @@ export class PlayScene extends Scene {
   private mode: 'title' | 'play' = 'title';
   private title: TitleOverlay | null = null;
   private shop: ShopPanel | null = null;
+  private settings: SettingsPanel | null = null;
+  private musicOn = true;
+  /** Reklamy: zasady pokazywania pełnoekranowych i stan banera (tylko poza rozgrywką). */
+  private readonly adPolicy = new AdPolicy();
+  private bannerWanted = false;
+  private sfxOn = true;
+  private vibrationOn = true;
 
   override async enter(): Promise<void> {
     const saved = normalizeSave(await this.store.load());
@@ -197,6 +207,9 @@ export class PlayScene extends Scene {
     this.owned = saved.owned;
     this.hatId = saved.hat;
     this.controls = saved.controls;
+    this.musicOn = saved.music;
+    this.sfxOn = saved.sfx;
+    this.vibrationOn = saved.vibration;
     const pr = this.game.pixelRatio;
 
     const [slimeTex, bgTex, candyArt, crystal, lolly] = await Promise.all([
@@ -208,6 +221,8 @@ export class PlayScene extends Scene {
     ]);
     this.decor = [crystal, lolly];
     this.score = new Score(this.game.sound);
+    this.applySettings();
+    void ads.init(ADS).then(() => this.syncBanner(true));
     const powerArt = await Promise.all(POWER_KINDS.map((k) => optionalTexture(`power/${k}.png`)));
     for (const [i, kind] of POWER_KINDS.entries()) this.powerTex.set(kind, powerArt[i] ?? (await fallbackIcon(kind, pr)));
     const hatTex = await Promise.all(HATS.map((h) => optionalTexture(h.file)));
@@ -358,6 +373,7 @@ export class PlayScene extends Scene {
     this.layoutOverlay();
     this.title?.layout(view);
     this.shop?.layout(view);
+    this.settings?.layout(view);
   }
 
   override fixedUpdate(dt: number): void {
@@ -389,12 +405,14 @@ export class PlayScene extends Scene {
     this.updateBiome(dt);
     this.updateMusic();
     this.updateLights(dt);
+    this.syncBanner();
     this.shaker.update(dt);
     this.sparks.update(dt);
     this.againButton?.tick(dt);
     this.menuButton?.tick(dt);
     this.title?.tick(dt);
     this.shop?.tick(dt);
+    this.settings?.tick(dt);
     this.hat.rotation = this.hatSwing.update(dt);
     this.placeSlime(dt);
     this.animateCandies();
@@ -436,7 +454,7 @@ export class PlayScene extends Scene {
   }
 
   private snapshot(): Save {
-    return { best: this.best, candies: this.bank + this.run.candies, owned: this.owned, hat: this.hatId, controls: this.controls };
+    return { best: this.best, candies: this.bank + this.run.candies, owned: this.owned, hat: this.hatId, controls: this.controls, music: this.musicOn, sfx: this.sfxOn, vibration: this.vibrationOn };
   }
 
   // --- ekran startowy i sklep ---
@@ -450,16 +468,15 @@ export class PlayScene extends Scene {
       pixelRatio: this.game.pixelRatio,
       onStart: () => this.startPlaying(),
       onShop: () => this.openShop(),
-      onControls: () => this.cycleControls(),
+      onSettings: () => this.openSettings(),
     });
-    this.title.setControls(CONTROL_NAMES[this.controls]);
     this.title.setStats(this.best, this.bank + this.run.candies);
     this.overlay.addChild(this.title);
     this.title.layout(this.game.view);
   }
 
   private startPlaying(): void {
-    if (this.mode === 'play' || this.shop) return;
+    if (this.mode === 'play' || this.shop || this.settings) return;
     this.game.sound.synth(SFX.tap);
     const title = this.title;
     this.title = null;
@@ -474,7 +491,7 @@ export class PlayScene extends Scene {
   }
 
   private openShop(): void {
-    if (this.shop) return;
+    if (this.shop || this.settings) return;
     this.game.sound.synth(SFX.tap);
     this.shop = new ShopPanel({
       hats: this.hatTextures,
@@ -643,13 +660,62 @@ export class PlayScene extends Scene {
     return texts[this.controls][kind === 'start' ? 0 : 1];
   }
 
-  private cycleControls(): void {
-    this.controls = CONTROL_MODES[(CONTROL_MODES.indexOf(this.controls) + 1) % CONTROL_MODES.length]!;
+  // --- ustawienia ---
+
+  private openSettings(): void {
+    if (this.settings || this.shop) return;
+    this.game.sound.synth(SFX.tap);
+    this.settings = new SettingsPanel({
+      pixelRatio: this.game.pixelRatio,
+      onToggle: (key) => this.toggleSetting(key),
+      onClose: () => this.closeSettings(),
+    });
+    this.refreshSettings();
+    this.settings.layout(this.game.view);
+    this.overlay.addChild(this.settings);
+    this.settings.alpha = 0;
+    this.tweens.to(this.settings, { alpha: 1 }, { duration: 0.18 });
+  }
+
+  private closeSettings(): void {
+    const panel = this.settings;
+    this.settings = null;
+    if (!panel) return;
+    this.game.sound.synth(SFX.tap);
+    this.tweens.to(panel, { alpha: 0 }, { duration: 0.15 });
+    this.timers.after(0.16, () => {
+      this.tweens.killOf(panel);
+      panel.destroy({ children: true });
+    });
+  }
+
+  private toggleSetting(key: 'music' | 'sfx' | 'vibration' | 'controls' | 'privacy'): void {
+    if (key === 'privacy') {
+      this.game.sound.synth(SFX.tap);
+      void ads.privacyOptions();
+      return;
+    }
+    if (key === 'controls') {
+      this.controls = CONTROL_MODES[(CONTROL_MODES.indexOf(this.controls) + 1) % CONTROL_MODES.length]!;
+      this.hint.text = this.hintText('start');
+    } else if (key === 'music') this.musicOn = !this.musicOn;
+    else if (key === 'sfx') this.sfxOn = !this.sfxOn;
+    else this.vibrationOn = !this.vibrationOn;
+    this.applySettings();
     this.game.sound.synth(SFX.tap);
     haptics.tap();
-    this.title?.setControls(CONTROL_NAMES[this.controls]);
-    this.hint.text = this.hintText('start');
+    this.refreshSettings();
     void this.persist();
+  }
+
+  private applySettings(): void {
+    this.game.sound.sfxMuted = !this.sfxOn;
+    haptics.enabled = this.vibrationOn;
+    this.score?.setEnabled(this.musicOn);
+  }
+
+  private refreshSettings(): void {
+    this.settings?.refresh({ music: this.musicOn, sfx: this.sfxOn, vibration: this.vibrationOn, controls: CONTROL_NAMES[this.controls] });
   }
 
   private aim(x: number, y: number): void {
@@ -1141,6 +1207,8 @@ export class PlayScene extends Scene {
 
   private die(cause: 'spikes' | 'syrup'): void {
     const s = this.run.slime;
+    this.adPolicy.runEnded();
+    this.lastRunSeconds = this.run.time;
     this.score.die();
     this.endAirAim();
     this.aiming = null;
@@ -1195,6 +1263,7 @@ export class PlayScene extends Scene {
       resolution: this.game.pixelRatio,
       onTap: () => {
         this.game.sound.synth(SFX.tap);
+        this.maybeInterstitial();
         this.newRun();
       },
     });
@@ -1209,6 +1278,7 @@ export class PlayScene extends Scene {
       resolution: this.game.pixelRatio,
       onTap: () => {
         this.game.sound.synth(SFX.tap);
+        this.maybeInterstitial();
         this.newRun();
         this.showTitle();
       },
@@ -1536,12 +1606,31 @@ export class PlayScene extends Scene {
     this.flashG.alpha = this.dropGlow * 0.28;
   }
 
+  /** Baner tylko poza rozgrywką: ekran startowy, sklep, ustawienia, koniec biegu. */
+  private syncBanner(force = false): void {
+    const want = this.mode === 'title' || !!this.againButton || !!this.shop || !!this.settings;
+    if (want === this.bannerWanted && !force) return;
+    this.bannerWanted = want;
+    void (want ? ads.showBanner() : ads.hideBanner());
+  }
+
+  /** Między biegami: reklama pełnoekranowa wg zasad (od 3. biegu, co 3 biegi, min. 2 min, nie po krótkim biegu). */
+  private maybeInterstitial(): void {
+    const now = performance.now() / 1000;
+    if (!this.adPolicy.shouldShow(now, this.lastRunSeconds)) return;
+    void ads.showInterstitial().then((shown) => {
+      if (shown) this.adPolicy.shown(now);
+    });
+  }
+
+  private lastRunSeconds = 0;
+
   private updateMusic(): void {
     const view = this.game.view;
     const below = this.run.syrupY - (this.run.slime.y + view.height * 0.1);
     const danger = this.run.started && !this.run.over ? Math.min(1, Math.max(0, 1 - below / 900)) : 0;
     const k = this.run.streak;
-    const menu = this.mode === 'title' || !!this.shop;
+    const menu = this.mode === 'title' || !!this.shop || !!this.settings;
     this.score.setBiome(Math.max(0, this.shownBiome));
     this.score.update({
       intensity: menu ? 0 : 1 + (k >= 2 ? 1 : 0) + (k >= 5 ? 1 : 0) + (k >= 10 ? 1 : 0),

@@ -275,6 +275,15 @@ export class Score {
   private readonly pulses: Pulse[] = [];
   /** Głośność całej muzyki. */
   volume = 0.25;
+  private bus: GainNode | null = null;
+  private enabled = true;
+
+  /** Włącza/wyłącza muzykę (ustawienia). Efekty akcji zostają w efektach dźwiękowych. */
+  setEnabled(on: boolean): void {
+    this.enabled = on;
+    const ctx = this.sound.audio;
+    if (ctx && this.bus) this.bus.gain.setTargetAtTime(on ? this.volume : 0, ctx.currentTime, 0.1);
+  }
 
   constructor(sound: Sound) {
     this.sound = sound;
@@ -584,7 +593,8 @@ export class Score {
     this.filter.type = 'lowpass';
     this.filter.frequency.value = 16000;
     const bus = ctx.createGain();
-    bus.gain.value = this.volume;
+    bus.gain.value = this.enabled ? this.volume : 0;
+    this.bus = bus;
     // Kompresor „skleja” miks (jak przy produkcji muzyki) i nie pozwala uderzeniom przesterować.
     const glue = ctx.createDynamicsCompressor();
     glue.threshold.value = -20;
