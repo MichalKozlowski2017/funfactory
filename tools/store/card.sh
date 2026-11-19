@@ -21,7 +21,8 @@ magick -size $((sw + 2 * b))x$((sh + 2 * b)) xc:none -fill white -draw "roundrec
   "$tmp/round.png" -geometry +$b+$b -composite "$tmp/framed.png"
 magick "$tmp/framed.png" \( +clone -background black -shadow 70x40+0+30 \) +swap -background none -layers merge +repage "$tmp/shadow.png"
 # Podpis: biały, gruby różowy kontur (z poszerzonej alfy), ciemny cień pod spodem.
-magick -background none -fill white -font "$FONT" -size $((W * 88 / 100))x$((capH * 78 / 100)) -gravity center caption:"$caption" "$tmp/cap.png"
+# Stała wielkość czcionki w całym zestawie (zawijanie do 2 linii), a nie dopasowanie do ramki.
+magick -background none -fill white -font "$FONT" -pointsize $((W * 76 / 1000)) -size $((W * 88 / 100))x -gravity center caption:"$caption" "$tmp/cap.png"
 magick "$tmp/cap.png" -alpha extract -morphology Dilate Disk:$((W / 140)) -background '#ff6f9f' -alpha shape "$tmp/cap-stroke.png"
 magick "$tmp/cap-stroke.png" -alpha extract -morphology Dilate Disk:$((W / 260)) -background '#2a1a3a' -alpha shape "$tmp/cap-ink.png"
 top=$((capH * 12 / 100))

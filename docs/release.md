@@ -87,4 +87,4 @@ xcodebuild -exportArchive -archivePath ../../release/glut/Glut.xcarchive \
 
 Przed każdą kolejną wersją podbij: `version` w `games/glut/package.json` (widać ją w ustawieniach), `MARKETING_VERSION` / `CURRENT_PROJECT_VERSION` w projekcie Xcode oraz `versionName` / `versionCode` w `android/app/build.gradle`.
 
-Zrzuty do sklepów: `node tools/playtest/shot.ts games/glut --gpu --size 440x956@3 ...` (scenariusze w historii tej sesji), a ramki z podpisem: `tools/store/frame.sh <zrzut> "<podpis>" <szer> <wys> <wyjście>`.
+Zrzuty do sklepów: `tools/store/glut-shots.sh` (8 scen: rozgrywka, syrop, mroczny świat, fabryka, nowy rekord, wyzwanie dnia, szafa, osiągnięcia; iOS 6,9″ i 6,5″ oraz Android, PL i EN), potem `tools/store/glut-cards.sh` składa karty z tłami z Fluxa i podpisami do `games/glut/store/screens/`. Karta 5 (ranking) pokazuje ekran nowego rekordu; po uruchomieniu Game Center można ją podmienić na zrzut prawdziwej tablicy.
