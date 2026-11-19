@@ -1,4 +1,4 @@
-import { Container, Graphics } from 'pixi.js';
+import { Container, Graphics, NineSliceSprite, type Texture } from 'pixi.js';
 import { Rng, Spring } from '@funfactory/core';
 import { FEATURE, type Block } from '../sim/physics.ts';
 import { SURFACE } from './surfaces.ts';
@@ -22,6 +22,22 @@ export const FEATURE_COLORS = {
 
 const ink = SURFACE.ink;
 
+/**
+ * Półka z grafiki (Flux) rozciągnięta na szerokość bloku: końcówki zostają w proporcjach,
+ * środek się rozciąga. Układ lokalny: (0,0) = lewy górny róg bloku; lukier wystaje lekko w górę.
+ */
+export function ledgeSprite(tex: Texture, w: number, h: number): NineSliceSprite {
+  const H = h + 16;
+  const sc = H / tex.height;
+  const cap = Math.min(tex.height * 0.75, (tex.width - 2) / 2);
+  const ns = new NineSliceSprite({ texture: tex, leftWidth: cap, rightWidth: cap, topHeight: 0, bottomHeight: 0 });
+  ns.width = Math.max(cap * 2 + 2, (w + 10) / sc);
+  ns.height = tex.height;
+  ns.scale.set(sc);
+  ns.position.set(-5, -6);
+  return ns;
+}
+
 /** Jedna półka z mechaniką: rysuje się w swoim układzie (0,0 = lewy górny róg bloku). */
 export class FeatureView extends Container {
   readonly block: Block;
@@ -30,11 +46,15 @@ export class FeatureView extends Container {
   private readonly wobble = new Spring(0, 320, 7);
   private stage = -1;
   private broken = false;
+  /** Grafika półki z Fluxa (null = rysowana w kodzie). */
+  private readonly tex: Texture | null;
 
-  constructor(block: Block) {
+  constructor(block: Block, tex: Texture | null = null) {
     super();
     this.block = block;
+    this.tex = tex;
     this.position.set(block.x, block.y);
+    if (tex) this.addChild(ledgeSprite(tex, block.w, block.h));
     this.addChild(this.g, this.arrows);
     this.draw();
   }
@@ -78,6 +98,25 @@ export class FeatureView extends Container {
     const g = this.g.clear();
     const w = b.w;
     const h = b.h;
+    if (this.tex) {
+      // Z grafiką: kod dorysowuje tylko pęknięcia czekolady (rosną z czasem stania).
+      this.stage = stage;
+      if (b.feature === 'crumble') {
+        const rng = new Rng((Math.round(b.x * 3 + b.y) >>> 0) || 1);
+        for (let k = 0; k < stage * 2; k++) {
+          let x = rng.range(10, w - 10);
+          let y = 0;
+          g.moveTo(x, y);
+          while (y < h) {
+            x += rng.range(-9, 9);
+            y += rng.range(6, 12);
+            g.lineTo(x, Math.min(h, y));
+          }
+          g.stroke({ color: 0xfff1d6, width: 3, alpha: 0.95 }).stroke({ color: ink, width: 1.5, alpha: 0.9 });
+        }
+      }
+      return;
+    }
     switch (b.feature) {
       case 'crumble': {
         this.stage = stage;

@@ -22,7 +22,7 @@ import {
 } from '@funfactory/kit2d';
 import { fallbackIcon, POWER_INFO, POWER_KINDS, PowerBubble, PowerHud } from '../fx/power-fx.ts';
 import { FEATURE_SFX, POWER_SFX, SFX, STREAK_SFX } from '../fx/sfx.ts';
-import { FEATURE_COLORS, FeatureView } from '../fx/features.ts';
+import { FEATURE_COLORS, FeatureView, ledgeSprite } from '../fx/features.ts';
 import { hudText, installHudFont } from '../fx/hud-font.ts';
 import { milestoneBanner, rainbow, StreakHud, streakTier } from '../fx/streak-fx.ts';
 import { bodyScale, bodySprite, SlimeFace, slimeTextures, type SlimeTextures } from '../fx/slime-art.ts';
@@ -180,6 +180,8 @@ export class PlayScene extends Scene {
   private readonly biomeWalls = new Map<string, { sticky: Texture | null; spikes: { tex: Texture; glow: Texture | null }[] }>();
   /** Biała, rozmyta sylwetka wspólnego kolca (poświata ostrzegawcza). */
   private spikeGlow: Texture | null = null;
+  /** Półki z Fluxa: zwykłe dla świata (id świata), 'ice' i półki specjalne ('crumble', 'bounce', 'cloud', 'belt'). */
+  private readonly ledgeTex = new Map<string, Texture>();
   run!: Run;
   private camera!: FollowCamera;
   private shaker!: Shaker;
@@ -355,6 +357,12 @@ export class PlayScene extends Scene {
       spike: wSpike,
     };
     this.spikeGlow = await optionalTexture('walls/spike-glow.png');
+    const ledgeKeys = [...BIOMES.map((b) => b.id as string), 'ice', 'crumble', 'bounce', 'cloud', 'belt'];
+    const ledgeArt = await Promise.all(ledgeKeys.map((k) => optionalTexture(`ledges/${k}.png`)));
+    ledgeKeys.forEach((k, i) => {
+      const t = ledgeArt[i];
+      if (t) this.ledgeTex.set(k, t);
+    });
     await Promise.all(
       BIOMES.map(async (b) => {
         const [sticky, spike1, glow1, spike2, glow2] = await Promise.all([
@@ -2306,10 +2314,19 @@ export class PlayScene extends Scene {
     for (const b of blocks) {
       if (!b.feature) {
         const look = this.lookAt(b.y + b.h / 2).surface;
+        // Zwykła półka z grafiki świata (lodowa wspólna); brak pliku = rysunek z kodu.
+        const isLedge = b.h === 36 && b.surface !== 'spikes';
+        const art = isLedge ? this.ledgeTex.get(b.surface === 'ice' ? 'ice' : BIOMES[biomeIndex(metersAt(b.y))]!.id) : undefined;
+        if (art) {
+          const sp = ledgeSprite(art, b.w, b.h);
+          sp.position.set(b.x - 5, b.y - 6);
+          under.addChild(sp);
+          continue;
+        }
         drawBlock(g, b, look, this.wallSprites(under, b, look));
         continue;
       }
-      const fv = new FeatureView(b);
+      const fv = new FeatureView(b, this.ledgeTex.get(b.feature) ?? null);
       if (b.gone) fv.visible = false;
       this.featureViews.set(b, fv);
       view.addChild(fv);

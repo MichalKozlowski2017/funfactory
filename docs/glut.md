@@ -174,6 +174,10 @@ Na ekranie startowym bot gra prawdziwy bieg w tle (autopilot jak w `?bot`, bez s
 
 Widoczny pas ściany (40 jednostek z każdej strony) to cały powierzchnia: tekstury z Fluxa (`public/art/walls/`: lód, lukier barwiony na kolor świata, karmel) jako `TilingSprite` przyklejony do świata (bez szwów między odcinkami, pionowo lustrzane odbicie), kolce jako sprite'y. Każdy świat ma własne kolce (2 warianty) i własną lepką ścianę (`walls/<świat>/spike.png`, `spike2.png`, `sticky.jpg`; brak pliku = wspólne): kryształy, czekoladowe ciernie, żelki, laski cukrowe, karmel z ogniem, lukrecja, zardzewiałe kolce, wiśniowe kły. Kolce rosną gąszczem (losowy kąt, wielkość i odstęp, powtarzalnie z położenia; z tyłu ciemniejsza warstwa) i mają czerwoną poświatę ostrzegawczą (`*-glow.png`, biała rozmyta sylwetka barwiona na czerwono), więc są czytelne na każdym tle. Grafika z kodu dorysowuje na wierzchu zacieki lukru, połysk krawędzi i szwy między odcinkami. Bez plików tekstur ściany rysują się w całości w kodzie. Mrok mrocznych światów zaczyna się za ścianą, więc lód i kolce są zawsze czytelne.
 
+### Półki
+
+Półki z Fluxa (`public/art/ledges/`): zwykła dla każdego świata (herbatnik z różnym lukrem: różowy, wafel z kremem, zielony z posypką, bita śmietana, karmel z solą, fioletowy, wafel ze śrubami, wiśniowy), wspólna lodowa i półki specjalne (tabliczka czekolady, galaretka, chmura, taśmociąg). Rysowane jako `NineSliceSprite` (`ledgeSprite` w `fx/features.ts`): końcówki w proporcjach, środek rozciągany do szerokości bloku. Półki specjalne zachowują animacje z kodu (pęknięcia, falowanie, strzałki). Brak pliku = rysunek z kodu. Zwykła półka w kopalni to wafel z kremem, żeby nie myliła się z kruszącą się czekoladą.
+
 ### Przejścia i kamera
 
 - **Przesłona** (`fx/iris.ts`): po „Graj” logo odlatuje, przyciski znikają, ciemne koło z cukierkowym obrzeżem zamyka się na przycisku, bieg się podmienia, koło otwiera się wokół slime'a, który „wyskakuje” (dźwięk, iskry, haptyka). To samo przy wyzwaniu dnia, „Jeszcze raz”, „Menu” i wyjściu z pauzy. W trakcie blokuje dotyk.

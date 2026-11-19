@@ -1,0 +1,17 @@
+{
+  "workflow": "flux2-sprite.json",
+  "PROMPT": "a long thin fluffy white and lavender cotton candy cloud platform, side view, perfectly horizontal, flat even top surface, rounded ends, game platform tile, clean thick dark outline, cute candy-land mobile game art, flat vector style, soft cel shading, glossy, single object, centered, plain light gray background, no text",
+  "NEGATIVE": "",
+  "SEED": 7201,
+  "WIDTH": 1536,
+  "HEIGHT": 512,
+  "PREFIX": "cloud",
+  "STEPS": 20,
+  "GUIDANCE": 4,
+  "BPM": 100,
+  "DURATION": 60,
+  "KEY": "A minor",
+  "LYRICS": "[Instrumental]",
+  "created": "2026-11-19T13:18:39.436Z",
+  "post": "trim alpha, wys. 128 px; w grze NineSlice (końcówki stałe, środek rozciągany)"
+}
