@@ -166,6 +166,10 @@ Cztery działy po 6 rzeczy, po jednej założonej z każdego (`sim/shop.ts`, gra
 
 38 osiągnięć (`sim/achievements.ts`): wysokości 50–700 m (każdy świat), na czas (100 m w 30 s, 200 m w minutę, 300 m w 1:30, 50 i 100 cukierków w pierwszej minucie, przetrwanie 2 i 5 minut; progi z pomiaru botem, czas gry, więc slow-motion nie oszukuje zegara), serie ×5–×20, skoki w locie, cukierki w jednym skoku, ratunki, odbicia od galaretki, pokruszone czekolady, wszystkie power-upy, liczba biegów (10/100/500), zebrane cukierki (1 tys. / 10 tys. / 50 tys.), wyzwanie dnia (pierwsze, 3 i 7 dni z rzędu), coś z każdego działu szafy. Nagrody w cukierkach (100–3000), cztery dają rzeczy do szafy. Liczniki w zapisie (`stats`), postęp w panelu (przycisk „Osiągnięcia” na ekranie startowym), powiadomienie z pucharem w trakcie gry (tekst bitmapowy, bez zacięć).
 
+### Tryb pokazowy (ekran startowy)
+
+Na ekranie startowym bot gra prawdziwy bieg w tle (autopilot jak w `?bot`, bez slow-motion), a muzyka reaguje na jego akcje. Bieg pokazowy (`demoRun`) niczego nie zapisuje: bez rekordu, cukierków na konto (`wallet()`), statystyk, osiągnięć, rankingu i reklam; efekty dźwiękowe i wibracje milczą (`sfx()` / `buzz()`, dźwięki interfejsu grają), bez napisów nad menu. Po śmierci bota po cichu startuje kolejny pokaz; stuknięcie „start” (albo wyzwanie dnia) daje graczowi świeży bieg. Kamera trzyma slime'a niżej, pod przyciskami.
+
 ### Pauza
 
 Przycisk w lewym górnym rogu w trakcie biegu (power-upy są pod nim). Panel: „Wróć do gry” albo „Menu”. Wyjście do menu kończy bieg tak jak śmierć (`recordRunEnd`: rekord, ranking, statystyki, wyzwanie dnia, cukierki), tylko bez ekranu końca. Gra pauzuje się sama, gdy aplikacja schodzi w tło w trakcie biegu.

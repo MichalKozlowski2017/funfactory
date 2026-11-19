@@ -265,6 +265,10 @@ export class PlayScene extends Scene {
   /** Ile jednostek gry od dołu zajmuje baner (z marginesem bezpiecznego obszaru); 0 bez banera. */
   private bannerReserve = 0;
   private sfxOn = true;
+  /** Tryb pokazowy na ekranie startowym (bot gra, nic się nie zapisuje). */
+  private demo = false;
+  /** Bieżący bieg jest pokazowy (start w trybie pokazowym). */
+  private demoRun = false;
   private vibrationOn = true;
 
   override async enter(): Promise<void> {
@@ -396,8 +400,8 @@ export class PlayScene extends Scene {
       timers: this.timers,
       candyTex: this.candyTex,
       onShow: () => {
-        this.game.sound.synth(SFX.record);
-        haptics.success();
+        this.sfx(SFX.record);
+        this.buzz('success');
       },
     });
     this.hud.addChild(this.shadeG, this.trailG, this.dangerG, this.glow, this.powerHud, this.heightText, this.bestText, this.streakHud, this.candyIcon, this.candyText, this.timerText, this.hint, this.syrupWarn, this.coach, this.fx);
@@ -554,7 +558,9 @@ export class PlayScene extends Scene {
       this.lookAhead += (rising - this.lookAhead) * (1 - Math.exp(-(rising > this.lookAhead ? 10 : 2.5) * dt));
       const la = this.lookAhead;
       const sy = this.shown.y;
-      let target = sy - view.height * (0.6 + 0.15 * la);
+      // W pokazie slime niżej na ekranie: pod przyciskami ekranu startowego, nie za nimi.
+      const base = this.demoRun && this.mode === 'title' ? 0.84 : 0.6;
+      let target = sy - view.height * (base + 0.15 * la);
       if (this.run.started) target = Math.max(target, Math.min(this.shown.syrup - view.height + 170, sy - view.height * (0.3 + 0.4 * la)));
       this.camera.opts.lambda = 5 + 5 * la;
       this.camera.follow(0, target, dt);
@@ -596,7 +602,7 @@ export class PlayScene extends Scene {
     this.pressure(dt);
 
     const meters = this.run.meters;
-    if (meters > this.best) {
+    if (!this.demoRun && meters > this.best) {
       this.best = meters;
       void this.persist();
     }
@@ -610,12 +616,14 @@ export class PlayScene extends Scene {
     this.bestText.text = t('best', { m: this.best });
     this.candyText.text = `${Math.max(0, this.run.candies - this.flying)}`;
     this.streakHud.tick(dt);
+    if (this.mode !== 'play') this.streakHud.visible = false;
+    this.powerHud.visible = this.mode === 'play';
 
     // Podpowiedź skoku w locie w pierwszych biegach: przy pierwszym opadaniu.
     this.updateCoach(dt / (this.game.loop.timeScale || 1));
     this.drawDanger();
     const below = this.run.syrupY - (this.camera.y + view.height);
-    this.syrupWarn.visible = this.run.started && !this.run.over && below > 0;
+    this.syrupWarn.visible = this.mode === 'play' && this.run.started && !this.run.over && below > 0;
     if (this.syrupWarn.visible) {
       this.syrupWarn.text = t('syrup', { m: Math.ceil(below / 100) });
       this.syrupWarn.alpha = below < 600 ? 0.6 + 0.4 * Math.sin(this.time * 12) : 0.7;
@@ -650,7 +658,7 @@ export class PlayScene extends Scene {
   private snapshot(): Save {
     return {
       best: this.best,
-      candies: this.bank + this.run.candies,
+      candies: this.wallet(),
       owned: this.owned,
       hat: this.hatId,
       skin: this.skinId,
@@ -684,15 +692,24 @@ export class PlayScene extends Scene {
       onRanking: () => this.openRanking(),
       onSettings: () => this.openSettings(),
     });
-    this.title.setStats(this.best, this.bank + this.run.candies);
+    this.title.setStats(this.best, this.wallet());
     this.title.setDaily(this.dailyInfo());
+    this.startDemo();
     this.overlay.addChild(this.title);
     this.title.layout(this.game.view, this.bannerReserve);
   }
 
   private startPlaying(): void {
     if (this.mode === 'play' || this.shop || this.settings || this.trophies || this.dailyPanel) return;
-    this.game.sound.synth(SFX.tap);
+    if (this.demoRun) {
+      // Koniec pokazu: gracz dostaje świeży bieg (ekran startowy odkładamy, żeby wygasł).
+      this.stopDemo();
+      const title = this.title;
+      if (title) this.overlay.removeChild(title);
+      this.newRun();
+      if (title) this.overlay.addChild(title);
+    }
+    this.sfx(SFX.tap);
     const title = this.title;
     this.title = null;
     if (title) {
@@ -705,6 +722,53 @@ export class PlayScene extends Scene {
     this.squash(0.25);
   }
 
+  /** Cukierki gracza: konto + bieżący bieg (bieg pokazowy bota się nie liczy). */
+  private wallet(): number {
+    return this.bank + (this.run && !this.demoRun ? this.run.candies : 0);
+  }
+
+  // --- dźwięk i haptyka (tryb pokazowy milczy) ---
+
+  /** Efekt dźwiękowy rozgrywki; w trybie pokazowym tylko dźwięki interfejsu (stuknięcie). */
+  private sfx(layers: SynthLayer[], opts?: Parameters<PlayScene['game']['sound']['synth']>[1]): void {
+    if (this.demo && layers !== SFX.tap) return;
+    this.game.sound.synth(layers, opts);
+  }
+
+  private buzz(kind: 'tap' | 'hit' | 'heavy' | 'success' | 'error'): void {
+    if (this.demo) return;
+    haptics[kind]();
+  }
+
+  // --- tryb pokazowy: bot gra na ekranie startowym ---
+
+  /** Bot gra w tle ekranu startowego (bez zapisu, dźwięków efektów i wibracji; muzyka reaguje). */
+  private startDemo(): void {
+    if (PILOT_MODE || this.demo) return;
+    this.demo = true;
+    // Bieg na ekranie startowym jest świeży (po newRun): od teraz jest pokazowy.
+    this.demoRun = true;
+    this.autopilot = { wait: 1.0, shot: null, t: 0, hold: 0, sx: 0, sy: 0 };
+  }
+
+  private stopDemo(): void {
+    if (!this.demo) return;
+    this.demo = false;
+    this.autopilot = null;
+    this.aiming = null;
+    this.trail.length = 0;
+    this.dotsG.clear();
+    this.endAirAim();
+    this.finger.visible = false;
+  }
+
+  /** Nowy bieg pokazowy po śmierci bota (ekran startowy i otwarte panele zostają). */
+  private restartDemo(): void {
+    if (!this.demo) return;
+    this.newRun(true);
+    if (this.autopilot) this.autopilot = { wait: 0.8, shot: null, t: 0, hold: 0, sx: 0, sy: 0 };
+  }
+
   // --- pauza ---
 
   private openPause(): void {
@@ -715,7 +779,7 @@ export class PlayScene extends Scene {
     this.tapPoint = null;
     this.trail.length = 0;
     this.dotsG.clear();
-    this.game.sound.synth(SFX.tap);
+    this.sfx(SFX.tap);
     this.pausePanel = new PausePanel({ pixelRatio: this.game.pixelRatio, onResume: () => this.closePause(), onMenu: () => this.quitToMenu() });
     this.pausePanel.layout(this.game.view);
     this.overlay.addChild(this.pausePanel);
@@ -728,7 +792,7 @@ export class PlayScene extends Scene {
     this.pausePanel = null;
     this.paused = false;
     if (!panel) return;
-    this.game.sound.synth(SFX.tap);
+    this.sfx(SFX.tap);
     this.tweens.killOf(panel);
     panel.destroy({ children: true });
   }
@@ -820,7 +884,7 @@ export class PlayScene extends Scene {
   /** Systemowy ekran tablic wyników; bez zalogowanego gracza krótka podpowiedź. */
   private openRanking(): void {
     if (this.shop || this.settings || this.trophies || this.dailyPanel) return;
-    this.game.sound.synth(SFX.tap);
+    this.sfx(SFX.tap);
     void gameServices.show().then((shown) => {
       if (shown) return;
       const ios = /iPhone|iPad/.test(navigator.userAgent);
@@ -851,7 +915,7 @@ export class PlayScene extends Scene {
   /** Liczniki na czas: dojście do 100/200/300 m, cukierki w pierwszej minucie, najdłuższy bieg. */
   private trackTimes(): void {
     const run = this.run;
-    if (!run.started || run.over || !this.stats) return;
+    if (!run.started || run.over || !this.stats || this.demoRun) return;
     const st = this.stats;
     for (const m of [100, 200, 300] as const) {
       if (this.runFast[m] || run.meters < m) continue;
@@ -865,7 +929,7 @@ export class PlayScene extends Scene {
 
   private openTrophies(): void {
     if (this.trophies || this.shop || this.settings || this.dailyPanel) return;
-    this.game.sound.synth(SFX.tap);
+    this.sfx(SFX.tap);
     this.trophies = new AchievementsPanel({
       pixelRatio: this.game.pixelRatio,
       progress: this.progress(),
@@ -882,7 +946,7 @@ export class PlayScene extends Scene {
     const panel = this.trophies;
     this.trophies = null;
     if (!panel) return;
-    this.game.sound.synth(SFX.tap);
+    this.sfx(SFX.tap);
     this.tweens.to(panel, { alpha: 0 }, { duration: 0.15 });
     this.timers.after(0.16, () => panel.destroy({ children: true }));
   }
@@ -890,7 +954,7 @@ export class PlayScene extends Scene {
   private progress() {
     const worn = [this.hatId, this.skinId, this.trailId, this.accId].filter(Boolean).length;
     // Cukierki bieżącego biegu liczą się na żywo; po śmierci są już w statystykach.
-    const live = this.run && !this.run.over ? this.run.candies : 0;
+    const live = this.run && !this.run.over && !this.demoRun ? this.run.candies : 0;
     return progressOf({ ...this.stats, candies: this.stats.candies + live }, { best: this.best, dailyStreak: dailyStreak(this.daily, dayKey(new Date())), worn });
   }
 
@@ -901,7 +965,7 @@ export class PlayScene extends Scene {
     if (!fresh.length) return;
     for (const d of fresh) this.earn(d);
     void this.persist();
-    this.title?.setStats(this.best, this.bank + this.run.candies);
+    this.title?.setStats(this.best, this.wallet());
   }
 
   private earn(d: AchievementDef): void {
@@ -927,7 +991,7 @@ export class PlayScene extends Scene {
   /** Panel wyzwania dnia: dzisiejszy wynik, seria, ostatnie dni, start i ranking dnia. */
   private openDaily(): void {
     if (this.mode === 'play' || this.dailyPanel || this.shop || this.settings || this.trophies) return;
-    this.game.sound.synth(SFX.tap);
+    this.sfx(SFX.tap);
     this.dailyPanel = new DailyPanel({
       pixelRatio: this.game.pixelRatio,
       daily: this.daily,
@@ -937,7 +1001,7 @@ export class PlayScene extends Scene {
         this.startDaily();
       },
       onRanking: () => {
-        this.game.sound.synth(SFX.tap);
+        this.sfx(SFX.tap);
         void gameServices.show('daily').then((shown) => {
           if (!shown) this.notice(/iPhone|iPad/.test(navigator.userAgent) ? t('loginIos') : t('loginAndroid'));
         });
@@ -958,7 +1022,7 @@ export class PlayScene extends Scene {
       panel.destroy({ children: true });
       return;
     }
-    this.game.sound.synth(SFX.tap);
+    this.sfx(SFX.tap);
     this.tweens.to(panel, { alpha: 0 }, { duration: 0.15 });
     this.timers.after(0.16, () => panel.destroy({ children: true }));
   }
@@ -966,6 +1030,7 @@ export class PlayScene extends Scene {
   /** Wyzwanie dnia: nowa studnia z seedem z daty i od razu gra. */
   private startDaily(): void {
     if (this.mode === 'play' || this.shop || this.settings || this.trophies || this.dailyPanel) return;
+    this.stopDemo();
     this.dailyMode = true;
     // newRun czyści nakładki: ekran startowy odkładamy na bok, żeby startPlaying go wygasił.
     const title = this.title;
@@ -993,7 +1058,7 @@ export class PlayScene extends Scene {
 
   private openShop(): void {
     if (this.shop || this.settings || this.trophies || this.dailyPanel) return;
-    this.game.sound.synth(SFX.tap);
+    this.sfx(SFX.tap);
     const previews = new Map<string, Texture | null>(this.hatTextures);
     for (const k of SKINS) previews.set(k.id, this.skinTex.get(k.id)?.body ?? null);
     for (const t of TRAILS) previews.set(t.id, this.cosmetics.trailPreviews.get(t.id) ?? null);
@@ -1023,10 +1088,10 @@ export class PlayScene extends Scene {
     const shop = this.shop;
     this.shop = null;
     if (!shop) return;
-    this.game.sound.synth(SFX.tap);
+    this.sfx(SFX.tap);
     this.tweens.to(shop, { alpha: 0 }, { duration: 0.15 });
     this.timers.after(0.16, () => shop.destroy({ children: true }));
-    this.title?.setStats(this.best, this.bank + this.run.candies);
+    this.title?.setStats(this.best, this.wallet());
   }
 
   private tapItem(id: string): void {
@@ -1037,7 +1102,7 @@ export class PlayScene extends Scene {
       return;
     }
     // Sklep działa tylko na ekranie startowym, gdzie bieg ma 0 cukierków: całe konto jest w `bank`.
-    this.bank = r.save.candies - this.run.candies;
+    this.bank = r.save.candies - (this.wallet() - this.bank);
     this.owned = r.save.owned;
     this.hatId = r.save.hat;
     this.skinId = r.save.skin;
@@ -1054,7 +1119,7 @@ export class PlayScene extends Scene {
       this.game.sound.synth(SFX.record);
       haptics.success();
     } else {
-      this.game.sound.synth(SFX.tap);
+      this.sfx(SFX.tap);
       haptics.tap();
     }
     this.squash(0.3);
@@ -1110,8 +1175,10 @@ export class PlayScene extends Scene {
 
   // --- bieg ---
 
-  private newRun(): void {
-    if (this.run) this.bank += this.run.candies;
+  private newRun(keepOverlay = false): void {
+    // Cukierki z biegu pokazowego nie trafiają na konto.
+    if (this.run && !this.demoRun) this.bank += this.run.candies;
+    this.demoRun = this.demo;
     this.runs++;
     this.dailyDay = dayKey(new Date());
     const seed = this.dailyMode ? dailySeed(this.dailyDay) : this.game.rng.int(1, 2 ** 31 - 1);
@@ -1132,7 +1199,7 @@ export class PlayScene extends Scene {
     this.powerViews.clear();
     this.decalLayer.removeChildren().forEach((c) => c.destroy());
     for (const k of this.run.shaft.chunks.keys()) this.addChunkView(k);
-    this.overlay.removeChildren().forEach((c) => c.destroy({ children: true }));
+    if (!keepOverlay) this.overlay.removeChildren().forEach((c) => c.destroy({ children: true }));
     this.againButton = null;
     this.slime.visible = true;
     this.slime.scale.set(1);
@@ -1224,7 +1291,7 @@ export class PlayScene extends Scene {
 
   private openSettings(): void {
     if (this.settings || this.shop || this.trophies || this.dailyPanel) return;
-    this.game.sound.synth(SFX.tap);
+    this.sfx(SFX.tap);
     this.settings = new SettingsPanel({
       pixelRatio: this.game.pixelRatio,
       onToggle: (key) => this.toggleSetting(key),
@@ -1288,7 +1355,7 @@ export class PlayScene extends Scene {
     const panel = this.settings;
     this.settings = null;
     if (!panel) return;
-    this.game.sound.synth(SFX.tap);
+    this.sfx(SFX.tap);
     this.tweens.to(panel, { alpha: 0 }, { duration: 0.15 });
     this.timers.after(0.16, () => {
       this.tweens.killOf(panel);
@@ -1301,13 +1368,13 @@ export class PlayScene extends Scene {
       this.langPref = lang() === 'pl' ? 'en' : 'pl';
       setLang(this.langPref);
       void this.persist();
-      this.game.sound.synth(SFX.tap);
+      this.sfx(SFX.tap);
       haptics.tap();
       this.relocalize();
       return;
     }
     if (key === 'privacy') {
-      this.game.sound.synth(SFX.tap);
+      this.sfx(SFX.tap);
       void ads.privacyOptions();
       return;
     }
@@ -1318,7 +1385,7 @@ export class PlayScene extends Scene {
     else if (key === 'sfx') this.sfxOn = !this.sfxOn;
     else this.vibrationOn = !this.vibrationOn;
     this.applySettings();
-    this.game.sound.synth(SFX.tap);
+    this.sfx(SFX.tap);
     haptics.tap();
     this.refreshSettings();
     void this.persist();
@@ -1393,7 +1460,7 @@ export class PlayScene extends Scene {
         for (const k of [1, -1]) g.moveTo(end.x - 14, end.y - 14 * k).lineTo(end.x + 14, end.y + 14 * k).stroke({ color: COLORS.danger, width: 7, cap: 'round' });
       }
     }
-    if (death && !this.aimDanger) haptics.tap();
+    if (death && !this.aimDanger) this.buzz('tap');
     this.aimDanger = death;
   }
 
@@ -1411,8 +1478,8 @@ export class PlayScene extends Scene {
     this.recorder?.shot(v.vx, v.vy);
     if (inAir) {
       const n = this.run.airJumps;
-      this.stats.maxAirJumps = Math.max(this.stats.maxAirJumps, n);
-      this.game.sound.synth(POWER_SFX.air, { pitch: 1 + Math.min(n - 1, 8) * 0.1 });
+      if (!this.demoRun) this.stats.maxAirJumps = Math.max(this.stats.maxAirJumps, n);
+      this.sfx(POWER_SFX.air, { pitch: 1 + Math.min(n - 1, 8) * 0.1 });
       this.score.airJump(n);
       if (n >= 2) this.comboPop(this.run.slime.x, this.run.slime.y + 30, n);
       this.sparks.burst(this.run.slime.x, this.run.slime.y, { count: 14, speed: [150, 400], life: [0.3, 0.5], scale: [0.5, 1], colors: [0xffffff, 0xc8f5ff] });
@@ -1420,9 +1487,9 @@ export class PlayScene extends Scene {
     this.hint.visible = false;
     this.combo = 0;
     this.hatSwing.kick(-v.vx / 600);
-    this.game.sound.synth(SFX.launch, { pitch: 0.8 + v.power * 0.5, volume: 0.6 });
+    this.sfx(SFX.launch, { pitch: 0.8 + v.power * 0.5, volume: 0.6 });
     this.score.launch(v.power);
-    haptics.tap();
+    this.buzz('tap');
   }
 
   private pickPower(p: PowerUp): void {
@@ -1433,10 +1500,10 @@ export class PlayScene extends Scene {
       this.tweens.to(bubble, { alpha: 0 }, { duration: 0.3 });
       void this.tweens.to(bubble.scale, { x: 2.2, y: 2.2 }, { duration: 0.3, ease: 'quadOut' }).done.then(() => bubble.destroy({ children: true }));
     }
-    this.game.sound.synth(POWER_SFX.pickup);
-    if (p.kind === 'rocket') this.game.sound.synth(POWER_SFX.rocket);
-    if (p.kind === 'frost') this.game.sound.synth(POWER_SFX.frost);
-    haptics.success();
+    this.sfx(POWER_SFX.pickup);
+    if (p.kind === 'rocket') this.sfx(POWER_SFX.rocket);
+    if (p.kind === 'frost') this.sfx(POWER_SFX.frost);
+    this.buzz('success');
     this.sparks.burst(p.x, p.y, { count: 26, speed: [200, 600], life: [0.4, 0.8], scale: [0.6, 1.3], endScale: 0.2, colors: [info.color, 0xffffff, 0xffd166] });
     this.shaker.add(p.kind === 'rocket' ? 0.5 : 0.2);
     this.floatText(p.x, p.y - 70, `${powerName(p.kind)}!`, info.css);
@@ -1445,6 +1512,7 @@ export class PlayScene extends Scene {
 
   /** Napis unoszący się w świecie (nazwa power-upu, „Odbite!”). */
   private floatText(x: number, y: number, message: string, color: string): void {
+    if (this.demoRun) return;
     const t = hudText(38, color);
     t.text = message;
     t.anchor.set(0.5);
@@ -1539,13 +1607,13 @@ export class PlayScene extends Scene {
     const p = this.autopilot;
     if (!p) return;
     const real = dt / (this.game.loop.timeScale || 1);
-    if (this.mode === 'title' || this.againButton) {
+    if (!this.demo && (this.mode === 'title' || this.againButton)) {
       this.finger.visible = false;
       p.wait -= real;
       if (p.wait > 0) return;
       if (this.mode === 'title') this.startPlaying();
       else {
-        this.game.sound.synth(SFX.tap);
+        this.sfx(SFX.tap);
         this.newRun();
       }
       p.wait = PILOT.reaction;
@@ -1617,7 +1685,8 @@ export class PlayScene extends Scene {
     this.aiming = { sx: p.sx, sy: p.sy, power: 0, dx: 0, dy: -1 };
     if (s.state === 'flying') {
       this.airAim = true;
-      this.game.loop.timeScale = 0.25;
+      // W pokazie bez slow-motion (ekran startowy ma swoje animacje).
+      if (!this.demo) this.game.loop.timeScale = 0.25;
     }
   }
 
@@ -1636,21 +1705,23 @@ export class PlayScene extends Scene {
     if (r.powered) this.pickPower(r.powered);
     if (r.shielded) {
       const s = this.run.slime;
-      this.game.sound.synth(POWER_SFX.shield);
-      haptics.heavy();
+      this.sfx(POWER_SFX.shield);
+      this.buzz('heavy');
       this.shaker.add(0.4);
       this.sparks.burst(s.x, s.y, { count: 30, speed: [200, 600], life: [0.3, 0.6], scale: [0.6, 1.2], colors: [POWER_INFO.shell.color, 0xffffff] });
       this.floatText(s.x, s.y - 60, t('bounced'), POWER_INFO.shell.css);
     }
-    if (r.bounced) this.stats.bounces++;
-    if (r.crumbled) this.stats.crumbles++;
-    if (r.trick?.kind === 'rescue') this.stats.rescues++;
-    if (r.streak) this.stats.bestStreak = Math.max(this.stats.bestStreak, r.streak);
-    if (r.airCombo) this.stats.maxAirCombo = Math.max(this.stats.maxAirCombo, r.airCombo.count);
-    if (r.powered && !this.stats.powers.includes(r.powered.kind)) this.stats.powers = [...this.stats.powers, r.powered.kind];
+    if (!this.demoRun) {
+      if (r.bounced) this.stats.bounces++;
+      if (r.crumbled) this.stats.crumbles++;
+      if (r.trick?.kind === 'rescue') this.stats.rescues++;
+      if (r.streak) this.stats.bestStreak = Math.max(this.stats.bestStreak, r.streak);
+      if (r.airCombo) this.stats.maxAirCombo = Math.max(this.stats.maxAirCombo, r.airCombo.count);
+      if (r.powered && !this.stats.powers.includes(r.powered.kind)) this.stats.powers = [...this.stats.powers, r.powered.kind];
+    }
     if (r.bounced) this.onBounce(r.bounced.block, r.bounced.x, r.bounced.y, r.bounced.nx, r.bounced.ny, r.bounced.speed);
     if (r.crumbled) this.onCrumble(r.crumbled);
-    if (r.landed && this.run.slime.stuckTo?.feature === 'crumble') this.game.sound.synth(FEATURE_SFX.creak, { pitch: 0.9 + this.game.rng.next() * 0.2 });
+    if (r.landed && this.run.slime.stuckTo?.feature === 'crumble') this.sfx(FEATURE_SFX.creak, { pitch: 0.9 + this.game.rng.next() * 0.2 });
     if (r.landed && this.airAim) this.endAirAim();
     if (r.landed) {
       const l = r.landed;
@@ -1671,9 +1742,9 @@ export class PlayScene extends Scene {
           colors: [this.slimeColor, 0xffffff],
         });
         this.splat(cx, cy, l.nx, l.ny, strength);
-        this.game.sound.synth(SFX.land, { volume: 0.4 + strength * 0.6, pitch: 0.9 + this.game.rng.next() * 0.2 });
+        this.sfx(SFX.land, { volume: 0.4 + strength * 0.6, pitch: 0.9 + this.game.rng.next() * 0.2 });
         this.score.land(strength);
-        haptics.hit();
+        this.buzz('hit');
       }
       if (strength > 0.6) this.shaker.add(0.25);
     }
@@ -1694,9 +1765,9 @@ export class PlayScene extends Scene {
     this.featureViews.get(block)?.boing(strength);
     this.squash(0.35);
     this.hatSwing.kick((this.game.rng.next() - 0.5) * 14);
-    this.game.sound.synth(FEATURE_SFX.boing, { pitch: 0.85 + strength * 0.4 + this.game.rng.next() * 0.1 });
+    this.sfx(FEATURE_SFX.boing, { pitch: 0.85 + strength * 0.4 + this.game.rng.next() * 0.1 });
     this.score.land(0.5);
-    haptics.tap();
+    this.buzz('tap');
     this.sparks.burst(x - nx * PHYS.radius, y - ny * PHYS.radius, {
       count: 12,
       speed: [150, 420],
@@ -1711,8 +1782,8 @@ export class PlayScene extends Scene {
 
   private onCrumble(block: Block): void {
     this.featureViews.get(block)?.shatter();
-    this.game.sound.synth(FEATURE_SFX.crumble, { pitch: 0.9 + this.game.rng.next() * 0.2 });
-    haptics.hit();
+    this.sfx(FEATURE_SFX.crumble, { pitch: 0.9 + this.game.rng.next() * 0.2 });
+    this.buzz('hit');
     this.shaker.add(0.2);
     // Kawałki czekolady wzdłuż całej półki.
     for (let i = 0; i < 4; i++) {
@@ -1746,8 +1817,8 @@ export class PlayScene extends Scene {
   private onMilestone(streak: number, reward: number): void {
     const tier = streakTier(streak);
     const s = this.run.slime;
-    this.game.sound.synth(STREAK_SFX.milestone, { pitch: 2 ** ((tier.level * 2) / 12) });
-    haptics.success();
+    this.sfx(STREAK_SFX.milestone, { pitch: 2 ** ((tier.level * 2) / 12) });
+    this.buzz('success');
     this.shaker.add(0.3 + tier.level * 0.1);
     this.game.hitstop(0.05);
     // Fala uderzeniowa i konfetti wokół slime'a.
@@ -1775,6 +1846,7 @@ export class PlayScene extends Scene {
       colors: tier.colors,
     });
     this.score.milestone();
+    if (this.demoRun) return;
     milestoneBanner(this.fx, {
       tweens: this.tweens,
       timers: this.timers,
@@ -1792,8 +1864,8 @@ export class PlayScene extends Scene {
     const s = this.run.slime;
     this.score.trick(jumps + (kind === 'rescue' ? 1 : 0));
     if (kind === 'rescue') {
-      this.game.sound.synth(STREAK_SFX.rescue);
-      haptics.success();
+      this.sfx(STREAK_SFX.rescue);
+      this.buzz('success');
       this.shaker.add(0.25);
       this.floatText(s.x, s.y - 80, `${t('rescue')}${jumps > 1 ? ` ×${jumps}` : ''}! +${reward}`, '#8ee3a1');
       const ring = new Graphics().circle(0, 0, 40).stroke({ color: 0x8ee3a1, width: 8 });
@@ -1808,8 +1880,8 @@ export class PlayScene extends Scene {
       });
       this.sparks.burst(s.x, s.y, { count: 26, speed: [200, 600], life: [0.4, 0.8], scale: [0.5, 1.2], gravity: 900, colors: [0x8ee3a1, 0xffffff, 0xc8f5ff] });
     } else {
-      this.game.sound.synth(STREAK_SFX.acrobat);
-      haptics.tap();
+      this.sfx(STREAK_SFX.acrobat);
+      this.buzz('tap');
       this.floatText(s.x, s.y - 80, `${t('acrobat')}${jumps > 1 ? ` ×${jumps}` : ''}! +${reward}`, '#c8f5ff');
       this.sparks.burst(s.x, s.y, { count: 14, speed: [150, 420], life: [0.3, 0.6], scale: [0.4, 1], colors: [0xffffff, 0xc8f5ff] });
     }
@@ -1819,7 +1891,7 @@ export class PlayScene extends Scene {
   private onAirCombo(count: number, reward: number): void {
     if (reward <= 0) return;
     const s = this.run.slime;
-    this.game.sound.synth(STREAK_SFX.combo);
+    this.sfx(STREAK_SFX.combo);
     this.score.trick(count);
     this.floatText(s.x, s.y - 70, `${t('combo')} ×${count}! +${reward}`, '#ffd166');
     this.flyCandies(reward, 0.1);
@@ -1829,11 +1901,12 @@ export class PlayScene extends Scene {
     this.streakHud.lose(streak);
     if (streak < 3) return;
     this.score.lost();
-    haptics.tap();
+    this.buzz('tap');
   }
 
   /** Cukierki-premie wyskakują ze slime'a i lecą łukiem do licznika w rogu. */
   private flyCandies(n: number, delay: number): void {
+    if (this.demoRun) return;
     const from = this.fx.toLocal(this.slime.getGlobalPosition());
     const to = this.candyIcon.position;
     const size = 46 / Math.max(this.candyTex.width, this.candyTex.height);
@@ -1859,7 +1932,7 @@ export class PlayScene extends Scene {
         this.tweens.killOf(c.scale);
         c.destroy();
         this.flying = Math.max(0, this.flying - 1);
-        this.game.sound.synth(STREAK_SFX.coin, { pitch: 1 + (i % 8) * 0.06 });
+        this.sfx(STREAK_SFX.coin, { pitch: 1 + (i % 8) * 0.06 });
         void pulse(this.tweens, this.candyIcon, 0.3);
       });
     }
@@ -1889,6 +1962,7 @@ export class PlayScene extends Scene {
 
   /** Małe „×3” przy kolejnych cukierkach w jednym locie. */
   private comboPop(x: number, y: number, n: number): void {
+    if (this.demoRun) return;
     const t = hudText(30 + Math.min(n, 6) * 4, n >= 3 ? '#ffd166' : '#ffffff');
     t.text = `×${n}`;
     t.anchor.set(0.5);
@@ -1911,8 +1985,8 @@ export class PlayScene extends Scene {
     this.dotsG.clear();
     this.game.hitstop(0.08);
     this.shaker.add(0.7);
-    this.game.sound.synth(SFX.death);
-    haptics.error();
+    this.sfx(SFX.death);
+    this.buzz('error');
     this.sparks.burst(s.x, s.y, {
       count: 40,
       speed: [200, 900],
@@ -1926,6 +2000,11 @@ export class PlayScene extends Scene {
       colors: cause === 'syrup' ? [this.slimeColor, COLORS.syrup, 0xffffff] : [this.slimeColor, 0xffffff, COLORS.danger],
     });
     this.slime.visible = false;
+    if (this.demoRun) {
+      // Bot w pokazie zginął: po chwili nowy bieg pokazowy, bez zapisu i ekranu końca.
+      this.timers.after(1.4, () => this.restartDemo());
+      return;
+    }
     this.recordRunEnd();
     this.timers.after(0.55, () => this.showGameOver(cause));
   }
@@ -1989,7 +2068,7 @@ export class PlayScene extends Scene {
       width: 380,
       resolution: this.game.pixelRatio,
       onTap: () => {
-        this.game.sound.synth(SFX.tap);
+        this.sfx(SFX.tap);
         this.maybeInterstitial();
         this.newRun();
       },
@@ -2004,7 +2083,7 @@ export class PlayScene extends Scene {
       fontSize: 34,
       resolution: this.game.pixelRatio,
       onTap: () => {
-        this.game.sound.synth(SFX.tap);
+        this.sfx(SFX.tap);
         this.maybeInterstitial();
         this.dailyMode = false;
         this.newRun();
@@ -2021,8 +2100,8 @@ export class PlayScene extends Scene {
     this.tweens.to(dim, { alpha: 1 }, { duration: 0.25 });
     void popIn(this.tweens, panel, 0.4);
     if (record) {
-      haptics.success();
-      this.game.sound.synth(SFX.record);
+      this.buzz('success');
+      this.sfx(SFX.record);
       this.timers.after(0.35, () => void pulse(this.tweens, sub, 0.25));
       const view = this.game.view;
       this.sparks.burst(view.width / 2, this.camera.y + view.height * 0.25, {
@@ -2083,8 +2162,8 @@ export class PlayScene extends Scene {
     if (danger > 0.55) {
       this.heartbeat -= dt;
       if (this.heartbeat <= 0) {
-        haptics.tap();
-        this.game.sound.synth(SFX.heartbeat, { volume: 0.5 + danger * 0.5 });
+        this.buzz('tap');
+        this.sfx(SFX.heartbeat, { volume: 0.5 + danger * 0.5 });
         this.shaker.add(0.08 + danger * 0.08);
         this.heartbeat = 0.85 - danger * 0.45;
       }
@@ -2412,8 +2491,8 @@ export class PlayScene extends Scene {
       root.destroy({ children: true });
     });
     // Im mroczniejszy świat, tym niżej brzmi.
-    this.game.sound.synth(BIOME_SFX, { pitch: 2 ** (-index / 12) });
-    haptics.success();
+    this.sfx(BIOME_SFX, { pitch: 2 ** (-index / 12) });
+    this.buzz('success');
   }
 
   /** Mrok: ciemne krawędzie ekranu (przezroczystość ustawia świat). */
