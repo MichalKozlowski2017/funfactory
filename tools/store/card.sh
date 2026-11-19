@@ -21,11 +21,25 @@ magick -size $((sw + 2 * b))x$((sh + 2 * b)) xc:none -fill white -draw "roundrec
   "$tmp/round.png" -geometry +$b+$b -composite "$tmp/framed.png"
 magick "$tmp/framed.png" \( +clone -background black -shadow 70x40+0+30 \) +swap -background none -layers merge +repage "$tmp/shadow.png"
 # Podpis: biały, gruby różowy kontur (z poszerzonej alfy), ciemny cień pod spodem.
-# Stała wielkość czcionki w całym zestawie (zawijanie do 2 linii), a nie dopasowanie do ramki.
-magick -background none -fill white -font "$FONT" -pointsize $((W * 76 / 1000)) -size $((W * 88 / 100))x -gravity center caption:"$caption" "$tmp/cap.png"
+# Stała wielkość czcionki w całym zestawie. Gdy nie mieści się w linii, łamiemy w spacji najbliżej środka
+# (dwie równe linie zamiast jednego słowa na dole).
+pt=$((W * 90 / 1000))
+one=$(magick -font "$FONT" -pointsize $pt label:"$caption" -format %w info:)
+if [ "$one" -gt $((W * 88 / 100)) ]; then
+  caption=$(python3 -c 'import sys
+t=sys.argv[1]; m=len(t)/2
+i=min((k for k,c in enumerate(t) if c==" "), key=lambda k: abs(k-m))
+print(t[:i]+"\n"+t[i+1:])' "$caption")
+fi
+# Za szeroka linia nawet po złamaniu: tylko ten podpis trochę mniejszy.
+wide=$(magick -font "$FONT" -pointsize $pt -interline-spacing $((-pt / 10)) label:"$caption" -format %w info:)
+if [ "$wide" -gt $((W * 86 / 100)) ]; then pt=$((pt * W * 86 / 100 / wide)); fi
+magick -background none -fill white -font "$FONT" -pointsize $pt -interline-spacing $((-pt / 10)) -gravity center label:"$caption" -bordercolor none -border $((W / 50)) "$tmp/cap.png"
 magick "$tmp/cap.png" -alpha extract -morphology Dilate Disk:$((W / 140)) -background '#ff6f9f' -alpha shape "$tmp/cap-stroke.png"
 magick "$tmp/cap-stroke.png" -alpha extract -morphology Dilate Disk:$((W / 260)) -background '#2a1a3a' -alpha shape "$tmp/cap-ink.png"
-top=$((capH * 12 / 100))
+# Podpis na środku pasa nad zrzutem.
+capHt=$(magick identify -format %h "$tmp/cap-ink.png")
+top=$(((capH - capHt) / 2 + H / 200))
 magick "$tmp/bg2.png" \
   "$tmp/cap-ink.png" -gravity north -geometry +0+$((top + W / 160)) -composite \
   "$tmp/cap-stroke.png" -gravity north -geometry +0+$top -composite \
