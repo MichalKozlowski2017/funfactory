@@ -112,6 +112,17 @@ export class Game {
     this.safeProbe = makeSafeProbe();
     this.app.renderer.on('resize', () => this.layout());
     this.layout();
+    // iOS (WKWebView) potrafi podać env(safe-area-inset-*) dopiero chwilę po starcie albo po obrocie,
+    // bez zdarzenia resize. Sprawdzamy więc obszar bezpieczny jeszcze kilka razy i przy powrocie do aplikacji.
+    const recheck = () => {
+      const s = readSafe(this.safeProbe);
+      const scale = this.app.screen.width / this.designWidth;
+      const v = this.view.safe;
+      if (Math.abs(s.top / scale - v.top) > 0.5 || Math.abs(s.bottom / scale - v.bottom) > 0.5 || Math.abs(s.left / scale - v.left) > 0.5 || Math.abs(s.right / scale - v.right) > 0.5) this.layout();
+    };
+    for (const ms of [100, 300, 700, 1500, 3000]) window.setTimeout(recheck, ms);
+    document.addEventListener('visibilitychange', recheck);
+    window.addEventListener('orientationchange', () => window.setTimeout(recheck, 300));
     this.app.ticker.add((ticker) => {
       if (this.dev) this.dev.frames++;
       this.frameStart = performance.now();

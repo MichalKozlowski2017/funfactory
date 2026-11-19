@@ -548,9 +548,10 @@ export class PlayScene extends Scene {
       this.toasts.width0 = view.width;
     }
     this.input.hitArea = new Rectangle(0, 0, view.width, view.height);
-    this.counter.position.set(view.width / 2, view.safe.top + 60);
-    this.bestText.position.set(view.width / 2, view.safe.top + 92);
-    this.streakHud.position.set(view.width / 2, view.safe.top + 150);
+    // Licznik niżej, pod rzędem pauzy i cukierków: środek górnej krawędzi zasłania wycięcie (notch, Dynamic Island).
+    this.counter.position.set(view.width / 2, view.safe.top + 125);
+    this.bestText.position.set(view.width / 2, view.safe.top + 165);
+    this.streakHud.position.set(view.width / 2, view.safe.top + 225);
     this.candyIcon.position.set(view.width - 52, view.safe.top + 58);
     this.candyText.position.set(view.width - 90, view.safe.top + 58);
     this.timerText.position.set(view.width - 34, view.safe.top + 112);
@@ -733,7 +734,7 @@ export class PlayScene extends Scene {
       .stroke({ color: 0x1e1530, width: 5 });
     label.tint = 0xffffff;
     ribbon.addChild(bg, label);
-    const y = this.counter.y + 140;
+    const y = this.counter.y + 120;
     ribbon.position.set(this.counter.x, y);
     ribbon.scale.set(0.2);
     ribbon.alpha = 0;
