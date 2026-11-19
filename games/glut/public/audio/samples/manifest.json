@@ -1,0 +1,444 @@
+{
+ "source": "VSCO 2 Community Edition, Versilian Studios (github.com/sgossner/VSCO-2-CE)",
+ "license": "CC0 1.0",
+ "instruments": {
+  "glock": {
+   "gain": 0.678,
+   "zones": [
+    {
+     "file": "glock-79.m4a",
+     "note": 79
+    },
+    {
+     "file": "glock-84.m4a",
+     "note": 84
+    },
+    {
+     "file": "glock-91.m4a",
+     "note": 91
+    },
+    {
+     "file": "glock-96.m4a",
+     "note": 96
+    },
+    {
+     "file": "glock-103.m4a",
+     "note": 103
+    }
+   ]
+  },
+  "marimba": {
+   "gain": 0.41,
+   "zones": [
+    {
+     "file": "marimba-65.m4a",
+     "note": 65
+    },
+    {
+     "file": "marimba-72.m4a",
+     "note": 72
+    },
+    {
+     "file": "marimba-79.m4a",
+     "note": 79
+    },
+    {
+     "file": "marimba-83.m4a",
+     "note": 83
+    },
+    {
+     "file": "marimba-89.m4a",
+     "note": 89
+    },
+    {
+     "file": "marimba-96.m4a",
+     "note": 96
+    }
+   ]
+  },
+  "xylo": {
+   "gain": 0.596,
+   "zones": [
+    {
+     "file": "xylo-67.m4a",
+     "note": 67
+    },
+    {
+     "file": "xylo-72.m4a",
+     "note": 72
+    },
+    {
+     "file": "xylo-79.m4a",
+     "note": 79
+    },
+    {
+     "file": "xylo-84.m4a",
+     "note": 84
+    },
+    {
+     "file": "xylo-91.m4a",
+     "note": 91
+    },
+    {
+     "file": "xylo-96.m4a",
+     "note": 96
+    }
+   ]
+  },
+  "harp": {
+   "gain": 0.457,
+   "zones": [
+    {
+     "file": "harp-65.m4a",
+     "note": 65
+    },
+    {
+     "file": "harp-72.m4a",
+     "note": 72
+    },
+    {
+     "file": "harp-79.m4a",
+     "note": 79
+    },
+    {
+     "file": "harp-86.m4a",
+     "note": 86
+    },
+    {
+     "file": "harp-93.m4a",
+     "note": 93
+    }
+   ]
+  },
+  "pizz": {
+   "gain": 0.605,
+   "zones": [
+    {
+     "file": "pizz-62.m4a",
+     "note": 62
+    },
+    {
+     "file": "pizz-69.m4a",
+     "note": 69
+    },
+    {
+     "file": "pizz-76.m4a",
+     "note": 76
+    },
+    {
+     "file": "pizz-83.m4a",
+     "note": 83
+    },
+    {
+     "file": "pizz-86.m4a",
+     "note": 86
+    }
+   ]
+  },
+  "bassPizz": {
+   "gain": 0.417,
+   "zones": [
+    {
+     "file": "basspizz-40.m4a",
+     "note": 40
+    },
+    {
+     "file": "basspizz-43.m4a",
+     "note": 43
+    },
+    {
+     "file": "basspizz-50.m4a",
+     "note": 50
+    },
+    {
+     "file": "basspizz-57.m4a",
+     "note": 57
+    },
+    {
+     "file": "basspizz-64.m4a",
+     "note": 64
+    }
+   ]
+  },
+  "tuba": {
+   "gain": 0.347,
+   "zones": [
+    {
+     "file": "tuba-41.m4a",
+     "note": 41
+    },
+    {
+     "file": "tuba-46.m4a",
+     "note": 46
+    },
+    {
+     "file": "tuba-53.m4a",
+     "note": 53
+    },
+    {
+     "file": "tuba-58.m4a",
+     "note": 58
+    },
+    {
+     "file": "tuba-62.m4a",
+     "note": 62
+    }
+   ]
+  },
+  "brass": {
+   "gain": 0.59,
+   "zones": [
+    {
+     "file": "brass-41.m4a",
+     "note": 41
+    },
+    {
+     "file": "brass-46.m4a",
+     "note": 46
+    },
+    {
+     "file": "brass-53.m4a",
+     "note": 53
+    },
+    {
+     "file": "brass-58.m4a",
+     "note": 58
+    },
+    {
+     "file": "brass-65.m4a",
+     "note": 65
+    },
+    {
+     "file": "brass-70.m4a",
+     "note": 70
+    },
+    {
+     "file": "brass-74.m4a",
+     "note": 74
+    },
+    {
+     "file": "brass-77.m4a",
+     "note": 77
+    }
+   ]
+  },
+  "violas": {
+   "gain": 0.484,
+   "zones": [
+    {
+     "file": "violas-55.m4a",
+     "note": 55,
+     "loop": {
+      "start": 1.4,
+      "end": 4
+     }
+    },
+    {
+     "file": "violas-62.m4a",
+     "note": 62,
+     "loop": {
+      "start": 1.4,
+      "end": 4
+     }
+    },
+    {
+     "file": "violas-69.m4a",
+     "note": 69,
+     "loop": {
+      "start": 1.4,
+      "end": 4
+     }
+    },
+    {
+     "file": "violas-76.m4a",
+     "note": 76,
+     "loop": {
+      "start": 1.4,
+      "end": 4
+     }
+    }
+   ]
+  },
+  "cellos": {
+   "gain": 0.428,
+   "zones": [
+    {
+     "file": "cellos-53.m4a",
+     "note": 53,
+     "loop": {
+      "start": 1.4,
+      "end": 4
+     }
+    },
+    {
+     "file": "cellos-60.m4a",
+     "note": 60,
+     "loop": {
+      "start": 1.4,
+      "end": 4
+     }
+    },
+    {
+     "file": "cellos-67.m4a",
+     "note": 67,
+     "loop": {
+      "start": 1.4,
+      "end": 4
+     }
+    },
+    {
+     "file": "cellos-74.m4a",
+     "note": 74,
+     "loop": {
+      "start": 1.4,
+      "end": 4
+     }
+    }
+   ]
+  },
+  "kickSoft": {
+   "gain": 0.642,
+   "zones": [
+    {
+     "file": "kicksoft-0.m4a"
+    }
+   ]
+  },
+  "kickHard": {
+   "gain": 0.519,
+   "zones": [
+    {
+     "file": "kickhard-0.m4a"
+    }
+   ]
+  },
+  "bassDrum": {
+   "gain": 0.476,
+   "zones": [
+    {
+     "file": "bassdrum-0.m4a"
+    }
+   ]
+  },
+  "taiko": {
+   "gain": 0.763,
+   "zones": [
+    {
+     "file": "taiko-0.m4a"
+    }
+   ]
+  },
+  "slap": {
+   "gain": 0.587,
+   "zones": [
+    {
+     "file": "slap-0.m4a"
+    }
+   ]
+  },
+  "snare": {
+   "gain": 0.957,
+   "zones": [
+    {
+     "file": "snare-0.m4a"
+    }
+   ]
+  },
+  "snareSoft": {
+   "gain": 0.971,
+   "zones": [
+    {
+     "file": "snaresoft-0.m4a"
+    }
+   ]
+  },
+  "rimshot": {
+   "gain": 1.251,
+   "zones": [
+    {
+     "file": "rimshot-0.m4a"
+    }
+   ]
+  },
+  "tom": {
+   "gain": 0.927,
+   "zones": [
+    {
+     "file": "tom-0.m4a"
+    }
+   ]
+  },
+  "timpani": {
+   "gain": 0.674,
+   "zones": [
+    {
+     "file": "timpani-0.m4a"
+    }
+   ]
+  },
+  "crash": {
+   "gain": 0.66,
+   "zones": [
+    {
+     "file": "crash-0.m4a"
+    }
+   ]
+  },
+  "tss": {
+   "gain": 0.582,
+   "zones": [
+    {
+     "file": "tss-0.m4a"
+    }
+   ]
+  },
+  "shaker": {
+   "gain": 1.993,
+   "zones": [
+    {
+     "file": "shaker-0.m4a"
+    }
+   ]
+  },
+  "tamb": {
+   "gain": 1.071,
+   "zones": [
+    {
+     "file": "tamb-0.m4a"
+    }
+   ]
+  },
+  "triangle": {
+   "gain": 1.017,
+   "zones": [
+    {
+     "file": "triangle-0.m4a"
+    }
+   ]
+  },
+  "anvil": {
+   "gain": 0.68,
+   "zones": [
+    {
+     "file": "anvil-0.m4a"
+    }
+   ]
+  },
+  "brake": {
+   "gain": 0.849,
+   "zones": [
+    {
+     "file": "brake-0.m4a"
+    }
+   ]
+  },
+  "claves": {
+   "gain": 1.98,
+   "zones": [
+    {
+     "file": "claves-0.m4a"
+    }
+   ]
+  }
+ }
+}

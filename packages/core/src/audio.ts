@@ -26,6 +26,29 @@ export interface SynthLayer {
   release?: number;
 }
 
+/** Odtwarzanie bufora (próbki instrumentu) w zaplanowanym czasie, jak `synth`. */
+export interface SampleOptions {
+  /** Czas kontekstu audio startu (domyślnie: teraz). */
+  at?: number;
+  /** Wyjście (np. szyna muzyki); bez niego dźwięk jest efektem (wyciszany przez `sfxMuted`). */
+  output?: AudioNode;
+  /** Mnożnik prędkości = wysokości (2 = oktawa wyżej). */
+  rate?: number;
+  volume?: number;
+  /** Panorama -1..1. */
+  pan?: number;
+  /** Narastanie (s); domyślnie bez (atak z próbki). */
+  attack?: number;
+  /**
+   * Długość nuty (s): potem wygaszenie w `release` s. Bez niej próbka gra do końca.
+   * Razem z `loop` pozwala trzymać dźwięk dłużej niż plik.
+   */
+  duration?: number;
+  release?: number;
+  /** Pętla (s, względem początku dźwięku w pliku); działa razem z `duration`. */
+  loop?: { start: number; end: number };
+}
+
 export interface PlayOptions {
   volume?: number;
   /** Mnożnik wysokości/prędkości. Losowanie ±5% likwiduje efekt „karabinu maszynowego”. */
@@ -42,6 +65,11 @@ export class Sound {
   private master: GainNode | null = null;
   private buffers = new Map<string, AudioBuffer>();
   private pending = new Map<string, string>();
+  /** Pobrane bajty (pobieranie nie wymaga kontekstu audio, dekodowanie tak). */
+  private fetched = new Map<string, Promise<ArrayBuffer | null>>();
+  private decoding = new Map<string, Promise<void>>();
+  /** Początek dźwięku w buforze: pomija ciszę kodera (AAC/mp3 doklejają ją na początku). */
+  private starts = new Map<string, number>();
   private music: AudioBufferSourceNode | null = null;
   muted = false;
   /** Wycisza tylko efekty (dźwięki bez własnego wyjścia); muzyka grana na własnej szynie gra dalej. */
@@ -89,6 +117,73 @@ export class Sound {
 
   async preload(): Promise<void> {
     await Promise.all([...this.pending.keys()].map((name) => this.decode(name)));
+  }
+
+  /**
+   * Pobiera zarejestrowane pliki od razu, a dekoduje, gdy istnieje kontekst audio (po pierwszym dotknięciu),
+   * więc nie tworzy kontekstu przed gestem. Błędy pojedynczych plików pomija (wtedy `loaded()` = false).
+   * Kończy się, gdy wszystko jest zdekodowane albo odrzucone.
+   */
+  load(names: string[] = [...this.pending.keys()]): Promise<void> {
+    for (const name of names) void this.bytes(name);
+    if (this.ctx) return Promise.all(names.map((name) => this.decode(name))).then(() => undefined);
+    return new Promise((resolve) => {
+      this.onContext.push(() => void Promise.all(names.map((name) => this.decode(name))).then(() => resolve()));
+    });
+  }
+
+  /** Czy plik jest zdekodowany i gotowy do natychmiastowego grania. */
+  loaded(name: string): boolean {
+    return this.buffers.has(name);
+  }
+
+  /**
+   * Gra zdekodowany plik w czasie `at` (dokładnie co do próbki), z wysokością `rate`, panoramą i obwiednią.
+   * Zwraca false, gdy bufor nie jest gotowy (wołający może wtedy zagrać zastępczo syntezą) albo dźwięk jest wyłączony.
+   */
+  sample(name: string, opts: SampleOptions = {}): boolean {
+    if (this.muted || (this.sfxMuted && !opts.output)) return false;
+    const ctx = this.ctx;
+    const buffer = this.buffers.get(name);
+    if (!ctx || !this.master || !buffer || ctx.state !== 'running') return false;
+    const t0 = Math.max(ctx.currentTime, opts.at ?? 0);
+    const rate = Math.max(0.05, opts.rate ?? 1);
+    const offset = this.starts.get(name) ?? 0;
+    const src = ctx.createBufferSource();
+    src.buffer = buffer;
+    src.playbackRate.value = rate;
+    // Pętla tylko z `duration` (inaczej grałaby bez końca).
+    if (opts.loop && opts.duration !== undefined && opts.loop.end > opts.loop.start) {
+      src.loop = true;
+      src.loopStart = offset + opts.loop.start;
+      src.loopEnd = Math.min(buffer.duration, offset + opts.loop.end);
+    }
+    const gain = ctx.createGain();
+    const peak = Math.max(0.0002, opts.volume ?? 1);
+    if (opts.attack) {
+      gain.gain.setValueAtTime(0.0001, t0);
+      gain.gain.exponentialRampToValueAtTime(peak, t0 + opts.attack);
+    } else gain.gain.setValueAtTime(peak, t0);
+    // Bez `duration` gra do końca pliku (w czasie rzeczywistym: długość / prędkość).
+    const natural = (buffer.duration - offset) / rate;
+    let end = t0 + natural;
+    if (opts.duration !== undefined && (src.loop || opts.duration < natural)) {
+      const release = Math.max(0.01, opts.release ?? 0.1);
+      const hold = t0 + Math.max(opts.attack ?? 0, opts.duration);
+      gain.gain.setValueAtTime(peak, hold);
+      gain.gain.setTargetAtTime(0.0001, hold, release / 4);
+      end = hold + release * 1.5;
+    }
+    let node: AudioNode = src.connect(gain);
+    if (opts.pan && ctx.createStereoPanner) {
+      const panner = ctx.createStereoPanner();
+      panner.pan.value = Math.max(-1, Math.min(1, opts.pan));
+      node = gain.connect(panner);
+    }
+    node.connect(opts.output ?? this.master);
+    src.start(t0, offset);
+    if (src.loop || end < t0 + natural) src.stop(end + 0.02);
+    return true;
   }
 
   play(name: string, opts: PlayOptions = {}): void {
@@ -199,11 +294,7 @@ export class Sound {
 
   /** Bufor pliku (ładuje i dekoduje przy pierwszym użyciu). Null, gdy pliku nie ma albo nie da się go zdekodować. */
   async buffer(name: string): Promise<AudioBuffer | null> {
-    try {
-      await this.decode(name);
-    } catch {
-      return null;
-    }
+    await this.decode(name);
     return this.buffers.get(name) ?? null;
   }
 
@@ -216,22 +307,59 @@ export class Sound {
     if (this.master) this.master.gain.value = volume;
   }
 
+  private onContext: (() => void)[] = [];
+
   private context(): AudioContext | null {
     if (this.ctx) return this.ctx;
     if (typeof AudioContext === 'undefined') return null;
     this.ctx = new AudioContext();
     this.master = this.ctx.createGain();
     this.master.connect(this.ctx.destination);
+    for (const fn of this.onContext.splice(0)) fn();
     return this.ctx;
   }
 
-  private async decode(name: string): Promise<void> {
-    const url = this.pending.get(name);
-    const ctx = this.context();
-    if (!url || !ctx || this.buffers.has(name)) return;
-    const data = await (await fetch(url)).arrayBuffer();
-    this.buffers.set(name, await ctx.decodeAudioData(data));
+  private bytes(name: string): Promise<ArrayBuffer | null> {
+    let p = this.fetched.get(name);
+    if (!p) {
+      const url = this.pending.get(name);
+      p = url
+        ? fetch(url)
+            .then((r) => (r.ok ? r.arrayBuffer() : null))
+            .catch(() => null)
+        : Promise.resolve(null);
+      this.fetched.set(name, p);
+    }
+    return p;
   }
+
+  /** Pobiera i dekoduje plik (raz, nawet przy równoległych wywołaniach). Nie rzuca: przy błędzie bufora po prostu nie ma. */
+  private decode(name: string): Promise<void> {
+    if (this.buffers.has(name)) return Promise.resolve();
+    let p = this.decoding.get(name);
+    if (p) return p;
+    const ctx = this.context();
+    if (!ctx || !this.pending.has(name)) return Promise.resolve();
+    p = this.bytes(name)
+      .then((data) => (data ? decodeAudio(ctx, data) : null))
+      .then((buffer) => {
+        if (!buffer) return;
+        this.buffers.set(name, buffer);
+        this.starts.set(name, leadingSilence(buffer, 0.0005));
+      })
+      .catch(() => undefined)
+      .finally(() => this.decoding.delete(name));
+    this.decoding.set(name, p);
+    return p;
+  }
+}
+
+/** decodeAudioData w wersji z obietnicą i z wywołaniami zwrotnymi (starszy WebKit zna tylko te drugie). */
+function decodeAudio(ctx: AudioContext, data: ArrayBuffer): Promise<AudioBuffer> {
+  return new Promise((resolve, reject) => {
+    const p = ctx.decodeAudioData(data, resolve, reject) as Promise<AudioBuffer> | undefined;
+    p?.catch(reject);
+  });
 }
 
 /** Długość ciszy na początku bufora (maks. 0,2 s), np. opóźnienie kodera mp3. */
