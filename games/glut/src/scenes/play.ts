@@ -570,14 +570,18 @@ export class PlayScene extends Scene {
       let target = Math.max(slimeTarget, syrupTarget);
       let lambda = 5 + 5 * la;
       if (target > this.camera.y) {
-        // W dół kamera rusza tylko wtedy, gdy slime schodzi poniżej 75% ekranu (strefa spokoju,
-        // bez bujania przy małych skokach) albo gdy trzeba pokazać syrop.
+        // W dół kamera rusza tylko wtedy, gdy slime spadnie w dolną część ekranu (poniżej 75%);
+        // wtedy trzyma go na tej wysokości. Syrop poza kadrem pokazuje napis „▼ syrop”.
+        // (Ciągłe zjeżdżanie, żeby pokazać syrop, przeszkadzało w sterowaniu.)
         const keepSlime = sy - view.height * (base === 0.6 ? 0.75 : 0.88);
-        target = Math.max(this.camera.y, Math.min(target, Math.max(keepSlime, syrupTarget)));
-        if (s.state === 'flying' && s.vy > 600) lambda = 8;
+        target = Math.max(this.camera.y, Math.min(target, keepSlime));
+        if (s.state === 'flying' && s.vy > 600) lambda = 14;
       }
       this.camera.opts.lambda = lambda;
       this.camera.follow(0, target, dt);
+      // Twarda granica: przy szybkim spadaniu wygładzanie nie nadąża, a slime nie może zniknąć z dołu ekranu.
+      const hard = sy - view.height * (base === 0.6 ? 0.85 : 0.92);
+      if (this.camera.y < hard) this.camera.snap(0, hard);
     }
     if (this.bg) this.bg.tilePosition.y = -this.camera.y * 0.35;
     if (this.bgNext) this.bgNext.tilePosition.y = -this.camera.y * 0.35;

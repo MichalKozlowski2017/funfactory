@@ -173,7 +173,7 @@ Na ekranie startowym bot gra prawdziwy bieg w tle (autopilot jak w `?bot`, bez s
 ### Przejścia i kamera
 
 - **Przesłona** (`fx/iris.ts`): po „Graj” logo odlatuje, przyciski znikają, ciemne koło z cukierkowym obrzeżem zamyka się na przycisku, bieg się podmienia, koło otwiera się wokół slime'a, który „wyskakuje” (dźwięk, iskry, haptyka). To samo przy wyzwaniu dnia, „Jeszcze raz”, „Menu” i wyjściu z pauzy. W trakcie blokuje dotyk.
-- **Kamera** podąża za slime'em w obie strony: w górę jak wcześniej (z wyprzedzaniem w szybkim locie), w dół tylko poza strefą spokoju (gdy slime schodzi poniżej 75% ekranu) albo żeby pokazać syrop (slime zostaje co najmniej 30% od góry). Dzięki temu przy upadku slime i poziom syropu są zawsze w kadrze.
+- **Kamera** podąża za slime'em w obie strony: w górę jak wcześniej (z wyprzedzaniem w szybkim locie), w dół wyłącznie wtedy, gdy slime spadnie poniżej 75% ekranu (trzyma go wtedy na tej wysokości). Ciągłe zjeżdżanie, żeby pokazać syrop, przeszkadzało w sterowaniu (uwaga właściciela), więc syrop poza kadrem sygnalizuje tylko napis „▼ syrop”.
 
 ### Pauza
 
