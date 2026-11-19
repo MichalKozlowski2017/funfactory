@@ -1,4 +1,4 @@
-import { AdMob, AdmobConsentStatus, BannerAdPosition, BannerAdSize } from '@capacitor-community/admob';
+import { AdMob, AdmobConsentStatus, BannerAdPluginEvents, BannerAdPosition, BannerAdSize } from '@capacitor-community/admob';
 import { isNative, platformName } from './platform.ts';
 
 /** Identyfikatory jednostek reklamowych na platformę. */
@@ -33,6 +33,31 @@ export class Ads {
   private interstitialLoaded = false;
   /** Bez reklam (np. po zakupie): nic się nie wyświetla. */
   disabled = false;
+  /**
+   * Wysokość widocznego banera w punktach CSS (0, gdy go nie ma). Gra rezerwuje nad nim miejsce,
+   * żeby baner nie zasłaniał przycisków. Zmiany zgłasza `onBanner`.
+   */
+  bannerHeight = 0;
+  private readonly bannerListeners = new Set<(height: number) => void>();
+  /** Baner udawany w przeglądarce (playtesty): wysokość w punktach CSS. */
+  private simulated = 0;
+
+  /** Powiadomienie o zmianie wysokości banera. Zwraca funkcję wypisującą. */
+  onBanner(fn: (height: number) => void): () => void {
+    this.bannerListeners.add(fn);
+    return () => this.bannerListeners.delete(fn);
+  }
+
+  /** Playtesty w przeglądarce: udaje baner o danej wysokości, gdy gra go pokazuje. */
+  simulateBanner(height: number): void {
+    this.simulated = height;
+  }
+
+  private setBannerHeight(height: number): void {
+    if (height === this.bannerHeight) return;
+    this.bannerHeight = height;
+    for (const fn of this.bannerListeners) fn(height);
+  }
 
   get available(): boolean {
     return isNative() && this.ready && !this.disabled;
@@ -51,6 +76,11 @@ export class Ads {
         if (status === 'notDetermined') await AdMob.requestTrackingAuthorization();
       }
       await AdMob.initialize({ initializeForTesting: cfg.testing });
+      void AdMob.addListener(BannerAdPluginEvents.SizeChanged, (size) => {
+        // iOS podaje punkty; gdyby platforma podała piksele (adaptacyjny baner ma ok. 50–90 pt), przeliczamy.
+        const h = size.height > 150 ? size.height / (window.devicePixelRatio || 1) : size.height;
+        this.setBannerHeight(this.bannerShown ? h : 0);
+      });
       this.ready = true;
       void this.loadInterstitial();
     } catch {
@@ -69,6 +99,11 @@ export class Ads {
   }
 
   async showBanner(): Promise<void> {
+    if (!isNative() && this.simulated) {
+      this.bannerShown = true;
+      this.setBannerHeight(this.simulated);
+      return;
+    }
     if (!this.available || !this.units || this.bannerShown) return;
     this.bannerShown = true;
     try {
@@ -85,8 +120,10 @@ export class Ads {
   }
 
   async hideBanner(): Promise<void> {
-    if (!isNative() || !this.bannerShown) return;
+    if (!this.bannerShown) return;
     this.bannerShown = false;
+    this.setBannerHeight(0);
+    if (!isNative()) return;
     try {
       await AdMob.removeBanner();
     } catch {

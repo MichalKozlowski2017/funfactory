@@ -6,7 +6,7 @@ const config: CapacitorConfig = {
   webDir: 'dist',
   // Kolor jak tło ekranu startowego: bez białego/czarnego mignięcia przed wczytaniem gry.
   backgroundColor: '#1a1028',
-  ios: { contentInset: 'never', backgroundColor: '#1a1028' },
+  ios: { contentInset: 'never', backgroundColor: '#1a1028', scrollEnabled: false },
   android: { backgroundColor: '#1a1028' },
 };
 

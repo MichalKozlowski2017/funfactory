@@ -85,10 +85,12 @@ export class SettingsPanel extends Container {
     }
   }
 
-  layout(view: View): void {
+  /** `bottom`: miejsce zajęte od dołu (baner reklamy). */
+  layout(view: View, bottom = 0): void {
     this.dim.clear().rect(0, 0, view.width, view.height).fill({ color: 0x140c22, alpha: 0.75 });
     const h = 940;
-    const top = (view.height - h) / 2;
+    const free = view.height - bottom - view.safe.top;
+    const top = view.safe.top + Math.max(10, (free - h) / 2);
     this.panel.clear().roundRect(50, top, view.width - 100, h, 40).fill({ color: 0x2b1e3f }).stroke({ color: hexToNumber(pal.ink), width: 6 });
     this.body.position.set(view.width / 2, top);
     this.title.position.set(0, 80);

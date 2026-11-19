@@ -12,6 +12,7 @@ export interface TitleOptions {
   onShop: () => void;
   /** Wyzwanie dnia: ta sama studnia dla wszystkich. */
   onDaily: () => void;
+  onAchievements: () => void;
   /** Ustawienia (muzyka, dźwięki, wibracje, sterowanie). */
   onSettings: () => void;
 }
@@ -32,6 +33,7 @@ export class TitleOverlay extends Container {
   private readonly shop: Button;
   private readonly settings: Button;
   private readonly daily: Button;
+  private readonly trophies: Button;
   private readonly dailyInfo: Text;
   private time = 0;
 
@@ -53,18 +55,20 @@ export class TitleOverlay extends Container {
     this.prompt.text = 'Dotknij, aby zacząć';
     this.best = text(32, pal.accent);
     this.bank = text(36, pal.surface);
-    this.bank.anchor.set(0, 0.5);
+    // Do prawej, przed ikonką: dłuższe liczby rosną w lewo, a nie pod zaokrąglony róg ekranu.
+    this.bank.anchor.set(1, 0.5);
     this.icon = new Sprite({ texture: o.candyTex, anchor: 0.5 });
     this.icon.scale.set(54 / Math.max(o.candyTex.width, o.candyTex.height));
     this.daily = new Button({ label: 'Wyzwanie dnia', color: '#ffb84d', width: 420, height: 104, fontSize: 40, resolution: o.pixelRatio, onTap: o.onDaily });
     this.dailyInfo = text(26, '#ffd9a0');
-    this.shop = new Button({ label: 'Szafa', color: '#9b8cff', width: 300, height: 96, fontSize: 40, resolution: o.pixelRatio, onTap: o.onShop });
+    this.shop = new Button({ label: 'Szafa', color: '#9b8cff', width: 250, height: 96, fontSize: 38, resolution: o.pixelRatio, onTap: o.onShop });
+    this.trophies = new Button({ label: 'Osiągnięcia', color: '#e58bd0', width: 250, height: 96, fontSize: 34, resolution: o.pixelRatio, onTap: o.onAchievements });
 
     this.settings = new Button({ label: 'Ustawienia', color: '#5fc8e8', width: 300, height: 88, fontSize: 34, resolution: o.pixelRatio, onTap: o.onSettings });
 
     this.tap.eventMode = 'static';
     this.tap.on('pointertap', () => o.onStart());
-    this.addChild(this.shade, this.tap, this.logo, this.prompt, this.best, this.icon, this.bank, this.daily, this.dailyInfo, this.shop, this.settings);
+    this.addChild(this.shade, this.tap, this.logo, this.prompt, this.best, this.icon, this.bank, this.daily, this.dailyInfo, this.shop, this.trophies, this.settings);
   }
 
   setStats(best: number, candies: number): void {
@@ -77,7 +81,8 @@ export class TitleOverlay extends Container {
     this.dailyInfo.text = info;
   }
 
-  layout(view: View): void {
+  /** `bottom`: miejsce zajęte od dołu (baner reklamy); przyciski zostają nad nim. */
+  layout(view: View, bottom = 0): void {
     this.tap.hitArea = new Rectangle(0, 0, view.width, view.height);
     const gradient = new FillGradient({
       type: 'linear',
@@ -95,12 +100,15 @@ export class TitleOverlay extends Container {
     this.logo.position.set(cx, view.height * 0.24);
     this.prompt.position.set(cx, view.height * 0.4);
     this.best.position.set(cx, view.height * 0.4 + 60);
-    this.icon.position.set(view.width - 130, view.safe.top + 58);
-    this.bank.position.set(view.width - 96, view.safe.top + 58);
-    const y = Math.max(view.height * 0.5, view.height * 0.4 + 140);
+    this.icon.position.set(view.width - 52, view.safe.top + 58);
+    this.bank.position.set(view.width - 90, view.safe.top + 58);
+    let y = Math.max(view.height * 0.5, view.height * 0.4 + 140);
+    // Ostatni przycisk (dół ok. y + 340) nad banerem.
+    y = Math.min(y, view.height - bottom - 350);
     this.daily.position.set(cx, y);
     this.dailyInfo.position.set(cx, y + 76);
-    this.shop.position.set(cx, y + 180);
+    this.shop.position.set(cx - 135, y + 180);
+    this.trophies.position.set(cx + 135, y + 180);
     this.settings.position.set(cx, y + 290);
   }
 
@@ -109,6 +117,7 @@ export class TitleOverlay extends Container {
     this.shop.tick(dt);
     this.settings.tick(dt);
     this.daily.tick(dt);
+    this.trophies.tick(dt);
     this.logo.rotation = Math.sin(this.time * 1.6) * 0.035;
     this.logo.scale.set(1 + Math.sin(this.time * 3.2) * 0.025, 1 - Math.sin(this.time * 3.2) * 0.025);
     this.prompt.alpha = 0.55 + 0.45 * Math.abs(Math.sin(this.time * 2.4));

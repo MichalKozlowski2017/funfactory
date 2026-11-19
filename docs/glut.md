@@ -155,12 +155,24 @@ Decyzja właściciela: rozgrywka ma być kompetytywna i zawsze taka sama, bo pla
 
 ### Szafa (kosmetyka)
 
-Cztery działy po 4 rzeczy, po jednej założonej z każdego (`sim/shop.ts`, grafika `fx/cosmetics.ts` z kodu SVG, poza czapkami z Fluxa):
+Cztery działy po 6 rzeczy, po jednej założonej z każdego (`sim/shop.ts`, grafika `fx/cosmetics.ts` z kodu SVG, czapki z Fluxa). Ceny 400 / 1000 / 2500 / 5000 / 10 000: przeciętny gracz zbiera ok. 1500–2500 cukierków na godzinę (bot: 1700–6700/h zależnie od refleksu), więc to od kwadransa do kilku godzin na rzecz, a cała szafa to kilkadziesiąt godzin (decyzja właściciela: „coś, na co trzeba zapracować długą grą”). Szósta rzecz w każdym dziale jest tylko za osiągnięcie.
 
-- **Czapki** 30–200: imprezowa, kucharska, korona, czarodzieja.
-- **Kolory** 40–300: miętowy, cytrynowy, winogronowy, złoty. Kolor przechodzi na ślad, kleksy i cząsteczki.
-- **Ślady w locie** 50–250: bąbelki, serduszka, gwiazdki, tęcza.
-- **Dodatki** 40–160: kokarda, wąsy, okulary, monokl (na twarzy, zostają pionowo jak oczy).
+- **Czapki:** imprezowa, kucharska, piracka, korona, czarodzieja; **rogi** za 700 m.
+- **Kolory:** miętowy, cytrynowy, lodowy, winogronowy, złoty; **tęczowy** (animowany) za serię ×20. Kolor przechodzi na ślad, kleksy i cząsteczki.
+- **Ślady w locie:** bąbelki, serduszka, nutki, gwiazdki, tęcza; **ogień** za 25 ratunków.
+- **Dodatki:** kokarda, wąsy, słuchawki, okulary, monokl; **medal** za wyzwanie dnia 7 dni z rzędu.
+
+### Osiągnięcia
+
+38 osiągnięć (`sim/achievements.ts`): wysokości 50–700 m (każdy świat), na czas (100 m w 30 s, 200 m w minutę, 300 m w 1:30, 50 i 100 cukierków w pierwszej minucie, przetrwanie 2 i 5 minut; progi z pomiaru botem, czas gry, więc slow-motion nie oszukuje zegara), serie ×5–×20, skoki w locie, cukierki w jednym skoku, ratunki, odbicia od galaretki, pokruszone czekolady, wszystkie power-upy, liczba biegów (10/100/500), zebrane cukierki (1 tys. / 10 tys. / 50 tys.), wyzwanie dnia (pierwsze, 3 i 7 dni z rzędu), coś z każdego działu szafy. Nagrody w cukierkach (100–3000), cztery dają rzeczy do szafy. Liczniki w zapisie (`stats`), postęp w panelu (przycisk „Osiągnięcia” na ekranie startowym), powiadomienie z pucharem w trakcie gry (tekst bitmapowy, bez zacięć).
+
+### Timer i gesty systemowe
+
+Czas biegu (czas gry) pod licznikiem cukierków i na ekranie końca. Na iOS widok gry (`GameViewController` w `AppDelegate.swift`) odracza systemowe gesty przy górnej i dolnej krawędzi (bez tego przesunięcie w dół włączało „Reachability” i ekran zjeżdżał do połowy); WebView nie przewija się.
+
+### Reklama a układ
+
+Baner zgłasza swoją wysokość (`ads.bannerHeight`, `ads.onBanner`); szafa, ustawienia, osiągnięcia i ekran startowy rezerwują nad nim miejsce, więc nic nie chowa się pod reklamą. W przeglądarce `?banner=62` udaje baner o tej wysokości (punkty CSS).
 
 ### Wyzwanie dnia i ranking
 

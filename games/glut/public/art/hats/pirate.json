@@ -1,0 +1,17 @@
+{
+  "workflow": "flux2-sprite.json",
+  "PROMPT": "a small pirate tricorn hat, dark purple with a gold trim and a tiny white skull and crossbones made of candy, accessory item seen from the front, no character, cute candy-land mobile game art, flat vector style, clean thick dark outline, soft cel shading, pastel pink lavender and mint palette, single object, centered, plain light gray background, no text",
+  "NEGATIVE": "",
+  "SEED": 412,
+  "WIDTH": 1024,
+  "HEIGHT": 1024,
+  "PREFIX": "pirate",
+  "STEPS": 20,
+  "GUIDANCE": 4,
+  "BPM": 100,
+  "DURATION": 60,
+  "KEY": "A minor",
+  "LYRICS": "[Instrumental]",
+  "created": "2026-11-19T08:24:53.607Z",
+  "post": "trim alpha, fit 200px"
+}

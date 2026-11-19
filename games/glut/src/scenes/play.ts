@@ -22,7 +22,7 @@ import { fallbackIcon, POWER_INFO, POWER_KINDS, PowerBubble, PowerHud } from '..
 import { FEATURE_SFX, POWER_SFX, SFX, STREAK_SFX } from '../fx/sfx.ts';
 import { FEATURE_COLORS, FeatureView } from '../fx/features.ts';
 import { hudText, installHudFont } from '../fx/hud-font.ts';
-import { candyWord, milestoneBanner, StreakHud, streakTier } from '../fx/streak-fx.ts';
+import { candyWord, milestoneBanner, rainbow, StreakHud, streakTier } from '../fx/streak-fx.ts';
 import { bodyScale, bodySprite, SlimeFace, slimeTextures, type SlimeTextures } from '../fx/slime-art.ts';
 import { drawBlock, SURFACE } from '../fx/surfaces.ts';
 import { BIOME_LOOKS, mixColor, type BiomeLook } from '../fx/biome-look.ts';
@@ -35,6 +35,9 @@ import { SHAFT, type Candy, type PowerKind, type PowerUp } from '../sim/shaft.ts
 import { ACCESSORIES, HATS, ITEMS, NEW_SAVE, normalizeSave, SKINS, tapItem, TRAILS, type Save } from '../sim/shop.ts';
 import { dailySeed, dailyStreak, dayKey, recordDaily, type DailyRecord } from '../sim/daily.ts';
 import { ReplayRecorder, type Replay } from '../sim/replay.ts';
+import { ACHIEVEMENTS, formatTime, newlyEarned, progressOf, type AchievementDef, type Stats } from '../sim/achievements.ts';
+import { AchievementToasts } from '../ui/achievement-toast.ts';
+import { AchievementsPanel } from '../ui/achievements-panel.ts';
 import { accessorySprite, cosmeticTextures, type CosmeticTextures } from '../fx/cosmetics.ts';
 import { ShopPanel } from '../ui/shop-panel.ts';
 import { SettingsPanel } from '../ui/settings-panel.ts';
@@ -176,6 +179,11 @@ export class PlayScene extends Scene {
   private candyIcon!: Sprite;
   private hint!: Text;
   private syrupWarn!: BitmapText;
+  /** Czas biegu (czas gry, jak w osiągnięciach na czas). */
+  private timerText!: BitmapText;
+  private timerShown = -1;
+  /** Czasy dojścia do 100/200/300 m w tym biegu. */
+  private runFast: Record<number, number> = {};
   private againButton: Button | null = null;
   private menuButton: Button | null = null;
   private aiming: { sx: number; sy: number; power: number; dx: number; dy: number } | null = null;
@@ -214,6 +222,12 @@ export class PlayScene extends Scene {
   private recorder: ReplayRecorder | null = null;
   lastReplay: Replay | null = null;
   private dailyResult: { improved: boolean; record: DailyRecord } | null = null;
+  /** Osiągnięcia: liczniki, zdobyte, powiadomienia, panel. */
+  private stats!: Stats;
+  private earned: string[] = [];
+  private toasts!: AchievementToasts;
+  private trophies: AchievementsPanel | null = null;
+  private achIn = 0;
   /** Licznik wydajności (ukryty: 5 stuknięć w wersję w ustawieniach). */
   private perfText: Text | null = null;
   private perfIn = 0;
@@ -233,6 +247,8 @@ export class PlayScene extends Scene {
   /** Reklamy: zasady pokazywania pełnoekranowych i stan banera (tylko poza rozgrywką). */
   private readonly adPolicy = new AdPolicy();
   private bannerWanted = false;
+  /** Ile jednostek gry od dołu zajmuje baner (z marginesem bezpiecznego obszaru); 0 bez banera. */
+  private bannerReserve = 0;
   private sfxOn = true;
   private vibrationOn = true;
 
@@ -246,6 +262,8 @@ export class PlayScene extends Scene {
     this.trailId = saved.trail;
     this.accId = saved.acc;
     this.daily = saved.daily;
+    this.stats = saved.stats;
+    this.earned = saved.achievements;
     this.controls = saved.controls;
     this.musicOn = saved.music;
     this.sfxOn = saved.sfx;
@@ -268,6 +286,15 @@ export class PlayScene extends Scene {
     this.score = new Score(this.game.sound);
     this.applySettings();
     void ads.init(ADS).then(() => this.syncBanner(true));
+    const simulated = Number(new URLSearchParams(location.search).get('banner'));
+    if (simulated > 0) ads.simulateBanner(simulated);
+    const unsubscribe = ads.onBanner((h) => {
+      const view = this.game.view;
+      const k = view.width / this.game.app.screen.width;
+      this.bannerReserve = h > 0 ? h * k + view.safe.bottom + 12 : 0;
+      this.layoutPanels();
+    });
+    this.once('destroyed', unsubscribe);
     const powerArt = await Promise.all(POWER_KINDS.map((k) => optionalTexture(`power/${k}.png`)));
     for (const [i, kind] of POWER_KINDS.entries()) this.powerTex.set(kind, powerArt[i] ?? (await fallbackIcon(kind, pr)));
     const hatTex = await Promise.all(HATS.map((h) => optionalTexture(h.file)));
@@ -334,10 +361,23 @@ export class PlayScene extends Scene {
     this.hint.anchor.set(0.5);
     this.hint.text = this.hintText('start');
     this.syrupWarn = hudText(28, '#ffc2d4');
+    this.timerText = hudText(30, '#d9ccff');
+    this.timerText.anchor.set(1, 0.5);
     this.syrupWarn.anchor.set(0.5, 1);
     this.powerHud = new PowerHud(this.powerTex);
     this.streakHud = new StreakHud(this.tweens, this.game.pixelRatio);
-    this.hud.addChild(this.shadeG, this.trailG, this.dangerG, this.glow, this.powerHud, this.heightText, this.bestText, this.streakHud, this.candyIcon, this.candyText, this.hint, this.syrupWarn, this.fx);
+    this.toasts = new AchievementToasts({
+      tweens: this.tweens,
+      timers: this.timers,
+      candyTex: this.candyTex,
+      onShow: () => {
+        this.game.sound.synth(SFX.record);
+        haptics.success();
+      },
+    });
+    this.hud.addChild(this.shadeG, this.trailG, this.dangerG, this.glow, this.powerHud, this.heightText, this.bestText, this.streakHud, this.candyIcon, this.candyText, this.timerText, this.hint, this.syrupWarn, this.fx);
+    // Powiadomienia nad wszystkim (także nad panelami poza grą).
+    this.addChild(this.toasts);
 
     const input = gestures(this.input, { dragThreshold: 10 });
     // Proca i swipe: przeciągnięcie w dowolnym miejscu ekranu.
@@ -394,12 +434,17 @@ export class PlayScene extends Scene {
   }
 
   override resize(view: View): void {
+    if (this.toasts) {
+      this.toasts.top = view.safe.top + 16;
+      this.toasts.width0 = view.width;
+    }
     this.input.hitArea = new Rectangle(0, 0, view.width, view.height);
     this.heightText.position.set(view.width / 2, view.safe.top + 24);
     this.bestText.position.set(view.width / 2, view.safe.top + 92);
     this.streakHud.position.set(view.width / 2, view.safe.top + 150);
     this.candyIcon.position.set(view.width - 52, view.safe.top + 58);
     this.candyText.position.set(view.width - 90, view.safe.top + 58);
+    this.timerText.position.set(view.width - 34, view.safe.top + 112);
     this.powerHud.position.set(52, view.safe.top + 58);
     this.hint.position.set(view.width / 2, view.height * 0.3);
     this.syrupWarn.position.set(view.width / 2, view.height - view.safe.bottom - 24);
@@ -423,9 +468,16 @@ export class PlayScene extends Scene {
     this.camera.opts.maxY = this.floorView();
     if (!this.run.started) this.camera.snap(0, this.floorView());
     this.layoutOverlay();
-    this.title?.layout(view);
-    this.shop?.layout(view);
-    this.settings?.layout(view);
+    this.layoutPanels();
+  }
+
+  /** Panele poza grą: układ z miejscem na baner reklamy u dołu. */
+  private layoutPanels(): void {
+    const view = this.game.view;
+    this.title?.layout(view, this.bannerReserve);
+    this.shop?.layout(view, this.bannerReserve);
+    this.settings?.layout(view, this.bannerReserve);
+    this.trophies?.layout(view, this.bannerReserve);
   }
 
   override fixedUpdate(dt: number): void {
@@ -475,6 +527,12 @@ export class PlayScene extends Scene {
     this.updateBiome(dt);
     this.updateMusic();
     this.updatePerf(dt / (this.game.loop.timeScale || 1));
+    this.achIn -= dt;
+    if (this.achIn <= 0) {
+      this.achIn = 0.3;
+      this.checkAchievements();
+    }
+    if (this.bodyArt && SKINS.find((k) => k.id === this.skinId)?.rainbow) this.bodyArt.tint = rainbow(this.time);
     this.updateLights(dt);
     this.syncBanner();
     this.shaker.update(dt);
@@ -485,6 +543,7 @@ export class PlayScene extends Scene {
     this.title?.tick(dt);
     this.shop?.tick(dt);
     this.settings?.tick(dt);
+    this.trophies?.tick(dt);
     this.hat.rotation = this.hatSwing.update(dt);
     this.placeSlime(dt);
     this.animateCandies();
@@ -501,6 +560,12 @@ export class PlayScene extends Scene {
       void this.persist();
     }
     this.heightText.text = `${meters} m`;
+    const sec = Math.floor(this.run.time);
+    if (sec !== this.timerShown) {
+      this.timerShown = sec;
+      this.timerText.text = formatTime(sec);
+    }
+    this.trackTimes();
     this.bestText.text = `rekord ${this.best} m`;
     this.candyText.text = `${Math.max(0, this.run.candies - this.flying)}`;
     this.streakHud.tick(dt);
@@ -561,6 +626,8 @@ export class PlayScene extends Scene {
       sfx: this.sfxOn,
       vibration: this.vibrationOn,
       daily: this.daily,
+      stats: this.stats,
+      achievements: this.earned,
     };
   }
 
@@ -569,23 +636,24 @@ export class PlayScene extends Scene {
   private showTitle(): void {
     this.mode = 'title';
     this.hint.visible = false;
-    for (const t of [this.heightText, this.bestText, this.candyIcon, this.candyText]) t.visible = false;
+    for (const t of [this.heightText, this.bestText, this.candyIcon, this.candyText, this.timerText]) t.visible = false;
     this.title = new TitleOverlay({
       candyTex: this.candyTex,
       pixelRatio: this.game.pixelRatio,
       onStart: () => this.startPlaying(),
       onShop: () => this.openShop(),
       onDaily: () => this.startDaily(),
+      onAchievements: () => this.openTrophies(),
       onSettings: () => this.openSettings(),
     });
     this.title.setStats(this.best, this.bank + this.run.candies);
     this.title.setDaily(this.dailyInfo());
     this.overlay.addChild(this.title);
-    this.title.layout(this.game.view);
+    this.title.layout(this.game.view, this.bannerReserve);
   }
 
   private startPlaying(): void {
-    if (this.mode === 'play' || this.shop || this.settings) return;
+    if (this.mode === 'play' || this.shop || this.settings || this.trophies) return;
     this.game.sound.synth(SFX.tap);
     const title = this.title;
     this.title = null;
@@ -594,9 +662,78 @@ export class PlayScene extends Scene {
       this.timers.after(0.21, () => title.destroy({ children: true }));
     }
     this.mode = 'play';
-    for (const t of [this.heightText, this.bestText, this.candyIcon, this.candyText]) t.visible = true;
+    for (const t of [this.heightText, this.bestText, this.candyIcon, this.candyText, this.timerText]) t.visible = true;
     this.hint.visible = this.runs === 1;
     this.squash(0.25);
+  }
+
+  // --- osiągnięcia ---
+
+  /** Liczniki na czas: dojście do 100/200/300 m, cukierki w pierwszej minucie, najdłuższy bieg. */
+  private trackTimes(): void {
+    const run = this.run;
+    if (!run.started || run.over || !this.stats) return;
+    const st = this.stats;
+    for (const m of [100, 200, 300] as const) {
+      if (this.runFast[m] || run.meters < m) continue;
+      this.runFast[m] = run.time;
+      const key = `fast${m}` as const;
+      st[key] = st[key] > 0 ? Math.min(st[key], run.time) : run.time;
+    }
+    if (run.time <= 60) st.candies60 = Math.max(st.candies60, run.candies);
+    st.longest = Math.max(st.longest, run.time);
+  }
+
+  private openTrophies(): void {
+    if (this.trophies || this.shop || this.settings) return;
+    this.game.sound.synth(SFX.tap);
+    this.trophies = new AchievementsPanel({
+      pixelRatio: this.game.pixelRatio,
+      progress: this.progress(),
+      earned: this.earned,
+      onClose: () => this.closeTrophies(),
+    });
+    this.trophies.layout(this.game.view, this.bannerReserve);
+    this.overlay.addChild(this.trophies);
+    this.trophies.alpha = 0;
+    this.tweens.to(this.trophies, { alpha: 1 }, { duration: 0.18 });
+  }
+
+  private closeTrophies(): void {
+    const panel = this.trophies;
+    this.trophies = null;
+    if (!panel) return;
+    this.game.sound.synth(SFX.tap);
+    this.tweens.to(panel, { alpha: 0 }, { duration: 0.15 });
+    this.timers.after(0.16, () => panel.destroy({ children: true }));
+  }
+
+  private progress() {
+    const worn = [this.hatId, this.skinId, this.trailId, this.accId].filter(Boolean).length;
+    // Cukierki bieżącego biegu liczą się na żywo; po śmierci są już w statystykach.
+    const live = this.run && !this.run.over ? this.run.candies : 0;
+    return progressOf({ ...this.stats, candies: this.stats.candies + live }, { best: this.best, dailyStreak: dailyStreak(this.daily, dayKey(new Date())), worn });
+  }
+
+  /** Sprawdza osiągnięcia; nowe: nagroda do konta, rzecz do szafy, powiadomienie. */
+  private checkAchievements(): void {
+    if (!this.stats) return;
+    const fresh = newlyEarned(this.progress(), this.earned);
+    if (!fresh.length) return;
+    for (const d of fresh) this.earn(d);
+    void this.persist();
+    this.title?.setStats(this.best, this.bank + this.run.candies);
+  }
+
+  private earn(d: AchievementDef): void {
+    this.earned = [...this.earned, d.id];
+    this.bank += d.reward;
+    let itemName: string | null = null;
+    if (d.item && !this.owned.includes(d.item)) {
+      this.owned = [...this.owned, d.item];
+      itemName = ITEMS.find((i) => i.id === d.item)?.name ?? null;
+    }
+    this.toasts.push(d, itemName);
   }
 
   /** Podpis wyzwania dnia na ekranie startowym. */
@@ -610,7 +747,7 @@ export class PlayScene extends Scene {
 
   /** Wyzwanie dnia: nowa studnia z seedem z daty i od razu gra. */
   private startDaily(): void {
-    if (this.mode === 'play' || this.shop || this.settings) return;
+    if (this.mode === 'play' || this.shop || this.settings || this.trophies) return;
     this.dailyMode = true;
     // newRun czyści nakładki: ekran startowy odkładamy na bok, żeby startPlaying go wygasił.
     const title = this.title;
@@ -637,7 +774,7 @@ export class PlayScene extends Scene {
   }
 
   private openShop(): void {
-    if (this.shop || this.settings) return;
+    if (this.shop || this.settings || this.trophies) return;
     this.game.sound.synth(SFX.tap);
     const previews = new Map<string, Texture | null>(this.hatTextures);
     for (const k of SKINS) previews.set(k.id, this.skinTex.get(k.id)?.body ?? null);
@@ -645,6 +782,11 @@ export class PlayScene extends Scene {
     for (const a of ACCESSORIES) previews.set(a.id, this.cosmetics.acc.get(a.id) ?? null);
     this.shop = new ShopPanel({
       previews,
+      rainbow: new Set(SKINS.filter((k) => k.rainbow).map((k) => k.id)),
+      unlockName: (id) => {
+        const unlock = ITEMS.find((i) => i.id === id)?.unlock;
+        return unlock ? (ACHIEVEMENTS.find((d) => d.id === unlock)?.desc ?? null) : null;
+      },
       candyTex: this.candyTex,
       pixelRatio: this.game.pixelRatio,
       tweens: this.tweens,
@@ -652,7 +794,7 @@ export class PlayScene extends Scene {
       onClose: () => this.closeShop(),
     });
     this.shop.refresh(this.snapshot());
-    this.shop.layout(this.game.view);
+    this.shop.layout(this.game.view, this.bannerReserve);
     this.overlay.addChild(this.shop);
     this.shop.alpha = 0;
     this.tweens.to(this.shop, { alpha: 1 }, { duration: 0.18 });
@@ -671,7 +813,7 @@ export class PlayScene extends Scene {
   private tapItem(id: string): void {
     const r = tapItem(this.snapshot(), id);
     if (!r.ok) {
-      if (r.reason === 'poor') this.shop?.deny(id, r.missing ?? 0);
+      if (r.reason === 'poor' || r.reason === 'locked') this.shop?.deny(id, r.missing ?? 0);
       haptics.error();
       return;
     }
@@ -757,6 +899,7 @@ export class PlayScene extends Scene {
     this.run = new Run(seed);
     this.recorder = new ReplayRecorder(seed);
     this.bestAtStart = this.best;
+    this.runFast = {};
     this.streakHud.set(0);
     this.reachedBiome = 0;
     this.score?.revive();
@@ -859,7 +1002,7 @@ export class PlayScene extends Scene {
   // --- ustawienia ---
 
   private openSettings(): void {
-    if (this.settings || this.shop) return;
+    if (this.settings || this.shop || this.trophies) return;
     this.game.sound.synth(SFX.tap);
     this.settings = new SettingsPanel({
       pixelRatio: this.game.pixelRatio,
@@ -869,7 +1012,7 @@ export class PlayScene extends Scene {
     });
     this.refreshSettings();
     this.settings.setVersionNote(this.perfText ? 'licznik wł.' : '');
-    this.settings.layout(this.game.view);
+    this.settings.layout(this.game.view, this.bannerReserve);
     this.overlay.addChild(this.settings);
     this.settings.alpha = 0;
     this.tweens.to(this.settings, { alpha: 1 }, { duration: 0.18 });
@@ -1019,6 +1162,7 @@ export class PlayScene extends Scene {
     this.recorder?.shot(v.vx, v.vy);
     if (inAir) {
       const n = this.run.airJumps;
+      this.stats.maxAirJumps = Math.max(this.stats.maxAirJumps, n);
       this.game.sound.synth(POWER_SFX.air, { pitch: 1 + Math.min(n - 1, 8) * 0.1 });
       this.score.airJump(n);
       if (n >= 2) this.comboPop(this.run.slime.x, this.run.slime.y + 30, n);
@@ -1249,6 +1393,12 @@ export class PlayScene extends Scene {
       this.sparks.burst(s.x, s.y, { count: 30, speed: [200, 600], life: [0.3, 0.6], scale: [0.6, 1.2], colors: [POWER_INFO.shell.color, 0xffffff] });
       this.floatText(s.x, s.y - 60, 'Odbite!', POWER_INFO.shell.css);
     }
+    if (r.bounced) this.stats.bounces++;
+    if (r.crumbled) this.stats.crumbles++;
+    if (r.trick?.kind === 'rescue') this.stats.rescues++;
+    if (r.streak) this.stats.bestStreak = Math.max(this.stats.bestStreak, r.streak);
+    if (r.airCombo) this.stats.maxAirCombo = Math.max(this.stats.maxAirCombo, r.airCombo.count);
+    if (r.powered && !this.stats.powers.includes(r.powered.kind)) this.stats.powers = [...this.stats.powers, r.powered.kind];
     if (r.bounced) this.onBounce(r.bounced.block, r.bounced.x, r.bounced.y, r.bounced.nx, r.bounced.ny, r.bounced.speed);
     if (r.crumbled) this.onCrumble(r.crumbled);
     if (r.landed && this.run.slime.stuckTo?.feature === 'crumble') this.game.sound.synth(FEATURE_SFX.creak, { pitch: 0.9 + this.game.rng.next() * 0.2 });
@@ -1529,6 +1679,9 @@ export class PlayScene extends Scene {
     });
     this.slime.visible = false;
     this.lastReplay = this.recorder?.finish(this.run.meters) ?? null;
+    this.stats.runs++;
+    this.stats.candies += this.run.candies;
+    if (this.dailyMode) this.stats.dailyRuns++;
     this.recorder = null;
     if (this.dailyMode && !PILOT_MODE) {
       const r = recordDaily(this.daily, this.dailyDay, this.run.meters);
@@ -1549,6 +1702,8 @@ export class PlayScene extends Scene {
     title.text = cause === 'syrup' ? 'Syrop cię dopadł!' : 'Au, kolce!';
     const score = this.makeText(110, '#ffffff');
     score.text = `${meters} m`;
+    const clock = this.makeText(30, '#d9ccff');
+    clock.text = `czas ${formatTime(this.run.time)}`;
     const sub = this.makeText(34, record ? pal.accent : pal.surface);
     sub.text = record ? 'Nowy rekord!' : `rekord ${this.best} m`;
     const daily = this.dailyResult;
@@ -1563,10 +1718,11 @@ export class PlayScene extends Scene {
     const rhythm = this.makeText(28, '#ffd166');
     rhythm.text = this.run.bestStreak >= 2 ? `najlepszy rytm ×${this.run.bestStreak}${this.run.bonus ? ` · premie +${this.run.bonus}` : ''}` : '';
     rhythm.position.set(0, 76);
-    for (const t of [title, score, sub, sweets, rhythm]) t.anchor.set(0.5);
-    title.position.set(0, -250);
-    score.position.set(0, -130);
-    sub.position.set(0, -30);
+    for (const t of [title, score, clock, sub, sweets, rhythm]) t.anchor.set(0.5);
+    title.position.set(0, -260);
+    score.position.set(0, -150);
+    clock.position.set(0, -72);
+    sub.position.set(0, -22);
     sweets.position.set(0, 30);
     const again = new Button({
       label: 'Jeszcze raz',
@@ -1598,7 +1754,7 @@ export class PlayScene extends Scene {
     });
     menu.position.set(0, 300);
     this.menuButton = menu;
-    panel.addChild(title, score, sub, sweets, rhythm, again, menu);
+    panel.addChild(title, score, clock, sub, sweets, rhythm, again, menu);
     panel.label = 'panel';
     this.overlay.addChild(dim, panel);
     this.layoutOverlay();
@@ -1931,7 +2087,7 @@ export class PlayScene extends Scene {
 
   /** Baner tylko poza rozgrywką: ekran startowy, sklep, ustawienia, koniec biegu. */
   private syncBanner(force = false): void {
-    const want = this.mode === 'title' || !!this.againButton || !!this.shop || !!this.settings;
+    const want = this.mode === 'title' || !!this.againButton || !!this.shop || !!this.settings || !!this.trophies;
     if (want === this.bannerWanted && !force) return;
     this.bannerWanted = want;
     void (want ? ads.showBanner() : ads.hideBanner());

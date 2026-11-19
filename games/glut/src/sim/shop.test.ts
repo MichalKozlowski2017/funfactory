@@ -3,18 +3,24 @@ import { HATS, ITEMS, KINDS, NEW_SAVE, normalizeSave, tapItem, itemsOf } from '.
 
 describe('wardrobe', () => {
   it('buys and equips when affordable', () => {
-    const r = tapItem({ ...NEW_SAVE, candies: 50 }, 'party');
+    const r = tapItem({ ...NEW_SAVE, candies: 450 }, 'party');
     expect(r.ok).toBe(true);
     if (!r.ok) return;
     expect(r.action).toBe('bought');
-    expect(r.save.candies).toBe(20);
+    expect(r.save.candies).toBe(50);
     expect(r.save.owned).toEqual(['party']);
     expect(r.save.hat).toBe('party');
   });
 
   it('refuses when too poor and says how much is missing', () => {
     const r = tapItem({ ...NEW_SAVE, candies: 10 }, 'crown');
-    expect(r).toEqual({ ok: false, reason: 'poor', missing: 110 });
+    expect(r).toEqual({ ok: false, reason: 'poor', missing: 4990 });
+  });
+
+  it('achievement items cannot be bought, only worn once earned', () => {
+    expect(tapItem({ ...NEW_SAVE, candies: 99999 }, 'horns')).toEqual({ ok: false, reason: 'locked', unlock: 'h700' });
+    const r = tapItem({ ...NEW_SAVE, owned: ['horns'] }, 'horns');
+    expect(r.ok && r.action === 'equipped' && r.save.hat === 'horns').toBe(true);
   });
 
   it('owned item toggles on and off without charging', () => {
@@ -26,7 +32,7 @@ describe('wardrobe', () => {
   });
 
   it('wears one item per kind, independently across kinds', () => {
-    let save = { ...NEW_SAVE, candies: 1000 };
+    let save = { ...NEW_SAVE, candies: 100000 };
     for (const id of ['party', 'mint', 'hearts', 'bow', 'lemon']) {
       const r = tapItem(save, id);
       if (r.ok) save = r.save;
@@ -35,15 +41,16 @@ describe('wardrobe', () => {
     expect(save.owned).toContain('mint');
   });
 
-  it('has unique ids and growing prices in every kind', () => {
+  it('has unique ids, growing prices and one achievement item in every kind', () => {
     expect(new Set(ITEMS.map((i) => i.id)).size).toBe(ITEMS.length);
     for (const { kind } of KINDS) {
-      const prices = itemsOf(kind).map((i) => i.price);
-      expect(prices.length).toBe(4);
-      expect([...prices].sort((a, b) => a - b)).toEqual(prices);
-      expect(prices[0]).toBeLessThanOrEqual(50);
+      const items = itemsOf(kind);
+      expect(items.length).toBe(6);
+      const prices = items.filter((i) => !i.unlock).map((i) => i.price);
+      expect(prices).toEqual([400, 1000, 2500, 5000, 10000]);
+      expect(items.filter((i) => i.unlock).length).toBe(1);
     }
-    expect(HATS[0]!.price).toBeLessThanOrEqual(40);
+    expect(HATS[0]!.price).toBe(400);
   });
 
   it('normalizes old or broken saves', () => {

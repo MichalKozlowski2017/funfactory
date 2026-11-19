@@ -42,3 +42,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return config
     }
 }
+
+/// Widok gry: odracza systemowe gesty przy krawędziach ekranu. Bez tego przesunięcie palcem w dół
+/// przy dolnej krawędzi włącza „Reachability” (cały ekran zjeżdża do połowy), a przy górnej
+/// Centrum powiadomień. Z odroczeniem pierwszy ruch trafia do gry, system reaguje dopiero na drugi.
+class GameViewController: CAPBridgeViewController {
+    override var preferredScreenEdgesDeferringSystemGestures: UIRectEdge { [.top, .bottom] }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Bez przewijania i „gumowania” widoku WebView: gra zajmuje cały ekran.
+        webView?.scrollView.isScrollEnabled = false
+        webView?.scrollView.bounces = false
+        setNeedsUpdateOfScreenEdgesDeferringSystemGestures()
+    }
+}

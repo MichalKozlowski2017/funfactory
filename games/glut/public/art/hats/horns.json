@@ -1,0 +1,17 @@
+{
+  "workflow": "flux2-sprite.json",
+  "PROMPT": "a pair of small cute devil horns on a thin headband, glossy cherry red horns, accessory item seen from the front, no character, cute candy-land mobile game art, flat vector style, clean thick dark outline, soft cel shading, pastel pink lavender and mint palette, single object, centered, plain light gray background, no text",
+  "NEGATIVE": "",
+  "SEED": 420,
+  "WIDTH": 1024,
+  "HEIGHT": 1024,
+  "PREFIX": "horns",
+  "STEPS": 20,
+  "GUIDANCE": 4,
+  "BPM": 100,
+  "DURATION": 60,
+  "KEY": "A minor",
+  "LYRICS": "[Instrumental]",
+  "created": "2026-11-19T08:26:12.257Z",
+  "post": "trim alpha, keep top 46% (horns, no full headband), fit 200px"
+}
