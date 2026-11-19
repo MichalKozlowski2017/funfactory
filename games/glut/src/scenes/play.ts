@@ -23,7 +23,7 @@ import {
 import { fallbackIcon, POWER_INFO, POWER_KINDS, PowerBubble, PowerHud } from '../fx/power-fx.ts';
 import { FEATURE_SFX, POWER_SFX, SFX, STREAK_SFX } from '../fx/sfx.ts';
 import { FEATURE_COLORS, FeatureView, ledgeSprite } from '../fx/features.ts';
-import { hudText, installHudFont } from '../fx/hud-font.ts';
+import { hudText, installHudFont, installSignFont, signText } from '../fx/hud-font.ts';
 import { milestoneBanner, rainbow, StreakHud, streakTier } from '../fx/streak-fx.ts';
 import { bodyScale, bodySprite, SlimeFace, slimeTextures, type SlimeTextures } from '../fx/slime-art.ts';
 import { drawBlock, SURFACE } from '../fx/surfaces.ts';
@@ -103,6 +103,10 @@ async function mirrorTile(texture: Texture): Promise<Texture> {
  */
 /** Ile przed lądowaniem (s czasu gry) puszczony strzał czeka na przyklejenie zamiast skoku w locie. */
 const QUEUE_WINDOW = 0.15;
+/** Szerokość tabliczek z metrami (jednostki gry). */
+const SIGN = { small: 170, big: 220, record: 330 } as const;
+/** Przesunięcie napisu w dół (ułamek wysokości tabliczki) tam, gdzie u góry jest ozdoba (haczyk, czaszka, gwiazdka). */
+const SIGN_TEXT_DY: Record<string, number> = { choco: 0.09, nightmare: 0.08, factory: 0.02, record: 0.06 };
 
 export class PlayScene extends Scene {
   readonly id = 'play';
@@ -116,6 +120,9 @@ export class PlayScene extends Scene {
   private readonly markerLayer = new Container();
   private readonly markerG = new Graphics();
   private readonly markerTexts: BitmapText[] = [];
+  /** Tabliczki z metrami: grafika świata (Flux) + liczba. Pula, rysowane tylko w kadrze. */
+  private readonly signs: { box: Container; art: Sprite; label: BitmapText }[] = [];
+  private readonly signTex = new Map<string, Texture>();
   private readonly chunkViews = new Map<number, Container>();
   private readonly candyViews = new Map<string, { sprite: Sprite; candy: Candy }>();
   private readonly powerViews = new Map<string, PowerBubble>();
@@ -363,6 +370,9 @@ export class PlayScene extends Scene {
     // Tekstury ścian są przygotowane bez szwu w pionie (inpainting łączenia), więc powtarzają się wprost.
     this.wallTex = { ice: wIce, frosting: wFrost, caramel: wCaramel, spike: wSpike };
     this.spikeGlow = await optionalTexture('walls/spike-glow.png');
+    const signKeys = [...BIOMES.map((b) => b.id), 'record'];
+    const [signArt] = await Promise.all([Promise.all(signKeys.map((k) => optionalTexture(`signs/${k}.png`))), installSignFont(pr)]);
+    signKeys.forEach((k, i) => signArt[i] && this.signTex.set(k, signArt[i]));
     const ledgeKeys = [...BIOMES.map((b) => b.id as string), 'ice', 'crumble', 'bounce', 'cloud', 'belt'];
     const ledgeArt = await Promise.all(ledgeKeys.map((k) => optionalTexture(`ledges/${k}.png`)));
     ledgeKeys.forEach((k, i) => {
@@ -593,26 +603,53 @@ export class PlayScene extends Scene {
     }
   }
 
-  /** Znaczniki wysokości w studni: kreska z liczbą co 10 m (większa co 50 m) i linia rekordu z początku biegu. */
+  /** Znaczniki wysokości w studni: tabliczka świata z liczbą co 10 m (większa co 50 m, na przemian przy lewej
+   * i prawej ścianie) i linia rekordu z początku biegu (w wyzwaniu dnia: dzisiejszy najlepszy wynik). */
   private drawMarkers(): void {
     const g = this.markerG;
     g.clear();
-    if (!this.markerG.parent) this.markerLayer.addChild(g);
+    if (!g.parent) this.markerLayer.addChild(g);
     const show = this.mode === 'play' && !this.demoRun;
     this.markerLayer.visible = show;
     if (!show) return;
-    const top = this.camera.y - 60;
-    const bottom = this.camera.y + this.game.view.height + 60;
+    const top = this.camera.y - 120;
+    const bottom = this.camera.y + this.game.view.height + 120;
     const yOf = (m: number) => START.y - m * 100;
+    const inner = SHAFT.wall;
     let used = 0;
+    let usedText = 0;
+    const sign = (key: string, text: string, x: number, y: number, width: number, size: number, color: string): boolean => {
+      const tex = this.signTex.get(key);
+      if (!tex) return false;
+      let sg = this.signs[used];
+      if (!sg) {
+        sg = { box: new Container(), art: new Sprite({ anchor: 0.5 }), label: signText(40, '#ffffff') };
+        sg.label.anchor.set(0.5);
+        sg.box.addChild(sg.art, sg.label);
+        this.markerLayer.addChild(sg.box);
+        this.signs.push(sg);
+      }
+      used++;
+      sg.box.visible = true;
+      sg.box.position.set(x, y);
+      sg.art.texture = tex;
+      sg.art.scale.set(width / tex.width);
+      sg.label.text = text;
+      sg.label.tint = color;
+      sg.label.scale.set(size / 40);
+      const fit = (width * 0.74) / Math.max(1, sg.label.width);
+      if (fit < 1) sg.label.scale.set((size / 40) * fit);
+      sg.label.y = -size * 0.04 + (SIGN_TEXT_DY[key] ?? 0) * tex.height * sg.art.scale.y;
+      return true;
+    };
     const label = (text: string, x: number, y: number, size: number, color: string, anchorX: number) => {
-      let tx = this.markerTexts[used];
+      let tx = this.markerTexts[usedText];
       if (!tx) {
         tx = hudText(30, color);
         this.markerTexts.push(tx);
         this.markerLayer.addChild(tx);
       }
-      used++;
+      usedText++;
       tx.visible = true;
       tx.text = text;
       tx.scale.set(size / 30);
@@ -621,28 +658,34 @@ export class PlayScene extends Scene {
       tx.position.set(x, y);
       tx.alpha = 0.8;
     };
-    const inner = SHAFT.wall;
     const first = Math.max(10, Math.ceil(metersAt(bottom) / 10) * 10);
     for (let m = first; yOf(m) >= top; m += 10) {
       const y = yOf(m);
       const big = m % 50 === 0;
+      const left = (m / 10) % 2 === 1;
+      const width = big ? SIGN.big : SIGN.small;
+      const x = left ? inner + width / 2 - 6 : SHAFT.width - inner - width / 2 + 6;
+      const biome = BIOMES[biomeIndex(m)]!.id;
+      if (sign(biome, `${m} m`, x, y, width, big ? 46 : 36, '#ffffff')) continue;
+      // Bez grafiki: kreska na obu ścianach z liczbą.
       const len = big ? 44 : 24;
       for (const [x0, dir] of [[inner, 1], [SHAFT.width - inner, -1]] as const) {
         g.moveTo(x0, y).lineTo(x0 + dir * len, y).stroke({ color: 0xffffff, width: big ? 5 : 3, alpha: big ? 0.7 : 0.45, cap: 'round' });
       }
       label(`${m} m`, inner + len + 10, y, big ? 30 : 22, '#ffffff', 0);
     }
-    // Linia rekordu (w wyzwaniu dnia: dzisiejszy najlepszy wynik).
     const record = this.dailyMode ? (this.daily.find((d) => d.day === this.dailyDay)?.best ?? 0) : this.bestAtStart;
     if (record >= 10) {
       const y = yOf(record);
       if (y >= top && y <= bottom) {
         const color = 0xffd166;
         for (let x = inner + 8; x < SHAFT.width - inner - 8; x += 36) g.moveTo(x, y).lineTo(Math.min(x + 20, SHAFT.width - inner - 8), y).stroke({ color, width: 5, alpha: 0.85, cap: 'round' });
-        label(this.dailyMode ? t('todayLine', { m: record }) : t('best', { m: record }), SHAFT.width - inner - 16, y - 26, 30, '#ffd166', 1);
+        const text = this.dailyMode ? t('todayLine', { m: record }) : t('best', { m: record });
+        if (!sign('record', text, SHAFT.width / 2, y, SIGN.record, 34, '#fff3c4')) label(text, SHAFT.width - inner - 16, y - 26, 30, '#ffd166', 1);
       }
     }
-    for (let i = used; i < this.markerTexts.length; i++) this.markerTexts[i]!.visible = false;
+    for (let i = used; i < this.signs.length; i++) this.signs[i]!.box.visible = false;
+    for (let i = usedText; i < this.markerTexts.length; i++) this.markerTexts[i]!.visible = false;
   }
 
   /** Pozycje do rysowania: między poprzednim a obecnym krokiem fizyki (bez skoków przy teleporcie i nowym biegu). */

@@ -1,0 +1,17 @@
+{
+  "workflow": "flux2-sprite.json",
+  "PROMPT": "a blank creepy signboard plaque made of dark cherry red hard candy with spiky black sugar thorns and a tiny skull lollipop, sinister glow, single isolated mobile game UI sign asset, wide horizontal plaque, big empty smooth flat center area for a number, cute candy-land style, flat vector game art, clean thick dark outline, soft cel shading, glossy, centered, front view, plain light gray background, no text, no letters, no numbers",
+  "NEGATIVE": "",
+  "SEED": 3371,
+  "WIDTH": 1024,
+  "HEIGHT": 576,
+  "PREFIX": "nightmare",
+  "STEPS": 20,
+  "GUIDANCE": 4,
+  "BPM": 100,
+  "DURATION": 60,
+  "KEY": "A minor",
+  "LYRICS": "[Instrumental]",
+  "created": "2026-11-19T20:35:02.673Z",
+  "post": "trim, resize 512 wide"
+}

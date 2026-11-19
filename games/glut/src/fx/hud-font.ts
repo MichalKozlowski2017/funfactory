@@ -43,3 +43,41 @@ export function hudText(size: number, color: string | number): BitmapText {
   t.tint = color;
   return t;
 }
+
+/** Krój tabliczek z metrami (Lilita One, OFL): cyfry i krótkie podpisy. */
+export const SIGN_FONT = 'glut-sign';
+let signInstalled = false;
+
+/** Wczytuje Lilita One i instaluje z niej atlas (raz). Bez pliku fontu atlas powstaje z kroju systemowego. */
+export async function installSignFont(pixelRatio: number): Promise<void> {
+  if (signInstalled) return;
+  signInstalled = true;
+  let family = 'system-ui, -apple-system, sans-serif';
+  try {
+    const face = new FontFace('Lilita One', `url(${import.meta.env.BASE_URL}fonts/lilita-one.ttf)`);
+    document.fonts.add(await face.load());
+    family = '"Lilita One", system-ui, sans-serif';
+  } catch {
+    // zostaje krój systemowy
+  }
+  BitmapFont.install({
+    name: SIGN_FONT,
+    chars: CHARS,
+    resolution: Math.min(4, pixelRatio * 1.1),
+    padding: 6,
+    style: {
+      fontFamily: family,
+      fontSize: BASE,
+      fill: '#ffffff',
+      stroke: { color: '#1e1530', width: BASE * 0.14, join: 'round' },
+      letterSpacing: 2,
+    },
+  });
+}
+
+/** Napis na tabliczce (Lilita One). */
+export function signText(size: number, color: string | number): BitmapText {
+  const t = new BitmapText({ text: '', style: { fontFamily: SIGN_FONT, fontSize: size } });
+  t.tint = color;
+  return t;
+}
