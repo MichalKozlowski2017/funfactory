@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { dailySeed, dailyStreak, dayKey, normalizeDaily, recordDaily, DAILY_KEEP } from './daily.ts';
+import { dailySeed, dailyStreak, dayKey, lastDays, normalizeDaily, recordDaily, secondsToNextDay, weekday, DAILY_KEEP } from './daily.ts';
 import { playBot } from './bot.ts';
 import { ReplayRecorder, verifyReplay } from './replay.ts';
 import { Run } from './run.ts';
@@ -38,6 +38,14 @@ describe('daily challenge', () => {
     expect(dailyStreak(list, '2026-11-19')).toBe(3);
     expect(dailyStreak(list, '2026-11-20')).toBe(3);
     expect(dailyStreak(list, '2026-11-21')).toBe(0);
+  });
+
+  it('lists the last days, counts down to midnight UTC and knows weekdays', () => {
+    expect(lastDays('2026-03-02', 3)).toEqual(['2026-02-28', '2026-03-01', '2026-03-02']);
+    expect(secondsToNextDay(new Date(Date.UTC(2026, 10, 19, 23, 59, 30)))).toBe(30);
+    expect(secondsToNextDay(new Date(Date.UTC(2026, 10, 19, 0, 0, 0)))).toBe(86400);
+    expect(weekday('2026-11-16')).toBe(0); // poniedziałek
+    expect(weekday('2026-11-22')).toBe(6); // niedziela
   });
 
   it('drops broken entries', () => {

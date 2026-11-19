@@ -65,3 +65,25 @@ export function normalizeDaily(raw: unknown): DailyRecord[] {
     .map((r) => ({ day: r.day, best: Number(r.best) || 0, tries: Number(r.tries) || 0 }))
     .slice(-DAILY_KEEP);
 }
+
+/** Ostatnie `n` dni (UTC) kończące się dziś, od najstarszego. */
+export function lastDays(today: string, n: number): string[] {
+  const d = new Date(`${today}T12:00:00Z`);
+  const out: string[] = [];
+  for (let i = 0; i < n; i++) {
+    out.unshift(dayKey(d));
+    d.setUTCDate(d.getUTCDate() - 1);
+  }
+  return out;
+}
+
+/** Sekundy do następnego wyzwania (północ UTC). */
+export function secondsToNextDay(now: Date): number {
+  const next = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1);
+  return Math.max(0, Math.ceil((next - now.getTime()) / 1000));
+}
+
+/** Dzień tygodnia dla klucza dnia: 0 = poniedziałek … 6 = niedziela. */
+export function weekday(day: string): number {
+  return (new Date(`${day}T12:00:00Z`).getUTCDay() + 6) % 7;
+}

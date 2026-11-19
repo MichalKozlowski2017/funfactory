@@ -80,6 +80,19 @@ const PL = {
   ctrlDrag: 'Proca',
   ctrlSwipe: 'Swipe',
   ctrlTap: 'Tap',
+  play: 'Graj',
+  dailyRanking: 'Ranking dnia',
+  nextIn: 'Nowe wyzwanie za {t}',
+  todayBest: 'Dziś najlepiej: {m} m',
+  todayNone: 'Dziś jeszcze bez próby',
+  tries: 'próby: {n}',
+  streakNow: 'Seria: {n} dni z rzędu',
+  streakNone: 'Zagraj dziś, żeby zacząć serię',
+  medalGoal: 'Medal za 7 dni z rzędu: {n}/7',
+  medalGot: 'Medal zdobyty ✓',
+  last7: 'Ostatnie 7 dni',
+  bestDailyEver: 'Najlepszy wynik dnia: {m} m',
+  weekdays: 'pn,wt,śr,cz,pt,sb,nd',
 };
 
 type Key = keyof typeof PL;
@@ -150,6 +163,19 @@ const EN: Record<Key, string> = {
   ctrlDrag: 'Slingshot',
   ctrlSwipe: 'Swipe',
   ctrlTap: 'Tap',
+  play: 'Play',
+  dailyRanking: "Today's leaderboard",
+  nextIn: 'New challenge in {t}',
+  todayBest: "Today's best: {m} m",
+  todayNone: 'No try yet today',
+  tries: 'tries: {n}',
+  streakNow: 'Streak: {n} days in a row',
+  streakNone: 'Play today to start a streak',
+  medalGoal: 'Medal for 7 days in a row: {n}/7',
+  medalGot: 'Medal earned ✓',
+  last7: 'Last 7 days',
+  bestDailyEver: 'Best daily result: {m} m',
+  weekdays: 'Mo,Tu,We,Th,Fr,Sa,Su',
 };
 
 /** Angielskie nazwy z danych gry (po id). */

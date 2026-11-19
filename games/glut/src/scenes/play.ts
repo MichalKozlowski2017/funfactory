@@ -40,6 +40,7 @@ import { ReplayRecorder, type Replay } from '../sim/replay.ts';
 import { ACHIEVEMENTS, formatTime, newlyEarned, progressOf, type AchievementDef, type Stats } from '../sim/achievements.ts';
 import { AchievementToasts } from '../ui/achievement-toast.ts';
 import { AchievementsPanel } from '../ui/achievements-panel.ts';
+import { DailyPanel } from '../ui/daily-panel.ts';
 import { accessorySprite, cosmeticTextures, type CosmeticTextures } from '../fx/cosmetics.ts';
 import { ShopPanel } from '../ui/shop-panel.ts';
 import { SettingsPanel } from '../ui/settings-panel.ts';
@@ -229,6 +230,7 @@ export class PlayScene extends Scene {
   private earned: string[] = [];
   private toasts!: AchievementToasts;
   private trophies: AchievementsPanel | null = null;
+  private dailyPanel: DailyPanel | null = null;
   private achIn = 0;
   /** Licznik wydajności (ukryty: 5 stuknięć w wersję w ustawieniach). */
   private perfText: Text | null = null;
@@ -490,6 +492,7 @@ export class PlayScene extends Scene {
     this.shop?.layout(view, this.bannerReserve);
     this.settings?.layout(view, this.bannerReserve);
     this.trophies?.layout(view, this.bannerReserve);
+    this.dailyPanel?.layout(view, this.bannerReserve);
   }
 
   override fixedUpdate(dt: number): void {
@@ -556,6 +559,7 @@ export class PlayScene extends Scene {
     this.shop?.tick(dt);
     this.settings?.tick(dt);
     this.trophies?.tick(dt);
+    this.dailyPanel?.tick(dt);
     this.hat.rotation = this.hatSwing.update(dt);
     this.placeSlime(dt);
     this.animateCandies();
@@ -655,7 +659,7 @@ export class PlayScene extends Scene {
       pixelRatio: this.game.pixelRatio,
       onStart: () => this.startPlaying(),
       onShop: () => this.openShop(),
-      onDaily: () => this.startDaily(),
+      onDaily: () => this.openDaily(),
       onAchievements: () => this.openTrophies(),
       onRanking: () => this.openRanking(),
       onSettings: () => this.openSettings(),
@@ -667,7 +671,7 @@ export class PlayScene extends Scene {
   }
 
   private startPlaying(): void {
-    if (this.mode === 'play' || this.shop || this.settings || this.trophies) return;
+    if (this.mode === 'play' || this.shop || this.settings || this.trophies || this.dailyPanel) return;
     this.game.sound.synth(SFX.tap);
     const title = this.title;
     this.title = null;
@@ -685,7 +689,7 @@ export class PlayScene extends Scene {
 
   /** Systemowy ekran tablic wyników; bez zalogowanego gracza krótka podpowiedź. */
   private openRanking(): void {
-    if (this.shop || this.settings || this.trophies) return;
+    if (this.shop || this.settings || this.trophies || this.dailyPanel) return;
     this.game.sound.synth(SFX.tap);
     void gameServices.show().then((shown) => {
       if (shown) return;
@@ -730,7 +734,7 @@ export class PlayScene extends Scene {
   }
 
   private openTrophies(): void {
-    if (this.trophies || this.shop || this.settings) return;
+    if (this.trophies || this.shop || this.settings || this.dailyPanel) return;
     this.game.sound.synth(SFX.tap);
     this.trophies = new AchievementsPanel({
       pixelRatio: this.game.pixelRatio,
@@ -790,9 +794,48 @@ export class PlayScene extends Scene {
     return rec ? t('dailyToday', { m: rec.best, n: rec.tries }) + days : t('dailySame') + days;
   }
 
+  /** Panel wyzwania dnia: dzisiejszy wynik, seria, ostatnie dni, start i ranking dnia. */
+  private openDaily(): void {
+    if (this.mode === 'play' || this.dailyPanel || this.shop || this.settings || this.trophies) return;
+    this.game.sound.synth(SFX.tap);
+    this.dailyPanel = new DailyPanel({
+      pixelRatio: this.game.pixelRatio,
+      daily: this.daily,
+      medal: this.earned.includes('daily7'),
+      onPlay: () => {
+        this.closeDaily(true);
+        this.startDaily();
+      },
+      onRanking: () => {
+        this.game.sound.synth(SFX.tap);
+        void gameServices.show('daily').then((shown) => {
+          if (!shown) this.notice(/iPhone|iPad/.test(navigator.userAgent) ? t('loginIos') : t('loginAndroid'));
+        });
+      },
+      onClose: () => this.closeDaily(),
+    });
+    this.dailyPanel.layout(this.game.view, this.bannerReserve);
+    this.overlay.addChild(this.dailyPanel);
+    this.dailyPanel.alpha = 0;
+    this.tweens.to(this.dailyPanel, { alpha: 1 }, { duration: 0.18 });
+  }
+
+  private closeDaily(instant = false): void {
+    const panel = this.dailyPanel;
+    this.dailyPanel = null;
+    if (!panel) return;
+    if (instant) {
+      panel.destroy({ children: true });
+      return;
+    }
+    this.game.sound.synth(SFX.tap);
+    this.tweens.to(panel, { alpha: 0 }, { duration: 0.15 });
+    this.timers.after(0.16, () => panel.destroy({ children: true }));
+  }
+
   /** Wyzwanie dnia: nowa studnia z seedem z daty i od razu gra. */
   private startDaily(): void {
-    if (this.mode === 'play' || this.shop || this.settings || this.trophies) return;
+    if (this.mode === 'play' || this.shop || this.settings || this.trophies || this.dailyPanel) return;
     this.dailyMode = true;
     // newRun czyści nakładki: ekran startowy odkładamy na bok, żeby startPlaying go wygasił.
     const title = this.title;
@@ -819,7 +862,7 @@ export class PlayScene extends Scene {
   }
 
   private openShop(): void {
-    if (this.shop || this.settings || this.trophies) return;
+    if (this.shop || this.settings || this.trophies || this.dailyPanel) return;
     this.game.sound.synth(SFX.tap);
     const previews = new Map<string, Texture | null>(this.hatTextures);
     for (const k of SKINS) previews.set(k.id, this.skinTex.get(k.id)?.body ?? null);
@@ -1048,7 +1091,7 @@ export class PlayScene extends Scene {
   // --- ustawienia ---
 
   private openSettings(): void {
-    if (this.settings || this.shop || this.trophies) return;
+    if (this.settings || this.shop || this.trophies || this.dailyPanel) return;
     this.game.sound.synth(SFX.tap);
     this.settings = new SettingsPanel({
       pixelRatio: this.game.pixelRatio,
@@ -2164,7 +2207,7 @@ export class PlayScene extends Scene {
 
   /** Baner tylko poza rozgrywką: ekran startowy, sklep, ustawienia, koniec biegu. */
   private syncBanner(force = false): void {
-    const want = this.mode === 'title' || !!this.againButton || !!this.shop || !!this.settings || !!this.trophies;
+    const want = this.mode === 'title' || !!this.againButton || !!this.shop || !!this.settings || !!this.trophies || !!this.dailyPanel;
     if (want === this.bannerWanted && !force) return;
     this.bannerWanted = want;
     void (want ? ads.showBanner() : ads.hideBanner());
