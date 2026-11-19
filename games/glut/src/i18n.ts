@@ -93,6 +93,9 @@ const PL = {
   last7: 'Ostatnie 7 dni',
   bestDailyEver: 'Najlepszy wynik dnia: {m} m',
   weekdays: 'pn,wt,śr,cz,pt,sb,nd',
+  tipStreak: 'Skacz od razu po lądowaniu: seria daje premie!',
+  tipSyrup: 'Syrop rośnie! Wspinaj się wyżej',
+  tipPower: 'Złap bańkę: daje moc na kilka sekund',
 };
 
 type Key = keyof typeof PL;
@@ -176,6 +179,9 @@ const EN: Record<Key, string> = {
   last7: 'Last 7 days',
   bestDailyEver: 'Best daily result: {m} m',
   weekdays: 'Mo,Tu,We,Th,Fr,Sa,Su',
+  tipStreak: 'Jump right after landing: streaks give bonuses!',
+  tipSyrup: 'The syrup is rising! Keep climbing',
+  tipPower: 'Grab a bubble: it gives a power for a few seconds',
 };
 
 /** Angielskie nazwy z danych gry (po id). */

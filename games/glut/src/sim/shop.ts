@@ -112,6 +112,8 @@ export interface Save {
   vibration: boolean;
   /** Wyzwanie dnia: wyniki z ostatnich dni (najnowszy na końcu). */
   daily: DailyRecord[];
+  /** Pokazane (zaliczone) wskazówki samouczka. */
+  tips: string[];
   /** Język interfejsu (null = jak w telefonie). */
   lang: 'pl' | 'en' | null;
   /** Liczniki do osiągnięć i zdobyte osiągnięcia. */
@@ -132,6 +134,7 @@ export const NEW_SAVE: Save = {
   sfx: true,
   vibration: true,
   daily: [],
+  tips: [],
   lang: null,
   stats: normalizeStats(undefined),
   achievements: [],
@@ -185,6 +188,7 @@ export function normalizeSave(raw: Partial<Save>): Save {
     vibration: raw.vibration !== false,
     daily: normalizeDaily(raw.daily),
     lang: raw.lang === 'pl' || raw.lang === 'en' ? raw.lang : null,
+    tips: Array.isArray(raw.tips) ? raw.tips.filter((x): x is string => typeof x === 'string') : [],
     stats: normalizeStats(raw.stats),
     achievements: Array.isArray(raw.achievements) ? raw.achievements.filter((id): id is string => typeof id === 'string') : [],
   };

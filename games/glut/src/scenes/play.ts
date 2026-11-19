@@ -41,6 +41,7 @@ import { ACHIEVEMENTS, formatTime, newlyEarned, progressOf, type AchievementDef,
 import { AchievementToasts } from '../ui/achievement-toast.ts';
 import { AchievementsPanel } from '../ui/achievements-panel.ts';
 import { DailyPanel } from '../ui/daily-panel.ts';
+import { Coach, type Gesture } from '../ui/coach.ts';
 import { accessorySprite, cosmeticTextures, type CosmeticTextures } from '../fx/cosmetics.ts';
 import { ShopPanel } from '../ui/shop-panel.ts';
 import { SettingsPanel } from '../ui/settings-panel.ts';
@@ -121,7 +122,6 @@ export class PlayScene extends Scene {
   /** Ile cukierków-premii jest jeszcze w locie do licznika (licznik dolicza je po dotarciu). */
   private flying = 0;
   /** Podpowiedź skoku w locie pokazana w tym biegu. */
-  private airHinted = false;
   /** Celowanie w locie (drugi oddech): zwolniony czas. */
   private airAim = false;
   private readonly dotsG = new Graphics();
@@ -238,6 +238,10 @@ export class PlayScene extends Scene {
   private versionTaps: number[] = [];
   /** Język wybrany w ustawieniach (null = jak w telefonie). */
   private langPref: 'pl' | 'en' | null = null;
+  /** Samouczek: zaliczone wskazówki (zapisywane) i widok. */
+  private tips: string[] = [];
+  private coach!: Coach;
+  private coachUntil = 0;
   /** Stan sprzed ostatniego kroku fizyki: rysujemy pozycję pośrednią (płynny ruch przy nierównych klatkach). */
   private readonly prev = { x: 0, y: 0, syrup: 0 };
   private readonly shown = { x: 0, y: 0, syrup: 0 };
@@ -269,6 +273,7 @@ export class PlayScene extends Scene {
     this.accId = saved.acc;
     this.daily = saved.daily;
     this.langPref = saved.lang;
+    this.tips = saved.tips;
     // `?lang=en` / `?lang=pl` wymusza język (playtesty, zrzuty do sklepów).
     const forced = new URLSearchParams(location.search).get('lang');
     setLang(forced === 'pl' || forced === 'en' ? forced : (saved.lang ?? detectLang()));
@@ -380,6 +385,7 @@ export class PlayScene extends Scene {
     this.syrupWarn.anchor.set(0.5, 1);
     this.powerHud = new PowerHud(this.powerTex);
     this.streakHud = new StreakHud(this.tweens, this.game.pixelRatio);
+    this.coach = new Coach(this.tweens);
     this.toasts = new AchievementToasts({
       tweens: this.tweens,
       timers: this.timers,
@@ -389,7 +395,7 @@ export class PlayScene extends Scene {
         haptics.success();
       },
     });
-    this.hud.addChild(this.shadeG, this.trailG, this.dangerG, this.glow, this.powerHud, this.heightText, this.bestText, this.streakHud, this.candyIcon, this.candyText, this.timerText, this.hint, this.syrupWarn, this.fx);
+    this.hud.addChild(this.shadeG, this.trailG, this.dangerG, this.glow, this.powerHud, this.heightText, this.bestText, this.streakHud, this.candyIcon, this.candyText, this.timerText, this.hint, this.syrupWarn, this.coach, this.fx);
     // Powiadomienia nad wszystkim (także nad panelami poza grą).
     this.addChild(this.toasts);
 
@@ -587,13 +593,7 @@ export class PlayScene extends Scene {
     this.streakHud.tick(dt);
 
     // Podpowiedź skoku w locie w pierwszych biegach: przy pierwszym opadaniu.
-    if (this.mode === 'play' && this.runs <= 3 && !this.airHinted && s.state === 'flying' && this.run.canAim && s.vy > 200 && !this.aiming) {
-      this.airHinted = true;
-      this.hint.text = this.hintText('air');
-      this.hint.visible = true;
-      void popIn(this.tweens, this.hint, 0.3);
-    }
-    if (this.airHinted && this.hint.visible && s.state === 'stuck') this.hint.visible = false;
+    this.updateCoach(dt / (this.game.loop.timeScale || 1));
     this.drawDanger();
     const below = this.run.syrupY - (this.camera.y + view.height);
     this.syrupWarn.visible = this.run.started && !this.run.over && below > 0;
@@ -643,6 +643,7 @@ export class PlayScene extends Scene {
       vibration: this.vibrationOn,
       daily: this.daily,
       lang: this.langPref,
+      tips: this.tips,
       stats: this.stats,
       achievements: this.earned,
     };
@@ -681,8 +682,78 @@ export class PlayScene extends Scene {
     }
     this.mode = 'play';
     for (const t of [this.heightText, this.bestText, this.candyIcon, this.candyText, this.timerText]) t.visible = true;
-    this.hint.visible = this.runs === 1;
+    this.hint.visible = false;
     this.squash(0.25);
+  }
+
+  // --- samouczek ---
+
+  private passTip(id: string, hide = true): void {
+    if (hide) this.coach.hide(id);
+    if (PILOT_MODE || this.tips.includes(id)) return;
+    this.tips = [...this.tips, id];
+    void this.persist();
+  }
+
+  /** Wskazówka tekstowa na kilka sekund (pokazana raz na zawsze). */
+  private timedTip(id: string, text: string): void {
+    if (PILOT_MODE || this.tips.includes(id) || this.coach.current) return;
+    const view = this.game.view;
+    this.coach.show(id, text, { x: view.width / 2, y: view.height * 0.3 });
+    this.coachUntil = this.time + 3.5;
+    this.passTip(id, false);
+  }
+
+  /** Gest celowania dla trybu sterowania, względem slime'a na ekranie. */
+  private aimGesture(): Gesture {
+    const view = this.game.view;
+    const sx = Math.max(140, Math.min(view.width - 140, this.shown.x));
+    const sy = this.shown.y - this.camera.y;
+    const clampY = (y: number) => Math.max(view.safe.top + 220, Math.min(view.height - 120, y));
+    if (this.controls === 'tap') return { kind: 'tap', from: { x: sx, y: sy }, to: { x: Math.min(view.width - 100, sx + 120), y: clampY(sy - 330) } };
+    if (this.controls === 'drag') return { kind: 'drag', from: { x: sx, y: clampY(sy - 10) }, to: { x: sx - 70, y: clampY(sy + 220) } };
+    return { kind: 'drag', from: { x: sx - 60, y: clampY(sy + 80) }, to: { x: sx + 80, y: clampY(sy - 180) } };
+  }
+
+  /** Samouczek: celowanie, skok w locie (z palcem), syrop i bańki (tekst), aż gracz je zaliczy. */
+  private updateCoach(real: number): void {
+    const c = this.coach;
+    c.tick(real);
+    const view = this.game.view;
+    const run = this.run;
+    const s = run.slime;
+    if (this.mode !== 'play' || run.over || this.autopilot || PILOT_MODE) {
+      c.hide();
+      return;
+    }
+    if (c.current && this.time > this.coachUntil && !['aim', 'air'].includes(c.current)) c.hide();
+    const at = { x: view.width / 2, y: view.height * 0.3 };
+    if (!this.tips.includes('aim')) {
+      if (s.state === 'stuck' && !this.aiming) {
+        c.show('aim', this.hintText('start'), at, this.aimGesture());
+        c.moveGesture(this.aimGesture());
+      } else c.hide('aim');
+      return;
+    }
+    if (!this.tips.includes('air')) {
+      if (s.state === 'flying' && run.canAim && s.vy > 200 && !this.aiming) {
+        c.show('air', this.hintText('air'), at, this.aimGesture());
+        c.moveGesture(this.aimGesture());
+      } else if (s.state !== 'flying' || this.aiming) c.hide('air');
+    }
+    if (c.current) return;
+    // Syrop pierwszy raz w kadrze.
+    if (!this.tips.includes('syrup') && run.time > 4 && this.shown.syrup - this.camera.y < view.height - 40) this.timedTip('syrup', t('tipSyrup'));
+    // Pierwsza bańka z mocą na ekranie.
+    if (!this.tips.includes('power')) {
+      for (const b of this.powerViews.values()) {
+        const y = b.y - this.camera.y;
+        if (y > view.safe.top + 150 && y < view.height - 150) {
+          this.timedTip('power', t('tipPower'));
+          break;
+        }
+      }
+    }
   }
 
   // --- ranking ---
@@ -992,7 +1063,6 @@ export class PlayScene extends Scene {
     this.streakHud.set(0);
     this.reachedBiome = 0;
     this.score?.revive();
-    this.airHinted = false;
     this.hint.text = this.hintText('start');
     for (const view of this.chunkViews.values()) view.destroy({ children: true });
     this.chunkViews.clear();
@@ -1007,7 +1077,7 @@ export class PlayScene extends Scene {
     this.againButton = null;
     this.slime.visible = true;
     this.slime.scale.set(1);
-    this.hint.visible = this.mode === 'play' && this.runs === 1;
+    this.hint.visible = false;
     this.menuButton = null;
     this.glow.alpha = 0;
     this.heartbeat = 0;
@@ -1275,6 +1345,7 @@ export class PlayScene extends Scene {
     const k = this.controls === 'swipe' ? -1 : 1;
     const v = launchVelocity(k * (x - aiming.sx), k * (y - aiming.sy));
     if (!v || !this.run.launch(v.vx, v.vy)) return;
+    this.passTip(inAir ? 'air' : 'aim');
     this.recorder?.shot(v.vx, v.vy);
     if (inAir) {
       const n = this.run.airJumps;
@@ -1599,6 +1670,7 @@ export class PlayScene extends Scene {
   // --- serie ---
 
   private onStreak(streak: number): void {
+    if (streak === 1 && this.tips.includes('aim')) this.timedTip('streak', t('tipStreak'));
     this.streakHud.set(streak);
     if (streak < 2) return;
     this.score.streak(streak);
