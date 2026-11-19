@@ -485,6 +485,19 @@ export class Score {
     this.play(bell, tone(this.chord, n + 2, 1), 0.3, n % 2 ? 0.5 : -0.5, 1, undefined, true);
   }
 
+  /** Licznik metrów, co 10 m: cicha nuta z akordu. */
+  meterTick(): void {
+    this.play(bell, tone(this.chord, 4, 1), 0.25, 0, 0.45, undefined, true);
+  }
+
+  /** Licznik metrów, co 50 m: trzy wznoszące się nuty. */
+  meterMilestone(): void {
+    const ctx = this.sound.audio;
+    if (!ctx) return;
+    const step = this.sixteenth();
+    for (let i = 0; i < 3; i++) this.play(bell, tone(this.chord, 3 + i * 2, 1), 0.3, i - 1, 0.8, ctx.currentTime + i * step, true);
+  }
+
   /** Lądowanie: miękka pryma w basie. */
   land(strength: number): void {
     this.play(this.style.bass, tone(this.chord, 0, -2), 0.3, undefined, 0.3 + strength * 0.5);

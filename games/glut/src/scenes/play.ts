@@ -103,10 +103,11 @@ async function mirrorTile(texture: Texture): Promise<Texture> {
  */
 /** Ile przed lądowaniem (s czasu gry) puszczony strzał czeka na przyklejenie zamiast skoku w locie. */
 const QUEUE_WINDOW = 0.15;
-/** Szerokość tabliczek z metrami (jednostki gry). */
-const SIGN = { small: 170, big: 220, record: 330 } as const;
-/** Przesunięcie napisu w dół (ułamek wysokości tabliczki) tam, gdzie u góry jest ozdoba (haczyk, czaszka, gwiazdka). */
-const SIGN_TEXT_DY: Record<string, number> = { choco: 0.09, nightmare: 0.08, factory: 0.02, record: 0.06 };
+/** Kolor licznika metrów w każdym świecie (jasne odcienie, czytelne na ciemnym tle). */
+const COUNTER_TINT = [0xffd6ec, 0xf6d3a0, 0xc9f5b0, 0xd8ecff, 0xffc078, 0xc8ff9e, 0xeadcae, 0xff9db2];
+const GOLD = 0xffd166;
+/** Odliczanie do rekordu pod licznikiem, gdy zostało tyle metrów lub mniej. */
+const RECORD_COUNTDOWN = 20;
 
 export class PlayScene extends Scene {
   readonly id = 'play';
@@ -119,10 +120,15 @@ export class PlayScene extends Scene {
   /** Znaczniki wysokości na ścianach (co 10 m) i linia rekordu. */
   private readonly markerLayer = new Container();
   private readonly markerG = new Graphics();
-  private readonly markerTexts: BitmapText[] = [];
-  /** Tabliczki z metrami: grafika świata (Flux) + liczba. Pula, rysowane tylko w kadrze. */
-  private readonly signs: { box: Container; art: Sprite; label: BitmapText }[] = [];
-  private readonly signTex = new Map<string, Texture>();
+  /** Licznik metrów u góry: liczba + „m”, sprężynka (skala, kołysanie), błysk złota. */
+  private readonly counter = new Container();
+  private heightUnit!: BitmapText;
+  private counterPop = { x: 0, v: 0, rot: 0, vr: 0, gold: 0 };
+  private counterTint = COUNTER_TINT[0]!;
+  /** Najwyższy metr, za który licznik już zareagował w tym biegu. */
+  private counterMax = 0;
+  private recordBeaten = false;
+  private hudSparks!: Particles;
   private readonly chunkViews = new Map<number, Container>();
   private readonly candyViews = new Map<string, { sprite: Sprite; candy: Candy }>();
   private readonly powerViews = new Map<string, PowerBubble>();
@@ -370,9 +376,7 @@ export class PlayScene extends Scene {
     // Tekstury ścian są przygotowane bez szwu w pionie (inpainting łączenia), więc powtarzają się wprost.
     this.wallTex = { ice: wIce, frosting: wFrost, caramel: wCaramel, spike: wSpike };
     this.spikeGlow = await optionalTexture('walls/spike-glow.png');
-    const signKeys = [...BIOMES.map((b) => b.id), 'record'];
-    const [signArt] = await Promise.all([Promise.all(signKeys.map((k) => optionalTexture(`signs/${k}.png`))), installSignFont(pr)]);
-    signKeys.forEach((k, i) => signArt[i] && this.signTex.set(k, signArt[i]));
+    await installSignFont(pr);
     const ledgeKeys = [...BIOMES.map((b) => b.id as string), 'ice', 'crumble', 'bounce', 'cloud', 'belt'];
     const ledgeArt = await Promise.all(ledgeKeys.map((k) => optionalTexture(`ledges/${k}.png`)));
     ledgeKeys.forEach((k, i) => {
@@ -440,8 +444,12 @@ export class PlayScene extends Scene {
     this.camera = new FollowCamera(this.world, { lambda: 5 });
 
     installHudFont(this.game.pixelRatio);
-    this.heightText = hudText(56, pal.surface);
-    this.heightText.anchor.set(0.5, 0);
+    this.heightText = signText(68, 0xffffff);
+    this.heightText.anchor.set(0.5);
+    this.heightUnit = signText(40, 0xffffff);
+    this.heightUnit.anchor.set(0, 0.5);
+    this.counter.addChild(this.heightText, this.heightUnit);
+    this.hudSparks = new Particles(dotTexture(this.game.app.renderer, 10), this.game.rng);
     this.bestText = hudText(26, pal.accent);
     this.bestText.anchor.set(0.5, 0);
     this.candyText = hudText(36, pal.surface);
@@ -467,7 +475,7 @@ export class PlayScene extends Scene {
         this.buzz('success');
       },
     });
-    this.hud.addChild(this.shadeG, this.trailG, this.dangerG, this.glow, this.powerHud, this.heightText, this.bestText, this.streakHud, this.candyIcon, this.candyText, this.timerText, this.hint, this.syrupWarn, this.coach, this.fx);
+    this.hud.addChild(this.shadeG, this.trailG, this.dangerG, this.glow, this.powerHud, this.counter, this.hudSparks.view, this.bestText, this.streakHud, this.candyIcon, this.candyText, this.timerText, this.hint, this.syrupWarn, this.coach, this.fx);
     // Pauza nad warstwą dotyku (inaczej stuknięcie w nią zaczynałoby celowanie).
     this.pauseButton = new Button({ label: '', color: '#6e6488', width: 88, height: 88, radius: 44, resolution: this.game.pixelRatio, onTap: () => this.openPause() });
     this.pauseButton.addChild(new Graphics().roundRect(-15, -18, 10, 36, 4).fill({ color: 0xffffff }).roundRect(5, -18, 10, 36, 4).fill({ color: 0xffffff }));
@@ -540,7 +548,7 @@ export class PlayScene extends Scene {
       this.toasts.width0 = view.width;
     }
     this.input.hitArea = new Rectangle(0, 0, view.width, view.height);
-    this.heightText.position.set(view.width / 2, view.safe.top + 24);
+    this.counter.position.set(view.width / 2, view.safe.top + 60);
     this.bestText.position.set(view.width / 2, view.safe.top + 92);
     this.streakHud.position.set(view.width / 2, view.safe.top + 150);
     this.candyIcon.position.set(view.width - 52, view.safe.top + 58);
@@ -603,89 +611,143 @@ export class PlayScene extends Scene {
     }
   }
 
-  /** Znaczniki wysokości w studni: tabliczka świata z liczbą co 10 m (większa co 50 m, na przemian przy lewej
-   * i prawej ścianie) i linia rekordu z początku biegu (w wyzwaniu dnia: dzisiejszy najlepszy wynik). */
+  /** Rekord, z którym gracz się mierzy w tym biegu (w wyzwaniu dnia: dzisiejszy najlepszy wynik). */
+  private runRecord(): number {
+    return this.dailyMode ? (this.daily.find((d) => d.day === this.dailyDay)?.best ?? 0) : this.bestAtStart;
+  }
+
+  /** Cienka przerywana linia w studni na wysokości rekordu. */
   private drawMarkers(): void {
     const g = this.markerG;
     g.clear();
     if (!g.parent) this.markerLayer.addChild(g);
-    const show = this.mode === 'play' && !this.demoRun;
-    this.markerLayer.visible = show;
-    if (!show) return;
-    const top = this.camera.y - 120;
-    const bottom = this.camera.y + this.game.view.height + 120;
-    const yOf = (m: number) => START.y - m * 100;
+    const record = this.runRecord();
+    if (this.mode !== 'play' || this.demoRun || record < 10) return;
+    const y = START.y - record * 100;
+    if (y < this.camera.y - 20 || y > this.camera.y + this.game.view.height + 20) return;
     const inner = SHAFT.wall;
-    let used = 0;
-    let usedText = 0;
-    const sign = (key: string, text: string, x: number, y: number, width: number, size: number, color: string): boolean => {
-      const tex = this.signTex.get(key);
-      if (!tex) return false;
-      let sg = this.signs[used];
-      if (!sg) {
-        sg = { box: new Container(), art: new Sprite({ anchor: 0.5 }), label: signText(40, '#ffffff') };
-        sg.label.anchor.set(0.5);
-        sg.box.addChild(sg.art, sg.label);
-        this.markerLayer.addChild(sg.box);
-        this.signs.push(sg);
-      }
-      used++;
-      sg.box.visible = true;
-      sg.box.position.set(x, y);
-      sg.art.texture = tex;
-      sg.art.scale.set(width / tex.width);
-      sg.label.text = text;
-      sg.label.tint = color;
-      sg.label.scale.set(size / 40);
-      const fit = (width * 0.74) / Math.max(1, sg.label.width);
-      if (fit < 1) sg.label.scale.set((size / 40) * fit);
-      sg.label.y = -size * 0.04 + (SIGN_TEXT_DY[key] ?? 0) * tex.height * sg.art.scale.y;
-      return true;
-    };
-    const label = (text: string, x: number, y: number, size: number, color: string, anchorX: number) => {
-      let tx = this.markerTexts[usedText];
-      if (!tx) {
-        tx = hudText(30, color);
-        this.markerTexts.push(tx);
-        this.markerLayer.addChild(tx);
-      }
-      usedText++;
-      tx.visible = true;
-      tx.text = text;
-      tx.scale.set(size / 30);
-      tx.tint = color;
-      tx.anchor.set(anchorX, 0.5);
-      tx.position.set(x, y);
-      tx.alpha = 0.8;
-    };
-    const first = Math.max(10, Math.ceil(metersAt(bottom) / 10) * 10);
-    for (let m = first; yOf(m) >= top; m += 10) {
-      const y = yOf(m);
-      const big = m % 50 === 0;
-      const left = (m / 10) % 2 === 1;
-      const width = big ? SIGN.big : SIGN.small;
-      const x = left ? inner + width / 2 - 6 : SHAFT.width - inner - width / 2 + 6;
-      const biome = BIOMES[biomeIndex(m)]!.id;
-      if (sign(biome, `${m} m`, x, y, width, big ? 46 : 36, '#ffffff')) continue;
-      // Bez grafiki: kreska na obu ścianach z liczbą.
-      const len = big ? 44 : 24;
-      for (const [x0, dir] of [[inner, 1], [SHAFT.width - inner, -1]] as const) {
-        g.moveTo(x0, y).lineTo(x0 + dir * len, y).stroke({ color: 0xffffff, width: big ? 5 : 3, alpha: big ? 0.7 : 0.45, cap: 'round' });
-      }
-      label(`${m} m`, inner + len + 10, y, big ? 30 : 22, '#ffffff', 0);
+    for (let x = inner + 8; x < SHAFT.width - inner - 8; x += 36) g.moveTo(x, y).lineTo(Math.min(x + 20, SHAFT.width - inner - 8), y).stroke({ color: GOLD, width: 4, alpha: 0.7, cap: 'round' });
+  }
+
+  /** Licznik metrów: tekst, kolor świata, reakcje co 1/10/50/100 m i pobicie rekordu. */
+  private updateCounter(meters: number, real: number): void {
+    const num = this.heightText;
+    const text = `${meters}`;
+    if (num.text !== text) {
+      num.text = text;
+      this.heightUnit.text = 'm';
+      const gap = 8;
+      const total = num.width + gap + this.heightUnit.width;
+      num.x = -total / 2 + num.width / 2;
+      this.heightUnit.x = num.x + num.width / 2 + gap;
+      this.heightUnit.y = 8;
     }
-    const record = this.dailyMode ? (this.daily.find((d) => d.day === this.dailyDay)?.best ?? 0) : this.bestAtStart;
-    if (record >= 10) {
-      const y = yOf(record);
-      if (y >= top && y <= bottom) {
-        const color = 0xffd166;
-        for (let x = inner + 8; x < SHAFT.width - inner - 8; x += 36) g.moveTo(x, y).lineTo(Math.min(x + 20, SHAFT.width - inner - 8), y).stroke({ color, width: 5, alpha: 0.85, cap: 'round' });
-        const text = this.dailyMode ? t('todayLine', { m: record }) : t('best', { m: record });
-        if (!sign('record', text, SHAFT.width / 2, y, SIGN.record, 34, '#fff3c4')) label(text, SHAFT.width - inner - 16, y - 26, 30, '#ffd166', 1);
+    const live = this.mode === 'play' && !this.demoRun && !this.run.over;
+    if (live && meters > this.counterMax) {
+      // Kilka metrów naraz (rakieta, teleport): jedna reakcja, najważniejsza z przekroczonych.
+      let pick = meters;
+      for (const step of [100, 50, 10]) {
+        const top = Math.floor(meters / step) * step;
+        if (top > this.counterMax) {
+          pick = top;
+          break;
+        }
       }
+      this.counterStep(pick);
+      this.counterMax = meters;
+      const record = this.runRecord();
+      if (!this.recordBeaten && record > 0 && meters > record) this.celebrateRecord();
     }
-    for (let i = used; i < this.signs.length; i++) this.signs[i]!.box.visible = false;
-    for (let i = usedText; i < this.markerTexts.length; i++) this.markerTexts[i]!.visible = false;
+    // Sprężynka skali i kołysania.
+    const p = this.counterPop;
+    const dt = Math.min(real, 1 / 30);
+    p.v += (-320 * p.x - 16 * p.v) * dt;
+    p.x += p.v * dt;
+    p.vr += (-260 * p.rot - 9 * p.vr) * dt;
+    p.rot += p.vr * dt;
+    p.gold = Math.max(0, p.gold - real * 1.6);
+    this.counter.scale.set(1 + p.x);
+    this.counter.rotation = p.rot;
+    // Kolor: płynnie do koloru świata; złoty po pobiciu rekordu albo przy błysku.
+    const target = this.recordBeaten ? GOLD : COUNTER_TINT[biomeIndex(meters)] ?? 0xffffff;
+    this.counterTint = mixColor(this.counterTint, target, 1 - Math.exp(-4 * real));
+    const tint = mixColor(this.counterTint, this.recordBeaten ? 0xffffff : GOLD, Math.min(1, p.gold));
+    num.tint = tint;
+    this.heightUnit.tint = tint;
+    this.hudSparks.update(real);
+  }
+
+  /** Reakcja licznika na nowy metr `m`. */
+  private counterStep(m: number): void {
+    const p = this.counterPop;
+    if (m % 100 === 0) {
+      p.v += 9;
+      p.gold = 1.2;
+      return; // resztę robi baner świata
+    }
+    if (m % 50 === 0) {
+      p.v += 7;
+      p.vr += 2.2;
+      p.gold = 1;
+      this.score.meterMilestone();
+      this.buzz('tap');
+      this.counterSparks(16, [GOLD, 0xffffff, this.counterTint]);
+      return;
+    }
+    if (m % 10 === 0) {
+      p.v += 4.5;
+      this.score.meterTick();
+      return;
+    }
+    p.v += 1.2;
+  }
+
+  /** Iskierki wokół licznika. */
+  private counterSparks(count: number, colors: number[]): void {
+    const { x, y } = this.counter.position;
+    this.hudSparks.burst(x, y, { count, speed: [220, 520], life: [0.35, 0.7], scale: [0.5, 1.1], endScale: 0.2, drag: 2, colors });
+  }
+
+  /** Pobicie rekordu w trakcie biegu: złoty licznik do końca biegu, wstążka, fanfara. */
+  private celebrateRecord(): void {
+    this.recordBeaten = true;
+    const p = this.counterPop;
+    p.v += 10;
+    p.vr += 3;
+    p.gold = 1.5;
+    this.sfx(SFX.record);
+    this.buzz('success');
+    this.counterSparks(30, [GOLD, 0xffffff, 0xff9db2]);
+    const ribbon = new Container();
+    const label = signText(40, GOLD);
+    label.anchor.set(0.5);
+    label.text = t('newRecord').toUpperCase();
+    const w = label.width + 56;
+    const bg = new Graphics()
+      .moveTo(-w / 2 - 26, -26).lineTo(-w / 2, 0).lineTo(-w / 2 - 26, 26).lineTo(-w / 2 + 10, 26).lineTo(-w / 2 + 10, -26).closePath()
+      .moveTo(w / 2 + 26, -26).lineTo(w / 2, 0).lineTo(w / 2 + 26, 26).lineTo(w / 2 - 10, 26).lineTo(w / 2 - 10, -26).closePath()
+      .fill({ color: 0xd8507f })
+      .stroke({ color: 0x1e1530, width: 4, join: 'round' })
+      .roundRect(-w / 2, -30, w, 60, 14)
+      .fill({ color: 0xff7aa8 })
+      .stroke({ color: 0x1e1530, width: 5 });
+    label.tint = 0xffffff;
+    ribbon.addChild(bg, label);
+    const y = this.counter.y + 140;
+    ribbon.position.set(this.counter.x, y);
+    ribbon.scale.set(0.2);
+    ribbon.alpha = 0;
+    this.fx.addChild(ribbon);
+    this.tweens.to(ribbon, { alpha: 1 }, { duration: 0.15 });
+    this.tweens.to(ribbon.scale, { x: 1, y: 1 }, { duration: 0.45, ease: 'backOut' });
+    this.timers.after(2.2, () => {
+      this.tweens.to(ribbon, { alpha: 0, y: y - 30 }, { duration: 0.4, ease: 'quadIn' });
+      this.timers.after(0.45, () => {
+        this.tweens.killOf(ribbon);
+        this.tweens.killOf(ribbon.scale);
+        ribbon.destroy({ children: true });
+      });
+    });
   }
 
   /** Pozycje do rysowania: między poprzednim a obecnym krokiem fizyki (bez skoków przy teleporcie i nowym biegu). */
@@ -779,7 +841,7 @@ export class PlayScene extends Scene {
       this.best = meters;
       void this.persist();
     }
-    this.heightText.text = `${meters} m`;
+    this.updateCounter(meters, dt / (this.game.loop.timeScale || 1));
     this.drawMarkers();
     const sec = Math.floor(this.run.time);
     if (sec !== this.timerShown) {
@@ -787,7 +849,9 @@ export class PlayScene extends Scene {
       this.timerText.text = formatTime(sec);
     }
     this.trackTimes();
-    this.bestText.text = t('best', { m: this.best });
+    const record = this.runRecord();
+    const left = record - meters;
+    this.bestText.text = !this.recordBeaten && record > 0 && meters > 0 && left <= RECORD_COUNTDOWN ? t('toRecord', { m: left }) : t('best', { m: this.best });
     this.candyText.text = `${Math.max(0, this.run.candies - this.flying)}`;
     this.streakHud.tick(dt);
     if (this.mode !== 'play') this.streakHud.visible = false;
@@ -855,7 +919,7 @@ export class PlayScene extends Scene {
   private showTitle(): void {
     this.mode = 'title';
     this.hint.visible = false;
-    for (const t of [this.heightText, this.bestText, this.candyIcon, this.candyText, this.timerText]) t.visible = false;
+    for (const t of [this.counter, this.bestText, this.candyIcon, this.candyText, this.timerText]) t.visible = false;
     this.title = new TitleOverlay({
       candyTex: this.candyTex,
       pixelRatio: this.game.pixelRatio,
@@ -896,7 +960,7 @@ export class PlayScene extends Scene {
       this.timers.after(0.21, () => title.destroy({ children: true }));
     }
     this.mode = 'play';
-    for (const t of [this.heightText, this.bestText, this.candyIcon, this.candyText, this.timerText]) t.visible = true;
+    for (const t of [this.counter, this.bestText, this.candyIcon, this.candyText, this.timerText]) t.visible = true;
     this.hint.visible = false;
     this.squash(0.25);
   }
@@ -1409,6 +1473,9 @@ export class PlayScene extends Scene {
     this.run = new Run(seed);
     this.recorder = new ReplayRecorder(seed);
     this.bestAtStart = this.best;
+    this.counterMax = 0;
+    this.recordBeaten = false;
+    this.counterPop = { x: 0, v: 0, rot: 0, vr: 0, gold: 0 };
     this.runFast = {};
     this.streakHud.set(0);
     this.reachedBiome = 0;
@@ -2826,11 +2893,7 @@ export class PlayScene extends Scene {
     name.style.dropShadow = { color: '#120a1e', distance: 6, angle: Math.PI / 2, blur: 0, alpha: 1 };
     const fit = Math.min(1, (view.width - 60) / name.width);
     name.scale.set(fit);
-    const sub = this.makeText(34, '#ffd166');
-    sub.anchor.set(0.5);
-    sub.text = `${index * 100} m`;
-    sub.y = -62;
-    root.addChild(sub, name);
+    root.addChild(name);
     const tipText = biomeTip(index);
     if (tipText) {
       const tip = this.makeText(30, '#ffffff');
@@ -2850,6 +2913,47 @@ export class PlayScene extends Scene {
       this.tweens.killOf(root);
       root.destroy({ children: true });
     });
+    // Liczba wylatuje z licznika na środek nad nazwę świata, błyszczy, potem wraca do licznika.
+    const big = signText(40, GOLD);
+    big.anchor.set(0.5);
+    big.text = `${index * 100} m!`;
+    big.position.copyFrom(this.counter.position);
+    this.fx.addChild(big);
+    const bigY = y - 110;
+    this.tweens.to(big, { x: view.width / 2, y: bigY }, { duration: 0.55, ease: 'backOut' });
+    this.tweens.to(big.scale, { x: 2.6, y: 2.6 }, { duration: 0.55, ease: 'backOut' });
+    // Połysk: biały błysk przelatuje po cyfrach.
+    const shine = { k: 0 };
+    this.tweens.to(shine, { k: 1 }, { duration: 0.7, delay: 0.5, ease: 'linear', onUpdate: () => (big.tint = mixColor(GOLD, 0xffffff, Math.sin(shine.k * Math.PI))) });
+    this.timers.after(2.9, () => {
+      this.tweens.to(big, { x: this.counter.x, y: this.counter.y, alpha: 0.2 }, { duration: 0.45, ease: 'quadIn' });
+      this.tweens.to(big.scale, { x: 1, y: 1 }, { duration: 0.45, ease: 'quadIn' });
+    });
+    this.timers.after(3.4, () => {
+      this.tweens.killOf(big);
+      this.tweens.killOf(big.scale);
+      this.tweens.killOf(shine);
+      big.destroy();
+      this.counterPop.v += 6;
+      this.counterPop.gold = 1;
+    });
+    // Konfetti z obu boków w kolorach nowego świata.
+    const look = BIOME_LOOKS[BIOMES[index]!.id];
+    const colors = [COUNTER_TINT[index] ?? GOLD, look.surface.frosting, look.surface.biscuit, GOLD, 0xffffff];
+    for (const side of [-1, 1]) {
+      this.hudSparks.burst(side < 0 ? 0 : view.width, bigY + 40, {
+        count: 40,
+        speed: [500, 1100],
+        angle: side < 0 ? -Math.PI / 3 : (-2 * Math.PI) / 3,
+        spread: 0.6,
+        life: [1.2, 2],
+        scale: [0.7, 1.4],
+        gravity: 900,
+        drag: 1.2,
+        spin: [-8, 8],
+        colors,
+      });
+    }
     // Im mroczniejszy świat, tym niżej brzmi.
     this.sfx(BIOME_SFX, { pitch: 2 ** (-index / 12) });
     this.buzz('success');

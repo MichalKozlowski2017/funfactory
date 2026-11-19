@@ -223,7 +223,7 @@ Premie idą w cukierki, rekord zostaje w metrach (decyzja właściciela).
 
 - Nazwa: Glut.
 - Celowanie: przeciąganie w dowolnym miejscu ekranu.
-- Znaczniki wysokości w studni: co 10 m tabliczka w stylu świata (`public/art/signs/<świat>.png`, Flux) z liczbą krojem Lilita One, na przemian przy lewej i prawej ścianie, co 50 m większa; złota wstęga z gwiazdką (`signs/record.png`) i przerywana linia na wysokości rekordu z początku biegu (w wyzwaniu dnia: dzisiejszy najlepszy wynik). Bez grafiki: kreski z liczbą.
+- Licznik metrów u góry (krój Lilita One, kolor świata): każdy metr lekki podskok; co 10 m puls i cicha nuta z akordu; co 50 m mocniejszy pop z kołysaniem, złoty błysk, iskierki, trzy nuty, wibracja; co 100 m liczba wylatuje z licznika nad nazwę nowego świata (połysk, konfetti z obu boków w kolorach świata) i wraca. Pod licznikiem „do rekordu: N m” w ostatnich 20 m; po pobiciu wstążka „NOWY REKORD!”, fanfara, wibracja, licznik złoty do końca biegu. W studni cienka przerywana złota linia rekordu (w wyzwaniu dnia: dzisiejszy najlepszy wynik). Tabliczki z metrami (wersja z 19.11) właściciel odrzucił.
 - Strzał z wyprzedzeniem (19.11.2026): puszczony w locie, gdy do lądowania zostało mniej niż 0,15 s, czeka na przyklejenie i odpala z pełną siłą z półki (zamiast słabego skoku w locie). Bez skoków w zapasie można celować już w locie (bez kropek i slow-motion), strzał odpali po lądowaniu; palec trzymany przez lądowanie od razu pokazuje tor. Wibracje przy naciąganiu: lekkie stuknięcie co 20% siły, mocniejsze przy pełnej.
 
 ## Balans (strojenie botem, 19.11.2026)
