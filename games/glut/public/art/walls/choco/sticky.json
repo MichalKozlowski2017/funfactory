@@ -1,0 +1,17 @@
+{
+  "workflow": "flux2.json",
+  "PROMPT": "glossy milk chocolate ganache wall with thick swirls and a few chocolate chips, warm brown, seamless tileable texture filling the entire frame edge to edge, no border, no frame, flat view, cute candy-land mobile game art, flat vector style, soft cel shading, glossy, no text, no letters",
+  "NEGATIVE": "",
+  "SEED": 5201,
+  "WIDTH": 512,
+  "HEIGHT": 1536,
+  "PREFIX": "wall-choco",
+  "STEPS": 20,
+  "GUIDANCE": 4,
+  "BPM": 100,
+  "DURATION": 60,
+  "KEY": "A minor",
+  "LYRICS": "[Instrumental]",
+  "created": "2026-11-19T12:37:46.463Z",
+  "post": "resize 384 szer., JPEG 86; w grze lustrzane odbicie w pionie"
+}

@@ -1,0 +1,17 @@
+{
+  "workflow": "flux2.json",
+  "PROMPT": "translucent green gummy jelly wall with air bubbles and soft highlights, seamless tileable texture filling the entire frame edge to edge, no border, no frame, flat view, cute candy-land mobile game art, flat vector style, soft cel shading, glossy, no text, no letters",
+  "NEGATIVE": "",
+  "SEED": 5301,
+  "WIDTH": 512,
+  "HEIGHT": 1536,
+  "PREFIX": "wall-jelly",
+  "STEPS": 20,
+  "GUIDANCE": 4,
+  "BPM": 100,
+  "DURATION": 60,
+  "KEY": "A minor",
+  "LYRICS": "[Instrumental]",
+  "created": "2026-11-19T12:38:47.264Z",
+  "post": "resize 384 szer., JPEG 86; w grze lustrzane odbicie w pionie"
+}

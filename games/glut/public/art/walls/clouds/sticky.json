@@ -1,0 +1,17 @@
+{
+  "workflow": "flux2.json",
+  "PROMPT": "fluffy pink and white cotton candy wall, soft puffy fibers, seamless tileable texture filling the entire frame edge to edge, no border, no frame, flat view, cute candy-land mobile game art, flat vector style, soft cel shading, glossy, no text, no letters",
+  "NEGATIVE": "",
+  "SEED": 5401,
+  "WIDTH": 512,
+  "HEIGHT": 1536,
+  "PREFIX": "wall-clouds",
+  "STEPS": 20,
+  "GUIDANCE": 4,
+  "BPM": 100,
+  "DURATION": 60,
+  "KEY": "A minor",
+  "LYRICS": "[Instrumental]",
+  "created": "2026-11-19T12:39:48.061Z",
+  "post": "resize 384 szer., JPEG 86; w grze lustrzane odbicie w pionie"
+}

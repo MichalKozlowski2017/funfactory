@@ -172,7 +172,7 @@ Na ekranie startowym bot gra prawdziwy bieg w tle (autopilot jak w `?bot`, bez s
 
 ### Ściany
 
-Widoczny pas ściany (40 jednostek z każdej strony) to cały powierzchnia: tekstury z Fluxa (`public/art/walls/`: lód, lukier barwiony na kolor świata, karmel) jako `TilingSprite` przyklejony do świata (bez szwów między odcinkami, pionowo lustrzane odbicie), kolce jako sprite'y. Grafika z kodu dorysowuje na wierzchu zacieki lukru, połysk krawędzi i szwy między odcinkami. Bez plików tekstur ściany rysują się w całości w kodzie. Mrok mrocznych światów zaczyna się za ścianą, więc lód i kolce są zawsze czytelne.
+Widoczny pas ściany (40 jednostek z każdej strony) to cały powierzchnia: tekstury z Fluxa (`public/art/walls/`: lód, lukier barwiony na kolor świata, karmel) jako `TilingSprite` przyklejony do świata (bez szwów między odcinkami, pionowo lustrzane odbicie), kolce jako sprite'y. Każdy świat ma własne kolce (2 warianty) i własną lepką ścianę (`walls/<świat>/spike.png`, `spike2.png`, `sticky.jpg`; brak pliku = wspólne): kryształy, czekoladowe ciernie, żelki, laski cukrowe, karmel z ogniem, lukrecja, zardzewiałe kolce, wiśniowe kły. Kolce rosną gąszczem (losowy kąt, wielkość i odstęp, powtarzalnie z położenia; z tyłu ciemniejsza warstwa) i mają czerwoną poświatę ostrzegawczą (`*-glow.png`, biała rozmyta sylwetka barwiona na czerwono), więc są czytelne na każdym tle. Grafika z kodu dorysowuje na wierzchu zacieki lukru, połysk krawędzi i szwy między odcinkami. Bez plików tekstur ściany rysują się w całości w kodzie. Mrok mrocznych światów zaczyna się za ścianą, więc lód i kolce są zawsze czytelne.
 
 ### Przejścia i kamera
 

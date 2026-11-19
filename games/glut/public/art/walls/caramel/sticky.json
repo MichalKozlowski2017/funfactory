@@ -1,0 +1,17 @@
+{
+  "workflow": "flux2.json",
+  "PROMPT": "toasted marshmallow crust wall, golden brown with soft white spots, seamless tileable texture filling the entire frame edge to edge, no border, no frame, flat view, cute candy-land mobile game art, flat vector style, soft cel shading, glossy, no text, no letters",
+  "NEGATIVE": "",
+  "SEED": 5501,
+  "WIDTH": 512,
+  "HEIGHT": 1536,
+  "PREFIX": "wall-caramel",
+  "STEPS": 20,
+  "GUIDANCE": 4,
+  "BPM": 100,
+  "DURATION": 60,
+  "KEY": "A minor",
+  "LYRICS": "[Instrumental]",
+  "created": "2026-11-19T12:40:48.877Z",
+  "post": "resize 384 szer., JPEG 86; w grze lustrzane odbicie w pionie"
+}

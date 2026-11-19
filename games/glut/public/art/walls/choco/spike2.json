@@ -1,0 +1,17 @@
+{
+  "workflow": "flux2-sprite.json",
+  "PROMPT": "a single sharp dark chocolate thorn with glossy cocoa shine spike shaped like a cone, horizontal, pointing to the right, menacing but cute, clean thick dark outline, cute candy-land mobile game art, flat vector style, soft cel shading, glossy, single object, centered, plain light gray background, no text",
+  "NEGATIVE": "",
+  "SEED": 4202,
+  "WIDTH": 1024,
+  "HEIGHT": 1024,
+  "PREFIX": "spike-choco",
+  "STEPS": 20,
+  "GUIDANCE": 4,
+  "BPM": 100,
+  "DURATION": 60,
+  "KEY": "A minor",
+  "LYRICS": "[Instrumental]",
+  "created": "2026-11-19T12:21:27.077Z",
+  "post": "trim alpha, 160 szer."
+}

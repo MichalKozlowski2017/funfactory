@@ -1,6 +1,6 @@
 import { Assets, type BitmapText, Container, FillGradient, Graphics, Rectangle, Sprite, Text, Texture, TilingSprite } from 'pixi.js';
 import { circle, defs, ellipse, hexToNumber, palettes, path, radialGradient, svg } from '@funfactory/art';
-import { ads, gameServices, haptics, SaveStore, Spring, type SynthLayer } from '@funfactory/core';
+import { ads, gameServices, haptics, Rng, SaveStore, Spring, type SynthLayer } from '@funfactory/core';
 import { ADS } from '../ads-config.ts';
 import { GAME_SERVICES } from '../game-services-config.ts';
 import { achDesc, itemName as trItemName, biomeName, biomeTip, candies, controlName, detectLang, formatDay, lang, powerName, setLang, t } from '../i18n.ts';
@@ -176,6 +176,10 @@ export class PlayScene extends Scene {
   private decor: (Texture | null)[] = [];
   /** Tekstury ścian z Fluxa (brak pliku = ściany rysowane w kodzie). */
   private wallTex: { ice: Texture | null; frosting: Texture | null; caramel: Texture | null; spike: Texture | null } = { ice: null, frosting: null, caramel: null, spike: null };
+  /** Ściany i kolce własne dla świata (brak pliku = wspólne z `wallTex`). */
+  private readonly biomeWalls = new Map<string, { sticky: Texture | null; spikes: { tex: Texture; glow: Texture | null }[] }>();
+  /** Biała, rozmyta sylwetka wspólnego kolca (poświata ostrzegawcza). */
+  private spikeGlow: Texture | null = null;
   run!: Run;
   private camera!: FollowCamera;
   private shaker!: Shaker;
@@ -350,6 +354,23 @@ export class PlayScene extends Scene {
       caramel: wCaramel ? await mirrorTile(wCaramel) : null,
       spike: wSpike,
     };
+    this.spikeGlow = await optionalTexture('walls/spike-glow.png');
+    await Promise.all(
+      BIOMES.map(async (b) => {
+        const [sticky, spike1, glow1, spike2, glow2] = await Promise.all([
+          optionalTexture(`walls/${b.id}/sticky.jpg`),
+          optionalTexture(`walls/${b.id}/spike.png`),
+          optionalTexture(`walls/${b.id}/spike-glow.png`),
+          optionalTexture(`walls/${b.id}/spike2.png`),
+          optionalTexture(`walls/${b.id}/spike2-glow.png`),
+        ]);
+        const spikes = [
+          spike1 ? { tex: spike1, glow: glow1 } : null,
+          spike2 ? { tex: spike2, glow: glow2 } : null,
+        ].filter((x): x is { tex: Texture; glow: Texture | null } => !!x);
+        this.biomeWalls.set(b.id, { sticky: sticky ? await mirrorTile(sticky) : null, spikes });
+      }),
+    );
     const baseBg = bgTex ? await mirrorTile(bgTex) : null;
     if (baseBg) this.biomeBg.push(baseBg);
     this.biomeCandy.push(this.candyTex);
@@ -2334,8 +2355,11 @@ export class PlayScene extends Scene {
     const isWall = (b.x < 0 || b.x >= SHAFT.width - SHAFT.wall) && b.w <= SHAFT.width;
     if (!isWall) return false;
     const T = this.wallTex;
-    const tex = b.surface === 'ice' ? T.ice : b.surface === 'sticky' ? T.frosting : T.caramel;
-    if (!tex || (b.surface === 'spikes' && !T.spike)) return false;
+    const own = this.biomeWalls.get(BIOMES[biomeIndex(metersAt(b.y + b.h / 2))]!.id);
+    const sticky = own?.sticky ?? T.frosting;
+    const spikes = own?.spikes.length ? own.spikes : T.spike ? [{ tex: T.spike, glow: this.spikeGlow }] : [];
+    const tex = b.surface === 'ice' ? T.ice : b.surface === 'sticky' ? sticky : T.caramel;
+    if (!tex || (b.surface === 'spikes' && !spikes.length)) return false;
     const W = SHAFT.wall;
     const left = b.x < 0;
     const band = left ? b.x + b.w - W : b.x;
@@ -2347,17 +2371,43 @@ export class PlayScene extends Scene {
     strip.tileScale.set(k, k);
     strip.tilePosition.set(left ? -20 : -60, -b.y);
     strip.position.set(band, b.y);
-    if (b.surface === 'sticky') strip.tint = P.frosting;
+    // Wspólny lukier jest biały i barwiony na kolor świata; własna ściana świata ma swoje kolory.
+    if (b.surface === 'sticky' && !own?.sticky) strip.tint = P.frosting;
     layer.addChild(strip);
-    if (b.surface === 'spikes' && T.spike) {
-      const n = Math.max(1, Math.floor(b.h / 34));
-      for (let i = 0; i < n; i++) {
-        const sp = new Sprite({ texture: T.spike, anchor: { x: 0.1, y: 0.5 } });
-        const sc = 40 / T.spike.width;
-        sp.scale.set(sc * inward, sc);
-        sp.position.set(edge - inward * 8, b.y + (i + 0.5) * (b.h / n));
-        layer.addChild(sp);
-      }
+    if (b.surface === 'spikes') {
+      // Gąszcz zamiast grzebienia: każdy kolec ma inny kąt, wielkość i odstęp (powtarzalnie z położenia),
+      // z tyłu przyciemniona warstwa mniejszych dla głębi. Groźny jest cały odcinek ściany, jak wcześniej.
+      const rng = new Rng((Math.round(b.y * 13 + b.x * 7) >>> 0) || 1);
+      const place = (count: number, back: boolean) => {
+        for (let i = 0; i < count; i++) {
+          const { tex, glow: glowTex } = spikes[rng.int(0, spikes.length - 1)]!;
+          const sp = new Sprite({ texture: tex, anchor: { x: 0.1, y: 0.5 } });
+          const size = back ? rng.range(0.55, 0.85) : rng.range(0.75, 1.3);
+          const sc = (40 / tex.width) * size;
+          sp.scale.set(sc * inward, sc * (rng.chance(0.5) ? 1 : -1));
+          sp.rotation = rng.range(-0.45, 0.45) * inward;
+          const y = b.y + ((i + 0.5) * b.h) / count + rng.range(-0.3, 0.3) * (b.h / count);
+          sp.position.set(edge - inward * rng.range(back ? 10 : 4, back ? 16 : 10), Math.max(b.y + 8, Math.min(b.y + b.h - 8, y)));
+          if (back) sp.tint = 0x9a8a9a;
+          else if (glowTex) {
+            // Poświata ostrzegawcza (biała rozmyta sylwetka barwiona na czerwono): ten sam sygnał
+            // „niebezpieczne” we wszystkich światach, także dla ciemnych kolców na ciemnym tle.
+            // Sylwetka ma ramkę 24 px: przeliczamy kotwicę, żeby leżała dokładnie pod kolcem.
+            const ax = (0.1 * tex.width + 24) / glowTex.width;
+            const glow = new Sprite({ texture: glowTex, anchor: { x: ax, y: 0.5 } });
+            const gs = Math.abs(sp.scale.x);
+            glow.scale.set(Math.sign(sp.scale.x) * gs, Math.sign(sp.scale.y) * gs);
+            glow.rotation = sp.rotation;
+            glow.position.set(sp.x, sp.y);
+            glow.tint = 0xff3b3b;
+            glow.alpha = 0.8;
+            layer.addChild(glow);
+          }
+          layer.addChild(sp);
+        }
+      };
+      place(Math.max(1, Math.round(b.h / 40)), true);
+      place(Math.max(1, Math.round(b.h / 30)), false);
     }
     return true;
   }
