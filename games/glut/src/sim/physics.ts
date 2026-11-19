@@ -312,9 +312,9 @@ export class World {
     for (const other of this.blocks) {
       if (other === b || other.gone) continue;
       let c = contact(s.x, s.y, s.r, other);
-      if (!c && dy && other.surface !== 'spikes') {
+      if (!c && dy) {
         // Zsuwając się po ścianie, slime tylko dotyka jej powierzchni: przylegający niżej kawałek ściany
-        // nie daje zachodzenia, więc szukamy go z małym zapasem i przyklejamy się (zamiast spadać).
+        // nie daje zachodzenia, więc szukamy go z małym zapasem: lepki przytrzymuje, kolce zabijają.
         const near = contact(s.x, s.y, s.r + 2, other);
         if (near && Math.abs(near.nx - s.nx) < 0.05 && Math.abs(near.ny - s.ny) < 0.05) c = { ...near, depth: near.depth - 2 };
       }

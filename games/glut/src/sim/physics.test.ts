@@ -91,6 +91,20 @@ describe('World', () => {
     expect(world.slime.x).toBeCloseTo(20 + PHYS.radius, 0);
   });
 
+  it('dies when sliding down ice onto spikes below', () => {
+    const ice = box(0, -600, 20, 200, 'ice');
+    const world = new World([box(-100, 0, 1000, 100), ice, box(0, -400, 20, 300, 'spikes')], { x: 300, y: -50 });
+    world.slime.state = 'stuck';
+    world.slime.x = 20 + PHYS.radius;
+    world.slime.y = -560;
+    world.slime.nx = 1;
+    world.slime.ny = 0;
+    world.slime.stuckTo = ice;
+    let died = false;
+    for (let i = 0; i < 300 && !died; i++) died = !!world.step(1 / 60).died;
+    expect(died).toBe(true);
+  });
+
   it('dies on spikes', () => {
     const world = new World([box(-100, 0, 1000, 100), box(0, -400, 1000, 20, 'spikes')], { x: 300, y: -50 });
     world.launch(0, -2000);
