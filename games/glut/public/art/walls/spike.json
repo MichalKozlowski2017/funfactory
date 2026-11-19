@@ -1,0 +1,17 @@
+{
+  "workflow": "flux2-sprite.json",
+  "PROMPT": "a single sharp glossy caramel candy spike shaped like a cone pointing to the right, orange amber caramel with a white shine, horizontal, clean thick dark outline, cute candy-land mobile game art, flat vector style, soft cel shading, single object, centered, plain light gray background, no text",
+  "NEGATIVE": "",
+  "SEED": 3401,
+  "WIDTH": 1024,
+  "HEIGHT": 1024,
+  "PREFIX": "spike",
+  "STEPS": 20,
+  "GUIDANCE": 4,
+  "BPM": 100,
+  "DURATION": 60,
+  "KEY": "A minor",
+  "LYRICS": "[Instrumental]",
+  "created": "2026-11-19T12:01:29.659Z",
+  "post": "trim alpha, 160 szer."
+}

@@ -174,6 +174,8 @@ export class PlayScene extends Scene {
   private dropGlow = 0;
   private candyTex!: Texture;
   private decor: (Texture | null)[] = [];
+  /** Tekstury ścian z Fluxa (brak pliku = ściany rysowane w kodzie). */
+  private wallTex: { ice: Texture | null; frosting: Texture | null; caramel: Texture | null; spike: Texture | null } = { ice: null, frosting: null, caramel: null, spike: null };
   run!: Run;
   private camera!: FollowCamera;
   private shaker!: Shaker;
@@ -335,6 +337,19 @@ export class PlayScene extends Scene {
     const biomeArt = await Promise.all(
       BIOMES.slice(1).map((b) => Promise.all([optionalTexture(`biomes/${b.id}/bg.jpg`), optionalTexture(`biomes/${b.id}/candy.png`)])),
     );
+    const [wIce, wFrost, wCaramel, wSpike] = await Promise.all([
+      optionalTexture('walls/ice.jpg'),
+      optionalTexture('walls/frosting.jpg'),
+      optionalTexture('walls/caramel.jpg'),
+      optionalTexture('walls/spike.png'),
+    ]);
+    // Pionowo bez szwu: obraz + jego odbicie (jak tło).
+    this.wallTex = {
+      ice: wIce ? await mirrorTile(wIce) : null,
+      frosting: wFrost ? await mirrorTile(wFrost) : null,
+      caramel: wCaramel ? await mirrorTile(wCaramel) : null,
+      spike: wSpike,
+    };
     const baseBg = bgTex ? await mirrorTile(bgTex) : null;
     if (baseBg) this.biomeBg.push(baseBg);
     this.biomeCandy.push(this.candyTex);
@@ -2264,10 +2279,13 @@ export class PlayScene extends Scene {
     if (!blocks || this.chunkViews.has(k)) return;
     const view = new Container();
     const g = new Graphics();
-    view.addChild(g);
+    // Tekstury ścian pod grafiką z kodu (ta dorysowuje zacieki, połysk i szwy na wierzchu).
+    const under = new Container();
+    view.addChild(under, g);
     for (const b of blocks) {
       if (!b.feature) {
-        drawBlock(g, b, this.lookAt(b.y + b.h / 2).surface);
+        const look = this.lookAt(b.y + b.h / 2).surface;
+        drawBlock(g, b, look, this.wallSprites(under, b, look));
         continue;
       }
       const fv = new FeatureView(b);
@@ -2309,6 +2327,39 @@ export class PlayScene extends Scene {
       this.powerViews.set(p.id, bubble);
       this.candyLayer.addChild(bubble);
     }
+  }
+
+  /** Pas ściany z tekstury (lód, lukier w kolorze świata, karmel z kolcami). Zwraca, czy się udało. */
+  private wallSprites(layer: Container, b: Block, P: typeof SURFACE): boolean {
+    const isWall = (b.x < 0 || b.x >= SHAFT.width - SHAFT.wall) && b.w <= SHAFT.width;
+    if (!isWall) return false;
+    const T = this.wallTex;
+    const tex = b.surface === 'ice' ? T.ice : b.surface === 'sticky' ? T.frosting : T.caramel;
+    if (!tex || (b.surface === 'spikes' && !T.spike)) return false;
+    const W = SHAFT.wall;
+    const left = b.x < 0;
+    const band = left ? b.x + b.w - W : b.x;
+    const edge = left ? b.x + b.w : b.x;
+    const inward = left ? 1 : -1;
+    const strip = new TilingSprite({ texture: tex, width: W, height: b.h });
+    // Szerokość tekstury = 140 jednostek świata (w pasie widać jej wycinek); wzór przyklejony do świata.
+    const k = 140 / tex.width;
+    strip.tileScale.set(k, k);
+    strip.tilePosition.set(left ? -20 : -60, -b.y);
+    strip.position.set(band, b.y);
+    if (b.surface === 'sticky') strip.tint = P.frosting;
+    layer.addChild(strip);
+    if (b.surface === 'spikes' && T.spike) {
+      const n = Math.max(1, Math.floor(b.h / 34));
+      for (let i = 0; i < n; i++) {
+        const sp = new Sprite({ texture: T.spike, anchor: { x: 0.1, y: 0.5 } });
+        const sc = 40 / T.spike.width;
+        sp.scale.set(sc * inward, sc);
+        sp.position.set(edge - inward * 8, b.y + (i + 0.5) * (b.h / n));
+        layer.addChild(sp);
+      }
+    }
+    return true;
   }
 
   private removeChunkView(k: number): void {

@@ -49,8 +49,12 @@ function frostingEdge(g: Graphics, rng: Rng, from: number, to: number, at: numbe
   }
 }
 
-/** Rysuje blok w palecie świata (domyślnie kryształowa jaskinia). */
-export function drawBlock(g: Graphics, b: Block, P: typeof SURFACE = SURFACE): void {
+/**
+ * Rysuje blok w palecie świata (domyślnie kryształowa jaskinia).
+ * `textured`: ściany mają tekstury (sprite'y pod tą grafiką), więc tu tylko detale na wierzchu:
+ * zacieki lukru, połysk krawędzi, szew; bez wypełnienia pasa i bez kolców.
+ */
+export function drawBlock(g: Graphics, b: Block, P: typeof SURFACE = SURFACE, textured = false): void {
   const rng = new Rng(seedOf(b));
   const isWall = b.x < 0 || b.x >= SHAFT.width - SHAFT.wall;
 
@@ -72,6 +76,22 @@ export function drawBlock(g: Graphics, b: Block, P: typeof SURFACE = SURFACE): v
     const W = SHAFT.wall;
     const band = left ? edge - W : edge; // lewy brzeg pasa widocznego
     const outer = left ? band : band + W; // krawędź ekranu
+    if (textured) {
+      // Skała tylko poza widocznym pasem (pas wypełnia tekstura pod spodem).
+      if (left) g.rect(b.x, b.y, band - b.x, b.h).fill({ color: P.rock });
+      else g.rect(band + W, b.y, b.x + b.w - band - W, b.h).fill({ color: P.rock });
+      if (b.surface === 'sticky') {
+        g.rect(left ? outer : outer - 10, b.y, 10, b.h).fill({ color: P.frostingShade, alpha: 0.45 });
+        frostingEdge(g, rng, b.y, b.y + b.h, edge, P.frosting, true, inward);
+      } else if (b.surface === 'ice') {
+        g.rect(left ? outer : outer - 8, b.y, 8, b.h).fill({ color: P.iceShade, alpha: 0.6 });
+        g.rect(left ? edge - 4 : edge, b.y, 4, b.h).fill({ color: 0xffffff, alpha: 0.75 });
+      } else {
+        g.rect(left ? outer : outer - 8, b.y, 8, b.h).fill({ color: P.ink, alpha: 0.35 });
+      }
+      g.rect(band, b.y, W, 2).fill({ color: P.ink, alpha: 0.55 });
+      return;
+    }
     g.rect(b.x, b.y, b.w, b.h).fill({ color: P.rock });
     if (b.surface === 'sticky') {
       g.rect(band, b.y, W, b.h).fill({ color: P.frosting });

@@ -170,6 +170,10 @@ Cztery działy po 6 rzeczy, po jednej założonej z każdego (`sim/shop.ts`, gra
 
 Na ekranie startowym bot gra prawdziwy bieg w tle (autopilot jak w `?bot`, bez slow-motion), a muzyka reaguje na jego akcje. Bieg pokazowy (`demoRun`) niczego nie zapisuje: bez rekordu, cukierków na konto (`wallet()`), statystyk, osiągnięć, rankingu i reklam; efekty dźwiękowe i wibracje milczą (`sfx()` / `buzz()`, dźwięki interfejsu grają), bez napisów nad menu. Po śmierci bota po cichu startuje kolejny pokaz; przycisk „Graj” (albo wyzwanie dnia) daje graczowi świeży bieg. Kamera trzyma slime'a niżej, pod przyciskami.
 
+### Ściany
+
+Widoczny pas ściany (40 jednostek z każdej strony) to cały powierzchnia: tekstury z Fluxa (`public/art/walls/`: lód, lukier barwiony na kolor świata, karmel) jako `TilingSprite` przyklejony do świata (bez szwów między odcinkami, pionowo lustrzane odbicie), kolce jako sprite'y. Grafika z kodu dorysowuje na wierzchu zacieki lukru, połysk krawędzi i szwy między odcinkami. Bez plików tekstur ściany rysują się w całości w kodzie. Mrok mrocznych światów zaczyna się za ścianą, więc lód i kolce są zawsze czytelne.
+
 ### Przejścia i kamera
 
 - **Przesłona** (`fx/iris.ts`): po „Graj” logo odlatuje, przyciski znikają, ciemne koło z cukierkowym obrzeżem zamyka się na przycisku, bieg się podmienia, koło otwiera się wokół slime'a, który „wyskakuje” (dźwięk, iskry, haptyka). To samo przy wyzwaniu dnia, „Jeszcze raz”, „Menu” i wyjściu z pauzy. W trakcie blokuje dotyk.

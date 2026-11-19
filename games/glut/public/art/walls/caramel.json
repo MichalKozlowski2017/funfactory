@@ -1,0 +1,17 @@
+{
+  "workflow": "flux2.json",
+  "PROMPT": "glossy dark caramel toffee surface with melted drips and warm highlights, rich amber and brown, seamless tileable texture filling the entire frame edge to edge, no border, no frame, no objects in front, top-down flat view, cute candy-land mobile game art, flat vector style, soft cel shading, glossy, no text, no letters",
+  "NEGATIVE": "",
+  "SEED": 3302,
+  "WIDTH": 512,
+  "HEIGHT": 1536,
+  "PREFIX": "caramel",
+  "STEPS": 20,
+  "GUIDANCE": 4,
+  "BPM": 100,
+  "DURATION": 60,
+  "KEY": "A minor",
+  "LYRICS": "[Instrumental]",
+  "created": "2026-11-19T12:00:11.020Z",
+  "post": "resize 384 szer., JPEG 86; w grze: lustrzane odbicie w pionie (bez szwu)"
+}
