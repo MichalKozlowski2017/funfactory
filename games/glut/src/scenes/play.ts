@@ -33,7 +33,7 @@ import { botCanShoot, chooseShot, type BotShot } from '../sim/bot.ts';
 import { CONTROL_MODES, dragToTap, tapToDrag, type ControlMode } from '../sim/controls.ts';
 import { launchVelocity, PHYS, type Block } from '../sim/physics.ts';
 import { AIR, airPower, Run, STREAK, type RunStep } from '../sim/run.ts';
-import { SHAFT, type Candy, type PowerKind, type PowerUp } from '../sim/shaft.ts';
+import { SHAFT, START, type Candy, type PowerKind, type PowerUp } from '../sim/shaft.ts';
 import { ACCESSORIES, HATS, ITEMS, NEW_SAVE, normalizeSave, SKINS, tapItem, TRAILS, type Save } from '../sim/shop.ts';
 import { dailySeed, dailyStreak, dayKey, recordDaily, type DailyRecord } from '../sim/daily.ts';
 import { ReplayRecorder, type Replay } from '../sim/replay.ts';
@@ -112,6 +112,10 @@ export class PlayScene extends Scene {
   private readonly chunkLayer = new Container();
   private readonly decalLayer = new Container();
   private readonly candyLayer = new Container();
+  /** Znaczniki wysokości na ścianach (co 10 m) i linia rekordu. */
+  private readonly markerLayer = new Container();
+  private readonly markerG = new Graphics();
+  private readonly markerTexts: BitmapText[] = [];
   private readonly chunkViews = new Map<number, Container>();
   private readonly candyViews = new Map<string, { sprite: Sprite; candy: Candy }>();
   private readonly powerViews = new Map<string, PowerBubble>();
@@ -410,7 +414,7 @@ export class PlayScene extends Scene {
       this.backdrop.addChild(this.lightL, this.lightR, this.flashG);
     }
     this.shake.addChild(this.world);
-    this.world.addChild(this.chunkLayer, this.decalLayer, this.candyLayer, this.dotsG, this.slime, this.syrupG);
+    this.world.addChild(this.chunkLayer, this.markerLayer, this.decalLayer, this.candyLayer, this.dotsG, this.slime, this.syrupG);
 
     const scale = bodyScale(PHYS.radius);
     this.body.addChild(this.hat);
@@ -589,6 +593,58 @@ export class PlayScene extends Scene {
     }
   }
 
+  /** Znaczniki wysokości w studni: kreska z liczbą co 10 m (większa co 50 m) i linia rekordu z początku biegu. */
+  private drawMarkers(): void {
+    const g = this.markerG;
+    g.clear();
+    if (!this.markerG.parent) this.markerLayer.addChild(g);
+    const show = this.mode === 'play' && !this.demoRun;
+    this.markerLayer.visible = show;
+    if (!show) return;
+    const top = this.camera.y - 60;
+    const bottom = this.camera.y + this.game.view.height + 60;
+    const yOf = (m: number) => START.y - m * 100;
+    let used = 0;
+    const label = (text: string, x: number, y: number, size: number, color: string, anchorX: number) => {
+      let tx = this.markerTexts[used];
+      if (!tx) {
+        tx = hudText(30, color);
+        this.markerTexts.push(tx);
+        this.markerLayer.addChild(tx);
+      }
+      used++;
+      tx.visible = true;
+      tx.text = text;
+      tx.scale.set(size / 30);
+      tx.tint = color;
+      tx.anchor.set(anchorX, 0.5);
+      tx.position.set(x, y);
+      tx.alpha = 0.8;
+    };
+    const inner = SHAFT.wall;
+    const first = Math.max(10, Math.ceil(metersAt(bottom) / 10) * 10);
+    for (let m = first; yOf(m) >= top; m += 10) {
+      const y = yOf(m);
+      const big = m % 50 === 0;
+      const len = big ? 44 : 24;
+      for (const [x0, dir] of [[inner, 1], [SHAFT.width - inner, -1]] as const) {
+        g.moveTo(x0, y).lineTo(x0 + dir * len, y).stroke({ color: 0xffffff, width: big ? 5 : 3, alpha: big ? 0.7 : 0.45, cap: 'round' });
+      }
+      label(`${m} m`, inner + len + 10, y, big ? 30 : 22, '#ffffff', 0);
+    }
+    // Linia rekordu (w wyzwaniu dnia: dzisiejszy najlepszy wynik).
+    const record = this.dailyMode ? (this.daily.find((d) => d.day === this.dailyDay)?.best ?? 0) : this.bestAtStart;
+    if (record >= 10) {
+      const y = yOf(record);
+      if (y >= top && y <= bottom) {
+        const color = 0xffd166;
+        for (let x = inner + 8; x < SHAFT.width - inner - 8; x += 36) g.moveTo(x, y).lineTo(Math.min(x + 20, SHAFT.width - inner - 8), y).stroke({ color, width: 5, alpha: 0.85, cap: 'round' });
+        label(this.dailyMode ? t('todayLine', { m: record }) : t('best', { m: record }), SHAFT.width - inner - 16, y - 26, 30, '#ffd166', 1);
+      }
+    }
+    for (let i = used; i < this.markerTexts.length; i++) this.markerTexts[i]!.visible = false;
+  }
+
   /** Pozycje do rysowania: między poprzednim a obecnym krokiem fizyki (bez skoków przy teleporcie i nowym biegu). */
   private interpolate(): void {
     const s = this.run.slime;
@@ -681,6 +737,7 @@ export class PlayScene extends Scene {
       void this.persist();
     }
     this.heightText.text = `${meters} m`;
+    this.drawMarkers();
     const sec = Math.floor(this.run.time);
     if (sec !== this.timerShown) {
       this.timerShown = sec;
