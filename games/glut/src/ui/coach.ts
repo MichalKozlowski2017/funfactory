@@ -3,9 +3,9 @@ import type { Tweens } from '@funfactory/core';
 import { popIn, setRestScale } from '@funfactory/kit2d';
 import { hudText } from '../fx/hud-font.ts';
 
-/** Gest do pokazania palcem: przeciągnięcie od `from` do `to` albo stuknięcie w `to` (jednostki ekranu). */
+/** Gest do pokazania palcem: przeciągnięcie od `from` do `to` (jednostki ekranu). */
 export interface Gesture {
-  kind: 'drag' | 'tap';
+  kind: 'drag';
   from: { x: number; y: number };
   to: { x: number; y: number };
 }
@@ -71,17 +71,6 @@ export class Coach extends Container {
     // Cykl 1,8 s: pojawienie i dotyk (0–0,3), ruch (0,3–0,9), puszczenie i zanik (0,9–1,3), przerwa.
     const c = this.time % 1.8;
     const ease = (x: number) => x * x * (3 - 2 * x);
-    if (g.kind === 'tap') {
-      const k = c < 0.25 ? c / 0.25 : c < 0.6 ? 1 : Math.max(0, 1 - (c - 0.6) / 0.4);
-      this.finger.position.set(g.to.x, g.to.y);
-      this.finger.alpha = k;
-      this.finger.scale.set(c > 0.25 && c < 0.45 ? 0.8 : 1);
-      if (c > 0.25 && c < 0.9) {
-        const r = 34 + (c - 0.25) * 160;
-        this.trail.circle(g.to.x, g.to.y, r).stroke({ color: 0xffffff, width: 4, alpha: Math.max(0, 0.8 - (c - 0.25) * 1.3) });
-      }
-      return;
-    }
     const m = c < 0.3 ? 0 : c < 0.9 ? ease((c - 0.3) / 0.6) : 1;
     const x = g.from.x + (g.to.x - g.from.x) * m;
     const y = g.from.y + (g.to.y - g.from.y) * m;

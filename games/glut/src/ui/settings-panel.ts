@@ -6,14 +6,13 @@ import { t } from '../i18n.ts';
 const pal = palettes.candy;
 const FONT = 'system-ui, -apple-system, sans-serif';
 
-type Key = 'music' | 'sfx' | 'vibration' | 'controls' | 'lang' | 'privacy';
+type Key = 'music' | 'sfx' | 'vibration' | 'lang' | 'privacy';
 
 export interface SettingsState {
   music: boolean;
   sfx: boolean;
   vibration: boolean;
   /** Nazwa trybu sterowania (Swipe / Proca / Tap). */
-  controls: string;
 }
 
 export interface SettingsOptions {
@@ -43,8 +42,8 @@ export class SettingsPanel extends Container {
       resolution: o.pixelRatio,
       anchor: 0.5,
     });
-    for (const key of ['music', 'sfx', 'vibration', 'controls', 'lang', 'privacy'] as const) {
-      const color = key === 'controls' || key === 'lang' ? '#5fc8e8' : key === 'privacy' ? '#6e6488' : '#9b8cff';
+    for (const key of ['music', 'sfx', 'vibration', 'lang', 'privacy'] as const) {
+      const color = key === 'lang' ? '#5fc8e8' : key === 'privacy' ? '#6e6488' : '#9b8cff';
       const button = new Button({ label: '', color, width: 460, height: key === 'privacy' ? 80 : 96, fontSize: key === 'privacy' ? 28 : 34, resolution: o.pixelRatio, onTap: () => o.onToggle(key) });
       this.rows.push({ key, button });
       this.body.addChild(button);
@@ -78,13 +77,11 @@ export class SettingsPanel extends Container {
             ? t('sfx', { v: on(s.sfx) })
             : r.key === 'vibration'
               ? t('vibration', { v: on(s.vibration) })
-              : r.key === 'controls'
-                ? t('controls', { v: s.controls })
-                : r.key === 'lang'
-                  ? t('language')
-                  : t('privacy');
+              : r.key === 'lang'
+                ? t('language')
+                : t('privacy');
       r.button.setLabel(label);
-      r.button.alpha = r.key === 'controls' || r.key === 'privacy' || r.key === 'lang' || s[r.key] ? 1 : 0.6;
+      r.button.alpha = r.key === 'privacy' || r.key === 'lang' || s[r.key] ? 1 : 0.6;
     }
   }
 

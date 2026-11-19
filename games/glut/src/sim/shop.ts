@@ -1,4 +1,3 @@
-import { CONTROL_MODES, type ControlMode } from './controls.ts';
 import { normalizeDaily, type DailyRecord } from './daily.ts';
 import { normalizeStats, type Stats } from './achievements.ts';
 /**
@@ -105,7 +104,6 @@ export interface Save {
   skin: string | null;
   trail: string | null;
   acc: string | null;
-  controls: ControlMode;
   /** Ustawienia: muzyka, efekty dźwiękowe, wibracje. */
   music: boolean;
   sfx: boolean;
@@ -129,7 +127,6 @@ export const NEW_SAVE: Save = {
   skin: null,
   trail: null,
   acc: null,
-  controls: 'swipe',
   music: true,
   sfx: true,
   vibration: true,
@@ -182,7 +179,6 @@ export function normalizeSave(raw: Partial<Save>): Save {
     skin: worn('skin', raw.skin),
     trail: worn('trail', raw.trail),
     acc: worn('acc', raw.acc),
-    controls: CONTROL_MODES.includes(raw.controls as ControlMode) ? (raw.controls as ControlMode) : 'swipe',
     music: raw.music !== false,
     sfx: raw.sfx !== false,
     vibration: raw.vibration !== false,

@@ -3,7 +3,7 @@ import { circle, defs, ellipse, hexToNumber, palettes, path, radialGradient, svg
 import { ads, gameServices, haptics, Rng, SaveStore, Spring, type SynthLayer } from '@funfactory/core';
 import { ADS } from '../ads-config.ts';
 import { GAME_SERVICES } from '../game-services-config.ts';
-import { achDesc, itemName as trItemName, biomeName, biomeTip, candies, controlName, detectLang, formatDay, lang, powerName, setLang, t } from '../i18n.ts';
+import { achDesc, itemName as trItemName, biomeName, biomeTip, candies, detectLang, formatDay, lang, powerName, setLang, t } from '../i18n.ts';
 import { AdPolicy } from '../sim/ad-policy.ts';
 import { Score } from '../fx/score.ts';
 import {
@@ -30,7 +30,6 @@ import { drawBlock, SURFACE } from '../fx/surfaces.ts';
 import { BIOME_LOOKS, mixColor, type BiomeLook } from '../fx/biome-look.ts';
 import { biomeBlend, biomeIndex, BIOMES, metersAt } from '../sim/biomes.ts';
 import { botCanShoot, chooseShot, type BotShot } from '../sim/bot.ts';
-import { CONTROL_MODES, dragToTap, tapToDrag, type ControlMode } from '../sim/controls.ts';
 import { launchVelocity, PHYS, type Block } from '../sim/physics.ts';
 import { AIR, airPower, Run, STREAK, type RunStep } from '../sim/run.ts';
 import { SHAFT, START, type Candy, type PowerKind, type PowerUp } from '../sim/shaft.ts';
@@ -152,13 +151,8 @@ export class PlayScene extends Scene {
   private aimStep = 0;
   private readonly dotsG = new Graphics();
   /** Tryb sterowania (eksperyment, zapisywany). */
-  private controls: ControlMode = 'drag';
   /** Tap: gdzie jest palec (jednostki ekranu), póki trzymany. */
-  private tapPoint: { x: number; y: number } | null = null;
   /** Swipe: ślad palca jak cięcie we Fruit Ninja (punkty z wiekiem w sekundach rzeczywistych). */
-  private readonly trail: { x: number; y: number; age: number }[] = [];
-  private readonly trailG = new Graphics();
-  private trailEmpty = true;
   /** Celowanie kończy się na kolcach (do jednorazowej wibracji ostrzegawczej). */
   private aimDanger = false;
   /** Ostrzeżenie o kolcach tuż nad kadrem. */
@@ -323,7 +317,6 @@ export class PlayScene extends Scene {
     setLang(forced === 'pl' || forced === 'en' ? forced : (saved.lang ?? detectLang()));
     this.stats = saved.stats;
     this.earned = saved.achievements;
-    this.controls = saved.controls;
     this.musicOn = saved.music;
     this.sfxOn = saved.sfx;
     this.vibrationOn = saved.vibration;
@@ -475,7 +468,7 @@ export class PlayScene extends Scene {
         this.buzz('success');
       },
     });
-    this.hud.addChild(this.shadeG, this.trailG, this.dangerG, this.glow, this.powerHud, this.counter, this.hudSparks.view, this.bestText, this.streakHud, this.candyIcon, this.candyText, this.timerText, this.hint, this.syrupWarn, this.coach, this.fx);
+    this.hud.addChild(this.shadeG, this.dangerG, this.glow, this.powerHud, this.counter, this.hudSparks.view, this.bestText, this.streakHud, this.candyIcon, this.candyText, this.timerText, this.hint, this.syrupWarn, this.coach, this.fx);
     // Pauza nad warstwą dotyku (inaczej stuknięcie w nią zaczynałoby celowanie).
     this.pauseButton = new Button({ label: '', color: '#6e6488', width: 88, height: 88, radius: 44, resolution: this.game.pixelRatio, onTap: () => this.openPause() });
     this.pauseButton.addChild(new Graphics().roundRect(-15, -18, 10, 36, 4).fill({ color: 0xffffff }).roundRect(5, -18, 10, 36, 4).fill({ color: 0xffffff }));
@@ -489,40 +482,10 @@ export class PlayScene extends Scene {
     this.addChild(this.toasts);
 
     const input = gestures(this.input, { dragThreshold: 10 });
-    // Proca i swipe: przeciągnięcie w dowolnym miejscu ekranu.
-    input.on('dragStart', ({ x, y }) => {
-      if (this.controls === 'tap' || this.autopilot) return;
-      this.beginAim(x, y);
-      if (this.controls === 'swipe') this.trail.push({ x, y, age: 0 });
-    });
-    input.on('drag', ({ x, y }) => {
-      if (this.controls === 'tap' || this.autopilot) return;
-      if (this.controls === 'swipe') this.trail.push({ x, y, age: 0 });
-      this.aim(x, y);
-    });
-    input.on('dragEnd', ({ x, y }) => this.controls !== 'tap' && !this.autopilot && this.release(x, y));
-    // Tap: stuknięcie wskazuje cel, odległość od slime'a to siła. Trzymanie pokazuje tor (w locie slow-motion).
-    this.input.on('pointerdown', (e) => {
-      if (this.controls !== 'tap' || this.autopilot) return;
-      const p = this.input.toLocal(e.global);
-      if (!this.beginAim(0, 0)) return;
-      this.tapPoint = { x: p.x, y: p.y };
-      this.ripple(p.x, p.y);
-      this.aimTap();
-    });
-    this.input.on('pointermove', (e) => {
-      if (!this.tapPoint) return;
-      const p = this.input.toLocal(e.global);
-      this.tapPoint = { x: p.x, y: p.y };
-    });
-    const tapUp = () => {
-      if (!this.tapPoint) return;
-      const d = this.tapDrag();
-      this.tapPoint = null;
-      this.release(d?.x ?? 0, d?.y ?? 0);
-    };
-    this.input.on('pointerup', tapUp);
-    this.input.on('pointerupoutside', tapUp);
+    // Proca: przeciągnięcie w dowolnym miejscu ekranu, strzał w przeciwną stronę.
+    input.on('dragStart', ({ x, y }) => !this.autopilot && this.beginAim(x, y));
+    input.on('drag', ({ x, y }) => !this.autopilot && this.aim(x, y));
+    input.on('dragEnd', ({ x, y }) => !this.autopilot && this.release(x, y));
     if (PILOT_MODE) {
       this.autopilot = { wait: PILOT.start, shot: null, t: 0, hold: 0, sx: 0, sy: 0 };
       this.finger.circle(0, 0, 30).fill({ color: 0xffffff, alpha: 0.35 }).circle(0, 0, 30).stroke({ color: 0xffffff, width: 4, alpha: 0.8 });
@@ -766,8 +729,6 @@ export class PlayScene extends Scene {
     this.time += dt;
     this.interpolate();
     this.pilot(dt);
-    if (this.tapPoint && this.aiming) this.aimTap(); // slime w locie się rusza, cel względem niego też
-    this.drawTrail(dt / (this.game.loop.timeScale || 1));
     const s = this.run.slime;
     const view = this.game.view;
     if (s.state !== 'dead') {
@@ -903,7 +864,6 @@ export class PlayScene extends Scene {
       skin: this.skinId,
       trail: this.trailId,
       acc: this.accId,
-      controls: this.controls,
       music: this.musicOn,
       sfx: this.sfxOn,
       vibration: this.vibrationOn,
@@ -1000,7 +960,6 @@ export class PlayScene extends Scene {
     this.demo = false;
     this.autopilot = null;
     this.aiming = null;
-    this.trail.length = 0;
     this.dotsG.clear();
     this.endAirAim();
     this.finger.visible = false;
@@ -1062,8 +1021,6 @@ export class PlayScene extends Scene {
     this.paused = true;
     this.endAirAim();
     this.aiming = null;
-    this.tapPoint = null;
-    this.trail.length = 0;
     this.dotsG.clear();
     this.sfx(SFX.tap);
     this.pausePanel = new PausePanel({ pixelRatio: this.game.pixelRatio, onResume: () => this.closePause(), onMenu: () => this.transition(this.center(), () => this.quitToMenu()) });
@@ -1113,15 +1070,13 @@ export class PlayScene extends Scene {
     this.passTip(id, false);
   }
 
-  /** Gest celowania dla trybu sterowania, względem slime'a na ekranie. */
+  /** Gest celowania (proca), względem slime'a na ekranie. */
   private aimGesture(): Gesture {
     const view = this.game.view;
     const sx = Math.max(140, Math.min(view.width - 140, this.shown.x));
     const sy = this.shown.y - this.camera.y;
     const clampY = (y: number) => Math.max(view.safe.top + 220, Math.min(view.height - 120, y));
-    if (this.controls === 'tap') return { kind: 'tap', from: { x: sx, y: sy }, to: { x: Math.min(view.width - 100, sx + 120), y: clampY(sy - 330) } };
-    if (this.controls === 'drag') return { kind: 'drag', from: { x: sx, y: clampY(sy - 10) }, to: { x: sx - 70, y: clampY(sy + 220) } };
-    return { kind: 'drag', from: { x: sx - 60, y: clampY(sy + 80) }, to: { x: sx + 80, y: clampY(sy - 180) } };
+    return { kind: 'drag', from: { x: sx, y: clampY(sy - 10) }, to: { x: sx - 70, y: clampY(sy + 220) } };
   }
 
   /** Samouczek: celowanie, skok w locie (z palcem), syrop i bańki (tekst), aż gracz je zaliczy. */
@@ -1547,59 +1502,8 @@ export class PlayScene extends Scene {
     this.aimStep = step;
   }
 
-  /** Tap: przeciągnięcie procy z położenia palca względem slime'a (na ekranie). */
-  private tapDrag(): { x: number; y: number } | null {
-    if (!this.tapPoint) return null;
-    const s = this.run.slime;
-    return tapToDrag(s.x, s.y - this.camera.y, this.tapPoint.x, this.tapPoint.y);
-  }
-
-  private aimTap(): void {
-    const d = this.tapDrag();
-    if (d) this.aim(d.x, d.y);
-    else this.dotsG.clear();
-  }
-
-  /** Świecąca smuga za palcem w trybie swipe: zwęża się ku końcowi i gaśnie w 0,18 s. */
-  private drawTrail(real: number): void {
-    const life = 0.18;
-    for (const p of this.trail) p.age += real;
-    while (this.trail.length && this.trail[0]!.age > life) this.trail.shift();
-    if (this.trail.length > 24) this.trail.splice(0, this.trail.length - 24);
-    // Bez śladu nie czyścimy co klatkę pustej grafiki.
-    if (this.trail.length === 0 && this.trailEmpty) return;
-    this.trailEmpty = this.trail.length === 0;
-    const g = this.trailG.clear();
-    const n = this.trail.length;
-    for (let i = 1; i < n; i++) {
-      const a = this.trail[i - 1]!;
-      const b = this.trail[i]!;
-      const k = (1 - b.age / life) * (i / n);
-      g.moveTo(a.x, a.y).lineTo(b.x, b.y).stroke({ color: 0xff9ebb, width: 6 + 40 * k, alpha: 0.45 * k, cap: 'round' });
-      g.moveTo(a.x, a.y).lineTo(b.x, b.y).stroke({ color: 0xffffff, width: 3 + 14 * k, alpha: 0.95 * k, cap: 'round' });
-    }
-  }
-
-  private ripple(x: number, y: number): void {
-    const r = new Graphics().circle(0, 0, 26).stroke({ color: 0xffffff, width: 5, alpha: 0.8 });
-    r.position.set(x, y);
-    this.fx.addChild(r);
-    this.tweens.to(r.scale, { x: 2.2, y: 2.2 }, { duration: 0.3, ease: 'quadOut' });
-    this.tweens.to(r, { alpha: 0 }, { duration: 0.3 });
-    this.timers.after(0.32, () => {
-      this.tweens.killOf(r);
-      this.tweens.killOf(r.scale);
-      r.destroy();
-    });
-  }
-
   private hintText(kind: 'start' | 'air'): string {
-    const keys = {
-      drag: ['hintDragStart', 'hintDragAir'],
-      swipe: ['hintSwipeStart', 'hintSwipeAir'],
-      tap: ['hintTapStart', 'hintTapAir'],
-    } as const;
-    return t(keys[this.controls][kind === 'start' ? 0 : 1]);
+    return t(kind === 'start' ? 'hintDragStart' : 'hintDragAir');
   }
 
   // --- ustawienia ---
@@ -1678,7 +1582,7 @@ export class PlayScene extends Scene {
     });
   }
 
-  private toggleSetting(key: 'music' | 'sfx' | 'vibration' | 'controls' | 'lang' | 'privacy'): void {
+  private toggleSetting(key: 'music' | 'sfx' | 'vibration' | 'lang' | 'privacy'): void {
     if (key === 'lang') {
       this.langPref = lang() === 'pl' ? 'en' : 'pl';
       setLang(this.langPref);
@@ -1693,10 +1597,7 @@ export class PlayScene extends Scene {
       void ads.privacyOptions();
       return;
     }
-    if (key === 'controls') {
-      this.controls = CONTROL_MODES[(CONTROL_MODES.indexOf(this.controls) + 1) % CONTROL_MODES.length]!;
-      this.hint.text = this.hintText('start');
-    } else if (key === 'music') this.musicOn = !this.musicOn;
+    if (key === 'music') this.musicOn = !this.musicOn;
     else if (key === 'sfx') this.sfxOn = !this.sfxOn;
     else this.vibrationOn = !this.vibrationOn;
     this.applySettings();
@@ -1731,7 +1632,7 @@ export class PlayScene extends Scene {
   }
 
   private refreshSettings(): void {
-    this.settings?.refresh({ music: this.musicOn, sfx: this.sfxOn, vibration: this.vibrationOn, controls: controlName(this.controls) });
+    this.settings?.refresh({ music: this.musicOn, sfx: this.sfxOn, vibration: this.vibrationOn });
   }
 
   private aim(x: number, y: number): void {
@@ -1741,8 +1642,7 @@ export class PlayScene extends Scene {
       this.dotsG.clear();
       return;
     }
-    const k = this.controls === 'swipe' ? -1 : 1; // swipe: w stronę skoku, proca: przeciwnie
-    const v = launchVelocity(k * (x - this.aiming.sx), k * (y - this.aiming.sy));
+    const v = launchVelocity(x - this.aiming.sx, y - this.aiming.sy);
     this.dotsG.clear();
     this.aiming.power = v?.power ?? 0;
     this.aiming.lx = x;
@@ -1789,8 +1689,7 @@ export class PlayScene extends Scene {
     this.dotsG.clear();
     this.endAirAim();
     if (!aiming) return;
-    const k = this.controls === 'swipe' ? -1 : 1;
-    const v = launchVelocity(k * (x - aiming.sx), k * (y - aiming.sy));
+    const v = launchVelocity(x - aiming.sx, y - aiming.sy);
     if (!v) return;
     // W locie tuż przed lądowaniem (albo bez skoków w zapasie) strzał czeka na przyklejenie:
     // pełna siła z półki zamiast słabego skoku w locie.
@@ -1968,19 +1867,9 @@ export class PlayScene extends Scene {
       const e = 1 - (1 - p.t) ** 3;
       let x: number;
       let y: number;
-      if (this.controls === 'tap') {
-        x = p.shot.dragX;
-        y = p.shot.dragY;
-        const sl = this.run.slime;
-        const t = dragToTap(sl.x, sl.y - this.camera.y, x, y);
-        this.finger.position.set(t.x, t.y);
-      } else {
-        const k = this.controls === 'swipe' ? -1 : 1;
-        x = p.sx + k * p.shot.dragX * e;
-        y = p.sy + k * p.shot.dragY * e;
-        this.finger.position.set(x, y);
-        if (this.controls === 'swipe') this.trail.push({ x, y, age: 0 });
-      }
+      x = p.sx + p.shot.dragX * e;
+      y = p.sy + p.shot.dragY * e;
+      this.finger.position.set(x, y);
       this.aim(x, y);
       this.finger.visible = true;
       if (p.t < 1) return;
@@ -2004,11 +1893,10 @@ export class PlayScene extends Scene {
     const view = this.game.view;
     const s = this.run.slime;
     const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
-    const k = this.controls === 'swipe' ? -1 : 1;
-    const mx = k * shot.dragX;
-    const my = k * shot.dragY;
-    p.sx = this.controls === 'tap' ? 0 : clamp(s.x, 50 - Math.min(0, mx), view.width - 50 - Math.max(0, mx));
-    p.sy = this.controls === 'tap' ? 0 : clamp(s.y - this.camera.y, view.safe.top + 160 - Math.min(0, my), view.height - 50 - Math.max(0, my));
+    const mx = shot.dragX;
+    const my = shot.dragY;
+    p.sx = clamp(s.x, 50 - Math.min(0, mx), view.width - 50 - Math.max(0, mx));
+    p.sy = clamp(s.y - this.camera.y, view.safe.top + 160 - Math.min(0, my), view.height - 50 - Math.max(0, my));
     p.shot = shot;
     p.t = 0;
     p.hold = PILOT.hold;
@@ -2054,7 +1942,7 @@ export class PlayScene extends Scene {
     if (r.landed && this.run.slime.stuckTo?.feature === 'crumble') this.sfx(FEATURE_SFX.creak, { pitch: 0.9 + this.game.rng.next() * 0.2 });
     if (r.landed && this.airAim) this.endAirAim();
     // Palec trzymany przez lądowanie: od razu kropki toru z półki (bez czekania na ruch palca).
-    if (r.landed && this.aiming?.lx !== undefined && this.controls !== 'tap') this.aim(this.aiming.lx, this.aiming.ly!);
+    if (r.landed && this.aiming?.lx !== undefined) this.aim(this.aiming.lx, this.aiming.ly!);
     if (r.landed) {
       const l = r.landed;
       const strength = Math.min(1, l.speed / PHYS.maxSpeed);

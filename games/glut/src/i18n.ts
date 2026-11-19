@@ -7,7 +7,6 @@
  */
 import { ACHIEVEMENTS, type AchievementDef } from './sim/achievements.ts';
 import { BIOMES } from './sim/biomes.ts';
-import type { ControlMode } from './sim/controls.ts';
 import type { PowerKind } from './sim/shaft.ts';
 import { ITEMS, type ItemKind } from './sim/shop.ts';
 
@@ -33,10 +32,6 @@ const PL = {
   loginAndroid: 'Ranking działa w aplikacji z kontem Google Play Games',
   hintDragStart: 'Przeciągnij w dół i puść',
   hintDragAir: 'W locie przeciągnij jeszcze raz!',
-  hintSwipeStart: 'Przesuń palcem w stronę skoku',
-  hintSwipeAir: 'W locie przesuń jeszcze raz!',
-  hintTapStart: 'Stuknij tam, gdzie chcesz skoczyć',
-  hintTapAir: 'W locie stuknij jeszcze raz!',
   bounced: 'Odbite!',
   rescue: 'Ratunek',
   acrobat: 'Akrobacja',
@@ -66,7 +61,6 @@ const PL = {
   music: 'Muzyka: {v}',
   sfx: 'Dźwięki: {v}',
   vibration: 'Wibracje: {v}',
-  controls: 'Sterowanie: {v}',
   privacy: 'Prywatność reklam',
   language: 'Język: Polski',
   perfOn: 'licznik wł.',
@@ -78,9 +72,6 @@ const PL = {
   tier1: 'Super rytm',
   tier2: 'Szał',
   tier3: 'Cukrowy szał',
-  ctrlDrag: 'Proca',
-  ctrlSwipe: 'Swipe',
-  ctrlTap: 'Tap',
   play: 'Graj',
   dailyRanking: 'Ranking dnia',
   nextIn: 'Nowe wyzwanie za {t}',
@@ -123,10 +114,6 @@ const EN: Record<Key, string> = {
   loginAndroid: 'Leaderboards need a Google Play Games account',
   hintDragStart: 'Drag down and let go',
   hintDragAir: 'In the air, drag again!',
-  hintSwipeStart: 'Swipe where you want to jump',
-  hintSwipeAir: 'In the air, swipe again!',
-  hintTapStart: 'Tap where you want to jump',
-  hintTapAir: 'In the air, tap again!',
   bounced: 'Bounced!',
   rescue: 'Rescue',
   acrobat: 'Acrobat',
@@ -156,7 +143,6 @@ const EN: Record<Key, string> = {
   music: 'Music: {v}',
   sfx: 'Sounds: {v}',
   vibration: 'Vibration: {v}',
-  controls: 'Controls: {v}',
   privacy: 'Ad privacy',
   language: 'Language: English',
   perfOn: 'meter on',
@@ -168,9 +154,6 @@ const EN: Record<Key, string> = {
   tier1: 'Super rhythm',
   tier2: 'Frenzy',
   tier3: 'Sugar rush',
-  ctrlDrag: 'Slingshot',
-  ctrlSwipe: 'Swipe',
-  ctrlTap: 'Tap',
   play: 'Play',
   dailyRanking: "Today's leaderboard",
   nextIn: 'New challenge in {t}',
@@ -342,7 +325,6 @@ export const kindName = (kind: ItemKind): string =>
 
 export const tierName = (level: number): string => t((['tier0', 'tier1', 'tier2', 'tier3'] as const)[Math.max(0, Math.min(3, level))]!);
 
-export const controlName = (mode: ControlMode): string => t(({ drag: 'ctrlDrag', swipe: 'ctrlSwipe', tap: 'ctrlTap' } as const)[mode]);
 
 /** Data wyzwania do pokazania (RRRR-MM-DD → 19.11.2026 albo Nov 19, 2026). */
 export function formatDay(day: string): string {
