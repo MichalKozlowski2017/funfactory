@@ -41,6 +41,9 @@ export const POWER_SPAWN = {
   ] as [PowerKind, number][],
 };
 
+/** Udział kolców i lodu wśród odcinków ścian: [na dole, przy pełnej trudności]. Kolce od 3. kawałka. */
+export const WALLS: { spikes: [number, number]; ice: [number, number] } = { spikes: [0.05, 0.22], ice: [0.25, 0.45] };
+
 /** Wymiary studni. Ściany wchodzą w ekran na `wall` jednostek. */
 export const SHAFT = { width: 720, wall: 40, chunk: 1200 } as const;
 
@@ -98,8 +101,8 @@ export function generateChunk(seed: number, chunk: number): Block[] {
       const segTop = Math.max(top, y - rng.range(220, 460));
       let surface: Surface = 'sticky';
       if (chunk > 0) {
-        const spikes = chunk >= 3 ? lerp(0.05, 0.22, d) : 0;
-        const ice = lerp(0.35, 0.55, d);
+        const spikes = chunk >= 3 ? lerp(WALLS.spikes[0], WALLS.spikes[1], d) : 0;
+        const ice = lerp(WALLS.ice[0], WALLS.ice[1], d);
         surface = rng.weighted<Surface>([
           ['spikes', spikes],
           ['ice', ice],

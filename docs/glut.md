@@ -216,10 +216,23 @@ Premie idą w cukierki, rekord zostaje w metrach (decyzja właściciela).
 - **Rytm:** strzał w ciągu 1 s od lądowania i lądowanie wyżej (min. 60 jednostek) podbija serię. Skoki w bok jej nie zrywają, zawahanie tak. Pierścień wokół slime'a pokazuje pozostały czas. Każdy skok gra kolejną nutę pentatoniki, co 5 skoków oktawa wyżej.
 - **Kamienie milowe** co 5: premia 3 / 5 / 8 / maks. 10, baner z promieniami, błysk, fala, konfetti, cukierki lecą do licznika. Poziomy: Rytm (róż), Super rytm od 10 (złoto), Szał od 15 (mięta), Cukrowy szał od 20 (tęcza).
 - **Combo w locie:** „×2”, „×3” przy kolejnych cukierkach w jednym skoku; od 3 premia n−2.
-- **Skoki w locie:** bez limitu, ale każdy kolejny w tym samym locie słabszy (60% strzału z półki, potem ×0,8 za każdy następny), po lądowaniu siła wraca; skrzydełka pokazują siłę następnego skoku. Nagrody po bezpiecznym lądowaniu: akrobacja (wyżej niż start) = liczba skoków, ratunek (skok przy opadaniu, syrop bliżej niż 5 m) = liczba skoków + 1, maks. 6. Drugi oddech: przez 10 s skoki w locie nie słabną. Syrop 50–165. Slow-motion płynny (krok symulacji skalowany co klatkę zamiast co kilka klatek).
+- **Skoki w locie:** bez limitu, ale każdy kolejny w tym samym locie słabszy (60% strzału z półki, potem ×0,8 za każdy następny), po lądowaniu siła wraca; skrzydełka pokazują siłę następnego skoku. Nagrody po bezpiecznym lądowaniu: akrobacja (wyżej niż start) = liczba skoków, ratunek (skok przy opadaniu, syrop bliżej niż 5 m) = liczba skoków + 1, maks. 6. Drugi oddech: przez 10 s skoki w locie nie słabną. Syrop 35–150 (patrz „Balans”). Slow-motion płynny (krok symulacji skalowany co klatkę zamiast co kilka klatek).
 - Strojenie botem (120 biegów, reakcja 0,4–1,4 s; bez skoków w locie mediana 114 m, z jednym 141 m, bez limitu ok. 175 m przy szybkiej reakcji w slow-motion): seria 5 w 72% biegów, 10 w 12%; premie ok. +40% cukierków (wolniejszy gracz ok. +20%).
 
 
 
 - Nazwa: Glut.
 - Celowanie: przeciąganie w dowolnym miejscu ekranu.
+
+## Balans (strojenie botem, 19.11.2026)
+
+`node games/glut/src/sim/balance.ts [biegi] [profile]`: bot w trzech profilach gracza (nowy: reakcja 0,7–1,6 s i słabe celowanie; przeciętny: 0,45–1,1 s; wprawny: 0,3–0,7 s), raport: rozkład wysokości, czas biegu, frustracja na starcie, zasięg i ryzyko każdego świata (kolce/syrop), cukierki na godzinę, osiągnięcia na czas.
+
+Kalibracja na właścicielu (36 biegów na iPhonie: rekord 555 m, wyzwanie dnia 249 m po 6 próbach, 80 cukierków na bieg, najdłuższy bieg 111 s) wypada odrobinę ponad profilem „przeciętny”, więc prawdziwy nowy gracz to coś między „nowym” a „przeciętnym”.
+
+Przed zmianą syrop zabijał prawie wszystkich poza wprawnymi: nowy mediana 44 m (33% biegów kończyło się poniżej 30 m), przeciętny 144 m (Chmury widziało 2%). Zmiany:
+- syrop startuje 8,6 m pod dnem (było 2,6), prędkość 35 → 150 (było 50 → 165) i rośnie od 20 do 450 m (było do ok. 144 m),
+- doganianie łagodniejsze: od 15 m odstępu, ×0,8 (było od 10 m, ×1,2), więc jedno nieudane spadnięcie nie kończy biegu,
+- mniej lodu na ścianach: 25 → 45% odcinków (było 35 → 55%); lód zsuwał w syrop w trakcie celowania.
+
+Po zmianie (300 biegów na profil): nowy mediana 111 m, poniżej 30 m tylko 4%, 61% widzi Czekoladową kopalnię; przeciętny 248 m, Chmury 38%, Lukrecja 13%; wprawny 428 m, Koszmar 27%, ginie prawie tylko na kolcach. Bieg trwa ok. 1,5–2 min (było ok. 1 min). Cukierki na godzinę bez zmian (ok. 1000 / 3000 / 8000), więc ceny w szafie zostają. Czas kruszenia czekolady nie ogranicza nowych graczy (1,3 → 1,8 s nic nie zmienia), więc został.

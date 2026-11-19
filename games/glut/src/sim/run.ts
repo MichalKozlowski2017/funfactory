@@ -1,5 +1,5 @@
 import { PHYS, World, type StepResult } from './physics.ts';
-import { CANDY_RADIUS, difficulty, POWER_RADIUS, Shaft, SHAFT, START, type Candy, type PowerKind, type PowerUp } from './shaft.ts';
+import { CANDY_RADIUS, POWER_RADIUS, Shaft, SHAFT, START, type Candy, type PowerKind, type PowerUp } from './shaft.ts';
 
 /** Czasy i siła power-upów (wszystkie działają od razu po zebraniu). */
 export const POWER = {
@@ -40,15 +40,27 @@ export function airPower(n: number, breath: boolean): number {
 export type TimedPower = 'shell' | 'magnet' | 'frost' | 'rocket' | 'glue' | 'breath';
 
 export const SYRUP = {
-  /** Start syropu pod dnem studni. */
-  startY: 260,
+  /** Start syropu pod dnem studni (nisko: nowy gracz ma chwilę na naukę, zanim syrop się pojawi). */
+  startY: 860,
   /** Prędkość na dole i przy pełnej trudności (jednostki/s). */
-  speedMin: 50,
-  speedMax: 165,
+  speedMin: 35,
+  speedMax: 150,
+  /**
+   * Między tymi wysokościami (m) prędkość rośnie od `speedMin` do `speedMax`. Długa rampa: pełne tempo
+   * dopiero w Spalonym karmelu, żeby przeciętny gracz zobaczył kilka światów (strojenie: sim/balance.ts).
+   */
+  rampFrom: 20,
+  rampTo: 450,
   /** Gdy syrop zostaje dalej niż `leash` pod slime'em, przyspiesza, żeby zawsze był blisko. */
-  leash: 1000,
-  catchUp: 1.2,
+  leash: 1500,
+  catchUp: 0.8,
 } as const;
+
+/** Prędkość syropu (jednostki/s) na wysokości `meters` (bez doganiania). */
+export function syrupSpeed(meters: number): number {
+  const k = Math.min(1, Math.max(0, (meters - SYRUP.rampFrom) / (SYRUP.rampTo - SYRUP.rampFrom)));
+  return SYRUP.speedMin + (SYRUP.speedMax - SYRUP.speedMin) * k;
+}
 
 /**
  * Serie. Rytm: szybki strzał po lądowaniu (w oknie `window`) i lądowanie wyżej podbija serię,
@@ -190,8 +202,7 @@ export class Run {
 
     if (this.started) {
       this.time += dt;
-      const chunk = Math.floor(-this.syrupY / SHAFT.chunk);
-      let speed = SYRUP.speedMin + (SYRUP.speedMax - SYRUP.speedMin) * difficulty(chunk);
+      let speed = syrupSpeed((START.y - this.syrupY) / 100);
       const gap = this.syrupY - s.y;
       if (gap > SYRUP.leash) speed += (gap - SYRUP.leash) * SYRUP.catchUp;
       if (this.timers.frost <= 0) this.syrupY -= speed * dt;

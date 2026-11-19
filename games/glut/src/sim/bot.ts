@@ -74,6 +74,8 @@ export function playBot(
     /** Reakcja na skok w locie [min, max] w czasie gry. Gracz celuje wtedy w slow-motion, więc szybciej. */
     airReaction?: [number, number];
     seekPowers?: boolean;
+    /** Podgląd każdego kroku (analizy balansu): bieg, czas gry. */
+    onStep?: (run: Run, t: number) => void;
   } = {},
 ): BotResult {
   const run = new Run(seed);
@@ -93,6 +95,7 @@ export function playBot(
   while (t < maxTime) {
     const r = run.step(dt);
     t += dt;
+    opts.onStep?.(run, t);
     if (r.powered) powers++;
     // Człowiek reaguje od lądowania (nie odlicza w locie czasu na kolejny strzał z półki).
     if (r.landed) wait = react();
