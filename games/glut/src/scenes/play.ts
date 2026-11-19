@@ -1026,7 +1026,8 @@ export class PlayScene extends Scene {
 
   /** Sprawdza osiągnięcia; nowe: nagroda do konta, rzecz do szafy, powiadomienie. */
   private checkAchievements(): void {
-    if (!this.stats) return;
+    // Bot (?bot) nie zdobywa osiągnięć (nagrania, zrzuty do sklepów).
+    if (!this.stats || PILOT_MODE) return;
     const fresh = newlyEarned(this.progress(), this.earned);
     if (!fresh.length) return;
     for (const d of fresh) this.earn(d);
@@ -2588,8 +2589,17 @@ export class PlayScene extends Scene {
         { offset: 1, color: 'rgba(8,4,14,0)' },
       ],
     });
-    const w = 190;
-    this.shadeG.clear().rect(0, 0, w, view.height).fill(side(0, 1)).rect(view.width - w, 0, w, view.height).fill(side(1, 0)).rect(0, 0, view.width, view.height * 0.22).fill(top);
+    // Boki mroku zaczynają się od wewnętrznej krawędzi ścian: lód, lukier i kolce zostają czytelne.
+    const w = 170;
+    const wall = SHAFT.wall;
+    this.shadeG
+      .clear()
+      .rect(wall, 0, w, view.height)
+      .fill(side(0, 1))
+      .rect(view.width - wall - w, 0, w, view.height)
+      .fill(side(1, 0))
+      .rect(0, 0, view.width, view.height * 0.22)
+      .fill(top);
     this.shadeG.alpha = 0;
   }
 

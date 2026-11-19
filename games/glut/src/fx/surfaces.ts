@@ -67,36 +67,44 @@ export function drawBlock(g: Graphics, b: Block, P: typeof SURFACE = SURFACE): v
     const left = b.x < 0;
     const edge = left ? b.x + b.w : b.x; // wewnętrzna krawędź ściany
     const inward = left ? 1 : -1;
+    // Widoczna część ściany (od krawędzi ekranu do krawędzi studni) jest cała powierzchnią:
+    // szeroki lód, gruby lukier albo karmel z kolcami. Skała zostaje tylko poza ekranem.
+    const W = SHAFT.wall;
+    const band = left ? edge - W : edge; // lewy brzeg pasa widocznego
+    const outer = left ? band : band + W; // krawędź ekranu
     g.rect(b.x, b.y, b.w, b.h).fill({ color: P.rock });
-    // Ciemniejsze plamy skały, żeby ściana nie była płaska.
-    for (let i = 0; i < 3; i++) {
-      const cy = b.y + rng.range(20, Math.max(21, b.h - 20));
-      g.ellipse(edge - inward * rng.range(14, 30), cy, rng.range(8, 16), rng.range(10, 24)).fill({ color: P.rockEdge, alpha: 0.6 });
-    }
     if (b.surface === 'sticky') {
-      // Pas lukru na krawędzi + zacieki do środka studni.
-      const x = left ? edge - 10 : edge;
-      g.rect(x, b.y, 10, b.h).fill({ color: P.frosting });
-      g.rect(left ? edge - 3 : edge, b.y, 3, b.h).fill({ color: P.frostingShade });
+      g.rect(band, b.y, W, b.h).fill({ color: P.frosting });
+      // Głębia: ciemniejszy pas przy krawędzi ekranu, jasny połysk przy studni.
+      g.rect(left ? outer : outer - 12, b.y, 12, b.h).fill({ color: P.frostingShade, alpha: 0.85 });
+      g.rect(left ? edge - 7 : edge + 4, b.y, 3, b.h).fill({ color: 0xffffff, alpha: 0.35 });
+      for (let y = b.y + rng.range(14, 50); y < b.y + b.h - 20; y += rng.range(46, 90)) {
+        g.circle(band + W / 2 + rng.range(-6, 6), y, rng.range(3, 5)).fill({ color: 0xffffff, alpha: 0.45 });
+      }
       frostingEdge(g, rng, b.y, b.y + b.h, edge, P.frosting, true, inward);
     } else if (b.surface === 'ice') {
-      const x = left ? edge - 14 : edge;
-      g.rect(x, b.y, 14, b.h).fill({ color: P.ice, alpha: 0.95 });
-      g.rect(left ? edge - 4 : edge, b.y, 4, b.h).fill({ color: P.iceShade });
-      // Odblaski.
-      for (let y = b.y + rng.range(10, 40); y < b.y + b.h - 30; y += rng.range(50, 90)) {
-        g.poly([x + 3, y, x + 7, y, x + 11, y + 26, x + 7, y + 26]).fill({ color: 0xffffff, alpha: 0.7 });
+      g.rect(band, b.y, W, b.h).fill({ color: P.ice, alpha: 0.97 });
+      g.rect(left ? outer : outer - 10, b.y, 10, b.h).fill({ color: P.iceShade });
+      g.rect(left ? edge - 4 : edge, b.y, 4, b.h).fill({ color: 0xffffff, alpha: 0.75 });
+      // Odblaski: ukośne smugi przez całą szerokość tafli.
+      for (let y = b.y + rng.range(10, 40); y < b.y + b.h - 40; y += rng.range(55, 95)) {
+        const x0 = band + 6;
+        g.poly([x0, y, x0 + 8, y, x0 + W - 6, y + 34, x0 + W - 14, y + 34]).fill({ color: 0xffffff, alpha: 0.6 });
       }
     } else {
-      // Karmelowe kolce skierowane do środka.
-      const n = Math.max(1, Math.floor(b.h / 30));
+      // Karmelowa podstawa przez całą szerokość i większe kolce do środka studni.
+      g.rect(band, b.y, W, b.h).fill({ color: P.caramelShade });
+      g.rect(left ? outer : outer - 10, b.y, 10, b.h).fill({ color: P.ink, alpha: 0.35 });
+      const n = Math.max(1, Math.floor(b.h / 34));
       for (let i = 0; i < n; i++) {
         const y = b.y + (i + 0.5) * (b.h / n);
-        const tip = edge + inward * 24;
-        g.poly([edge, y - 13, tip, y, edge, y + 13]).fill({ color: P.caramel }).stroke({ color: P.ink, width: 3, join: 'round' });
-        g.poly([edge, y - 7, edge + inward * 12, y - 1, edge, y]).fill({ color: 0xffffff, alpha: 0.45 });
+        const tip = edge + inward * 30;
+        g.poly([edge - inward * 6, y - 16, tip, y, edge - inward * 6, y + 16]).fill({ color: P.caramel }).stroke({ color: P.ink, width: 3, join: 'round' });
+        g.poly([edge - inward * 4, y - 9, edge + inward * 14, y - 1, edge - inward * 4, y]).fill({ color: 0xffffff, alpha: 0.45 });
       }
     }
+    // Szew między odcinkami ściany (inny materiał zaczyna się wyraźnie).
+    g.rect(band, b.y, W, 2).fill({ color: P.ink, alpha: 0.55 });
     return;
   }
 
