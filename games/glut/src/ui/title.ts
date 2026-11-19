@@ -1,4 +1,4 @@
-import { Container, FillGradient, Graphics, Rectangle, Sprite, Text, type Texture } from 'pixi.js';
+import { Container, FillGradient, Graphics, Sprite, Text, type Texture } from 'pixi.js';
 import { palettes } from '@funfactory/art';
 import { Button, type View } from '@funfactory/kit2d';
 import { t } from '../i18n.ts';
@@ -25,11 +25,11 @@ export interface TitleOptions {
  * Stuknięcie w dowolne miejsce poza przyciskiem startuje grę.
  */
 export class TitleOverlay extends Container {
-  private readonly tap = new Container();
   /** Przyciemnienie pod napisami, żeby nie mieszały się z półkami w tle. */
   private readonly shade = new Graphics();
   private readonly logo: Text;
-  private readonly prompt: Text;
+  /** Duży zielony przycisk startu (zamiast „dotknij gdziekolwiek”). */
+  private readonly play: Button;
   private readonly best: Text;
   private readonly bank: Text;
   private readonly icon: Sprite;
@@ -55,8 +55,7 @@ export class TitleOverlay extends Container {
     // Cukierkowy napis: różowe wypełnienie, gruby biały kontur, twardy ciemny cień pod spodem.
     this.logo.style.stroke = { color: '#fff4f8', width: 16, join: 'round' };
     this.logo.style.dropShadow = { color: '#120a1e', distance: 10, angle: Math.PI / 2, blur: 0, alpha: 1 };
-    this.prompt = text(40, pal.surface);
-    this.prompt.text = t('start');
+    this.play = new Button({ label: t('play').toUpperCase(), color: '#4cc46a', width: 440, height: 130, fontSize: 60, resolution: o.pixelRatio, onTap: o.onStart });
     this.best = text(32, pal.accent);
     this.bank = text(36, pal.surface);
     // Do prawej, przed ikonką: dłuższe liczby rosną w lewo, a nie pod zaokrąglony róg ekranu.
@@ -69,11 +68,9 @@ export class TitleOverlay extends Container {
     this.trophies = new Button({ label: t('achievements'), color: '#e58bd0', width: 250, height: 96, fontSize: 34, resolution: o.pixelRatio, onTap: o.onAchievements });
 
     this.settings = new Button({ label: t('settings'), color: '#5fc8e8', width: 250, height: 88, fontSize: 34, resolution: o.pixelRatio, onTap: o.onSettings });
-    this.ranking = new Button({ label: t('ranking'), color: '#7fcf9a', width: 250, height: 88, fontSize: 34, resolution: o.pixelRatio, onTap: o.onRanking });
+    this.ranking = new Button({ label: t('ranking'), color: '#5f86e8', width: 250, height: 88, fontSize: 34, resolution: o.pixelRatio, onTap: o.onRanking });
 
-    this.tap.eventMode = 'static';
-    this.tap.on('pointertap', () => o.onStart());
-    this.addChild(this.shade, this.tap, this.logo, this.prompt, this.best, this.icon, this.bank, this.daily, this.dailyInfo, this.shop, this.trophies, this.ranking, this.settings);
+    this.addChild(this.shade, this.logo, this.play, this.best, this.icon, this.bank, this.daily, this.dailyInfo, this.shop, this.trophies, this.ranking, this.settings);
   }
 
   setStats(best: number, candies: number): void {
@@ -88,7 +85,6 @@ export class TitleOverlay extends Container {
 
   /** `bottom`: miejsce zajęte od dołu (baner reklamy); przyciski zostają nad nim. */
   layout(view: View, bottom = 0): void {
-    this.tap.hitArea = new Rectangle(0, 0, view.width, view.height);
     const gradient = new FillGradient({
       type: 'linear',
       start: { x: 0, y: 0 },
@@ -103,11 +99,12 @@ export class TitleOverlay extends Container {
     this.shade.clear().rect(0, 0, view.width, view.height * 0.68).fill(gradient);
     const cx = view.width / 2;
     this.logo.position.set(cx, view.height * 0.24);
-    this.prompt.position.set(cx, view.height * 0.4);
-    this.best.position.set(cx, view.height * 0.4 + 60);
+    const playY = view.height * 0.38;
+    this.play.position.set(cx, playY);
+    this.best.position.set(cx, playY + 96);
     this.icon.position.set(view.width - 52, view.safe.top + 58);
     this.bank.position.set(view.width - 90, view.safe.top + 58);
-    let y = Math.max(view.height * 0.5, view.height * 0.4 + 140);
+    let y = Math.max(view.height * 0.52, playY + 200);
     // Ostatni przycisk (dół ok. y + 340) nad banerem.
     y = Math.min(y, view.height - bottom - 350);
     this.daily.position.set(cx, y);
@@ -127,6 +124,8 @@ export class TitleOverlay extends Container {
     this.ranking.tick(dt);
     this.logo.rotation = Math.sin(this.time * 1.6) * 0.035;
     this.logo.scale.set(1 + Math.sin(this.time * 3.2) * 0.025, 1 - Math.sin(this.time * 3.2) * 0.025);
-    this.prompt.alpha = 0.55 + 0.45 * Math.abs(Math.sin(this.time * 2.4));
+    this.play.tick(dt);
+    // Delikatne „oddychanie”, żeby przycisk startu przyciągał wzrok.
+    this.play.scale.set(1 + Math.sin(this.time * 3) * 0.025);
   }
 }

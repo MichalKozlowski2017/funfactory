@@ -115,7 +115,7 @@ export class DailyPanel extends Container {
 
     const play = new Button({ label: t('play'), color: '#ffb84d', width: 300, height: 100, fontSize: 42, resolution: o.pixelRatio, onTap: o.onPlay });
     play.position.set(-150 - 8, H - 110);
-    const ranking = new Button({ label: t('dailyRanking'), color: '#7fcf9a', width: 280, height: 100, fontSize: 32, resolution: o.pixelRatio, onTap: o.onRanking });
+    const ranking = new Button({ label: t('dailyRanking'), color: '#5f86e8', width: 280, height: 100, fontSize: 32, resolution: o.pixelRatio, onTap: o.onRanking });
     ranking.position.set(140 + 8, H - 110);
     const close = new Button({ label: '✕', color: '#6e6488', width: 88, height: 88, fontSize: 40, radius: 44, resolution: o.pixelRatio, onTap: o.onClose });
     close.position.set(250, 64);

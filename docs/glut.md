@@ -168,7 +168,7 @@ Cztery działy po 6 rzeczy, po jednej założonej z każdego (`sim/shop.ts`, gra
 
 ### Tryb pokazowy (ekran startowy)
 
-Na ekranie startowym bot gra prawdziwy bieg w tle (autopilot jak w `?bot`, bez slow-motion), a muzyka reaguje na jego akcje. Bieg pokazowy (`demoRun`) niczego nie zapisuje: bez rekordu, cukierków na konto (`wallet()`), statystyk, osiągnięć, rankingu i reklam; efekty dźwiękowe i wibracje milczą (`sfx()` / `buzz()`, dźwięki interfejsu grają), bez napisów nad menu. Po śmierci bota po cichu startuje kolejny pokaz; stuknięcie „start” (albo wyzwanie dnia) daje graczowi świeży bieg. Kamera trzyma slime'a niżej, pod przyciskami.
+Na ekranie startowym bot gra prawdziwy bieg w tle (autopilot jak w `?bot`, bez slow-motion), a muzyka reaguje na jego akcje. Bieg pokazowy (`demoRun`) niczego nie zapisuje: bez rekordu, cukierków na konto (`wallet()`), statystyk, osiągnięć, rankingu i reklam; efekty dźwiękowe i wibracje milczą (`sfx()` / `buzz()`, dźwięki interfejsu grają), bez napisów nad menu. Po śmierci bota po cichu startuje kolejny pokaz; przycisk „Graj” (albo wyzwanie dnia) daje graczowi świeży bieg. Kamera trzyma slime'a niżej, pod przyciskami.
 
 ### Pauza
 
