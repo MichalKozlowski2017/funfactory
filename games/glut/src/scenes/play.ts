@@ -349,13 +349,8 @@ export class PlayScene extends Scene {
       optionalTexture('walls/caramel.jpg'),
       optionalTexture('walls/spike.png'),
     ]);
-    // Pionowo bez szwu: obraz + jego odbicie (jak tło).
-    this.wallTex = {
-      ice: wIce ? await mirrorTile(wIce) : null,
-      frosting: wFrost ? await mirrorTile(wFrost) : null,
-      caramel: wCaramel ? await mirrorTile(wCaramel) : null,
-      spike: wSpike,
-    };
+    // Tekstury ścian są przygotowane bez szwu w pionie (inpainting łączenia), więc powtarzają się wprost.
+    this.wallTex = { ice: wIce, frosting: wFrost, caramel: wCaramel, spike: wSpike };
     this.spikeGlow = await optionalTexture('walls/spike-glow.png');
     const ledgeKeys = [...BIOMES.map((b) => b.id as string), 'ice', 'crumble', 'bounce', 'cloud', 'belt'];
     const ledgeArt = await Promise.all(ledgeKeys.map((k) => optionalTexture(`ledges/${k}.png`)));
@@ -376,7 +371,7 @@ export class PlayScene extends Scene {
           spike1 ? { tex: spike1, glow: glow1 } : null,
           spike2 ? { tex: spike2, glow: glow2 } : null,
         ].filter((x): x is { tex: Texture; glow: Texture | null } => !!x);
-        this.biomeWalls.set(b.id, { sticky: sticky ? await mirrorTile(sticky) : null, spikes });
+        this.biomeWalls.set(b.id, { sticky, spikes });
       }),
     );
     const baseBg = bgTex ? await mirrorTile(bgTex) : null;

@@ -13,5 +13,5 @@
   "KEY": "A minor",
   "LYRICS": "[Instrumental]",
   "created": "2026-11-19T12:39:48.061Z",
-  "post": "resize 384 szer., JPEG 86; w grze lustrzane odbicie w pionie"
+  "post": "resize 384 szer., JPEG 86; bez szwu w pionie: przesunięcie o pół wysokości + inpainting pasa łączenia (Flux 2, DifferentialDiffusion, SetLatentNoiseMask, pas 320 px); w grze powtarzana wprost"
 }
