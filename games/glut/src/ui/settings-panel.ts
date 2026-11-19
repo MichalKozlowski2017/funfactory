@@ -19,6 +19,8 @@ export interface SettingsOptions {
   pixelRatio: number;
   onToggle: (key: Key) => void;
   onClose: () => void;
+  /** Stuknięcie w numer wersji (5 razy z rzędu włącza licznik wydajności). */
+  onVersionTap?: () => void;
 }
 
 /** Ustawienia: muzyka, dźwięki, wibracje, sterowanie. Proste przełączniki, bez wpływu na rozgrywkę. */
@@ -53,8 +55,16 @@ export class SettingsPanel extends Container {
       resolution: o.pixelRatio,
       anchor: 0.5,
     });
+    this.version.eventMode = 'static';
+    this.version.hitArea = { contains: (x: number, y: number) => Math.abs(x) < 140 && Math.abs(y) < 44 };
+    this.version.on('pointertap', () => o.onVersionTap?.());
     this.body.addChild(this.title, this.close, this.version);
     this.addChild(this.dim, this.panel, this.body);
+  }
+
+  /** Dopisek przy wersji (np. stan licznika wydajności). */
+  setVersionNote(note: string): void {
+    this.version.text = `Glut ${__APP_VERSION__}${note ? ` · ${note}` : ''}`;
   }
 
   refresh(s: SettingsState): void {

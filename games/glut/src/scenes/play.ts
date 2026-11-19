@@ -1,4 +1,4 @@
-import { Assets, Container, FillGradient, Graphics, Rectangle, Sprite, Text, Texture, TilingSprite } from 'pixi.js';
+import { Assets, type BitmapText, Container, FillGradient, Graphics, Rectangle, Sprite, Text, Texture, TilingSprite } from 'pixi.js';
 import { circle, defs, ellipse, hexToNumber, palettes, path, radialGradient, svg } from '@funfactory/art';
 import { ads, haptics, SaveStore, Spring, type SynthLayer } from '@funfactory/core';
 import { ADS } from '../ads-config.ts';
@@ -19,18 +19,23 @@ import {
   type View,
 } from '@funfactory/kit2d';
 import { fallbackIcon, POWER_INFO, POWER_KINDS, PowerBubble, PowerHud } from '../fx/power-fx.ts';
-import { POWER_SFX, SFX, STREAK_SFX } from '../fx/sfx.ts';
+import { FEATURE_SFX, POWER_SFX, SFX, STREAK_SFX } from '../fx/sfx.ts';
+import { FEATURE_COLORS, FeatureView } from '../fx/features.ts';
+import { hudText, installHudFont } from '../fx/hud-font.ts';
 import { candyWord, milestoneBanner, StreakHud, streakTier } from '../fx/streak-fx.ts';
-import { bodyScale, bodySprite, SlimeFace, slimeTextures } from '../fx/slime-art.ts';
+import { bodyScale, bodySprite, SlimeFace, slimeTextures, type SlimeTextures } from '../fx/slime-art.ts';
 import { drawBlock, SURFACE } from '../fx/surfaces.ts';
 import { BIOME_LOOKS, mixColor, type BiomeLook } from '../fx/biome-look.ts';
 import { biomeBlend, biomeIndex, BIOMES, metersAt } from '../sim/biomes.ts';
 import { botCanShoot, chooseShot, type BotShot } from '../sim/bot.ts';
 import { CONTROL_MODES, CONTROL_NAMES, dragToTap, tapToDrag, type ControlMode } from '../sim/controls.ts';
-import { launchVelocity, PHYS } from '../sim/physics.ts';
+import { launchVelocity, PHYS, type Block } from '../sim/physics.ts';
 import { AIR, airPower, Run, STREAK, type RunStep } from '../sim/run.ts';
 import { SHAFT, type Candy, type PowerKind, type PowerUp } from '../sim/shaft.ts';
-import { HATS, NEW_SAVE, normalizeSave, tapHat, type Save } from '../sim/shop.ts';
+import { ACCESSORIES, HATS, ITEMS, NEW_SAVE, normalizeSave, SKINS, tapItem, TRAILS, type Save } from '../sim/shop.ts';
+import { dailySeed, dailyStreak, dayKey, recordDaily, type DailyRecord } from '../sim/daily.ts';
+import { ReplayRecorder, type Replay } from '../sim/replay.ts';
+import { accessorySprite, cosmeticTextures, type CosmeticTextures } from '../fx/cosmetics.ts';
 import { ShopPanel } from '../ui/shop-panel.ts';
 import { SettingsPanel } from '../ui/settings-panel.ts';
 import { TitleOverlay } from '../ui/title.ts';
@@ -98,6 +103,8 @@ export class PlayScene extends Scene {
   private readonly chunkViews = new Map<number, Container>();
   private readonly candyViews = new Map<string, { sprite: Sprite; candy: Candy }>();
   private readonly powerViews = new Map<string, PowerBubble>();
+  /** Półki z mechaniką (czekolada, galaretka, chmury, taśmociągi): osobne, animowane widoki. */
+  private readonly featureViews = new Map<Block, FeatureView>();
   private readonly powerTex = new Map<PowerKind, Texture>();
   private powerHud!: PowerHud;
   /** Efekty power-upów wokół slime'a (nie obracają się z ciałem). */
@@ -119,6 +126,7 @@ export class PlayScene extends Scene {
   /** Swipe: ślad palca jak cięcie we Fruit Ninja (punkty z wiekiem w sekundach rzeczywistych). */
   private readonly trail: { x: number; y: number; age: number }[] = [];
   private readonly trailG = new Graphics();
+  private trailEmpty = true;
   /** Celowanie kończy się na kolcach (do jednorazowej wibracji ostrzegawczej). */
   private aimDanger = false;
   /** Ostrzeżenie o kolcach tuż nad kadrem. */
@@ -162,12 +170,12 @@ export class PlayScene extends Scene {
   private camera!: FollowCamera;
   private shaker!: Shaker;
   private sparks!: Particles;
-  private heightText!: Text;
-  private bestText!: Text;
-  private candyText!: Text;
+  private heightText!: BitmapText;
+  private bestText!: BitmapText;
+  private candyText!: BitmapText;
   private candyIcon!: Sprite;
   private hint!: Text;
-  private syrupWarn!: Text;
+  private syrupWarn!: BitmapText;
   private againButton: Button | null = null;
   private menuButton: Button | null = null;
   private aiming: { sx: number; sy: number; power: number; dx: number; dy: number } | null = null;
@@ -185,6 +193,34 @@ export class PlayScene extends Scene {
   private readonly finger = new Graphics();
   private owned: string[] = [];
   private hatId: string | null = null;
+  private skinId: string | null = null;
+  private trailId: string | null = null;
+  private accId: string | null = null;
+  /** Kolor ciała (zależy od koloru z szafy): ślady, kleksy, cząsteczki. */
+  private slimeColor = hexToNumber(pal.swatches[0]);
+  private cosmetics!: CosmeticTextures;
+  /** Ciało dla każdego koloru (id koloru albo 'base'). */
+  private readonly skinTex = new Map<string, SlimeTextures>();
+  private bodyArt: Container | null = null;
+  /** Dodatek (okulary, wąsy…) na twarzy slime'a. */
+  private readonly accLayer = new Container();
+  /** Ślad w locie z szafy (własny kształt cząsteczek). */
+  private trailFx: Particles | null = null;
+  /** Wyzwanie dnia: wyniki z ostatnich dni i czy obecny bieg jest wyzwaniem. */
+  private daily: DailyRecord[] = [];
+  private dailyMode = false;
+  private dailyDay = '';
+  /** Nagranie biegu (do weryfikacji wyniku przez przyszły ranking). */
+  private recorder: ReplayRecorder | null = null;
+  lastReplay: Replay | null = null;
+  private dailyResult: { improved: boolean; record: DailyRecord } | null = null;
+  /** Licznik wydajności (ukryty: 5 stuknięć w wersję w ustawieniach). */
+  private perfText: Text | null = null;
+  private perfIn = 0;
+  private versionTaps: number[] = [];
+  /** Stan sprzed ostatniego kroku fizyki: rysujemy pozycję pośrednią (płynny ruch przy nierównych klatkach). */
+  private readonly prev = { x: 0, y: 0, syrup: 0 };
+  private readonly shown = { x: 0, y: 0, syrup: 0 };
   private readonly hatTextures = new Map<string, Texture | null>();
   private readonly hat = new Container();
   private readonly hatSwing = new Spring(0, 260, 9);
@@ -206,19 +242,28 @@ export class PlayScene extends Scene {
     this.bank = saved.candies;
     this.owned = saved.owned;
     this.hatId = saved.hat;
+    this.skinId = saved.skin;
+    this.trailId = saved.trail;
+    this.accId = saved.acc;
+    this.daily = saved.daily;
     this.controls = saved.controls;
     this.musicOn = saved.music;
     this.sfxOn = saved.sfx;
     this.vibrationOn = saved.vibration;
     const pr = this.game.pixelRatio;
 
-    const [slimeTex, bgTex, candyArt, crystal, lolly] = await Promise.all([
+    const [slimeTex, bgTex, candyArt, crystal, lolly, cosmetics, ...skins] = await Promise.all([
       slimeTextures(pal.swatches[0], pal.ink, pr),
       optionalTexture('bg.jpg'),
       optionalTexture('candy.png'),
       optionalTexture('decor/crystal.png'),
       optionalTexture('decor/lolly.png'),
+      cosmeticTextures(pr),
+      ...SKINS.map((k) => slimeTextures(k.color, pal.ink, pr)),
     ]);
+    this.cosmetics = cosmetics;
+    this.skinTex.set('base', slimeTex);
+    SKINS.forEach((k, i) => this.skinTex.set(k.id, skins[i]!));
     this.decor = [crystal, lolly];
     this.score = new Score(this.game.sound);
     this.applySettings();
@@ -264,29 +309,31 @@ export class PlayScene extends Scene {
     this.world.addChild(this.chunkLayer, this.decalLayer, this.candyLayer, this.dotsG, this.slime, this.syrupG);
 
     const scale = bodyScale(PHYS.radius);
-    this.body.addChild(bodySprite(slimeTex, scale), this.hat);
-    this.wearHat();
+    this.body.addChild(this.hat);
     this.face = new SlimeFace(slimeTex, scale);
+    this.face.addChild(this.accLayer);
     this.slime.addChild(this.aura, this.body, this.face);
     if (new URLSearchParams(location.search).has('diag')) this.setupDiag(slimeTex.body);
 
     this.sparks = new Particles(dotTexture(this.game.app.renderer, 10), this.game.rng);
     this.world.addChild(this.sparks.view);
+    this.wear();
     this.shaker = new Shaker(this.shake, this.game.rng);
     this.camera = new FollowCamera(this.world, { upOnly: true, lambda: 5 });
 
-    this.heightText = this.makeText(56, pal.surface);
+    installHudFont(this.game.pixelRatio);
+    this.heightText = hudText(56, pal.surface);
     this.heightText.anchor.set(0.5, 0);
-    this.bestText = this.makeText(26, pal.accent);
+    this.bestText = hudText(26, pal.accent);
     this.bestText.anchor.set(0.5, 0);
-    this.candyText = this.makeText(36, pal.surface);
+    this.candyText = hudText(36, pal.surface);
     this.candyText.anchor.set(1, 0.5);
     this.candyIcon = new Sprite({ texture: this.candyTex, anchor: 0.5 });
     this.candyIcon.scale.set(54 / Math.max(this.candyTex.width, this.candyTex.height));
     this.hint = this.makeText(34, pal.surface);
     this.hint.anchor.set(0.5);
     this.hint.text = this.hintText('start');
-    this.syrupWarn = this.makeText(28, '#ffc2d4');
+    this.syrupWarn = hudText(28, '#ffc2d4');
     this.syrupWarn.anchor.set(0.5, 1);
     this.powerHud = new PowerHud(this.powerTex);
     this.streakHud = new StreakHud(this.tweens, this.game.pixelRatio);
@@ -336,6 +383,11 @@ export class PlayScene extends Scene {
 
     this.newRun();
     this.showTitle();
+    try {
+      if (localStorage.getItem('glut-perf') === '1' || new URLSearchParams(location.search).has('perf')) this.setPerfHud(true);
+    } catch {
+      // bez pamięci przeglądarki
+    }
     // Uchwyt dla playtestów (tylko w trybie deweloperskim).
     if (import.meta.env.DEV) (window as unknown as { __glut: PlayScene }).__glut = this;
     this.timers.after(0.1, () => this.game.markReady());
@@ -377,11 +429,28 @@ export class PlayScene extends Scene {
   }
 
   override fixedUpdate(dt: number): void {
+    const s = this.run.slime;
+    this.prev.x = s.x;
+    this.prev.y = s.y;
+    this.prev.syrup = this.run.syrupY;
+    this.recorder?.step(dt);
     this.react(this.run.step(dt));
+  }
+
+  /** Pozycje do rysowania: między poprzednim a obecnym krokiem fizyki (bez skoków przy teleporcie i nowym biegu). */
+  private interpolate(): void {
+    const s = this.run.slime;
+    const a = this.game.loop.alpha;
+    const far = Math.abs(s.x - this.prev.x) + Math.abs(s.y - this.prev.y) > 300;
+    this.shown.x = far ? s.x : this.prev.x + (s.x - this.prev.x) * a;
+    this.shown.y = far ? s.y : this.prev.y + (s.y - this.prev.y) * a;
+    const dy = this.run.syrupY - this.prev.syrup;
+    this.shown.syrup = Math.abs(dy) > 300 ? this.run.syrupY : this.prev.syrup + dy * a;
   }
 
   override update(dt: number): void {
     this.time += dt;
+    this.interpolate();
     this.pilot(dt);
     if (this.tapPoint && this.aiming) this.aimTap(); // slime w locie się rusza, cel względem niego też
     this.drawTrail(dt / (this.game.loop.timeScale || 1));
@@ -395,8 +464,9 @@ export class PlayScene extends Scene {
       const rising = s.state === 'flying' ? Math.min(1, Math.max(0, -s.vy / 1500)) : 0;
       this.lookAhead += (rising - this.lookAhead) * (1 - Math.exp(-(rising > this.lookAhead ? 10 : 2.5) * dt));
       const la = this.lookAhead;
-      let target = s.y - view.height * (0.6 + 0.15 * la);
-      if (this.run.started) target = Math.max(target, Math.min(this.run.syrupY - view.height + 170, s.y - view.height * (0.3 + 0.4 * la)));
+      const sy = this.shown.y;
+      let target = sy - view.height * (0.6 + 0.15 * la);
+      if (this.run.started) target = Math.max(target, Math.min(this.shown.syrup - view.height + 170, sy - view.height * (0.3 + 0.4 * la)));
       this.camera.opts.lambda = 5 + 5 * la;
       this.camera.follow(0, target, dt);
     }
@@ -404,10 +474,12 @@ export class PlayScene extends Scene {
     if (this.bgNext) this.bgNext.tilePosition.y = -this.camera.y * 0.35;
     this.updateBiome(dt);
     this.updateMusic();
+    this.updatePerf(dt / (this.game.loop.timeScale || 1));
     this.updateLights(dt);
     this.syncBanner();
     this.shaker.update(dt);
     this.sparks.update(dt);
+    this.trailFx?.update(dt);
     this.againButton?.tick(dt);
     this.menuButton?.tick(dt);
     this.title?.tick(dt);
@@ -417,6 +489,7 @@ export class PlayScene extends Scene {
     this.placeSlime(dt);
     this.animateCandies();
     for (const b of this.powerViews.values()) b.tick(this.time);
+    for (const f of this.featureViews.values()) f.tick(dt, this.time);
     this.powerHud.update(this.run);
     this.drawAura(dt);
     this.drawSyrup();
@@ -449,12 +522,46 @@ export class PlayScene extends Scene {
     }
   }
 
+  /** Playtesty: przenosi slime'a na wysokość `meters` (syrop daleko pod nim). Tylko przez `__glut` w trybie dev. */
+  teleport(meters: number): void {
+    if (this.mode !== 'play') this.startPlaying();
+    const run = this.run;
+    const s = run.slime;
+    Object.assign(s, { x: SHAFT.width / 2, y: -60 - meters * 100, vx: 0, vy: 0, stuckTo: null });
+    const changes = run.shaft.update(s.y, s.y + 400);
+    run.world.blocks = run.shaft.blocks;
+    this.react({ added: changes.added, removed: changes.removed });
+    // Nad najbliższą zwykłą półką pod celem.
+    const ledge = run.shaft.blocks
+      .filter((b) => b.h === 36 && !b.feature && b.y > s.y)
+      .sort((a, b) => a.y - b.y)[0];
+    if (ledge) Object.assign(s, { x: ledge.x + ledge.w / 2, y: ledge.y - PHYS.radius - 2 });
+    run.world.settle();
+    run.peakY = s.y;
+    run.started = true;
+    run.syrupY = s.y + 1500;
+    this.hint.visible = false;
+  }
+
   private persist(): Promise<void> {
     return this.store.save(this.snapshot());
   }
 
   private snapshot(): Save {
-    return { best: this.best, candies: this.bank + this.run.candies, owned: this.owned, hat: this.hatId, controls: this.controls, music: this.musicOn, sfx: this.sfxOn, vibration: this.vibrationOn };
+    return {
+      best: this.best,
+      candies: this.bank + this.run.candies,
+      owned: this.owned,
+      hat: this.hatId,
+      skin: this.skinId,
+      trail: this.trailId,
+      acc: this.accId,
+      controls: this.controls,
+      music: this.musicOn,
+      sfx: this.sfxOn,
+      vibration: this.vibrationOn,
+      daily: this.daily,
+    };
   }
 
   // --- ekran startowy i sklep ---
@@ -468,9 +575,11 @@ export class PlayScene extends Scene {
       pixelRatio: this.game.pixelRatio,
       onStart: () => this.startPlaying(),
       onShop: () => this.openShop(),
+      onDaily: () => this.startDaily(),
       onSettings: () => this.openSettings(),
     });
     this.title.setStats(this.best, this.bank + this.run.candies);
+    this.title.setDaily(this.dailyInfo());
     this.overlay.addChild(this.title);
     this.title.layout(this.game.view);
   }
@@ -490,15 +599,56 @@ export class PlayScene extends Scene {
     this.squash(0.25);
   }
 
+  /** Podpis wyzwania dnia na ekranie startowym. */
+  private dailyInfo(): string {
+    const today = dayKey(new Date());
+    const rec = this.daily.find((r) => r.day === today);
+    const streak = dailyStreak(this.daily, today);
+    const days = streak >= 2 ? ` · seria ${streak} dni` : '';
+    return rec ? `dziś: ${rec.best} m (prób: ${rec.tries})${days}` : `ta sama studnia dla wszystkich${days}`;
+  }
+
+  /** Wyzwanie dnia: nowa studnia z seedem z daty i od razu gra. */
+  private startDaily(): void {
+    if (this.mode === 'play' || this.shop || this.settings) return;
+    this.dailyMode = true;
+    // newRun czyści nakładki: ekran startowy odkładamy na bok, żeby startPlaying go wygasił.
+    const title = this.title;
+    if (title) this.overlay.removeChild(title);
+    this.newRun();
+    if (title) this.overlay.addChild(title);
+    this.startPlaying();
+    this.dailyBanner();
+  }
+
+  private dailyBanner(): void {
+    const view = this.game.view;
+    const t = this.makeText(44, '#ffb84d');
+    t.anchor.set(0.5);
+    t.text = `Wyzwanie dnia · ${this.dailyDay.split('-').reverse().join('.')}`;
+    t.position.set(view.width / 2, view.safe.top + 230);
+    this.fx.addChild(t);
+    void popIn(this.tweens, t, 0.35);
+    this.timers.after(2.2, () => this.tweens.to(t, { alpha: 0 }, { duration: 0.5 }));
+    this.timers.after(2.8, () => {
+      this.tweens.killOf(t);
+      t.destroy();
+    });
+  }
+
   private openShop(): void {
     if (this.shop || this.settings) return;
     this.game.sound.synth(SFX.tap);
+    const previews = new Map<string, Texture | null>(this.hatTextures);
+    for (const k of SKINS) previews.set(k.id, this.skinTex.get(k.id)?.body ?? null);
+    for (const t of TRAILS) previews.set(t.id, this.cosmetics.trailPreviews.get(t.id) ?? null);
+    for (const a of ACCESSORIES) previews.set(a.id, this.cosmetics.acc.get(a.id) ?? null);
     this.shop = new ShopPanel({
-      hats: this.hatTextures,
+      previews,
       candyTex: this.candyTex,
       pixelRatio: this.game.pixelRatio,
       tweens: this.tweens,
-      onTap: (id) => this.tapHat(id),
+      onTap: (id) => this.tapItem(id),
       onClose: () => this.closeShop(),
     });
     this.shop.refresh(this.snapshot());
@@ -518,8 +668,8 @@ export class PlayScene extends Scene {
     this.title?.setStats(this.best, this.bank + this.run.candies);
   }
 
-  private tapHat(id: string): void {
-    const r = tapHat(this.snapshot(), id);
+  private tapItem(id: string): void {
+    const r = tapItem(this.snapshot(), id);
     if (!r.ok) {
       if (r.reason === 'poor') this.shop?.deny(id, r.missing ?? 0);
       haptics.error();
@@ -529,8 +679,13 @@ export class PlayScene extends Scene {
     this.bank = r.save.candies - this.run.candies;
     this.owned = r.save.owned;
     this.hatId = r.save.hat;
+    this.skinId = r.save.skin;
+    this.trailId = r.save.trail;
+    this.accId = r.save.acc;
     void this.persist();
-    this.wearHat();
+    this.wear();
+    const kind = ITEMS.find((i) => i.id === id)?.kind;
+    if (kind === 'trail' && this.trailId) this.trailDemo();
     this.shop?.refresh(r.save);
     this.title?.setStats(this.best, r.save.candies);
     if (r.action === 'bought') {
@@ -545,17 +700,51 @@ export class PlayScene extends Scene {
     this.hatSwing.kick(4);
   }
 
-  /** Czapka siedzi na czubku ciała: obraca się i spłaszcza razem z nim. */
-  private wearHat(): void {
+  /** Zakłada wszystko z szafy: kolor ciała, czapkę, dodatek i ślad. */
+  private wear(): void {
+    // Kolor: nowe ciało pod czapką.
+    const tex = this.skinTex.get(this.skinId ?? 'base') ?? this.skinTex.get('base');
+    if (tex) {
+      this.bodyArt?.destroy();
+      this.bodyArt = bodySprite(tex, bodyScale(PHYS.radius));
+      this.body.addChildAt(this.bodyArt, 0);
+      this.slimeColor = hexToNumber(tex.color);
+    }
+    // Czapka siedzi na czubku ciała: obraca się i spłaszcza razem z nim.
     this.hat.removeChildren().forEach((c) => c.destroy());
     const def = HATS.find((h) => h.id === this.hatId);
-    const tex = def ? this.hatTextures.get(def.id) : null;
-    if (!def || !tex) return;
-    const s = new Sprite({ texture: tex, anchor: { x: 0.5, y: 0.9 } });
-    s.scale.set(def.width / tex.width);
-    s.position.set(0, def.y);
-    s.rotation = def.tilt;
-    this.hat.addChild(s);
+    const hatTex = def ? this.hatTextures.get(def.id) : null;
+    if (def && hatTex) {
+      const s = new Sprite({ texture: hatTex, anchor: { x: 0.5, y: 0.9 } });
+      s.scale.set(def.width / hatTex.width);
+      s.position.set(0, def.y);
+      s.rotation = def.tilt;
+      this.hat.addChild(s);
+    }
+    // Dodatek na twarzy (zostaje pionowo, jak oczy).
+    this.accLayer.removeChildren().forEach((c) => c.destroy());
+    const accTex = this.accId ? this.cosmetics.acc.get(this.accId) : null;
+    const acc = this.accId && accTex ? accessorySprite(this.accId, accTex) : null;
+    if (acc) this.accLayer.addChild(acc);
+    // Ślad: cząsteczki w kształcie z szafy.
+    const trail = TRAILS.find((t) => t.id === this.trailId);
+    this.trailFx?.view.destroy();
+    this.trailFx = null;
+    if (trail) {
+      const shape = this.cosmetics.shapes.get(trail.shape);
+      if (shape) {
+        this.trailFx = new Particles(shape, this.game.rng);
+        this.world.addChildAt(this.trailFx.view, this.world.getChildIndex(this.slime));
+      }
+    }
+  }
+
+  /** Pokaz śladu po założeniu w szafie: krótki wybuch kształtów wokół slime'a. */
+  private trailDemo(): void {
+    const trail = TRAILS.find((t) => t.id === this.trailId);
+    const s = this.run.slime;
+    if (!trail || !this.trailFx) return;
+    this.trailFx.burst(s.x, s.y - 30, { count: 24, speed: [150, 420], angle: -Math.PI / 2, spread: Math.PI * 1.4, life: [0.5, 0.9], scale: [0.6, 1.2], endScale: 0.2, gravity: 600, colors: trail.colors });
   }
 
   // --- bieg ---
@@ -563,7 +752,10 @@ export class PlayScene extends Scene {
   private newRun(): void {
     if (this.run) this.bank += this.run.candies;
     this.runs++;
-    this.run = new Run(this.game.rng.int(1, 2 ** 31 - 1));
+    this.dailyDay = dayKey(new Date());
+    const seed = this.dailyMode ? dailySeed(this.dailyDay) : this.game.rng.int(1, 2 ** 31 - 1);
+    this.run = new Run(seed);
+    this.recorder = new ReplayRecorder(seed);
     this.bestAtStart = this.best;
     this.streakHud.set(0);
     this.reachedBiome = 0;
@@ -572,6 +764,7 @@ export class PlayScene extends Scene {
     this.hint.text = this.hintText('start');
     for (const view of this.chunkViews.values()) view.destroy({ children: true });
     this.chunkViews.clear();
+    this.featureViews.clear();
     for (const v of this.candyViews.values()) v.sprite.destroy();
     this.candyViews.clear();
     for (const b of this.powerViews.values()) b.destroy({ children: true });
@@ -627,6 +820,9 @@ export class PlayScene extends Scene {
     for (const p of this.trail) p.age += real;
     while (this.trail.length && this.trail[0]!.age > life) this.trail.shift();
     if (this.trail.length > 24) this.trail.splice(0, this.trail.length - 24);
+    // Bez śladu nie czyścimy co klatkę pustej grafiki.
+    if (this.trail.length === 0 && this.trailEmpty) return;
+    this.trailEmpty = this.trail.length === 0;
     const g = this.trailG.clear();
     const n = this.trail.length;
     for (let i = 1; i < n; i++) {
@@ -669,12 +865,59 @@ export class PlayScene extends Scene {
       pixelRatio: this.game.pixelRatio,
       onToggle: (key) => this.toggleSetting(key),
       onClose: () => this.closeSettings(),
+      onVersionTap: () => this.tapVersion(),
     });
     this.refreshSettings();
+    this.settings.setVersionNote(this.perfText ? 'licznik wł.' : '');
     this.settings.layout(this.game.view);
     this.overlay.addChild(this.settings);
     this.settings.alpha = 0;
     this.tweens.to(this.settings, { alpha: 1 }, { duration: 0.18 });
+  }
+
+  /** 5 stuknięć w wersję w ciągu 3 s włącza/wyłącza licznik wydajności (zapamiętany na urządzeniu). */
+  private tapVersion(): void {
+    const now = this.time;
+    this.versionTaps = [...this.versionTaps.filter((t) => now - t < 3), now];
+    if (this.versionTaps.length < 5) return;
+    this.versionTaps = [];
+    this.setPerfHud(!this.perfText);
+    try {
+      localStorage.setItem('glut-perf', this.perfText ? '1' : '0');
+    } catch {
+      // brak pamięci przeglądarki: licznik działa do zamknięcia gry
+    }
+    haptics.success();
+  }
+
+  private setPerfHud(on: boolean): void {
+    if (on && !this.perfText) {
+      this.perfText = new Text({
+        text: '',
+        style: { fontFamily: 'ui-monospace, Menlo, monospace', fontSize: 20, fontWeight: '700', fill: '#7dffb0', stroke: { color: '#000000', width: 4 } },
+        resolution: this.game.pixelRatio,
+      });
+      this.perfText.anchor.set(0, 1);
+      this.perfText.position.set(16, this.game.view.height - this.game.view.safe.bottom - 70);
+      this.hud.addChild(this.perfText);
+    } else if (!on && this.perfText) {
+      this.perfText.destroy();
+      this.perfText = null;
+    }
+    this.settings?.setVersionNote(this.perfText ? 'licznik wł.' : '');
+  }
+
+  private updatePerf(dt: number): void {
+    if (!this.perfText) return;
+    this.perfIn -= dt;
+    if (this.perfIn > 0) return;
+    this.perfIn = 0.5;
+    const p = this.game.perf;
+    this.perfText.text = [
+      `${p.fps.toFixed(0)} fps  max ${p.worstMs.toFixed(0)} ms`,
+      `CPU ${p.cpuMs.toFixed(1)} / max ${p.cpuWorst.toFixed(1)} ms`,
+      `zacięcia ${p.hitches}  kroki 0:${p.zeroSteps} 2+:${p.multiSteps}`,
+    ].join('\n');
   }
 
   private closeSettings(): void {
@@ -773,6 +1016,7 @@ export class PlayScene extends Scene {
     const k = this.controls === 'swipe' ? -1 : 1;
     const v = launchVelocity(k * (x - aiming.sx), k * (y - aiming.sy));
     if (!v || !this.run.launch(v.vx, v.vy)) return;
+    this.recorder?.shot(v.vx, v.vy);
     if (inAir) {
       const n = this.run.airJumps;
       this.game.sound.synth(POWER_SFX.air, { pitch: 1 + Math.min(n - 1, 8) * 0.1 });
@@ -808,7 +1052,7 @@ export class PlayScene extends Scene {
 
   /** Napis unoszący się w świecie (nazwa power-upu, „Odbite!”). */
   private floatText(x: number, y: number, message: string, color: string): void {
-    const t = this.makeText(38, color);
+    const t = hudText(38, color);
     t.text = message;
     t.anchor.set(0.5);
     // Nie pod górnym paskiem (wysokość, rekord, cukierki).
@@ -817,7 +1061,11 @@ export class PlayScene extends Scene {
     this.world.addChild(t);
     void popIn(this.tweens, t, 0.25);
     this.tweens.to(t, { y: y - 90, alpha: 0 }, { duration: 1.1, delay: 0.5, ease: 'quadIn' });
-    this.timers.after(1.7, () => t.destroy());
+    this.timers.after(1.7, () => {
+      this.tweens.killOf(t);
+      this.tweens.killOf(t.scale);
+      t.destroy();
+    });
   }
 
   /** Kolce tuż nad kadrem: czerwone ząbki przy górnej krawędzi, mocniejsze, im bliżej. */
@@ -1001,6 +1249,9 @@ export class PlayScene extends Scene {
       this.sparks.burst(s.x, s.y, { count: 30, speed: [200, 600], life: [0.3, 0.6], scale: [0.6, 1.2], colors: [POWER_INFO.shell.color, 0xffffff] });
       this.floatText(s.x, s.y - 60, 'Odbite!', POWER_INFO.shell.css);
     }
+    if (r.bounced) this.onBounce(r.bounced.block, r.bounced.x, r.bounced.y, r.bounced.nx, r.bounced.ny, r.bounced.speed);
+    if (r.crumbled) this.onCrumble(r.crumbled);
+    if (r.landed && this.run.slime.stuckTo?.feature === 'crumble') this.game.sound.synth(FEATURE_SFX.creak, { pitch: 0.9 + this.game.rng.next() * 0.2 });
     if (r.landed && this.airAim) this.endAirAim();
     if (r.landed) {
       const l = r.landed;
@@ -1018,7 +1269,7 @@ export class PlayScene extends Scene {
           life: [0.25, 0.5],
           scale: [0.5, 1.1],
           gravity: 1800,
-          colors: [COLORS.slime, 0xffffff],
+          colors: [this.slimeColor, 0xffffff],
         });
         this.splat(cx, cy, l.nx, l.ny, strength);
         this.game.sound.synth(SFX.land, { volume: 0.4 + strength * 0.6, pitch: 0.9 + this.game.rng.next() * 0.2 });
@@ -1034,6 +1285,49 @@ export class PlayScene extends Scene {
     if (r.streakBroken) this.onStreakLost(r.streakBroken);
     if (r.died) this.die('spikes');
     if (r.drowned) this.die('syrup');
+  }
+
+  // --- półki z mechaniką ---
+
+  private onBounce(block: Block, x: number, y: number, nx: number, ny: number, speed: number): void {
+    if (this.airAim) this.endAirAim();
+    const strength = Math.min(1, speed / PHYS.maxSpeed);
+    this.featureViews.get(block)?.boing(strength);
+    this.squash(0.35);
+    this.hatSwing.kick((this.game.rng.next() - 0.5) * 14);
+    this.game.sound.synth(FEATURE_SFX.boing, { pitch: 0.85 + strength * 0.4 + this.game.rng.next() * 0.1 });
+    this.score.land(0.5);
+    haptics.tap();
+    this.sparks.burst(x - nx * PHYS.radius, y - ny * PHYS.radius, {
+      count: 12,
+      speed: [150, 420],
+      angle: Math.atan2(ny, nx),
+      spread: Math.PI * 0.8,
+      life: [0.25, 0.5],
+      scale: [0.5, 1],
+      gravity: 1600,
+      colors: [FEATURE_COLORS.jelly, 0xffffff],
+    });
+  }
+
+  private onCrumble(block: Block): void {
+    this.featureViews.get(block)?.shatter();
+    this.game.sound.synth(FEATURE_SFX.crumble, { pitch: 0.9 + this.game.rng.next() * 0.2 });
+    haptics.hit();
+    this.shaker.add(0.2);
+    // Kawałki czekolady wzdłuż całej półki.
+    for (let i = 0; i < 4; i++) {
+      this.sparks.burst(block.x + ((i + 0.5) * block.w) / 4, block.y + block.h / 2, {
+        count: 7,
+        speed: [80, 260],
+        angle: -Math.PI / 2,
+        spread: Math.PI * 1.6,
+        life: [0.4, 0.8],
+        scale: [0.7, 1.4],
+        gravity: 2200,
+        colors: [FEATURE_COLORS.choco, FEATURE_COLORS.chocoLight, FEATURE_COLORS.chocoShine],
+      });
+    }
   }
 
   // --- serie ---
@@ -1182,7 +1476,7 @@ export class PlayScene extends Scene {
       speed: [120, 380],
       life: [0.25, 0.5],
       scale: [0.4, 0.9],
-      colors: [0xffffff, 0xffd166, COLORS.slime],
+      colors: [0xffffff, 0xffd166, this.slimeColor],
     });
     void pulse(this.tweens, this.candyIcon, 0.35);
     if (sprite) {
@@ -1195,14 +1489,18 @@ export class PlayScene extends Scene {
 
   /** Małe „×3” przy kolejnych cukierkach w jednym locie. */
   private comboPop(x: number, y: number, n: number): void {
-    const t = this.makeText(30 + Math.min(n, 6) * 4, n >= 3 ? '#ffd166' : '#ffffff');
+    const t = hudText(30 + Math.min(n, 6) * 4, n >= 3 ? '#ffd166' : '#ffffff');
     t.text = `×${n}`;
     t.anchor.set(0.5);
     t.position.set(x, y - 40);
     this.world.addChild(t);
     void popIn(this.tweens, t, 0.2);
     this.tweens.to(t, { y: y - 100, alpha: 0 }, { duration: 0.5, delay: 0.25, ease: 'quadIn' });
-    this.timers.after(0.8, () => t.destroy());
+    this.timers.after(0.8, () => {
+      this.tweens.killOf(t);
+      this.tweens.killOf(t.scale);
+      t.destroy();
+    });
   }
 
   private die(cause: 'spikes' | 'syrup'): void {
@@ -1227,9 +1525,16 @@ export class PlayScene extends Scene {
       endScale: 0.3,
       gravity: 2000,
       drag: 1,
-      colors: cause === 'syrup' ? [COLORS.slime, COLORS.syrup, 0xffffff] : [COLORS.slime, 0xffffff, COLORS.danger],
+      colors: cause === 'syrup' ? [this.slimeColor, COLORS.syrup, 0xffffff] : [this.slimeColor, 0xffffff, COLORS.danger],
     });
     this.slime.visible = false;
+    this.lastReplay = this.recorder?.finish(this.run.meters) ?? null;
+    this.recorder = null;
+    if (this.dailyMode && !PILOT_MODE) {
+      const r = recordDaily(this.daily, this.dailyDay, this.run.meters);
+      this.daily = r.list;
+      this.dailyResult = r;
+    } else this.dailyResult = null;
     void this.persist();
     this.timers.after(0.55, () => this.showGameOver(cause));
   }
@@ -1246,6 +1551,13 @@ export class PlayScene extends Scene {
     score.text = `${meters} m`;
     const sub = this.makeText(34, record ? pal.accent : pal.surface);
     sub.text = record ? 'Nowy rekord!' : `rekord ${this.best} m`;
+    const daily = this.dailyResult;
+    if (daily) {
+      // Wyzwanie dnia: liczy się najlepszy wynik dnia.
+      sub.style.fill = daily.improved ? '#ffb84d' : pal.surface;
+      sub.text = daily.improved && daily.record.tries > 1 ? `Najlepszy dziś! (próba ${daily.record.tries})` : `wyzwanie dnia: najlepiej ${daily.record.best} m`;
+      if (record) sub.text = `Nowy rekord! · dziś ${daily.record.best} m`;
+    }
     const sweets = this.makeText(30, pal.surface);
     sweets.text = `+${this.run.candies} ${candyWord(this.run.candies)} (razem ${this.bank + this.run.candies})`;
     const rhythm = this.makeText(28, '#ffd166');
@@ -1270,7 +1582,7 @@ export class PlayScene extends Scene {
     again.position.set(0, 170);
     this.againButton = again;
     const menu = new Button({
-      label: 'Czapki i menu',
+      label: 'Menu',
       color: '#9b8cff',
       width: 380,
       height: 90,
@@ -1279,6 +1591,7 @@ export class PlayScene extends Scene {
       onTap: () => {
         this.game.sound.synth(SFX.tap);
         this.maybeInterstitial();
+        this.dailyMode = false;
         this.newRun();
         this.showTitle();
       },
@@ -1386,8 +1699,17 @@ export class PlayScene extends Scene {
     if (!blocks || this.chunkViews.has(k)) return;
     const view = new Container();
     const g = new Graphics();
-    for (const b of blocks) drawBlock(g, b, this.lookAt(b.y + b.h / 2).surface);
     view.addChild(g);
+    for (const b of blocks) {
+      if (!b.feature) {
+        drawBlock(g, b, this.lookAt(b.y + b.h / 2).surface);
+        continue;
+      }
+      const fv = new FeatureView(b);
+      if (b.gone) fv.visible = false;
+      this.featureViews.set(b, fv);
+      view.addChild(fv);
+    }
     if (k === 0) {
       // Dekoracje na dnie studni (tylko wygląd, bez kolizji).
       const [crystal, lolly] = this.decor;
@@ -1425,6 +1747,7 @@ export class PlayScene extends Scene {
   }
 
   private removeChunkView(k: number): void {
+    for (const b of this.featureViews.keys()) if (b.chunk === k) this.featureViews.delete(b);
     this.chunkViews.get(k)?.destroy({ children: true });
     this.chunkViews.delete(k);
     for (const [id, v] of this.candyViews) {
@@ -1452,9 +1775,9 @@ export class PlayScene extends Scene {
     const g = new Graphics();
     const rng = this.game.rng;
     const w = 30 + strength * 30;
-    g.ellipse(0, 0, w, 7 + strength * 4).fill({ color: COLORS.slime, alpha: 0.85 });
+    g.ellipse(0, 0, w, 7 + strength * 4).fill({ color: this.slimeColor, alpha: 0.85 });
     for (let i = 0; i < 3 + Math.round(strength * 4); i++) {
-      g.circle(rng.range(-w * 1.2, w * 1.2), rng.range(-10, 2), rng.range(2.5, 6)).fill({ color: COLORS.slime, alpha: 0.85 });
+      g.circle(rng.range(-w * 1.2, w * 1.2), rng.range(-10, 2), rng.range(2.5, 6)).fill({ color: this.slimeColor, alpha: 0.85 });
     }
     g.position.set(x, y);
     g.rotation = Math.atan2(ny, nx) + Math.PI / 2;
@@ -1467,7 +1790,7 @@ export class PlayScene extends Scene {
   }
 
   private drawSyrup(): void {
-    const y = this.run.syrupY;
+    const y = this.shown.syrup;
     const bottom = this.camera.y + this.game.view.height + 200;
     const g = this.syrupG.clear();
     if (y > bottom) return;
@@ -1654,13 +1977,22 @@ export class PlayScene extends Scene {
     sub.text = `${index * 100} m`;
     sub.y = -62;
     root.addChild(sub, name);
+    const tipText = BIOMES[index]!.tip;
+    if (tipText) {
+      const tip = this.makeText(30, '#ffffff');
+      tip.anchor.set(0.5);
+      tip.text = tipText;
+      tip.y = 64;
+      tip.scale.set(Math.min(1, (view.width - 60) / tip.width));
+      root.addChild(tip);
+    }
     const y = view.safe.top + 300;
     root.position.set(view.width / 2, y - 60);
     root.alpha = 0;
     this.fx.addChild(root);
     this.tweens.to(root, { y, alpha: 1 }, { duration: 0.5, ease: 'backOut' });
-    this.timers.after(2.4, () => this.tweens.to(root, { y: y - 50, alpha: 0 }, { duration: 0.6, ease: 'quadIn' }));
-    this.timers.after(3.1, () => {
+    this.timers.after(3.2, () => this.tweens.to(root, { y: y - 50, alpha: 0 }, { duration: 0.6, ease: 'quadIn' }));
+    this.timers.after(3.9, () => {
       this.tweens.killOf(root);
       root.destroy({ children: true });
     });
@@ -1744,7 +2076,7 @@ export class PlayScene extends Scene {
 
   private placeSlime(dt: number): void {
     const s = this.run.slime;
-    this.slime.position.set(s.x, s.y);
+    this.slime.position.set(this.shown.x, this.shown.y);
     let look = { x: 0, y: 0 };
     if (s.state === 'flying') {
       const speed = Math.hypot(s.vx, s.vy);
@@ -1760,14 +2092,27 @@ export class PlayScene extends Scene {
       this.trailIn -= dt;
       if (this.trailIn <= 0 && speed > 400) {
         this.trailIn = 0.03;
-        this.sparks.burst(s.x - dirX * 20, s.y - dirY * 20, {
-          count: 1,
-          speed: [10, 60],
-          life: [0.25, 0.45],
-          scale: [0.5, 0.9],
-          endScale: 0.1,
-          colors: [COLORS.slime],
-        });
+        const trail = TRAILS.find((t) => t.id === this.trailId);
+        if (trail && this.trailFx) {
+          this.trailFx.burst(s.x - dirX * 24, s.y - dirY * 24, {
+            count: 1,
+            speed: [10, 70],
+            life: [0.35, 0.6],
+            scale: trail.shape === 'dot' ? [0.45, 0.8] : [0.55, 0.9],
+            endScale: 0.15,
+            spin: trail.shape === 'dot' ? undefined : [-4, 4],
+            colors: trail.colors,
+          });
+        } else {
+          this.sparks.burst(s.x - dirX * 20, s.y - dirY * 20, {
+            count: 1,
+            speed: [10, 60],
+            life: [0.25, 0.45],
+            scale: [0.5, 0.9],
+            endScale: 0.1,
+            colors: [this.slimeColor],
+          });
+        }
       }
     } else if (s.state === 'stuck') {
       this.body.rotation = Math.atan2(s.ny, s.nx) + Math.PI / 2;

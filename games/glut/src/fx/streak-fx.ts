@@ -1,7 +1,8 @@
-import { Container, Graphics, Text, type TextStyleOptions } from 'pixi.js';
+import { type BitmapText, Container, Graphics, Text, type TextStyleOptions } from 'pixi.js';
 import type { Timers, Tweens } from '@funfactory/core';
 import { popIn, pulse, setRestScale, type View } from '@funfactory/kit2d';
 import { STREAK } from '../sim/run.ts';
+import { hudText } from './hud-font.ts';
 
 const FONT = 'system-ui, -apple-system, sans-serif';
 const INK = '#1e1530';
@@ -53,16 +54,18 @@ function makeText(size: number, fill: string, pixelRatio: number, extra: Partial
 
 /** Licznik rytmu pod wysokością: „Rytm ×7” i kropki do następnej premii. */
 export class StreakHud extends Container {
-  private readonly caption: Text;
+  private readonly caption: BitmapText;
   private readonly pips = new Graphics();
   private readonly tweens: Tweens;
   private streak = 0;
   private time = 0;
 
-  constructor(tweens: Tweens, pixelRatio: number) {
+  constructor(tweens: Tweens, _pixelRatio: number) {
     super();
     this.tweens = tweens;
-    this.caption = makeText(40, '#ffffff', pixelRatio);
+    // Bitmapowy: zmienia się przy każdym skoku, zwykły Text wgrywałby wtedy nową teksturę.
+    this.caption = hudText(40, '#ffffff');
+    this.caption.anchor.set(0.5);
     this.caption.y = 0;
     this.pips.y = 38;
     this.addChild(this.caption, this.pips);

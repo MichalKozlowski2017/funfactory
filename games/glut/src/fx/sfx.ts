@@ -26,6 +26,26 @@ export const SFX = {
   tap: [{ wave: 'triangle', freq: 660, freqEnd: 880, duration: 0.06, volume: 0.15 }],
 } satisfies Record<string, SynthLayer[]>;
 
+/** Dźwięki półek z mechaniką. */
+export const FEATURE_SFX = {
+  /** Galaretka: „boing” z opadającym i wracającym tonem. */
+  boing: [
+    { wave: 'sine', freq: 180, freqEnd: 520, duration: 0.22, volume: 0.3 },
+    { wave: 'triangle', freq: 360, freqEnd: 900, duration: 0.16, volume: 0.08, delay: 0.03 },
+  ],
+  /** Czekolada trzeszczy pod slime'em. */
+  creak: [
+    { wave: 'noise', freq: 1500, filter: 'bandpass', filterFreq: 1300, duration: 0.05, volume: 0.18 },
+    { wave: 'noise', freq: 1500, filter: 'bandpass', filterFreq: 1700, duration: 0.04, volume: 0.14, delay: 0.09 },
+  ],
+  /** Czekolada pęka. */
+  crumble: [
+    { wave: 'noise', freq: 900, filter: 'lowpass', filterFreq: 2400, filterFreqEnd: 300, duration: 0.35, volume: 0.35 },
+    { wave: 'sine', freq: 140, freqEnd: 60, duration: 0.2, volume: 0.25 },
+    { wave: 'noise', freq: 3000, filter: 'bandpass', filterFreq: 2600, duration: 0.05, volume: 0.15, delay: 0.12 },
+  ],
+} satisfies Record<string, SynthLayer[]>;
+
 /** Dźwięki power-upów. */
 export const POWER_SFX = {
   pickup: [523, 784, 1047, 1568].map((freq, i) => ({ wave: 'triangle', freq, duration: 0.12, volume: 0.16, delay: i * 0.05 })),

@@ -71,6 +71,13 @@ export class Button extends Container {
     this.text.text = value;
   }
 
+  /** Zmiana koloru (np. aktywna zakładka). */
+  setColor(color: string): void {
+    if (color === this.opts.color) return;
+    this.opts.color = color;
+    this.draw();
+  }
+
   setEnabled(on: boolean): void {
     this.enabled = on;
     this.alpha = on ? 1 : 0.5;

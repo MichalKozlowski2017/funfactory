@@ -215,6 +215,11 @@ export class Run {
   /** Serie: rytm skoków i cukierki w jednym locie. */
   private rhythm(dt: number, result: RunStep): void {
     const s = this.world.slime;
+    // Odbicie od galaretki zaczyna nowy lot: skoki w locie znów mają pełną siłę.
+    if (result.bounced) {
+      this.airJumps = 0;
+      this.rescue = false;
+    }
     if (result.landed) {
       this.sinceLand = 0;
       const climbed = this.started && s.y < this.launchY - STREAK.minClimb;

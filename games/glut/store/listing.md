@@ -29,13 +29,16 @@ SKACZ W RYTM
 Muzyka rośnie razem z Tobą. Każdy skok, cukierek i combo grają nuty w rytm utworu, a im dłuższa seria, tym głośniej robi się w studni.
 
 8 ŚWIATÓW
-Co 100 metrów nowy świat: kryształowa jaskinia, czekoladowa kopalnia, żelkowy las, chmury z waty cukrowej… a wyżej coraz mroczniej. Czy dotrzesz do Cukrowego koszmaru?
+Co 100 metrów nowy świat z własnymi półkami: czekolada kruszy się pod Tobą, galaretka odbija jak trampolina, przez chmury przelecisz od dołu, a w fabryce jeżdżą taśmociągi… a wyżej coraz mroczniej. Czy dotrzesz do Cukrowego koszmaru?
+
+WYZWANIE DNIA
+Codziennie nowa studnia, ta sama dla wszystkich. Ile metrów zrobisz dziś?
 
 POWER-UPY I TRIKI
 Gumowa skorupka, magnes na cukierki, lodowy oddech, pieprzowa rakieta i inne. Ratuj się skokami w locie, rób akrobacje i zbieraj premie za serie.
 
 UCZCIWA RYWALIZACJA
-Wszyscy grają na tych samych zasadach: za cukierki kupujesz tylko czapki dla slime'a, nic, co daje przewagę.
+Wszyscy grają na tych samych zasadach: za cukierki kupujesz tylko wygląd (czapki, kolory, ślady, dodatki), nic, co daje przewagę.
 
 - sterowanie jednym palcem: swipe, proca albo tap
 - krótkie, dynamiczne podejścia
@@ -51,13 +54,16 @@ JUMP TO THE BEAT
 The music grows with you. Every jump, candy and combo plays notes in rhythm, and the longer your streak, the louder the tower gets.
 
 8 WORLDS
-A new world every 100 meters: crystal cave, chocolate mine, gummy forest, cotton candy clouds… and darker the higher you go. Can you reach the Sugar Nightmare?
+A new world every 100 meters, each with its own ledges: chocolate crumbles under you, jelly bounces like a trampoline, clouds let you through from below and factory belts carry you away… and it gets darker the higher you go. Can you reach the Sugar Nightmare?
+
+DAILY CHALLENGE
+A new tower every day, the same for everyone. How high can you get today?
 
 POWER-UPS AND TRICKS
 Rubber shell, candy magnet, frost breath, pepper rocket and more. Save yourself with mid-air jumps, pull off acrobatics and earn streak bonuses.
 
 FAIR COMPETITION
-Everyone plays by the same rules: candies only buy hats for your slime, nothing that gives an advantage.
+Everyone plays by the same rules: candies only buy looks (hats, colors, trails, accessories), nothing that gives an advantage.
 
 - one-finger controls: swipe, slingshot or tap
 - short, fast-paced runs
@@ -107,6 +113,6 @@ Wg dokumentacji Google Mobile Ads SDK:
 
 ## Notatki dla recenzji (App Review / Google)
 
-PL: Gra nie wymaga konta. Reklamy pokazują się tylko poza rozgrywką: baner na ekranie startowym, w sklepie z czapkami i na ekranie końca biegu, a reklama pełnoekranowa po kilku biegach. Ustawienia → Prywatność reklam otwiera formularz zgody Google (UMP).
+PL: Gra nie wymaga konta. Reklamy pokazują się tylko poza rozgrywką: baner na ekranie startowym, w szafie i na ekranie końca biegu, a reklama pełnoekranowa po kilku biegach. Ustawienia → Prywatność reklam otwiera formularz zgody Google (UMP).
 
-EN: No account needed. Ads appear only outside gameplay: a banner on the title, hat shop and game-over screens, and an interstitial between runs after a few runs. Settings → Ad privacy opens Google's consent form (UMP).
+EN: No account needed. Ads appear only outside gameplay: a banner on the title, wardrobe and game-over screens, and an interstitial between runs after a few runs. Settings → Ad privacy opens Google's consent form (UMP).

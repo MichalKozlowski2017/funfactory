@@ -39,7 +39,7 @@ Strzał możliwy jest tylko wtedy, gdy slime jest przyklejony, więc nie da się
 1. **Start:** tytuł, slime na dnie studni, napis „Dotknij, aby zacząć” i najlepszy wynik.
 2. **Gra:** u góry wysokość i liczba cukierków, poza tym czysty ekran.
 3. **Koniec:** wysokość, rekord (z animacją, jeśli jest nowy), cukierki i przycisk „Jeszcze raz”. Od śmierci do nowego podejścia ma minąć mniej niż sekunda.
-4. **Skórki** (prosta szuflada na ekranie startowym): 4 czapki do kupienia za cukierki.
+4. **Szafa** (ekran startowy): czapki, kolory, ślady i dodatki za cukierki. Obok **Wyzwanie dnia** i Ustawienia.
 
 ## Grafika (paleta `candy`)
 
@@ -72,7 +72,7 @@ Efekty syntezowane w kodzie (Web Audio, styl sfxr): strzał, plaśnięcie, cukie
 
 - Własna prosta fizyka: slime to koło, ściany i półki to prostokąty, w kroku stałym 1/60 s z podkrokami, żeby szybki slime nie przelatywał przez ściany. Rapier nie jest potrzebny.
 - Kamera płynnie podąża w górę i nigdy nie zjeżdża w dół.
-- Zapis (`SaveStore`): rekord, cukierki, kupione czapki, wybrana czapka.
+- Zapis (`SaveStore`): rekord, cukierki, kupione i założone rzeczy z szafy, ustawienia, wyniki wyzwań dnia.
 
 **Dodatki do frameworka, które wyjdą przy tej grze** (trafią do `packages/`, bo są ogólne):
 - `kit2d`: kamera z podążaniem i paralaksą
@@ -113,34 +113,63 @@ Power-upy zdobywa się w trakcie biegu: świecące bańki w studni, rzadsze od c
 
 ## Światy co 100 m
 
-Glut wspina się przez Cukrową Wieżę: im wyżej, tym starsze i bardziej zapomniane piętra. Mrok dopiero od 400 m (większość biegów kończy się wcześniej; mrok to nagroda dla dobrych graczy). Światy są czysto wizualne (te same zasady gry), więc ranking zostaje uczciwy.
+Glut wspina się przez Cukrową Wieżę: im wyżej, tym starsze i bardziej zapomniane piętra. Mrok dopiero od 400 m (większość biegów kończy się wcześniej; mrok to nagroda dla dobrych graczy). Od drugiego świata część lukrowanych półek ma **mechanikę** (osobny strumień losowy: układ półek się nie zmienia, a dla danego seedu wszyscy mają to samo, więc ranking zostaje uczciwy).
 
-| Od | Świat | Nastrój |
-|---|---|---|
-| 0 m | Kryształowa jaskinia | jasno, słodko |
-| 100 m | Czekoladowa kopalnia | ciepło |
-| 200 m | Żelkowy las | kolorowo |
-| 300 m | Chmury z waty cukrowej | zachód słońca |
-| 400 m | Spalony karmel | noc, żar, dym |
-| 500 m | Lukrecjowe bagno | czerń, mgła, zielone światełka |
-| 600 m | Opuszczona fabryka | rdza, migające lampy |
-| 700 m+ | Cukrowy koszmar | ciemność, wiśniowa galareta |
+| Od | Świat | Nastrój | Półki (szansa na lukrowanej półce) |
+|---|---|---|---|
+| 0 m | Kryształowa jaskinia | jasno, słodko | zwykłe |
+| 100 m | Czekoladowa kopalnia | ciepło | czekolada 45% |
+| 200 m | Żelkowy las | kolorowo | galaretka 40%, czekolada 10% |
+| 300 m | Chmury z waty cukrowej | zachód słońca | chmury 50% |
+| 400 m | Spalony karmel | noc, żar, dym | czekolada 35%, galaretka 20% |
+| 500 m | Lukrecjowe bagno | czerń, mgła, zielone światełka | chmury 30%, czekolada 25% |
+| 600 m | Opuszczona fabryka | rdza, migające lampy | taśmociągi 50%, czekolada 15% |
+| 700 m+ | Cukrowy koszmar | ciemność, wiśniowa galareta | wszystko po trochu |
+
+Mechaniki (`sim/physics.ts`, `FEATURE`; wygląd `fx/features.ts`, kolory stałe we wszystkich światach jak lód i kolce):
+
+- **Czekolada** kruszy się po 1,3 s stania (trzeszczy, pęka, drży coraz mocniej), potem znika i slime spada. Pasuje do serii: nie wolno się zawahać.
+- **Galaretka** odbija jak trampolina (z góry min. 1500, czyli ok. 4 m w górę) i zaczyna nowy lot: skoki w locie znów mają pełną siłę.
+- **Chmura** przepuszcza od dołu i z boku, trzyma tylko lądowanie z góry.
+- **Taśmociąg** wiezie stojącego slime'a (130/s) zawsze od ściany do środka (nigdy na ścianę z kolcami) i zrzuca z krawędzi.
+
+Baner przy wejściu do świata ma podpowiedź o nowej mechanice. Bot: mediana 261 m przed zmianą 276 m (szybki), 153 wobec 156 m (wolny), więc trudność prawie bez zmian.
 
 Każdy świat: tło (`public/art/biomes/<id>/bg.jpg`, ten sam przepis co `bg.jpg`), cukierek (`candy.png`), paleta ścian i półek (lód i kolce wszędzie te same, dla czytelności), kolor syropu i poświaty, cząsteczki w powietrzu, mrok przy krawędziach, migotanie (fabryka). Na ostatnich 8 m tło przenika w następne; przy wejściu baner z nazwą i akord (niższy w mroczniejszych światach). Kod: `sim/biomes.ts` (granice), `fx/biome-look.ts` (wygląd).
 
 ## Muzyka proceduralna (w duchu Tetris Effect)
 
-Muzyka składa się na żywo w kodzie (`src/fx/score.ts`), bez plików audio. Każdy świat ma tempo, kolejkę akordów (jasne np. Am–F–C–G, mroczne Am–Dm–E, Am–B♭–Am–E) i własne barwy (dzwonki, marimba, pady, bas, perkusja, pozytywka, metaliczne uderzenia). Wszystko w a-moll.
+Muzyka składa się na żywo w kodzie (`src/fx/score.ts`). Barwy to próbki prawdziwych instrumentów z VSCO 2 CE (CC0, ok. 1 MB w `public/audio/samples/`, skrypt `tools/audio/samples.ts`); do czasu ich wczytania (albo gdy się nie wczytają) gra synteza, `?synth` wymusza syntezę. Każdy świat ma tempo, kolejkę akordów (jasne np. Am–F–C–G, mroczne Am–Dm–E, Am–B♭–Am–E) i własne barwy (dzwonki, marimba, pady, bas, perkusja, pozytywka, metaliczne uderzenia). Wszystko w a-moll.
 
 - **Warstwy wg intensywności** (zmiana na początku taktu): menu = pad; bieg = bas i stopa; seria ×2 = hi-hat i arpeggio; ×5 = werbel, pełna perkusja, drugie arpeggio; ×10 = melodia.
 - **Akcje grają nuty z aktualnego akordu**: strzał (wyższa nuta = mocniejszy), cukierki w locie (wznosząca się melodia), seria (melodia w górę), skok w locie (błysk oktawę wyżej), lądowanie (pryma w basie), kamień milowy (przebieg w górę + talerz w takt), zerwanie serii (dwie opadające nuty), śmierć (akord rozpada się w dół).
 - **Napięcie**: syrop blisko = bicie serca, niepokojąca sekunda i zamknięty filtr; slow-motion zwalnia tempo i przytłumia.
 
+Płynność: pętla wyrównuje drgający czas klatek (zawsze 1 krok fizyki na klatkę przy 60 Hz), slime, kamera i syrop są rysowane między krokami, liczniki to tekst bitmapowy (`fx/hud-font.ts`). Ukryty licznik wydajności: Ustawienia → 5 stuknięć w numer wersji (albo `?perf`).
+
 Próba z gotowymi utworami z ACE-Step 1.5 (Legion) odrzucona: nagrań nie da się rozebrać na ścieżki reagujące na grę. Model zostaje na Legionie (np. na muzykę do menu).
 
 ## Rywalizacja: zasady równe dla wszystkich
 
-Decyzja właściciela: rozgrywka ma być kompetytywna i zawsze taka sama, bo planujemy leaderboard. Za cukierki kupuje się **tylko kosmetykę** (czapki, później ubranka i inne dodatki), nigdy nic, co wpływa na grę: bez ulepszeń power-upów, bez boosterów na start. Wypróbowane ulepszenia leżą na gałęzi `archiwum-ulepszenia`.
+Decyzja właściciela: rozgrywka ma być kompetytywna i zawsze taka sama, bo planujemy leaderboard. Za cukierki kupuje się **tylko kosmetykę**, nigdy nic, co wpływa na grę: bez ulepszeń power-upów, bez boosterów na start. Wypróbowane ulepszenia leżą na gałęzi `archiwum-ulepszenia`.
+
+### Szafa (kosmetyka)
+
+Cztery działy po 4 rzeczy, po jednej założonej z każdego (`sim/shop.ts`, grafika `fx/cosmetics.ts` z kodu SVG, poza czapkami z Fluxa):
+
+- **Czapki** 30–200: imprezowa, kucharska, korona, czarodzieja.
+- **Kolory** 40–300: miętowy, cytrynowy, winogronowy, złoty. Kolor przechodzi na ślad, kleksy i cząsteczki.
+- **Ślady w locie** 50–250: bąbelki, serduszka, gwiazdki, tęcza.
+- **Dodatki** 40–160: kokarda, wąsy, okulary, monokl (na twarzy, zostają pionowo jak oczy).
+
+### Wyzwanie dnia i ranking
+
+- **Wyzwanie dnia** (przycisk na ekranie startowym): seed z daty (`sim/daily.ts`, `dailySeed('RRRR-MM-DD')`), więc w danym dniu wszyscy grają tę samą studnię. Nowe o północy czasu lokalnego. Liczy się najlepszy wynik dnia; zapis trzyma 30 ostatnich dni (najlepszy wynik, liczba prób) i serię dni z rzędu.
+- **Powtórki** (`sim/replay.ts`): każdy bieg nagrywa seed, długości kroków symulacji (RLE, bo slow-motion zmienia krok) i strzały. `verifyReplay` odtwarza bieg w Node i porównuje wynik; odrzuca też kroki dłuższe niż 1/60 s i strzały mocniejsze niż w grze. Sprawdzone: powtórka z przeglądarki daje w Node ten sam wynik co do metra. Powtórka ma kilka KB.
+- **Globalny ranking wymaga serwera** i decyzji właściciela. Opcje:
+  1. Game Center + Google Play Games: darmowe, natywne tablice, ale osobne dla iOS i Androida, bez weryfikacji powtórek (wynik przyjmowany na słowo).
+  2. Własny mały serwer (np. funkcja na Cloudflare/Vercel + baza): wspólna tablica dla obu platform, `verifyReplay` na serwerze, anonimowy nick. Wymaga konta, domeny i aktualizacji polityki prywatności (nick i wynik to dane).
+  Rekomendacja: 2 dla wyzwania dnia (uczciwość dzięki powtórkom), ewentualnie 1 dodatkowo dla rekordu ogólnego.
 
 ## Krok 6: serie
 

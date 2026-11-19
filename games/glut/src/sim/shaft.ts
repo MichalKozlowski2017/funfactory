@@ -1,5 +1,6 @@
 import { Rng } from '@funfactory/core';
-import { contact, type Block, type Surface } from './physics.ts';
+import { BIOME_FEATURES, BIOMES, biomeIndex, metersAt } from './biomes.ts';
+import { contact, FEATURE, type Block, type Feature, type Surface } from './physics.ts';
 
 export interface Candy {
   id: string;
@@ -58,6 +59,17 @@ const chunkSeed = (seed: number, chunk: number): number => {
   return (h ^ (h >>> 13)) >>> 0;
 };
 
+/** Mechanika półki na wysokości `y` według świata (albo brak). Losuje zawsze raz, żeby strumień był stabilny. */
+function pickFeature(rng: Rng, y: number): Feature | null {
+  const roll = rng.next();
+  let acc = 0;
+  for (const [feature, p] of BIOME_FEATURES[BIOMES[biomeIndex(metersAt(y))]!.id]) {
+    acc += p;
+    if (roll < acc) return feature;
+  }
+  return null;
+}
+
 /**
  * Jeden kawałek studni: od y = -chunk*CH (dół) do -(chunk+1)*CH (góra).
  *
@@ -101,6 +113,8 @@ export function generateChunk(seed: number, chunk: number): Block[] {
   }
 
   // Półki w slotach o równych odstępach (także na styku kawałków) z losowym przesunięciem.
+  // Mechaniki półek mają osobny strumień losowy: nie zmieniają układu półek ani ścian.
+  const features = new Rng(chunkSeed(seed ^ 0xb10c, chunk));
   const slots = 3;
   const slotH = CH / slots;
   const jitter = lerp(0.1, 0.3, d);
@@ -116,6 +130,13 @@ export function generateChunk(seed: number, chunk: number): Block[] {
     else x = SHAFT.wall + rng.range(inner * 0.2, inner * 0.8 - w);
     const surface: Surface = chunk > 1 && rng.chance(lerp(0.05, 0.3, d)) ? 'ice' : 'sticky';
     add(x, y, w, 36, surface);
+    if (surface === 'sticky') {
+      const feature = pickFeature(features, y);
+      const ledge = blocks[blocks.length - 1]!;
+      if (feature) ledge.feature = feature;
+      // Taśmociąg wiezie od ściany do środka (nigdy na ścianę, która mogłaby mieć kolce).
+      if (feature === 'belt') ledge.belt = FEATURE.belt * (side === 'L' ? 1 : side === 'R' ? -1 : features.chance(0.5) ? 1 : -1);
+    }
     // Bez kolców pod półkami: karały za strzał w górę zza kadru (decyzja po testach na telefonie).
     side = side === 'C' ? (rng.chance(0.5) ? 'L' : 'R') : rng.chance(0.25) ? 'C' : side === 'L' ? 'R' : 'L';
   }
@@ -188,7 +209,10 @@ export class Shaft {
     const added: number[] = [];
     const removed: number[] = [];
     const wantTop = Math.floor(-y / SHAFT.chunk) + 2;
-    for (let k = 0; k <= wantTop; k++) {
+    const keepFrom = Math.floor(-belowY / SHAFT.chunk) - 1;
+    // Generujemy tylko od najniższego trzymanego kawałka: wcześniej pętla szła od 0, więc
+    // co krok tworzyła i od razu kasowała wszystkie kawałki pod syropem (śmieci dla GC).
+    for (let k = Math.max(0, keepFrom); k <= wantTop; k++) {
       if (this.chunks.has(k)) continue;
       const blocks = generateChunk(this.seed, k);
       this.chunks.set(k, blocks);
@@ -196,7 +220,6 @@ export class Shaft {
       this.powers.set(k, generatePowerUps(this.seed, k, blocks));
       added.push(k);
     }
-    const keepFrom = Math.floor(-belowY / SHAFT.chunk) - 1;
     for (const k of this.chunks.keys()) {
       if (k < keepFrom) {
         this.chunks.delete(k);

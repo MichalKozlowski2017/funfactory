@@ -94,6 +94,20 @@ describe('Rng', () => {
   });
 });
 
+describe('Tweens and destroyed targets', () => {
+  it('drops tweens whose target was destroyed', () => {
+    const tweens = new Tweens();
+    const target = { x: 0, destroyed: false };
+    tweens.to(target, { x: 10 }, { duration: 1 });
+    tweens.update(0.5);
+    target.destroyed = true;
+    target.x = -1;
+    tweens.update(0.25);
+    expect(target.x).toBe(-1);
+    expect(tweens.count).toBe(0);
+  });
+});
+
 describe('Loop', () => {
   it('runs fixed steps from accumulated time', () => {
     let fixed = 0;
@@ -114,6 +128,32 @@ describe('Loop', () => {
     loop.timeScale = 0; // hitstop: czas stoi
     loop.tick(1 / 60);
     expect(steps.length).toBe(4);
+  });
+
+  it('jittery 60 Hz frames still give exactly one step each', () => {
+    const counts: number[] = [];
+    const loop = new Loop({}, 60);
+    // Drgania odczytu czasu jak w przeglądarce: 15,2–18,1 ms.
+    const jitter = [16.1, 17.4, 15.2, 18.1, 16.6, 15.9, 17.2, 16.0, 17.9, 15.5];
+    for (let i = 0; i < 200; i++) {
+      loop.tick(jitter[i % jitter.length]! / 1000);
+      counts.push(loop.lastSteps);
+    }
+    expect(new Set(counts)).toEqual(new Set([1]));
+  });
+
+  it('120 Hz frames alternate single steps and real pauses still catch up', () => {
+    const loop = new Loop({}, 60);
+    const counts: number[] = [];
+    for (let i = 0; i < 20; i++) {
+      loop.tick(8.4 / 1000);
+      counts.push(loop.lastSteps);
+    }
+    expect(counts.filter((c) => c === 1).length).toBe(10);
+    loop.tick(0.05); // zacięcie 50 ms: nadrabia kilkoma krokami
+    expect(loop.lastSteps).toBe(3);
+    expect(loop.alpha).toBeGreaterThanOrEqual(0);
+    expect(loop.alpha).toBeLessThan(1);
   });
 
   it('pause stops time', () => {

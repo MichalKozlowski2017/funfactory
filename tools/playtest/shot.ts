@@ -80,9 +80,9 @@ const port = typeof address === 'object' && address ? address.port : 5173;
 const url = `http://127.0.0.1:${port}/?seed=${values.seed}${values.query ? `&${values.query}` : ''}`;
 
 const engine = values.browser === 'webkit' ? webkit : chromium;
-const browser = await engine.launch(
-  values.gpu && engine === chromium ? { args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'] } : {},
-);
+// Autoplay bez gestu: dźwięk gry działa w nagraniach (rec:start dołącza ścieżkę audio).
+const chromiumArgs = ['--autoplay-policy=no-user-gesture-required', ...(values.gpu ? ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'] : [])];
+const browser = await engine.launch(engine === chromium ? { args: chromiumArgs } : {});
 const { defaultBrowserType: _ignored, ...deviceOpts } = device;
 if (values.size) {
   const m = /^(\d+)x(\d+)(?:@(\d+(?:\.\d+)?))?$/.exec(values.size);
@@ -246,14 +246,28 @@ async function toScreen(page: Page, x: number, y: number): Promise<[number, numb
 
 /**
  * Nagrywanie samego canvasa (MediaRecorder) w jego natywnej rozdzielczości, bez rozmycia
- * wideo z Playwrighta (to ma rozmiar ekranu w punktach CSS). Bez dźwięku.
+ * wideo z Playwrighta (to ma rozmiar ekranu w punktach CSS). Z dźwiękiem gry, gdy jest
+ * `game.sound` (wyjście główne podpięte do strumienia; w Chromium bez wymogu gestu).
  */
 async function startRecording(page: Page): Promise<void> {
   await page.evaluate(() => {
     const canvas = document.querySelector('canvas');
     if (!canvas) throw new Error('no canvas');
-    const type = ['video/webm;codecs=vp9', 'video/webm;codecs=vp8', 'video/webm'].find((t) => MediaRecorder.isTypeSupported(t));
-    const rec = new MediaRecorder(canvas.captureStream(60), { mimeType: type, videoBitsPerSecond: 12_000_000 });
+    const stream = canvas.captureStream(60);
+    const sound = (window as unknown as { __ff?: { game: { sound?: { output: AudioNode | null; audio: AudioContext | null } } } }).__ff?.game.sound;
+    const out = sound?.output;
+    const ctx = sound?.audio;
+    if (out && ctx) {
+      void ctx.resume();
+      const dest = ctx.createMediaStreamDestination();
+      out.connect(dest);
+      for (const track of dest.stream.getAudioTracks()) stream.addTrack(track);
+    }
+    const audio = stream.getAudioTracks().length > 0;
+    const type = (audio ? ['video/webm;codecs=vp9,opus', 'video/webm;codecs=vp8,opus'] : [])
+      .concat(['video/webm;codecs=vp9', 'video/webm;codecs=vp8', 'video/webm'])
+      .find((t) => MediaRecorder.isTypeSupported(t));
+    const rec = new MediaRecorder(stream, { mimeType: type, videoBitsPerSecond: 12_000_000, audioBitsPerSecond: 192_000 });
     const chunks: Blob[] = [];
     rec.ondataavailable = (e) => chunks.push(e.data);
     rec.start(1000);
@@ -279,7 +293,7 @@ async function saveRecording(page: Page, name: string): Promise<void> {
   saved.push(webm);
   // mp4 (H.264) odtwarza się wszędzie, także na iPhonie. Stała liczba klatek wyrównuje zacięcia nagrania.
   const mp4 = resolve(outDir, `${name}.mp4`);
-  const ff = spawnSync('ffmpeg', ['-y', '-loglevel', 'error', '-i', webm, '-vf', 'crop=trunc(iw/2)*2:trunc(ih/2)*2', '-r', '60', '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-crf', '20', '-movflags', '+faststart', mp4]);
+  const ff = spawnSync('ffmpeg', ['-y', '-loglevel', 'error', '-i', webm, '-vf', 'crop=trunc(iw/2)*2:trunc(ih/2)*2', '-r', '60', '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-crf', '20', '-c:a', 'aac', '-b:a', '192k', '-movflags', '+faststart', mp4]);
   if (ff.status === 0) saved.push(mp4);
   else console.warn('ffmpeg niedostępny albo błąd: zostaje sam .webm');
 }

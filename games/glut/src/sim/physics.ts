@@ -5,6 +5,26 @@
 
 export type Surface = 'sticky' | 'ice' | 'spikes';
 
+/**
+ * Mechaniki półek w wyższych światach:
+ * - crumble: czekolada kruszy się po chwili stania (FEATURE.crumble),
+ * - bounce: galaretka odbija jak trampolina, nie klei,
+ * - cloud: chmura przepuszcza od dołu, trzyma tylko lądowanie z góry,
+ * - belt: taśmociąg przesuwa stojącego slime'a (prędkość `belt`).
+ */
+export type Feature = 'crumble' | 'bounce' | 'cloud' | 'belt';
+
+export const FEATURE = {
+  /** Po tylu sekundach stania czekolada się rozpada. */
+  crumble: 1.3,
+  /** Minimalna prędkość odbicia od galaretki w górę i w bok/dół. */
+  bounceUp: 1500,
+  bounceSide: 500,
+  /** Ile prędkości zostaje przy odbiciu (gdy więcej niż minimum). */
+  bounceKeep: 0.85,
+  belt: 130,
+} as const;
+
 export interface Block {
   x: number;
   y: number;
@@ -13,6 +33,13 @@ export interface Block {
   surface: Surface;
   /** Numer kawałka studni (generator), do sprzątania i rysowania. */
   chunk?: number;
+  feature?: Feature;
+  /** Taśmociąg: prędkość pozioma (jednostki/s). */
+  belt?: number;
+  /** Czekolada: ile sekund już się kruszy. */
+  crack?: number;
+  /** Czekolada rozpadła się: blok nie istnieje dla fizyki. */
+  gone?: boolean;
 }
 
 export type SlimeState = 'stuck' | 'flying' | 'dead';
@@ -89,6 +116,10 @@ export interface StepResult {
   slipped?: boolean;
   /** Skorupka odbiła slime'a od kolców (i się zużyła). */
   shielded?: boolean;
+  /** Odbicie od galaretki. */
+  bounced?: { block: Block; x: number; y: number; nx: number; ny: number; speed: number };
+  /** Czekolada pod slime'em się rozpadła. */
+  crumbled?: Block;
 }
 
 /** Modyfikatory fizyki od power-upów (ustawia je Run). */
@@ -206,8 +237,11 @@ export class World {
       s.x += s.vx * h;
       s.y += s.vy * h;
       for (const b of this.blocks) {
+        if (b.gone) continue;
         const c = contact(s.x, s.y, s.r, b);
         if (!c) continue;
+        // Chmura: tylko lądowanie z góry, w locie w górę i z boku przelatuje się przez nią.
+        if (b.feature === 'cloud' && !(c.ny < -0.7 && s.vy > 0)) continue;
         if (b.surface === 'spikes') {
           if (this.mods.shell) {
             // Skorupka: odbicie od kolców z utratą części prędkości.
@@ -226,6 +260,13 @@ export class World {
         s.y += c.ny * c.depth;
         const into = s.vx * c.nx + s.vy * c.ny;
         if (into >= 0) continue; // oddala się od powierzchni (np. tuż po strzale)
+        if (b.feature === 'bounce') {
+          // Galaretka: odbicie jak od trampoliny, z góry zawsze mocne.
+          const out = Math.max(c.ny < -0.5 ? FEATURE.bounceUp : FEATURE.bounceSide, -into * FEATURE.bounceKeep);
+          s.vx = s.vx - into * c.nx + c.nx * out;
+          s.vy = s.vy - into * c.ny + c.ny * out;
+          return { bounced: { block: b, x: s.x, y: s.y, nx: c.nx, ny: c.ny, speed: out } };
+        }
         if (b.surface === 'ice' && c.ny > 0.5 && !this.mods.glue) {
           // Lodowy sufit: nie trzyma, tylko zatrzymuje ruch w górę.
           s.vx -= into * c.nx;
@@ -248,16 +289,34 @@ export class World {
   private stepStuck(dt: number): StepResult {
     const s = this.slime;
     const b = s.stuckTo;
-    if (!b || b.surface !== 'ice' || s.ny < -0.5 || this.mods.glue) return {};
-    // Lód na ścianie: powolne zjeżdżanie w dół.
-    s.y += PHYS.iceSlide * dt;
+    if (!b) return {};
+    if (b.feature === 'crumble') {
+      b.crack = (b.crack ?? 0) + dt;
+      if (b.crack >= FEATURE.crumble) {
+        b.gone = true;
+        s.state = 'flying';
+        s.vx = 0;
+        s.vy = 0;
+        s.stuckTo = null;
+        return { slipped: true, crumbled: b };
+      }
+    }
+    // Ruch po powierzchni: taśmociąg wiezie stojącego w bok, lód na ścianie zsuwa w dół.
+    let dx = 0;
+    let dy = 0;
+    if (b.feature === 'belt' && s.ny < -0.5) dx = (b.belt ?? 0) * dt;
+    else if (b.surface === 'ice' && s.ny >= -0.5 && !this.mods.glue) dy = PHYS.iceSlide * dt;
+    if (!dx && !dy) return {};
+    s.x += dx;
+    s.y += dy;
     for (const other of this.blocks) {
-      if (other === b) continue;
+      if (other === b || other.gone) continue;
       const c = contact(s.x, s.y, s.r, other);
       if (!c) continue;
+      if (other.feature === 'cloud' && c.ny >= -0.7) continue;
       if (other.surface === 'spikes') {
         if (this.mods.shell) {
-          // Zjechał na kolce w skorupce: odbija się w powietrze.
+          // Wjechał na kolce w skorupce: odbija się w powietrze.
           s.state = 'flying';
           s.stuckTo = null;
           s.vx = c.nx * 500;
@@ -277,8 +336,8 @@ export class World {
     }
     if (!contact(s.x, s.y, s.r + 2, b)) {
       s.state = 'flying';
-      s.vx = 0;
-      s.vy = PHYS.iceSlide;
+      s.vx = dx / dt;
+      s.vy = dy ? PHYS.iceSlide : 0;
       s.stuckTo = null;
       return { slipped: true };
     }

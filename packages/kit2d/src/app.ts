@@ -1,4 +1,4 @@
-import { Application, Container } from 'pixi.js';
+import { Application, Container, UPDATE_PRIORITY } from 'pixi.js';
 import { Loop, Rng, Sound } from '@funfactory/core';
 import { SceneManager } from './scene.ts';
 
@@ -14,6 +14,27 @@ export interface GameOptions {
   designWidth?: number;
   /** Seed RNG. Domyślnie z `?seed=` w URL albo z czasu. */
   seed?: number;
+  /**
+   * Wygładzanie krawędzi (MSAA), domyślnie włączone. Na ekranach 3x kosztuje sporo pracy GPU,
+   * a różnicy prawie nie widać. `?aa=1` / `?aa=0` w URL wymusza (do porównań).
+   */
+  antialias?: boolean;
+}
+
+/** Statystyki płynności (zawsze liczone, tanie). Okno: ostatnie `PerfStats.window` sekund. */
+export interface PerfStats {
+  fps: number;
+  /** Średni i najdłuższy odstęp między klatkami (ms). */
+  frameMs: number;
+  worstMs: number;
+  /** Czas pracy procesora na klatkę: logika + rysowanie (ms). */
+  cpuMs: number;
+  cpuWorst: number;
+  /** Zacięcia (klatka > 25 ms) od startu. */
+  hitches: number;
+  /** Klatki bez kroku fizyki i z 2+ krokami w oknie (nierówny ruch). */
+  zeroSteps: number;
+  multiSteps: number;
 }
 
 export interface View {
@@ -56,6 +77,11 @@ export class Game {
   view: View = { width: 720, height: 1280, safe: { top: 0, right: 0, bottom: 0, left: 0 } };
   /** Ile pikseli urządzenia przypada na jednostkę gry. Do renderowania tekstur w pełnej ostrości. */
   pixelRatio = 1;
+  /** Płynność z ostatnich sekund (licznik wydajności). */
+  readonly perf: PerfStats = { fps: 0, frameMs: 0, worstMs: 0, cpuMs: 0, cpuWorst: 0, hitches: 0, zeroSteps: 0, multiSteps: 0 };
+  private readonly perfWindow: { frame: number; cpu: number; steps: number }[] = [];
+  private frameStart = 0;
+  private lastFrame = 0;
   private safeProbe: HTMLDivElement | null = null;
 
   private readonly opts: GameOptions;
@@ -76,7 +102,7 @@ export class Game {
     await this.app.init({
       resizeTo: parent === document.body ? window : parent,
       background: this.opts.background ?? '#000000',
-      antialias: true,
+      antialias: this.antialias(),
       autoDensity: true,
       resolution: Math.min(window.devicePixelRatio || 1, 3),
       preference: 'webgl',
@@ -88,13 +114,50 @@ export class Game {
     this.layout();
     this.app.ticker.add((ticker) => {
       if (this.dev) this.dev.frames++;
+      this.frameStart = performance.now();
       this.loop.tick(ticker.deltaMS / 1000);
     });
+    // Po narysowaniu (render ma priorytet LOW): koniec pracy klatki.
+    this.app.ticker.add(() => this.measure(), null, UPDATE_PRIORITY.UTILITY);
     document.addEventListener('visibilitychange', () => {
       this.loop.paused = document.hidden;
     });
     this.installDevHook();
     return this;
+  }
+
+  private antialias(): boolean {
+    const forced = new URLSearchParams(location.search).get('aa');
+    if (forced !== null) return forced !== '0';
+    return this.opts.antialias ?? true;
+  }
+
+  private measure(): void {
+    const now = performance.now();
+    const frame = this.lastFrame ? now - this.lastFrame : 16.7;
+    this.lastFrame = now;
+    if (frame > 25 && frame < 1000) this.perf.hitches++;
+    const w = this.perfWindow;
+    w.push({ frame, cpu: now - this.frameStart, steps: this.loop.lastSteps });
+    // Okno ok. 3 s.
+    let total = 0;
+    for (const f of w) total += f.frame;
+    while (w.length > 2 && total > 3000) total -= w.shift()!.frame;
+    const p = this.perf;
+    p.fps = (w.length / total) * 1000;
+    p.frameMs = total / w.length;
+    p.worstMs = 0;
+    p.cpuMs = 0;
+    p.cpuWorst = 0;
+    p.zeroSteps = 0;
+    p.multiSteps = 0;
+    for (const f of w) {
+      p.worstMs = Math.max(p.worstMs, f.frame);
+      p.cpuMs += f.cpu / w.length;
+      p.cpuWorst = Math.max(p.cpuWorst, f.cpu);
+      if (f.steps === 0 && !this.loop.paused && this.loop.timeScale > 0) p.zeroSteps++;
+      if (f.steps > 1) p.multiSteps++;
+    }
   }
 
   /** Zatrzymanie gry na chwilę przy mocnym trafieniu (hit-stop). */

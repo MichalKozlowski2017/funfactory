@@ -127,7 +127,15 @@ export class Tweens {
     const snapshot = this.active;
     this.active = [];
     const keep: Tween<object>[] = [];
-    for (const tween of snapshot) if (!tween.step(scaled)) keep.push(tween);
+    for (const tween of snapshot) {
+      // Obiekt zniszczony w trakcie animacji (np. Pixi `destroy()`): tween znika po cichu,
+      // zamiast pisać do zwolnionych pól i wywracać całą klatkę.
+      if ((tween.target as { destroyed?: unknown }).destroyed === true) {
+        tween.kill();
+        continue;
+      }
+      if (!tween.step(scaled)) keep.push(tween);
+    }
     // Tweeny utworzone w trakcie update (np. w onUpdate) trafiły do this.active.
     this.active = keep.concat(this.active);
   }
