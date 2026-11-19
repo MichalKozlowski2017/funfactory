@@ -2355,10 +2355,13 @@ export class PlayScene extends Scene {
     const isWall = (b.x < 0 || b.x >= SHAFT.width - SHAFT.wall) && b.w <= SHAFT.width;
     if (!isWall) return false;
     const T = this.wallTex;
-    const own = this.biomeWalls.get(BIOMES[biomeIndex(metersAt(b.y + b.h / 2))]!.id);
+    const biome = BIOMES[biomeIndex(metersAt(b.y + b.h / 2))]!.id;
+    const own = this.biomeWalls.get(biome);
     const sticky = own?.sticky ?? T.frosting;
     const spikes = own?.spikes.length ? own.spikes : T.spike ? [{ tex: T.spike, glow: this.spikeGlow }] : [];
-    const tex = b.surface === 'ice' ? T.ice : b.surface === 'sticky' ? sticky : T.caramel;
+    // Podstawa pod kolcami: ściana świata przyciemniona (zamiast tego samego karmelu wszędzie).
+    const spikeBase = own?.sticky ?? T.frosting ?? T.caramel;
+    const tex = b.surface === 'ice' ? T.ice : b.surface === 'sticky' ? sticky : spikeBase;
     if (!tex || (b.surface === 'spikes' && !spikes.length)) return false;
     const W = SHAFT.wall;
     const left = b.x < 0;
@@ -2373,6 +2376,10 @@ export class PlayScene extends Scene {
     strip.position.set(band, b.y);
     // Wspólny lukier jest biały i barwiony na kolor świata; własna ściana świata ma swoje kolory.
     if (b.surface === 'sticky' && !own?.sticky) strip.tint = P.frosting;
+    // Podstawa kolców: ciemniejsza wersja ściany świata, żeby kolce na niej się odcinały.
+    if (b.surface === 'spikes') strip.tint = own?.sticky ? 0x6e5f6e : mixColor(P.frosting, 0x2a1a3a, 0.45);
+    // Lód przygaszony do nastroju świata (w mrocznych nie świeci mocniej niż rozgrywka), nadal jasny i czytelny.
+    if (b.surface === 'ice') strip.tint = mixColor(0xffffff, 0x6f82a8, Math.min(1, BIOME_LOOKS[biome].dark * 1.6));
     layer.addChild(strip);
     if (b.surface === 'spikes') {
       // Gąszcz zamiast grzebienia: każdy kolec ma inny kąt, wielkość i odstęp (powtarzalnie z położenia),
@@ -2399,7 +2406,8 @@ export class PlayScene extends Scene {
             glow.scale.set(Math.sign(sp.scale.x) * gs, Math.sign(sp.scale.y) * gs);
             glow.rotation = sp.rotation;
             glow.position.set(sp.x, sp.y);
-            glow.tint = 0xff3b3b;
+            // W czerwono-pomarańczowych światach czerwona poświata by się zlała: tam żółta.
+            glow.tint = biome === 'caramel' || biome === 'nightmare' ? 0xffd23b : 0xff3b3b;
             glow.alpha = 0.8;
             layer.addChild(glow);
           }

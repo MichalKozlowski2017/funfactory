@@ -85,11 +85,13 @@ export function drawBlock(g: Graphics, b: Block, P: typeof SURFACE = SURFACE, te
         frostingEdge(g, rng, b.y, b.y + b.h, edge, P.frosting, true, inward);
       } else if (b.surface === 'ice') {
         g.rect(left ? outer : outer - 8, b.y, 8, b.h).fill({ color: P.iceShade, alpha: 0.6 });
-        g.rect(left ? edge - 4 : edge, b.y, 4, b.h).fill({ color: 0xffffff, alpha: 0.75 });
+        g.rect(left ? edge - 8 : edge + 3, b.y, 5, b.h).fill({ color: 0xffffff, alpha: 0.6 });
       } else {
         g.rect(left ? outer : outer - 8, b.y, 8, b.h).fill({ color: P.ink, alpha: 0.35 });
       }
       g.rect(band, b.y, W, 2).fill({ color: P.ink, alpha: 0.55 });
+      // Ciemny kontur na krawędzi studni, jak przy reszcie grafik (ściana nie wygląda na doklejoną).
+      g.rect(left ? edge - 3 : edge, b.y, 3, b.h).fill({ color: P.ink, alpha: 0.9 });
       return;
     }
     g.rect(b.x, b.y, b.w, b.h).fill({ color: P.rock });
