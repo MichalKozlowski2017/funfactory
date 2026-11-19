@@ -43,6 +43,7 @@ import { AchievementsPanel } from '../ui/achievements-panel.ts';
 import { DailyPanel } from '../ui/daily-panel.ts';
 import { Coach, type Gesture } from '../ui/coach.ts';
 import { PausePanel } from '../ui/pause-panel.ts';
+import { Iris } from '../fx/iris.ts';
 import { accessorySprite, cosmeticTextures, type CosmeticTextures } from '../fx/cosmetics.ts';
 import { ShopPanel } from '../ui/shop-panel.ts';
 import { SettingsPanel } from '../ui/settings-panel.ts';
@@ -247,6 +248,8 @@ export class PlayScene extends Scene {
   private paused = false;
   private pausePanel: PausePanel | null = null;
   private pauseButton!: Button;
+  /** Przejście „przesłona” między ekranem startowym a biegiem. */
+  private readonly iris = new Iris();
   /** Stan sprzed ostatniego kroku fizyki: rysujemy pozycję pośrednią (płynny ruch przy nierównych klatkach). */
   private readonly prev = { x: 0, y: 0, syrup: 0 };
   private readonly shown = { x: 0, y: 0, syrup: 0 };
@@ -374,7 +377,7 @@ export class PlayScene extends Scene {
     this.world.addChild(this.sparks.view);
     this.wear();
     this.shaker = new Shaker(this.shake, this.game.rng);
-    this.camera = new FollowCamera(this.world, { upOnly: true, lambda: 5 });
+    this.camera = new FollowCamera(this.world, { lambda: 5 });
 
     installHudFont(this.game.pixelRatio);
     this.heightText = hudText(56, pal.surface);
@@ -413,6 +416,7 @@ export class PlayScene extends Scene {
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) this.openPause();
     });
+    this.addChild(this.iris);
     // Powiadomienia nad wszystkim (także nad panelami poza grą).
     this.addChild(this.toasts);
 
@@ -560,9 +564,19 @@ export class PlayScene extends Scene {
       const sy = this.shown.y;
       // W pokazie slime niżej na ekranie: pod przyciskami ekranu startowego, nie za nimi.
       const base = this.demoRun && this.mode === 'title' ? 0.84 : 0.6;
-      let target = sy - view.height * (base + 0.15 * la);
-      if (this.run.started) target = Math.max(target, Math.min(this.shown.syrup - view.height + 170, sy - view.height * (0.3 + 0.4 * la)));
-      this.camera.opts.lambda = 5 + 5 * la;
+      const slimeTarget = sy - view.height * (base + 0.15 * la);
+      // Syrop w kadrze u dołu, o ile slime zostaje co najmniej 30% od góry ekranu.
+      const syrupTarget = this.run.started ? Math.min(this.shown.syrup - view.height + 170, sy - view.height * (0.3 + 0.4 * la)) : -Infinity;
+      let target = Math.max(slimeTarget, syrupTarget);
+      let lambda = 5 + 5 * la;
+      if (target > this.camera.y) {
+        // W dół kamera rusza tylko wtedy, gdy slime schodzi poniżej 75% ekranu (strefa spokoju,
+        // bez bujania przy małych skokach) albo gdy trzeba pokazać syrop.
+        const keepSlime = sy - view.height * (base === 0.6 ? 0.75 : 0.88);
+        target = Math.max(this.camera.y, Math.min(target, Math.max(keepSlime, syrupTarget)));
+        if (s.state === 'flying' && s.vy > 600) lambda = 8;
+      }
+      this.camera.opts.lambda = lambda;
       this.camera.follow(0, target, dt);
     }
     if (this.bg) this.bg.tilePosition.y = -this.camera.y * 0.35;
@@ -588,6 +602,7 @@ export class PlayScene extends Scene {
     this.settings?.tick(dt);
     this.trophies?.tick(dt);
     this.pausePanel?.tick(dt);
+    this.iris.tick();
     this.pauseButton.tick(dt);
     this.pauseButton.visible = this.mode === 'play' && !this.run.over && !this.againButton && !this.autopilot;
     this.dailyPanel?.tick(dt);
@@ -685,7 +700,12 @@ export class PlayScene extends Scene {
     this.title = new TitleOverlay({
       candyTex: this.candyTex,
       pixelRatio: this.game.pixelRatio,
-      onStart: () => this.startPlaying(),
+      onStart: () => {
+        if (this.iris.busy || this.shop || this.settings || this.trophies || this.dailyPanel) return;
+        const from = this.title?.playPosition ?? this.center();
+        this.title?.leave(this.tweens);
+        this.transition(from, () => this.startPlaying());
+      },
       onShop: () => this.openShop(),
       onDaily: () => this.openDaily(),
       onAchievements: () => this.openTrophies(),
@@ -769,6 +789,48 @@ export class PlayScene extends Scene {
     if (this.autopilot) this.autopilot = { wait: 0.8, shot: null, t: 0, hold: 0, sx: 0, sy: 0 };
   }
 
+  // --- przejścia ---
+
+  private center(): { x: number; y: number } {
+    return { x: this.game.view.width / 2, y: this.game.view.height / 2 };
+  }
+
+  /** Przesłona: zamyka się do `from`, podmienia scenę (`swap`), otwiera się wokół slime'a. */
+  private transition(from: { x: number; y: number }, swap: () => void): void {
+    if (this.iris.busy) return;
+    // Dźwięk interfejsu: gra także, gdy w tle trwa pokaz (tam efekty milczą).
+    this.game.sound.synth(SFX.whoosh);
+    const view = this.game.view;
+    this.iris.run({
+      tweens: this.tweens,
+      width: view.width,
+      height: view.height,
+      from,
+      swap,
+      to: () => ({ x: this.run.slime.x, y: this.run.slime.y - this.camera.y - PHYS.radius * 0.6 }),
+      onOpen: () => this.popSlime(),
+    });
+  }
+
+  /** Slime „wyskakuje” po otwarciu przesłony. */
+  private popSlime(): void {
+    const s = this.run.slime;
+    this.game.sound.synth(SFX.pop);
+    if (!this.demo) haptics.success();
+    this.squash(0.45);
+    this.hatSwing.kick(6);
+    this.sparks.burst(s.x, s.y - 20, {
+      count: 24,
+      speed: [200, 520],
+      angle: -Math.PI / 2,
+      spread: Math.PI * 1.4,
+      life: [0.35, 0.7],
+      scale: [0.5, 1.1],
+      gravity: 1200,
+      colors: [this.slimeColor, 0xffffff, 0xffd166],
+    });
+  }
+
   // --- pauza ---
 
   private openPause(): void {
@@ -780,7 +842,7 @@ export class PlayScene extends Scene {
     this.trail.length = 0;
     this.dotsG.clear();
     this.sfx(SFX.tap);
-    this.pausePanel = new PausePanel({ pixelRatio: this.game.pixelRatio, onResume: () => this.closePause(), onMenu: () => this.quitToMenu() });
+    this.pausePanel = new PausePanel({ pixelRatio: this.game.pixelRatio, onResume: () => this.closePause(), onMenu: () => this.transition(this.center(), () => this.quitToMenu()) });
     this.pausePanel.layout(this.game.view);
     this.overlay.addChild(this.pausePanel);
     this.pausePanel.alpha = 0;
@@ -997,8 +1059,10 @@ export class PlayScene extends Scene {
       daily: this.daily,
       medal: this.earned.includes('daily7'),
       onPlay: () => {
+        if (this.iris.busy) return;
         this.closeDaily(true);
-        this.startDaily();
+        this.title?.leave(this.tweens);
+        this.transition(this.center(), () => this.startDaily());
       },
       onRanking: () => {
         this.sfx(SFX.tap);
@@ -2070,7 +2134,7 @@ export class PlayScene extends Scene {
       onTap: () => {
         this.sfx(SFX.tap);
         this.maybeInterstitial();
-        this.newRun();
+        this.transition(this.center(), () => this.newRun());
       },
     });
     again.position.set(0, 170);
@@ -2085,9 +2149,11 @@ export class PlayScene extends Scene {
       onTap: () => {
         this.sfx(SFX.tap);
         this.maybeInterstitial();
-        this.dailyMode = false;
-        this.newRun();
-        this.showTitle();
+        this.transition(this.center(), () => {
+          this.dailyMode = false;
+          this.newRun();
+          this.showTitle();
+        });
       },
     });
     menu.position.set(0, 300);

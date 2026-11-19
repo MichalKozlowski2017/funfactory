@@ -170,6 +170,11 @@ Cztery działy po 6 rzeczy, po jednej założonej z każdego (`sim/shop.ts`, gra
 
 Na ekranie startowym bot gra prawdziwy bieg w tle (autopilot jak w `?bot`, bez slow-motion), a muzyka reaguje na jego akcje. Bieg pokazowy (`demoRun`) niczego nie zapisuje: bez rekordu, cukierków na konto (`wallet()`), statystyk, osiągnięć, rankingu i reklam; efekty dźwiękowe i wibracje milczą (`sfx()` / `buzz()`, dźwięki interfejsu grają), bez napisów nad menu. Po śmierci bota po cichu startuje kolejny pokaz; przycisk „Graj” (albo wyzwanie dnia) daje graczowi świeży bieg. Kamera trzyma slime'a niżej, pod przyciskami.
 
+### Przejścia i kamera
+
+- **Przesłona** (`fx/iris.ts`): po „Graj” logo odlatuje, przyciski znikają, ciemne koło z cukierkowym obrzeżem zamyka się na przycisku, bieg się podmienia, koło otwiera się wokół slime'a, który „wyskakuje” (dźwięk, iskry, haptyka). To samo przy wyzwaniu dnia, „Jeszcze raz”, „Menu” i wyjściu z pauzy. W trakcie blokuje dotyk.
+- **Kamera** podąża za slime'em w obie strony: w górę jak wcześniej (z wyprzedzaniem w szybkim locie), w dół tylko poza strefą spokoju (gdy slime schodzi poniżej 75% ekranu) albo żeby pokazać syrop (slime zostaje co najmniej 30% od góry). Dzięki temu przy upadku slime i poziom syropu są zawsze w kadrze.
+
 ### Pauza
 
 Przycisk w lewym górnym rogu w trakcie biegu (power-upy są pod nim). Panel: „Wróć do gry” albo „Menu”. Wyjście do menu kończy bieg tak jak śmierć (`recordRunEnd`: rekord, ranking, statystyki, wyzwanie dnia, cukierki), tylko bez ekranu końca. Gra pauzuje się sama, gdy aplikacja schodzi w tło w trakcie biegu.

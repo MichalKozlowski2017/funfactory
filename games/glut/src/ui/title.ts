@@ -1,6 +1,7 @@
 import { Container, FillGradient, Graphics, Sprite, Text, type Texture } from 'pixi.js';
 import { palettes } from '@funfactory/art';
 import { Button, type View } from '@funfactory/kit2d';
+import type { Tweens } from '@funfactory/core';
 import { t } from '../i18n.ts';
 
 const pal = palettes.candy;
@@ -76,6 +77,19 @@ export class TitleOverlay extends Container {
   setStats(best: number, candies: number): void {
     this.best.text = best > 0 ? t('best', { m: best }) : '';
     this.bank.text = `${candies}`;
+  }
+
+  /** Środek przycisku „Graj” (stąd zamyka się przesłona). */
+  get playPosition(): { x: number; y: number } {
+    return { x: this.play.x, y: this.play.y };
+  }
+
+  /** Wyjście: logo odlatuje w górę, przyciski znikają po kolei (przed przesłoną). */
+  leave(tweens: Tweens): void {
+    tweens.to(this.logo, { y: this.logo.y - 260, alpha: 0 }, { duration: 0.3, ease: 'quadIn' });
+    [this.play, this.best, this.daily, this.dailyInfo, this.shop, this.trophies, this.ranking, this.settings].forEach((c, i) => {
+      tweens.to(c, { y: c.y + 120, alpha: 0 }, { duration: 0.24, delay: i * 0.025, ease: 'quadIn' });
+    });
   }
 
   /** Podpis pod wyzwaniem dnia: dzisiejszy wynik i seria dni. */

@@ -24,6 +24,17 @@ export const SFX = {
     { wave: 'sine', freq: 70, freqEnd: 45, duration: 0.12, volume: 0.3, delay: 0.18 },
   ],
   tap: [{ wave: 'triangle', freq: 660, freqEnd: 880, duration: 0.06, volume: 0.15 }],
+  /** Przejście: przesłona się zamyka. */
+  whoosh: [
+    { wave: 'noise', freq: 800, filter: 'bandpass', filterFreq: 600, filterFreqEnd: 3200, duration: 0.36, volume: 0.22, attack: 0.08 },
+    { wave: 'sine', freq: 220, freqEnd: 440, duration: 0.3, volume: 0.06 },
+  ],
+  /** Przejście: slime wyskakuje w nowym biegu. */
+  pop: [
+    { wave: 'sine', freq: 300, freqEnd: 900, duration: 0.12, volume: 0.22 },
+    { wave: 'triangle', freq: 1320, duration: 0.1, volume: 0.1, delay: 0.06 },
+    { wave: 'triangle', freq: 1760, duration: 0.14, volume: 0.08, delay: 0.12 },
+  ],
 } satisfies Record<string, SynthLayer[]>;
 
 /** Dźwięki półek z mechaniką. */
