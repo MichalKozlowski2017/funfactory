@@ -48,6 +48,15 @@ App Store Connect → Apps → „+” → New App:
 ### 6. Formularze w sklepach
 Wszystkie odpowiedzi są w `games/glut/store/listing.md`: opis, słowa kluczowe, kategorie, ocena wiekowa (13+ w Google Play), „Bezpieczeństwo danych” (Google) i „App Privacy” (Apple), notatki dla recenzji.
 
+### 7. Ranking: Game Center i Google Play Games
+Kod jest gotowy (`games/glut/src/game-services-config.ts`, wtyczka natywna `GameServices`). Nick i awatar gracza pochodzą z konta Game Center / Play Games.
+- **Apple** (po akceptacji umowy z kroku 1): App Store Connect → aplikacja → Game Center → Leaderboards:
+  - `glut.best`: Classic, „High score”, typ Integer, sortowanie malejąco, jednostka „m”, zakres wyników 0–5000 (odrzuca absurdalne wyniki).
+  - `glut.daily`: **Recurring**, start dowolnego dnia o **00:00 UTC**, czas trwania 1 dzień, reszta jak wyżej.
+  Potem powiedz mi, a włączę uprawnienie Game Center w projekcie (plik `App.entitlements` jest gotowy; bez zaakceptowanej umowy Xcode nie wystawia profilu z tym uprawnieniem).
+- **Google**: Play Console → Usługi gier Play → Konfiguracja (projekt gier) → Tablice wyników: „Rekord” i „Wyzwanie dnia” (format liczbowy, wyższy lepszy, limit 0–5000). Wyślij mi **ID projektu** (liczba) i **ID obu tablic** (format `CgkI…`).
+- Polityka prywatności: dopiszę, że wynik i nick idą do Apple Game Center / Google Play Games, gdy gracz jest zalogowany.
+
 ## Kroki [Claude] po otrzymaniu ID reklam
 
 1. Wpisuję ID jednostek w `games/glut/src/ads-config.ts` i ustawiam `testing: false`.

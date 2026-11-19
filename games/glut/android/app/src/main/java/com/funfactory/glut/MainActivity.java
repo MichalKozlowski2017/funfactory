@@ -9,6 +9,8 @@ import com.getcapacitor.BridgeActivity;
 public class MainActivity extends BridgeActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        // Wtyczki z kodu aplikacji (nie z npm) rejestrujemy przed startem mostka.
+        registerPlugin(GameServicesPlugin.class);
         super.onCreate(savedInstanceState);
         immersive();
     }

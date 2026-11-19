@@ -13,6 +13,8 @@ export interface TitleOptions {
   /** Wyzwanie dnia: ta sama studnia dla wszystkich. */
   onDaily: () => void;
   onAchievements: () => void;
+  /** Ranking (Game Center / Play Games). */
+  onRanking: () => void;
   /** Ustawienia (muzyka, dźwięki, wibracje, sterowanie). */
   onSettings: () => void;
 }
@@ -34,6 +36,7 @@ export class TitleOverlay extends Container {
   private readonly settings: Button;
   private readonly daily: Button;
   private readonly trophies: Button;
+  private readonly ranking: Button;
   private readonly dailyInfo: Text;
   private time = 0;
 
@@ -64,11 +67,12 @@ export class TitleOverlay extends Container {
     this.shop = new Button({ label: 'Szafa', color: '#9b8cff', width: 250, height: 96, fontSize: 38, resolution: o.pixelRatio, onTap: o.onShop });
     this.trophies = new Button({ label: 'Osiągnięcia', color: '#e58bd0', width: 250, height: 96, fontSize: 34, resolution: o.pixelRatio, onTap: o.onAchievements });
 
-    this.settings = new Button({ label: 'Ustawienia', color: '#5fc8e8', width: 300, height: 88, fontSize: 34, resolution: o.pixelRatio, onTap: o.onSettings });
+    this.settings = new Button({ label: 'Ustawienia', color: '#5fc8e8', width: 250, height: 88, fontSize: 34, resolution: o.pixelRatio, onTap: o.onSettings });
+    this.ranking = new Button({ label: 'Ranking', color: '#7fcf9a', width: 250, height: 88, fontSize: 34, resolution: o.pixelRatio, onTap: o.onRanking });
 
     this.tap.eventMode = 'static';
     this.tap.on('pointertap', () => o.onStart());
-    this.addChild(this.shade, this.tap, this.logo, this.prompt, this.best, this.icon, this.bank, this.daily, this.dailyInfo, this.shop, this.trophies, this.settings);
+    this.addChild(this.shade, this.tap, this.logo, this.prompt, this.best, this.icon, this.bank, this.daily, this.dailyInfo, this.shop, this.trophies, this.ranking, this.settings);
   }
 
   setStats(best: number, candies: number): void {
@@ -109,7 +113,8 @@ export class TitleOverlay extends Container {
     this.dailyInfo.position.set(cx, y + 76);
     this.shop.position.set(cx - 135, y + 180);
     this.trophies.position.set(cx + 135, y + 180);
-    this.settings.position.set(cx, y + 290);
+    this.ranking.position.set(cx - 135, y + 290);
+    this.settings.position.set(cx + 135, y + 290);
   }
 
   tick(dt: number): void {
@@ -118,6 +123,7 @@ export class TitleOverlay extends Container {
     this.settings.tick(dt);
     this.daily.tick(dt);
     this.trophies.tick(dt);
+    this.ranking.tick(dt);
     this.logo.rotation = Math.sin(this.time * 1.6) * 0.035;
     this.logo.scale.set(1 + Math.sin(this.time * 3.2) * 0.025, 1 - Math.sin(this.time * 3.2) * 0.025);
     this.prompt.alpha = 0.55 + 0.45 * Math.abs(Math.sin(this.time * 2.4));

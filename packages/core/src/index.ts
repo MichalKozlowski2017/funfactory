@@ -9,3 +9,4 @@ export * from './timers.ts';
 export * from './platform.ts';
 export * from './audio.ts';
 export * from './ads.ts';
+export * from './game-services.ts';

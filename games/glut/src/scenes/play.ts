@@ -1,7 +1,8 @@
 import { Assets, type BitmapText, Container, FillGradient, Graphics, Rectangle, Sprite, Text, Texture, TilingSprite } from 'pixi.js';
 import { circle, defs, ellipse, hexToNumber, palettes, path, radialGradient, svg } from '@funfactory/art';
-import { ads, haptics, SaveStore, Spring, type SynthLayer } from '@funfactory/core';
+import { ads, gameServices, haptics, SaveStore, Spring, type SynthLayer } from '@funfactory/core';
 import { ADS } from '../ads-config.ts';
+import { GAME_SERVICES } from '../game-services-config.ts';
 import { AdPolicy } from '../sim/ad-policy.ts';
 import { Score } from '../fx/score.ts';
 import {
@@ -285,7 +286,11 @@ export class PlayScene extends Scene {
     this.decor = [crystal, lolly];
     this.score = new Score(this.game.sound);
     this.applySettings();
-    void ads.init(ADS).then(() => this.syncBanner(true));
+    // Najpierw zgody reklam (RODO, ATT), potem logowanie do Game Center / Play Games (bez nakładania się okien).
+    void ads.init(ADS).then(() => {
+      this.syncBanner(true);
+      if (!PILOT_MODE) void gameServices.init(GAME_SERVICES);
+    });
     const simulated = Number(new URLSearchParams(location.search).get('banner'));
     if (simulated > 0) ads.simulateBanner(simulated);
     const unsubscribe = ads.onBanner((h) => {
@@ -644,6 +649,7 @@ export class PlayScene extends Scene {
       onShop: () => this.openShop(),
       onDaily: () => this.startDaily(),
       onAchievements: () => this.openTrophies(),
+      onRanking: () => this.openRanking(),
       onSettings: () => this.openSettings(),
     });
     this.title.setStats(this.best, this.bank + this.run.candies);
@@ -665,6 +671,37 @@ export class PlayScene extends Scene {
     for (const t of [this.heightText, this.bestText, this.candyIcon, this.candyText, this.timerText]) t.visible = true;
     this.hint.visible = this.runs === 1;
     this.squash(0.25);
+  }
+
+  // --- ranking ---
+
+  /** Systemowy ekran tablic wyników; bez zalogowanego gracza krótka podpowiedź. */
+  private openRanking(): void {
+    if (this.shop || this.settings || this.trophies) return;
+    this.game.sound.synth(SFX.tap);
+    void gameServices.show().then((shown) => {
+      if (shown) return;
+      const ios = /iPhone|iPad/.test(navigator.userAgent);
+      this.notice(ios ? 'Zaloguj się do Game Center w Ustawieniach iPhone’a' : 'Ranking działa w aplikacji z kontem Google Play Games');
+    });
+  }
+
+  /** Krótki napis na środku ekranu (podpowiedź). */
+  private notice(message: string): void {
+    const view = this.game.view;
+    const t = hudText(30, '#ffffff');
+    t.text = message;
+    t.anchor.set(0.5);
+    if (t.width > view.width - 60) t.scale.set((view.width - 60) / t.width);
+    t.position.set(view.width / 2, view.height - this.bannerReserve - 80);
+    this.toasts.addChild(t);
+    void popIn(this.tweens, t, 0.25);
+    this.timers.after(2.6, () => this.tweens.to(t, { alpha: 0 }, { duration: 0.4 }));
+    this.timers.after(3.1, () => {
+      this.tweens.killOf(t);
+      this.tweens.killOf(t.scale);
+      t.destroy();
+    });
   }
 
   // --- osiągnięcia ---
@@ -1679,6 +1716,10 @@ export class PlayScene extends Scene {
     });
     this.slime.visible = false;
     this.lastReplay = this.recorder?.finish(this.run.meters) ?? null;
+    if (!PILOT_MODE) {
+      void gameServices.submit('best', this.run.meters);
+      if (this.dailyMode) void gameServices.submit('daily', this.run.meters);
+    }
     this.stats.runs++;
     this.stats.candies += this.run.candies;
     if (this.dailyMode) this.stats.dailyRuns++;

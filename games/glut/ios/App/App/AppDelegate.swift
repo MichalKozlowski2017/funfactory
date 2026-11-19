@@ -1,5 +1,6 @@
 import UIKit
 import Capacitor
+import GameKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -49,11 +50,86 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 class GameViewController: CAPBridgeViewController {
     override var preferredScreenEdgesDeferringSystemGestures: UIRectEdge { [.top, .bottom] }
 
+    /// Wtyczki z kodu aplikacji (nie z npm) rejestrujemy ręcznie.
+    override func capacitorDidLoad() {
+        bridge?.registerPluginInstance(GameServicesPlugin())
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Bez przewijania i „gumowania” widoku WebView: gra zajmuje cały ekran.
         webView?.scrollView.isScrollEnabled = false
         webView?.scrollView.bounces = false
         setNeedsUpdateOfScreenEdgesDeferringSystemGestures()
+    }
+}
+
+/// Tablice wyników przez Game Center. Część JS: `gameServices` w @funfactory/core.
+@objc(GameServicesPlugin)
+public class GameServicesPlugin: CAPPlugin, CAPBridgedPlugin, GKGameCenterControllerDelegate {
+    public let identifier = "GameServicesPlugin"
+    public let jsName = "GameServices"
+    public let pluginMethods: [CAPPluginMethod] = [
+        CAPPluginMethod(name: "signIn", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "submitScore", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "showLeaderboard", returnType: CAPPluginReturnPromise),
+    ]
+
+    private func playerInfo() -> [String: Any] {
+        let p = GKLocalPlayer.local
+        return ["authenticated": p.isAuthenticated, "playerId": p.isAuthenticated ? p.gamePlayerID : "", "alias": p.isAuthenticated ? p.alias : ""]
+    }
+
+    /// Logowanie: Game Center może pokazać własne okno; wynik wraca, gdy gracz się zaloguje albo je zamknie.
+    @objc func signIn(_ call: CAPPluginCall) {
+        let player = GKLocalPlayer.local
+        if player.isAuthenticated {
+            call.resolve(playerInfo())
+            return
+        }
+        var answered = false
+        player.authenticateHandler = { [weak self] viewController, _ in
+            guard let self = self else { return }
+            if let viewController = viewController {
+                DispatchQueue.main.async { self.bridge?.viewController?.present(viewController, animated: true) }
+                return
+            }
+            if !answered {
+                answered = true
+                call.resolve(self.playerInfo())
+            }
+        }
+    }
+
+    @objc func submitScore(_ call: CAPPluginCall) {
+        guard let id = call.getString("leaderboardId"), let score = call.getInt("score") else {
+            call.reject("leaderboardId i score są wymagane")
+            return
+        }
+        guard GKLocalPlayer.local.isAuthenticated else {
+            call.resolve(["submitted": false])
+            return
+        }
+        GKLeaderboard.submitScore(score, context: 0, player: GKLocalPlayer.local, leaderboardIDs: [id]) { error in
+            call.resolve(["submitted": error == nil, "error": error?.localizedDescription ?? ""])
+        }
+    }
+
+    @objc func showLeaderboard(_ call: CAPPluginCall) {
+        DispatchQueue.main.async {
+            let controller: GKGameCenterViewController
+            if let id = call.getString("leaderboardId") {
+                controller = GKGameCenterViewController(leaderboardID: id, playerScope: .global, timeScope: .allTime)
+            } else {
+                controller = GKGameCenterViewController(state: .leaderboards)
+            }
+            controller.gameCenterDelegate = self
+            self.bridge?.viewController?.present(controller, animated: true)
+            call.resolve()
+        }
+    }
+
+    public func gameCenterViewControllerDidFinish(_ gameCenterViewController: GKGameCenterViewController) {
+        gameCenterViewController.dismiss(animated: true)
     }
 }

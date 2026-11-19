@@ -176,12 +176,9 @@ Baner zgłasza swoją wysokość (`ads.bannerHeight`, `ads.onBanner`); szafa, us
 
 ### Wyzwanie dnia i ranking
 
-- **Wyzwanie dnia** (przycisk na ekranie startowym): seed z daty (`sim/daily.ts`, `dailySeed('RRRR-MM-DD')`), więc w danym dniu wszyscy grają tę samą studnię. Nowe o północy czasu lokalnego. Liczy się najlepszy wynik dnia; zapis trzyma 30 ostatnich dni (najlepszy wynik, liczba prób) i serię dni z rzędu.
+- **Wyzwanie dnia** (przycisk na ekranie startowym): seed z daty (`sim/daily.ts`, `dailySeed('RRRR-MM-DD')`), więc w danym dniu wszyscy grają tę samą studnię. Nowe o północy UTC (w Polsce o 1:00 albo 2:00), razem z dzienną tablicą w Game Center. Liczy się najlepszy wynik dnia; zapis trzyma 30 ostatnich dni (najlepszy wynik, liczba prób) i serię dni z rzędu.
 - **Powtórki** (`sim/replay.ts`): każdy bieg nagrywa seed, długości kroków symulacji (RLE, bo slow-motion zmienia krok) i strzały. `verifyReplay` odtwarza bieg w Node i porównuje wynik; odrzuca też kroki dłuższe niż 1/60 s i strzały mocniejsze niż w grze. Sprawdzone: powtórka z przeglądarki daje w Node ten sam wynik co do metra. Powtórka ma kilka KB.
-- **Globalny ranking wymaga serwera** i decyzji właściciela. Opcje:
-  1. Game Center + Google Play Games: darmowe, natywne tablice, ale osobne dla iOS i Androida, bez weryfikacji powtórek (wynik przyjmowany na słowo).
-  2. Własny mały serwer (np. funkcja na Cloudflare/Vercel + baza): wspólna tablica dla obu platform, `verifyReplay` na serwerze, anonimowy nick. Wymaga konta, domeny i aktualizacji polityki prywatności (nick i wynik to dane).
-  Rekomendacja: 2 dla wyzwania dnia (uczciwość dzięki powtórkom), ewentualnie 1 dodatkowo dla rekordu ogólnego.
+- **Ranking** (decyzja właściciela): Game Center (iOS) i Google Play Games (Android), nick z konta gracza, bez własnego serwera. Tablice: `best` (rekord) i `daily` (wyzwanie dnia, na iOS tablica cykliczna co dzień od 00:00 UTC; wyzwanie też zmienia się o północy UTC). Przycisk „Ranking” na ekranie startowym otwiera systemowy ekran tablic. Wtyczka natywna `GameServices` (Swift w `AppDelegate.swift`, Java `GameServicesPlugin.java`), API `gameServices` w `@funfactory/core`. Powtórki zostają w kodzie: gdyby oszustwa stały się problemem, można dołożyć własny serwer z weryfikacją.
 
 ## Krok 6: serie
 
