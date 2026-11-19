@@ -101,6 +101,9 @@ async function mirrorTile(texture: Texture): Promise<Texture> {
 /**
  * Glut: rozgrywka. Generowana studnia, syrop, cukierki, ekran końca.
  */
+/** Ile przed lądowaniem (s czasu gry) puszczony strzał czeka na przyklejenie zamiast skoku w locie. */
+const QUEUE_WINDOW = 0.15;
+
 export class PlayScene extends Scene {
   readonly id = 'play';
   private readonly backdrop = new Container();
@@ -126,6 +129,10 @@ export class PlayScene extends Scene {
   /** Podpowiedź skoku w locie pokazana w tym biegu. */
   /** Celowanie w locie (drugi oddech): zwolniony czas. */
   private airAim = false;
+  /** Strzał z wyprzedzeniem: puszczony w locie tuż przed lądowaniem, odpala po przyklejeniu (sekundy czasu gry). */
+  private queued: { vx: number; vy: number; power: number; left: number } | null = null;
+  /** Poziom naciągnięcia (0–5) do wibracji przy celowaniu. */
+  private aimStep = 0;
   private readonly dotsG = new Graphics();
   /** Tryb sterowania (eksperyment, zapisywany). */
   private controls: ControlMode = 'drag';
@@ -199,7 +206,7 @@ export class PlayScene extends Scene {
   private runFast: Record<number, number> = {};
   private againButton: Button | null = null;
   private menuButton: Button | null = null;
-  private aiming: { sx: number; sy: number; power: number; dx: number; dy: number } | null = null;
+  private aiming: { sx: number; sy: number; power: number; dx: number; dy: number; lx?: number; ly?: number } | null = null;
   private best = 0;
   private bestAtStart = 0;
   private bank = 0;
@@ -571,6 +578,15 @@ export class PlayScene extends Scene {
     this.prev.syrup = this.run.syrupY;
     this.recorder?.step(dt);
     this.react(this.run.step(dt));
+    const q = this.queued;
+    if (q) {
+      q.left -= dt;
+      if (this.run.over || this.mode !== 'play') this.queued = null;
+      else if (this.run.slime.state === 'stuck') {
+        this.queued = null;
+        this.fire(q, false);
+      } else if (q.left <= 0) this.queued = null;
+    }
   }
 
   /** Pozycje do rysowania: między poprzednim a obecnym krokiem fizyki (bez skoków przy teleporcie i nowym biegu). */
@@ -1330,14 +1346,37 @@ export class PlayScene extends Scene {
 
   /** Początek celowania (wspólny dla trybów). W locie zwalnia czas. */
   private beginAim(x: number, y: number): boolean {
-    if (this.mode !== 'play' || !this.run.canAim) return false;
+    if (this.mode !== 'play' || !(this.run.canAim || this.canPreAim())) return false;
     this.aiming = { sx: x, sy: y, power: 0, dx: 0, dy: -1 };
     this.aimDanger = false;
-    if (this.run.slime.state === 'flying') {
+    this.aimStep = 0;
+    this.queued = null;
+    if (this.run.slime.state === 'flying' && this.run.canAim) {
       this.airAim = true;
       this.game.loop.timeScale = 0.25;
     }
     return true;
+  }
+
+  /** Celowanie w locie bez skoków w zapasie: bez kropek i slow-motion, strzał odpali po lądowaniu. */
+  private canPreAim(): boolean {
+    return this.run.slime.state === 'flying' && !this.run.over && this.run.timers.rocket <= 0;
+  }
+
+  /** Czy slime wyląduje (przyklei się) w ciągu `QUEUE_WINDOW` przy obecnej prędkości. */
+  private landsSoon(): boolean {
+    const s = this.run.slime;
+    if (s.state !== 'flying') return false;
+    const p = this.run.world.predict(s.vx, s.vy, Math.ceil(QUEUE_WINDOW * 60), 1);
+    return p.end === 'land';
+  }
+
+  /** Wibracje przy naciąganiu: lekkie stuknięcie co 20% siły, mocniejsze przy pełnej. */
+  private aimTicks(power: number): void {
+    const step = power >= 0.999 ? 5 : Math.floor(power * 5);
+    if (step === this.aimStep) return;
+    if (step > 0) this.buzz(step === 5 ? 'hit' : 'tap');
+    this.aimStep = step;
   }
 
   /** Tap: przeciągnięcie procy z położenia palca względem slime'a (na ekranie). */
@@ -1528,7 +1567,8 @@ export class PlayScene extends Scene {
   }
 
   private aim(x: number, y: number): void {
-    if (!this.aiming || !this.run.canAim) {
+    const preAim = !!this.aiming && !this.run.canAim && this.canPreAim();
+    if (!this.aiming || (!this.run.canAim && !preAim)) {
       this.endAirAim();
       this.dotsG.clear();
       return;
@@ -1537,7 +1577,10 @@ export class PlayScene extends Scene {
     const v = launchVelocity(k * (x - this.aiming.sx), k * (y - this.aiming.sy));
     this.dotsG.clear();
     this.aiming.power = v?.power ?? 0;
-    if (!v) return;
+    this.aiming.lx = x;
+    this.aiming.ly = y;
+    this.aimTicks(this.aiming.power);
+    if (!v || preAim) return; // przed lądowaniem toru nie znamy: kropki pojawią się po przyklejeniu
     const speed = Math.hypot(v.vx, v.vy);
     this.aiming.dx = v.vx / speed;
     this.aiming.dy = v.vy / speed;
@@ -1576,12 +1619,23 @@ export class PlayScene extends Scene {
     const aiming = this.aiming;
     this.aiming = null;
     this.dotsG.clear();
-    const inAir = this.airAim;
     this.endAirAim();
     if (!aiming) return;
     const k = this.controls === 'swipe' ? -1 : 1;
     const v = launchVelocity(k * (x - aiming.sx), k * (y - aiming.sy));
-    if (!v || !this.run.launch(v.vx, v.vy)) return;
+    if (!v) return;
+    // W locie tuż przed lądowaniem (albo bez skoków w zapasie) strzał czeka na przyklejenie:
+    // pełna siła z półki zamiast słabego skoku w locie.
+    if (this.run.slime.state === 'flying' && (!this.run.canAim || this.landsSoon())) {
+      if (this.canPreAim()) this.queued = { vx: v.vx, vy: v.vy, power: v.power, left: QUEUE_WINDOW };
+      return;
+    }
+    this.fire(v, this.run.slime.state === 'flying');
+  }
+
+  /** Strzał (z palca albo z kolejki po lądowaniu). */
+  private fire(v: { vx: number; vy: number; power: number }, inAir: boolean): void {
+    if (!this.run.launch(v.vx, v.vy)) return;
     this.passTip(inAir ? 'air' : 'aim');
     this.recorder?.shot(v.vx, v.vy);
     if (inAir) {
@@ -1831,6 +1885,8 @@ export class PlayScene extends Scene {
     if (r.crumbled) this.onCrumble(r.crumbled);
     if (r.landed && this.run.slime.stuckTo?.feature === 'crumble') this.sfx(FEATURE_SFX.creak, { pitch: 0.9 + this.game.rng.next() * 0.2 });
     if (r.landed && this.airAim) this.endAirAim();
+    // Palec trzymany przez lądowanie: od razu kropki toru z półki (bez czekania na ruch palca).
+    if (r.landed && this.aiming?.lx !== undefined && this.controls !== 'tap') this.aim(this.aiming.lx, this.aiming.ly!);
     if (r.landed) {
       const l = r.landed;
       const strength = Math.min(1, l.speed / PHYS.maxSpeed);

@@ -223,6 +223,7 @@ Premie idą w cukierki, rekord zostaje w metrach (decyzja właściciela).
 
 - Nazwa: Glut.
 - Celowanie: przeciąganie w dowolnym miejscu ekranu.
+- Strzał z wyprzedzeniem (19.11.2026): puszczony w locie, gdy do lądowania zostało mniej niż 0,15 s, czeka na przyklejenie i odpala z pełną siłą z półki (zamiast słabego skoku w locie). Bez skoków w zapasie można celować już w locie (bez kropek i slow-motion), strzał odpali po lądowaniu; palec trzymany przez lądowanie od razu pokazuje tor. Wibracje przy naciąganiu: lekkie stuknięcie co 20% siły, mocniejsze przy pełnej.
 
 ## Balans (strojenie botem, 19.11.2026)
 
