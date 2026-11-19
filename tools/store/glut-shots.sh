@@ -14,11 +14,22 @@ for size in ${SIZES:-"ios-6.9:440x956@3" "ios-6.5:414x896@3" "android:360x640@3"
   name=${size%%:*}; dim=${size#*:}
   for lang in ${LANGS:-pl en}; do
     dir=$OUT/$name-$lang; rm -rf $dir; mkdir -p $dir
-    run() { rm -rf .shots/store-tmp; node tools/playtest/shot.ts games/glut --gpu --seed ${SEED:-7} --size $dim --query "$1" --out .shots/store-tmp --steps "$2" >/dev/null 2>&1 || echo "FAIL $name $lang $3"; cp .shots/store-tmp/*.png $dir/$3.png 2>/dev/null; }
+    # Scena z grą, w której bot zginął przed zdjęciem (eval rzuca błąd), powtarza się z kolejnym ziarnem.
+    run() {
+      for seed in ${SEED:-7} 11 13 17; do
+        rm -rf .shots/store-tmp
+        if node tools/playtest/shot.ts games/glut --gpu --seed $seed --size $dim --query "$1" --out .shots/store-tmp --steps "$2" >/dev/null 2>&1; then
+          cp .shots/store-tmp/*.png $dir/$3.png 2>/dev/null
+          return
+        fi
+      done
+      echo "FAIL $name $lang $3"
+    }
     # 1. Rozgrywka: skoki, cukierki, seria.
     run "bot&lang=$lang" "wait:1200
 $DRESS
 wait:15000
+eval:if (__glut.run.over) throw new Error('dead')
 shot:s" 1
     # 2. Syrop tuż pod glutem.
     run "bot&lang=$lang" "wait:1200
@@ -26,8 +37,10 @@ $DRESS
 wait:2500
 wait:7000
 eval:__glut.earned=['h50','h100','h200','h300','h400','h500','h600','h700','s5','s10','s15','s20','air3','air6','combo4','combo6','rescue1','rescue25','bounce50','crumble30','powers','fast100','fast200','fast300','candies60','candies60b','live120','live300','runs10','runs100','runs500','candy1k','candy10k','candy50k','daily1','daily3','daily7','dressed']
-eval:__glut.run.syrupY = Math.max(__glut.run.slime.y + 160, __glut.camera.y + __glut.game.view.height - 230)
-wait:400
+eval:new Promise((r) => { const i = setInterval(() => { if (__glut.run.slime.state === 'stuck') { clearInterval(i); __glut.autopilot.wait = 99; __glut.autopilot.shot = null; r(1); } }, 16); })
+eval:__glut.run.syrupY = __glut.run.slime.y + 230
+wait:700
+eval:if (__glut.run.over) throw new Error('dead')
 shot:s" 2
     # 3. Mroczny świat z kolcami.
     run "bot&lang=$lang" "wait:1200
@@ -36,6 +49,7 @@ wait:2500
 eval:__glut.reachedBiome=7
 eval:__glut.teleport(708)
 wait:1600
+eval:if (__glut.run.over) throw new Error('dead')
 shot:s" 3
     # 4. Fabryka: taśmociągi, bąble z mocami.
     run "bot&lang=$lang" "wait:1200
@@ -44,25 +58,25 @@ wait:2500
 eval:__glut.reachedBiome=6
 eval:__glut.teleport(612)
 wait:1800
+eval:if (__glut.run.over) throw new Error('dead')
 shot:s" 4
-    # 5. Nowy rekord (ranking).
-    run "lang=$lang" "wait:1200
+    # 5. Nowy rekord w trakcie biegu (ranking): wstążka „NOWY REKORD!”, złoty licznik, iskry.
+    run "bot&lang=$lang" "wait:1200
 $DRESS
-eval:__glut.best=231
 eval:__glut.earned=['h50','h100','h200','h300','h400','h500','h600','h700','s5','s10','s15','s20','air3','air6','combo4','combo6','rescue1','rescue25','bounce50','crumble30','powers','fast100','fast200','fast300','candies60','candies60b','live120','live300','runs10','runs100','runs500','candy1k','candy10k','candy50k','daily1','daily3','daily7','dressed']
-wait:800
+eval:__glut.best=231; __glut.bestAtStart=231
 eval:__glut.reachedBiome=2
-eval:__glut.teleport(246)
-wait:3500
+eval:__glut.teleport(226)
+wait:1500
 eval:__glut.bank=1240
-eval:__glut.run.time=187.4
-eval:__glut.run.syrupY = __glut.run.slime.y - 80
-wait:2600
+eval:__glut.run.peakY = -60 - 23205
+wait:420
+eval:if (__glut.run.over) throw new Error('dead')
 shot:s" 5
     # 6. Wyzwanie dnia.
     run "lang=$lang" "wait:2500
-$DAILY
 eval:__glut.earned=['daily1','daily3']
+$DAILY
 eval:__glut.title.visible=false
 eval:__glut.openDaily()
 wait:600
