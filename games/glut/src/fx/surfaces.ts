@@ -54,7 +54,7 @@ function frostingEdge(g: Graphics, rng: Rng, from: number, to: number, at: numbe
  * `textured`: ściany mają tekstury (sprite'y pod tą grafiką), więc tu tylko detale na wierzchu:
  * zacieki lukru, połysk krawędzi, szew; bez wypełnienia pasa i bez kolców.
  */
-export function drawBlock(g: Graphics, b: Block, P: typeof SURFACE = SURFACE, textured = false): void {
+export function drawBlock(g: Graphics, b: Block, P: typeof SURFACE = SURFACE, textured = false, seamBelow = true): void {
   const rng = new Rng(seedOf(b));
   const isWall = b.x < 0 || b.x >= SHAFT.width - SHAFT.wall;
 
@@ -89,7 +89,8 @@ export function drawBlock(g: Graphics, b: Block, P: typeof SURFACE = SURFACE, te
       } else {
         g.rect(left ? outer : outer - 8, b.y, 8, b.h).fill({ color: P.ink, alpha: 0.35 });
       }
-      g.rect(band, b.y, W, 2).fill({ color: P.ink, alpha: 0.55 });
+      // Szew tylko tam, gdzie pod spodem zaczyna się inny materiał (ta sama ściana ciągnie się bez kresek).
+      if (seamBelow) g.rect(band, b.y + b.h - 2, W, 2).fill({ color: P.ink, alpha: 0.55 });
       // Ciemny kontur na krawędzi studni, jak przy reszcie grafik (ściana nie wygląda na doklejoną).
       g.rect(left ? edge - 3 : edge, b.y, 3, b.h).fill({ color: P.ink, alpha: 0.9 });
       return;
@@ -126,7 +127,7 @@ export function drawBlock(g: Graphics, b: Block, P: typeof SURFACE = SURFACE, te
       }
     }
     // Szew między odcinkami ściany (inny materiał zaczyna się wyraźnie).
-    g.rect(band, b.y, W, 2).fill({ color: P.ink, alpha: 0.55 });
+    if (seamBelow) g.rect(band, b.y + b.h - 2, W, 2).fill({ color: P.ink, alpha: 0.55 });
     return;
   }
 

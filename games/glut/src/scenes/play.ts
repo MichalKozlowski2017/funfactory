@@ -2318,7 +2318,7 @@ export class PlayScene extends Scene {
           under.addChild(sp);
           continue;
         }
-        drawBlock(g, b, look, this.wallSprites(under, b, look));
+        drawBlock(g, b, look, this.wallSprites(under, b, look), this.wallSeamBelow(b));
         continue;
       }
       const fv = new FeatureView(b, this.ledgeTex.get(b.feature) ?? null);
@@ -2360,6 +2360,18 @@ export class PlayScene extends Scene {
       this.powerViews.set(p.id, bubble);
       this.candyLayer.addChild(bubble);
     }
+  }
+
+  /** Czy pod odcinkiem ściany zaczyna się inny materiał (albo inny świat): tylko tam rysujemy szew. */
+  private wallSeamBelow(b: Block): boolean {
+    const left = b.x < 0;
+    const bottom = b.y + b.h;
+    const below = this.run.shaft.blocks.find(
+      (o) => o !== b && (o.x < 0) === left && o.w <= SHAFT.width && Math.abs(o.y - bottom) < 1 && (left ? o.x < 0 : o.x >= SHAFT.width - SHAFT.wall),
+    );
+    if (!below) return false;
+    const biome = (y: number) => biomeIndex(metersAt(y));
+    return below.surface !== b.surface || biome(below.y + below.h / 2) !== biome(b.y + b.h / 2);
   }
 
   /** Pas ściany z tekstury (lód, lukier w kolorze świata, karmel z kolcami). Zwraca, czy się udało. */
