@@ -119,7 +119,7 @@ export const ACHIEVEMENTS: AchievementDef[] = [
   a('s15', 'Szał', 'Seria ×15', 'streak', 15, 600),
   a('s20', 'Cukrowy szał', 'Seria ×20', 'streak', 20, 1000, 'prism'),
   a('air3', 'Trzy oddechy', '3 skoki w jednym locie', 'airJumps', 3, 150),
-  a('air6', 'Akrobata', '6 skoków w jednym locie', 'airJumps', 6, 500),
+  a('air6', 'Akrobata', '6 skoków w jednym locie (z drugim oddechem)', 'airJumps', 6, 500),
   a('combo4', 'Łasuch', '4 cukierki w jednym skoku', 'airCombo', 4, 200),
   a('combo6', 'Żarłok', '6 cukierków w jednym skoku', 'airCombo', 6, 600),
   a('rescue1', 'Na ostatnią chwilę', 'Uratuj się skokiem w locie', 'rescues', 1, 100),

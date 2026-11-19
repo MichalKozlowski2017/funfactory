@@ -1682,8 +1682,8 @@ export class PlayScene extends Scene {
       const r = 300 * (0.92 + 0.08 * Math.sin(this.time * 4));
       g.circle(0, 0, r).stroke({ color: POWER_INFO.magnet.color, width: 3, alpha: 0.25 });
     }
-    if (s.state === 'flying' && run.timers.rocket <= 0 && !run.over) {
-      // Skrzydełka: wielkość = siła następnego skoku w locie (kurczą się z każdym skokiem), złote z drugim oddechem.
+    if (s.state === 'flying' && run.timers.rocket <= 0 && !run.over && run.airJumpsLeft > 0) {
+      // Skrzydełka: wielkość = siła następnego skoku w locie (kurczą się z każdym skokiem, znikają po ostatnim), złote z drugim oddechem.
       const breath = run.timers.breath > 0;
       const k = airPower(run.airJumps, breath) / AIR.power;
       const flap = Math.sin(this.time * (12 + run.airJumps * 3)) * 0.25;

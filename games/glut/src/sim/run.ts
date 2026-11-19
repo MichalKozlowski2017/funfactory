@@ -17,8 +17,8 @@ export const POWER = {
 } as const;
 
 /**
- * Skoki w locie: bez limitu, ale każdy kolejny w tym samym locie słabszy (`decay`), po lądowaniu
- * siła wraca. Dzięki temu seria skoków ratuje i wynosi wyżej, ale nie zastępuje półek.
+ * Skoki w locie: najwyżej `max` w jednym locie (drugi oddech znosi limit), każdy kolejny słabszy
+ * (`decay`), po lądowaniu albo odbiciu od galaretki limit i siła wracają. Dzięki temu seria skoków ratuje i wynosi wyżej, ale nie zastępuje półek.
  * Nagrody po bezpiecznym lądowaniu: akrobacja (wyżej niż start) = liczba skoków,
  * ratunek (skok przy opadaniu, gdy syrop był blisko) = liczba skoków + 1. Obie z limitem.
  */
@@ -27,6 +27,8 @@ export const AIR = {
   power: 0.6,
   /** Mnożnik siły każdego kolejnego skoku w tym samym locie (drugi oddech go wyłącza). */
   decay: 0.8,
+  /** Ile skoków w jednym locie (bez drugiego oddechu). */
+  max: 3,
   rescueGap: 500,
   maxReward: 6,
 } as const;
@@ -149,7 +151,13 @@ export class Run {
   get canAim(): boolean {
     const s = this.world.slime;
     if (this.over || this.timers.rocket > 0) return false;
-    return s.state === 'stuck' || s.state === 'flying';
+    if (s.state === 'stuck') return true;
+    return s.state === 'flying' && this.airJumpsLeft > 0;
+  }
+
+  /** Ile skoków w locie zostało (Infinity z drugim oddechem). */
+  get airJumpsLeft(): number {
+    return this.timers.breath > 0 ? Infinity : Math.max(0, AIR.max - this.airJumps);
   }
 
   /** Prędkość strzału z uwzględnieniem słabszego skoku w locie (do celowania i przewidywania toru). */
@@ -161,6 +169,7 @@ export class Run {
   launch(vx: number, vy: number): boolean {
     if (this.over || this.timers.rocket > 0) return false;
     const inAir = this.world.slime.state === 'flying';
+    if (inAir && this.airJumpsLeft <= 0) return false;
     ({ vx, vy } = this.shotVelocity(vx, vy));
     const s = this.world.slime;
     const falling = s.vy > 0 && this.syrupY - s.y < AIR.rescueGap;

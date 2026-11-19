@@ -232,7 +232,7 @@ export const EN_DATA = {
     s15: ['Frenzy', 'Streak ×15'],
     s20: ['Sugar rush', 'Streak ×20'],
     air3: ['Three breaths', '3 jumps in one flight'],
-    air6: ['Acrobat', '6 jumps in one flight'],
+    air6: ['Acrobat', '6 jumps in one flight (with Second breath)'],
     combo4: ['Sweet tooth', '4 candies in one jump'],
     combo6: ['Glutton', '6 candies in one jump'],
     rescue1: ['Just in time', 'Save yourself with a mid-air jump'],

@@ -67,12 +67,12 @@ describe('glue', () => {
 });
 
 describe('air jump', () => {
-  it('is unlimited, but every next jump in the same flight is weaker', () => {
+  it('every next jump in the same flight is weaker', () => {
     const run = new Run(5);
     run.launch(0, -1500);
     run.step(1 / 60);
     const vys: number[] = [];
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < AIR.max; i++) {
       expect(run.canAim).toBe(true);
       expect(run.launch(0, -1000)).toBe(true);
       vys.push(run.slime.vy);
@@ -90,6 +90,17 @@ describe('air jump', () => {
       run.launch(0, -1000);
       expect(run.slime.vy).toBeCloseTo(-1000 * airPower(0, true));
     }
+  });
+
+  it('limits air jumps per flight unless breath is active', () => {
+    const run = new Run(5);
+    run.launch(0, -1500);
+    run.step(1 / 60);
+    for (let i = 0; i < AIR.max; i++) expect(run.launch(0, -1000)).toBe(true);
+    expect(run.canAim).toBe(false);
+    expect(run.launch(0, -1000)).toBe(false);
+    run.activate('breath');
+    expect(run.launch(0, -1000)).toBe(true);
   });
 
   it('rewards a rescue: jumps while falling near the syrup, then land', () => {
