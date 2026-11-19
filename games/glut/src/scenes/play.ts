@@ -3,6 +3,7 @@ import { circle, defs, ellipse, hexToNumber, palettes, path, radialGradient, svg
 import { ads, gameServices, haptics, SaveStore, Spring, type SynthLayer } from '@funfactory/core';
 import { ADS } from '../ads-config.ts';
 import { GAME_SERVICES } from '../game-services-config.ts';
+import { achDesc, itemName as trItemName, biomeName, biomeTip, candies, controlName, detectLang, formatDay, lang, powerName, setLang, t } from '../i18n.ts';
 import { AdPolicy } from '../sim/ad-policy.ts';
 import { Score } from '../fx/score.ts';
 import {
@@ -23,13 +24,13 @@ import { fallbackIcon, POWER_INFO, POWER_KINDS, PowerBubble, PowerHud } from '..
 import { FEATURE_SFX, POWER_SFX, SFX, STREAK_SFX } from '../fx/sfx.ts';
 import { FEATURE_COLORS, FeatureView } from '../fx/features.ts';
 import { hudText, installHudFont } from '../fx/hud-font.ts';
-import { candyWord, milestoneBanner, rainbow, StreakHud, streakTier } from '../fx/streak-fx.ts';
+import { milestoneBanner, rainbow, StreakHud, streakTier } from '../fx/streak-fx.ts';
 import { bodyScale, bodySprite, SlimeFace, slimeTextures, type SlimeTextures } from '../fx/slime-art.ts';
 import { drawBlock, SURFACE } from '../fx/surfaces.ts';
 import { BIOME_LOOKS, mixColor, type BiomeLook } from '../fx/biome-look.ts';
 import { biomeBlend, biomeIndex, BIOMES, metersAt } from '../sim/biomes.ts';
 import { botCanShoot, chooseShot, type BotShot } from '../sim/bot.ts';
-import { CONTROL_MODES, CONTROL_NAMES, dragToTap, tapToDrag, type ControlMode } from '../sim/controls.ts';
+import { CONTROL_MODES, dragToTap, tapToDrag, type ControlMode } from '../sim/controls.ts';
 import { launchVelocity, PHYS, type Block } from '../sim/physics.ts';
 import { AIR, airPower, Run, STREAK, type RunStep } from '../sim/run.ts';
 import { SHAFT, type Candy, type PowerKind, type PowerUp } from '../sim/shaft.ts';
@@ -233,6 +234,8 @@ export class PlayScene extends Scene {
   private perfText: Text | null = null;
   private perfIn = 0;
   private versionTaps: number[] = [];
+  /** Język wybrany w ustawieniach (null = jak w telefonie). */
+  private langPref: 'pl' | 'en' | null = null;
   /** Stan sprzed ostatniego kroku fizyki: rysujemy pozycję pośrednią (płynny ruch przy nierównych klatkach). */
   private readonly prev = { x: 0, y: 0, syrup: 0 };
   private readonly shown = { x: 0, y: 0, syrup: 0 };
@@ -263,6 +266,10 @@ export class PlayScene extends Scene {
     this.trailId = saved.trail;
     this.accId = saved.acc;
     this.daily = saved.daily;
+    this.langPref = saved.lang;
+    // `?lang=en` / `?lang=pl` wymusza język (playtesty, zrzuty do sklepów).
+    const forced = new URLSearchParams(location.search).get('lang');
+    setLang(forced === 'pl' || forced === 'en' ? forced : (saved.lang ?? detectLang()));
     this.stats = saved.stats;
     this.earned = saved.achievements;
     this.controls = saved.controls;
@@ -571,7 +578,7 @@ export class PlayScene extends Scene {
       this.timerText.text = formatTime(sec);
     }
     this.trackTimes();
-    this.bestText.text = `rekord ${this.best} m`;
+    this.bestText.text = t('best', { m: this.best });
     this.candyText.text = `${Math.max(0, this.run.candies - this.flying)}`;
     this.streakHud.tick(dt);
 
@@ -587,7 +594,7 @@ export class PlayScene extends Scene {
     const below = this.run.syrupY - (this.camera.y + view.height);
     this.syrupWarn.visible = this.run.started && !this.run.over && below > 0;
     if (this.syrupWarn.visible) {
-      this.syrupWarn.text = `▼ syrop ${Math.ceil(below / 100)} m`;
+      this.syrupWarn.text = t('syrup', { m: Math.ceil(below / 100) });
       this.syrupWarn.alpha = below < 600 ? 0.6 + 0.4 * Math.sin(this.time * 12) : 0.7;
     }
   }
@@ -631,6 +638,7 @@ export class PlayScene extends Scene {
       sfx: this.sfxOn,
       vibration: this.vibrationOn,
       daily: this.daily,
+      lang: this.langPref,
       stats: this.stats,
       achievements: this.earned,
     };
@@ -682,7 +690,7 @@ export class PlayScene extends Scene {
     void gameServices.show().then((shown) => {
       if (shown) return;
       const ios = /iPhone|iPad/.test(navigator.userAgent);
-      this.notice(ios ? 'Zaloguj się do Game Center w Ustawieniach iPhone’a' : 'Ranking działa w aplikacji z kontem Google Play Games');
+      this.notice(ios ? t('loginIos') : t('loginAndroid'));
     });
   }
 
@@ -768,7 +776,7 @@ export class PlayScene extends Scene {
     let itemName: string | null = null;
     if (d.item && !this.owned.includes(d.item)) {
       this.owned = [...this.owned, d.item];
-      itemName = ITEMS.find((i) => i.id === d.item)?.name ?? null;
+      itemName = trItemName(d.item);
     }
     this.toasts.push(d, itemName);
   }
@@ -778,8 +786,8 @@ export class PlayScene extends Scene {
     const today = dayKey(new Date());
     const rec = this.daily.find((r) => r.day === today);
     const streak = dailyStreak(this.daily, today);
-    const days = streak >= 2 ? ` · seria ${streak} dni` : '';
-    return rec ? `dziś: ${rec.best} m (prób: ${rec.tries})${days}` : `ta sama studnia dla wszystkich${days}`;
+    const days = streak >= 2 ? t('dailyStreak', { n: streak }) : '';
+    return rec ? t('dailyToday', { m: rec.best, n: rec.tries }) + days : t('dailySame') + days;
   }
 
   /** Wyzwanie dnia: nowa studnia z seedem z daty i od razu gra. */
@@ -797,16 +805,16 @@ export class PlayScene extends Scene {
 
   private dailyBanner(): void {
     const view = this.game.view;
-    const t = this.makeText(44, '#ffb84d');
-    t.anchor.set(0.5);
-    t.text = `Wyzwanie dnia · ${this.dailyDay.split('-').reverse().join('.')}`;
-    t.position.set(view.width / 2, view.safe.top + 230);
-    this.fx.addChild(t);
-    void popIn(this.tweens, t, 0.35);
-    this.timers.after(2.2, () => this.tweens.to(t, { alpha: 0 }, { duration: 0.5 }));
+    const banner = this.makeText(44, '#ffb84d');
+    banner.anchor.set(0.5);
+    banner.text = `${t('daily')} · ${formatDay(this.dailyDay)}`;
+    banner.position.set(view.width / 2, view.safe.top + 230);
+    this.fx.addChild(banner);
+    void popIn(this.tweens, banner, 0.35);
+    this.timers.after(2.2, () => this.tweens.to(banner, { alpha: 0 }, { duration: 0.5 }));
     this.timers.after(2.8, () => {
-      this.tweens.killOf(t);
-      t.destroy();
+      this.tweens.killOf(banner);
+      banner.destroy();
     });
   }
 
@@ -822,7 +830,8 @@ export class PlayScene extends Scene {
       rainbow: new Set(SKINS.filter((k) => k.rainbow).map((k) => k.id)),
       unlockName: (id) => {
         const unlock = ITEMS.find((i) => i.id === id)?.unlock;
-        return unlock ? (ACHIEVEMENTS.find((d) => d.id === unlock)?.desc ?? null) : null;
+        const def = unlock ? ACHIEVEMENTS.find((d) => d.id === unlock) : undefined;
+        return def ? achDesc(def) : null;
       },
       candyTex: this.candyTex,
       pixelRatio: this.game.pixelRatio,
@@ -1028,12 +1037,12 @@ export class PlayScene extends Scene {
   }
 
   private hintText(kind: 'start' | 'air'): string {
-    const texts: Record<ControlMode, [string, string]> = {
-      drag: ['Przeciągnij w dół i puść', 'W locie przeciągnij jeszcze raz!'],
-      swipe: ['Przesuń palcem w stronę skoku', 'W locie przesuń jeszcze raz!'],
-      tap: ['Stuknij tam, gdzie chcesz skoczyć', 'W locie stuknij jeszcze raz!'],
-    };
-    return texts[this.controls][kind === 'start' ? 0 : 1];
+    const keys = {
+      drag: ['hintDragStart', 'hintDragAir'],
+      swipe: ['hintSwipeStart', 'hintSwipeAir'],
+      tap: ['hintTapStart', 'hintTapAir'],
+    } as const;
+    return t(keys[this.controls][kind === 'start' ? 0 : 1]);
   }
 
   // --- ustawienia ---
@@ -1048,7 +1057,7 @@ export class PlayScene extends Scene {
       onVersionTap: () => this.tapVersion(),
     });
     this.refreshSettings();
-    this.settings.setVersionNote(this.perfText ? 'licznik wł.' : '');
+    this.settings.setVersionNote(this.perfText ? t('perfOn') : '');
     this.settings.layout(this.game.view, this.bannerReserve);
     this.overlay.addChild(this.settings);
     this.settings.alpha = 0;
@@ -1084,7 +1093,7 @@ export class PlayScene extends Scene {
       this.perfText.destroy();
       this.perfText = null;
     }
-    this.settings?.setVersionNote(this.perfText ? 'licznik wł.' : '');
+    this.settings?.setVersionNote(this.perfText ? t('perfOn') : '');
   }
 
   private updatePerf(dt: number): void {
@@ -1112,7 +1121,16 @@ export class PlayScene extends Scene {
     });
   }
 
-  private toggleSetting(key: 'music' | 'sfx' | 'vibration' | 'controls' | 'privacy'): void {
+  private toggleSetting(key: 'music' | 'sfx' | 'vibration' | 'controls' | 'lang' | 'privacy'): void {
+    if (key === 'lang') {
+      this.langPref = lang() === 'pl' ? 'en' : 'pl';
+      setLang(this.langPref);
+      void this.persist();
+      this.game.sound.synth(SFX.tap);
+      haptics.tap();
+      this.relocalize();
+      return;
+    }
     if (key === 'privacy') {
       this.game.sound.synth(SFX.tap);
       void ads.privacyOptions();
@@ -1131,6 +1149,24 @@ export class PlayScene extends Scene {
     void this.persist();
   }
 
+  /** Po zmianie języka: ekran startowy i ustawienia budujemy od nowa (teksty powstają przy tworzeniu). */
+  private relocalize(): void {
+    this.hint.text = this.hintText('start');
+    const settings = this.settings;
+    this.settings = null;
+    settings?.destroy({ children: true });
+    if (this.title) {
+      this.title.destroy({ children: true });
+      this.title = null;
+      this.showTitle();
+    }
+    if (settings) {
+      this.openSettings();
+      this.tweens.killOf(this.settings!);
+      this.settings!.alpha = 1;
+    }
+  }
+
   private applySettings(): void {
     this.game.sound.sfxMuted = !this.sfxOn;
     haptics.enabled = this.vibrationOn;
@@ -1138,7 +1174,7 @@ export class PlayScene extends Scene {
   }
 
   private refreshSettings(): void {
-    this.settings?.refresh({ music: this.musicOn, sfx: this.sfxOn, vibration: this.vibrationOn, controls: CONTROL_NAMES[this.controls] });
+    this.settings?.refresh({ music: this.musicOn, sfx: this.sfxOn, vibration: this.vibrationOn, controls: controlName(this.controls) });
   }
 
   private aim(x: number, y: number): void {
@@ -1227,7 +1263,7 @@ export class PlayScene extends Scene {
     haptics.success();
     this.sparks.burst(p.x, p.y, { count: 26, speed: [200, 600], life: [0.4, 0.8], scale: [0.6, 1.3], endScale: 0.2, colors: [info.color, 0xffffff, 0xffd166] });
     this.shaker.add(p.kind === 'rocket' ? 0.5 : 0.2);
-    this.floatText(p.x, p.y - 70, `${info.name}!`, info.css);
+    this.floatText(p.x, p.y - 70, `${powerName(p.kind)}!`, info.css);
     this.hatSwing.kick(5);
   }
 
@@ -1428,7 +1464,7 @@ export class PlayScene extends Scene {
       haptics.heavy();
       this.shaker.add(0.4);
       this.sparks.burst(s.x, s.y, { count: 30, speed: [200, 600], life: [0.3, 0.6], scale: [0.6, 1.2], colors: [POWER_INFO.shell.color, 0xffffff] });
-      this.floatText(s.x, s.y - 60, 'Odbite!', POWER_INFO.shell.css);
+      this.floatText(s.x, s.y - 60, t('bounced'), POWER_INFO.shell.css);
     }
     if (r.bounced) this.stats.bounces++;
     if (r.crumbled) this.stats.crumbles++;
@@ -1582,7 +1618,7 @@ export class PlayScene extends Scene {
       this.game.sound.synth(STREAK_SFX.rescue);
       haptics.success();
       this.shaker.add(0.25);
-      this.floatText(s.x, s.y - 80, `Ratunek${jumps > 1 ? ` ×${jumps}` : ''}! +${reward}`, '#8ee3a1');
+      this.floatText(s.x, s.y - 80, `${t('rescue')}${jumps > 1 ? ` ×${jumps}` : ''}! +${reward}`, '#8ee3a1');
       const ring = new Graphics().circle(0, 0, 40).stroke({ color: 0x8ee3a1, width: 8 });
       ring.position.set(s.x, s.y);
       this.world.addChild(ring);
@@ -1597,7 +1633,7 @@ export class PlayScene extends Scene {
     } else {
       this.game.sound.synth(STREAK_SFX.acrobat);
       haptics.tap();
-      this.floatText(s.x, s.y - 80, `Akrobacja${jumps > 1 ? ` ×${jumps}` : ''}! +${reward}`, '#c8f5ff');
+      this.floatText(s.x, s.y - 80, `${t('acrobat')}${jumps > 1 ? ` ×${jumps}` : ''}! +${reward}`, '#c8f5ff');
       this.sparks.burst(s.x, s.y, { count: 14, speed: [150, 420], life: [0.3, 0.6], scale: [0.4, 1], colors: [0xffffff, 0xc8f5ff] });
     }
     this.flyCandies(reward, 0.15);
@@ -1608,7 +1644,7 @@ export class PlayScene extends Scene {
     const s = this.run.slime;
     this.game.sound.synth(STREAK_SFX.combo);
     this.score.trick(count);
-    this.floatText(s.x, s.y - 70, `Combo ×${count}! +${reward}`, '#ffd166');
+    this.floatText(s.x, s.y - 70, `${t('combo')} ×${count}! +${reward}`, '#ffd166');
     this.flyCandies(reward, 0.1);
   }
 
@@ -1740,24 +1776,24 @@ export class PlayScene extends Scene {
     const dim = new Graphics();
     dim.label = 'dim';
     const title = this.makeText(52, pal.surface);
-    title.text = cause === 'syrup' ? 'Syrop cię dopadł!' : 'Au, kolce!';
+    title.text = cause === 'syrup' ? t('overSyrup') : t('overSpikes');
     const score = this.makeText(110, '#ffffff');
     score.text = `${meters} m`;
     const clock = this.makeText(30, '#d9ccff');
-    clock.text = `czas ${formatTime(this.run.time)}`;
+    clock.text = t('time', { t: formatTime(this.run.time) });
     const sub = this.makeText(34, record ? pal.accent : pal.surface);
-    sub.text = record ? 'Nowy rekord!' : `rekord ${this.best} m`;
+    sub.text = record ? t('newRecord') : t('best', { m: this.best });
     const daily = this.dailyResult;
     if (daily) {
       // Wyzwanie dnia: liczy się najlepszy wynik dnia.
       sub.style.fill = daily.improved ? '#ffb84d' : pal.surface;
-      sub.text = daily.improved && daily.record.tries > 1 ? `Najlepszy dziś! (próba ${daily.record.tries})` : `wyzwanie dnia: najlepiej ${daily.record.best} m`;
-      if (record) sub.text = `Nowy rekord! · dziś ${daily.record.best} m`;
+      sub.text = daily.improved && daily.record.tries > 1 ? t('bestToday', { n: daily.record.tries }) : t('dailyBest', { m: daily.record.best });
+      if (record) sub.text = t('recordToday', { m: daily.record.best });
     }
     const sweets = this.makeText(30, pal.surface);
-    sweets.text = `+${this.run.candies} ${candyWord(this.run.candies)} (razem ${this.bank + this.run.candies})`;
+    sweets.text = t('candiesRun', { n: this.run.candies, candies: candies(this.run.candies), total: this.bank + this.run.candies });
     const rhythm = this.makeText(28, '#ffd166');
-    rhythm.text = this.run.bestStreak >= 2 ? `najlepszy rytm ×${this.run.bestStreak}${this.run.bonus ? ` · premie +${this.run.bonus}` : ''}` : '';
+    rhythm.text = this.run.bestStreak >= 2 ? t('rhythmBest', { n: this.run.bestStreak }) + (this.run.bonus ? t('bonus', { n: this.run.bonus }) : '') : '';
     rhythm.position.set(0, 76);
     for (const t of [title, score, clock, sub, sweets, rhythm]) t.anchor.set(0.5);
     title.position.set(0, -260);
@@ -1766,7 +1802,7 @@ export class PlayScene extends Scene {
     sub.position.set(0, -22);
     sweets.position.set(0, 30);
     const again = new Button({
-      label: 'Jeszcze raz',
+      label: t('again'),
       color: pal.accent,
       width: 380,
       resolution: this.game.pixelRatio,
@@ -1779,7 +1815,7 @@ export class PlayScene extends Scene {
     again.position.set(0, 170);
     this.againButton = again;
     const menu = new Button({
-      label: 'Menu',
+      label: t('menu'),
       color: '#9b8cff',
       width: 380,
       height: 90,
@@ -2165,7 +2201,7 @@ export class PlayScene extends Scene {
     const root = new Container();
     const name = this.makeText(60, '#ffffff');
     name.anchor.set(0.5);
-    name.text = BIOMES[index]!.name;
+    name.text = biomeName(index);
     name.style.dropShadow = { color: '#120a1e', distance: 6, angle: Math.PI / 2, blur: 0, alpha: 1 };
     const fit = Math.min(1, (view.width - 60) / name.width);
     name.scale.set(fit);
@@ -2174,7 +2210,7 @@ export class PlayScene extends Scene {
     sub.text = `${index * 100} m`;
     sub.y = -62;
     root.addChild(sub, name);
-    const tipText = BIOMES[index]!.tip;
+    const tipText = biomeTip(index);
     if (tipText) {
       const tip = this.makeText(30, '#ffffff');
       tip.anchor.set(0.5);

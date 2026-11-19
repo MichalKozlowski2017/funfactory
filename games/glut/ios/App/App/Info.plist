@@ -6,6 +6,11 @@
 	<string>$(CAPACITOR_DEBUG)</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>en</string>
+		<string>pl</string>
+	</array>
 	<key>GADApplicationIdentifier</key>
 	<!-- Testowe ID AdMob. Przed wydaniem: prawdziwe ID aplikacji z konta AdMob (docs/release.md). -->
 	<string>ca-app-pub-3940256099942544~1458002511</string>

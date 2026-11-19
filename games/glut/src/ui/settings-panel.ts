@@ -1,11 +1,12 @@
 import { Container, Graphics, Text } from 'pixi.js';
 import { hexToNumber, palettes } from '@funfactory/art';
 import { Button, type View } from '@funfactory/kit2d';
+import { t } from '../i18n.ts';
 
 const pal = palettes.candy;
 const FONT = 'system-ui, -apple-system, sans-serif';
 
-type Key = 'music' | 'sfx' | 'vibration' | 'controls' | 'privacy';
+type Key = 'music' | 'sfx' | 'vibration' | 'controls' | 'lang' | 'privacy';
 
 export interface SettingsState {
   music: boolean;
@@ -37,18 +38,18 @@ export class SettingsPanel extends Container {
     super();
     this.dim.eventMode = 'static';
     this.title = new Text({
-      text: 'Ustawienia',
+      text: t('settings'),
       style: { fontFamily: FONT, fontSize: 56, fontWeight: '800', fill: pal.surface, stroke: { color: pal.ink, width: 6, join: 'round' } },
       resolution: o.pixelRatio,
       anchor: 0.5,
     });
-    for (const key of ['music', 'sfx', 'vibration', 'controls', 'privacy'] as const) {
-      const color = key === 'controls' ? '#5fc8e8' : key === 'privacy' ? '#6e6488' : '#9b8cff';
+    for (const key of ['music', 'sfx', 'vibration', 'controls', 'lang', 'privacy'] as const) {
+      const color = key === 'controls' || key === 'lang' ? '#5fc8e8' : key === 'privacy' ? '#6e6488' : '#9b8cff';
       const button = new Button({ label: '', color, width: 460, height: key === 'privacy' ? 80 : 96, fontSize: key === 'privacy' ? 28 : 34, resolution: o.pixelRatio, onTap: () => o.onToggle(key) });
       this.rows.push({ key, button });
       this.body.addChild(button);
     }
-    this.close = new Button({ label: 'Gotowe', color: pal.accent, width: 320, height: 100, fontSize: 40, resolution: o.pixelRatio, onTap: o.onClose });
+    this.close = new Button({ label: t('done'), color: pal.accent, width: 320, height: 100, fontSize: 40, resolution: o.pixelRatio, onTap: o.onClose });
     this.version = new Text({
       text: `Glut ${__APP_VERSION__}`,
       style: { fontFamily: FONT, fontSize: 22, fill: '#9a8fa8' },
@@ -68,27 +69,29 @@ export class SettingsPanel extends Container {
   }
 
   refresh(s: SettingsState): void {
-    const on = (v: boolean) => (v ? 'wł.' : 'wył.');
+    const on = (v: boolean) => (v ? t('on') : t('off'));
     for (const r of this.rows) {
       const label =
         r.key === 'music'
-          ? `Muzyka: ${on(s.music)}`
+          ? t('music', { v: on(s.music) })
           : r.key === 'sfx'
-            ? `Dźwięki: ${on(s.sfx)}`
+            ? t('sfx', { v: on(s.sfx) })
             : r.key === 'vibration'
-              ? `Wibracje: ${on(s.vibration)}`
+              ? t('vibration', { v: on(s.vibration) })
               : r.key === 'controls'
-                ? `Sterowanie: ${s.controls}`
-                : 'Prywatność reklam';
+                ? t('controls', { v: s.controls })
+                : r.key === 'lang'
+                  ? t('language')
+                  : t('privacy');
       r.button.setLabel(label);
-      r.button.alpha = r.key === 'controls' || r.key === 'privacy' || s[r.key] ? 1 : 0.6;
+      r.button.alpha = r.key === 'controls' || r.key === 'privacy' || r.key === 'lang' || s[r.key] ? 1 : 0.6;
     }
   }
 
   /** `bottom`: miejsce zajęte od dołu (baner reklamy). */
   layout(view: View, bottom = 0): void {
     this.dim.clear().rect(0, 0, view.width, view.height).fill({ color: 0x140c22, alpha: 0.75 });
-    const h = 940;
+    const h = 1060;
     const free = view.height - bottom - view.safe.top;
     const top = view.safe.top + Math.max(10, (free - h) / 2);
     this.panel.clear().roundRect(50, top, view.width - 100, h, 40).fill({ color: 0x2b1e3f }).stroke({ color: hexToNumber(pal.ink), width: 6 });

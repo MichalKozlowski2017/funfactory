@@ -4,6 +4,7 @@ import type { Tweens } from '@funfactory/core';
 import { Button, popIn, type View } from '@funfactory/kit2d';
 import { itemsOf, KINDS, type ItemKind, type Save } from '../sim/shop.ts';
 import { rainbow } from '../fx/streak-fx.ts';
+import { itemName, kindName, t } from '../i18n.ts';
 
 const pal = palettes.candy;
 const FONT = 'system-ui, -apple-system, sans-serif';
@@ -56,14 +57,14 @@ export class ShopPanel extends Container {
     this.opts = opts;
     this.dim.eventMode = 'static'; // blokuje dotyk pod spodem
     this.title = this.text(56, pal.surface);
-    this.title.text = 'Szafa';
+    this.title.text = t('wardrobe');
     this.bank = this.text(40, pal.surface);
     this.bank.anchor.set(0, 0.5);
     this.icon = new Sprite({ texture: opts.candyTex, anchor: 0.5 });
     this.icon.scale.set(52 / Math.max(opts.candyTex.width, opts.candyTex.height));
-    this.close = new Button({ label: 'Gotowe', color: pal.accent, width: 320, height: 96, fontSize: 40, resolution: opts.pixelRatio, onTap: opts.onClose });
-    for (const { kind, name } of KINDS) {
-      const button = new Button({ label: name, color: '#6e6488', width: 158, height: 88, fontSize: 28, radius: 22, resolution: opts.pixelRatio, onTap: () => this.show(kind) });
+    this.close = new Button({ label: t('done'), color: pal.accent, width: 320, height: 96, fontSize: 40, resolution: opts.pixelRatio, onTap: opts.onClose });
+    for (const { kind } of KINDS) {
+      const button = new Button({ label: kindName(kind), color: '#6e6488', width: 158, height: 88, fontSize: 28, radius: 22, resolution: opts.pixelRatio, onTap: () => this.show(kind) });
       this.tabs.push({ kind, button });
       this.body.addChild(button);
     }
@@ -86,7 +87,7 @@ export class ShopPanel extends Container {
       if (tex) art.scale.set(Math.min(170 / tex.width, (h * 0.42) / tex.height));
       art.y = -h * 0.14;
       const name = this.text(30, pal.surface);
-      name.text = item.name;
+      name.text = itemName(item.id);
       name.y = h * 0.2;
       const state = this.text(26, pal.accent);
       state.y = h * 0.36;
@@ -115,7 +116,7 @@ export class ShopPanel extends Container {
       const worn = save[item.kind] === c.id;
       const locked = !owned && !!item.unlock;
       const affordable = save.candies >= item.price;
-      c.state.text = worn ? 'Założone ✓' : owned ? 'Załóż' : locked ? '🔒 osiągnięcie' : `${item.price} cukierków`;
+      c.state.text = worn ? t('worn') : owned ? t('wear') : locked ? t('locked') : t('price', { n: item.price });
       c.state.style.fill = worn ? '#8ee3a1' : owned ? pal.surface : locked ? '#ffd166' : affordable ? pal.accent : '#9a8fa8';
       c.art.alpha = locked ? 0.45 : 1;
       const fill = worn ? 0x3d5a4a : locked ? 0x2f2444 : 0x3a2c55;
@@ -128,7 +129,7 @@ export class ShopPanel extends Container {
     const c = this.cards.find((x) => x.id === id);
     if (!c) return;
     const unlock = this.opts.unlockName(id);
-    c.state.text = unlock ? `za: ${unlock}` : `brakuje ${missing}`;
+    c.state.text = unlock ? t('unlockFor', { what: unlock }) : t('missing', { n: missing });
     c.state.style.fill = unlock ? '#ffd166' : '#ff6f8f';
     if (c.state.width > CARD_W - 20) c.state.scale.set((CARD_W - 20) / c.state.width);
     const x = c.view.x;

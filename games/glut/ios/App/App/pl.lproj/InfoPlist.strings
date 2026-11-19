@@ -1,0 +1,2 @@
+/* Pytanie systemu o śledzenie (ATT), po polsku. */
+"NSUserTrackingUsageDescription" = "Pozwala dopasować reklamy, dzięki którym Glut jest darmowy. Gra działa tak samo bez tej zgody.";

@@ -4,6 +4,7 @@ import { Button, type View } from '@funfactory/kit2d';
 import { ACHIEVEMENTS, formatTime, LOWER_IS_BETTER, type Progress } from '../sim/achievements.ts';
 import { ITEMS } from '../sim/shop.ts';
 import { trophy } from './achievement-toast.ts';
+import { achDesc, achName, itemName, t } from '../i18n.ts';
 
 const pal = palettes.candy;
 const FONT = 'system-ui, -apple-system, sans-serif';
@@ -34,13 +35,13 @@ export class AchievementsPanel extends Container {
       });
     this.dim.eventMode = 'static';
     this.title = text(52, pal.surface);
-    this.title.text = 'Osiągnięcia';
+    this.title.text = t('achievements');
     this.title.anchor.set(0.5);
     this.count = text(30, '#ffd166');
     this.count.anchor.set(0.5);
     const done = ACHIEVEMENTS.filter((d) => o.earned.includes(d.id)).length;
     this.count.text = `${done} / ${ACHIEVEMENTS.length}`;
-    this.close = new Button({ label: 'Gotowe', color: pal.accent, width: 320, height: 100, fontSize: 40, resolution: o.pixelRatio, onTap: o.onClose });
+    this.close = new Button({ label: t('done'), color: pal.accent, width: 320, height: 100, fontSize: 40, resolution: o.pixelRatio, onTap: o.onClose });
 
     ACHIEVEMENTS.forEach((d, i) => {
       const got = o.earned.includes(d.id);
@@ -53,11 +54,11 @@ export class AchievementsPanel extends Container {
       const cup = trophy(60, got ? 0xffd166 : 0x6e6488);
       cup.position.set(-252, (ROW_H - 14) / 2);
       const name = text(32, got ? '#ffffff' : '#d8cdea');
-      name.text = d.name;
+      name.text = achName(d);
       name.position.set(-206, 12);
       const desc = text(24, got ? '#cfeedd' : '#a99cc0', '700');
       const item = d.item ? ITEMS.find((x) => x.id === d.item) : null;
-      desc.text = `${d.desc}${item ? ` · ${item.name}` : ''}`;
+      desc.text = `${achDesc(d)}${item ? ` · ${itemName(item.id)}` : ''}`;
       desc.position.set(-206, 54);
       const reward = text(28, got ? '#8ee3a1' : '#ffd166');
       reward.text = got ? '✓' : `+${d.reward}`;

@@ -1,0 +1,2 @@
+/* Pytanie systemu o śledzenie (ATT), po angielsku. */
+"NSUserTrackingUsageDescription" = "Lets us show ads that fit you, which keep Glut free. The game works the same without it.";

@@ -3,6 +3,7 @@ import type { Timers, Tweens } from '@funfactory/core';
 import { popIn } from '@funfactory/kit2d';
 import type { AchievementDef } from '../sim/achievements.ts';
 import { hudText } from '../fx/hud-font.ts';
+import { achName, t } from '../i18n.ts';
 
 /** Puchar z kodu (Graphics): bez tekstur, rysuje się raz. */
 export function trophy(size: number, color = 0xffd166): Graphics {
@@ -69,10 +70,10 @@ export class AchievementToasts extends Container {
     const cup = trophy(78);
     cup.position.set(-w / 2 + 62, h / 2 + 4);
     const head = hudText(26, '#ffd166');
-    head.text = 'Osiągnięcie!';
+    head.text = t('achievement');
     head.position.set(-w / 2 + 116, 16);
     const name = hudText(40, '#ffffff');
-    name.text = def.name;
+    name.text = achName(def);
     name.position.set(-w / 2 + 116, 46);
     const reward = hudText(34, '#ffffff');
     reward.text = `+${def.reward}`;
@@ -84,7 +85,7 @@ export class AchievementToasts extends Container {
     root.addChild(bg, cup, head, name, reward, icon);
     if (itemName) {
       const extra = hudText(28, '#8ee3a1');
-      extra.text = `Nowość w szafie: ${itemName}`;
+      extra.text = t('newInWardrobe', { item: itemName });
       extra.position.set(-w / 2 + 116, 104);
       root.addChild(extra);
     }

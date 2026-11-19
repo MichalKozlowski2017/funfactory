@@ -1,6 +1,7 @@
 import { Container, FillGradient, Graphics, Rectangle, Sprite, Text, type Texture } from 'pixi.js';
 import { palettes } from '@funfactory/art';
 import { Button, type View } from '@funfactory/kit2d';
+import { t } from '../i18n.ts';
 
 const pal = palettes.candy;
 const FONT = 'system-ui, -apple-system, sans-serif';
@@ -55,20 +56,20 @@ export class TitleOverlay extends Container {
     this.logo.style.stroke = { color: '#fff4f8', width: 16, join: 'round' };
     this.logo.style.dropShadow = { color: '#120a1e', distance: 10, angle: Math.PI / 2, blur: 0, alpha: 1 };
     this.prompt = text(40, pal.surface);
-    this.prompt.text = 'Dotknij, aby zacząć';
+    this.prompt.text = t('start');
     this.best = text(32, pal.accent);
     this.bank = text(36, pal.surface);
     // Do prawej, przed ikonką: dłuższe liczby rosną w lewo, a nie pod zaokrąglony róg ekranu.
     this.bank.anchor.set(1, 0.5);
     this.icon = new Sprite({ texture: o.candyTex, anchor: 0.5 });
     this.icon.scale.set(54 / Math.max(o.candyTex.width, o.candyTex.height));
-    this.daily = new Button({ label: 'Wyzwanie dnia', color: '#ffb84d', width: 420, height: 104, fontSize: 40, resolution: o.pixelRatio, onTap: o.onDaily });
+    this.daily = new Button({ label: t('daily'), color: '#ffb84d', width: 420, height: 104, fontSize: 40, resolution: o.pixelRatio, onTap: o.onDaily });
     this.dailyInfo = text(26, '#ffd9a0');
-    this.shop = new Button({ label: 'Szafa', color: '#9b8cff', width: 250, height: 96, fontSize: 38, resolution: o.pixelRatio, onTap: o.onShop });
-    this.trophies = new Button({ label: 'Osiągnięcia', color: '#e58bd0', width: 250, height: 96, fontSize: 34, resolution: o.pixelRatio, onTap: o.onAchievements });
+    this.shop = new Button({ label: t('wardrobe'), color: '#9b8cff', width: 250, height: 96, fontSize: 38, resolution: o.pixelRatio, onTap: o.onShop });
+    this.trophies = new Button({ label: t('achievements'), color: '#e58bd0', width: 250, height: 96, fontSize: 34, resolution: o.pixelRatio, onTap: o.onAchievements });
 
-    this.settings = new Button({ label: 'Ustawienia', color: '#5fc8e8', width: 250, height: 88, fontSize: 34, resolution: o.pixelRatio, onTap: o.onSettings });
-    this.ranking = new Button({ label: 'Ranking', color: '#7fcf9a', width: 250, height: 88, fontSize: 34, resolution: o.pixelRatio, onTap: o.onRanking });
+    this.settings = new Button({ label: t('settings'), color: '#5fc8e8', width: 250, height: 88, fontSize: 34, resolution: o.pixelRatio, onTap: o.onSettings });
+    this.ranking = new Button({ label: t('ranking'), color: '#7fcf9a', width: 250, height: 88, fontSize: 34, resolution: o.pixelRatio, onTap: o.onRanking });
 
     this.tap.eventMode = 'static';
     this.tap.on('pointertap', () => o.onStart());
@@ -76,7 +77,7 @@ export class TitleOverlay extends Container {
   }
 
   setStats(best: number, candies: number): void {
-    this.best.text = best > 0 ? `rekord ${best} m` : '';
+    this.best.text = best > 0 ? t('best', { m: best }) : '';
     this.bank.text = `${candies}`;
   }
 

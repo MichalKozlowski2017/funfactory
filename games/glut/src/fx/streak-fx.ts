@@ -3,6 +3,7 @@ import type { Timers, Tweens } from '@funfactory/core';
 import { popIn, pulse, setRestScale, type View } from '@funfactory/kit2d';
 import { STREAK } from '../sim/run.ts';
 import { hudText } from './hud-font.ts';
+import { candies, tierName } from '../i18n.ts';
 
 const FONT = 'system-ui, -apple-system, sans-serif';
 const INK = '#1e1530';
@@ -34,13 +35,6 @@ export function rainbow(time: number): number {
   return (f(5) << 16) | (f(3) << 8) | f(1);
 }
 
-/** Odmiana: 1 cukierek, 2–4 cukierki (bez 12–14), 5+ cukierków. */
-export function candyWord(n: number): string {
-  if (n === 1) return 'cukierek';
-  const d = n % 10;
-  const t = n % 100;
-  return d >= 2 && d <= 4 && (t < 12 || t > 14) ? 'cukierki' : 'cukierków';
-}
 
 function makeText(size: number, fill: string, pixelRatio: number, extra: Partial<TextStyleOptions> = {}): Text {
   const t = new Text({
@@ -85,7 +79,7 @@ export class StreakHud extends Container {
     }
     this.visible = true;
     const tier = streakTier(streak);
-    this.caption.text = `${tier.name} ×${streak}`;
+    this.caption.text = `${tierName(tier.level)} ×${streak}`;
     this.caption.tint = tier.color;
     this.drawPips(tier);
     void pulse(this.tweens, this, 0.22, 0.22);
@@ -168,13 +162,13 @@ export function milestoneBanner(
     dropShadow: { color: '#120a1e', distance: 8, angle: Math.PI / 2, blur: 0, alpha: 1 },
     fill: tier.css === '#ffffff' ? '#ff9ebb' : tier.css,
   });
-  title.text = `${tier.name} ×${o.streak}!`;
+  title.text = `${tierName(tier.level)} ×${o.streak}!`;
   const fit = Math.min(1, (view.width - 60) / title.width);
   setRestScale(title, fit);
   title.scale.set(fit);
 
   const sub = makeText(46, '#ffd166', o.pixelRatio);
-  sub.text = `+${o.reward} ${candyWord(o.reward)}`;
+  sub.text = `+${o.reward} ${candies(o.reward)}`;
   sub.y = 86;
 
   root.addChild(rays, title, sub);

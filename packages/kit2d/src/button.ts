@@ -51,6 +51,7 @@ export class Button extends Container {
     this.text = new Text({ text: this.opts.label, style, anchor: 0.5, resolution: this.opts.resolution ?? 2 });
     this.addChild(this.shadow, this.face);
     this.face.addChild(this.plate, this.text);
+    this.fit();
     this.draw();
 
     this.eventMode = 'static';
@@ -69,6 +70,14 @@ export class Button extends Container {
 
   setLabel(value: string): void {
     this.text.text = value;
+    this.fit();
+  }
+
+  /** Napis szerszy niż przycisk (np. inny język) zmniejsza się, zamiast wychodzić poza krawędź. */
+  private fit(): void {
+    this.text.scale.set(1);
+    const room = this.opts.width - 36;
+    if (this.text.width > room) this.text.scale.set(room / this.text.width);
   }
 
   /** Zmiana koloru (np. aktywna zakładka). */

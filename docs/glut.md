@@ -166,6 +166,10 @@ Cztery działy po 6 rzeczy, po jednej założonej z każdego (`sim/shop.ts`, gra
 
 38 osiągnięć (`sim/achievements.ts`): wysokości 50–700 m (każdy świat), na czas (100 m w 30 s, 200 m w minutę, 300 m w 1:30, 50 i 100 cukierków w pierwszej minucie, przetrwanie 2 i 5 minut; progi z pomiaru botem, czas gry, więc slow-motion nie oszukuje zegara), serie ×5–×20, skoki w locie, cukierki w jednym skoku, ratunki, odbicia od galaretki, pokruszone czekolady, wszystkie power-upy, liczba biegów (10/100/500), zebrane cukierki (1 tys. / 10 tys. / 50 tys.), wyzwanie dnia (pierwsze, 3 i 7 dni z rzędu), coś z każdego działu szafy. Nagrody w cukierkach (100–3000), cztery dają rzeczy do szafy. Liczniki w zapisie (`stats`), postęp w panelu (przycisk „Osiągnięcia” na ekranie startowym), powiadomienie z pucharem w trakcie gry (tekst bitmapowy, bez zacięć).
 
+### Języki
+
+Polski i angielski (`src/i18n.ts`): `t('klucz', {zmienne})`, liczba mnoga cukierków, daty. Język z telefonu (polski dla `pl`, angielski dla reszty), zmiana w Ustawieniach (zapisana w `Save.lang`), `?lang=en` wymusza w playtestach. Nazwy z danych (osiągnięcia, szafa, światy, power-upy) zostają po polsku w `sim/`, angielskie są w `EN_DATA` po id; test pilnuje kompletności. Na iOS tekst pytania o śledzenie (ATT) jest w `en.lproj` / `pl.lproj/InfoPlist.strings`. Przyciski same zmniejszają za długi napis (`Button.fit`).
+
 ### Timer i gesty systemowe
 
 Czas biegu (czas gry) pod licznikiem cukierków i na ekranie końca. Na iOS widok gry (`GameViewController` w `AppDelegate.swift`) odracza systemowe gesty przy górnej i dolnej krawędzi (bez tego przesunięcie w dół włączało „Reachability” i ekran zjeżdżał do połowy); WebView nie przewija się.
