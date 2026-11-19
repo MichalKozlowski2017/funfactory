@@ -75,6 +75,22 @@ describe('World', () => {
     expect(world.slime.state).toBe('flying');
   });
 
+  it('slides down ice onto a sticky wall below and stops there', () => {
+    const ice = box(0, -600, 20, 200, 'ice');
+    const sticky = box(0, -400, 20, 300);
+    const world = new World([box(-100, 0, 1000, 100), ice, sticky], { x: 300, y: -50 });
+    world.slime.state = 'stuck';
+    world.slime.x = 20 + PHYS.radius;
+    world.slime.y = -560;
+    world.slime.nx = 1;
+    world.slime.ny = 0;
+    world.slime.stuckTo = ice;
+    for (let i = 0; i < 300; i++) world.step(1 / 60);
+    expect(world.slime.state).toBe('stuck');
+    expect(world.slime.stuckTo).toBe(sticky);
+    expect(world.slime.x).toBeCloseTo(20 + PHYS.radius, 0);
+  });
+
   it('dies on spikes', () => {
     const world = new World([box(-100, 0, 1000, 100), box(0, -400, 1000, 20, 'spikes')], { x: 300, y: -50 });
     world.launch(0, -2000);

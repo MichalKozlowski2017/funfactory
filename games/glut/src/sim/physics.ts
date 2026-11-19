@@ -311,7 +311,13 @@ export class World {
     s.y += dy;
     for (const other of this.blocks) {
       if (other === b || other.gone) continue;
-      const c = contact(s.x, s.y, s.r, other);
+      let c = contact(s.x, s.y, s.r, other);
+      if (!c && dy && other.surface !== 'spikes') {
+        // Zsuwając się po ścianie, slime tylko dotyka jej powierzchni: przylegający niżej kawałek ściany
+        // nie daje zachodzenia, więc szukamy go z małym zapasem i przyklejamy się (zamiast spadać).
+        const near = contact(s.x, s.y, s.r + 2, other);
+        if (near && Math.abs(near.nx - s.nx) < 0.05 && Math.abs(near.ny - s.ny) < 0.05) c = { ...near, depth: near.depth - 2 };
+      }
       if (!c) continue;
       if (other.feature === 'cloud' && c.ny >= -0.7) continue;
       if (other.surface === 'spikes') {
