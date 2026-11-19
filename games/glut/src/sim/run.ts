@@ -46,16 +46,16 @@ export const SYRUP = {
   startY: 860,
   /** Prędkość na dole i przy pełnej trudności (jednostki/s). */
   speedMin: 35,
-  speedMax: 150,
+  speedMax: 220,
   /**
-   * Między tymi wysokościami (m) prędkość rośnie od `speedMin` do `speedMax`. Długa rampa: pełne tempo
-   * dopiero w Spalonym karmelu, żeby przeciętny gracz zobaczył kilka światów (strojenie: sim/balance.ts).
+   * Między tymi wysokościami (m) prędkość rośnie od `speedMin` do `speedMax`. Pierwsze 30 m spokojne
+   * (nauka), potem szybko rośnie: pełne tempo w Chmurach (strojenie: sim/balance.ts).
    */
-  rampFrom: 20,
-  rampTo: 450,
+  rampFrom: 30,
+  rampTo: 250,
   /** Gdy syrop zostaje dalej niż `leash` pod slime'em, przyspiesza, żeby zawsze był blisko. */
-  leash: 1500,
-  catchUp: 0.8,
+  leash: 1200,
+  catchUp: 1.0,
 } as const;
 
 /** Prędkość syropu (jednostki/s) na wysokości `meters` (bez doganiania). */
