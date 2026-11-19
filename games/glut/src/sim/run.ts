@@ -45,17 +45,17 @@ export const SYRUP = {
   /** Start syropu pod dnem studni (nisko: nowy gracz ma chwilę na naukę, zanim syrop się pojawi). */
   startY: 860,
   /** Prędkość na dole i przy pełnej trudności (jednostki/s). */
-  speedMin: 35,
-  speedMax: 220,
+  speedMin: 45,
+  speedMax: 260,
   /**
-   * Między tymi wysokościami (m) prędkość rośnie od `speedMin` do `speedMax`. Pierwsze 30 m spokojne
-   * (nauka), potem szybko rośnie: pełne tempo w Chmurach (strojenie: sim/balance.ts).
+   * Między tymi wysokościami (m) prędkość rośnie od `speedMin` do `speedMax`. Pierwsze 20 m spokojniejsze
+   * (nauka), potem szybko rośnie: pełne tempo na 200 m (strojenie: sim/balance.ts).
    */
-  rampFrom: 30,
-  rampTo: 250,
+  rampFrom: 20,
+  rampTo: 200,
   /** Gdy syrop zostaje dalej niż `leash` pod slime'em, przyspiesza, żeby zawsze był blisko. */
-  leash: 1200,
-  catchUp: 1.0,
+  leash: 1000,
+  catchUp: 1.2,
 } as const;
 
 /** Prędkość syropu (jednostki/s) na wysokości `meters` (bez doganiania). */
