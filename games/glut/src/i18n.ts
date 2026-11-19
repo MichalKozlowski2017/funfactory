@@ -96,6 +96,9 @@ const PL = {
   tipStreak: 'Skacz od razu po lądowaniu: seria daje premie!',
   tipSyrup: 'Syrop rośnie! Wspinaj się wyżej',
   tipPower: 'Złap bańkę: daje moc na kilka sekund',
+  paused: 'Pauza',
+  resume: 'Wróć do gry',
+  quitNote: 'Wyjście do menu kończy bieg. Wynik i cukierki zostają zapisane.',
 };
 
 type Key = keyof typeof PL;
@@ -182,6 +185,9 @@ const EN: Record<Key, string> = {
   tipStreak: 'Jump right after landing: streaks give bonuses!',
   tipSyrup: 'The syrup is rising! Keep climbing',
   tipPower: 'Grab a bubble: it gives a power for a few seconds',
+  paused: 'Paused',
+  resume: 'Resume',
+  quitNote: 'Going to the menu ends the run. Your score and candies are saved.',
 };
 
 /** Angielskie nazwy z danych gry (po id). */

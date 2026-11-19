@@ -42,6 +42,7 @@ import { AchievementToasts } from '../ui/achievement-toast.ts';
 import { AchievementsPanel } from '../ui/achievements-panel.ts';
 import { DailyPanel } from '../ui/daily-panel.ts';
 import { Coach, type Gesture } from '../ui/coach.ts';
+import { PausePanel } from '../ui/pause-panel.ts';
 import { accessorySprite, cosmeticTextures, type CosmeticTextures } from '../fx/cosmetics.ts';
 import { ShopPanel } from '../ui/shop-panel.ts';
 import { SettingsPanel } from '../ui/settings-panel.ts';
@@ -242,6 +243,10 @@ export class PlayScene extends Scene {
   private tips: string[] = [];
   private coach!: Coach;
   private coachUntil = 0;
+  /** Pauza w trakcie biegu. */
+  private paused = false;
+  private pausePanel: PausePanel | null = null;
+  private pauseButton!: Button;
   /** Stan sprzed ostatniego kroku fizyki: rysujemy pozycję pośrednią (płynny ruch przy nierównych klatkach). */
   private readonly prev = { x: 0, y: 0, syrup: 0 };
   private readonly shown = { x: 0, y: 0, syrup: 0 };
@@ -396,6 +401,14 @@ export class PlayScene extends Scene {
       },
     });
     this.hud.addChild(this.shadeG, this.trailG, this.dangerG, this.glow, this.powerHud, this.heightText, this.bestText, this.streakHud, this.candyIcon, this.candyText, this.timerText, this.hint, this.syrupWarn, this.coach, this.fx);
+    // Pauza nad warstwą dotyku (inaczej stuknięcie w nią zaczynałoby celowanie).
+    this.pauseButton = new Button({ label: '', color: '#6e6488', width: 88, height: 88, radius: 44, resolution: this.game.pixelRatio, onTap: () => this.openPause() });
+    this.pauseButton.addChild(new Graphics().roundRect(-15, -18, 10, 36, 4).fill({ color: 0xffffff }).roundRect(5, -18, 10, 36, 4).fill({ color: 0xffffff }));
+    this.pauseButton.visible = false;
+    this.addChildAt(this.pauseButton, this.getChildIndex(this.overlay));
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) this.openPause();
+    });
     // Powiadomienia nad wszystkim (także nad panelami poza grą).
     this.addChild(this.toasts);
 
@@ -465,7 +478,9 @@ export class PlayScene extends Scene {
     this.candyIcon.position.set(view.width - 52, view.safe.top + 58);
     this.candyText.position.set(view.width - 90, view.safe.top + 58);
     this.timerText.position.set(view.width - 34, view.safe.top + 112);
-    this.powerHud.position.set(52, view.safe.top + 58);
+    this.powerHud.position.set(52, view.safe.top + 160);
+    this.pauseButton?.position.set(56, view.safe.top + 58);
+    this.pausePanel?.layout(view);
     this.hint.position.set(view.width / 2, view.height * 0.3);
     this.syrupWarn.position.set(view.width / 2, view.height - view.safe.bottom - 24);
     if (this.bg) this.bg.height = view.height;
@@ -502,6 +517,7 @@ export class PlayScene extends Scene {
   }
 
   override fixedUpdate(dt: number): void {
+    if (this.paused) return;
     const s = this.run.slime;
     this.prev.x = s.x;
     this.prev.y = s.y;
@@ -565,6 +581,9 @@ export class PlayScene extends Scene {
     this.shop?.tick(dt);
     this.settings?.tick(dt);
     this.trophies?.tick(dt);
+    this.pausePanel?.tick(dt);
+    this.pauseButton.tick(dt);
+    this.pauseButton.visible = this.mode === 'play' && !this.run.over && !this.againButton && !this.autopilot;
     this.dailyPanel?.tick(dt);
     this.hat.rotation = this.hatSwing.update(dt);
     this.placeSlime(dt);
@@ -684,6 +703,46 @@ export class PlayScene extends Scene {
     for (const t of [this.heightText, this.bestText, this.candyIcon, this.candyText, this.timerText]) t.visible = true;
     this.hint.visible = false;
     this.squash(0.25);
+  }
+
+  // --- pauza ---
+
+  private openPause(): void {
+    if (this.paused || this.mode !== 'play' || this.run.over || this.againButton || this.autopilot) return;
+    this.paused = true;
+    this.endAirAim();
+    this.aiming = null;
+    this.tapPoint = null;
+    this.trail.length = 0;
+    this.dotsG.clear();
+    this.game.sound.synth(SFX.tap);
+    this.pausePanel = new PausePanel({ pixelRatio: this.game.pixelRatio, onResume: () => this.closePause(), onMenu: () => this.quitToMenu() });
+    this.pausePanel.layout(this.game.view);
+    this.overlay.addChild(this.pausePanel);
+    this.pausePanel.alpha = 0;
+    this.tweens.to(this.pausePanel, { alpha: 1 }, { duration: 0.15 });
+  }
+
+  private closePause(): void {
+    const panel = this.pausePanel;
+    this.pausePanel = null;
+    this.paused = false;
+    if (!panel) return;
+    this.game.sound.synth(SFX.tap);
+    this.tweens.killOf(panel);
+    panel.destroy({ children: true });
+  }
+
+  /** Wyjście do menu w trakcie biegu: bieg się kończy i zapisuje jak po śmierci (bez ekranu końca). */
+  private quitToMenu(): void {
+    this.closePause();
+    if (this.run.started && !this.run.over) {
+      this.run.over = true;
+      this.recordRunEnd();
+    }
+    this.dailyMode = false;
+    this.newRun();
+    this.showTitle();
   }
 
   // --- samouczek ---
@@ -1077,6 +1136,9 @@ export class PlayScene extends Scene {
     this.againButton = null;
     this.slime.visible = true;
     this.slime.scale.set(1);
+    // Kształt z lotu (rozciągnięcie, obrót) nie przechodzi na nowy bieg.
+    this.tweens.killOf(this.body.scale);
+    this.body.scale.set(1);
     this.hint.visible = false;
     this.menuButton = null;
     this.glow.alpha = 0;
@@ -1843,8 +1905,6 @@ export class PlayScene extends Scene {
 
   private die(cause: 'spikes' | 'syrup'): void {
     const s = this.run.slime;
-    this.adPolicy.runEnded();
-    this.lastRunSeconds = this.run.time;
     this.score.die();
     this.endAirAim();
     this.aiming = null;
@@ -1866,6 +1926,14 @@ export class PlayScene extends Scene {
       colors: cause === 'syrup' ? [this.slimeColor, COLORS.syrup, 0xffffff] : [this.slimeColor, 0xffffff, COLORS.danger],
     });
     this.slime.visible = false;
+    this.recordRunEnd();
+    this.timers.after(0.55, () => this.showGameOver(cause));
+  }
+
+  /** Koniec biegu (śmierć albo wyjście do menu): rekord, ranking, statystyki, wyzwanie dnia, zapis. */
+  private recordRunEnd(): void {
+    this.adPolicy.runEnded();
+    this.lastRunSeconds = this.run.time;
     this.lastReplay = this.recorder?.finish(this.run.meters) ?? null;
     if (!PILOT_MODE) {
       void gameServices.submit('best', this.run.meters);
@@ -1881,7 +1949,6 @@ export class PlayScene extends Scene {
       this.dailyResult = r;
     } else this.dailyResult = null;
     void this.persist();
-    this.timers.after(0.55, () => this.showGameOver(cause));
   }
 
   private showGameOver(cause: 'spikes' | 'syrup'): void {
