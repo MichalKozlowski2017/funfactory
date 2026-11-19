@@ -1,4 +1,4 @@
-package com.funfactory.glut;
+package com.mkdev.glut;
 
 import com.getcapacitor.JSObject;
 import com.getcapacitor.Plugin;

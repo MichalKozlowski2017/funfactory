@@ -25,7 +25,7 @@ Eksport archiwum zatrzymał się na: „PLA Update available”. Wejdź na devel
 ### 2. Apple: rekord aplikacji w App Store Connect
 App Store Connect → Apps → „+” → New App:
 - Platforma iOS, nazwa: `Glut: Słodka wspinaczka` (alternatywy w `listing.md`), język główny: polski.
-- Bundle ID: `com.funfactory.glut` (jeśli nie ma na liście, dodaj go w developer.apple.com → Identifiers). **Bundle ID jest na zawsze**: jeśli wolisz inny (np. z Twoją domeną), powiedz przed pierwszym wysłaniem, a zmienię go w projektach.
+- Bundle ID: `com.mkdev.glut` (jeśli nie ma na liście, dodaj go w developer.apple.com → Identifiers). Prefiks `com.mkdev` jak w Dealoot (decyzja właściciela).
 - SKU: `glut-001`.
 
 ### 3. Google Play: konto dewelopera i aplikacja

@@ -1,10 +1,10 @@
 apply plugin: 'com.android.application'
 
 android {
-    namespace = "com.funfactory.glut"
+    namespace = "com.mkdev.glut"
     compileSdk = rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "com.funfactory.glut"
+        applicationId "com.mkdev.glut"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

@@ -2,8 +2,8 @@
 <resources>
     <string name="app_name">Glut</string>
     <string name="title_activity_main">Glut</string>
-    <string name="package_name">com.funfactory.glut</string>
-    <string name="custom_url_scheme">com.funfactory.glut</string>
+    <string name="package_name">com.mkdev.glut</string>
+    <string name="custom_url_scheme">com.mkdev.glut</string>
     <!-- ID projektu Usług gier Play (Play Console → Usługi gier Play → Konfiguracja). Puste = ranking wyłączony. -->
     <string name="game_services_project_id" translatable="false"></string>
 </resources>

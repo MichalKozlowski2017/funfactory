@@ -1,7 +1,7 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.funfactory.glut',
+  appId: 'com.mkdev.glut',
   appName: 'Glut',
   webDir: 'dist',
   // Kolor jak tło ekranu startowego: bez białego/czarnego mignięcia przed wczytaniem gry.

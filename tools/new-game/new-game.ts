@@ -1,7 +1,7 @@
 /**
  * Nowa gra z szablonu templates/game.
  *
- *   pnpm new-game <slug> --title "Nazwa Gry" [--app-id com.funfactory.slug] [--native]
+ *   pnpm new-game <slug> --title "Nazwa Gry" [--app-id com.mkdev.slug] [--native]
  *
  * --native: od razu buduje i dodaje projekty iOS (Xcode) i Android (Android Studio) przez Capacitor.
  */
@@ -30,7 +30,7 @@ if (!slug || !/^[a-z][a-z0-9-]{1,40}$/.test(slug)) {
 }
 
 const title = values.title ?? slug.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
-const appId = values['app-id'] ?? `com.funfactory.${slug.replace(/-/g, '')}`;
+const appId = values['app-id'] ?? `com.mkdev.${slug.replace(/-/g, '')}`;
 const dest = resolve(repo, 'games', slug);
 
 if (existsSync(dest)) {

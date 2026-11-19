@@ -1,4 +1,4 @@
-package com.funfactory.glut;
+package com.mkdev.glut;
 
 import android.os.Bundle;
 import androidx.core.view.WindowCompat;
