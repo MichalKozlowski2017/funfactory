@@ -11,7 +11,7 @@ Gra jest po polsku i angielsku (język z telefonu: polski dla polskiego, angiels
 | Pole | PL | EN |
 |---|---|---|
 | Nazwa (App Store ≤ 30, Google Play ≤ 30) | Glut: Słodka wspinaczka | Glut: Sweet Climb |
-| Podtytuł (App Store ≤ 30) | Skacz wyżej niż syrop! | Outjump the rising syrup! |
+| Podtytuł (App Store ≤ 30) | Ucieczka z cukrowej studni | Escape the sugar well |
 | Krótki opis (Google Play ≤ 80) | Wystrzel slime'a w górę cukrowej wieży, łap serie i uciekaj przed syropem! | Fling a jelly slime up a candy tower, chain combos and outrun the syrup! |
 
 Sama nazwa „Glut” może być zajęta w sklepach. Dlatego proponuję wersję z podtytułem; ikona i ekran pokazują „Glut”.
@@ -75,8 +75,8 @@ Everyone plays by the same rules: candies only buy looks (hats, colors, trails, 
 
 ## Słowa kluczowe (App Store ≤ 100 znaków)
 
-- PL: `slime,skakanie,zręcznościowa,wspinaczka,cukierki,arcade,rytm,combo,jednym palcem,platformówka`
-- EN: `slime,jump,arcade,climb,candy,casual,rhythm,combo,one finger,platformer,jelly`
+- PL: `slime,skakanie,zręcznościowa,galaretka,cukierki,arcade,rytm,combo,jednym palcem,platformówka` (bez słów z nazwy i podtytułu: App Store indeksuje je osobno)
+- EN: `slime,jump,arcade,tower,candy,casual,rhythm,combo,one finger,platformer,jelly`
 
 ## Kategorie
 
