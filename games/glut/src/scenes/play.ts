@@ -1,6 +1,6 @@
 import { Assets, type BitmapText, Container, FillGradient, Graphics, Rectangle, Sprite, Text, Texture, TilingSprite } from 'pixi.js';
 import { circle, defs, ellipse, hexToNumber, palettes, path, radialGradient, svg } from '@funfactory/art';
-import { ads, gameServices, haptics, isNative, Rng, SaveStore, Spring, type SynthLayer } from '@funfactory/core';
+import { ads, gameServices, haptics, isNative, platformName, Rng, SaveStore, Spring, type SynthLayer } from '@funfactory/core';
 import { ADS, ADS_ENABLED } from '../ads-config.ts';
 import { newInstallId, Stats as Telemetry } from '../stats.ts';
 import { ConsentPanel } from '../ui/consent-panel.ts';
@@ -350,6 +350,11 @@ export class PlayScene extends Scene {
     SKINS.forEach((k, i) => this.skinTex.set(k.id, skins[i]!));
     this.decor = [crystal, lolly];
     this.score = new Score(this.game.sound);
+    // Android: głośniki telefonów (np. Pixel) mocno wybijają górę, więc perkusja i wysokie tony są za ostre (uwaga właściciela).
+    if (platformName() === 'android' || new URLSearchParams(location.search).has('androidmix')) {
+      this.game.sound.setTreble(-5);
+      this.score.percussion = 0.72;
+    }
     this.applySettings();
     // Najpierw zgody reklam (RODO, ATT), potem logowanie do Game Center / Play Games (bez nakładania się okien).
     // Reklamy wyłączone (ADS_ENABLED): od razu Game Center / Play Games.

@@ -63,6 +63,9 @@ export interface PlayOptions {
 export class Sound {
   private ctx: AudioContext | null = null;
   private master: GainNode | null = null;
+  /** Korekcja wysokich tonów na wyjściu (np. jaskrawe głośniki części telefonów z Androidem). */
+  private shelf: BiquadFilterNode | null = null;
+  private trebleDb = 0;
   private buffers = new Map<string, AudioBuffer>();
   private pending = new Map<string, string>();
   /** Pobrane bajty (pobieranie nie wymaga kontekstu audio, dekodowanie tak). */
@@ -303,6 +306,12 @@ export class Sound {
     this.music = null;
   }
 
+  /** Podbicie/przycięcie wysokich tonów na wyjściu w dB (ujemne = ciemniej). */
+  setTreble(db: number): void {
+    this.trebleDb = db;
+    if (this.shelf) this.shelf.gain.value = db;
+  }
+
   setVolume(volume: number): void {
     if (this.master) this.master.gain.value = volume;
   }
@@ -314,7 +323,19 @@ export class Sound {
     if (typeof AudioContext === 'undefined') return null;
     this.ctx = new AudioContext();
     this.master = this.ctx.createGain();
-    this.master.connect(this.ctx.destination);
+    // Wyjście: korekcja wysokich tonów i ogranicznik (muzyka i efekty sumują się tutaj; bez niego głośne
+    // chwile mogą przesterować i trzeszczeć).
+    this.shelf = this.ctx.createBiquadFilter();
+    this.shelf.type = 'highshelf';
+    this.shelf.frequency.value = 3800;
+    this.shelf.gain.value = this.trebleDb;
+    const limiter = this.ctx.createDynamicsCompressor();
+    limiter.threshold.value = -2;
+    limiter.knee.value = 0;
+    limiter.ratio.value = 20;
+    limiter.attack.value = 0.002;
+    limiter.release.value = 0.12;
+    this.master.connect(this.shelf).connect(limiter).connect(this.ctx.destination);
     for (const fn of this.onContext.splice(0)) fn();
     return this.ctx;
   }

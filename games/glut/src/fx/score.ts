@@ -342,6 +342,8 @@ export class Score {
   private wantedStyle: Style = STYLES.crystal;
   private step = 0;
   private nextTime = 0;
+  /** Głośność perkusji (uderzeń) względem reszty; na Androidzie ciszej, bo głośniki wybijają górę. */
+  percussion = 1;
   private level = 0;
   private wantedLevel = 0;
   private danger = 0;
@@ -687,6 +689,7 @@ export class Score {
   /** Uderzenie: wszystkie warstwy próbek naraz (i ewentualnie trochę syntezy pod spodem) albo sama synteza. */
   private hit(h: Hit, volume: number, at?: number, wet = false): void {
     if (!this.ensure()) return;
+    volume *= this.percussion;
     const output = wet ? this.wet : this.dry;
     if (!output) return;
     if (h.samples && h.samples.every((l) => this.sampler.ready(l.inst))) {
