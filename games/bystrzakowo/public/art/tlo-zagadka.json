@@ -1,0 +1,16 @@
+{
+  "workflow": "flux2.json",
+  "PROMPT": "a soft blurred cozy background of a sunny meadow with green hills and blue sky, very simple and calm, pastel colors, lots of empty space, no animals, no houses, no characters, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, bright cheerful pastel colors, cute and friendly",
+  "NEGATIVE": "",
+  "SEED": 21,
+  "WIDTH": 1536,
+  "HEIGHT": 864,
+  "PREFIX": "tlo-zagadka",
+  "STEPS": 20,
+  "GUIDANCE": 4,
+  "BPM": 100,
+  "DURATION": 60,
+  "KEY": "A minor",
+  "LYRICS": "[Instrumental]",
+  "created": "2026-11-20T21:28:59.923Z"
+}

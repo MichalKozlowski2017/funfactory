@@ -54,6 +54,11 @@ export interface PlayOptions {
   /** Mnożnik wysokości/prędkości. Losowanie ±5% likwiduje efekt „karabinu maszynowego”. */
   rate?: number;
   loop?: boolean;
+  /**
+   * Kanał (np. 'voice' dla lektora): nowy dźwięk na tym samym kanale ucina poprzedni,
+   * więc kwestie się nie nakładają.
+   */
+  channel?: string;
 }
 
 /**
@@ -74,6 +79,7 @@ export class Sound {
   /** Początek dźwięku w buforze: pomija ciszę kodera (AAC/mp3 doklejają ją na początku). */
   private starts = new Map<string, number>();
   private music: AudioBufferSourceNode | null = null;
+  private channels = new Map<string, { src: AudioBufferSourceNode; gain: GainNode }>();
   muted = false;
   /** Wycisza tylko efekty (dźwięki bez własnego wyjścia); muzyka grana na własnej szynie gra dalej. */
   sfxMuted = false;
@@ -189,15 +195,17 @@ export class Sound {
     return true;
   }
 
-  play(name: string, opts: PlayOptions = {}): void {
-    if (this.muted) return;
+  /** Gra plik. Zwraca czas trwania w sekundach (0, gdy nie zagrał: brak bufora, wyciszenie). */
+  play(name: string, opts: PlayOptions = {}): number {
+    if (this.muted) return 0;
     const ctx = this.context();
-    if (!ctx || !this.master) return;
+    if (!ctx || !this.master) return 0;
     const buffer = this.buffers.get(name);
     if (!buffer) {
       void this.decode(name);
-      return;
+      return 0;
     }
+    if (opts.channel) this.stopChannel(opts.channel);
     const src = ctx.createBufferSource();
     src.buffer = buffer;
     src.playbackRate.value = opts.rate ?? 1;
@@ -210,6 +218,24 @@ export class Sound {
       this.music?.stop();
       this.music = src;
     }
+    if (opts.channel) {
+      const entry = { src, gain };
+      this.channels.set(opts.channel, entry);
+      src.onended = () => {
+        if (this.channels.get(opts.channel!) === entry) this.channels.delete(opts.channel!);
+      };
+    }
+    return buffer.duration / (opts.rate ?? 1);
+  }
+
+  /** Ucina to, co gra na kanale (krótkie wyciszenie, bez trzasku). */
+  stopChannel(channel: string): void {
+    const entry = this.channels.get(channel);
+    if (!entry || !this.ctx) return;
+    this.channels.delete(channel);
+    const t = this.ctx.currentTime;
+    entry.gain.gain.setTargetAtTime(0, t, 0.015);
+    entry.src.stop(t + 0.08);
   }
 
   /**

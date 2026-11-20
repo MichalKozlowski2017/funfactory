@@ -24,6 +24,40 @@ importers:
         specifier: ^5.1.1
         version: 5.1.1(@types/node@22.20.5)(vite@8.3.8(@types/node@22.20.5))
 
+  games/bystrzakowo:
+    dependencies:
+      '@capacitor/android':
+        specifier: ^8.6.2
+        version: 8.6.2(@capacitor/core@8.6.2)
+      '@capacitor/core':
+        specifier: ^8.6.2
+        version: 8.6.2
+      '@capacitor/haptics':
+        specifier: ^8.0.2
+        version: 8.0.2(@capacitor/core@8.6.2)
+      '@capacitor/ios':
+        specifier: ^8.6.2
+        version: 8.6.2(@capacitor/core@8.6.2)
+      '@capacitor/preferences':
+        specifier: ^8.0.1
+        version: 8.0.1(@capacitor/core@8.6.2)
+      '@funfactory/art':
+        specifier: workspace:*
+        version: link:../../packages/art
+      '@funfactory/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+      '@funfactory/kit2d':
+        specifier: workspace:*
+        version: link:../../packages/kit2d
+      pixi.js:
+        specifier: ^8.23.0
+        version: 8.23.0
+    devDependencies:
+      '@capacitor/cli':
+        specifier: ^8.6.2
+        version: 8.6.2
+
   games/glut:
     dependencies:
       '@capacitor/android':

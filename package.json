@@ -13,7 +13,8 @@
     "check": "pnpm typecheck && pnpm test",
     "shot": "node tools/playtest/shot.ts",
     "new-game": "node tools/new-game/new-game.ts",
-    "comfy": "node $HOME/.claude/skills/comfyui/comfy.ts"
+    "comfy": "node $HOME/.claude/skills/comfyui/comfy.ts",
+    "legion": "node $HOME/.claude/skills/comfyui/legion-watch.ts"
   },
   "devDependencies": {
     "@playwright/test": "^1.65.1",

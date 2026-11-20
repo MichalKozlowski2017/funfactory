@@ -8,7 +8,7 @@
  *   pnpm shot games/glut --gpu --query bot --steps "rec:start,wait:60000,rec:save:gameplay"
  *   pnpm shot games/foo --init "localStorage.setItem('save', '{...}')"
  *
- * Kroki (współrzędne w jednostkach gry, szerokość 720):
+ * Kroki (współrzędne w jednostkach gry: szerokość 720, a w grach poziomych wysokość 720):
  *   wait:<ms>                 czekaj
  *   shot:<nazwa>              zrzut ekranu
  *   tap:<x>:<y>               stuknięcie
@@ -239,7 +239,8 @@ async function gesture(page: Page, from: [number, number], to: [number, number],
 async function toScreen(page: Page, x: number, y: number): Promise<[number, number]> {
   const scale = await page.evaluate(() => {
     const game = window.__ff?.game;
-    return game ? game.app.screen.width / game.designWidth : 1;
+    // Gry poziome (designHeight): skala z wysokości. Wspólny wzór: piksele CSS / jednostki widoku.
+    return game ? game.app.screen.width / game.view.width : 1;
   });
   return [x * scale, y * scale];
 }

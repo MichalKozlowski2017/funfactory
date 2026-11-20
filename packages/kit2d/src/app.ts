@@ -12,6 +12,11 @@ export interface GameOptions {
    * Projektujemy dla 720 szerokości. Telefony 19.5:9 dają ~1560 wysokości, tablety mniej.
    */
   designWidth?: number;
+  /**
+   * Gry poziome: stała wysokość przestrzeni projektowej (np. 720), szerokość wynika z proporcji ekranu
+   * (tablet 4:3 ~960, telefon 19.5:9 ~1560). Gdy ustawione, `designWidth` nie ma znaczenia.
+   */
+  designHeight?: number;
   /** Seed RNG. Domyślnie z `?seed=` w URL albo z czasu. */
   seed?: number;
   /**
@@ -38,9 +43,9 @@ export interface PerfStats {
 }
 
 export interface View {
-  /** Szerokość w jednostkach gry (= designWidth). */
+  /** Szerokość w jednostkach gry (= designWidth, a w grach poziomych zależy od ekranu). */
   width: number;
-  /** Wysokość w jednostkach gry (zależy od ekranu). */
+  /** Wysokość w jednostkach gry (zależy od ekranu, a w grach poziomych = designHeight). */
   height: number;
   /** Wcięcia bezpiecznego obszaru (notch, home indicator) w jednostkach gry. */
   safe: { top: number; right: number; bottom: number; left: number };
@@ -116,7 +121,7 @@ export class Game {
     // bez zdarzenia resize. Sprawdzamy więc obszar bezpieczny jeszcze kilka razy i przy powrocie do aplikacji.
     const recheck = () => {
       const s = readSafe(this.safeProbe);
-      const scale = this.app.screen.width / this.designWidth;
+      const scale = this.unitScale();
       const v = this.view.safe;
       if (Math.abs(s.top / scale - v.top) > 0.5 || Math.abs(s.bottom / scale - v.bottom) > 0.5 || Math.abs(s.left / scale - v.left) > 0.5 || Math.abs(s.right / scale - v.right) > 0.5) this.layout();
     };
@@ -178,14 +183,20 @@ export class Game {
     window.setTimeout(() => (this.loop.timeScale = previous), seconds * 1000);
   }
 
+  /** Ile pikseli CSS przypada na jednostkę gry. */
+  private unitScale(): number {
+    const { width, height } = this.app.screen;
+    return this.opts.designHeight ? height / this.opts.designHeight : width / this.designWidth;
+  }
+
   private layout(): void {
     const { width, height } = this.app.screen;
-    const scale = width / this.designWidth;
+    const scale = this.unitScale();
     this.root.scale.set(scale);
     this.pixelRatio = scale * this.app.renderer.resolution;
     const safe = readSafe(this.safeProbe);
     this.view = {
-      width: this.designWidth,
+      width: width / scale,
       height: height / scale,
       safe: { top: safe.top / scale, right: safe.right / scale, bottom: safe.bottom / scale, left: safe.left / scale },
     };
