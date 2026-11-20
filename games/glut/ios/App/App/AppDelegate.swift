@@ -75,9 +75,12 @@ public class GameServicesPlugin: CAPPlugin, CAPBridgedPlugin, GKGameCenterContro
         CAPPluginMethod(name: "showLeaderboard", returnType: CAPPluginReturnPromise),
     ]
 
+    /// Ostatni błąd Game Center (np. „application is not recognized”), do diagnostyki.
+    private var lastError = ""
+
     private func playerInfo() -> [String: Any] {
         let p = GKLocalPlayer.local
-        return ["authenticated": p.isAuthenticated, "playerId": p.isAuthenticated ? p.gamePlayerID : "", "alias": p.isAuthenticated ? p.alias : ""]
+        return ["authenticated": p.isAuthenticated, "playerId": p.isAuthenticated ? p.gamePlayerID : "", "alias": p.isAuthenticated ? p.alias : "", "error": lastError]
     }
 
     /// Logowanie: Game Center może pokazać własne okno; wynik wraca, gdy gracz się zaloguje albo je zamknie.
@@ -88,8 +91,10 @@ public class GameServicesPlugin: CAPPlugin, CAPBridgedPlugin, GKGameCenterContro
             return
         }
         var answered = false
-        player.authenticateHandler = { [weak self] viewController, _ in
+        player.authenticateHandler = { [weak self] viewController, error in
             guard let self = self else { return }
+            NSLog("[GameCenter] auth: vc=%@ authenticated=%@ error=%@", viewController == nil ? "no" : "yes", GKLocalPlayer.local.isAuthenticated ? "yes" : "no", error?.localizedDescription ?? "none")
+            self.lastError = error?.localizedDescription ?? ""
             if let viewController = viewController {
                 DispatchQueue.main.async { self.bridge?.viewController?.present(viewController, animated: true) }
                 return
@@ -111,6 +116,7 @@ public class GameServicesPlugin: CAPPlugin, CAPBridgedPlugin, GKGameCenterContro
             return
         }
         GKLeaderboard.submitScore(score, context: 0, player: GKLocalPlayer.local, leaderboardIDs: [id]) { error in
+            NSLog("[GameCenter] submit %@ %d: %@", id, score, error?.localizedDescription ?? "ok")
             call.resolve(["submitted": error == nil, "error": error?.localizedDescription ?? ""])
         }
     }
