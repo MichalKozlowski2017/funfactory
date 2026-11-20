@@ -59,4 +59,9 @@ describe('wardrobe', () => {
     // Założona rzecz musi być kupiona i z właściwego działu.
     expect(normalizeSave({ owned: ['mint'], skin: 'mint', hat: 'mint', trail: 'stars' } as never)).toMatchObject({ skin: 'mint', hat: null, trail: null });
   });
+  it('keeps stats consent and a valid install id', () => {
+    expect(normalizeSave({} as never)).toMatchObject({ statsConsent: null, installId: '' });
+    expect(normalizeSave({ statsConsent: true, installId: '3f2a9c1e-1b2c-4d5e-8f90-a1b2c3d4e5f6' } as never)).toMatchObject({ statsConsent: true, installId: '3f2a9c1e-1b2c-4d5e-8f90-a1b2c3d4e5f6' });
+    expect(normalizeSave({ statsConsent: 'yes', installId: 'x;drop' } as never)).toMatchObject({ statsConsent: null, installId: '' });
+  });
 });

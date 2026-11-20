@@ -6,13 +6,15 @@ import { t } from '../i18n.ts';
 const pal = palettes.candy;
 const FONT = 'system-ui, -apple-system, sans-serif';
 
-type Key = 'music' | 'sfx' | 'vibration' | 'lang' | 'privacy';
+type Key = 'music' | 'sfx' | 'vibration' | 'lang' | 'stats' | 'privacy';
 
 export interface SettingsState {
   music: boolean;
   sfx: boolean;
   vibration: boolean;
-  /** Nazwa trybu sterowania (Swipe / Proca / Tap). */
+  /** Anonimowe statystyki włączone i identyfikator instalacji (pokazywany pod wersją). */
+  stats: boolean;
+  installId: string;
 }
 
 export interface SettingsOptions {
@@ -34,6 +36,8 @@ export class SettingsPanel extends Container {
   private readonly rows: { key: Key; button: Button }[] = [];
   private readonly close: Button;
   private readonly version: Text;
+  /** Identyfikator instalacji do statystyk (gracz poda go, prosząc o usunięcie danych). */
+  private readonly installId: Text;
 
   constructor(o: SettingsOptions) {
     super();
@@ -44,7 +48,7 @@ export class SettingsPanel extends Container {
       resolution: o.pixelRatio,
       anchor: 0.5,
     });
-    for (const key of ['music', 'sfx', 'vibration', 'lang', 'privacy'] as const) {
+    for (const key of ['music', 'sfx', 'vibration', 'lang', 'stats', 'privacy'] as const) {
       if (key === 'privacy' && !o.adsPrivacy) continue;
       const color = key === 'lang' ? '#5fc8e8' : key === 'privacy' ? '#6e6488' : '#9b8cff';
       const button = new Button({ label: '', color, width: 460, height: key === 'privacy' ? 80 : 96, fontSize: key === 'privacy' ? 28 : 34, resolution: o.pixelRatio, onTap: () => o.onToggle(key) });
@@ -61,7 +65,8 @@ export class SettingsPanel extends Container {
     this.version.eventMode = 'static';
     this.version.hitArea = { contains: (x: number, y: number) => Math.abs(x) < 140 && Math.abs(y) < 44 };
     this.version.on('pointertap', () => o.onVersionTap?.());
-    this.body.addChild(this.title, this.close, this.version);
+    this.installId = new Text({ text: '', style: { fontFamily: FONT, fontSize: 18, fill: '#7d7290' }, resolution: o.pixelRatio, anchor: 0.5 });
+    this.body.addChild(this.title, this.close, this.version, this.installId);
     this.addChild(this.dim, this.panel, this.body);
   }
 
@@ -82,10 +87,13 @@ export class SettingsPanel extends Container {
               ? t('vibration', { v: on(s.vibration) })
               : r.key === 'lang'
                 ? t('language')
-                : t('privacy');
+                : r.key === 'stats'
+                  ? t('statsSetting', { v: on(s.stats) })
+                  : t('privacy');
       r.button.setLabel(label);
       r.button.alpha = r.key === 'privacy' || r.key === 'lang' || s[r.key] ? 1 : 0.6;
     }
+    this.installId.text = s.stats && s.installId ? `ID: ${s.installId}` : '';
   }
 
   /** `bottom`: miejsce zajęte od dołu (baner reklamy). */
@@ -100,6 +108,7 @@ export class SettingsPanel extends Container {
     this.rows.forEach((r, i) => r.button.position.set(0, 200 + i * 120));
     this.close.position.set(0, h - 130);
     this.version.position.set(0, h - 50);
+    this.installId.position.set(0, h - 20);
   }
 
   tick(dt: number): void {

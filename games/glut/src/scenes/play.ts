@@ -1,7 +1,9 @@
 import { Assets, type BitmapText, Container, FillGradient, Graphics, Rectangle, Sprite, Text, Texture, TilingSprite } from 'pixi.js';
 import { circle, defs, ellipse, hexToNumber, palettes, path, radialGradient, svg } from '@funfactory/art';
-import { ads, gameServices, haptics, Rng, SaveStore, Spring, type SynthLayer } from '@funfactory/core';
+import { ads, gameServices, haptics, isNative, Rng, SaveStore, Spring, type SynthLayer } from '@funfactory/core';
 import { ADS, ADS_ENABLED } from '../ads-config.ts';
+import { newInstallId, Stats as Telemetry } from '../stats.ts';
+import { ConsentPanel } from '../ui/consent-panel.ts';
 import { GAME_SERVICES } from '../game-services-config.ts';
 import { achDesc, itemName as trItemName, biomeName, biomeTip, candies, detectLang, formatDay, lang, powerName, setLang, t } from '../i18n.ts';
 import { AdPolicy } from '../sim/ad-policy.ts';
@@ -299,6 +301,14 @@ export class PlayScene extends Scene {
   /** Bieżący bieg jest pokazowy (start w trybie pokazowym). */
   private demoRun = false;
   private vibrationOn = true;
+  /** Anonimowe statystyki (za zgodą): kolejka zdarzeń wysyłana do glut-stats. */
+  private telemetry!: Telemetry;
+  private consentPanel: ConsentPanel | null = null;
+  private statsConsent: boolean | null = null;
+  private installId = '';
+  /** Płynność w bieżącym biegu: klatki i czas rzeczywisty (do średniego FPS w statystykach). */
+  private fpsFrames = 0;
+  private fpsTime = 0;
 
   override async enter(): Promise<void> {
     const saved = normalizeSave(await this.store.load());
@@ -320,6 +330,10 @@ export class PlayScene extends Scene {
     this.musicOn = saved.music;
     this.sfxOn = saved.sfx;
     this.vibrationOn = saved.vibration;
+    this.statsConsent = saved.statsConsent;
+    this.installId = saved.installId;
+    this.telemetry = new Telemetry(__APP_VERSION__);
+    this.applyStatsConsent(true);
     const pr = this.game.pixelRatio;
 
     const [slimeTex, bgTex, candyArt, crystal, lolly, cosmetics, ...skins] = await Promise.all([
@@ -497,6 +511,7 @@ export class PlayScene extends Scene {
 
     this.newRun();
     this.showTitle();
+    this.timers.after(1.2, () => this.askConsent());
     try {
       if (localStorage.getItem('glut-perf') === '1' || new URLSearchParams(location.search).has('perf')) this.setPerfHud(true);
     } catch {
@@ -523,6 +538,7 @@ export class PlayScene extends Scene {
     this.powerHud.position.set(52, view.safe.top + 160);
     this.pauseButton?.position.set(56, view.safe.top + 58);
     this.pausePanel?.layout(view);
+    this.consentPanel?.layout(view);
     this.hint.position.set(view.width / 2, view.height * 0.3);
     this.syrupWarn.position.set(view.width / 2, view.height - view.safe.bottom - 24);
     if (this.bg) this.bg.height = view.height;
@@ -729,6 +745,10 @@ export class PlayScene extends Scene {
 
   override update(dt: number): void {
     this.time += dt;
+    if (this.mode === 'play' && !this.paused && !this.run.over && !this.demoRun) {
+      this.fpsFrames++;
+      this.fpsTime += dt / (this.game.loop.timeScale || 1);
+    }
     this.interpolate();
     this.pilot(dt);
     const s = this.run.slime;
@@ -786,6 +806,7 @@ export class PlayScene extends Scene {
     this.settings?.tick(dt);
     this.trophies?.tick(dt);
     this.pausePanel?.tick(dt);
+    this.consentPanel?.tick(dt);
     this.iris.tick();
     this.pauseButton.tick(dt);
     this.pauseButton.visible = this.mode === 'play' && !this.run.over && !this.againButton && !this.autopilot;
@@ -874,6 +895,8 @@ export class PlayScene extends Scene {
       tips: this.tips,
       stats: this.stats,
       achievements: this.earned,
+      statsConsent: this.statsConsent,
+      installId: this.installId,
     };
   }
 
@@ -1060,6 +1083,7 @@ export class PlayScene extends Scene {
     if (hide) this.coach.hide(id);
     if (PILOT_MODE || this.tips.includes(id)) return;
     this.tips = [...this.tips, id];
+    this.telemetry.track('funnel', { step: `tip_${id}` });
     void this.persist();
   }
 
@@ -1214,6 +1238,7 @@ export class PlayScene extends Scene {
 
   private earn(d: AchievementDef): void {
     this.earned = [...this.earned, d.id];
+    this.telemetry.track('ach', { id: d.id });
     this.bank += d.reward;
     let itemName: string | null = null;
     if (d.item && !this.owned.includes(d.item)) {
@@ -1278,6 +1303,7 @@ export class PlayScene extends Scene {
     if (this.mode === 'play' || this.shop || this.settings || this.trophies || this.dailyPanel) return;
     this.stopDemo();
     this.dailyMode = true;
+    this.telemetry.track('funnel', { step: 'daily' });
     // newRun czyści nakładki: ekran startowy odkładamy na bok, żeby startPlaying go wygasił.
     const title = this.title;
     if (title) this.overlay.removeChild(title);
@@ -1361,6 +1387,7 @@ export class PlayScene extends Scene {
     this.shop?.refresh(r.save);
     this.title?.setStats(this.best, r.save.candies);
     if (r.action === 'bought') {
+      this.telemetry.track('buy', { item: id, kind, candies: r.save.candies });
       this.shop?.celebrate(id);
       this.game.sound.synth(SFX.record);
       haptics.success();
@@ -1431,6 +1458,8 @@ export class PlayScene extends Scene {
     this.run = new Run(seed);
     this.recorder = new ReplayRecorder(seed);
     this.bestAtStart = this.best;
+    this.fpsFrames = 0;
+    this.fpsTime = 0;
     this.counterMax = 0;
     this.recordBeaten = false;
     this.counterPop = { x: 0, v: 0, rot: 0, vr: 0, gold: 0 };
@@ -1585,7 +1614,14 @@ export class PlayScene extends Scene {
     });
   }
 
-  private toggleSetting(key: 'music' | 'sfx' | 'vibration' | 'lang' | 'privacy'): void {
+  private toggleSetting(key: 'music' | 'sfx' | 'vibration' | 'lang' | 'stats' | 'privacy'): void {
+    if (key === 'stats') {
+      this.setStatsConsent(this.statsConsent !== true);
+      this.sfx(SFX.tap);
+      haptics.tap();
+      this.refreshSettings();
+      return;
+    }
     if (key === 'lang') {
       this.langPref = lang() === 'pl' ? 'en' : 'pl';
       setLang(this.langPref);
@@ -1635,7 +1671,7 @@ export class PlayScene extends Scene {
   }
 
   private refreshSettings(): void {
-    this.settings?.refresh({ music: this.musicOn, sfx: this.sfxOn, vibration: this.vibrationOn });
+    this.settings?.refresh({ music: this.musicOn, sfx: this.sfxOn, vibration: this.vibrationOn, stats: this.statsConsent === true, installId: this.installId });
   }
 
   private aim(x: number, y: number): void {
@@ -2228,12 +2264,62 @@ export class PlayScene extends Scene {
       this.timers.after(1.4, () => this.restartDemo());
       return;
     }
-    this.recordRunEnd();
+    this.recordRunEnd(cause);
     this.timers.after(0.55, () => this.showGameOver(cause));
   }
 
+  /** Statystyki: włącza/wyłącza wysyłanie wg zgody. Przy starcie (albo udzieleniu zgody) zgłasza sesję. */
+  private applyStatsConsent(startup = false): void {
+    this.telemetry.configure(this.statsConsent === true, this.installId);
+    if (this.statsConsent === true && startup) this.telemetry.track('session', { first: this.stats.runs === 0 });
+  }
+
+  private setStatsConsent(yes: boolean): void {
+    this.statsConsent = yes;
+    if (yes && !this.installId) this.installId = newInstallId();
+    this.applyStatsConsent(true);
+    if (yes) this.telemetry.track('funnel', { step: 'consent_yes' });
+    void this.persist();
+  }
+
+  /** Pytanie o zgodę na statystyki: raz, na ekranie startowym (w aplikacji; w przeglądarce tylko z `?consent`). */
+  private askConsent(): void {
+    if (this.statsConsent !== null || this.consentPanel || PILOT_MODE) return;
+    if (!isNative() && !new URLSearchParams(location.search).has('consent')) return;
+    const panel = new ConsentPanel({
+      pixelRatio: this.game.pixelRatio,
+      onAnswer: (yes) => {
+        this.setStatsConsent(yes);
+        this.sfx(SFX.tap);
+        haptics.tap();
+        this.consentPanel = null;
+        this.tweens.to(panel, { alpha: 0 }, { duration: 0.15 });
+        this.timers.after(0.16, () => panel.destroy({ children: true }));
+      },
+    });
+    panel.layout(this.game.view);
+    panel.alpha = 0;
+    this.consentPanel = panel;
+    this.addChild(panel);
+    this.tweens.to(panel, { alpha: 1 }, { duration: 0.2 });
+  }
+
   /** Koniec biegu (śmierć albo wyjście do menu): rekord, ranking, statystyki, wyzwanie dnia, zapis. */
-  private recordRunEnd(): void {
+  private recordRunEnd(cause: 'spikes' | 'syrup' | 'quit' = 'quit'): void {
+    if (!PILOT_MODE) {
+      this.telemetry.track('run', {
+        mode: this.dailyMode ? 'daily' : 'normal',
+        meters: this.run.meters,
+        time: Math.round(this.run.time * 10) / 10,
+        cause,
+        candies: this.run.candies,
+        record: this.run.meters > this.bestAtStart,
+        fps: this.fpsTime > 1 ? Math.round((this.fpsFrames / this.fpsTime) * 10) / 10 : null,
+        runs: this.stats.runs + 1,
+      });
+      if (this.stats.runs === 0) this.telemetry.track('funnel', { step: 'first_run' });
+      void this.telemetry.flush();
+    }
     this.adPolicy.runEnded();
     this.lastRunSeconds = this.run.time;
     this.lastReplay = this.recorder?.finish(this.run.meters) ?? null;

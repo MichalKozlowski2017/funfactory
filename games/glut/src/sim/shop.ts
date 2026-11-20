@@ -117,6 +117,10 @@ export interface Save {
   /** Liczniki do osiągnięć i zdobyte osiągnięcia. */
   stats: Stats;
   achievements: string[];
+  /** Zgoda na anonimowe statystyki (null = jeszcze nie pytaliśmy). */
+  statsConsent: boolean | null;
+  /** Losowy identyfikator instalacji do statystyk (pusty, dopóki nie potrzebny). */
+  installId: string;
 }
 
 export const NEW_SAVE: Save = {
@@ -135,6 +139,8 @@ export const NEW_SAVE: Save = {
   lang: null,
   stats: normalizeStats(undefined),
   achievements: [],
+  statsConsent: null,
+  installId: '',
 };
 
 export type ShopResult =
@@ -187,5 +193,7 @@ export function normalizeSave(raw: Partial<Save>): Save {
     tips: Array.isArray(raw.tips) ? raw.tips.filter((x): x is string => typeof x === 'string') : [],
     stats: normalizeStats(raw.stats),
     achievements: Array.isArray(raw.achievements) ? raw.achievements.filter((id): id is string => typeof id === 'string') : [],
+    statsConsent: typeof raw.statsConsent === 'boolean' ? raw.statsConsent : null,
+    installId: typeof raw.installId === 'string' && /^[a-z0-9-]{8,64}$/i.test(raw.installId) ? raw.installId : '',
   };
 }
