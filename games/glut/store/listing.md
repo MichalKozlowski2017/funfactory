@@ -25,7 +25,7 @@ Sama nazwa „Glut” może być zajęta w sklepach. Dlatego proponuję wersję 
 
 Glut to mały, lepki slime, który utknął na dnie Cukrowej Wieży. Od dołu podnosi się różowy syrop, a jedyna droga prowadzi w górę!
 
-Przesuń palcem i wystrzel Gluta jak z procy. Przykleja się do lukrowanych półek i ścian, ślizga po lodzie, a w locie może odbić się jeszcze raz. Uważaj na karmelowe kolce i nie daj się dogonić syropowi.
+Naciągnij palcem i wystrzel Gluta jak z procy. Przykleja się do lukrowanych półek i ścian, ślizga po lodzie, a w locie może odbić się jeszcze raz. Uważaj na karmelowe kolce i nie daj się dogonić syropowi.
 
 SKACZ W RYTM
 Muzyka rośnie razem z Tobą. Każdy skok, cukierek i combo grają nuty w rytm utworu, a im dłuższa seria, tym głośniej robi się w studni.
@@ -42,15 +42,16 @@ Gumowa skorupka, magnes na cukierki, lodowy oddech, pieprzowa rakieta i inne. Ra
 UCZCIWA RYWALIZACJA
 Wszyscy grają na tych samych zasadach: za cukierki kupujesz tylko wygląd (czapki, kolory, ślady, dodatki), nic, co daje przewagę.
 
-- sterowanie jednym palcem: swipe, proca albo tap
+- sterowanie jednym palcem, jak z procy
+- światowy ranking i wyzwanie dnia w Game Center / Google Play Games
 - krótkie, dynamiczne podejścia
-- gra offline, bez konta
+- gra offline, bez konta, bez reklam
 
 ## Description (EN)
 
 Glut is a small, sticky slime stuck at the bottom of the Sugar Tower. Pink syrup is rising from below, and the only way out is up!
 
-Swipe to fling Glut like a slingshot. It sticks to frosted ledges and walls, slides on ice, and can jump again mid-air. Watch out for caramel spikes and don't let the syrup catch you.
+Pull back and fling Glut like a slingshot. It sticks to frosted ledges and walls, slides on ice, and can jump again mid-air. Watch out for caramel spikes and don't let the syrup catch you.
 
 JUMP TO THE BEAT
 The music grows with you. Every jump, candy and combo plays notes in rhythm, and the longer your streak, the louder the tower gets.
@@ -67,9 +68,10 @@ Rubber shell, candy magnet, frost breath, pepper rocket and more. Save yourself 
 FAIR COMPETITION
 Everyone plays by the same rules: candies only buy looks (hats, colors, trails, accessories), nothing that gives an advantage.
 
-- one-finger controls: swipe, slingshot or tap
+- one-finger slingshot controls
+- global leaderboards and daily challenge on Game Center / Google Play Games
 - short, fast-paced runs
-- plays offline, no account needed
+- plays offline, no account, no ads
 
 ## Słowa kluczowe (App Store ≤ 100 znaków)
 
@@ -91,19 +93,27 @@ Gra: kreskówkowa, bez przemocy wobec postaci, bez treści dla dorosłych. Mrocz
 
 ## Prywatność: Google Play „Bezpieczeństwo danych”
 
-Gra nie zbiera ani nie udostępnia danych: zapis gry (rekord, cukierki, szafa, ustawienia) zostaje na urządzeniu, reklam nie ma (biblioteki reklamowej nie ma w paczce).
+Zapis gry zostaje na urządzeniu. Za zgodą gracza (okno przy pierwszym uruchomieniu, przełącznik w Ustawieniach) gra wysyła anonimowe statystyki do naszego serwera (glut-stats na Vercelu, baza Neon): przebieg biegów, zakupy w szafie, osiągnięcia, płynność, błędy, wersja systemu i języka, losowy identyfikator instalacji. Bez reklam, bez danych osobowych, bez lokalizacji.
 
-- „Czy aplikacja zbiera lub udostępnia dane użytkownika?” → **Nie**.
-- Ranking idzie przez Google Play Games (usługa Google, konto gracza w Google). Jeśli formularz zapyta o SDK Play Games, przyjmij podpowiedzi Google dla tego SDK.
-- Reklamy: **nie** (deklaracja „Zawiera reklamy”: nie).
+- „Czy aplikacja zbiera lub udostępnia dane użytkownika?” → **Tak** (zbiera; nie udostępnia).
+- Zbierane typy: **Aktywność w aplikacji → Interakcje w aplikacji**; **Informacje o aplikacji i wydajności → Logi awarii** (błędy) i **Diagnostyka** (FPS); **Identyfikatory urządzenia lub inne → Identyfikatory urządzenia lub inne** (losowe ID instalacji).
+- Dla każdego: zbierane, **nie udostępniane**, **opcjonalne** (gracz może odmówić), cel **Analityka**, przetwarzane w ulotny sposób: nie.
+- Dane szyfrowane w transmisji: **tak** (HTTPS). Możliwość prośby o usunięcie: **tak** (e-mail z ID instalacji z Ustawień).
+- Ranking: Google Play Games (usługa Google). Jeśli formularz zapyta o SDK Play Games, przyjmij podpowiedzi Google dla tego SDK.
+- Reklamy: **nie**.
 
 ## Prywatność: App Store „App Privacy”
 
-- **Data Collection:** „No, we do not collect data from this app”. Game Center to usługa Apple i nie wchodzi do tej deklaracji.
-- Brak śledzenia (ATT nie jest używane).
+- **Do you or your third-party partners collect data from this app?** → **Yes**.
+- Typy danych:
+  - **Usage Data → Product Interaction**
+  - **Diagnostics → Performance Data** (FPS) i **Other Diagnostic Data** (błędy)
+  - **Identifiers → Device ID** (losowe ID instalacji, nie identyfikator reklamowy)
+- Dla każdego: cel **Analytics**; **Linked to user: No**; **Used for tracking: No**.
+- Game Center to usługa Apple i nie wchodzi do tej deklaracji. Brak reklam i śledzenia (ATT nie jest używane).
 
 ## Notatki dla recenzji (App Review / Google)
 
-PL: Gra nie wymaga konta i nie ma reklam ani zakupów. Ranking działa przez Game Center (iOS) / Google Play Games (Android), gdy gracz jest zalogowany.
+PL: Gra nie wymaga konta i nie ma reklam ani zakupów. Anonimowe statystyki są opcjonalne (pytamy przy pierwszym uruchomieniu, zmiana w Ustawieniach). Ranking działa przez Game Center (iOS) / Google Play Games (Android), gdy gracz jest zalogowany.
 
-EN: No account needed, no ads and no purchases. Leaderboards use Game Center (iOS) / Google Play Games (Android) when the player is signed in.
+EN: No account needed, no ads and no purchases. Anonymous statistics are optional (asked on first launch, can be changed in Settings). Leaderboards use Game Center (iOS) / Google Play Games (Android) when the player is signed in.
