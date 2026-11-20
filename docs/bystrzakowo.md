@@ -82,7 +82,8 @@ Darmowe: 3 domki w pełni (np. cienie, co nie pasuje, liczenie). Reszta po **jed
 
 ## Produkcja treści
 
-- **Grafika:** Flux 2 na Legionie (`flux2-sprite`), jeden styl dla całego katalogu (miękkie, okrągłe kształty, grube kontury, paleta pastelowa z mocnymi akcentami). Na start ok. 120–150 obiektów. Przewodnicy i tła polany jako osobne ilustracje, a postacie składane z części animowanych w kodzie.
+- **Grafika:** Flux 2 na Legionie (`flux2-sprite`), styl **plastelina** (wybór właściciela 2026-11-20, test w `assets-raw/bystrzakowo/styl2/`): „soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, bright cheerful pastel colors, cute and friendly, no face on objects”. Konkurent był wektor (czytelniejszy, spójniejszy). Jeśli plastelina się nie sprawdzi, zmieniamy styl, a katalog trzyma prompty, więc całość da się przegenerować.
+  - Ryzyka plasteliny: słabsza spójność (Flux dorabia szczegóły, np. nóżki kubka) i mniej czytelne cienie (pełne koła roweru, „bryły”). Dlatego każdy obiekt przechodzi kontrolę: podgląd obiektu i jego cienia, a obiekty o mało charakterystycznej sylwetce nie trafiają do zagadki z cieniami (tag w katalogu). Na start ok. 120–150 obiektów. Przewodnicy i tła polany jako osobne ilustracje, a postacie składane z części animowanych w kodzie.
 - **Lektor:** skill `tts`. Szacunkowo: nazwy obiektów (~150), zdania o obiektach (~150), polecenia zagadek (~80), pochwały i reakcje (~40 na przewodnika), głoski, litery i liczby (~70). Razem ok. 500–600 nagrań. Przy ~5 s na kwestię to około godziny generowania z automatyczną kontrolą wymowy, a potem odsłuch próbki przez właściciela.
 - **Dźwięki zwierząt i efekty:** paczki CC0 (np. Freesound CC0, Kenney) albo synteza.
 
