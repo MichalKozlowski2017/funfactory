@@ -8,6 +8,7 @@ Zagadki dla przedszkolaków po polsku, z lektorem. Dziecko nie musi umieć czyta
 - **Rynek:** najpierw Polska (polski lektor jest naszym wyróżnikiem), wersja angielska później.
 - **Treść:** jak najwięcej rodzajów zagadek i kategorii tematycznych.
 - **Głosy:** dwie postacie-przewodnicy, żeńska i męska (skill `tts`: głosy `alt` i `prezenter`).
+- **Ekran:** orientacja pozioma, nastawienie na tablety (iPad, tablety z Androidem), telefony też obsługiwane. Kit2d projektuje dziś w pionie (720 szerokości), więc trzeba dodać tryb poziomy.
 - **Nazwa:** Bystrzakowo (slug `bystrzakowo`). Same „Bystrzaki” odrzucone, bo kolidują z „Bystrzaki do dzieła” (Wilga) i „Dzieciaki Bystrzaki” (Winning Moves).
 
 ## Świat i przewodnicy
@@ -97,4 +98,3 @@ Darmowe: 3 domki w pełni (np. cienie, co nie pasuje, liczenie). Reszta po **jed
 - Imiona i gatunki przewodników (lisica i borsuk to propozycja).
 - Cena i podział darmowe/płatne.
 - Statystyki w 1.0: wyłączone czy zbiorcze bez ID?
-- Pozioma czy pionowa orientacja? Proponuję **poziomą**: tablety, wygodne dla małych rąk, więcej miejsca na 4 odpowiedzi. Kit2d projektuje dziś w pionie (720 szerokości), więc trzeba to dodać.
