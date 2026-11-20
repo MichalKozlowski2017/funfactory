@@ -1,17 +1,17 @@
 {
   "workflow": "flux2.json",
-  "PROMPT": "wide game banner illustration, a cute pink jelly slime blob leaping upward inside a tall candy cave shaft with pink frosting ledges, sugar crystals, wrapped candies floating, glowing pink syrup rising at the bottom, dreamy purple atmosphere, leave empty space on the left side for a title, cute candy-land mobile game art, flat vector style, clean thick dark outline, soft cel shading, pastel pink lavender and mint palette, glossy, no text, no letters",
+  "PROMPT": "wide panoramic banner, a cute pink jelly slime blob with big shiny eyes leaping upward through a tall candy tower shaft, the tower changes from a pink crystal cave at the bottom through chocolate mine and gummy jelly forest to cotton candy clouds and a dark cherry red sugar nightmare factory at the top, wrapped candies floating, glowing pink syrup rising at the bottom, sparkles, the slime in the center third, rich colorful background across the whole width, cute candy-land mobile game key art, flat vector style, clean thick dark outline, soft cel shading, glossy, vibrant, no text, no letters, no logo",
   "NEGATIVE": "",
-  "SEED": 1300,
-  "WIDTH": 1536,
-  "HEIGHT": 752,
-  "PREFIX": "feature",
+  "SEED": 4100,
+  "WIDTH": 1920,
+  "HEIGHT": 816,
+  "PREFIX": "header",
   "STEPS": 20,
   "GUIDANCE": 4,
   "BPM": 100,
   "DURATION": 60,
   "KEY": "A minor",
   "LYRICS": "[Instrumental]",
-  "created": "2026-11-18T22:28:49.697Z",
-  "post": "resize 1024 szer., crop 1024x500, logo „Glut” i podtytuł (tools/store/feature.sh): PL „Ucieczka z cukrowej studni”, EN „Outjump the rising syrup!” (feature-graphic-en.png)"
+  "created": "2026-11-20T11:32:23.421Z",
+  "post": "ta sama ilustracja co nagłówek App Store (header-4100); 1180 szer., kadr 1024x500 przesunięty, tools/store/feature.sh: logo „Glut” (Lilita One, gradient, białe i ciemne kontury, cień, przechył) i podtytuł na różowej wstążce po lewej; feature-graphic.png (PL), feature-graphic-en.png (EN)"
 }
