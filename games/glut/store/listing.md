@@ -11,7 +11,7 @@ Gra jest po polsku i angielsku (język z telefonu: polski dla polskiego, angiels
 | Pole | PL | EN |
 |---|---|---|
 | Nazwa (App Store ≤ 30, Google Play ≤ 30) | Glut: Słodka wspinaczka | Glut: Sweet Climb |
-| Podtytuł (App Store ≤ 30) | Ucieczka z cukrowej studni | Escape the sugar well |
+| Podtytuł (App Store ≤ 30) | Ucieczka z cukrowej studni | Outjump the rising syrup! |
 | Krótki opis (Google Play ≤ 80) | Wystrzel slime'a w górę cukrowej wieży, łap serie i uciekaj przed syropem! | Fling a jelly slime up a candy tower, chain combos and outrun the syrup! |
 
 Sama nazwa „Glut” może być zajęta w sklepach. Dlatego proponuję wersję z podtytułem; ikona i ekran pokazują „Glut”.
