@@ -1,0 +1,16 @@
+{
+  "workflow": "flux2.json",
+  "PROMPT": "wide panoramic banner, a cute pink jelly slime blob with big shiny eyes leaping upward through a tall candy tower shaft, the tower changes from a pink crystal cave at the bottom through chocolate mine and gummy jelly forest to cotton candy clouds and a dark cherry red sugar nightmare factory at the top, wrapped candies floating, glowing pink syrup rising at the bottom, sparkles, the slime in the center third, rich colorful background across the whole width, landscape composition, cute candy-land mobile game key art, flat vector style, clean thick dark outline, soft cel shading, glossy, vibrant, no text, no letters, no logo",
+  "NEGATIVE": "",
+  "SEED": 4200,
+  "WIDTH": 1536,
+  "HEIGHT": 1024,
+  "PREFIX": "search",
+  "STEPS": 20,
+  "GUIDANCE": 4,
+  "BPM": 100,
+  "DURATION": 60,
+  "KEY": "A minor",
+  "LYRICS": "[Instrumental]",
+  "created": "2026-11-20T11:38:28.192Z"
+}
