@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Grafika promocyjna Google Play 1024×500 z ilustracji nagłówka App Store: logo „Glut” i podtytuł na różowej wstążce (Lilita One).
+# Grafika promocyjna Google Play 1024×500 z ilustracji nagłówka App Store: logo „Glut” i podtytuł z konturem (Lilita One).
 #   fg.sh <ilustracja.png> "<podtytuł>" <wyjście.png>
 set -euo pipefail
 ART=$1; SUB=$2; OUT=$3
@@ -19,18 +19,15 @@ W=$(magick identify -format '%w' "$T/lo.png"); H=$(magick identify -format '%h' 
 magick -size "${W}x$((H+10))" xc:none "$T/lo.png" -geometry +0+10 -composite "$T/lo.png" -geometry +0+0 -composite \
   "$T/lw.png" -geometry +0+0 -composite "$T/lpg.png" -geometry +0+0 -composite \
   -trim +repage -bordercolor none -border 10 -background none -rotate -4 "$T/logo.png"
-# Podtytuł: biały tekst na różowej wstążce z białą i ciemną obwódką oraz cieniem.
-txt "$SUB" 40 white "$T/st.png"; magick "$T/st.png" -trim +repage "$T/st.png"
-tw=$(magick identify -format '%w' "$T/st.png"); th=$(magick identify -format '%h' "$T/st.png"); W=$((tw+64)); H=$((th+32))
-magick -size "$((W+12))x$((H+18))" xc:none \
-  -fill '#2a1238' -draw "roundrectangle 0,7 $((W+11)),$((H+17)) 28,28" \
-  -fill '#2a1238' -draw "roundrectangle 0,0 $((W+11)),$((H+11)) 28,28" \
-  -fill '#fff4f8' -draw "roundrectangle 4,4 $((W+7)),$((H+7)) 25,25" \
-  -fill '#ff7aa8' -draw "roundrectangle 8,8 $((W+3)),$((H+3)) 21,21" \
-  "$T/st.png" -gravity center -geometry +0-4 -composite "$T/sub.png"
+# Podtytuł: biały tekst z ciemnym konturem i twardym cieniem (bez tła).
+txt "$SUB" 44 white "$T/st.png"
+outline "$T/st.png" 6 '#2a1238' "$T/so.png"
+W=$(magick identify -format '%w' "$T/so.png"); H=$(magick identify -format '%h' "$T/so.png")
+magick -size "${W}x$((H+6))" xc:none "$T/so.png" -geometry +0+6 -composite "$T/so.png" -geometry +0+0 -composite \
+  "$T/st.png" -geometry +0+0 -composite -trim +repage "$T/sub.png"
 # Tło: kadr przesunięty, żeby glut był w prawej części; lewa strona lekko przyciemniona.
 magick "$ART" -filter Lanczos -resize 1180x -gravity center -crop 1024x500-60+0 +repage "$T/bg.png"
 magick -size 500x1024 gradient:'rgba(42,18,56,0.55)'-'rgba(42,18,56,0)' -rotate -90 -resize 620x500! "$T/shade.png"
 magick "$T/bg.png" "$T/shade.png" -gravity west -composite \
   \( "$T/logo.png" -resize 410x \) -gravity northwest -geometry +36+78 -composite \
-  \( "$T/sub.png" -resize '440x>' \) -gravity northwest -geometry +42+298 -composite "$OUT"
+  \( "$T/sub.png" -resize '440x>' \) -gravity northwest -geometry +46+296 -composite "$OUT"
