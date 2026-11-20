@@ -1,12 +1,12 @@
 import type { Rng } from '@funfactory/core';
-import { ITEMS, type Item } from './catalog.ts';
+import { firstSound, ITEMS, type Color, type Item } from './catalog.ts';
 
 /**
  * Silniki zagadek: z katalogu i poziomu trudności (0..MAX_LEVEL) generują pytania.
  * Czysty TS bez Pixi, żeby dało się testować i stroić.
  */
-export type PuzzleKind = 'cienie' | 'pasuje' | 'liczenie';
-export const PUZZLE_KINDS: readonly PuzzleKind[] = ['cienie', 'pasuje', 'liczenie'];
+export type PuzzleKind = 'cienie' | 'pasuje' | 'liczenie' | 'kolory' | 'gloski' | 'mamy';
+export const PUZZLE_KINDS: readonly PuzzleKind[] = ['cienie', 'pasuje', 'liczenie', 'kolory', 'gloski', 'mamy'];
 export const MAX_LEVEL = 2;
 export const ROUND_LENGTH = 5;
 
@@ -32,7 +32,49 @@ export interface CountQuestion {
   options: number[];
 }
 
-export type Question = ShadowQuestion | OddQuestion | CountQuestion;
+/** „Pokaż coś czerwonego”: dokładnie jeden obiekt ma kolor `color`. */
+export interface ColorQuestion {
+  kind: 'kolory';
+  color: Color;
+  target: Item;
+  options: Item[];
+}
+
+/** „Co zaczyna się na głoskę sz?”: dokładnie jeden obiekt zaczyna się na `sound`. */
+export interface SoundQuestion {
+  kind: 'gloski';
+  sound: string;
+  target: Item;
+  options: Item[];
+}
+
+/** „Gdzie jest mama kurczaczka?”: `baby` u góry, do wyboru dorosłe zwierzęta. */
+export interface MotherQuestion {
+  kind: 'mamy';
+  baby: Item;
+  target: Item;
+  options: Item[];
+}
+
+export type Question = ShadowQuestion | OddQuestion | CountQuestion | ColorQuestion | SoundQuestion | MotherQuestion;
+
+/**
+ * Głoski, o które pytamy (lektor ma do nich nagrania „gloska-<głoska>”). Pomijamy zwarte (k, p, t, b, d, g),
+ * bo w izolacji brzmią jak sylaby („ka”, „pe”) i myliłyby dzieci.
+ */
+export const SOUNDS = ['a', 'o', 'u', 'm', 'l', 'w', 's', 'sz', 'ż', 'ś', 'r', 'h', 'z', 'cz', 'j', 'n', 'ł'] as const;
+
+/** Nazwa pliku nagrania głoski (bez polskich znaków w nazwach plików). */
+export const soundSlug = (sound: string): string => sound.replace('ż', 'zh').replace('ś', 'si').replace('ł', 'lw').replace('ź', 'zi');
+
+/** Głoski łatwe do pomylenia: zmyłki nie mogą być z tej samej grupy co odpowiedź. */
+const CONFUSABLE: string[][] = [
+  ['s', 'ś', 'sz', 'z', 'ź', 'ż', 'c', 'ć', 'cz', 'dz', 'dź', 'dż'],
+  ['l', 'ł', 'r'],
+  ['o', 'u'],
+  ['m', 'n'],
+];
+const confusable = (a: string, b: string) => a === b || CONFUSABLE.some((g) => g.includes(a) && g.includes(b));
 
 /** Liczba odpowiedzi do wyboru na danym poziomie. */
 export const optionCount = (level: number): number => [2, 3, 4][clampLevel(level)] as number;
@@ -81,17 +123,90 @@ export function countQuestion(rng: Rng, level: number, recent: readonly string[]
   return { kind: 'liczenie', item, count, options };
 }
 
-export function makeQuestion(kind: PuzzleKind, rng: Rng, level: number, recent: readonly string[] = []): Question {
-  if (kind === 'cienie') return shadowQuestion(rng, level, recent);
-  if (kind === 'pasuje') return oddQuestion(rng, level, recent);
-  return countQuestion(rng, level, recent);
+const freshPick = <T extends Item>(rng: Rng, pool: readonly T[], recent: readonly string[]): T => {
+  const fresh = pool.filter((i) => !recent.includes(i.id));
+  return rng.pick(fresh.length > 0 ? fresh : pool);
+};
+
+export function colorQuestion(rng: Rng, level: number, recent: readonly string[] = []): ColorQuestion {
+  const colored = ITEMS.filter((i) => i.color);
+  const target = freshPick(rng, colored, recent);
+  const n = Math.max(3, optionCount(level));
+  // Zmyłki: różne kolory, inne niż odpowiedź (żeby dokładnie jedna była dobra i obraz był czytelny).
+  const decoys: Item[] = [];
+  const used = new Set<string>([target.color!]);
+  for (const item of rng.shuffle(colored.filter((i) => i.color !== target.color))) {
+    if (decoys.length >= n - 1) break;
+    if (used.has(item.color!)) continue;
+    used.add(item.color!);
+    decoys.push(item);
+  }
+  return { kind: 'kolory', color: target.color!, target, options: rng.shuffle([target, ...decoys]) };
 }
 
-/** Id obiektu, który pytanie „zużywa” (żeby nie powtarzać go w rundzie). */
-export const questionKey = (q: Question): string => (q.kind === 'cienie' ? q.target.id : q.kind === 'pasuje' ? q.odd.id : q.item.id);
+export function soundQuestion(rng: Rng, level: number, recent: readonly string[] = []): SoundQuestion {
+  const known = new Set<string>(SOUNDS);
+  const pool = ITEMS.filter((i) => known.has(firstSound(i.name)));
+  const target = freshPick(rng, pool, recent);
+  const sound = firstSound(target.name);
+  const n = Math.max(3, optionCount(level));
+  const decoys = take(
+    rng,
+    ITEMS.filter((i) => !confusable(firstSound(i.name), sound)),
+    n - 1,
+  );
+  return { kind: 'gloski', sound, target, options: rng.shuffle([target, ...decoys]) };
+}
 
-export const isCorrect = (q: Question, answer: Item | number): boolean =>
-  q.kind === 'cienie' ? answer === q.target : q.kind === 'pasuje' ? answer === q.odd : answer === q.count;
+export function motherQuestion(rng: Rng, level: number, recent: readonly string[] = []): MotherQuestion {
+  // Tylko młode, których mama jest w katalogu (katalog może być okrojony do wczytanych grafik).
+  const babies = ITEMS.filter((i) => i.mother && ITEMS.some((m) => m.id === i.mother));
+  const baby = freshPick(rng, babies, recent);
+  const target = ITEMS.find((i) => i.id === baby.mother)!;
+  const mothers = new Set(babies.map((b) => b.mother));
+  // Zmyłki: inne dorosłe zwierzęta (najpierw inne mamy z tej gry, potem reszta zwierząt).
+  const adults = ITEMS.filter((i) => i.category === 'zwierzeta' && !i.mother && i !== target);
+  const n = Math.max(3, optionCount(level));
+  const preferred = take(rng, adults.filter((a) => mothers.has(a.id)), n - 1);
+  const decoys = preferred.length >= n - 1 ? preferred : [...preferred, ...take(rng, adults, n - 1 - preferred.length, preferred)];
+  return { kind: 'mamy', baby, target, options: rng.shuffle([target, ...decoys]) };
+}
+
+export function makeQuestion(kind: PuzzleKind, rng: Rng, level: number, recent: readonly string[] = []): Question {
+  switch (kind) {
+    case 'cienie':
+      return shadowQuestion(rng, level, recent);
+    case 'pasuje':
+      return oddQuestion(rng, level, recent);
+    case 'liczenie':
+      return countQuestion(rng, level, recent);
+    case 'kolory':
+      return colorQuestion(rng, level, recent);
+    case 'gloski':
+      return soundQuestion(rng, level, recent);
+    case 'mamy':
+      return motherQuestion(rng, level, recent);
+  }
+}
+
+/** Obiekt, o który chodzi w pytaniu (dobra odpowiedź albo obiekt do liczenia). */
+export const questionItem = (q: Question): Item => (q.kind === 'pasuje' ? q.odd : q.kind === 'liczenie' ? q.item : q.kind === 'mamy' ? q.baby : q.target);
+
+/** Id obiektu, który pytanie „zużywa” (żeby nie powtarzać go w rundzie). */
+export const questionKey = (q: Question): string => questionItem(q).id;
+
+/** Prawidłowa odpowiedź. */
+export const answerOf = (q: Question): Item | number => (q.kind === 'liczenie' ? q.count : q.kind === 'pasuje' ? q.odd : q.target);
+
+export const isCorrect = (q: Question, answer: Item | number): boolean => answer === answerOf(q);
+
+/** Nagranie polecenia (bez rozszerzenia), np. "kolor-czerwony", "gloska-sz", "mama-kurczak". */
+export function promptLine(q: Question): string {
+  if (q.kind === 'kolory') return `kolor-${q.color}`;
+  if (q.kind === 'gloski') return `gloska-${soundSlug(q.sound)}`;
+  if (q.kind === 'mamy') return `mama-${q.baby.id}`;
+  return q.kind;
+}
 
 /** Cała runda: ROUND_LENGTH pytań bez powtórzeń obiektu przewodniego. */
 export function makeRound(kind: PuzzleKind, rng: Rng, level: number): Question[] {
@@ -103,6 +218,16 @@ export function makeRound(kind: PuzzleKind, rng: Rng, level: number): Question[]
     out.push(q);
   }
   return out;
+}
+
+/** Czy z obecnego katalogu da się złożyć rundę (np. są młode zwierzęta i ich mamy). */
+export function playable(kind: PuzzleKind, rng: Rng): boolean {
+  try {
+    const round = makeRound(kind, rng, MAX_LEVEL);
+    return round.every((q) => q.kind === 'liczenie' || q.options.length >= 3 || (q.kind === 'cienie' && q.options.length >= 2));
+  } catch {
+    return false;
+  }
 }
 
 /**

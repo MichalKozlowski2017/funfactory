@@ -30,6 +30,21 @@ for id in pies ryba zaba kaczka gruszka truskawka samolot lodka pilka mis klocek
 sprite styl2/plastelina-lisica-21.png lusia 720
 sprite styl2/plastelina-borsuk-21.png bazyl 720
 for k in cienie pasuje liczenie; do sprite proto/dom-$k-21.png dom-$k 560; done
+for k in kolory gloski mamy; do sprite extra/dom-$k-21.png dom-$k 560; done
+# Nowe obiekty katalogu (scripts/gen-art.ts): assets-raw/bystrzakowo/items/<id>-21.png
+for f in $RAW/items/*-21.png; do
+  [ -f "$f" ] || continue
+  id=$(basename "$f" -21.png)
+  [ -f "$OUT/items/$id.webp" ] && [ "$OUT/items/$id.webp" -nt "$f" ] && continue
+  sprite "items/$id-21.png" "items/$id" 512
+done
+# Muzyka (ACE-Step): FLAC -> AAC, cicha pętla w tle.
+mus=$(ls $RAW/extra/muzyka*.flac 2>/dev/null | head -1 || true)
+if [ -n "$mus" ]; then
+  mkdir -p public/audio
+  ffmpeg -loglevel error -y -i "$mus" -af "loudnorm=I=-20:TP=-2,afade=t=in:d=0.05" -ac 2 -ar 44100 -c:a aac -b:a 96k public/audio/muzyka.m4a
+  cp "${mus%.flac}.json" public/audio/muzyka.json 2>/dev/null || true
+fi
 background proto/tlo-polana-21.png polana
 background proto/tlo-zagadka-21.png tlo-zagadka
 du -sh $OUT
