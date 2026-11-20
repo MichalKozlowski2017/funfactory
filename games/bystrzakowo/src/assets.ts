@@ -1,6 +1,7 @@
 import { Assets, type Texture } from 'pixi.js';
 import { pixelsToTexture, type Game } from '@funfactory/kit2d';
 import { ITEMS, keepOnly, type Color } from './sim/catalog.ts';
+import { state } from './state.ts';
 import { PUZZLE_KINDS, SOUNDS, soundSlug, type PuzzleKind } from './sim/puzzles.ts';
 
 /**
@@ -106,6 +107,11 @@ export function say(game: Game, guide: Guide, line: string): number {
 /** Muzyka w tle: cicha pętla, startuje raz (po pierwszym dotknięciu, gdy dźwięk jest odblokowany). */
 let musicOn = false;
 export function startMusic(game: Game): void {
-  if (musicOn) return;
+  if (musicOn || !state.progress.music) return;
   if (game.sound.play('muzyka', { loop: true, volume: 0.16 }) > 0) musicOn = true;
+}
+
+export function stopMusic(game: Game): void {
+  game.sound.stopMusic();
+  musicOn = false;
 }

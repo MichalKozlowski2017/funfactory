@@ -87,6 +87,18 @@ Darmowe: 3 domki w pełni (np. cienie, co nie pasuje, liczenie). Reszta po **jed
 - **Lektor:** skill `tts`. Szacunkowo: nazwy obiektów (~150), zdania o obiektach (~150), polecenia zagadek (~80), pochwały i reakcje (~40 na przewodnika), głoski, litery i liczby (~70). Razem ok. 500–600 nagrań. Przy ~5 s na kwestię to około godziny generowania z automatyczną kontrolą wymowy, a potem odsłuch próbki przez właściciela.
 - **Dźwięki zwierząt i efekty:** paczki CC0 (np. Freesound CC0, Kenney) albo synteza.
 
+## Stan (2026-11-21, noc)
+
+Gra: `games/bystrzakowo` (Vite + Pixi + Capacitor, poziomo, `designHeight: 720`).
+
+- **6 domków:** cienie, co nie pasuje, liczenie (dotykanie i liczenie na głos), kolory (plama farby i „Pokaż coś czerwonego”), głoski (litera i „Co zaczyna się na głoskę…”, bez głosek zwartych k/p/t/b/d/g), mamy i dzieci.
+- **Katalog:** 115 obiektów w 8 kategoriach (`src/sim/catalog.ts`): kolor, sylwetka, liczenie, pary mama–młode, pierwsza głoska liczona z nazwy. Obiekt bez grafiki wypada z gry, domek bez treści się chowa.
+- **Rytm:** rundy po 5 pytań, naklejka na koniec, trudność adaptacyjna w każdym domku, podpowiedzi przy bezczynności (8 s: polecenie jeszcze raz, 16 s: dobra karta się kołysze), dotknięcie przewodnika powtarza polecenie.
+- **Album naklejek** (brakujące jako cienie, strony gestem albo strzałkami), **strefa rodzica** (przytrzymaj zębatkę 2 s: muzyka, zerowanie postępów).
+- **Lektor:** Lusia (`alt`) i Bazyl (`prezenter`), skrypty `scripts/voice.sh` i `voice/lines*.json`.
+- **Grafika:** `scripts/gen-art.ts` (Flux na Legionie), `scripts/assets.sh` (WebP do `public/art`), `scripts/icon.sh` (ikona i ekran startowy).
+- **Muzyka:** ACE-Step, cicha pętla 64 s.
+
 ## Plan
 
 1. **Prototyp (3 domki: cienie, co nie pasuje, liczenie):** katalog z ~20 obiektami, silniki zagadek w czystym TS z testami, polana z trzema domkami, lektor, naklejka po rundzie. Cel: sprawdzić na dziecku, czy jest zabawnie i zrozumiale.

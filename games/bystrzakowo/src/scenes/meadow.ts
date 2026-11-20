@@ -5,6 +5,7 @@ import { loadArt, say, shadowOf, startMusic, type Art } from '../assets.ts';
 import { playable, type PuzzleKind } from '../sim/puzzles.ts';
 import { state } from '../state.ts';
 import { COLORS, cover, label, sfx } from '../ui.ts';
+import { ParentGate, ParentPanel } from '../parent.ts';
 import { AlbumScene } from './album.ts';
 import { PuzzleScene } from './puzzle.ts';
 
@@ -24,6 +25,8 @@ export class MeadowScene extends Scene {
   private album!: Container;
   private particles!: Particles;
   private leaving = false;
+  private gate!: ParentGate;
+  private parentPanel: ParentPanel | null = null;
 
   override async enter(): Promise<void> {
     this.art = await loadArt();
@@ -96,6 +99,10 @@ export class MeadowScene extends Scene {
     this.particles = new Particles(dotTexture(this.game.app.renderer, 10), this.game.rng);
     this.addChild(this.particles.view);
 
+    this.gate = new ParentGate();
+    this.gate.onOpen = () => this.openParent();
+    this.addChild(this.gate);
+
     // Powitanie i muzyka przy pierwszym dotknięciu (przeglądarki odblokowują dźwięk dopiero po geście).
     this.eventMode = 'static';
     this.on('pointerdown', () => {
@@ -159,8 +166,20 @@ export class MeadowScene extends Scene {
     this.timers.after(0.35, () => void this.game.scenes.go(new PuzzleScene(kind), { fade: 0.3, color: 0xfff6e8 }));
   }
 
+  private openParent(): void {
+    if (this.parentPanel) return;
+    this.parentPanel = new ParentPanel(this.game, () => {
+      this.parentPanel?.destroy({ children: true });
+      this.parentPanel = null;
+    });
+    this.parentPanel.layout(this.game.view);
+    this.addChild(this.parentPanel);
+  }
+
   override update(dt: number): void {
     this.particles.update(dt);
+    this.gate.tick(dt);
+    this.parentPanel?.tick(dt);
   }
 
   override resize(view: View): void {
@@ -184,5 +203,7 @@ export class MeadowScene extends Scene {
     place(BACK, h * 0.5 + 75, 0.62);
     place(FRONT, h - 40, 0.9);
     this.album.position.set(w - safe.right - 110, 90 + safe.top);
+    this.gate.position.set(safe.left + 60, 60 + safe.top);
+    this.parentPanel?.layout(view);
   }
 }

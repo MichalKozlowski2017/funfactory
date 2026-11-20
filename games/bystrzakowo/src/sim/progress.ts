@@ -9,12 +9,15 @@ export interface Progress {
   /** Zebrane naklejki (id obiektów z katalogu), w kolejności zdobycia. */
   stickers: string[];
   rounds: number;
+  /** Ustawienia ze strefy rodzica. */
+  music: boolean;
 }
 
 export const newProgress = (): Progress => ({
   levels: Object.fromEntries(PUZZLE_KINDS.map((k) => [k, 0])) as Record<PuzzleKind, number>,
   stickers: [],
   rounds: 0,
+  music: true,
 });
 
 /** Naklejka za rundę: najpierw te, których dziecko jeszcze nie ma. */
