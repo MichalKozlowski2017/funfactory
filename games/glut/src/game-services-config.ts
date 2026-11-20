@@ -10,6 +10,6 @@ import type { GameServicesConfig } from '@funfactory/core';
  */
 export const GAME_SERVICES: GameServicesConfig = {
   ios: { best: 'glut.best', daily: 'glut.daily' },
-  // Play Games nadaje własne ID (np. CgkI…); wpiszemy je po utworzeniu tablic w Play Console.
-  android: { best: '', daily: '' },
+  // Play Games (projekt 803220270496): tablice „Best height” i „Daily challenge”.
+  android: { best: 'CgkIoNuinbAXEAIQAQ', daily: 'CgkIoNuinbAXEAIQAg' },
 };
