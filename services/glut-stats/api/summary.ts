@@ -33,7 +33,7 @@ export async function GET(): Promise<Response> {
     await Promise.all([
       q(`SELECT (SELECT count(DISTINCT install) FROM ev) AS installs, (SELECT count(*) FROM runs) AS runs,
            (SELECT count(*) FROM runs WHERE mode = 'daily') AS daily_runs, (SELECT count(DISTINCT install) FROM runs WHERE mode = 'daily') AS daily_players,
-           (SELECT round(sum(time) / 3600.0, 1) FROM runs) AS hours, (SELECT max(meters) FROM runs) AS best,
+           (SELECT round((sum(time) / 3600.0)::numeric, 1) FROM runs) AS hours, (SELECT max(meters) FROM runs) AS best,
            (SELECT min(ts) FROM ev) AS first_event, (SELECT max(ts) FROM ev) AS last_event`),
       q(`, first AS (SELECT install, min(day) AS d0 FROM ev GROUP BY install)
          SELECT ev.day, (SELECT count(*) FROM first WHERE d0 = ev.day) AS new, count(DISTINCT ev.install) AS active,
@@ -77,9 +77,11 @@ export async function GET(): Promise<Response> {
          FROM runs`),
       q(`SELECT data->>'item' AS item, count(*) AS count FROM ev WHERE name = 'buy' GROUP BY 1 ORDER BY 2 DESC LIMIT 24`),
       q(`SELECT data->>'id' AS id, count(DISTINCT install) AS installs FROM ev WHERE name = 'ach' GROUP BY 1 ORDER BY 2 DESC`),
-      q(`SELECT coalesce(e.platform, '?') AS platform, count(DISTINCT e.install) AS installs,
-           (SELECT round(percentile_cont(0.5) WITHIN GROUP (ORDER BY r.fps)::numeric, 1) FROM runs r WHERE r.platform = e.platform) AS median_fps
-         FROM ev e GROUP BY 1 ORDER BY 2 DESC`),
+      q(`SELECT coalesce(p.platform, '?') AS platform, p.installs, f.median_fps
+         FROM (SELECT platform, count(DISTINCT install) AS installs FROM ev GROUP BY platform) p
+         LEFT JOIN (SELECT platform, round(percentile_cont(0.5) WITHIN GROUP (ORDER BY fps)::numeric, 1) AS median_fps FROM runs WHERE fps IS NOT NULL GROUP BY platform) f
+           ON f.platform IS NOT DISTINCT FROM p.platform
+         ORDER BY p.installs DESC`),
       q(`SELECT build, count(DISTINCT install) AS installs, count(*) AS runs,
            percentile_disc(0.5) WITHIN GROUP (ORDER BY meters) AS median_m, round(percentile_cont(0.5) WITHIN GROUP (ORDER BY time)::numeric, 1) AS median_time
          FROM runs GROUP BY build ORDER BY min(day) DESC LIMIT 12`),
