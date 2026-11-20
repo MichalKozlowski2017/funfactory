@@ -1,5 +1,7 @@
 # Glut: karta w sklepach i odpowiedzi do formularzy
 
+Adresy: polityka prywatności https://mkdev.com.pl/apps/glut/privacy-policy, strona gry (wsparcie/marketing) https://mkdev.com.pl/apps/glut, kontakt mkdev.appslab@gmail.com.
+
 Grafiki w tym katalogu: `icon-1024.png` (App Store), `icon-512.png` (Google Play), `feature-graphic.png` (Google Play, 1024×500), `screens/` (iPhone 6,9" 1320×2868, iPhone 6,5" 1242×2688, Android 1080×1920; wersje PL i EN).
 
 Gra jest po polsku i angielsku (język z telefonu: polski dla polskiego, angielski dla innych; zmiana w Ustawieniach). W App Store Connect i Play Console dodaj język angielski z kartą EN poniżej.

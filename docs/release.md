@@ -12,7 +12,7 @@ Stan na 2026-11-19: wszystko, co da się zrobić bez kont i podpisów właścici
 | Ikony, splash, ciemne tło startu | w projektach `ios/` i `android/` |
 | Grafiki do sklepów (ikony, feature graphic, zrzuty PL/EN) | `games/glut/store/` |
 | Teksty, kategorie, odpowiedzi do formularzy | `games/glut/store/listing.md` |
-| Polityka prywatności (do opublikowania) | `games/glut/legal/privacy.html` |
+| Polityka prywatności (opublikowana) | https://mkdev.com.pl/apps/glut/privacy-policy (repo `~/Sites/mkdev`, plik `content/pages/privacy-glut.mdx`) |
 | Reklamy AdMob | **wyłączone na start** (decyzja 20.11.2026): kod w repo (`ADS_ENABLED` w `games/glut/src/ads-config.ts`), biblioteki nie ma w paczkach |
 
 `release/` jest w `.gitignore` (duże pliki binarne). Buildy da się odtworzyć poleceniami z sekcji „Budowanie”.
@@ -36,9 +36,8 @@ App Store Connect → Apps → „+” → New App:
 ### 4. AdMob: na później
 Na start gra wychodzi bez reklam. Wracamy do tego, gdy ruch będzie sensowny: konto AdMob, 2 aplikacje, jednostki Banner i Interstitial, komunikat RODO, `app-ads.txt` na stronie dewelopera, potem kroki [Claude] niżej.
 
-### 5. Polityka prywatności pod stałym adresem
-- Uzupełnij w `games/glut/legal/privacy.html` pola `[IMIĘ I NAZWISKO / NAZWA WYDAWCY]` i `[E-MAIL KONTAKTOWY]` (albo podaj mi je, wpiszę).
-- Opublikuj stronę (np. GitHub Pages, własna domena, Netlify) i podaj adres w obu sklepach.
+### 5. Polityka prywatności: gotowe
+Opublikowana na stronie mkdev (jak Dealoot): **https://mkdev.com.pl/apps/glut/privacy-policy**, strona gry: https://mkdev.com.pl/apps/glut. Ten adres wpisz w obu sklepach (Privacy Policy URL), a https://mkdev.com.pl/apps/glut jako stronę wsparcia/marketingu. Kontakt: mkdev.appslab@gmail.com.
 
 ### 6. Formularze w sklepach
 Wszystkie odpowiedzi są w `games/glut/store/listing.md`: opis, słowa kluczowe, kategorie, ocena wiekowa (13+ w Google Play), „Bezpieczeństwo danych” (Google) i „App Privacy” (Apple), notatki dla recenzji.
