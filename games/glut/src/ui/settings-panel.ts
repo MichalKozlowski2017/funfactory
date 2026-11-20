@@ -21,9 +21,11 @@ export interface SettingsOptions {
   onClose: () => void;
   /** Stuknięcie w numer wersji (5 razy z rzędu włącza licznik wydajności). */
   onVersionTap?: () => void;
+  /** Przycisk ustawień prywatności reklam (tylko gdy reklamy są włączone). */
+  adsPrivacy?: boolean;
 }
 
-/** Ustawienia: muzyka, dźwięki, wibracje, sterowanie. Proste przełączniki, bez wpływu na rozgrywkę. */
+/** Ustawienia: muzyka, dźwięki, wibracje, język (i prywatność reklam, gdy są włączone). Proste przełączniki, bez wpływu na rozgrywkę. */
 export class SettingsPanel extends Container {
   private readonly dim = new Graphics();
   private readonly panel = new Graphics();
@@ -43,6 +45,7 @@ export class SettingsPanel extends Container {
       anchor: 0.5,
     });
     for (const key of ['music', 'sfx', 'vibration', 'lang', 'privacy'] as const) {
+      if (key === 'privacy' && !o.adsPrivacy) continue;
       const color = key === 'lang' ? '#5fc8e8' : key === 'privacy' ? '#6e6488' : '#9b8cff';
       const button = new Button({ label: '', color, width: 460, height: key === 'privacy' ? 80 : 96, fontSize: key === 'privacy' ? 28 : 34, resolution: o.pixelRatio, onTap: () => o.onToggle(key) });
       this.rows.push({ key, button });

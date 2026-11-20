@@ -15,7 +15,6 @@
     "aab": "vite build && cap sync android && cd android && JAVA_HOME=\"${JAVA_HOME_21:-/Applications/Android Studio.app/Contents/jbr/Contents/Home}\" ./gradlew bundleRelease"
   },
   "dependencies": {
-    "@capacitor-community/admob": "8.3.0",
     "@capacitor/android": "^8.6.2",
     "@capacitor/core": "^8.6.2",
     "@capacitor/haptics": "^8.0.2",

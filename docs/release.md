@@ -13,7 +13,7 @@ Stan na 2026-11-19: wszystko, co da się zrobić bez kont i podpisów właścici
 | Grafiki do sklepów (ikony, feature graphic, zrzuty PL/EN) | `games/glut/store/` |
 | Teksty, kategorie, odpowiedzi do formularzy | `games/glut/store/listing.md` |
 | Polityka prywatności (do opublikowania) | `games/glut/legal/privacy.html` |
-| Reklamy AdMob (baner poza grą, pełnoekranowe między biegami, zgoda RODO, ATT) | działają na **testowych** ID Google |
+| Reklamy AdMob | **wyłączone na start** (decyzja 20.11.2026): kod w repo (`ADS_ENABLED` w `games/glut/src/ads-config.ts`), biblioteki nie ma w paczkach |
 
 `release/` jest w `.gitignore` (duże pliki binarne). Buildy da się odtworzyć poleceniami z sekcji „Budowanie”.
 
@@ -33,13 +33,8 @@ App Store Connect → Apps → „+” → New App:
 - **Ważne:** nowe konta osobiste muszą przed produkcją przeprowadzić **test zamknięty z co najmniej 12 testerami przez 14 dni**. Zaplanuj znajomych jako testerów. Konto firmowe nie ma tego wymogu.
 - Utwórz aplikację: nazwa jak wyżej, gra, bezpłatna, język polski.
 
-### 4. AdMob: konto i jednostki reklamowe
-- admob.google.com: konto (połączone z płatnościami i danymi podatkowymi).
-- Dodaj 2 aplikacje (iOS i Android, „jeszcze nie w sklepie”, potem połączysz ze sklepem).
-- W każdej utwórz jednostki: **Banner** (adaptacyjny) i **Interstitial**.
-- Privacy & messaging: utwórz komunikat RODO (GDPR) dla obu aplikacji i komunikat wyjaśniający IDFA dla iOS.
-- **app-ads.txt:** AdMob wymaga pliku `app-ads.txt` na stronie dewelopera (domena podana w sklepach). Potrzebna jest jakakolwiek Twoja strona, np. ta sama, na której będzie polityka prywatności.
-- Wyślij mi: ID aplikacji (2 sztuki, format `ca-app-pub-…~…`) i ID jednostek (4 sztuki, format `ca-app-pub-…/…`).
+### 4. AdMob: na później
+Na start gra wychodzi bez reklam. Wracamy do tego, gdy ruch będzie sensowny: konto AdMob, 2 aplikacje, jednostki Banner i Interstitial, komunikat RODO, `app-ads.txt` na stronie dewelopera, potem kroki [Claude] niżej.
 
 ### 5. Polityka prywatności pod stałym adresem
 - Uzupełnij w `games/glut/legal/privacy.html` pola `[IMIĘ I NAZWISKO / NAZWA WYDAWCY]` i `[E-MAIL KONTAKTOWY]` (albo podaj mi je, wpiszę).
@@ -57,7 +52,9 @@ Kod jest gotowy (`games/glut/src/game-services-config.ts`, wtyczka natywna `Game
 - **Google**: Play Console → Usługi gier Play → Konfiguracja (projekt gier) → Tablice wyników: „Rekord” i „Wyzwanie dnia” (format liczbowy, wyższy lepszy, limit 0–5000). Wyślij mi **ID projektu** (liczba) i **ID obu tablic** (format `CgkI…`).
 - Polityka prywatności: dopiszę, że wynik i nick idą do Apple Game Center / Google Play Games, gdy gracz jest zalogowany.
 
-## Kroki [Claude] po otrzymaniu ID reklam
+## Kroki [Claude] po otrzymaniu ID reklam (gdy włączymy reklamy)
+
+0. `ADS_ENABLED = true`, `@capacitor-community/admob` z powrotem w `games/glut/package.json`, w Info.plist `GADApplicationIdentifier`, `NSUserTrackingUsageDescription` i `SKAdNetworkItems`, w AndroidManifest `com.google.android.gms.ads.APPLICATION_ID` (stan sprzed wyłączenia jest w historii git). Polityka prywatności i formularze sklepów: z powrotem sekcje o reklamach.
 
 1. Wpisuję ID jednostek w `games/glut/src/ads-config.ts` i ustawiam `testing: false`.
 2. Wpisuję ID aplikacji w `ios/App/App/Info.plist` (`GADApplicationIdentifier`) i `android/app/src/main/AndroidManifest.xml` (`com.google.android.gms.ads.APPLICATION_ID`).

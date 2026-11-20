@@ -81,38 +81,27 @@ Everyone plays by the same rules: candies only buy looks (hats, colors, trails, 
 
 ## Ocena wiekowa
 
-Gra: kreskówkowa, bez przemocy wobec postaci, bez treści dla dorosłych. Mroczniejsze światy (straszne oczy w ciemności, cukierki-czaszki) to „łagodne motywy strachu w stylu kreskówki”. Reklamy: tak. Zakupy w aplikacji: nie. Kontakt między użytkownikami: nie.
+Gra: kreskówkowa, bez przemocy wobec postaci, bez treści dla dorosłych. Mroczniejsze światy (straszne oczy w ciemności, cukierki-czaszki) to „łagodne motywy strachu w stylu kreskówki”. Reklamy: nie (na start; decyzja właściciela 20.11.2026). Zakupy w aplikacji: nie. Kontakt między użytkownikami: nie.
 
-- App Store (kwestionariusz wieku): Horror/Fear Themes → Infrequent/Mild; wszystko inne → None. Made for Kids: **nie**. Reklamy: tak.
+- App Store (kwestionariusz wieku): Horror/Fear Themes → Infrequent/Mild; wszystko inne → None. Made for Kids: **nie**. Reklamy: nie.
 - Google Play (IARC): przemoc: nie; strach: łagodny, kreskówkowy; wulgaryzmy, hazard, narkotyki: nie; interakcja użytkowników: nie; udostępnianie lokalizacji: nie; zakupy cyfrowe: nie.
 - Google Play, grupa docelowa: **13–15, 16–17, 18+** (decyzja właściciela: 13+). Na pytanie „czy aplikacja może przyciągać dzieci” odpowiadamy uczciwie: styl jest kreskówkowy, ale gra nie jest skierowana do dzieci (bez postaci z bajek dla dzieci, bez języka dla dzieci w opisie i marketingu).
 
 ## Prywatność: Google Play „Bezpieczeństwo danych”
 
-Gra sama nie zbiera danych; zapis gry (rekord, cukierki, czapki, ustawienia) zostaje na urządzeniu. Dane zbiera SDK reklam Google AdMob (wg dokumentacji Google dla Data safety):
+Gra nie zbiera ani nie udostępnia danych: zapis gry (rekord, cukierki, szafa, ustawienia) zostaje na urządzeniu, reklam nie ma (biblioteki reklamowej nie ma w paczce).
 
-| Typ danych | Zbierane | Udostępniane | Cel | Opcjonalne |
-|---|---|---|---|---|
-| Identyfikatory urządzenia (identyfikator reklamowy) | tak | tak (Google) | reklamy, analityka, zapobieganie oszustwom | nie (SDK) |
-| Przybliżona lokalizacja (z adresu IP) | tak | tak (Google) | reklamy, zapobieganie oszustwom | nie |
-| Aktywność w aplikacji (interakcje z reklamami) | tak | tak (Google) | reklamy, analityka | nie |
-| Informacje o aplikacji i wydajności (diagnostyka, awarie SDK) | tak | tak (Google) | analityka, zapobieganie oszustwom | nie |
-
-- Dane szyfrowane w transmisji: **tak**.
-- Możliwość usunięcia danych: aplikacja nie ma konta; zgodę na reklamy spersonalizowane można zmienić w Ustawienia → Prywatność reklam.
-- Reklamy: **tak** (deklaracja „Zawiera reklamy”).
+- „Czy aplikacja zbiera lub udostępnia dane użytkownika?” → **Nie**.
+- Ranking idzie przez Google Play Games (usługa Google, konto gracza w Google). Jeśli formularz zapyta o SDK Play Games, przyjmij podpowiedzi Google dla tego SDK.
+- Reklamy: **nie** (deklaracja „Zawiera reklamy”: nie).
 
 ## Prywatność: App Store „App Privacy”
 
-Wg dokumentacji Google Mobile Ads SDK:
-
-- **Data Used to Track You:** Identifiers → Device ID (tylko gdy gracz pozwoli w oknie ATT).
-- **Data Linked to You:** brak.
-- **Data Not Linked to You:** Location → Coarse Location; Usage Data → Advertising Data, Product Interaction; Diagnostics → Crash Data, Performance Data; Identifiers → Device ID.
-- Cel: Third-Party Advertising, Analytics.
+- **Data Collection:** „No, we do not collect data from this app”. Game Center to usługa Apple i nie wchodzi do tej deklaracji.
+- Brak śledzenia (ATT nie jest używane).
 
 ## Notatki dla recenzji (App Review / Google)
 
-PL: Gra nie wymaga konta. Reklamy pokazują się tylko poza rozgrywką: baner na ekranie startowym, w szafie i na ekranie końca biegu, a reklama pełnoekranowa po kilku biegach. Ustawienia → Prywatność reklam otwiera formularz zgody Google (UMP).
+PL: Gra nie wymaga konta i nie ma reklam ani zakupów. Ranking działa przez Game Center (iOS) / Google Play Games (Android), gdy gracz jest zalogowany.
 
-EN: No account needed. Ads appear only outside gameplay: a banner on the title, wardrobe and game-over screens, and an interstitial between runs after a few runs. Settings → Ad privacy opens Google's consent form (UMP).
+EN: No account needed, no ads and no purchases. Leaderboards use Game Center (iOS) / Google Play Games (Android) when the player is signed in.

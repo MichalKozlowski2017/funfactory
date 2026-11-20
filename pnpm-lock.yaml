@@ -26,9 +26,6 @@ importers:
 
   games/glut:
     dependencies:
-      '@capacitor-community/admob':
-        specifier: 8.3.0
-        version: 8.3.0
       '@capacitor/android':
         specifier: ^8.6.2
         version: 8.6.2(@capacitor/core@8.6.2)

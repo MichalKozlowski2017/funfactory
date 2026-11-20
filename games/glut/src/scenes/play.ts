@@ -1,7 +1,7 @@
 import { Assets, type BitmapText, Container, FillGradient, Graphics, Rectangle, Sprite, Text, Texture, TilingSprite } from 'pixi.js';
 import { circle, defs, ellipse, hexToNumber, palettes, path, radialGradient, svg } from '@funfactory/art';
 import { ads, gameServices, haptics, Rng, SaveStore, Spring, type SynthLayer } from '@funfactory/core';
-import { ADS } from '../ads-config.ts';
+import { ADS, ADS_ENABLED } from '../ads-config.ts';
 import { GAME_SERVICES } from '../game-services-config.ts';
 import { achDesc, itemName as trItemName, biomeName, biomeTip, candies, detectLang, formatDay, lang, powerName, setLang, t } from '../i18n.ts';
 import { AdPolicy } from '../sim/ad-policy.ts';
@@ -338,12 +338,14 @@ export class PlayScene extends Scene {
     this.score = new Score(this.game.sound);
     this.applySettings();
     // Najpierw zgody reklam (RODO, ATT), potem logowanie do Game Center / Play Games (bez nakładania się okien).
-    void ads.init(ADS).then(() => {
+    // Reklamy wyłączone (ADS_ENABLED): od razu Game Center / Play Games.
+    ads.disabled = !ADS_ENABLED;
+    void (ADS_ENABLED ? ads.init(ADS) : Promise.resolve()).then(() => {
       this.syncBanner(true);
       if (!PILOT_MODE) void gameServices.init(GAME_SERVICES);
     });
     const simulated = Number(new URLSearchParams(location.search).get('banner'));
-    if (simulated > 0) ads.simulateBanner(simulated);
+    if (simulated > 0 && ADS_ENABLED) ads.simulateBanner(simulated);
     const unsubscribe = ads.onBanner((h) => {
       const view = this.game.view;
       const k = view.width / this.game.app.screen.width;
@@ -1516,6 +1518,7 @@ export class PlayScene extends Scene {
       onToggle: (key) => this.toggleSetting(key),
       onClose: () => this.closeSettings(),
       onVersionTap: () => this.tapVersion(),
+      adsPrivacy: ADS_ENABLED,
     });
     this.refreshSettings();
     this.settings.setVersionNote(this.perfText ? t('perfOn') : '');
