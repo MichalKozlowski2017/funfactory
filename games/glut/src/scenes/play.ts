@@ -359,7 +359,8 @@ export class PlayScene extends Scene {
     // Najpierw zgody reklam (RODO, ATT), potem logowanie do Game Center / Play Games (bez nakładania się okien).
     // Reklamy wyłączone (ADS_ENABLED): od razu Game Center / Play Games.
     ads.disabled = !ADS_ENABLED;
-    void (ADS_ENABLED ? ads.init(ADS) : Promise.resolve()).then(() => {
+    // `__ADS__` to stała z Vite: przy wyłączonych reklamach cała gałąź (i biblioteka AdMob) wypada z paczki.
+    void (__ADS__ ? ads.init(ADS, () => import('@funfactory/core/admob')) : Promise.resolve()).then(() => {
       this.syncBanner(true);
       if (!PILOT_MODE) void gameServices.init(GAME_SERVICES);
     });

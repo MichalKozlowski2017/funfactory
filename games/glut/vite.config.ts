@@ -9,5 +9,5 @@ export default defineConfig({
   server: { host: true },
   build: { target: 'es2022', assetsInlineLimit: 0 },
   // Wersja gry (z package.json) widoczna w ustawieniach.
-  define: { __APP_VERSION__: JSON.stringify(pkg.version) },
+  define: { __APP_VERSION__: JSON.stringify(pkg.version), __ADS__: JSON.stringify(process.env.GLUT_ADS === '1') },
 });

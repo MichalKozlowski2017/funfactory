@@ -53,7 +53,7 @@ Kod jest gotowy (`games/glut/src/game-services-config.ts`, wtyczka natywna `Game
 
 ## Kroki [Claude] po otrzymaniu ID reklam (gdy włączymy reklamy)
 
-0. `ADS_ENABLED = true`, `@capacitor-community/admob` z powrotem w `games/glut/package.json`, w Info.plist `GADApplicationIdentifier`, `NSUserTrackingUsageDescription` i `SKAdNetworkItems`, w AndroidManifest `com.google.android.gms.ads.APPLICATION_ID` (stan sprzed wyłączenia jest w historii git). Polityka prywatności i formularze sklepów: z powrotem sekcje o reklamach.
+0. Budowanie z `GLUT_ADS=1` (stała `__ADS__` w `vite.config.ts`; bez niej kod AdMob w ogóle nie trafia do paczki, więc Apple nie widzi wywołań ATT), `@capacitor-community/admob` z powrotem w `games/glut/package.json`, w Info.plist `GADApplicationIdentifier`, `NSUserTrackingUsageDescription` i `SKAdNetworkItems`, w AndroidManifest `com.google.android.gms.ads.APPLICATION_ID` (stan sprzed wyłączenia jest w historii git). Polityka prywatności i formularze sklepów: z powrotem sekcje o reklamach.
 
 1. Wpisuję ID jednostek w `games/glut/src/ads-config.ts` i ustawiam `testing: false`.
 2. Wpisuję ID aplikacji w `ios/App/App/Info.plist` (`GADApplicationIdentifier`) i `android/app/src/main/AndroidManifest.xml` (`com.google.android.gms.ads.APPLICATION_ID`).

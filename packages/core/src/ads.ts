@@ -1,4 +1,6 @@
-import { AdMob, AdmobConsentStatus, BannerAdPluginEvents, BannerAdPosition, BannerAdSize } from '@capacitor-community/admob';
+// Bez statycznego importu AdMob: biblioteka przychodzi z `init(cfg, load)`. Gra wywołuje init tylko z włączonymi
+// reklamami, więc z wyłączonymi kod AdMob (z wywołaniami pytania o śledzenie) w ogóle nie trafia do paczki.
+type AdMobModule = typeof import('./admob.ts');
 import { isNative, platformName } from './platform.ts';
 
 /** Identyfikatory jednostek reklamowych na platformę. */
@@ -31,6 +33,8 @@ export class Ads {
   private ready = false;
   private bannerShown = false;
   private interstitialLoaded = false;
+  /** Biblioteka AdMob (wczytana w init). */
+  private m: AdMobModule | null = null;
   /** Bez reklam (np. po zakupie): nic się nie wyświetla. */
   disabled = false;
   /**
@@ -63,19 +67,15 @@ export class Ads {
     return isNative() && this.ready && !this.disabled;
   }
 
-  async init(cfg: AdsConfig): Promise<void> {
+  /** `load`: np. `() => import('@funfactory/core/admob')`; wołaj tylko, gdy gra ma reklamy. */
+  async init(cfg: AdsConfig, load: () => Promise<AdMobModule>): Promise<void> {
     if (!isNative() || this.ready) return;
     this.units = platformName() === 'ios' ? cfg.ios : cfg.android;
     this.testing = cfg.testing;
     try {
-      // Najpierw zgoda RODO (formularz pokazuje się tylko w UE/tam, gdzie wymagany), potem ATT na iOS.
-      const consent = await AdMob.requestConsentInfo();
-      if (consent.status === AdmobConsentStatus.REQUIRED && consent.isConsentFormAvailable) await AdMob.showConsentForm();
-      if (platformName() === 'ios') {
-        const { status } = await AdMob.trackingAuthorizationStatus();
-        if (status === 'notDetermined') await AdMob.requestTrackingAuthorization();
-      }
-      await AdMob.initialize({ initializeForTesting: cfg.testing });
+      this.m = await load();
+      const { AdMob, BannerAdPluginEvents } = this.m;
+      await this.m.startAdMob(cfg.testing);
       void AdMob.addListener(BannerAdPluginEvents.SizeChanged, (size) => {
         // iOS podaje punkty; gdyby platforma podała piksele (adaptacyjny baner ma ok. 50–90 pt), przeliczamy.
         const h = size.height > 150 ? size.height / (window.devicePixelRatio || 1) : size.height;
@@ -90,9 +90,9 @@ export class Ads {
 
   /** Ustawienia prywatności (wymóg UMP: gracz musi móc zmienić zgodę). */
   async privacyOptions(): Promise<void> {
-    if (!isNative()) return;
+    if (!isNative() || !this.m) return;
     try {
-      await AdMob.showPrivacyOptionsForm();
+      await this.m.AdMob.showPrivacyOptionsForm();
     } catch {
       /* brak formularza poza UE */
     }
@@ -104,7 +104,8 @@ export class Ads {
       this.setBannerHeight(this.simulated);
       return;
     }
-    if (!this.available || !this.units || this.bannerShown) return;
+    if (!this.available || !this.units || this.bannerShown || !this.m) return;
+    const { AdMob, BannerAdPosition, BannerAdSize } = this.m;
     this.bannerShown = true;
     try {
       await AdMob.showBanner({
@@ -123,9 +124,9 @@ export class Ads {
     if (!this.bannerShown) return;
     this.bannerShown = false;
     this.setBannerHeight(0);
-    if (!isNative()) return;
+    if (!isNative() || !this.m) return;
     try {
-      await AdMob.removeBanner();
+      await this.m.AdMob.removeBanner();
     } catch {
       /* nic */
     }
@@ -133,10 +134,10 @@ export class Ads {
 
   /** Pokazuje reklamę pełnoekranową, jeśli jest gotowa. Zwraca, czy się pokazała (gra czeka do zamknięcia). */
   async showInterstitial(): Promise<boolean> {
-    if (!this.available || !this.interstitialLoaded) return false;
+    if (!this.available || !this.interstitialLoaded || !this.m) return false;
     this.interstitialLoaded = false;
     try {
-      await AdMob.showInterstitial();
+      await this.m.AdMob.showInterstitial();
       return true;
     } catch {
       return false;
@@ -146,9 +147,9 @@ export class Ads {
   }
 
   private async loadInterstitial(): Promise<void> {
-    if (!this.available || !this.units || this.interstitialLoaded) return;
+    if (!this.available || !this.units || this.interstitialLoaded || !this.m) return;
     try {
-      await AdMob.prepareInterstitial({ adId: this.units.interstitial, isTesting: this.testing });
+      await this.m.AdMob.prepareInterstitial({ adId: this.units.interstitial, isTesting: this.testing });
       this.interstitialLoaded = true;
     } catch {
       this.interstitialLoaded = false;
