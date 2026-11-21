@@ -8,6 +8,7 @@ import { saveState, state } from '../state.ts';
 import { COLORS, cover, label, sfx } from '../ui.ts';
 import { ParentGate, ParentPanel } from '../parent.ts';
 import { realmIsOpen } from '../premium.ts';
+import { lang } from '../sim/lang.ts';
 import { journal, today } from '../log.ts';
 import { addTask, addTime, noteFact, playDaysAfter, shiftDay } from '../sim/journal.ts';
 import { extend, timeIsUp } from '../session.ts';
@@ -507,7 +508,7 @@ export class WorldScene extends Scene {
       for (const a of ['liczenie', 'kolory', 'gloski', 'historyjki', 'wzory', 'kolorowanka', 'emocje'] as const) for (let i = rng.int(0, 4); i > 0; i--) addTask(j, day, a, rng.int(0, 1));
     }
     const facts: [string, string][] = [['liczba:1', '111'], ['liczba:2', '111'], ['liczba:3', '1111'], ['liczba:4', '0111'], ['liczba:5', '111'], ['liczba:6', '1010'], ['liczba:7', '0010'],
-      ['kolor:czerwony', '111'], ['kolor:zielony', '111'], ['kolor:fioletowy', '1001'], ['gloska:a', '111'], ['gloska:m', '111'], ['gloska:sz', '0101'],
+      ['kolor:czerwony', '111'], ['kolor:zielony', '111'], ['kolor:fioletowy', '1001'], ['gloska:a', '111'], ['gloska:m', '111'], [lang() === 'pl' ? 'gloska:sz' : 'gloska:r', '0101'],
       ['litera:A', '11'], ['litera:M', '1'], ['litera:O', '1'], ['emocja:wesoly', '111'], ['emocja:smutny', '111'], ['emocja:zdziwiony', '01'], ['ksztalt:kolo', '111'], ['ksztalt:gwiazda', '0']];
     for (const [f, h] of facts) for (const c of h) noteFact(j, t, f, c === '1');
     state.progress.childName = name || undefined;

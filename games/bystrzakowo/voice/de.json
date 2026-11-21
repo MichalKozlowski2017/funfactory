@@ -1,7 +1,7 @@
 {
  "voice": "voices/lusia-de",
  "lang": "de",
- "tries": 10,
+ "tries": 8,
  "lines": [
   {
    "name": "lusia-brawo-1",
@@ -801,107 +801,128 @@
   {
    "name": "lusia-czytaj-kaczka",
    "text": "En... te... Ente!",
-   "voice": "voices/lusia-de"
+   "voice": "voices/lusia-de",
+   "tries": 3
   },
   {
    "name": "lusia-czytaj-pszczola",
    "text": "Bie... ne... Biene!",
-   "voice": "voices/lusia-de"
+   "voice": "voices/lusia-de",
+   "tries": 3
   },
   {
    "name": "lusia-czytaj-wiaderko",
    "text": "Ei... mer... Eimer!",
-   "voice": "voices/lusia-de"
+   "voice": "voices/lusia-de",
+   "tries": 3
   },
   {
    "name": "lusia-czytaj-gruszka",
    "text": "Bir... ne... Birne!",
-   "voice": "voices/lusia-de"
+   "voice": "voices/lusia-de",
+   "tries": 3
   },
   {
    "name": "lusia-czytaj-widelec",
    "text": "Ga... bel... Gabel!",
-   "voice": "voices/lusia-de"
+   "voice": "voices/lusia-de",
+   "tries": 3
   },
   {
    "name": "lusia-czytaj-lalka",
    "text": "Pup... pe... Puppe!",
-   "voice": "voices/lusia-de"
+   "voice": "voices/lusia-de",
+   "tries": 3
   },
   {
    "name": "lusia-czytaj-kot",
    "text": "Kat... ze... Katze!",
-   "voice": "voices/lusia-de"
+   "voice": "voices/lusia-de",
+   "tries": 3
   },
   {
    "name": "lusia-czytaj-kubek",
    "text": "Tas... se... Tasse!",
-   "voice": "voices/lusia-de"
+   "voice": "voices/lusia-de",
+   "tries": 3
   },
   {
    "name": "lusia-czytaj-malpa",
    "text": "Af... fe... Affe!",
-   "voice": "voices/lusia-de"
+   "voice": "voices/lusia-de",
+   "tries": 3
   },
   {
    "name": "lusia-czytaj-slonce",
    "text": "Son... ne... Sonne!",
-   "voice": "voices/lusia-de"
+   "voice": "voices/lusia-de",
+   "tries": 3
   },
   {
    "name": "lusia-czytaj-chmurka",
    "text": "Wol... ke... Wolke!",
-   "voice": "voices/lusia-de"
+   "voice": "voices/lusia-de",
+   "tries": 3
   },
   {
    "name": "lusia-czytaj-kwiatek",
    "text": "Blu... me... Blume!",
-   "voice": "voices/lusia-de"
+   "voice": "voices/lusia-de",
+   "tries": 3
   },
   {
    "name": "lusia-czytaj-hulajnoga",
    "text": "Rol... ler... Roller!",
-   "voice": "voices/lusia-de"
+   "voice": "voices/lusia-de",
+   "tries": 3
   },
   {
    "name": "lusia-czytaj-banan",
    "text": "Ba... na... ne... Banane!",
-   "voice": "voices/lusia-de"
+   "voice": "voices/lusia-de",
+   "tries": 3
   },
   {
    "name": "lusia-czytaj-pomidor",
    "text": "To... ma... te... Tomate!",
-   "voice": "voices/lusia-de"
+   "voice": "voices/lusia-de",
+   "tries": 3
   },
   {
    "name": "lusia-czytaj-rakieta",
    "text": "Ra... ke... te... Rakete!",
-   "voice": "voices/lusia-de"
+   "voice": "voices/lusia-de",
+   "tries": 3
   },
   {
    "name": "lusia-czytaj-cytryna",
    "text": "Zi... tro... ne... Zitrone!",
-   "voice": "voices/lusia-de"
+   "voice": "voices/lusia-de",
+   "tries": 3
   },
   {
    "name": "lusia-czytaj-slon",
    "text": "E... le... fant... Elefant!",
-   "voice": "voices/lusia-de"
+   "voice": "voices/lusia-de",
+   "tries": 3
   },
   {
    "name": "lusia-czytaj-ananas",
    "text": "A... na... nas... Ananas!",
-   "voice": "voices/lusia-de"
+   "voice": "voices/lusia-de",
+   "tries": 3
   },
   {
    "name": "lusia-czytaj-papryka",
    "text": "Pa... pri... ka... Paprika!",
-   "voice": "voices/lusia-de"
+   "voice": "voices/lusia-de",
+   "tries": 3
   },
   {
    "name": "lusia-czytaj-trabka",
    "text": "Trom... pe... te... Trompete!",
-   "voice": "voices/lusia-de"
+   "voice": "voices/lusia-de",
+   "tries": 3
   },
   {
    "name": "lusia-kolorowanka",

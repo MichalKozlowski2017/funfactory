@@ -457,10 +457,13 @@ const dir = join(import.meta.dirname, '..', 'voice');
 for (const l of ['en', 'de', 'es'] as const) {
   setLang(l as Lang);
   const names = voiceLines(l);
-  const lines = (['lusia', 'bazyl'] as const).flatMap((g) => names[g].map((line) => ({ name: `${g}-${line}`, text: text(l, g, line), voice: voiceOf(l, g) })));
+  // Sylabowanie Whisper zawsze zapisuje po swojemu („Pumpkin? Pumpkin?”), więc te kwestie dostają mniej prób.
+  const lines = (['lusia', 'bazyl'] as const).flatMap((g) =>
+    names[g].map((line) => ({ name: `${g}-${line}`, text: text(l, g, line), voice: voiceOf(l, g), ...(line.startsWith('czytaj-') ? { tries: 3 } : {}) })),
+  );
   // Każda kwestia raz (np. nazwy obiektów są w obu głosach osobno, więc zostają).
   const unique = [...new Map(lines.map((x) => [x.name, x])).values()];
-  writeFileSync(join(dir, `${l}.json`), JSON.stringify({ voice: voiceOf(l, 'lusia'), lang: l, tries: 10, lines: unique }, null, 1) + '\n');
+  writeFileSync(join(dir, `${l}.json`), JSON.stringify({ voice: voiceOf(l, 'lusia'), lang: l, tries: 8, lines: unique }, null, 1) + '\n');
   console.log(`${l}: ${unique.length} kwestii`);
 }
 void ITEMS;

@@ -1,7 +1,7 @@
 {
  "voice": "voices/lusia-es",
  "lang": "es",
- "tries": 10,
+ "tries": 8,
  "lines": [
   {
    "name": "lusia-brawo-1",
@@ -801,102 +801,122 @@
   {
    "name": "lusia-czytaj-kot",
    "text": "Ga... to... ¡Gato!",
-   "voice": "voices/lusia-es"
+   "voice": "voices/lusia-es",
+   "tries": 3
   },
   {
    "name": "lusia-czytaj-krowa",
    "text": "Va... ca... ¡Vaca!",
-   "voice": "voices/lusia-es"
+   "voice": "voices/lusia-es",
+   "tries": 3
   },
   {
    "name": "lusia-czytaj-kaczka",
    "text": "Pa... to... ¡Pato!",
-   "voice": "voices/lusia-es"
+   "voice": "voices/lusia-es",
+   "tries": 3
   },
   {
    "name": "lusia-czytaj-zaba",
    "text": "Ra... na... ¡Rana!",
-   "voice": "voices/lusia-es"
+   "voice": "voices/lusia-es",
+   "tries": 3
   },
   {
    "name": "lusia-czytaj-niedzwiedz",
    "text": "O... so... ¡Oso!",
-   "voice": "voices/lusia-es"
+   "voice": "voices/lusia-es",
+   "tries": 3
   },
   {
    "name": "lusia-czytaj-ksiezyc",
    "text": "Lu... na... ¡Luna!",
-   "voice": "voices/lusia-es"
+   "voice": "voices/lusia-es",
+   "tries": 3
   },
   {
    "name": "lusia-czytaj-malpa",
    "text": "Mo... no... ¡Mono!",
-   "voice": "voices/lusia-es"
+   "voice": "voices/lusia-es",
+   "tries": 3
   },
   {
    "name": "lusia-czytaj-pies",
    "text": "Pe... rro... ¡Perro!",
-   "voice": "voices/lusia-es"
+   "voice": "voices/lusia-es",
+   "tries": 3
   },
   {
    "name": "lusia-czytaj-drzewo",
    "text": "Ár... bol... ¡Árbol!",
-   "voice": "voices/lusia-es"
+   "voice": "voices/lusia-es",
+   "tries": 3
   },
   {
    "name": "lusia-czytaj-osmiornica",
    "text": "Pul... po... ¡Pulpo!",
-   "voice": "voices/lusia-es"
+   "voice": "voices/lusia-es",
+   "tries": 3
   },
   {
    "name": "lusia-czytaj-swinka",
    "text": "Cer... do... ¡Cerdo!",
-   "voice": "voices/lusia-es"
+   "voice": "voices/lusia-es",
+   "tries": 3
   },
   {
    "name": "lusia-czytaj-koza",
    "text": "Ca... bra... ¡Cabra!",
-   "voice": "voices/lusia-es"
+   "voice": "voices/lusia-es",
+   "tries": 3
   },
   {
    "name": "lusia-czytaj-kubek",
    "text": "Ta... za... ¡Taza!",
-   "voice": "voices/lusia-es"
+   "voice": "voices/lusia-es",
+   "tries": 3
   },
   {
    "name": "lusia-czytaj-kon",
    "text": "Ca... ba... llo... ¡Caballo!",
-   "voice": "voices/lusia-es"
+   "voice": "voices/lusia-es",
+   "tries": 3
   },
   {
    "name": "lusia-czytaj-krolik",
    "text": "Co... ne... jo... ¡Conejo!",
-   "voice": "voices/lusia-es"
+   "voice": "voices/lusia-es",
+   "tries": 3
   },
   {
    "name": "lusia-czytaj-pomidor",
    "text": "To... ma... te... ¡Tomate!",
-   "voice": "voices/lusia-es"
+   "voice": "voices/lusia-es",
+   "tries": 3
   },
   {
    "name": "lusia-czytaj-pilka",
    "text": "Pe... lo... ta... ¡Pelota!",
-   "voice": "voices/lusia-es"
+   "voice": "voices/lusia-es",
+   "tries": 3
   },
   {
    "name": "lusia-czytaj-zyrafa",
    "text": "Ji... ra... fa... ¡Jirafa!",
-   "voice": "voices/lusia-es"
+   "voice": "voices/lusia-es",
+   "tries": 3
   },
   {
    "name": "lusia-czytaj-ptak",
    "text": "Pá... ja... ro... ¡Pájaro!",
-   "voice": "voices/lusia-es"
+   "voice": "voices/lusia-es",
+   "tries": 3
   },
   {
    "name": "lusia-czytaj-motyl",
    "text": "Ma... ri... po... sa... ¡Mariposa!",
-   "voice": "voices/lusia-es"
+   "voice": "voices/lusia-es",
+   "tries": 3
   },
   {
    "name": "lusia-kolorowanka",

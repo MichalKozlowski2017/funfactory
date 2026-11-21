@@ -1,6 +1,6 @@
 {
   "name": "@funfactory-game/bystrzakowo",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -13,7 +13,8 @@
     "apk": "vite build && cap sync android && cd android && JAVA_HOME=\"${JAVA_HOME_21:-/Applications/Android Studio.app/Contents/jbr/Contents/Home}\" ./gradlew assembleDebug",
     "ios:device": "vite build && cap sync ios && xcodebuild -project ios/App/App.xcodeproj -scheme App -configuration Debug -destination generic/platform=iOS -derivedDataPath ios/App/build -allowProvisioningUpdates -quiet build && xcrun devicectl device install app --device \"${IOS_DEVICE:?ustaw IOS_DEVICE: nazwa albo UDID z xcrun devicectl list devices}\" ios/App/build/Build/Products/Debug-iphoneos/App.app",
     "assets": "scripts/assets.sh",
-    "voice": "scripts/voice.sh"
+    "voice": "scripts/voice.sh",
+    "aab": "vite build && cap sync android && cd android && JAVA_HOME=\"${JAVA_HOME_21:-/Applications/Android Studio.app/Contents/jbr/Contents/Home}\" ./gradlew bundleRelease"
   },
   "dependencies": {
     "@capacitor/android": "^8.6.2",

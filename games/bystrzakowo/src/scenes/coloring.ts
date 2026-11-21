@@ -192,6 +192,20 @@ export class ColoringScene extends RoundScene {
     this.solved();
   }
 
+  /** Zrzuty do sklepów: kilka największych obszarów (bez tła) w różnych kolorach. */
+  paintDemo(n = 8): void {
+    const bg = this.labels[0]!;
+    const regions = this.sizes.map((size, r) => ({ size, r })).filter((x) => x.r !== bg && x.r > 0 && x.size > 0).sort((a, b) => b.size - a.size).slice(0, n);
+    const k = SIZE / this.picture.texture.width;
+    regions.forEach(({ r }, i) => {
+      const at = this.labels.indexOf(r);
+      const x = (at % SIZE) / k - this.picture.texture.width / 2;
+      const y = Math.floor(at / SIZE) / k - this.picture.texture.height / 2;
+      this.choose(PAINTS[(i * 3 + 2) % PAINTS.length]!);
+      this.tap({ global: this.picture.toGlobal({ x, y }) } as FederatedPointerEvent);
+    });
+  }
+
   /** Playtest: zamalowanie kilku obszarów i koniec. */
   solve(): void {
     this.finishPicture();
