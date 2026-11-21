@@ -111,6 +111,17 @@ if (process.argv.includes('--dodatki')) {
     { out: 'pracownia', prefix: 'stacja-ksztalty', args: ['--workflow', 'flux2-sprite', '--count', '2', '--prompt', sprite('a wooden children shape sorter box with a circle, a square and a triangle hole and colorful blocks next to it, front view')] },
     { out: 'pracownia', prefix: 'stacja-cyfry', args: ['--workflow', 'flux2-sprite', '--count', '2', '--prompt', sprite('a small wooden board standing on a little stand with big colorful numbers 1 2 3 made of dots, front view')] },
   );
+  // Emocje: ta sama postać (ten sam seed), różne miny. Wyraźne, przesadzone, jak w książeczkach dla maluchów.
+  const face = (what: string) => `a cute round little child head with short brown hair and big eyes, ${what}, very clear exaggerated expression for toddlers, front view, single object, centered, ${STYLE}, plain light gray background`;
+  for (const [id, what] of [
+    ['wesoly', 'very happy, big open smile, cheerful'],
+    ['smutny', 'very sad, frowning mouth, a single tear on the cheek'],
+    ['zly', 'angry, furrowed eyebrows, red cheeks, pouting'],
+    ['zdziwiony', 'surprised, round open mouth, raised eyebrows, wide eyes'],
+    ['przestraszony', 'scared, trembling, worried eyebrows, wide eyes, small open mouth'],
+    ['spiacy', 'sleepy, closed eyes, yawning, a little nightcap'],
+  ])
+    tasks.push({ out: 'emocje', prefix: id!, args: ['--workflow', 'flux2-sprite', '--prompt', face(what!)] });
 }
 
 if (process.argv.includes('--warsztat')) {
@@ -139,7 +150,7 @@ for (const item of ITEMS) {
 }
 
 console.log(`Do wygenerowania: ${tasks.length}`);
-for (const dir of ['items', 'extra', 'warsztat', 'sciezka', 'pracownia', 'kolorowanki']) mkdirSync(join(raw, dir), { recursive: true });
+for (const dir of ['items', 'extra', 'warsztat', 'sciezka', 'pracownia', 'kolorowanki', 'emocje']) mkdirSync(join(raw, dir), { recursive: true });
 // Postęp liczony w obrazkach (zadanie z --count N daje N plików .png).
 const images = tasks.reduce((n, t) => n + (t.args.includes('--count') ? Number(t.args[t.args.indexOf('--count') + 1]) : t.args.includes('ace15') ? 0 : 1), 0);
 execFileSync(job, ['bystrzakowo-items', 'Bystrzakowo: grafiki', String(images), '--dir', raw, '--glob', '*'], { stdio: 'inherit' });

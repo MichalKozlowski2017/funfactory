@@ -9,7 +9,7 @@ export type WorkshopKind = 'sortowanie' | 'ukladanka' | 'wzory' | 'ksztalty';
 export const WORKSHOP_KINDS: readonly WorkshopKind[] = ['sortowanie', 'ukladanka', 'wzory', 'ksztalty'];
 
 /** Zabawy Polany poza zagadkami z wyborem (pamięć). */
-export type MeadowKind = 'memory';
+export type MeadowKind = 'memory' | 'emocje';
 
 /** Zabawy Ścieżki Lusi (prowadź palcem). */
 export type PathKind = 'kropki' | 'labirynt' | 'litery' | 'cyfry';
@@ -21,7 +21,7 @@ export const STUDIO_KINDS: readonly StudioKind[] = ['kolorowanka', 'naklejanka',
 
 /** Każda zabawa w grze (klucz poziomu trudności w zapisie). */
 export type Activity = PuzzleKind | MeadowKind | WorkshopKind | PathKind | StudioKind;
-export const ACTIVITIES: readonly Activity[] = [...PUZZLE_KINDS, 'memory', ...WORKSHOP_KINDS, ...PATH_KINDS, ...STUDIO_KINDS];
+export const ACTIVITIES: readonly Activity[] = [...PUZZLE_KINDS, 'memory', 'emocje', ...WORKSHOP_KINDS, ...PATH_KINDS, ...STUDIO_KINDS];
 
 export type RealmId = 'polana' | 'warsztat' | 'sciezka' | 'pracownia';
 
@@ -36,7 +36,7 @@ export interface Realm {
 }
 
 export const REALMS: readonly Realm[] = [
-  { id: 'polana', name: 'Polana Zagadek', guide: 'lusia', rows: [['kolory', 'gloski', 'mamy', 'memory'], ['cienie', 'pasuje', 'liczenie']] },
+  { id: 'polana', name: 'Polana Zagadek', guide: 'lusia', rows: [['kolory', 'gloski', 'mamy', 'memory'], ['cienie', 'pasuje', 'liczenie', 'emocje']] },
   { id: 'warsztat', name: 'Warsztat Bazyla', guide: 'bazyl', rows: [['wzory', 'ksztalty'], ['sortowanie', 'ukladanka']] },
   { id: 'sciezka', name: 'Ścieżka Lusi', guide: 'lusia', rows: [['litery', 'cyfry'], ['kropki', 'labirynt']] },
   { id: 'pracownia', name: 'Pracownia Malucha', guide: 'lusia', rows: [['kolorowanka', 'naklejanka', 'melodia']] },

@@ -8,6 +8,7 @@ import { SIGN_ART, SORT_LINES } from './sim/sorting.ts';
 import { MAZE_PAIRS } from './sim/maze.ts';
 import { LETTERS } from './sim/letters.ts';
 import { SHAPES } from './sim/shapes.ts';
+import { EMOTIONS } from './sim/emotions.ts';
 
 /**
  * Grafiki i nagrania gry. Obrazki obiektów: public/art/items/<id>.webp.
@@ -26,6 +27,8 @@ export interface Art {
   crate: Texture | null;
   bucket: Texture | null;
   signs: Map<string, Texture>;
+  /** Minki (zagadka z emocjami). */
+  emotions: Map<string, Texture>;
 }
 
 export const SHADOW_COLOR: [number, number, number] = [74, 58, 110];
@@ -79,7 +82,7 @@ export async function loadArt(): Promise<Art> {
   if (art) return art;
   const load = (path: string) => Assets.load<Texture>(url(path));
   const opt = (path: string) => load(path).catch(() => null);
-  const [items, lusia, bazyl, houses, realmBg, playBg, crate, bucket, signs] = await Promise.all([
+  const [items, lusia, bazyl, houses, realmBg, playBg, crate, bucket, signs, emotions] = await Promise.all([
     // Obiekt bez grafiki (np. jeszcze niewygenerowany) po prostu wypada z gry.
     Promise.all(ITEMS.map(async (i) => [i.id, await opt(`art/items/${i.id}.webp`)] as const)),
     load('art/lusia.webp'),
@@ -90,6 +93,7 @@ export async function loadArt(): Promise<Art> {
     opt('art/warsztat/skrzynka.webp'),
     opt('art/warsztat/wiadro.webp'),
     Promise.all(SIGN_ART.map(async (id) => [id, await opt(`art/warsztat/${id}.webp`)] as const)),
+    Promise.all(EMOTIONS.map(async (id): Promise<readonly [string, Texture | null]> => [id, await opt(`art/emocje/${id}.webp`)])),
   ]);
   const loaded = items.filter((e): e is readonly [string, Texture] => e[1] !== null);
   keepOnly(new Set(loaded.map(([id]) => id)));
@@ -103,6 +107,7 @@ export async function loadArt(): Promise<Art> {
     crate,
     bucket,
     signs: new Map(signs.filter((e): e is readonly [string, Texture] => e[1] !== null)),
+    emotions: new Map(emotions.filter((e): e is readonly [string, Texture] => e[1] !== null)),
   };
   return art;
 }
@@ -115,7 +120,7 @@ export const COLORS_SPOKEN: readonly Color[] = ['czerwony', 'zolty', 'zielony', 
 const COMMON = ['brawo-1', 'brawo-2', 'brawo-3', 'brawo-4', 'brawo-5', 'oj-1', 'oj-2', 'nagroda', 'witaj', 'pomoc', ...ITEMS.map((i) => `item-${i.id}`)];
 const VOICE: Record<Guide, string[]> = {
   lusia: [...COMMON, 'kraina-polana', 'kraina-sciezka', 'kropki', 'memory', 'memory-cien', 'kraina-pracownia', 'dobranoc', 'melodia', 'kolorowanka', 'kolorowanka-gotowe', 'naklejanka', 'litery', 'cyfry', 'liczba-0', ...LETTERS.map((l) => `litera-${l.ch.toLowerCase()}`), ...MAZE_PAIRS.map(([hero]) => `labirynt-${hero}`), 'cienie', 'liczenie', 'liczenie-dotyk', 'album', ...Array.from({ length: 10 }, (_, i) => `liczba-${i + 1}`), ...SOUNDS.map((s) => `gloska-${soundSlug(s)}`)],
-  bazyl: [...COMMON, 'kraina-warsztat', 'wzory', 'ksztalty', ...SHAPES.map((x) => `ksztalt-${x}`), 'pasuje', 'ukladanka', 'przeciagnij', ...SORT_LINES, ...COLORS_SPOKEN.map((c) => `kolor-${c}`), ...ITEMS.filter((i) => i.mother).map((i) => `mama-${i.id}`)],
+  bazyl: [...COMMON, ...EMOTIONS.flatMap((e) => [`emocje-${e}`, `minka-${e}`]), 'kraina-warsztat', 'wzory', 'ksztalty', ...SHAPES.map((x) => `ksztalt-${x}`), 'pasuje', 'ukladanka', 'przeciagnij', ...SORT_LINES, ...COLORS_SPOKEN.map((c) => `kolor-${c}`), ...ITEMS.filter((i) => i.mother).map((i) => `mama-${i.id}`)],
 };
 
 export function registerVoice(game: Game): void {

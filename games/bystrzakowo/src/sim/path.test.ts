@@ -127,3 +127,19 @@ describe('cyfry po śladzie', () => {
     }
   });
 });
+
+describe('emocje', () => {
+  it('dobra minka wśród odpowiedzi, bez powtórzeń z rzędu', async () => {
+    const { makeEmotionRound, EMOTION_ROUND } = await import('./emotions.ts');
+    for (const level of [0, 1, 2]) {
+      const r = makeEmotionRound(new Rng(level + 9), level);
+      expect(r.length).toBe(EMOTION_ROUND);
+      for (const [i, q] of r.entries()) {
+        expect(q.options).toContain(q.target);
+        expect(new Set(q.options).size).toBe(q.options.length);
+        expect(q.options.length).toBe([2, 3, 4][level]);
+        if (i > 0) expect(q.target).not.toBe(r[i - 1]!.target);
+      }
+    }
+  });
+});

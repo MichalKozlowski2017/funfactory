@@ -9,6 +9,66 @@
   {
    "name": "lusia-melodia",
    "text": "Posłuchaj mojej melodii i zagraj ją tak samo!"
+  },
+  {
+   "name": "bazyl-emocje-wesoly",
+   "text": "Pokaż wesołą minkę!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-minka-wesoly",
+   "text": "Wesoła minka!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-emocje-smutny",
+   "text": "Pokaż smutną minkę!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-minka-smutny",
+   "text": "Smutna minka!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-emocje-zly",
+   "text": "Pokaż złą minkę!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-minka-zly",
+   "text": "Zła minka!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-emocje-zdziwiony",
+   "text": "Pokaż zdziwioną minkę!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-minka-zdziwiony",
+   "text": "Zdziwiona minka!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-emocje-przestraszony",
+   "text": "Pokaż przestraszoną minkę!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-minka-przestraszony",
+   "text": "Przestraszona minka!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-emocje-spiacy",
+   "text": "Pokaż śpiącą minkę!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-minka-spiacy",
+   "text": "Śpiąca minka!",
+   "voice": "voices/prezenter"
   }
  ]
 }
