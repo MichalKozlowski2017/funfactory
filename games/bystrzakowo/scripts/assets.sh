@@ -71,13 +71,13 @@ sprite pracownia/stacja-kolorowanka-21.png dom-kolorowanka 560
 sprite pracownia/stacja-naklejanka-22.png dom-naklejanka 560
 sprite pracownia/stacja-litery-22.png dom-litery 560
 sprite pracownia/stacja-wzory-22.png dom-wzory 560
-sprite pracownia/dom-memory-21.png dom-memory 560
 sprite pracownia/stacja-ksztalty-22.png dom-ksztalty 560
 sprite pracownia/stacja-cyfry-22.png dom-cyfry 560
 sprite pracownia/stacja-sylaby-22.png dom-sylaby 560
-sprite pracownia/dom-emocje-21.png dom-emocje 560
 sprite pracownia/stacja-melodia-22.png dom-melodia 560
 sprite pracownia/stacja-historyjki-22.png dom-historyjki 560
+# Polana Zagadek: stanowiska mówiące, na czym polega zabawa.
+for x in cienie-21 emocje-22 gloski-22 kolory-22 liczenie-21 mamy-21 memory-22 pasuje-21; do sprite polana/stacja-$x.png dom-${x%-*} 560; done
 # Emocje: minki (najnowsza wersja każdej).
 mkdir -p $OUT/emocje
 for id in wesoly smutny zly zdziwiony przestraszony spiacy; do

@@ -1,16 +1,16 @@
 {
   "workflow": "flux2-sprite.json",
-  "PROMPT": "a tiny cozy cottage with a round wooden door and a purple roof, front view, single object, centered, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, bright cheerful pastel colors, cute and friendly, no face on objects, plain light gray background",
+  "PROMPT": "a small cute orange cat figurine standing next to its flat dark purple silhouette cutout of the same shape, on a small wooden stand, front view, single object, centered, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, bright cheerful pastel colors, cute and friendly, no face on objects, plain light gray background",
   "NEGATIVE": "",
   "SEED": 21,
   "WIDTH": 1024,
   "HEIGHT": 1024,
-  "PREFIX": "dom-cienie",
+  "PREFIX": "stacja-cienie",
   "STEPS": 20,
   "GUIDANCE": 4,
   "BPM": 100,
   "DURATION": 60,
   "KEY": "A minor",
   "LYRICS": "[Instrumental]",
-  "created": "2026-11-20T21:22:34.687Z"
+  "created": "2026-11-21T15:56:06.468Z"
 }
