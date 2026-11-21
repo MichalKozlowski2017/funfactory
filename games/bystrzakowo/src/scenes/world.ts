@@ -8,6 +8,7 @@ import { saveState, state } from '../state.ts';
 import { COLORS, cover, label, sfx } from '../ui.ts';
 import { ParentGate, ParentPanel } from '../parent.ts';
 import { AlbumScene } from './album.ts';
+import { ColoringScene } from './coloring.ts';
 import { DotsScene } from './dots.ts';
 import { JigsawScene } from './jigsaw.ts';
 import { MazeScene } from './maze.ts';
@@ -16,11 +17,12 @@ import { MemoryScene } from './memory.ts';
 import { PatternScene } from './patterns.ts';
 import { PuzzleScene } from './puzzle.ts';
 import { SortScene } from './sort.ts';
+import { StickerScene } from './stickers.ts';
 
 /** Obrazek na zakładce krainy (obiekt z katalogu). */
-const TAB_ICON: Record<string, string> = { polana: 'kwiatek', warsztat: 'klocek', sciezka: 'grzyb' };
+const TAB_ICON: Record<string, string> = { polana: 'kwiatek', warsztat: 'klocek', sciezka: 'grzyb', pracownia: 'tecza' };
 /** Kolor zakładki krainy. */
-const TAB_COLOR: Record<string, number> = { polana: 0x7ad7a0, warsztat: 0xf0a960, sciezka: 0x8fb8ff };
+const TAB_COLOR: Record<string, number> = { polana: 0x7ad7a0, warsztat: 0xf0a960, sciezka: 0x8fb8ff, pracownia: 0xff8fc0 };
 
 /**
  * Świat Bystrzakowa: krainy przewijane w bok (gest albo zakładki u góry). Każda kraina to inny rodzaj
@@ -251,6 +253,16 @@ export class WorldScene extends Scene {
       c.addChild(g);
     } else if (kind === 'ukladanka') c.addChild(puzzlePiece());
     else if (kind === 'litery') c.addChild(label('A', 52, pr, '#9b5de5'));
+    else if (kind === 'kolorowanka') {
+      // Paleta z kleksami farb.
+      const g = new Graphics().ellipse(0, 4, 32, 24).fill({ color: 0xf3d9a8 }).stroke({ color: COLORS.ink, width: 3 });
+      [0xe8413c, 0xffd23f, 0x3d8bff, 0x7ad35a].forEach((color, i) => g.circle(-16 + (i % 2) * 22 + (i > 1 ? 6 : 0), -6 + Math.floor(i / 2) * 16, 7).fill({ color }));
+      c.addChild(g);
+    } else if (kind === 'naklejanka') {
+      // Naklejka-gwiazdka z zagiętym rogiem.
+      const g = new Graphics().star(0, 2, 5, 30, 15).fill({ color: COLORS.sun }).stroke({ color: COLORS.ink, width: 3, join: 'round' }).circle(0, 2, 8).fill({ color: 0xff7a8a });
+      c.addChild(g);
+    }
     else if (kind === 'wzory') {
       // Koraliki we wzorze i znak zapytania.
       const g = new Graphics();
@@ -317,7 +329,7 @@ export class WorldScene extends Scene {
     void squash(this.tweens, house, 0.18);
     const p = this.toLocal(house.getGlobalPosition());
     this.particles.burst(p.x, p.y - 120, { count: 24, speed: [200, 520], life: [0.4, 0.8], gravity: 900, scale: [0.6, 1.2], colors: COLORS.confetti });
-    const scenes: Record<string, () => Scene> = { memory: () => new MemoryScene(), sortowanie: () => new SortScene(), ukladanka: () => new JigsawScene(), wzory: () => new PatternScene(), kropki: () => new DotsScene(), litery: () => new LetterScene(), labirynt: () => new MazeScene() };
+    const scenes: Record<string, () => Scene> = { memory: () => new MemoryScene(), sortowanie: () => new SortScene(), ukladanka: () => new JigsawScene(), wzory: () => new PatternScene(), kropki: () => new DotsScene(), litery: () => new LetterScene(), kolorowanka: () => new ColoringScene(), naklejanka: () => new StickerScene(), labirynt: () => new MazeScene() };
     const scene = isPuzzle(kind) ? new PuzzleScene(kind as PuzzleKind) : scenes[kind]!();
     this.timers.after(0.35, () => void this.game.scenes.go(scene, { fade: 0.3, color: 0xfff6e8 }));
   }

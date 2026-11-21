@@ -64,6 +64,14 @@ background sciezka/tlo-sciezka-21.png kraina-sciezka
 background sciezka/tlo-sciezka-gra-22.png gra-sciezka
 sprite sciezka/stacja-kropki-21.png dom-kropki 560
 sprite sciezka/stacja-labirynt-22.png dom-labirynt 560
+# Kolorowanki: czyste czarne kontury na białym (próg + pogrubienie linii, żeby obszary były zamknięte).
+mkdir -p $OUT/kolorowanki
+for f in $RAW/kolorowanki/*-21.png; do
+  [ -f "$f" ] || continue
+  id=$(basename "$f" -21.png)
+  magick "$f" -colorspace gray -resize 640x640 -threshold 55% -morphology Erode Disk:1.5 -strip "$OUT/kolorowanki/$id.png"
+  cp "${f%.png}.json" "$OUT/kolorowanki/$id.json"
+done
 background proto/tlo-polana-21.png polana
 background proto/tlo-zagadka-21.png tlo-zagadka
 du -sh $OUT

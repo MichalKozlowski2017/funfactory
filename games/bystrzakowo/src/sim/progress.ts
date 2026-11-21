@@ -11,6 +11,10 @@ export interface Progress {
   rounds: number;
   /** Ostatnio oglądana kraina (powrót z zabawy do tej samej krainy). */
   realm: number;
+  /** Pokolorowane strony kolorowanki (najpierw nowe). */
+  colored?: string[];
+  /** Obrazek z naklejek (pozycje w ułamkach ekranu). */
+  scene?: { id: string; x: number; y: number; flip: boolean }[];
   /** Ustawienia ze strefy rodzica. */
   music: boolean;
 }

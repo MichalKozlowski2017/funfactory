@@ -15,11 +15,15 @@ export type MeadowKind = 'memory';
 export type PathKind = 'kropki' | 'labirynt' | 'litery';
 export const PATH_KINDS: readonly PathKind[] = ['kropki', 'labirynt', 'litery'];
 
-/** Każda zabawa w grze (klucz poziomu trudności w zapisie). */
-export type Activity = PuzzleKind | MeadowKind | WorkshopKind | PathKind;
-export const ACTIVITIES: readonly Activity[] = [...PUZZLE_KINDS, 'memory', ...WORKSHOP_KINDS, ...PATH_KINDS];
+/** Zabawy Pracowni Malucha (twórz, bez złych odpowiedzi). */
+export type StudioKind = 'kolorowanka' | 'naklejanka';
+export const STUDIO_KINDS: readonly StudioKind[] = ['kolorowanka', 'naklejanka'];
 
-export type RealmId = 'polana' | 'warsztat' | 'sciezka';
+/** Każda zabawa w grze (klucz poziomu trudności w zapisie). */
+export type Activity = PuzzleKind | MeadowKind | WorkshopKind | PathKind | StudioKind;
+export const ACTIVITIES: readonly Activity[] = [...PUZZLE_KINDS, 'memory', ...WORKSHOP_KINDS, ...PATH_KINDS, ...STUDIO_KINDS];
+
+export type RealmId = 'polana' | 'warsztat' | 'sciezka' | 'pracownia';
 
 export interface Realm {
   id: RealmId;
@@ -35,6 +39,7 @@ export const REALMS: readonly Realm[] = [
   { id: 'polana', name: 'Polana Zagadek', guide: 'lusia', rows: [['kolory', 'gloski', 'mamy', 'memory'], ['cienie', 'pasuje', 'liczenie']] },
   { id: 'warsztat', name: 'Warsztat Bazyla', guide: 'bazyl', rows: [['sortowanie', 'ukladanka', 'wzory']] },
   { id: 'sciezka', name: 'Ścieżka Lusi', guide: 'lusia', rows: [['kropki', 'labirynt', 'litery']] },
+  { id: 'pracownia', name: 'Pracownia Malucha', guide: 'lusia', rows: [['kolorowanka', 'naklejanka']] },
 ];
 
 export const isPuzzle = (a: Activity): a is PuzzleKind => (PUZZLE_KINDS as readonly string[]).includes(a);

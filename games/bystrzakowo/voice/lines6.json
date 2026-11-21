@@ -79,6 +79,26 @@
    "name": "lusia-litera-s",
    "text": "S jak słoń!",
    "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-kraina-pracownia",
+   "text": "To Pracownia Malucha! Tutaj możesz malować i tworzyć.",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-kolorowanka",
+   "text": "Wybierz kolor i dotknij obrazka. Pomaluj go, jak chcesz!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-kolorowanka-gotowe",
+   "text": "Pięknie! Kiedy skończysz, dotknij zielonej strzałki.",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-naklejanka",
+   "text": "Ułóż swój obrazek z naklejek! Przeciągnij naklejkę na łąkę.",
+   "voice": "voices/alt"
   }
  ]
 }
