@@ -114,3 +114,16 @@ describe('litery po śladzie', () => {
     expect(advance(pts, 0, [0.5, 0.5], 0.1)).toBe(0);
   });
 });
+
+describe('cyfry po śladzie', () => {
+  it('10 cyfr, runda bez powtórzeń z poziomu dziecka', async () => {
+    const { DIGITS, makeDigitRound, LETTER_ROUND } = await import('./letters.ts');
+    expect(DIGITS.map((d) => d.ch).sort().join('')).toBe('0123456789');
+    for (const level of [0, 1, 2]) {
+      const r = makeDigitRound(new Rng(level + 3), level);
+      expect(r.length).toBe(LETTER_ROUND);
+      expect(new Set(r).size).toBe(LETTER_ROUND);
+      expect(r.every((d) => d.level <= level)).toBe(true);
+    }
+  });
+});

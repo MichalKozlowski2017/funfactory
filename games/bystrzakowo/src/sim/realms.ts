@@ -12,8 +12,8 @@ export const WORKSHOP_KINDS: readonly WorkshopKind[] = ['sortowanie', 'ukladanka
 export type MeadowKind = 'memory';
 
 /** Zabawy Ścieżki Lusi (prowadź palcem). */
-export type PathKind = 'kropki' | 'labirynt' | 'litery';
-export const PATH_KINDS: readonly PathKind[] = ['kropki', 'labirynt', 'litery'];
+export type PathKind = 'kropki' | 'labirynt' | 'litery' | 'cyfry';
+export const PATH_KINDS: readonly PathKind[] = ['kropki', 'labirynt', 'litery', 'cyfry'];
 
 /** Zabawy Pracowni Malucha (twórz, bez złych odpowiedzi). */
 export type StudioKind = 'kolorowanka' | 'naklejanka';
@@ -38,7 +38,7 @@ export interface Realm {
 export const REALMS: readonly Realm[] = [
   { id: 'polana', name: 'Polana Zagadek', guide: 'lusia', rows: [['kolory', 'gloski', 'mamy', 'memory'], ['cienie', 'pasuje', 'liczenie']] },
   { id: 'warsztat', name: 'Warsztat Bazyla', guide: 'bazyl', rows: [['sortowanie', 'ukladanka', 'wzory']] },
-  { id: 'sciezka', name: 'Ścieżka Lusi', guide: 'lusia', rows: [['kropki', 'labirynt', 'litery']] },
+  { id: 'sciezka', name: 'Ścieżka Lusi', guide: 'lusia', rows: [['kropki', 'labirynt', 'litery', 'cyfry']] },
   { id: 'pracownia', name: 'Pracownia Malucha', guide: 'lusia', rows: [['kolorowanka', 'naklejanka']] },
 ];
 

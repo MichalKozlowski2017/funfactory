@@ -83,3 +83,24 @@ export function makeLetterRound(rng: Rng, level: number): Letter[] {
 
 /** Tolerancja śladu (ułamek wysokości litery): młodsze dzieci rysują mniej dokładnie. */
 export const traceTolerance = (level: number): number => [0.16, 0.13, 0.11][Math.max(0, Math.min(MAX_LEVEL, Math.round(level)))] as number;
+
+/** Cyfry po śladzie: po narysowaniu tyle obrazków, ile mówi cyfra (Lusia liczy). */
+export const DIGITS: readonly Letter[] = [
+  { ch: '1', item: '', level: 0, strokes: [[[0.28, 0.22], [0.6, 0], [0.6, 1]]] },
+  { ch: '7', item: '', level: 0, strokes: [[[0.15, 0], [0.85, 0], [0.4, 1]]] },
+  { ch: '4', item: '', level: 0, strokes: [[[0.6, 0], [0.12, 0.68], [0.9, 0.68]], [[0.65, 0.35], [0.65, 1]]] },
+  { ch: '0', item: '', level: 1, strokes: [arc(0.5, 0.5, 0.34, 0.5, -90, 270, 28)] },
+  { ch: '2', item: '', level: 1, strokes: [[...arc(0.5, 0.28, 0.32, 0.28, -170, 25, 14), [0.15, 1], [0.85, 1]]] },
+  { ch: '3', item: '', level: 1, strokes: [[...arc(0.5, 0.25, 0.3, 0.25, -160, 90, 14), ...arc(0.5, 0.75, 0.32, 0.25, -90, 160, 14).slice(1)]] },
+  { ch: '5', item: '', level: 1, strokes: [[[0.8, 0], [0.27, 0], [0.22, 0.45], ...arc(0.48, 0.68, 0.32, 0.32, -125, 150, 16)]] },
+  { ch: '6', item: '', level: 2, strokes: [[[0.75, 0.04], [0.45, 0.1], [0.27, 0.32], [0.18, 0.65], ...arc(0.5, 0.72, 0.32, 0.28, 180, 540, 24)]] },
+  { ch: '8', item: '', level: 2, strokes: [[...arc(0.5, 0.25, 0.27, 0.25, -90, -270, 14), ...arc(0.5, 0.75, 0.32, 0.25, -90, 270, 24).slice(1), ...arc(0.5, 0.25, 0.27, 0.25, 90, -90, 14).slice(1)]] },
+  { ch: '9', item: '', level: 2, strokes: [[...arc(0.5, 0.3, 0.32, 0.3, 0, -360, 24), [0.8, 1]]] },
+];
+
+/** Cyfry do rundy: z poziomu dziecka (nowe najpierw) i niższych. */
+export function makeDigitRound(rng: Rng, level: number): Letter[] {
+  const l = Math.max(0, Math.min(MAX_LEVEL, Math.round(level)));
+  const ok = DIGITS.filter((x) => x.level <= l);
+  return [...rng.shuffle(ok.filter((x) => x.level === l)), ...rng.shuffle(ok.filter((x) => x.level < l))].slice(0, LETTER_ROUND);
+}

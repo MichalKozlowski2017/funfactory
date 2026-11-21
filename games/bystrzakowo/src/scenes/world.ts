@@ -253,6 +253,7 @@ export class WorldScene extends Scene {
       c.addChild(g);
     } else if (kind === 'ukladanka') c.addChild(puzzlePiece());
     else if (kind === 'litery') c.addChild(label('A', 52, pr, '#9b5de5'));
+    else if (kind === 'cyfry') c.addChild(label('3', 52, pr, '#5cb3ff'));
     else if (kind === 'kolorowanka') {
       // Paleta z kleksami farb.
       const g = new Graphics().ellipse(0, 4, 32, 24).fill({ color: 0xf3d9a8 }).stroke({ color: COLORS.ink, width: 3 });
@@ -329,7 +330,7 @@ export class WorldScene extends Scene {
     void squash(this.tweens, house, 0.18);
     const p = this.toLocal(house.getGlobalPosition());
     this.particles.burst(p.x, p.y - 120, { count: 24, speed: [200, 520], life: [0.4, 0.8], gravity: 900, scale: [0.6, 1.2], colors: COLORS.confetti });
-    const scenes: Record<string, () => Scene> = { memory: () => new MemoryScene(), sortowanie: () => new SortScene(), ukladanka: () => new JigsawScene(), wzory: () => new PatternScene(), kropki: () => new DotsScene(), litery: () => new LetterScene(), kolorowanka: () => new ColoringScene(), naklejanka: () => new StickerScene(), labirynt: () => new MazeScene() };
+    const scenes: Record<string, () => Scene> = { memory: () => new MemoryScene(), sortowanie: () => new SortScene(), ukladanka: () => new JigsawScene(), wzory: () => new PatternScene(), kropki: () => new DotsScene(), litery: () => new LetterScene('litery'), cyfry: () => new LetterScene('cyfry'), kolorowanka: () => new ColoringScene(), naklejanka: () => new StickerScene(), labirynt: () => new MazeScene() };
     const scene = isPuzzle(kind) ? new PuzzleScene(kind as PuzzleKind) : scenes[kind]!();
     this.timers.after(0.35, () => void this.game.scenes.go(scene, { fade: 0.3, color: 0xfff6e8 }));
   }

@@ -99,6 +99,16 @@
    "name": "lusia-naklejanka",
    "text": "Ułóż swój obrazek z naklejek! Przeciągnij naklejkę na łąkę.",
    "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-cyfry",
+   "text": "Narysuj palcem cyfrę! Zacznij od zielonej kropki.",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-liczba-0",
+   "text": "Zero! Nie ma nic.",
+   "voice": "voices/alt"
   }
  ]
 }

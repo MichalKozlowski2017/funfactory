@@ -2,7 +2,8 @@ import { Graphics, Rectangle, Sprite, type FederatedPointerEvent } from 'pixi.js
 import { haptics } from '@funfactory/core';
 import { popIn, pulse } from '@funfactory/kit2d';
 import { say } from '../assets.ts';
-import { advance, makeLetterRound, resample, traceTolerance, type Letter } from '../sim/letters.ts';
+import { advance, makeDigitRound, makeLetterRound, resample, traceTolerance, type Letter } from '../sim/letters.ts';
+import { ITEMS } from '../sim/catalog.ts';
 import { state } from '../state.ts';
 import { COLORS, sfx } from '../ui.ts';
 import { RoundScene } from './round.ts';
@@ -30,13 +31,18 @@ export class LetterScene extends RoundScene {
   private box = { x: 0, y: 0, w: 0, h: 0 };
   private tol = 0.14;
 
-  constructor() {
-    super('litery', 'lusia');
+  /** Cyfry: po narysowaniu tyle obrazków, ile mówi cyfra. */
+  private readonly digits: boolean;
+  private counted: Sprite[] = [];
+
+  constructor(kind: 'litery' | 'cyfry' = 'litery') {
+    super(kind, 'lusia');
+    this.digits = kind === 'cyfry';
   }
 
   protected async prepare(): Promise<void> {
-    const level = state.progress.levels.litery ?? 0;
-    this.letters = makeLetterRound(this.game.rng, level);
+    const level = state.progress.levels[this.kind] ?? 0;
+    this.letters = this.digits ? makeDigitRound(this.game.rng, level) : makeLetterRound(this.game.rng, level);
     this.length = this.letters.length;
     this.tol = traceTolerance(level);
   }
@@ -46,7 +52,7 @@ export class LetterScene extends RoundScene {
   }
 
   protected promptLine(): string {
-    return 'litery';
+    return this.digits ? 'cyfry' : 'litery';
   }
 
   protected show(): void {
@@ -58,8 +64,11 @@ export class LetterScene extends RoundScene {
     this.ink = new Graphics();
     this.start = new Graphics();
     this.pad = new Graphics();
-    this.picture = new Sprite({ texture: this.art.items.get(this.letter.item)!, anchor: 0.5 });
+    // Cyfry: obrazek do liczenia losowany z małych obiektów (np. 3 jabłka).
+    const item = this.digits ? this.game.rng.pick(ITEMS.filter((i) => i.countable)).id : this.letter.item;
+    this.picture = new Sprite({ texture: this.art.items.get(item)!, anchor: 0.5 });
     this.picture.visible = false;
+    this.counted = [];
     for (const v of [this.track, this.ink, this.start, this.picture]) v.eventMode = 'none';
     this.pad.eventMode = 'static';
     this.pad.on('pointerdown', (e) => this.down(e));
@@ -67,7 +76,7 @@ export class LetterScene extends RoundScene {
     this.pad.on('pointerup', () => (this.tracing = false));
     this.pad.on('pointerupoutside', () => (this.tracing = false));
     this.layer.addChild(this.pad, this.track, this.ink, this.start, this.picture);
-    this.timers.after(0.4, () => say(this.game, this.guide, 'litery'));
+    this.timers.after(0.4, () => say(this.game, this.guide, this.promptLine()));
   }
 
   protected override appear(): void {
@@ -123,12 +132,45 @@ export class LetterScene extends RoundScene {
     this.busy = true;
     this.start.clear();
     const pic = this.picture!;
+    void pulse(this.tweens, this.ink, 0.08, 0.35);
+    if (this.digits) return this.countOut(Number(this.letter.ch));
     pic.visible = true;
     void popIn(this.tweens, pic, 0.5);
-    void pulse(this.tweens, this.ink, 0.08, 0.35);
     this.burst(pic.x, pic.y, 36);
     const len = say(this.game, this.guide, `litera-${this.letter.ch.toLowerCase()}`);
     this.solved(len);
+  }
+
+  /** Po cyfrze: obrazki pojawiają się po kolei, Lusia liczy; zero to pusty talerz i „zero”. */
+  private countOut(n: number): void {
+    const pic = this.picture!;
+    const right = this.game.view.width - this.game.view.safe.right - 30;
+    const x0 = this.box.x + this.box.w + 30;
+    const cols = n > 6 ? 3 : n > 2 ? 2 : 1;
+    const rows = Math.max(1, Math.ceil(n / cols));
+    const size = Math.min(120, (right - x0) / cols, (this.box.h - 20) / Math.max(rows, 1));
+    for (let i = 0; i < n; i++) {
+      const s = new Sprite({ texture: pic.texture, anchor: 0.5 });
+      s.eventMode = 'none';
+      s.scale.set((size * 0.85) / Math.max(s.texture.width, s.texture.height));
+      const col = i % cols;
+      const row = Math.floor(i / cols);
+      s.position.set(x0 + (right - x0) / 2 + (col - (cols - 1) / 2) * size, this.box.y + this.box.h / 2 + (row - (rows - 1) / 2) * size);
+      s.visible = false;
+      this.layer.addChild(s);
+      this.counted.push(s);
+      this.timers.after(0.2 + i * 0.6, () => {
+        s.visible = true;
+        void popIn(this.tweens, s, 0.3);
+        sfx.pop(this.game.sound, 1 + i * 0.07);
+        say(this.game, this.guide, `liczba-${i + 1}`);
+      });
+    }
+    this.timers.after(0.4 + n * 0.6, () => {
+      const len = n === 0 ? say(this.game, this.guide, 'liczba-0') : 0;
+      this.burst(x0 + (right - x0) / 2, this.box.y + this.box.h / 2, 36);
+      this.solved(len);
+    });
   }
 
   /** Playtest: wszystkie kreski. */
