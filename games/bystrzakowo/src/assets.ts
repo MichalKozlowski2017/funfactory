@@ -4,7 +4,7 @@ import { ITEMS, keepOnly, type Color } from './sim/catalog.ts';
 import { state } from './state.ts';
 import { SOUNDS, soundSlug } from './sim/puzzles.ts';
 import { ACTIVITIES, REALMS, type Activity, type RealmId } from './sim/realms.ts';
-import { SORT_LINES } from './sim/sorting.ts';
+import { SIGN_ART, SORT_LINES } from './sim/sorting.ts';
 
 /**
  * Grafiki i nagrania gry. Obrazki obiektów: public/art/items/<id>.webp.
@@ -86,7 +86,7 @@ export async function loadArt(): Promise<Art> {
     Promise.all(REALMS.map(async (r) => [r.id, await load(`art/gra-${r.id}.jpg`).catch(() => load('art/tlo-zagadka.jpg'))] as const)),
     opt('art/warsztat/skrzynka.webp'),
     opt('art/warsztat/wiadro.webp'),
-    Promise.all(['stodola', 'staw'].map(async (id) => [id, await opt(`art/warsztat/${id}.webp`)] as const)),
+    Promise.all(SIGN_ART.map(async (id) => [id, await opt(`art/warsztat/${id}.webp`)] as const)),
   ]);
   const loaded = items.filter((e): e is readonly [string, Texture] => e[1] !== null);
   keepOnly(new Set(loaded.map(([id]) => id)));
@@ -118,6 +118,8 @@ const VOICE: Record<Guide, string[]> = {
 export function registerVoice(game: Game): void {
   // Bez lektora gra nie ma sensu, więc gra też w trybie cichym (rodzice często mają wyciszony telefon).
   game.sound.playThroughSilentMode();
+  // Po uśpieniu iPhone'a dźwięk bywa niemy: pierwsze dotknięcie po powrocie odbudowuje go (gra nie ma własnych węzłów audio).
+  game.sound.recoverAfterBackground = true;
   for (const guide of ['lusia', 'bazyl'] as const)
     for (const line of VOICE[guide]) game.sound.add(`${guide}-${line}`, url(`audio/${guide}/${line}.m4a`));
   game.sound.add('muzyka', url('audio/muzyka.m4a'));

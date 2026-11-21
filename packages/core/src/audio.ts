@@ -85,12 +85,23 @@ export class Sound {
   sfxMuted = false;
 
   private primed = false;
+  /**
+   * Odbudowa po powrocie z tła: iOS po uśpieniu telefonu potrafi zostawić kontekst niemy (stan „interrupted”
+   * albo „running” bez dźwięku), a `resume()` tego nie naprawia. Gdy włączone, pierwsze dotknięcie po powrocie
+   * tworzy nowy kontekst (zdekodowane bufory zostają) i wznawia muzykę. Tylko dla gier, które nie trzymają
+   * własnych węzłów audio podpiętych pod `output` (np. Glut buduje na nim szyny muzyki).
+   */
+  recoverAfterBackground = false;
+  private stale = false;
+  /** Grająca pętla (muzyka) do wznowienia po odbudowie. */
+  private loopRequest: { name: string; opts: PlayOptions } | null = null;
 
   constructor() {
     if (typeof window === 'undefined') return;
     // iOS (WKWebView) odblokowuje dźwięk dopiero w geście typu touchend/click, a po wyjściu z aplikacji
     // albo połączeniu przechodzi w stan 'interrupted'. Dlatego słuchamy stale i wznawiamy przy każdym dotyku.
     const unlock = () => {
+      if (this.stale && this.recoverAfterBackground) this.rebuild();
       const ctx = this.context();
       if (!ctx) return;
       if (ctx.state !== 'running') void ctx.resume();
@@ -109,8 +120,10 @@ export class Sound {
     // W tle (zminimalizowana aplikacja, zablokowany ekran) dźwięk śpi; po powrocie wraca.
     document.addEventListener('visibilitychange', () => {
       if (!this.ctx) return;
-      if (document.hidden) void this.ctx.suspend();
-      else if (this.ctx.state !== 'running') void this.ctx.resume();
+      if (document.hidden) {
+        void this.ctx.suspend();
+        this.stale = true;
+      } else if (this.ctx.state !== 'running') void this.ctx.resume();
     });
   }
 
@@ -228,6 +241,7 @@ export class Sound {
     if (src.loop) {
       this.music?.stop();
       this.music = src;
+      this.loopRequest = { name, opts };
     }
     if (opts.channel) {
       const entry = { src, gain };
@@ -341,6 +355,23 @@ export class Sound {
   stopMusic(): void {
     this.music?.stop();
     this.music = null;
+    this.loopRequest = null;
+  }
+
+  /** Nowy kontekst w miejsce starego (wołane w geście użytkownika, więc od razu gra). */
+  private rebuild(): void {
+    this.stale = false;
+    const old = this.ctx;
+    if (!old) return;
+    this.channels.clear();
+    this.music = null;
+    this.ctx = null;
+    this.master = null;
+    this.shelf = null;
+    this.primed = false;
+    void old.close().catch(() => undefined);
+    this.context();
+    if (this.loopRequest) this.play(this.loopRequest.name, this.loopRequest.opts);
   }
 
   /** Podbicie/przycięcie wysokich tonów na wyjściu w dB (ujemne = ciemniej). */
