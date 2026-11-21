@@ -1,8 +1,8 @@
 {
   "workflow": "flux2-sprite.json",
-  "PROMPT": "a cute round little child head with short brown hair and big eyes, scared, trembling, worried eyebrows, wide eyes, small open mouth, very clear exaggerated expression for toddlers, front view, single object, centered, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, bright cheerful pastel colors, cute and friendly, plain light gray background",
+  "PROMPT": "a cute round little child head with short brown hair and big eyes, scared and frightened, eyebrows raised high and pulled together, very wide eyes, mouth open in a small scream, hands on cheeks, no tears, very clear exaggerated expression for toddlers, front view, single object, centered, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, bright cheerful pastel colors, cute and friendly, plain light gray background",
   "NEGATIVE": "",
-  "SEED": 21,
+  "SEED": 22,
   "WIDTH": 1024,
   "HEIGHT": 1024,
   "PREFIX": "przestraszony",
@@ -12,5 +12,5 @@
   "DURATION": 60,
   "KEY": "A minor",
   "LYRICS": "[Instrumental]",
-  "created": "2026-11-21T11:43:13.553Z"
+  "created": "2026-11-21T11:59:06.803Z"
 }
