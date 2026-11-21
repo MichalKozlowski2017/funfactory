@@ -24,7 +24,18 @@ export interface Item {
   mother?: string;
   /** Dopełniacz nazwy młodego: „Gdzie jest mama kurczaczka?”. */
   genitive?: string;
+  /** Gdzie mieszka zwierzę (segregowanie „kto gdzie mieszka”). */
+  home?: Home;
 }
+
+export type Home = 'wies' | 'las' | 'woda';
+
+/** Domy zwierząt: tylko oczywiste dla przedszkolaka (bez żaby, żółwia, ptaków, które pasują w kilka miejsc). */
+const HOMES: Record<Home, string[]> = {
+  wies: ['kot', 'pies', 'krowa', 'kura', 'kaczka', 'swinka', 'owca', 'kon', 'kurczak', 'cielaczek', 'prosiaczek', 'jagniatko', 'zrebak'],
+  las: ['jez', 'wiewiorka', 'sowa', 'niedzwiedz'],
+  woda: ['ryba', 'krab', 'osmiornica'],
+};
 
 type Row = [id: string, name: string, color: Color | '', flags: string, prompt: string];
 
@@ -201,7 +212,12 @@ export const ITEMS: Item[] = [
     ['tecza', 'Tęcza', '', 's', 'a rainbow with clouds at the ends'],
     ['muszelka', 'Muszelka', 'rozowy', 'sc', 'a pink seashell'],
   ]),
-].map((item) => (BABIES[item.id] ? { ...item, mother: BABIES[item.id]![0], genitive: BABIES[item.id]![1] } : item));
+]
+  .map((item) => (BABIES[item.id] ? { ...item, mother: BABIES[item.id]![0], genitive: BABIES[item.id]![1] } : item))
+  .map((item) => {
+    const home = (Object.keys(HOMES) as Home[]).find((h) => HOMES[h].includes(item.id));
+    return home ? { ...item, home } : item;
+  });
 
 /**
  * Zostawia w katalogu tylko obiekty o podanych id (np. te, których grafika się wczytała).

@@ -2,7 +2,9 @@ import { Assets, type Texture } from 'pixi.js';
 import { pixelsToTexture, type Game } from '@funfactory/kit2d';
 import { ITEMS, keepOnly, type Color } from './sim/catalog.ts';
 import { state } from './state.ts';
-import { PUZZLE_KINDS, SOUNDS, soundSlug, type PuzzleKind } from './sim/puzzles.ts';
+import { SOUNDS, soundSlug } from './sim/puzzles.ts';
+import { ACTIVITIES, REALMS, type Activity, type RealmId } from './sim/realms.ts';
+import { SORT_LINES } from './sim/sorting.ts';
 
 /**
  * Grafiki i nagrania gry. Obrazki obiektów: public/art/items/<id>.webp.
@@ -12,9 +14,15 @@ export interface Art {
   items: Map<string, Texture>;
   lusia: Texture;
   bazyl: Texture;
-  houses: Record<PuzzleKind, Texture>;
-  meadow: Texture;
-  puzzleBg: Texture;
+  /** Domek albo stanowisko każdej zabawy. */
+  houses: Record<Activity, Texture>;
+  /** Tło krainy i tło zabaw w tej krainie. */
+  realmBg: Record<RealmId, Texture>;
+  playBg: Record<RealmId, Texture>;
+  /** Warsztat: skrzynka, białe wiaderko (barwione na kolor) i znaki domów zwierząt (stodoła, staw). */
+  crate: Texture | null;
+  bucket: Texture | null;
+  signs: Map<string, Texture>;
 }
 
 export const SHADOW_COLOR: [number, number, number] = [74, 58, 110];
@@ -67,18 +75,32 @@ export function shadowNow(id: string): Texture | null {
 export async function loadArt(): Promise<Art> {
   if (art) return art;
   const load = (path: string) => Assets.load<Texture>(url(path));
-  const [items, lusia, bazyl, houses, meadow, puzzleBg] = await Promise.all([
+  const opt = (path: string) => load(path).catch(() => null);
+  const [items, lusia, bazyl, houses, realmBg, playBg, crate, bucket, signs] = await Promise.all([
     // Obiekt bez grafiki (np. jeszcze niewygenerowany) po prostu wypada z gry.
-    Promise.all(ITEMS.map(async (i) => [i.id, await load(`art/items/${i.id}.webp`).catch(() => null)] as const)),
+    Promise.all(ITEMS.map(async (i) => [i.id, await opt(`art/items/${i.id}.webp`)] as const)),
     load('art/lusia.webp'),
     load('art/bazyl.webp'),
-    Promise.all(PUZZLE_KINDS.map(async (k) => [k, await load(`art/dom-${k}.webp`).catch(() => load('art/dom-cienie.webp'))] as const)),
-    load('art/polana.jpg'),
-    load('art/tlo-zagadka.jpg'),
+    Promise.all(ACTIVITIES.map(async (k) => [k, await load(`art/dom-${k}.webp`).catch(() => load('art/dom-cienie.webp'))] as const)),
+    Promise.all(REALMS.map(async (r) => [r.id, await load(`art/kraina-${r.id}.jpg`).catch(() => load('art/polana.jpg'))] as const)),
+    Promise.all(REALMS.map(async (r) => [r.id, await load(`art/gra-${r.id}.jpg`).catch(() => load('art/tlo-zagadka.jpg'))] as const)),
+    opt('art/warsztat/skrzynka.webp'),
+    opt('art/warsztat/wiadro.webp'),
+    Promise.all(['stodola', 'staw'].map(async (id) => [id, await opt(`art/warsztat/${id}.webp`)] as const)),
   ]);
   const loaded = items.filter((e): e is readonly [string, Texture] => e[1] !== null);
   keepOnly(new Set(loaded.map(([id]) => id)));
-  art = { items: new Map(loaded), lusia, bazyl, houses: Object.fromEntries(houses) as Record<PuzzleKind, Texture>, meadow, puzzleBg };
+  art = {
+    items: new Map(loaded),
+    lusia,
+    bazyl,
+    houses: Object.fromEntries(houses) as Record<Activity, Texture>,
+    realmBg: Object.fromEntries(realmBg) as Record<RealmId, Texture>,
+    playBg: Object.fromEntries(playBg) as Record<RealmId, Texture>,
+    crate,
+    bucket,
+    signs: new Map(signs.filter((e): e is readonly [string, Texture] => e[1] !== null)),
+  };
   return art;
 }
 
@@ -89,8 +111,8 @@ export const COLORS_SPOKEN: readonly Color[] = ['czerwony', 'zolty', 'zielony', 
 
 const COMMON = ['brawo-1', 'brawo-2', 'brawo-3', 'brawo-4', 'brawo-5', 'oj-1', 'oj-2', 'nagroda', 'witaj', 'pomoc', ...ITEMS.map((i) => `item-${i.id}`)];
 const VOICE: Record<Guide, string[]> = {
-  lusia: [...COMMON, 'cienie', 'liczenie', 'liczenie-dotyk', 'album', ...Array.from({ length: 10 }, (_, i) => `liczba-${i + 1}`), ...SOUNDS.map((s) => `gloska-${soundSlug(s)}`)],
-  bazyl: [...COMMON, 'pasuje', ...COLORS_SPOKEN.map((c) => `kolor-${c}`), ...ITEMS.filter((i) => i.mother).map((i) => `mama-${i.id}`)],
+  lusia: [...COMMON, 'kraina-polana', 'cienie', 'liczenie', 'liczenie-dotyk', 'album', ...Array.from({ length: 10 }, (_, i) => `liczba-${i + 1}`), ...SOUNDS.map((s) => `gloska-${soundSlug(s)}`)],
+  bazyl: [...COMMON, 'kraina-warsztat', 'pasuje', 'ukladanka', 'przeciagnij', ...SORT_LINES, ...COLORS_SPOKEN.map((c) => `kolor-${c}`), ...ITEMS.filter((i) => i.mother).map((i) => `mama-${i.id}`)],
 };
 
 export function registerVoice(game: Game): void {

@@ -1,7 +1,8 @@
 /**
  * Generuje brakujące grafiki na Legionie (Flux 2, styl plastelina) do assets-raw/bystrzakowo/items/<id>-<seed>.png.
  * Pomija obiekty, które mają już plik w public/art/items. Rejestruje paczkę w podglądzie `pnpm legion`.
- *   node games/bystrzakowo/scripts/gen-art.ts [--extra] [--only id,id --seed N]   (--extra: także domki, ikona, muzyka)
+ *   node games/bystrzakowo/scripts/gen-art.ts [--extra] [--warsztat] [--only id,id --seed N]
+ *   (--extra: domki, ikona, muzyka; --warsztat: tła, stanowiska i skrzynki Warsztatu Bazyla, po 2 warianty)
  */
 import { execFileSync } from 'node:child_process';
 import { existsSync, mkdirSync } from 'node:fs';
@@ -48,7 +49,24 @@ if (extra) {
   });
 }
 
+if (process.argv.includes('--warsztat')) {
+  const bg = (what: string) => `${what}, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, bright cheerful pastel colors, cute and friendly`;
+  const sprite = (what: string) => `${what}, single object, centered, ${STYLE}, no face on objects, plain light gray background`;
+  const wide = ['--workflow', 'flux2', '--width', '1536', '--height', '864', '--count', '2'];
+  tasks.push(
+    { out: 'warsztat', prefix: 'tlo-warsztat', args: [...wide, '--prompt', bg('wide view of a cozy wooden toy workshop interior, wooden shelves with colorful toys and jars along the walls, a big round window with sunlight, warm and friendly, large empty wooden floor in the middle and bottom, no characters, no animals')] },
+    { out: 'warsztat', prefix: 'tlo-warsztat-gra', args: [...wide, '--prompt', bg('a soft blurred cozy background of a warm wooden toy workshop, wooden wall and a light wooden tabletop, very simple and calm, lots of empty space, no characters, no objects in the foreground')] },
+    { out: 'warsztat', prefix: 'stacja-sortowanie', args: ['--workflow', 'flux2-sprite', '--count', '2', '--prompt', sprite('three small open wooden crates in a row filled with colorful fruits, toys and vegetables, front view')] },
+    { out: 'warsztat', prefix: 'stacja-ukladanka', args: ['--workflow', 'flux2-sprite', '--count', '2', '--prompt', sprite('a small wooden easel holding a colorful jigsaw puzzle picture with one piece missing, front view')] },
+    { out: 'warsztat', prefix: 'skrzynka', args: ['--workflow', 'flux2-sprite', '--count', '2', '--prompt', sprite('an empty open wooden crate, front view, wide and low')] },
+    { out: 'warsztat', prefix: 'wiadro', args: ['--workflow', 'flux2-sprite', '--count', '2', '--prompt', sprite('an empty plain pure white bucket with a handle, front view, matte white plasticine')] },
+    { out: 'warsztat', prefix: 'stodola', args: ['--workflow', 'flux2-sprite', '--prompt', sprite('a small red farm barn with a white cross on the door')] },
+    { out: 'warsztat', prefix: 'staw', args: ['--workflow', 'flux2-sprite', '--prompt', sprite('a small round blue pond with a green lily pad and reeds, seen from slightly above')] },
+  );
+}
+
 for (const item of ITEMS) {
+  if (process.argv.includes('--warsztat') && !only) break;
   if (only && !only.has(item.id)) continue;
   if (!only && existsSync(join(repo, 'games/bystrzakowo/public/art/items', `${item.id}.webp`))) continue;
   if (existsSync(join(raw, 'items', `${item.id}-${SEED}.png`))) continue;
@@ -57,8 +75,10 @@ for (const item of ITEMS) {
 }
 
 console.log(`Do wygenerowania: ${tasks.length}`);
-for (const dir of ['items', 'extra']) mkdirSync(join(raw, dir), { recursive: true });
-execFileSync(job, ['bystrzakowo-items', 'Bystrzakowo: katalog obiektów', String(tasks.length), '--dir', raw, '--glob', '*'], { stdio: 'inherit' });
+for (const dir of ['items', 'extra', 'warsztat']) mkdirSync(join(raw, dir), { recursive: true });
+// Postęp liczony w obrazkach (zadanie z --count N daje N plików .png).
+const images = tasks.reduce((n, t) => n + (t.args.includes('--count') ? Number(t.args[t.args.indexOf('--count') + 1]) : t.args.includes('ace15') ? 0 : 1), 0);
+execFileSync(job, ['bystrzakowo-items', 'Bystrzakowo: grafiki', String(images), '--dir', raw, '--glob', '*'], { stdio: 'inherit' });
 for (const [i, t] of tasks.entries()) {
   try {
     const out = execFileSync('node', [comfy, 'gen', ...t.args, '--seed', String(SEED), '--out', join(raw, t.out), '--prefix', t.prefix], { encoding: 'utf8' });

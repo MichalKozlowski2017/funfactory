@@ -31,7 +31,7 @@ export class AlbumScene extends Scene {
   override async enter(): Promise<void> {
     this.art = await loadArt();
     const pr = this.game.pixelRatio;
-    this.bg = new Sprite(this.art.puzzleBg);
+    this.bg = new Sprite(this.art.playBg.polana);
     this.title = label('Album', 64, pr, '#ff8fb1');
     const owned = new Set(state.progress.stickers).size;
     this.counter = label(`${owned} / ${ITEMS.length}`, 40, pr, '#ffd23f');
@@ -105,7 +105,7 @@ export class AlbumScene extends Scene {
     if (this.leaving) return;
     this.leaving = true;
     this.game.sound.stopChannel('voice');
-    void import('./meadow.ts').then(({ MeadowScene }) => this.game.scenes.go(new MeadowScene(), { fade: 0.3, color: 0xfff6e8 }));
+    void import('./world.ts').then(({ WorldScene }) => this.game.scenes.go(new WorldScene(), { fade: 0.3, color: 0xfff6e8 }));
   }
 
   private layout(): void {

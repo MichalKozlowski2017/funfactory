@@ -1,6 +1,6 @@
 import { Game } from '@funfactory/kit2d';
 import { registerVoice } from './assets.ts';
-import { MeadowScene } from './scenes/meadow.ts';
+import { WorldScene } from './scenes/world.ts';
 import { loadState } from './state.ts';
 import { loadFont } from './ui.ts';
 
@@ -8,5 +8,5 @@ import { loadFont } from './ui.ts';
 const game = await new Game({ background: '#fff6e8', designHeight: 720 }).start();
 await Promise.all([loadFont(), loadState()]);
 registerVoice(game);
-await game.scenes.go(new MeadowScene(), { fade: 0 });
+await game.scenes.go(new WorldScene(), { fade: 0 });
 

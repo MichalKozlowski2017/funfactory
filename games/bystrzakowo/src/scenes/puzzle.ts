@@ -1,17 +1,17 @@
 import { Container, Graphics, Sprite, Texture } from 'pixi.js';
 import { haptics } from '@funfactory/core';
-import { dotTexture, idleBreath, Particles, popIn, pulse, Scene, squash, type View } from '@funfactory/kit2d';
-import { loadArt, say, shadowNow, shadowOf, startMusic, type Art, type Guide } from '../assets.ts';
+import { popIn, pulse, squash } from '@funfactory/kit2d';
+import { say, shadowNow, shadowOf, type Guide } from '../assets.ts';
 import type { Color, Item } from '../sim/catalog.ts';
-import { pickSticker } from '../sim/progress.ts';
-import { answerOf, isCorrect, makeRound, nextLevel, promptLine, ROUND_LENGTH, type PuzzleKind, type Question } from '../sim/puzzles.ts';
-import { saveState, state } from '../state.ts';
-import { Card, COLORS, cover, IconButton, label, sfx } from '../ui.ts';
+import { answerOf, isCorrect, makeRound, promptLine, ROUND_LENGTH, type PuzzleKind, type Question } from '../sim/puzzles.ts';
+import { state } from '../state.ts';
+import { Card, COLORS, label, sfx } from '../ui.ts';
+import { RoundScene } from './round.ts';
 
 /** Kto prowadzi który domek. */
 export const GUIDE: Record<PuzzleKind, Guide> = { cienie: 'lusia', pasuje: 'bazyl', liczenie: 'lusia', kolory: 'bazyl', gloski: 'lusia', mamy: 'bazyl' };
 
-const PAINT: Record<Color, number> = {
+export const PAINT: Record<Color, number> = {
   czerwony: 0xe8413c,
   zolty: 0xffd23f,
   zielony: 0x4cbf56,
@@ -23,85 +23,42 @@ const PAINT: Record<Color, number> = {
   bialy: 0xffffff,
 };
 
-/** Po ilu sekundach bezczynności przewodnik powtarza polecenie, a po ilu podpowiada. */
-const IDLE_REPEAT = 8;
-const IDLE_HINT = 16;
-
-/** Runda zagadek jednego domku: 5 pytań, bez przegrywania, na koniec naklejka. */
-export class PuzzleScene extends Scene {
+/** Runda zagadek jednego domku Polany: 5 pytań z wyborem odpowiedzi. */
+export class PuzzleScene extends RoundScene {
   readonly id = 'puzzle';
-  private readonly kind: PuzzleKind;
-  private readonly guide: Guide;
-  private art!: Art;
-  private bg!: Sprite;
-  private guideSprite!: Sprite;
-  private home!: IconButton;
-  private dots!: Graphics;
-  private readonly layer = new Container();
-  private particles!: Particles;
+  private readonly puzzle: PuzzleKind;
   private questions: Question[] = [];
-  private index = 0;
-  private mistakes = 0;
-  private busy = false;
   private cards: Card[] = [];
   /** Duża karta u góry: cień, młode zwierzę, plama farby albo litera. */
   private hero: Card | null = null;
   /** Obiekty do policzenia i ich znaczniki. */
   private counters: { sprite: Sprite; badge: Container | null }[] = [];
   private counted = 0;
-  private overlay: Container | null = null;
-  private leaving = false;
-  private idle = 0;
-  private hinted = 0;
-  private updateNext: ((dt: number) => void) | null = null;
 
   constructor(kind: PuzzleKind) {
-    super();
-    this.kind = kind;
-    this.guide = GUIDE[kind];
+    super(kind, GUIDE[kind]);
+    this.puzzle = kind;
   }
 
-  override async enter(): Promise<void> {
-    this.art = await loadArt();
-    this.questions = makeRound(this.kind, this.game.rng, state.progress.levels[this.kind]);
-    if (this.kind === 'cienie') await Promise.all(this.questions.map((q) => shadowOf((answerOf(q) as Item).id)));
-    this.bg = new Sprite(this.art.puzzleBg);
-    this.guideSprite = new Sprite({ texture: this.guide === 'lusia' ? this.art.lusia : this.art.bazyl, anchor: { x: 0.5, y: 1 } });
-    this.guideSprite.scale.set(300 / this.guideSprite.texture.height);
-    this.guideSprite.eventMode = 'static';
-    this.guideSprite.cursor = 'pointer';
-    this.guideSprite.on('pointertap', () => this.repeatPrompt());
-    this.home = new IconButton('home');
-    this.home.onTap = () => this.leave();
-    this.dots = new Graphics();
-    this.particles = new Particles(dotTexture(this.game.app.renderer, 10), this.game.rng);
-    this.addChild(this.bg, this.guideSprite, this.layer, this.dots, this.home, this.particles.view);
-    idleBreath(this.tweens, this.guideSprite, 0.03, 1.8);
-    this.eventMode = 'static';
-    this.on('pointerdown', () => {
-      this.idle = 0;
-      startMusic(this.game);
-    });
-    this.game.markReady();
-    this.timers.after(0.35, () => this.show());
+  protected async prepare(): Promise<void> {
+    this.questions = makeRound(this.puzzle, this.game.rng, state.progress.levels[this.puzzle] ?? 0);
+    this.length = ROUND_LENGTH;
+    if (this.puzzle === 'cienie') await Promise.all(this.questions.map((q) => shadowOf((answerOf(q) as Item).id)));
   }
-
-  // ---------- pytania ----------
 
   private get q(): Question {
     return this.questions[this.index]!;
   }
 
-  private show(): void {
-    this.layer.removeChildren().forEach((c) => c.destroy({ children: true }));
-    this.layer.alpha = 1;
+  protected promptLine(): string {
+    return promptLine(this.q);
+  }
+
+  protected show(): void {
     this.cards = [];
     this.hero = null;
     this.counters = [];
     this.counted = 0;
-    this.busy = false;
-    this.idle = 0;
-    this.hinted = 0;
     const q = this.q;
     switch (q.kind) {
       case 'cienie':
@@ -137,14 +94,12 @@ export class PuzzleScene extends Scene {
         break;
     }
     this.cards = q.kind === 'liczenie' ? q.options.map((n) => this.numberCard(n)) : q.options.map((item) => this.itemCard(item));
-    this.place();
     // Wejście: pyknięcia po kolei.
     const all: Container[] = [...(this.hero ? [this.hero] : []), ...this.counters.map((c) => c.sprite), ...this.cards];
     all.forEach((c, i) => {
       void popIn(this.tweens, c, 0.4, i * 0.06);
       this.timers.after(i * 0.06, () => sfx.pop(this.game.sound, 0.9 + i * 0.06));
     });
-    this.drawDots();
     // Polecenie lektora. Przy liczeniu za pierwszym razem także podpowiedź „dotykaj i licz”.
     this.timers.after(0.3, () => {
       const len = say(this.game, this.guide, promptLine(q));
@@ -175,14 +130,6 @@ export class PuzzleScene extends Scene {
     return card;
   }
 
-  /** Dotknięcie przewodnika albo dużej karty: polecenie jeszcze raz. */
-  private repeatPrompt(): void {
-    if (this.busy || this.overlay) return;
-    this.idle = 0;
-    void squash(this.tweens, this.guideSprite, 0.08);
-    say(this.game, this.guide, promptLine(this.q));
-  }
-
   /** Dotknięcie obiektu przy liczeniu: numerek i lektor liczy na głos. */
   private countTap(entry: { sprite: Sprite; badge: Container | null }): void {
     if (entry.badge || this.busy) return;
@@ -204,14 +151,10 @@ export class PuzzleScene extends Scene {
     this.idle = 0;
     const q = this.q;
     if (isCorrect(q, value)) {
-      this.busy = true;
       card.markGood();
       void pulse(this.tweens, card, 0.18, 0.3);
-      sfx.good(this.game.sound);
-      haptics.success();
       const local = this.toLocal(card.getGlobalPosition());
-      this.particles.burst(local.x, local.y, { count: 30, speed: [200, 600], life: [0.4, 0.9], gravity: 700, scale: [0.5, 1.1], colors: COLORS.confetti });
-      this.jumpGuide();
+      this.burst(local.x, local.y);
       for (const other of this.cards) if (other !== card) this.tweens.to(other, { alpha: 0.35 }, { duration: 0.25 });
       if (q.kind === 'cienie') this.revealShadow(q.target);
       else if (this.hero) {
@@ -220,21 +163,13 @@ export class PuzzleScene extends Scene {
       }
       // Lektor: nazwa (albo liczba), potem pochwała.
       const first = typeof value === 'number' ? say(this.game, 'lusia', `liczba-${value}`) : say(this.game, this.guide, `item-${value.id}`);
-      const praise = `brawo-${this.game.rng.int(1, 5)}`;
-      this.timers.after(first + 0.15, () => {
-        const len = say(this.game, this.guide, praise);
-        this.timers.after(Math.max(0.8, len) + 0.3, () => this.next());
-      });
+      this.solved(first);
     } else {
-      this.mistakes++;
       card.enabled = false;
-      sfx.bad(this.game.sound);
-      haptics.error();
       const x = card.x;
       void this.tweens.to(card, { x: x + 14 }, { duration: 0.05, yoyo: true, repeat: 5 }).done.then(() => (card.x = x));
       this.tweens.to(card, { alpha: 0.35 }, { duration: 0.3, delay: 0.3 });
-      void squash(this.tweens, this.guideSprite, 0.08);
-      say(this.game, this.guide, `oj-${this.game.rng.int(1, 2)}`);
+      this.missed();
     }
   }
 
@@ -258,106 +193,15 @@ export class PuzzleScene extends Scene {
     void pulse(this.tweens, hero, 0.12, 0.3);
   }
 
-  private jumpGuide(): void {
-    const g = this.guideSprite;
-    const y = g.y;
-    this.tweens.killOf(g);
-    void this.tweens.to(g, { y: y - 50 }, { duration: 0.18, ease: 'quadOut', yoyo: true, repeat: 1 }).done.then(() => (g.y = y));
+  /** Dobra karta delikatnie się kołysze. */
+  protected hint(): void {
+    const i = (this.q.options as (Item | number)[]).indexOf(answerOf(this.q));
+    const card = this.cards[i];
+    if (card) void this.tweens.to(card, { rotation: 0.08 }, { duration: 0.12, yoyo: true, repeat: 5, ease: 'sineInOut' }).done.then(() => (card.rotation = 0));
   }
 
-  private next(): void {
-    this.index++;
-    if (this.index >= ROUND_LENGTH) return this.finish();
-    this.tweens.to(this.layer, { alpha: 0 }, { duration: 0.2 });
-    this.timers.after(0.25, () => this.show());
-  }
-
-  private finish(): void {
-    const p = state.progress;
-    p.levels[this.kind] = nextLevel(p.levels[this.kind], this.mistakes);
-    const sticker = pickSticker(this.game.rng, p.stickers);
-    p.stickers.push(sticker);
-    p.rounds++;
-    void saveState();
-    this.drawDots();
-    this.tweens.to(this.layer, { alpha: 0 }, { duration: 0.3 });
-    this.showReward(sticker);
-  }
-
-  private showReward(id: string): void {
-    const view = this.game.view;
-    const o = new Container();
-    o.addChild(new Graphics().rect(0, 0, view.width, view.height).fill({ color: 0x2a1a40, alpha: 0.55 }));
-    o.eventMode = 'static';
-    const badge = new Container();
-    badge.position.set(view.width / 2, view.height / 2 - 30);
-    const star = new Graphics().star(0, 0, 8, 230, 170).fill({ color: COLORS.sun }).stroke({ color: COLORS.ink, width: 8, join: 'round' });
-    const pic = new Sprite({ texture: this.art.items.get(id)!, anchor: 0.5 });
-    pic.scale.set(230 / Math.max(pic.texture.width, pic.texture.height));
-    badge.addChild(star, pic);
-    const next = new IconButton('next', 62);
-    next.position.set(view.width / 2, view.height - 90);
-    next.visible = false;
-    next.onTap = () => this.leave();
-    o.addChild(badge, next);
-    this.overlay = o;
-    this.addChild(o);
-    this.addChild(this.particles.view);
-    this.tweens.to(star, { rotation: Math.PI * 2 }, { duration: 12, repeat: -1, ease: 'linear' });
-    void popIn(this.tweens, badge, 0.6);
-    sfx.fanfare(this.game.sound);
-    haptics.success();
-    for (let i = 0; i < 3; i++)
-      this.timers.after(i * 0.25, () =>
-        this.particles.burst(view.width * (0.25 + i * 0.25), view.height * 0.35, { count: 50, speed: [250, 750], life: [0.8, 1.6], gravity: 600, scale: [0.6, 1.3], colors: COLORS.confetti }),
-      );
-    const len = say(this.game, this.guide, 'nagroda');
-    this.timers.after(Math.max(1.2, len), () => {
-      next.visible = true;
-      void popIn(this.tweens, next, 0.4);
-      this.updateNext = (dt) => next.tick(dt);
-    });
-  }
-
-  private leave(): void {
-    if (this.leaving) return;
-    this.leaving = true;
-    this.game.sound.stopChannel('voice');
-    void import('./meadow.ts').then(({ MeadowScene }) => this.game.scenes.go(new MeadowScene(), { fade: 0.3, color: 0xfff6e8 }));
-  }
-
-  // ---------- podpowiedzi ----------
-
-  private idleTick(dt: number): void {
-    if (this.busy || this.overlay || this.leaving || !this.questions.length) return;
-    this.idle += dt;
-    if (this.hinted === 0 && this.idle > IDLE_REPEAT) {
-      this.hinted = 1;
-      say(this.game, this.guide, promptLine(this.q));
-      void squash(this.tweens, this.guideSprite, 0.1);
-    } else if (this.hinted === 1 && this.idle > IDLE_HINT) {
-      this.hinted = 2;
-      // Dobra karta delikatnie się kołysze, a przewodnik zachęca.
-      const i = (this.q.options as (Item | number)[]).indexOf(answerOf(this.q));
-      const card = this.cards[i];
-      if (card) void this.tweens.to(card, { rotation: 0.08 }, { duration: 0.12, yoyo: true, repeat: 5, ease: 'sineInOut' }).done.then(() => (card.rotation = 0));
-      say(this.game, this.guide, 'pomoc');
-    }
-  }
-
-  // ---------- układ ----------
-
-  private drawDots(): void {
-    const g = this.dots.clear();
-    const gap = 54;
-    for (let i = 0; i < ROUND_LENGTH; i++) {
-      const x = (i - (ROUND_LENGTH - 1) / 2) * gap;
-      if (i < this.index) g.star(x, 0, 5, 22, 10).fill({ color: COLORS.sun }).stroke({ color: COLORS.ink, width: 4, join: 'round' });
-      else g.circle(x, 0, i === this.index ? 15 : 12).fill({ color: 0xffffff, alpha: 0.95 }).stroke({ color: COLORS.ink, width: 4 });
-    }
-  }
-
-  private place(): void {
+  protected place(): void {
+    if (!this.questions.length) return;
     const { width: w, height: h, safe } = this.game.view;
     const left = safe.left + 250;
     const right = w - safe.right - 40;
@@ -394,21 +238,9 @@ export class PuzzleScene extends Scene {
     }
   }
 
-  override update(dt: number): void {
+  protected override step(dt: number): void {
     for (const c of this.cards) c.tick(dt);
     this.hero?.tick(dt);
-    this.home.tick(dt);
-    this.updateNext?.(dt);
-    this.particles.update(dt);
-    this.idleTick(dt);
-  }
-
-  override resize(view: View): void {
-    cover(this.bg, view.width, view.height);
-    this.guideSprite.position.set(view.safe.left + 130, view.height - 10);
-    this.home.position.set(view.safe.left + 80, view.safe.top + 75);
-    this.dots.position.set(view.width / 2 + 100, view.safe.top + 60);
-    if (this.questions.length && this.index < ROUND_LENGTH && this.layer.children.length) this.place();
   }
 }
 

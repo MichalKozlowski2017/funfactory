@@ -1,4 +1,4 @@
-import { Container, Graphics, Sprite, Text, type Texture } from 'pixi.js';
+import { Container, Graphics, Point, Sprite, Text, type Texture } from 'pixi.js';
 import { haptics, Spring, type Sound } from '@funfactory/core';
 
 /** Krój nagłówków i cyfr (Lilita One, OFL). Ładowany raz w main.ts. */
@@ -166,4 +166,34 @@ export function cover(sprite: Sprite, width: number, height: number): void {
   sprite.anchor.set(0.5);
   sprite.scale.set(Math.max(width / t.width, height / t.height));
   sprite.position.set(width / 2, height / 2);
+}
+
+/**
+ * Przeciąganie palcem: obiekt idzie za palcem (z zachowanym punktem chwytu), po puszczeniu `drop`
+ * dostaje pozycję w układzie rodzica. `canStart` blokuje chwytanie (np. w trakcie animacji).
+ */
+export function draggable(obj: Container, handlers: { canStart: () => boolean; start?: () => void; drop: (at: Point) => void }): void {
+  let grab: { dx: number; dy: number; id: number } | null = null;
+  obj.eventMode = 'static';
+  obj.cursor = 'grab';
+  obj.on('pointerdown', (e) => {
+    if (grab || !obj.parent || !handlers.canStart()) return;
+    const p = obj.parent.toLocal(e.global);
+    grab = { dx: obj.x - p.x, dy: obj.y - p.y, id: e.pointerId };
+    obj.parent.addChild(obj); // na wierzch
+    haptics.tap();
+    handlers.start?.();
+  });
+  obj.on('globalpointermove', (e) => {
+    if (!grab || e.pointerId !== grab.id || !obj.parent) return;
+    const p = obj.parent.toLocal(e.global);
+    obj.position.set(p.x + grab.dx, p.y + grab.dy);
+  });
+  const end = (e: { pointerId: number }) => {
+    if (!grab || e.pointerId !== grab.id) return;
+    grab = null;
+    handlers.drop(new Point(obj.x, obj.y));
+  };
+  obj.on('pointerup', end);
+  obj.on('pointerupoutside', end);
 }

@@ -105,6 +105,19 @@ Gra: `games/bystrzakowo` (Vite + Pixi + Capacitor, poziomo, `designHeight: 720`)
   - cienie tylko dla obiektów o charakterystycznym konturze, kolory tylko tam, gdzie kolor jest jednoznaczny;
   - młode zwierzęta wygenerowane jako wyraźnie małe (leżące, duża głowa), żeby nie myliły się z mamą.
 
+## Krainy (decyzja 2026-11-21)
+
+Właściciel: zagadki mają być różnorodne, nie tylko wybór z trzech. Gra dzieli się na krainy, a każda kraina to inny rodzaj zabawy. Krainy przewija się gestem w bok albo zakładkami u góry; album, przewodnicy i strefa rodzica są wspólne. Za każdą rundę w dowolnej krainie jest naklejka.
+
+1. **Polana Zagadek** (dotknij i wybierz): cienie, co nie pasuje, liczenie, kolory, głoski, mamy i dzieci; później memory.
+2. **Warsztat Bazyla** (przeciągnij i ułóż): segregowanie (kategorie, kolory do wiaderek, „kto gdzie mieszka”: wieś, las, woda), układanka (2/4/6 kawałków); później „co dalej?” (wzory), od najmniejszego do największego, ubieranie na pogodę.
+3. **Ścieżka Lusi** (prowadź palcem): łączenie kropek, labirynt, litery po śladzie.
+4. **Pracownia Malucha** (twórz, bez złych odpowiedzi): kolorowanka, naklejanka (scena z zebranych naklejek).
+
+Kolejność budowy: nawigacja i Warsztat, potem Ścieżka, potem Pracownia, na końcu dokładki. Krainy mogą też wyznaczyć podział na część darmową i płatną (decyzja później).
+
+Kod: `src/sim/realms.ts` (krainy i zabawy), `src/scenes/world.ts` (świat), `src/scenes/round.ts` (wspólna rama rundy: przewodnik, gwiazdki, podpowiedzi, naklejka), zabawy w `src/scenes/{puzzle,sort,jigsaw}.ts`, logika w `src/sim/{puzzles,sorting,jigsaw}.ts`.
+
 ## Plan
 
 1. **Prototyp (3 domki: cienie, co nie pasuje, liczenie):** katalog z ~20 obiektami, silniki zagadek w czystym TS z testami, polana z trzema domkami, lektor, naklejka po rundzie. Cel: sprawdzić na dziecku, czy jest zabawnie i zrozumiale.

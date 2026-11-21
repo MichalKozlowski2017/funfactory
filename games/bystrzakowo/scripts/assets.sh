@@ -48,6 +48,16 @@ if [ -n "$mus" ]; then
   ffmpeg -loglevel error -y -i "$mus" -af "loudnorm=I=-20:TP=-2,afade=t=in:d=0.05" -ac 2 -ar 44100 -c:a aac -b:a 96k public/audio/muzyka.m4a
   cp "${mus%.flac}.json" public/audio/muzyka.json 2>/dev/null || true
 fi
+# Warsztat Bazyla: tło krainy, tło zabaw, stanowiska, skrzynka, wiaderko (barwione w grze), znaki domów.
+mkdir -p $OUT/warsztat
+background warsztat/tlo-warsztat-21.png kraina-warsztat
+background warsztat/gra2-32.png gra-warsztat
+sprite warsztat/stacja-sortowanie-22.png dom-sortowanie 560
+sprite warsztat/stacja-ukladanka-22.png dom-ukladanka 560
+sprite warsztat/skrzynka-21.png warsztat/skrzynka 512
+sprite warsztat/wiadro-21.png warsztat/wiadro 512
+sprite warsztat/stodola-21.png warsztat/stodola 256
+sprite warsztat/staw-21.png warsztat/staw 256
 background proto/tlo-polana-21.png polana
 background proto/tlo-zagadka-21.png tlo-zagadka
 du -sh $OUT
