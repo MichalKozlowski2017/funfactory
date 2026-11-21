@@ -1,0 +1,16 @@
+{
+ "voice": "voices/alt",
+ "tries": 8,
+ "lines": [
+  {
+   "name": "lusia-item-skuter",
+   "text": "Skuter!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "bazyl-item-skuter",
+   "text": "Skuter!",
+   "voice": "voices/prezenter"
+  }
+ ]
+}

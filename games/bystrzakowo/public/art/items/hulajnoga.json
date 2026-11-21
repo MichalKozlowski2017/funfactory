@@ -1,8 +1,8 @@
 {
   "workflow": "flux2-sprite.json",
-  "PROMPT": "a pink kick scooter, side view, single object, centered, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, bright cheerful pastel colors, cute and friendly, no face on objects, plain light gray background",
+  "PROMPT": "a blue children kick scooter with two small wheels, a tall handlebar and a flat narrow standing deck, no seat, no motor, no engine, side view, single object, centered, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, bright cheerful pastel colors, cute and friendly, no face on objects, plain light gray background",
   "NEGATIVE": "",
-  "SEED": 21,
+  "SEED": 42,
   "WIDTH": 1024,
   "HEIGHT": 1024,
   "PREFIX": "hulajnoga",
@@ -12,5 +12,5 @@
   "DURATION": 60,
   "KEY": "A minor",
   "LYRICS": "[Instrumental]",
-  "created": "2026-11-20T23:26:08.881Z"
+  "created": "2026-11-21T16:52:44.236Z"
 }

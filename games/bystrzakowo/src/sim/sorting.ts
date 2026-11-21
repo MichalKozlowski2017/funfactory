@@ -68,7 +68,7 @@ const GROUPS: Record<SortRule, GroupDef[]> = {
   ruch: [
     { key: 'lata', sign: 'chmurka', ids: ids(['ptak', 'sowa', 'motyl', 'pszczola', 'dzieciol', 'samolot', 'helikopter', 'rakieta', 'latawiec', 'biedronka']) },
     { key: 'plywa', sign: 'staw', ids: ids(['ryba', 'delfin', 'wieloryb', 'meduza', 'lodka', 'osmiornica', 'konikmorski']) },
-    { key: 'jezdzi', sign: 'droga', ids: ids(['auto', 'autobus', 'rower', 'traktor', 'pociag', 'hulajnoga', 'straz', 'ciezarowka']) },
+    { key: 'jezdzi', sign: 'droga', ids: ids(['auto', 'autobus', 'rower', 'traktor', 'pociag', 'hulajnoga', 'skuter', 'straz', 'ciezarowka']) },
   ],
 };
 

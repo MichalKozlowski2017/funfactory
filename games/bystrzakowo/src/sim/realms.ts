@@ -46,3 +46,28 @@ export const isPuzzle = (a: Activity): a is PuzzleKind => (PUZZLE_KINDS as reado
 
 /** Kraina, w której jest zabawa. */
 export const realmOf = (a: Activity): Realm => REALMS.find((r) => r.rows.some((row) => row.includes(a)))!;
+
+/** Podpisy zabaw na kafelkach krain (krótkie, żeby mieściły się w jednej linii). */
+export const ACTIVITY_NAMES: Record<Activity, string> = {
+  kolory: 'Kolory',
+  gloski: 'Głoski',
+  mamy: 'Mamy',
+  memory: 'Pary',
+  cienie: 'Cienie',
+  pasuje: 'Co nie pasuje?',
+  liczenie: 'Liczenie',
+  emocje: 'Minki',
+  wzory: 'Co dalej?',
+  ksztalty: 'Kształty',
+  sylaby: 'Sylaby',
+  sortowanie: 'Segregowanie',
+  ukladanka: 'Układanka',
+  historyjki: 'Historyjki',
+  litery: 'Literki',
+  cyfry: 'Cyferki',
+  kropki: 'Kropki',
+  labirynt: 'Labirynt',
+  kolorowanka: 'Kolorowanka',
+  naklejanka: 'Naklejki',
+  melodia: 'Melodia',
+};

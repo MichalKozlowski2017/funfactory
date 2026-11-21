@@ -3,7 +3,7 @@ import { haptics } from '@funfactory/core';
 import { dotTexture, idleBreath, Particles, popIn, Scene, squash, type View } from '@funfactory/kit2d';
 import { loadArt, say, shadowOf, startMusic, stopMusic, type Art } from '../assets.ts';
 import { playable, type PuzzleKind } from '../sim/puzzles.ts';
-import { isPuzzle, REALMS, type Activity } from '../sim/realms.ts';
+import { ACTIVITY_NAMES, isPuzzle, REALMS, type Activity } from '../sim/realms.ts';
 import { saveState, state } from '../state.ts';
 import { COLORS, cover, label, sfx } from '../ui.ts';
 import { ParentGate, ParentPanel } from '../parent.ts';
@@ -79,12 +79,16 @@ export class WorldScene extends Scene {
           .roundRect(-150, -150, 300, 300, 48)
           .stroke({ color: COLORS.ink, width: 5, alpha: 0.6 });
         const sprite = new Sprite({ texture: this.art.houses[kind], anchor: 0.5 });
-        sprite.scale.set(Math.min(240 / sprite.texture.height, 250 / sprite.texture.width));
-        sprite.y = 12;
+        sprite.scale.set(Math.min(190 / sprite.texture.height, 240 / sprite.texture.width));
+        sprite.y = -14;
+        // Podpis zabawy na dole kafelka.
+        const name = label(ACTIVITY_NAMES[kind], 40, pr * 2, '#ffffff');
+        name.scale.set(Math.min(1, 260 / name.width));
+        name.y = 112;
         const emblem = this.emblem(kind, catShadow);
         emblem.position.set(-118, -118);
         emblem.scale.set(0.85);
-        house.addChild(plate, sprite, emblem);
+        house.addChild(plate, sprite, name, emblem);
         house.eventMode = 'static';
         house.cursor = 'pointer';
         house.on('pointertap', () => this.open(kind, house));
