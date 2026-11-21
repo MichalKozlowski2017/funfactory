@@ -122,12 +122,18 @@ Kod: `src/sim/realms.ts` (krainy i zabawy), `src/scenes/world.ts` (świat), `src
 
 | Kraina | Zabawy |
 |---|---|
-| Polana Zagadek (Lusia) | cienie, co nie pasuje, liczenie, kolory, głoski, mamy i dzieci, memory (pary, na końcu obrazek i cień), emocje (minki) |
-| Warsztat Bazyla | segregowanie (6 reguł), układanka, co dalej (wzory), sorter kształtów |
+| Polana Zagadek | cienie, co nie pasuje, liczenie, kolory, głoski, mamy i dzieci, memory (pary; na końcu obrazek i cień), emocje (minki) |
+| Warsztat Bazyla | segregowanie (6 reguł), układanka, co dalej (wzory), sorter kształtów, sylaby (21 słów), historyjki obrazkowe (6 × 3 kadry) |
 | Ścieżka Lusi | łączenie kropek, labirynt, litery po śladzie (12), cyfry po śladzie (0–9, potem liczenie) |
-| Pracownia Malucha | kolorowanka (12 stron z Fluxa), naklejanka (scena z zebranych naklejek), melodia (cymbałki, powtórz) |
+| Pracownia Malucha | kolorowanka (12 stron), naklejanka (scena z zebranych naklejek), melodia (cymbałki, powtórz) |
 
-Strefa rodzica: muzyka, limit czasu zabawy (15/30/45 min, potem „Dobranoc” i odblokowanie tylko zębatką), zerowanie postępów. Research oczekiwań rodziców: `docs/bystrzakowo-rodzice.md`.
+Strefa rodzica: muzyka, limit czasu zabawy (15/30/45 min, potem „Dobranoc”, odblokowanie zębatką), zerowanie postępów. Przy pierwszym uruchomieniu Bazyl pokazuje zakładki krain.
+
+Dźwięk: kontekst 24 kHz, na starcie tylko polecenia; nazwy obiektów dekoduje runda (`roundItems`) i zwalnia po wyjściu (ok. 40 MB zamiast 130 MB w pamięci).
+
+Do odsłuchu: czytanie sylabami (`lusia-czytaj-*`), Whisper nie umie tego ocenić; „Romb” (Bazyl) z twardym „p” na końcu; „Dzięcioł” (Bazyl) z miękkim „ł”.
+
+Research oczekiwań rodziców: `docs/bystrzakowo-rodzice.md`.
 
 ## Plan
 

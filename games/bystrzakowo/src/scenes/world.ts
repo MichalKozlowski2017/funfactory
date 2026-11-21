@@ -141,7 +141,15 @@ export class WorldScene extends Scene {
       startMusic(this.game);
       if (state.greeted) return;
       state.greeted = true;
-      this.timers.after(0.15, () => say(this.game, 'lusia', 'witaj'));
+      this.timers.after(0.15, () => {
+        const len = say(this.game, 'lusia', 'witaj');
+        // Pierwsze uruchomienie: Bazyl pokazuje zakładki krain (podskakują).
+        if (state.progress.rounds === 0)
+          this.timers.after(len + 0.4, () => {
+            say(this.game, 'bazyl', 'krainy');
+            this.tabs.forEach((t, i) => this.timers.after(0.6 + i * 0.25, () => void squash(this.tweens, t, 0.35)));
+          });
+      });
     });
     const endSwipe = (x: number) => {
       if (this.swipeX === null || this.parentPanel) return;

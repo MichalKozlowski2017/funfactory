@@ -1,0 +1,10 @@
+{
+ "voice": "voices/prezenter",
+ "tries": 8,
+ "lines": [
+  {
+   "name": "bazyl-krainy",
+   "text": "Dotknij kolorowych kółek na górze, żeby odwiedzić inne krainy!"
+  }
+ ]
+}
