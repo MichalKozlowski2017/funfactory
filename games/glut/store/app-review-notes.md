@@ -5,27 +5,14 @@ Tekst poniżej wkleja się do App Store Connect → App Review Information → N
 
 ---
 
-Screen recording: attached in the App Review Information section (recorded on iPhone 15 Pro Max, latest iOS). It starts with launching the app and shows the typical flow: first-launch consent prompt, main menu, a full run, game over screen, daily challenge, wardrobe, settings and Game Center leaderboards. The UI in the recording is in Polish (device language); the language can be switched to English in Settings, as shown in the recording.
+Screen recording: see Attachment (iPhone 15 Pro Max, latest iOS). It starts with launching the app and shows: consent prompt, menu, a full run, game over, wardrobe, Game Center leaderboards, daily challenge, settings and achievements. UI is in Polish (device language); English can be selected in Settings.
 
-1. Purpose and target audience
-Glut: Sweet Climb is a casual single-player arcade game. The player is a candy slime that climbs up a candy well by slingshot jumps while rising syrup chases it from below. It is a short-session game for casual players (rated 13+). It offers quick, skill-based fun: runs of 1–3 minutes, a best-height record, a daily challenge that is the same level for everyone that day, achievements and cosmetic items (hats, colors, trails) unlocked with candies collected while playing.
+1. Purpose and audience: casual single-player arcade game (rated 13+). A candy slime climbs a candy well with slingshot jumps while rising syrup chases it. Short skill-based runs, best-height record, a daily challenge (same level for everyone each day), achievements and cosmetic items unlocked with in-game candies.
 
-2. How to use the main features
-No account, login or setup is required. Everything is available right after launch.
-- Play: tap "Play". Touch anywhere, drag back and release to jump (like a slingshot; dots show the trajectory). Climb as high as possible before the syrup catches you.
-- Daily challenge: "Daily challenge" button in the main menu (one fixed level per day).
-- Wardrobe: cosmetic items bought with candies earned in game. They do not affect gameplay.
-- Achievements: in-game list ("Achievements" button in the main menu).
-- Leaderboard: "Leaderboard" button opens Game Center (optional; the game works fully without signing in).
-- Settings: sound, music, vibration, language (English/Polish) and the optional anonymous statistics toggle.
+2. Main features: no account, login or setup needed. Tap "Play", then touch anywhere, drag back and release to jump. Menu: Daily challenge, Wardrobe (cosmetics only), Achievements, Leaderboard (Game Center, optional), Settings (sound, music, vibration, language, statistics).
 
-3. External services
-- Apple Game Center: optional leaderboards (best height, daily challenge).
-- Optional anonymous gameplay statistics, sent only if the player agrees on first launch (can be turned off in Settings at any time): our own endpoint hosted on Vercel with a Neon Postgres database. It receives a random installation ID and gameplay events (sessions, run results, errors). No personal data, no tracking, no third-party analytics or advertising SDKs are active in this version.
-- No in-app purchases, no ads, no AI services, no payment processors, no user accounts and no user-generated content.
+3. External services: Apple Game Center (optional leaderboards). Optional anonymous gameplay statistics, only with consent on first launch (can be turned off in Settings): our own endpoint on Vercel with a Neon Postgres database, receiving a random installation ID and gameplay events. No personal data, no tracking, no ads, no in-app purchases, no AI, no accounts, no user-generated content.
 
-4. Regional differences
-The app works the same in all regions where it is available. Content is localized in English and Polish only.
+4. Regions: the app works the same in all regions. Languages: English and Polish.
 
-5. Regulated industry / third-party material
-Not applicable. The app does not operate in a regulated industry. All graphics, music and sounds are original or used under licenses that allow commercial use (including CC0 sound samples).
+5. Regulated industry / third-party material: not applicable. All graphics, music and sounds are original or licensed for commercial use (including CC0 samples).
