@@ -38,6 +38,7 @@ export abstract class RoundScene extends Scene {
   protected leaving = false;
   protected idle = 0;
   private hinted = 0;
+  private solvedAt = -1;
   private updateNext: ((dt: number) => void) | null = null;
 
   constructor(kind: Activity, guide: Guide) {
@@ -125,6 +126,9 @@ export abstract class RoundScene extends Scene {
    * `afterLen`: ile sekund trwa to, co już mówi lektor (np. nazwa obiektu), zanim padnie pochwała.
    */
   protected solved(afterLen = 0): void {
+    // Każde zadanie kończy się raz (np. w memory ostatnie pary mogą zgłosić koniec niemal równocześnie).
+    if (this.solvedAt === this.index) return;
+    this.solvedAt = this.index;
     this.busy = true;
     sfx.good(this.game.sound);
     haptics.success();
