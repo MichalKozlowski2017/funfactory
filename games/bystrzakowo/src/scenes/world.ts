@@ -477,8 +477,8 @@ export class WorldScene extends Scene {
         const front = realm.rows[1]!;
         const top = place(front, h - 40, front.length < 3 ? 0.72 : 0.9);
         const back = realm.rows[0]!;
-        const stagger = back.length === front.length && front.length < 3 ? 0.18 : 0;
-        place(back, Math.max(h * 0.5 + 75, top + 25), 0.62, -stagger);
+        const stagger = back.length === front.length && front.length < 4 ? 0.18 : 0;
+        place(back, Math.max(h * 0.5 + (front.length < 4 ? 45 : 75), top + 25), 0.62, -stagger);
         for (const kind of front) this.houses.get(kind)!.x += (span * stagger) / front.length;
       } else place(realm.rows[0]!, h - 70, 1.25);
     });
