@@ -1,0 +1,14 @@
+{
+ "voice": "voices/prezenter",
+ "tries": 8,
+ "lines": [
+  { "name": "bazyl-historia-jajko", "text": "Najpierw jajko, potem wbijamy je na patelnię, a na końcu jest jajko sadzone!" },
+  { "name": "bazyl-historia-pizza", "text": "Najpierw kulka ciasta, potem sos, a na końcu pyszna pizza!" },
+  { "name": "bazyl-historia-swieca", "text": "Najpierw długa świeczka, potem coraz krótsza, a na końcu malutki ogarek!" },
+  { "name": "bazyl-historia-kakao", "text": "Najpierw pusty kubek, potem mleko, a na końcu ciepłe kakao!" },
+  { "name": "bazyl-historia-gniazdo", "text": "Najpierw patyczki, potem gniazdko, a na końcu ptaszek w gnieździe!" },
+  { "name": "bazyl-historia-drzewko", "text": "Najpierw malutka sadzonka, potem drzewko, a na końcu jabłoń z jabłkami!" },
+  { "name": "bazyl-historia-samolot", "text": "Najpierw kartka, potem składamy, a na końcu papierowy samolot!" },
+  { "name": "bazyl-historia-dzien", "text": "Najpierw rano wschodzi słońce, potem jest dzień, a na końcu noc!" }
+ ]
+}

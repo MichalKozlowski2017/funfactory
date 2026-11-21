@@ -91,6 +91,9 @@ for f in $RAW/historyjki/*-21.png; do
   id=$(basename "$f" -21.png)
   sprite "historyjki/$id-21.png" "historyjki/$id" 400
 done
+# Wybrane nowsze kadry (poprawki bez twarzy i nowe historyjki); nadpisują wersje -21.
+STORY_PICKS="balwan-1-51 balwan-2-51"
+for x in $STORY_PICKS; do sprite "historyjki/$x.png" "historyjki/${x%-*}" 400; done
 # Kolorowanki: czyste czarne kontury na białym (próg + pogrubienie linii, żeby obszary były zamknięte).
 mkdir -p $OUT/kolorowanki
 for f in $RAW/kolorowanki/*-21.png; do

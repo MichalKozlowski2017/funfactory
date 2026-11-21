@@ -1,8 +1,8 @@
 {
   "workflow": "flux2-sprite.json",
-  "PROMPT": "one big snowball on snowy ground, single scene object, centered, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, bright cheerful pastel colors, cute and friendly, no text, plain light gray background",
+  "PROMPT": "one big round plain white snowball lying on a small patch of snowy ground, plain snow, no face, no eyes, no mouth, no nose, no carrot, no decorations, single scene object, centered, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, no text, plain light gray background",
   "NEGATIVE": "",
-  "SEED": 21,
+  "SEED": 51,
   "WIDTH": 1024,
   "HEIGHT": 1024,
   "PREFIX": "balwan-1",
@@ -12,5 +12,5 @@
   "DURATION": 60,
   "KEY": "A minor",
   "LYRICS": "[Instrumental]",
-  "created": "2026-11-21T12:29:42.201Z"
+  "created": "2026-11-21T17:00:12.346Z"
 }

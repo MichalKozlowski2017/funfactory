@@ -144,6 +144,88 @@ if (process.argv.includes('--historyjki')) {
   for (const [id, frames] of stories) frames.forEach((what, i) => tasks.push({ out: 'historyjki', prefix: `${id}-${i + 1}`, args: ['--workflow', 'flux2-sprite', '--prompt', frame(what)] }));
 }
 
+if (process.argv.includes('--balwan')) {
+  // Bałwan krok po kroku: same kule śniegu bez twarzy (wcześniej Flux dorysowywał buzie i wyglądały jak głowy).
+  const frame = (what: string) => `${what}, plain snow, no face, no eyes, no mouth, no nose, no carrot, no decorations, single scene object, centered, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, no text, plain light gray background`;
+  tasks.push(
+    { out: 'historyjki', prefix: 'balwan-1', args: ['--workflow', 'flux2-sprite', '--count', '2', '--prompt', frame('one big round plain white snowball lying on a small patch of snowy ground')] },
+    { out: 'historyjki', prefix: 'balwan-2', args: ['--workflow', 'flux2-sprite', '--count', '2', '--prompt', frame('two plain white snowballs stacked on top of each other, a big one at the bottom and a smaller one on top, on a small patch of snowy ground, an unfinished snowman body')] },
+  );
+}
+
+if (process.argv.includes('--historyjki2')) {
+  // Nowe historyjki i poprawione kadry. Przedmioty bez buzi (Flux z „cute” dorysowywał twarze jajkom i jabłkom).
+  const base = 'single scene object, centered, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, bright cheerful pastel colors, no text, plain light gray background';
+  const thing = (what: string) => `${what}, no face, no eyes, no mouth, ${base}`;
+  const animal = (what: string) => `${what}, cute and friendly, ${base}`;
+  const frames: [string, string][] = [
+    // Poprawki (bez twarzy).
+    ['kwiat-1', thing('a small brown seed in a little pile of brown soil')],
+    ['kwiat-2', thing('a tiny green sprout with two leaves growing from a little pile of brown soil')],
+    ['kwiat-3', thing('a pink flower in bloom growing from a little pile of brown soil')],
+    ['kurczak-1', thing('a plain white egg in a little straw nest')],
+    ['jablko-1', thing('a whole shiny red apple with a leaf')],
+    ['jablko-2', thing('a red apple with one big bite taken out, with a leaf')],
+    ['jablko-3', thing('an apple core with a stem')],
+    ['lody-1', thing('a full ice cream cone with two scoops, pink and vanilla')],
+    ['lody-2', thing('an ice cream cone with one small half melted pink scoop')],
+    // Nowe historyjki.
+    ['zabka-1', thing('a small clump of round transparent frog eggs with black dots floating in a bit of blue pond water')],
+    ['zabka-2', animal('a small dark green tadpole with a long tail swimming in a bit of blue pond water')],
+    ['zabka-3', animal('a green frog sitting on a lily pad on a bit of blue pond water')],
+    ['kanapka-1', thing('a single plain slice of bread on a small wooden board')],
+    ['kanapka-2', thing('a single slice of bread spread with yellow butter on a small wooden board, a butter knife next to it')],
+    ['kanapka-3', thing('an open sandwich, a slice of bread with butter, cheese, tomato slices and lettuce on a small wooden board')],
+    ['wieza-1', thing('one single red wooden toy block standing on the floor')],
+    ['wieza-2', thing('two wooden toy blocks stacked on top of each other, red at the bottom and yellow on top')],
+    ['wieza-3', thing('a tall tower of five stacked colorful wooden toy blocks, red, yellow, green, blue and orange')],
+    ['balon-1', thing('a flat deflated red rubber balloon lying on the floor')],
+    ['balon-2', thing('a small half inflated red balloon with a string')],
+    ['balon-3', thing('a big round fully inflated shiny red balloon with a string')],
+    ['tort-1', thing('a mixing bowl with cake batter, a whisk, two eggs and a bag of flour next to it')],
+    ['tort-2', thing('a plain round baked sponge cake in a round baking tin')],
+    ['tort-3', thing('a round birthday cake with pink frosting, sprinkles and three lit candles on a plate')],
+    ['zamek-1', thing('a red toy bucket full of sand standing on beach sand with a small spade')],
+    ['zamek-2', thing('a small round pile of sand shaped like an upturned bucket on beach sand')],
+    ['zamek-3', thing('a sand castle with three towers and a little red flag on beach sand')],
+  ];
+  for (const [id, prompt] of frames) tasks.push({ out: 'historyjki', prefix: id, args: ['--workflow', 'flux2-sprite', '--count', '2', '--prompt', prompt] });
+}
+
+if (process.argv.includes('--historyjki3')) {
+  // Kolejne historyjki (razem 20).
+  const base = 'single scene object, centered, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, bright cheerful pastel colors, no text, plain light gray background';
+  const thing = (what: string) => `${what}, no face, no eyes, no mouth, ${base}`;
+  const animal = (what: string) => `${what}, cute and friendly, ${base}`;
+  const frames: [string, string][] = [
+    ['jajko-1', thing('a whole white egg next to a small frying pan')],
+    ['jajko-2', thing('a cracked egg with raw yolk and egg white pouring into a small frying pan')],
+    ['jajko-3', thing('a fried egg with a round yellow yolk in a small frying pan')],
+    ['pizza-1', thing('a round ball of pizza dough on a floured wooden board')],
+    ['pizza-2', thing('a flat round raw pizza dough spread with red tomato sauce on a wooden board')],
+    ['pizza-3', thing('a baked round pizza with melted cheese, tomato and basil on a wooden board')],
+    ['swieca-1', thing('a tall new white candle with a small flame in a candle holder')],
+    ['swieca-2', thing('a half burned white candle with a small flame and wax drips in a candle holder')],
+    ['swieca-3', thing('a tiny short burned down candle stub with a small flame and a puddle of wax in a candle holder')],
+    ['kakao-1', thing('an empty blue mug')],
+    ['kakao-2', thing('a blue mug full of white milk')],
+    ['kakao-3', thing('a blue mug full of hot brown cocoa with pink and white marshmallows on top')],
+    ['gniazdo-1', thing('a small pile of twigs and straw on a tree branch')],
+    ['gniazdo-2', thing('an empty round bird nest made of twigs on a tree branch')],
+    ['gniazdo-3', animal('a small blue bird sitting in a round nest made of twigs on a tree branch')],
+    ['drzewko-1', thing('a tiny tree sapling with a few leaves growing from a small mound of soil')],
+    ['drzewko-2', thing('a small young tree with a thin trunk and a small round crown on a small mound of grass')],
+    ['drzewko-3', thing('a big apple tree with a round green crown full of red apples on a small mound of grass')],
+    ['samolot-1', thing('a plain flat sheet of white paper lying on a table')],
+    ['samolot-2', thing('a sheet of white paper folded in half with a pointed folded tip, half made paper airplane')],
+    ['samolot-3', thing('a finished white paper airplane')],
+    ['dzien-1', thing('a small round green hill with the sun rising behind it, orange and pink morning sky in a round frame')],
+    ['dzien-2', thing('a small round green hill with a bright yellow sun high in a blue sky in a round frame')],
+    ['dzien-3', thing('a small round dark green hill under a dark blue night sky with a crescent moon and stars in a round frame')],
+  ];
+  for (const [id, prompt] of frames) tasks.push({ out: 'historyjki', prefix: id, args: ['--workflow', 'flux2-sprite', '--count', '2', '--prompt', prompt] });
+}
+
 if (process.argv.includes('--krajobrazy')) {
   // Tła naklejanki: szeroki krajobraz z dużą pustą przestrzenią na naklejki (dolne dwie trzecie).
   const land = (what: string) => `wide landscape scene of ${what}, the bottom two thirds is a big open empty flat area for placing stickers, low horizon detail, no characters, no animals, no people, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft lighting, bright cheerful pastel colors, cute and friendly`;
@@ -207,7 +289,7 @@ if (process.argv.includes('--warsztat')) {
 }
 
 for (const item of ITEMS) {
-  if ((process.argv.includes('--warsztat') || process.argv.includes('--sciezka') || process.argv.includes('--znaki') || process.argv.includes('--pracownia') || process.argv.includes('--dodatki') || process.argv.includes('--historyjki') || process.argv.includes('--polana') || process.argv.includes('--kolorowanki2') || process.argv.includes('--krajobrazy')) && !only) break;
+  if ((process.argv.includes('--warsztat') || process.argv.includes('--sciezka') || process.argv.includes('--znaki') || process.argv.includes('--pracownia') || process.argv.includes('--dodatki') || process.argv.includes('--historyjki') || process.argv.includes('--polana') || process.argv.includes('--kolorowanki2') || process.argv.includes('--krajobrazy') || process.argv.includes('--balwan') || process.argv.includes('--historyjki2') || process.argv.includes('--historyjki3')) && !only) break;
   if (only && !only.has(item.id)) continue;
   if (!only && existsSync(join(repo, 'games/bystrzakowo/public/art/items', `${item.id}.webp`))) continue;
   if (existsSync(join(raw, 'items', `${item.id}-${SEED}.png`))) continue;
