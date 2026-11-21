@@ -1,8 +1,8 @@
 {
   "workflow": "flux2-sprite.json",
-  "PROMPT": "a tiny cute fluffy white baby lamb, side view, single object, centered, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, bright cheerful pastel colors, cute and friendly, plain light gray background",
+  "PROMPT": "a tiny cute newborn white baby lamb with an oversized head, big eyes and short wool, lying down with legs folded, side view, single object, centered, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, bright cheerful pastel colors, cute and friendly, plain light gray background",
   "NEGATIVE": "",
-  "SEED": 21,
+  "SEED": 23,
   "WIDTH": 1024,
   "HEIGHT": 1024,
   "PREFIX": "jagniatko",
@@ -12,5 +12,5 @@
   "DURATION": 60,
   "KEY": "A minor",
   "LYRICS": "[Instrumental]",
-  "created": "2026-11-20T22:17:58.418Z"
+  "created": "2026-11-21T07:41:04.616Z"
 }
