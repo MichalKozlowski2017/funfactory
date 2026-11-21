@@ -14,7 +14,7 @@ import { RoundScene } from './round.ts';
  * brzegu od góry, `rx`/`ry` półosie elipsy otworu (0 = prosta krawędź, jak przednia deska skrzynki),
  * `sink`: jak głęboko obiekt siedzi (ułamek jego rozmiaru poniżej brzegu; skrzynka jest płytsza).
  */
-const BUCKET = { mouth: 0.43, rx: 0.4, ry: 0.07, sink: 0.25 };
+const BUCKET = { mouth: 0.41, rx: 0.39, ry: 0.05, sink: 0.25 };
 const CRATE = { mouth: 0.4, rx: 0, ry: 0, sink: 0.05 };
 
 /** Obiekt do posegregowania: kafelek z obrazkiem, który przeciąga się do skrzynki. */
@@ -261,7 +261,9 @@ export class SortScene extends RoundScene {
     v.scale.set(scale);
     v.position.set(v.x - bin.view.x, v.y - bin.view.y);
     bin.pile.addChild(v);
-    const deep = slot.y + this.itemSize(bin) * 0.9;
+    // W głąb, ale nie niżej niż dno (skrzynka jest niska: obiekt nie może wyjrzeć spod spodu).
+    const size = this.itemSize(bin);
+    const deep = Math.min(slot.y + size * 0.9, -size * 0.5 - 10);
     void this.tweens.to(v, { y: deep }, { duration: 0.16, ease: 'quadIn' }).done.then(() => this.land(piece, bin, slot));
   }
 
