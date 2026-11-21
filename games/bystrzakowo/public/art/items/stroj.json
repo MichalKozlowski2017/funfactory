@@ -1,0 +1,16 @@
+{
+  "workflow": "flux2-sprite.json",
+  "PROMPT": "a colorful children one-piece swimsuit with polka dots lying flat on its own, empty, no body, no mannequin, single object, centered, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, bright cheerful pastel colors, cute and friendly, no face on objects, plain light gray background",
+  "NEGATIVE": "",
+  "SEED": 22,
+  "WIDTH": 1024,
+  "HEIGHT": 1024,
+  "PREFIX": "stroj",
+  "STEPS": 20,
+  "GUIDANCE": 4,
+  "BPM": 100,
+  "DURATION": 60,
+  "KEY": "A minor",
+  "LYRICS": "[Instrumental]",
+  "created": "2026-11-21T10:23:28.540Z"
+}

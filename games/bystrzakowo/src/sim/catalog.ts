@@ -122,7 +122,7 @@ export const ITEMS: Item[] = [
     ['zajac', 'Zajączek', '', 's', 'a cute brown wild hare with very long ears, sitting, side view'],
     ['dzik', 'Dzik', 'brazowy', 's', 'a cute dark brown wild boar with small tusks, standing, side view'],
     ['sarna', 'Sarenka', 'brazowy', 's', 'a cute young roe deer with white spots, standing, side view'],
-    ['dzieciol', 'Dzięcioł', '', 's', 'a cute black and white woodpecker with a red cap, side view'],
+    ['dzieciol', 'Dzięcioł', '', 's', 'a cute woodpecker bird with a red cap, black and white wings, clinging to a short piece of brown tree trunk, side view'],
     // Woda
     ['wieloryb', 'Wieloryb', 'niebieski', 's', 'a cute big blue whale with a small water spout, side view'],
     ['delfin', 'Delfin', '', 's', 'a cute grey-blue dolphin jumping, side view'],
@@ -196,7 +196,7 @@ export const ITEMS: Item[] = [
     ['balonik', 'Balonik', 'czerwony', 'sc', 'a red balloon on a string'],
     ['trabka', 'Trąbka', 'zolty', 's', 'a yellow toy trumpet'],
     ['wiaderko', 'Wiaderko', 'niebieski', 's', 'a blue sand bucket with a handle'],
-    ['sanki', 'Sanki', '', 's', 'small wooden children sled with red runners, side view'],
+    ['sanki', 'Sanki', '', 's', 'an empty small wooden children sled with red runners and nothing on it, side view'],
   ]),
   ...rows('kuchnia', [
     ['kubek', 'Kubek', 'niebieski', 's', 'a blue mug'],
@@ -223,7 +223,7 @@ export const ITEMS: Item[] = [
     ['okulary', 'Okulary', '', 's', 'a pair of colorful children sunglasses, front view'],
     ['kapelusz', 'Kapelusz', 'zolty', 's', 'a yellow straw sun hat with a ribbon'],
     ['sandaly', 'Sandały', '', 's', 'a pair of colorful children summer sandals'],
-    ['stroj', 'Strój kąpielowy', '', '', 'a colorful children one-piece swimsuit with polka dots'],
+    ['stroj', 'Strój kąpielowy', '', '', 'a colorful children one-piece swimsuit with polka dots lying flat on its own, empty, no body, no mannequin'],
     ['kurtka', 'Kurtka', 'czerwony', 's', 'a puffy red children winter jacket with a hood'],
   ]),
   ...rows('natura', [

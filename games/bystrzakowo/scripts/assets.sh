@@ -58,6 +58,7 @@ sprite warsztat/skrzynka-21.png warsztat/skrzynka 512
 sprite warsztat/wiadro-21.png warsztat/wiadro 512
 sprite warsztat/stodola-21.png warsztat/stodola 256
 sprite warsztat/staw-21.png warsztat/staw 256
+for id in droga balwan palma kra; do sprite warsztat/$id-21.png warsztat/$id 256; done
 background proto/tlo-polana-21.png polana
 background proto/tlo-zagadka-21.png tlo-zagadka
 du -sh $OUT
