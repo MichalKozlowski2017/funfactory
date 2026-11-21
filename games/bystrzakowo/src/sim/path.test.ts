@@ -87,3 +87,30 @@ describe('memory', () => {
     expect(memoryMistakes(12, 4)).toBe(4);
   });
 });
+
+describe('litery po śladzie', () => {
+  it('litery mają obrazki w katalogu, kreski w polu 0..1, runda bez powtórzeń', async () => {
+    const { LETTERS, makeLetterRound, LETTER_ROUND, resample, advance } = await import('./letters.ts');
+    for (const l of LETTERS) {
+      expect(ITEMS.some((i) => i.id === l.item), l.ch).toBe(true);
+      for (const s of l.strokes) for (const [x, y] of s) {
+        expect(x).toBeGreaterThanOrEqual(-0.01);
+        expect(x).toBeLessThanOrEqual(1.01);
+        expect(y).toBeGreaterThanOrEqual(-0.01);
+        expect(y).toBeLessThanOrEqual(1.01);
+      }
+    }
+    for (const level of [0, 1, 2]) {
+      const round = makeLetterRound(new Rng(level + 1), level);
+      expect(round.length).toBe(LETTER_ROUND);
+      expect(new Set(round).size).toBe(LETTER_ROUND);
+      expect(round.every((x) => x.level <= level)).toBe(true);
+    }
+    // Postęp: palec wzdłuż kreski idzie do końca, palec daleko nie przesuwa.
+    const pts = resample([[0, 0], [0, 1]], 0.05);
+    let at = 0;
+    for (let y = 0; y <= 1.0001; y += 0.04) at = advance(pts, at, [0.02, y], 0.1);
+    expect(at).toBe(pts.length - 1);
+    expect(advance(pts, 0, [0.5, 0.5], 0.1)).toBe(0);
+  });
+});

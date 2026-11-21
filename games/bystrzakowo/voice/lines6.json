@@ -14,6 +14,71 @@
    "name": "bazyl-wzory",
    "text": "Co będzie dalej? Przeciągnij brakujący obrazek!",
    "voice": "voices/prezenter"
+  },
+  {
+   "name": "lusia-litery",
+   "text": "Narysuj palcem literę! Zacznij od zielonej kropki.",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-litera-a",
+   "text": "A jak autko!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-litera-i",
+   "text": "I jak indyk!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-litera-l",
+   "text": "L jak lew!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-litera-t",
+   "text": "T jak traktor!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-litera-o",
+   "text": "O jak owca!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-litera-m",
+   "text": "M jak motyl!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-litera-w",
+   "text": "W jak wieloryb!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-litera-k",
+   "text": "K jak kot!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-litera-p",
+   "text": "P jak pies!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-litera-d",
+   "text": "D jak dinozaur!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-litera-b",
+   "text": "B jak banan!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-litera-s",
+   "text": "S jak słoń!",
+   "voice": "voices/alt"
   }
  ]
 }

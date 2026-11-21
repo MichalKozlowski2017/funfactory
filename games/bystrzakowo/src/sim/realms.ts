@@ -12,8 +12,8 @@ export const WORKSHOP_KINDS: readonly WorkshopKind[] = ['sortowanie', 'ukladanka
 export type MeadowKind = 'memory';
 
 /** Zabawy Ścieżki Lusi (prowadź palcem). */
-export type PathKind = 'kropki' | 'labirynt';
-export const PATH_KINDS: readonly PathKind[] = ['kropki', 'labirynt'];
+export type PathKind = 'kropki' | 'labirynt' | 'litery';
+export const PATH_KINDS: readonly PathKind[] = ['kropki', 'labirynt', 'litery'];
 
 /** Każda zabawa w grze (klucz poziomu trudności w zapisie). */
 export type Activity = PuzzleKind | MeadowKind | WorkshopKind | PathKind;
@@ -34,7 +34,7 @@ export interface Realm {
 export const REALMS: readonly Realm[] = [
   { id: 'polana', name: 'Polana Zagadek', guide: 'lusia', rows: [['kolory', 'gloski', 'mamy', 'memory'], ['cienie', 'pasuje', 'liczenie']] },
   { id: 'warsztat', name: 'Warsztat Bazyla', guide: 'bazyl', rows: [['sortowanie', 'ukladanka', 'wzory']] },
-  { id: 'sciezka', name: 'Ścieżka Lusi', guide: 'lusia', rows: [['kropki', 'labirynt']] },
+  { id: 'sciezka', name: 'Ścieżka Lusi', guide: 'lusia', rows: [['kropki', 'labirynt', 'litery']] },
 ];
 
 export const isPuzzle = (a: Activity): a is PuzzleKind => (PUZZLE_KINDS as readonly string[]).includes(a);

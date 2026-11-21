@@ -11,6 +11,7 @@ import { AlbumScene } from './album.ts';
 import { DotsScene } from './dots.ts';
 import { JigsawScene } from './jigsaw.ts';
 import { MazeScene } from './maze.ts';
+import { LetterScene } from './letters.ts';
 import { MemoryScene } from './memory.ts';
 import { PatternScene } from './patterns.ts';
 import { PuzzleScene } from './puzzle.ts';
@@ -249,6 +250,7 @@ export class WorldScene extends Scene {
       g.poly([-8, -26, 8, -26, 8, -14, 15, -14, 0, -2, -15, -14, -8, -14]).fill({ color: COLORS.sun }).stroke({ color: COLORS.ink, width: 3, join: 'round' });
       c.addChild(g);
     } else if (kind === 'ukladanka') c.addChild(puzzlePiece());
+    else if (kind === 'litery') c.addChild(label('A', 52, pr, '#9b5de5'));
     else if (kind === 'wzory') {
       // Koraliki we wzorze i znak zapytania.
       const g = new Graphics();
@@ -315,7 +317,7 @@ export class WorldScene extends Scene {
     void squash(this.tweens, house, 0.18);
     const p = this.toLocal(house.getGlobalPosition());
     this.particles.burst(p.x, p.y - 120, { count: 24, speed: [200, 520], life: [0.4, 0.8], gravity: 900, scale: [0.6, 1.2], colors: COLORS.confetti });
-    const scenes: Record<string, () => Scene> = { memory: () => new MemoryScene(), sortowanie: () => new SortScene(), ukladanka: () => new JigsawScene(), wzory: () => new PatternScene(), kropki: () => new DotsScene(), labirynt: () => new MazeScene() };
+    const scenes: Record<string, () => Scene> = { memory: () => new MemoryScene(), sortowanie: () => new SortScene(), ukladanka: () => new JigsawScene(), wzory: () => new PatternScene(), kropki: () => new DotsScene(), litery: () => new LetterScene(), labirynt: () => new MazeScene() };
     const scene = isPuzzle(kind) ? new PuzzleScene(kind as PuzzleKind) : scenes[kind]!();
     this.timers.after(0.35, () => void this.game.scenes.go(scene, { fade: 0.3, color: 0xfff6e8 }));
   }
