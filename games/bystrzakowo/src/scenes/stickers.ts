@@ -1,6 +1,6 @@
 import { Assets, Container, Graphics, Rectangle, Sprite, type FederatedPointerEvent, type Texture } from 'pixi.js';
 import { haptics } from '@funfactory/core';
-import { dotTexture, Particles, popIn, popOut, pulse, Scene, squash, type View } from '@funfactory/kit2d';
+import { dotTexture, Particles, popIn, popOut, pulse, Scene, setRestScale, squash, type View } from '@funfactory/kit2d';
 import { loadArt, say, startMusic, type Art } from '../assets.ts';
 import { addPicture, depthScale, gallery, LANDSCAPES, MAX_PICTURES, removePicture, type Landscape, type Picture } from '../sim/stickers.ts';
 import { saveState, state } from '../state.ts';
@@ -192,7 +192,9 @@ export class StickerScene extends Scene {
     const v = p.view;
     const area = this.game.view.height - TRAY_H;
     const k = (STICKER * depthScale(v.y / area)) / Math.max(v.texture.width, v.texture.height);
-    v.scale.set(p.flip ? -k : k, k);
+    // Skala spoczynkowa dla animacji (squash/popIn wracają do niej, a nie do pierwszego rozmiaru).
+    this.tweens.killOf(v.scale);
+    setRestScale(v, p.flip ? -k : k, k);
     v.zIndex = v.y;
   }
 
