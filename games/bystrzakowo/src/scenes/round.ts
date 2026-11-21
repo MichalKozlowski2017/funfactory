@@ -5,6 +5,7 @@ import { itemVoices, loadArt, say, startMusic, type Art, type Guide } from '../a
 import { pickSticker } from '../sim/progress.ts';
 import { nextLevel } from '../sim/puzzles.ts';
 import { realmOf, type Activity } from '../sim/realms.ts';
+import { logFact, logTask } from '../log.ts';
 import { saveState, state } from '../state.ts';
 import { COLORS, cover, IconButton, sfx } from '../ui.ts';
 
@@ -39,6 +40,8 @@ export abstract class RoundScene extends Scene {
   protected idle = 0;
   private hinted = 0;
   private solvedAt = -1;
+  /** Pomyłki w bieżącym zadaniu (do dziennika). */
+  private taskMisses = 0;
   private voices: string[] = [];
   private updateNext: ((dt: number) => void) | null = null;
 
@@ -62,6 +65,13 @@ export abstract class RoundScene extends Scene {
   protected appear(): void {}
   /** Obiekty, których nazwy lektor może powiedzieć w tej rundzie (ich nagrania wczytuje się na start rundy). */
   protected roundItems(): string[] {
+    return [];
+  }
+  /**
+   * Umiejętności sprawdzane w bieżącym zadaniu (np. „liczba:5”, „kolor:zielony”) do dziennika rodzica.
+   * Wynik: dobrze, jeśli zadanie poszło bez pomyłki.
+   */
+  protected taskFacts(): string[] {
     return [];
   }
   /** Klatka animacji zadania. */
@@ -101,6 +111,7 @@ export abstract class RoundScene extends Scene {
     this.busy = false;
     this.idle = 0;
     this.hinted = 0;
+    this.taskMisses = 0;
     this.show();
     this.place();
     this.appear();
@@ -123,6 +134,7 @@ export abstract class RoundScene extends Scene {
   /** Pomyłka: dźwięk, haptyka, „ojej” przewodnika. Animację elementu robi podklasa. */
   protected missed(): void {
     this.mistakes++;
+    this.taskMisses++;
     sfx.bad(this.game.sound);
     haptics.error();
     void squash(this.tweens, this.guideSprite, 0.08);
@@ -138,6 +150,8 @@ export abstract class RoundScene extends Scene {
     if (this.solvedAt === this.index) return;
     this.solvedAt = this.index;
     this.busy = true;
+    logTask(this.kind, this.taskMisses);
+    for (const f of this.taskFacts()) logFact(f, this.taskMisses === 0);
     sfx.good(this.game.sound);
     haptics.success();
     this.jumpGuide();

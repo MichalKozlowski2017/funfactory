@@ -54,6 +54,14 @@ export class PuzzleScene extends RoundScene {
     });
   }
 
+  protected override taskFacts(): string[] {
+    const q = this.q;
+    if (q.kind === 'liczenie') return [`liczba:${q.count}`];
+    if (q.kind === 'kolory') return [`kolor:${q.color}`];
+    if (q.kind === 'gloski') return [`gloska:${q.sound}`];
+    return [];
+  }
+
   private get q(): Question {
     return this.questions[this.index]!;
   }

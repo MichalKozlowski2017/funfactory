@@ -1,6 +1,7 @@
 import type { Rng } from '@funfactory/core';
 import { ITEMS } from './catalog.ts';
 import { ACTIVITIES, type Activity } from './realms.ts';
+import type { Journal } from './journal.ts';
 import type { Picture } from './stickers.ts';
 
 /** Zapis postępów dziecka. */
@@ -21,6 +22,12 @@ export interface Progress {
   /** Galeria obrazków z naklejek (sim/stickers.ts) i numer bieżącego. */
   pictures?: Picture[];
   picture?: number;
+  /** Dziennik postępów dla rodzica (sim/journal.ts). */
+  journal?: Journal;
+  /** Imię dziecka (opcjonalne, tylko na urządzeniu). */
+  childName?: string;
+  /** Kupiona pełna wersja. */
+  full?: boolean;
   /** Ustawienia ze strefy rodzica. */
   music: boolean;
   /** Limit czasu zabawy w minutach (0 = bez limitu). */

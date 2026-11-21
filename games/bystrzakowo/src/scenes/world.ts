@@ -7,6 +7,8 @@ import { ACTIVITY_NAMES, isPuzzle, REALMS, type Activity } from '../sim/realms.t
 import { saveState, state } from '../state.ts';
 import { COLORS, cover, label, sfx } from '../ui.ts';
 import { ParentGate, ParentPanel } from '../parent.ts';
+import { journal, today } from '../log.ts';
+import { addTask, addTime, noteFact, shiftDay } from '../sim/journal.ts';
 import { extend, timeIsUp } from '../session.ts';
 import { AlbumScene } from './album.ts';
 import { ColoringScene } from './coloring.ts';
@@ -442,6 +444,26 @@ export class WorldScene extends Scene {
     const scenes: Record<string, () => Scene> = { memory: () => new MemoryScene(), emocje: () => new EmotionScene(), sortowanie: () => new SortScene(), ukladanka: () => new JigsawScene(), wzory: () => new PatternScene(), ksztalty: () => new ShapeScene(), sylaby: () => new SyllableScene(), historyjki: () => new StoryScene(), kropki: () => new DotsScene(), litery: () => new LetterScene('litery'), cyfry: () => new LetterScene('cyfry'), kolorowanka: () => new ColoringScene(), naklejanka: () => new StickerScene(), melodia: () => new MelodyScene(), labirynt: () => new MazeScene() };
     const scene = isPuzzle(kind) ? new PuzzleScene(kind as PuzzleKind) : scenes[kind]!();
     this.timers.after(0.35, () => void this.game.scenes.go(scene, { fade: 0.3, color: 0xfff6e8 }));
+  }
+
+  /** Playtest: przykładowy dziennik z tygodnia i strefa rodzica na zakładce `tab`. */
+  demoParent(tab = 'postepy', name = 'Zosia'): void {
+    const j = journal();
+    const t = today();
+    const rng = this.game.rng;
+    for (let d = 0; d < 6; d++) {
+      const day = shiftDay(t, -d);
+      if (d === 2) continue;
+      addTime(j, day, 300 + rng.int(0, 900));
+      for (const a of ['liczenie', 'kolory', 'gloski', 'historyjki', 'wzory', 'kolorowanka', 'emocje'] as const) for (let i = rng.int(0, 4); i > 0; i--) addTask(j, day, a, rng.int(0, 1));
+    }
+    const facts: [string, string][] = [['liczba:1', '111'], ['liczba:2', '111'], ['liczba:3', '1111'], ['liczba:4', '0111'], ['liczba:5', '111'], ['liczba:6', '1010'], ['liczba:7', '0010'],
+      ['kolor:czerwony', '111'], ['kolor:zielony', '111'], ['kolor:fioletowy', '1001'], ['gloska:a', '111'], ['gloska:m', '111'], ['gloska:sz', '0101'],
+      ['litera:A', '11'], ['litera:M', '1'], ['litera:O', '1'], ['emocja:wesoly', '111'], ['emocja:smutny', '111'], ['emocja:zdziwiony', '01'], ['ksztalt:kolo', '111'], ['ksztalt:gwiazda', '0']];
+    for (const [f, h] of facts) for (const c of h) noteFact(j, t, f, c === '1');
+    state.progress.childName = name || undefined;
+    this.openParent();
+    (this.parentPanel as unknown as { setTab(t: string): void }).setTab(tab);
   }
 
   private openParent(): void {

@@ -1,18 +1,16 @@
-import { Assets, Container, Graphics, Rectangle, Sprite, type FederatedPointerEvent, type Texture } from 'pixi.js';
+import { Container, Graphics, Rectangle, Sprite, type FederatedPointerEvent, type Texture } from 'pixi.js';
 import { haptics } from '@funfactory/core';
 import { dotTexture, Particles, popIn, popOut, pulse, Scene, setRestScale, squash, type View } from '@funfactory/kit2d';
 import { loadArt, say, startMusic, type Art } from '../assets.ts';
 import { addPicture, gallery, stickerScale, LANDSCAPES, MAX_PICTURES, removePicture, type Landscape, type Picture } from '../sim/stickers.ts';
+import { logTask } from '../log.ts';
+import { loadLandscapes, pictureView, STICKER, TRAY_H } from '../picture.ts';
 import { saveState, state } from '../state.ts';
 import { COLORS, cover, IconButton, sfx } from '../ui.ts';
 
 /** Naklejki zawsze dostępne na start (zanim dziecko coś zbierze). */
 const STARTERS = ['slonce', 'chmurka', 'drzewo', 'kwiatek', 'kot', 'pies'];
-const TRAY_H = 150;
 const PER_PAGE = 7;
-/** Rozmiar naklejki w połowie wysokości obrazka (wyżej mniejsza, niżej większa). */
-const STICKER = 120;
-const URL_BASE = import.meta.env.BASE_URL;
 
 interface Placed {
   view: Sprite;
@@ -54,13 +52,7 @@ export class StickerScene extends Scene {
 
   override async enter(): Promise<void> {
     this.art = await loadArt();
-    this.landscapes.set('polana', this.art.realmBg.polana);
-    await Promise.all(
-      LANDSCAPES.filter((l) => l !== 'polana').map(async (l) => {
-        const tex = await Assets.load<Texture>(`${URL_BASE}art/krajobrazy/${l}.jpg`).catch(() => null);
-        if (tex) this.landscapes.set(l, tex);
-      }),
-    );
+    for (const [l, tex] of await loadLandscapes(this.art)) this.landscapes.set(l, tex);
     this.bgs.push(new Sprite(this.art.realmBg.polana), new Sprite(this.art.realmBg.polana));
     this.board.sortableChildren = true;
     this.owned = [...new Set([...STARTERS, ...state.progress.stickers])].filter((id) => this.art.items.has(id));
@@ -448,21 +440,9 @@ export class StickerScene extends Scene {
   /** Miniatura obrazka: tło przycięte do karty i naklejki w tych samych proporcjach. */
   private thumb(pic: Picture, cw: number, ch: number, current: boolean): Container {
     const card = new Container();
-    const inner = new Container();
     const { width: w, height: h } = this.game.view;
     const k = Math.max(cw / w, ch / h);
-    const bg = new Sprite(this.landscapes.get(pic.bg) ?? this.art.realmBg.polana);
-    cover(bg, w, h);
-    inner.addChild(bg);
-    for (const s of pic.items) {
-      const tex = this.art.items.get(s.id);
-      if (!tex) continue;
-      const sp = new Sprite({ texture: tex, anchor: 0.5 });
-      const sk = (STICKER * stickerScale(s.id, (s.y * h) / (h - TRAY_H))) / Math.max(tex.width, tex.height);
-      sp.scale.set(s.flip ? -sk : sk, sk);
-      sp.position.set(s.x * w, s.y * h);
-      inner.addChild(sp);
-    }
+    const inner = pictureView(pic, w, h, this.art, this.landscapes);
     inner.scale.set(k);
     inner.position.set(-(w * k) / 2, -(h * k) / 2);
     const mask = new Graphics().roundRect(-cw / 2, -ch / 2, cw, ch, 22).fill({ color: 0xffffff });
@@ -493,6 +473,7 @@ export class StickerScene extends Scene {
     if (this.leaving) return;
     this.leaving = true;
     this.save();
+    if (this.placed.length) logTask('naklejanka', 0);
     this.game.sound.stopChannel('voice');
     void import('./world.ts').then(({ WorldScene }) => this.game.scenes.go(new WorldScene(), { fade: 0.3, color: 0xfff6e8 }));
   }

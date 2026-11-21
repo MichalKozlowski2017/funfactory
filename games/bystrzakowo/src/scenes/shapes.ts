@@ -2,6 +2,7 @@ import { Container, Graphics, type Point } from 'pixi.js';
 import { haptics } from '@funfactory/core';
 import { popIn, pulse, squash } from '@funfactory/kit2d';
 import { say } from '../assets.ts';
+import { logFact } from '../log.ts';
 import { makeShapeBoard, SHAPE_ROUND, type Shape } from '../sim/shapes.ts';
 import { state } from '../state.ts';
 import { COLORS, draggable, sfx } from '../ui.ts';
@@ -51,6 +52,8 @@ interface Piece {
   hole: Container;
   home: { x: number; y: number };
   done: boolean;
+  /** Klocek był już wkładany w złą dziurkę (do dziennika rodzica). */
+  missed?: boolean;
 }
 
 /**
@@ -131,6 +134,7 @@ export class ShapeScene extends RoundScene {
     if (wrong) {
       // Nie pasuje: klocek podskakuje nad dziurką i wraca.
       void squash(this.tweens, p.view, 0.2);
+      p.missed = true;
       this.missed();
     }
     this.tweens.to(p.view, { x: p.home.x, y: p.home.y }, { duration: 0.3, ease: 'backOut' });
@@ -140,6 +144,7 @@ export class ShapeScene extends RoundScene {
   /** Klocek wskakuje do dziurki: przysiad, „klik”, nazwa kształtu. */
   private fit(p: Piece): void {
     p.done = true;
+    logFact(`ksztalt:${p.shape}`, !p.missed);
     p.view.eventMode = 'none';
     this.tweens.to(p.view, { x: p.hole.x, y: p.hole.y }, { duration: 0.12, ease: 'quadOut' });
     void this.tweens.to(p.view.scale, { x: 0.92, y: 0.92 }, { duration: 0.12 }).done.then(() => void squash(this.tweens, p.view, 0.15));

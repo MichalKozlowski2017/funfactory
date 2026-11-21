@@ -3,6 +3,8 @@ import { haptics } from '@funfactory/core';
 import { pixelsToTexture, popIn, pulse, squash } from '@funfactory/kit2d';
 import { say } from '../assets.ts';
 import { labelRegions, mergeThin, regionAt } from '../sim/fill.ts';
+import { today } from '../log.ts';
+import { addPainting, pixelsToJpeg } from '../picture.ts';
 import { state } from '../state.ts';
 import { COLORS, IconButton, sfx } from '../ui.ts';
 import { RoundScene } from './round.ts';
@@ -182,6 +184,8 @@ export class ColoringScene extends RoundScene {
     this.busy = true;
     const seen = state.progress.colored ?? [];
     if (!seen.includes(this.page)) state.progress.colored = [...seen, this.page];
+    // Do albumu rodzica (tylko gdy coś pokolorowano).
+    if (this.fills > 0) void addPainting({ id: `k${Date.now()}`, page: this.page, date: today(), img: pixelsToJpeg(this.pixels, 480) });
     void pulse(this.tweens, this.picture, 0.08, 0.4);
     this.burst(this.picture.x, this.picture.y, 50);
     this.done.visible = false;

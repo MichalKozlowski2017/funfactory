@@ -47,6 +47,10 @@ export class LetterScene extends RoundScene {
     this.tol = traceTolerance(level);
   }
 
+  protected override taskFacts(): string[] {
+    return [`${this.digits ? 'cyfra' : 'litera'}:${this.letter.ch}`];
+  }
+
   private get letter(): Letter {
     return this.letters[this.index]!;
   }
