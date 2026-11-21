@@ -98,6 +98,12 @@ Gra: `games/bystrzakowo` (Vite + Pixi + Capacitor, poziomo, `designHeight: 720`)
 - **Lektor:** Lusia (`alt`) i Bazyl (`prezenter`), skrypty `scripts/voice.sh` i `voice/lines*.json`.
 - **Grafika:** `scripts/gen-art.ts` (Flux na Legionie), `scripts/assets.sh` (WebP do `public/art`), `scripts/icon.sh` (ikona i ekran startowy).
 - **Muzyka:** ACE-Step, cicha pętla 64 s.
+- **Kontrola sensu zagadek** (przegląd wszystkich 115 obrazków, cieni i pytań na zrzutach):
+  - obiekty podobne do siebie (kot i kotek, koń, źrebak, zebra i konik, auto i ciężarówka…) nie trafiają razem do jednego pytania (`LOOKALIKES`);
+  - w „co nie pasuje” intruz pochodzi z kategorii wyraźnie innej (bez motyla wśród kwiatków ani autka wśród zabawek; owoce kontra warzywa dopiero na najwyższym poziomie);
+  - głoski zmiękczone liczone poprawnie (Ziemniak = ź, Cielaczek = ć);
+  - cienie tylko dla obiektów o charakterystycznym konturze, kolory tylko tam, gdzie kolor jest jednoznaczny;
+  - młode zwierzęta wygenerowane jako wyraźnie małe (leżące, duża głowa), żeby nie myliły się z mamą.
 
 ## Plan
 

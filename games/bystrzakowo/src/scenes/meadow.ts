@@ -154,6 +154,11 @@ export class MeadowScene extends Scene {
     return c;
   }
 
+  /** Playtest: wejście do domku (`eval:__ff.game.scenes.current.play('kolory')`). */
+  play(kind: PuzzleKind): void {
+    this.open(kind, this.houses.get(kind)!);
+  }
+
   private open(kind: PuzzleKind, house: Container): void {
     if (this.leaving) return;
     this.leaving = true;

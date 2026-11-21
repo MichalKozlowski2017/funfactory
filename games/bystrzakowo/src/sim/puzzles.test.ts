@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { Rng } from '@funfactory/core';
-import { firstSound, ITEMS } from './catalog.ts';
-import { MAX_LEVEL, PUZZLE_KINDS, ROUND_LENGTH, colorQuestion, countQuestion, isCorrect, makeRound, maxCount, motherQuestion, nextLevel, oddQuestion, optionCount, questionKey, shadowQuestion, soundQuestion } from './puzzles.ts';
+import { firstSound, ITEMS, lookalike, type Item } from './catalog.ts';
+import { MAX_LEVEL, PUZZLE_KINDS, ROUND_LENGTH, colorQuestion, countQuestion, isCorrect, makeQuestion, makeRound, maxCount, motherQuestion, nextLevel, oddQuestion, optionCount, questionKey, shadowQuestion, soundQuestion } from './puzzles.ts';
 
 const levels = [0, 1, 2];
 
@@ -105,6 +105,11 @@ describe('kolory, głoski, mamy', () => {
     expect(firstSound('Czapka')).toBe('cz');
     expect(firstSound('Żaba')).toBe('ż');
     expect(firstSound('Kot')).toBe('k');
+    expect(firstSound('Ziemniak')).toBe('ź');
+    expect(firstSound('Cielaczek')).toBe('ć');
+    expect(firstSound('Niedźwiedź')).toBe('ń');
+    expect(firstSound('Cytryna')).toBe('c');
+    expect(firstSound('Zebra')).toBe('z');
   });
 
   it('mamy: odpowiedź to mama, zmyłki to inne dorosłe zwierzęta', () => {
@@ -122,5 +127,19 @@ describe('kolory, głoski, mamy', () => {
 
   it('każda mama istnieje w katalogu', () => {
     for (const baby of ITEMS.filter((i) => i.mother)) expect(ITEMS.some((i) => i.id === baby.mother)).toBe(true);
+  });
+
+  it('w jednym pytaniu nie ma dwóch podobnych obiektów (kot i kotek, koń i konik)', () => {
+    const rng = new Rng(9);
+    for (const kind of ['cienie', 'pasuje', 'mamy'] as const)
+      for (const level of levels)
+        for (let i = 0; i < 300; i++) {
+          const q = makeQuestion(kind, rng, level);
+          const opts = q.options as Item[];
+          // W „co nie pasuje” podobne mogą być obiekty z grupy, byle nie intruz do reszty.
+          const pairs = q.kind === 'pasuje' ? opts.filter((o) => o !== q.odd).map((o) => [q.odd, o] as const) : opts.flatMap((x, j) => opts.slice(j + 1).map((y) => [x, y] as const));
+          for (const [a, b] of pairs) expect(lookalike(a, b), `${kind}: ${a.id} ~ ${b.id}`).toBe(false);
+          expect(opts.length).toBe(kind === 'cienie' ? optionCount(level) : Math.max(3, optionCount(level)));
+        }
   });
 });

@@ -1,0 +1,16 @@
+{
+  "workflow": "flux2-sprite.json",
+  "PROMPT": "blue trousers, single object, centered, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, bright cheerful pastel colors, cute and friendly, no face on objects, plain light gray background",
+  "NEGATIVE": "",
+  "SEED": 21,
+  "WIDTH": 1024,
+  "HEIGHT": 1024,
+  "PREFIX": "spodnie",
+  "STEPS": 20,
+  "GUIDANCE": 4,
+  "BPM": 100,
+  "DURATION": 60,
+  "KEY": "A minor",
+  "LYRICS": "[Instrumental]",
+  "created": "2026-11-20T23:58:55.827Z"
+}

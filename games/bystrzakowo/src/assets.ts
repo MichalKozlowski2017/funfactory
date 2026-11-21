@@ -43,25 +43,26 @@ async function silhouette(texture: Texture): Promise<Texture> {
   return pixelsToTexture(img, texture.source.resolution);
 }
 
+const shadowsReady = new Map<string, Texture>();
+
 /** Cień obiektu (liczony raz). */
 export function shadowOf(id: string): Promise<Texture> {
   let s = shadows.get(id);
   if (!s) {
-    s = loadArt().then((a) => silhouette(a.items.get(id)!));
+    s = loadArt()
+      .then((a) => silhouette(a.items.get(id)!))
+      .then((t) => (shadowsReady.set(id, t), t));
     shadows.set(id, s);
   }
   return s;
 }
 
-/** Cień, jeśli jest już policzony (do synchronicznego rysowania), inaczej null. */
-export const shadowNow = (() => {
-  const ready = new Map<string, Texture>();
-  return (id: string): Texture | null => {
-    if (ready.has(id)) return ready.get(id)!;
-    void shadowOf(id).then((t) => ready.set(id, t));
-    return null;
-  };
-})();
+/** Cień, jeśli jest już policzony (do synchronicznego rysowania), inaczej null (i zaczyna liczyć). */
+export function shadowNow(id: string): Texture | null {
+  const t = shadowsReady.get(id);
+  if (!t) void shadowOf(id);
+  return t ?? null;
+}
 
 export async function loadArt(): Promise<Art> {
   if (art) return art;

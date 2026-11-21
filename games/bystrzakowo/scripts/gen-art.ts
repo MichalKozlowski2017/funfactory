@@ -1,7 +1,7 @@
 /**
  * Generuje brakujące grafiki na Legionie (Flux 2, styl plastelina) do assets-raw/bystrzakowo/items/<id>-<seed>.png.
  * Pomija obiekty, które mają już plik w public/art/items. Rejestruje paczkę w podglądzie `pnpm legion`.
- *   node games/bystrzakowo/scripts/gen-art.ts [--extra]   (--extra: także domki, ikona, muzyka)
+ *   node games/bystrzakowo/scripts/gen-art.ts [--extra] [--only id,id --seed N]   (--extra: także domki, ikona, muzyka)
  */
 import { execFileSync } from 'node:child_process';
 import { existsSync, mkdirSync } from 'node:fs';
@@ -14,7 +14,11 @@ const raw = join(repo, 'assets-raw/bystrzakowo');
 const comfy = join(homedir(), '.claude/skills/comfyui/comfy.ts');
 const job = join(homedir(), '.claude/skills/comfyui/scripts/legion-job.sh');
 export const STYLE = 'soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, bright cheerful pastel colors, cute and friendly';
-const SEED = 21;
+const seedArg = process.argv.indexOf('--seed');
+const SEED = seedArg > 0 ? Number(process.argv[seedArg + 1]) : 21;
+const onlyArg = process.argv.indexOf('--only');
+/** --only a,b,c: wygeneruj ponownie tylko te obiekty (np. z nowym promptem i innym --seed). */
+const only = onlyArg > 0 ? new Set(process.argv[onlyArg + 1]!.split(',')) : null;
 
 interface Task {
   out: string;
@@ -45,7 +49,8 @@ if (extra) {
 }
 
 for (const item of ITEMS) {
-  if (existsSync(join(repo, 'games/bystrzakowo/public/art/items', `${item.id}.webp`))) continue;
+  if (only && !only.has(item.id)) continue;
+  if (!only && existsSync(join(repo, 'games/bystrzakowo/public/art/items', `${item.id}.webp`))) continue;
   if (existsSync(join(raw, 'items', `${item.id}-${SEED}.png`))) continue;
   const prompt = `${item.prompt}, single object, centered, ${STYLE}${hasFace(item) ? '' : ', no face on objects'}, plain light gray background`;
   tasks.push({ out: 'items', prefix: item.id, args: ['--workflow', 'flux2-sprite', '--prompt', prompt] });

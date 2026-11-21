@@ -1,5 +1,5 @@
 import type { Rng } from '@funfactory/core';
-import { firstSound, ITEMS, type Color, type Item } from './catalog.ts';
+import { firstSound, ITEMS, lookalike, type Category, type Color, type Item } from './catalog.ts';
 
 /**
  * Silniki zagadek: z katalogu i poziomu trudności (0..MAX_LEVEL) generują pytania.
@@ -72,7 +72,7 @@ const CONFUSABLE: string[][] = [
   ['s', 'ś', 'sz', 'z', 'ź', 'ż', 'c', 'ć', 'cz', 'dz', 'dź', 'dż'],
   ['l', 'ł', 'r'],
   ['o', 'u'],
-  ['m', 'n'],
+  ['m', 'n', 'ń'],
 ];
 const confusable = (a: string, b: string) => a === b || CONFUSABLE.some((g) => g.includes(a) && g.includes(b));
 
@@ -87,16 +87,37 @@ function take<T>(rng: Rng, pool: readonly T[], n: number, avoid: readonly T[] = 
   return rng.shuffle(pool.filter((x) => !avoid.includes(x))).slice(0, n);
 }
 
+/** `n` losowych obiektów z puli, żaden nie jest podobny do `target` ani do siebie nawzajem. */
+function distinct(rng: Rng, pool: readonly Item[], n: number, target: Item): Item[] {
+  const out: Item[] = [];
+  for (const item of rng.shuffle([...pool])) {
+    if (out.length >= n) break;
+    if (lookalike(item, target) || out.some((o) => lookalike(o, item))) continue;
+    out.push(item);
+  }
+  return out;
+}
+
 export function shadowQuestion(rng: Rng, level: number, recent: readonly string[] = []): ShadowQuestion {
   const pool = ITEMS.filter((i) => i.shadow);
   const fresh = pool.filter((i) => !recent.includes(i.id));
   const target = rng.pick(fresh.length > 0 ? fresh : pool);
   const n = optionCount(level);
   // Na najwyższym poziomie zmyłki z tej samej kategorii (podobniejsze sylwetki).
-  const same = pool.filter((i) => i.category === target.category && i !== target);
-  const decoys = level >= MAX_LEVEL && same.length >= n - 1 ? take(rng, same, n - 1) : take(rng, pool, n - 1, [target]);
+  const same = pool.filter((i) => i.category === target.category);
+  const decoys = distinct(rng, level >= MAX_LEVEL && same.length > n ? same : pool, n - 1, target);
   return { kind: 'cienie', target, options: rng.shuffle([target, ...decoys]) };
 }
+
+/** Kategorie, których obiekty dziecko może uznać za „pasujące” do siebie. */
+const NEAR: [Category, Category][] = [
+  ['natura', 'zwierzeta'],
+  ['natura', 'owoce'],
+  ['natura', 'warzywa'],
+  ['zabawki', 'pojazdy'],
+  ['zabawki', 'zwierzeta'],
+];
+const FRUIT_VEG: Category[] = ['owoce', 'warzywa'];
 
 export function oddQuestion(rng: Rng, level: number, recent: readonly string[] = []): OddQuestion {
   const n = Math.max(3, optionCount(level));
@@ -104,10 +125,15 @@ export function oddQuestion(rng: Rng, level: number, recent: readonly string[] =
   for (const item of ITEMS) groups.set(item.category, [...(groups.get(item.category) ?? []), item]);
   const big = [...groups.values()].filter((g) => g.length >= n - 1);
   const group = rng.pick(big);
-  const others = ITEMS.filter((i) => i.category !== group[0]!.category);
+  const cat = group[0]!.category;
+  // Intruz z kategorii wyraźnie innej: motyl wśród kwiatków albo autko wśród zabawek byłyby sporne.
+  // Owoce i warzywa rozróżniamy dopiero na najwyższym poziomie.
+  const near = (c: Category) => c === cat || NEAR.some(([a, b]) => (a === cat && b === c) || (b === cat && a === c)) || (level < MAX_LEVEL && FRUIT_VEG.includes(c) && FRUIT_VEG.includes(cat));
+  const others = ITEMS.filter((i) => !near(i.category));
   const freshOdd = others.filter((i) => !recent.includes(i.id));
   const odd = rng.pick(freshOdd.length > 0 ? freshOdd : others);
-  return { kind: 'pasuje', odd, options: rng.shuffle([odd, ...take(rng, group, n - 1)]) };
+  const members = take(rng, group.filter((i) => !lookalike(i, odd)), n - 1);
+  return { kind: 'pasuje', odd, options: rng.shuffle([odd, ...members]) };
 }
 
 export function countQuestion(rng: Rng, level: number, recent: readonly string[] = []): CountQuestion {
@@ -165,7 +191,7 @@ export function motherQuestion(rng: Rng, level: number, recent: readonly string[
   const target = ITEMS.find((i) => i.id === baby.mother)!;
   const mothers = new Set(babies.map((b) => b.mother));
   // Zmyłki: inne dorosłe zwierzęta (najpierw inne mamy z tej gry, potem reszta zwierząt).
-  const adults = ITEMS.filter((i) => i.category === 'zwierzeta' && !i.mother && i !== target);
+  const adults = ITEMS.filter((i) => i.category === 'zwierzeta' && !i.mother && !lookalike(i, target) && !lookalike(i, baby));
   const n = Math.max(3, optionCount(level));
   const preferred = take(rng, adults.filter((a) => mothers.has(a.id)), n - 1);
   const decoys = preferred.length >= n - 1 ? preferred : [...preferred, ...take(rng, adults, n - 1 - preferred.length, preferred)];

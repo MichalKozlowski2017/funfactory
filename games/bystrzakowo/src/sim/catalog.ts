@@ -52,6 +52,23 @@ const BABIES: Record<string, [mother: string, genitive: string]> = {
   kijanka: ['zaba', 'kijanki'],
 };
 
+/**
+ * Obiekty o podobnej sylwetce albo łatwe do pomylenia przez dziecko. Nie trafiają razem do jednego pytania
+ * (cień kotka obok kota byłby nie do rozróżnienia, konik na biegunach obok koni w „co nie pasuje” myli).
+ */
+const LOOKALIKES: string[][] = [
+  ['kot', 'kotek'],
+  ['krowa', 'cielaczek'],
+  ['owca', 'jagniatko'],
+  ['swinka', 'prosiaczek'],
+  ['kon', 'zrebak', 'zebra', 'konik'],
+  ['kaczka', 'kaczatko', 'kurczak'],
+  ['mis', 'niedzwiedz'],
+  ['ogorek', 'groszek'],
+  ['auto', 'ciezarowka', 'straz', 'autobus'],
+];
+export const lookalike = (a: Item, b: Item): boolean => a === b || LOOKALIKES.some((g) => g.includes(a.id) && g.includes(b.id));
+
 export const ITEMS: Item[] = [
   ...rows('zwierzeta', [
     ['kot', 'Kot', 'pomaranczowy', 's', 'a cute cat sitting'],
@@ -61,16 +78,16 @@ export const ITEMS: Item[] = [
     ['kurczak', 'Kurczaczek', 'zolty', 'c', 'a fluffy yellow chick'],
     ['ryba', 'Rybka', 'pomaranczowy', 'sc', 'a cute orange fish, side view'],
     ['zaba', 'Żaba', 'zielony', 's', 'a cute green frog sitting'],
-    ['kaczka', 'Kaczka', 'zolty', 'sc', 'a cute yellow duck standing, side view'],
+    ['kaczka', 'Kaczka', 'bialy', 'sc', 'a cute adult white farm duck with an orange beak and orange feet, standing tall, side view'],
     ['kura', 'Kura', 'bialy', 's', 'a cute white hen with a red comb standing, side view'],
-    ['cielaczek', 'Cielaczek', '', 's', 'a tiny cute baby calf with brown spots, side view'],
+    ['cielaczek', 'Cielaczek', '', 's', 'a tiny cute newborn baby calf with brown spots, oversized head, short stubby legs, lying down curled up, side view'],
     ['kotek', 'Kotek', '', 's', 'a tiny cute grey kitten playing'],
-    ['owca', 'Owca', 'bialy', 's', 'a cute fluffy white sheep standing, side view'],
-    ['jagniatko', 'Jagniątko', 'bialy', 's', 'a tiny cute fluffy white baby lamb, side view'],
+    ['owca', 'Owca', 'bialy', '', 'a cute fluffy white sheep standing, side view'],
+    ['jagniatko', 'Jagniątko', 'bialy', '', 'a tiny cute fluffy white baby lamb, side view'],
     ['swinka', 'Świnka', 'rozowy', 's', 'a cute pink pig standing, side view'],
-    ['prosiaczek', 'Prosiaczek', 'rozowy', 'sc', 'a tiny cute pink piglet, side view'],
+    ['prosiaczek', 'Prosiaczek', 'rozowy', 'sc', 'a tiny cute newborn pink piglet with an oversized head and big eyes, sitting on its bottom, side view'],
     ['kon', 'Koń', 'brazowy', 's', 'a cute brown horse standing, side view'],
-    ['zrebak', 'Źrebaczek', 'brazowy', 's', 'a tiny cute brown foal with long legs, side view'],
+    ['zrebak', 'Źrebaczek', 'brazowy', 's', 'a tiny cute newborn brown baby foal with an oversized head and big eyes, lying down with legs folded, side view'],
     ['kaczatko', 'Kaczątko', 'zolty', 'sc', 'a tiny fluffy yellow duckling, side view'],
     ['kijanka', 'Kijanka', '', 'sc', 'a cute dark green tadpole with a long tail, side view'],
     ['lew', 'Lew', '', 's', 'a cute lion with a big fluffy mane sitting'],
@@ -78,20 +95,20 @@ export const ITEMS: Item[] = [
     ['malpa', 'Małpka', 'brazowy', 's', 'a cute brown monkey sitting'],
     ['zebra', 'Zebra', '', 's', 'a cute zebra with black and white stripes standing, side view'],
     ['niedzwiedz', 'Niedźwiedź', 'brazowy', 's', 'a cute big brown bear walking on four legs, side view'],
-    ['jez', 'Jeż', 'brazowy', 'sc', 'a cute hedgehog with spikes, side view'],
+    ['jez', 'Jeż', '', 'sc', 'a cute hedgehog with spikes, side view'],
     ['wiewiorka', 'Wiewiórka', 'pomaranczowy', 's', 'a cute orange squirrel with a big fluffy tail, side view'],
     ['sowa', 'Sowa', 'brazowy', 's', 'a cute brown owl with big round eyes'],
     ['motyl', 'Motyl', 'niebieski', 'sc', 'a cute blue butterfly with open wings, top view'],
-    ['biedronka', 'Biedronka', 'czerwony', 'sc', 'a cute red ladybug with black dots, top view'],
+    ['biedronka', 'Biedronka', 'czerwony', 'c', 'a cute red ladybug with black dots, top view'],
     ['pszczola', 'Pszczółka', 'zolty', 'sc', 'a cute yellow and black striped bee with small wings'],
     ['slimak', 'Ślimak', '', 'sc', 'a cute snail with a spiral shell, side view'],
     ['krolik', 'Królik', '', 's', 'a cute grey bunny rabbit with long ears sitting'],
-    ['mysz', 'Myszka', '', 'sc', 'a cute little grey mouse with round ears, side view'],
+    ['mysz', 'Myszka', '', 'c', 'a cute little grey mouse with round ears, side view'],
     ['pingwin', 'Pingwin', '', 's', 'a cute penguin standing'],
     ['zolw', 'Żółw', 'zielony', 'sc', 'a cute green turtle, side view'],
     ['krab', 'Krab', 'czerwony', 'sc', 'a cute red crab'],
     ['osmiornica', 'Ośmiornica', 'fioletowy', 's', 'a cute purple octopus'],
-    ['ptak', 'Ptaszek', 'niebieski', 'sc', 'a cute little blue bird, side view'],
+    ['ptak', 'Ptaszek', 'niebieski', 'c', 'a cute little blue bird, side view'],
     ['dinozaur', 'Dinozaur', 'zielony', 's', 'a cute green dinosaur with a long tail, side view'],
   ]),
   ...rows('owoce', [
@@ -102,9 +119,9 @@ export const ITEMS: Item[] = [
     ['sliwka', 'Śliwka', 'fioletowy', 'c', 'a purple plum with a small leaf'],
     ['wisnia', 'Wisienki', 'czerwony', 'sc', 'two red cherries on a stem'],
     ['pomarancza', 'Pomarańcza', 'pomaranczowy', 'c', 'a round orange fruit with a leaf'],
-    ['cytryna', 'Cytryna', 'zolty', 'sc', 'a yellow lemon'],
+    ['cytryna', 'Cytryna', 'zolty', 'c', 'a yellow lemon'],
     ['winogrona', 'Winogrona', 'fioletowy', 's', 'a bunch of purple grapes'],
-    ['arbuz', 'Arbuz', 'zielony', 's', 'a slice of watermelon with red flesh and green rind'],
+    ['arbuz', 'Arbuz', '', 's', 'a slice of watermelon with red flesh and green rind'],
     ['ananas', 'Ananas', 'zolty', 's', 'a pineapple with green leaves'],
     ['malina', 'Malina', 'rozowy', 'c', 'a pink raspberry'],
   ]),
@@ -152,7 +169,7 @@ export const ITEMS: Item[] = [
   ]),
   ...rows('kuchnia', [
     ['kubek', 'Kubek', 'niebieski', 's', 'a blue mug'],
-    ['talerz', 'Talerz', 'bialy', 'c', 'a white plate'],
+    ['talerz', 'Talerz', 'bialy', 'c', 'an empty round white dinner plate, three-quarter top view'],
     ['lyzka', 'Łyżka', '', 'sc', 'a spoon'],
     ['widelec', 'Widelec', '', 'sc', 'a fork'],
     ['garnek', 'Garnek', 'czerwony', 's', 'a red cooking pot with a lid'],
@@ -162,13 +179,13 @@ export const ITEMS: Item[] = [
     ['butelka', 'Butelka', '', 'sc', 'a baby milk bottle'],
   ]),
   ...rows('ubrania', [
-    ['czapka', 'Czapka', 'czerwony', 's', 'a red knitted winter hat with a pompom'],
-    ['szalik', 'Szalik', 'zielony', 's', 'a green striped scarf'],
+    ['czapka', 'Czapka', 'czerwony', 's', 'an empty red knitted winter beanie hat with a white pompom, lying on its own'],
+    ['szalik', 'Szalik', 'zielony', 's', 'a green striped knitted scarf, neatly folded and lying on its own'],
     ['but', 'Bucik', 'niebieski', 'sc', 'a blue children sneaker shoe, side view'],
     ['skarpetka', 'Skarpetka', 'rozowy', 'sc', 'a pink sock, side view'],
-    ['koszulka', 'Koszulka', 'zolty', 's', 'a yellow t-shirt'],
+    ['koszulka', 'Koszulka', 'zolty', '', 'a yellow t-shirt'],
     ['spodnie', 'Spodnie', 'niebieski', 's', 'blue trousers'],
-    ['sukienka', 'Sukienka', 'fioletowy', 's', 'a purple dress'],
+    ['sukienka', 'Sukienka', 'fioletowy', '', 'a purple dress'],
     ['rekawiczki', 'Rękawiczki', 'zielony', 's', 'a pair of green mittens'],
     ['kalosze', 'Kalosze', 'zolty', 's', 'a pair of yellow rain boots'],
     ['parasol', 'Parasol', 'czerwony', 's', 'an open red umbrella'],
@@ -180,7 +197,7 @@ export const ITEMS: Item[] = [
     ['ksiezyc', 'Księżyc', 'zolty', 's', 'a yellow crescent moon'],
     ['kwiatek', 'Kwiatek', 'rozowy', 'sc', 'a pink flower with green leaves'],
     ['drzewo', 'Drzewo', 'zielony', 's', 'a round green tree'],
-    ['lisc', 'Listek', 'zielony', 'sc', 'a green leaf'],
+    ['lisc', 'Listek', 'zielony', 'c', 'a green leaf'],
     ['tecza', 'Tęcza', '', 's', 'a rainbow with clouds at the ends'],
     ['muszelka', 'Muszelka', 'rozowy', 'sc', 'a pink seashell'],
   ]),
@@ -209,6 +226,9 @@ export const hasFace = (item: Item): boolean => item.category === 'zwierzeta' ||
  */
 export function firstSound(name: string): string {
   const n = name.toLowerCase();
+  // Zmiękczenie przez „i” przed samogłoską: cie- = ć, zie- = ź, nie- = ń, sie- = ś, dzie- = dź.
+  const soft = /^(dz|c|z|n|s)i[aąeęioóuy]/.exec(n);
+  if (soft) return { dz: 'dź', c: 'ć', z: 'ź', n: 'ń', s: 'ś' }[soft[1]!]!;
   for (const d of ['dż', 'dź', 'sz', 'cz', 'dz']) if (n.startsWith(d)) return d;
   if (n.startsWith('rz')) return 'ż';
   if (n.startsWith('ch')) return 'h';

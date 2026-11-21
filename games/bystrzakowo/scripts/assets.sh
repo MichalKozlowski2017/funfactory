@@ -26,17 +26,20 @@ sprite styl/plastelina-sitting-11.png items/kot 512
 sprite styl/plastelina-leaf-11.png items/jablko 512
 sprite styl/plastelina-car-11.png items/auto 512
 for id in krowa banan rower slon kubek kurczak; do sprite styl2/plastelina-$id-21.png items/$id 512; done
-for id in pies ryba zaba kaczka gruszka truskawka samolot lodka pilka mis klocek; do sprite proto/obj-$id-21.png items/$id 512; done
+for id in pies ryba zaba gruszka truskawka samolot lodka pilka mis klocek; do sprite proto/obj-$id-21.png items/$id 512; done
 sprite styl2/plastelina-lisica-21.png lusia 720
 sprite styl2/plastelina-borsuk-21.png bazyl 720
 for k in cienie pasuje liczenie; do sprite proto/dom-$k-21.png dom-$k 560; done
 for k in kolory gloski mamy; do sprite extra/dom-$k-21.png dom-$k 560; done
-# Nowe obiekty katalogu (scripts/gen-art.ts): assets-raw/bystrzakowo/items/<id>-21.png
-for f in $RAW/items/*-21.png; do
-  [ -f "$f" ] || continue
-  id=$(basename "$f" -21.png)
+# Obiekty katalogu (scripts/gen-art.ts): assets-raw/bystrzakowo/items/<id>-<seed>.png.
+# Przy kilku wersjach (przegenerowanie z innym seedem) wygrywa najnowsza.
+seen=" "
+for f in $(ls -t $RAW/items/*.png 2>/dev/null); do
+  base=$(basename "$f" .png); id=${base%-*}
+  case "$seen" in *" $id "*) continue ;; esac
+  seen="$seen$id "
   [ -f "$OUT/items/$id.webp" ] && [ "$OUT/items/$id.webp" -nt "$f" ] && continue
-  sprite "items/$id-21.png" "items/$id" 512
+  sprite "items/$base.png" "items/$id" 512
 done
 # Muzyka (ACE-Step): FLAC -> AAC, cicha pętla w tle.
 mus=$(ls $RAW/extra/muzyka*.flac 2>/dev/null | head -1 || true)
