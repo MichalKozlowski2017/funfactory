@@ -9,6 +9,13 @@ import { COLORS, draggable, sfx } from '../ui.ts';
 import { PAINT } from './puzzle.ts';
 import { RoundScene } from './round.ts';
 
+/**
+ * Kształt otworu pojemnika w ułamkach grafiki (zmierzone na plikach z Fluxa): `mouth` to wysokość linii
+ * brzegu od góry, `rx`/`ry` półosie elipsy otworu (0 = prosta krawędź, jak przednia deska skrzynki).
+ */
+const BUCKET = { mouth: 0.43, rx: 0.4, ry: 0.07 };
+const CRATE = { mouth: 0.4, rx: 0, ry: 0 };
+
 /** Obiekt do posegregowania: kafelek z obrazkiem, który przeciąga się do skrzynki. */
 interface Piece {
   view: Container;
@@ -23,6 +30,9 @@ interface BinView {
   /** Obiekty już włożone (za przednią ścianką skrzynki). */
   pile: Container;
   box: Container;
+  /** Grafika pojemnika (tył) i przednia ścianka nad obiektami; skalowane razem. */
+  back: Container;
+  front: Container;
   width: number;
   height: number;
   /** Kolory kropelek przy wpadaniu (kolor wiaderka albo konfetti). */
@@ -75,19 +85,44 @@ export class SortScene extends RoundScene {
 
   private binView(color: Color | null, sign: string | undefined): BinView {
     const view = new Container();
-    const pile = new Container();
+    // Pojemnik w trzech warstwach: tył, obiekty w środku, przednia ścianka (ta sama grafika przycięta
+    // do linii brzegu). Dzięki temu obiekty wystają z wnętrza, a nie leżą za pojemnikiem.
     const box = new Container();
+    const pile = new Container();
+    const back = new Container();
+    const front = new Container();
     const texture = color ? this.art.bucket : this.art.crate;
+    const shape = color ? BUCKET : CRATE;
     if (texture) {
-      const s = new Sprite({ texture, anchor: { x: 0.5, y: 1 } });
-      if (color) s.tint = PAINT[color];
-      box.addChild(s);
+      const make = () => {
+        const s = new Sprite({ texture, anchor: { x: 0.5, y: 1 } });
+        if (color) s.tint = PAINT[color];
+        return s;
+      };
+      back.addChild(make());
+      const w = texture.width;
+      const h = texture.height;
+      const mask = new Graphics();
+      if (shape.ry > 0) {
+        // Dolna połowa elipsy otworu i wszystko poniżej.
+        const cy = -h * (1 - shape.mouth);
+        const pts: number[] = [];
+        for (let i = 0; i <= 24; i++) {
+          const a = (i / 24) * Math.PI;
+          pts.push(-Math.cos(a) * w * shape.rx, cy + Math.sin(a) * h * shape.ry);
+        }
+        pts.push(w, 0, w, 10, -w, 10, -w, 0);
+        mask.poly(pts).fill({ color: 0xffffff });
+      } else mask.rect(-w, -h * (1 - shape.mouth), w * 2, h * (1 - shape.mouth) + 10).fill({ color: 0xffffff });
+      const frontSprite = make();
+      front.addChild(frontSprite, mask);
+      frontSprite.mask = mask;
     } else {
       // Zapas, gdy grafiki jeszcze nie ma: prosta skrzynka z kodu.
-      const g = new Graphics().roundRect(-140, -150, 280, 150, 24).fill({ color: color ? PAINT[color] : 0xc98a4b }).stroke({ color: COLORS.ink, width: 6 });
-      box.addChild(g);
+      back.addChild(new Graphics().roundRect(-140, -150, 280, 150, 24).fill({ color: color ? PAINT[color] : 0xc98a4b }).stroke({ color: COLORS.ink, width: 6 }));
     }
-    view.addChild(pile, box);
+    box.addChild(back, pile, front);
+    view.addChild(box);
     if (sign) {
       const tex = this.art.items.get(sign) ?? this.art.signs.get(sign);
       const plate = new Container();
@@ -102,7 +137,7 @@ export class SortScene extends RoundScene {
     }
     this.layer.addChild(view);
     const splash = color ? [PAINT[color], PAINT[color], 0xffffff] : COLORS.confetti;
-    return { view, pile, box, width: 0, height: 0, splash, rim: color ? 0.6 : 0.9 };
+    return { view, pile, box, back, front, width: 0, height: 0, splash, rim: texture ? 1 - shape.mouth : 0.9 };
   }
 
   private piece(item: Item, bin: number): Piece {
@@ -151,7 +186,7 @@ export class SortScene extends RoundScene {
 
   /** Miejsce n-tego obiektu w stosiku (wystaje ponad brzeg skrzynki). */
   private pileSlot(bin: BinView, n: number): { x: number; y: number } {
-    return { x: ((n % 3) - 1) * bin.width * 0.24 + (Math.floor(n / 3) % 2) * 20, y: -bin.height * (bin.rim + 0.04) - Math.floor(n / 3) * 16 };
+    return { x: ((n % 3) - 1) * bin.width * 0.24 + (Math.floor(n / 3) % 2) * 20, y: -bin.height * bin.rim - 8 - Math.floor(n / 3) * 14 };
   }
 
   /**
@@ -273,11 +308,12 @@ export class SortScene extends RoundScene {
     const nb = this.bins.length;
     const bw = Math.min(290, (cw - 40 * (nb - 1)) / nb);
     this.bins.forEach((b, i) => {
-      const sprite = b.box.children[0]!;
-      const sw = sprite instanceof Sprite ? sprite.texture.width : 280;
-      sprite.scale.set(bw / sw);
+      const art = b.back.children[0]!;
+      const sw = art instanceof Sprite ? art.texture.width : 280;
+      b.back.scale.set(bw / sw);
+      b.front.scale.set(bw / sw);
       b.width = bw;
-      b.height = sprite.height;
+      b.height = b.back.height;
       b.view.position.set(cx + (i - (nb - 1) / 2) * (bw + 40), h - 30);
       const sign = b.view.children.find((c) => c.label === 'sign');
       sign?.position.set(0, -b.height - 62);
