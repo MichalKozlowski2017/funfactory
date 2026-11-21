@@ -66,14 +66,25 @@ export class WorldScene extends Scene {
 
     REALMS.forEach((realm) => {
       const page = new Container();
+      const color = TAB_COLOR[realm.id] ?? COLORS.sun;
       for (const kind of realm.rows.flat()) {
+        // Kafelek 300×300 (skalowany w resize): jasna karta, obrazek stanowiska, znaczek zabawy w rogu.
         const house = new Container();
-        const sprite = new Sprite({ texture: this.art.houses[kind], anchor: { x: 0.5, y: 1 } });
-        // Domki są wysokie, stanowiska Warsztatu szerokie: mieszczą się w ramce 340×300.
-        sprite.scale.set(Math.min(300 / sprite.texture.height, 340 / sprite.texture.width));
+        const plate = new Graphics()
+          .roundRect(-150, -142, 300, 300, 48)
+          .fill({ color: 0x000000, alpha: 0.18 })
+          .roundRect(-150, -150, 300, 300, 48)
+          .fill({ color: COLORS.card })
+          .stroke({ color, width: 14 })
+          .roundRect(-150, -150, 300, 300, 48)
+          .stroke({ color: COLORS.ink, width: 5, alpha: 0.6 });
+        const sprite = new Sprite({ texture: this.art.houses[kind], anchor: 0.5 });
+        sprite.scale.set(Math.min(240 / sprite.texture.height, 250 / sprite.texture.width));
+        sprite.y = 12;
         const emblem = this.emblem(kind, catShadow);
-        emblem.y = -sprite.height - 30;
-        house.addChild(sprite, emblem);
+        emblem.position.set(-118, -118);
+        emblem.scale.set(0.85);
+        house.addChild(plate, sprite, emblem);
         house.eventMode = 'static';
         house.cursor = 'pointer';
         house.on('pointertap', () => this.open(kind, house));
@@ -423,7 +434,7 @@ export class WorldScene extends Scene {
     sfx.pop(this.game.sound);
     void squash(this.tweens, house, 0.18);
     const p = this.toLocal(house.getGlobalPosition());
-    this.particles.burst(p.x, p.y - 120, { count: 24, speed: [200, 520], life: [0.4, 0.8], gravity: 900, scale: [0.6, 1.2], colors: COLORS.confetti });
+    this.particles.burst(p.x, p.y, { count: 24, speed: [200, 520], life: [0.4, 0.8], gravity: 900, scale: [0.6, 1.2], colors: COLORS.confetti });
     const scenes: Record<string, () => Scene> = { memory: () => new MemoryScene(), emocje: () => new EmotionScene(), sortowanie: () => new SortScene(), ukladanka: () => new JigsawScene(), wzory: () => new PatternScene(), ksztalty: () => new ShapeScene(), sylaby: () => new SyllableScene(), historyjki: () => new StoryScene(), kropki: () => new DotsScene(), litery: () => new LetterScene('litery'), cyfry: () => new LetterScene('cyfry'), kolorowanka: () => new ColoringScene(), naklejanka: () => new StickerScene(), melodia: () => new MelodyScene(), labirynt: () => new MazeScene() };
     const scene = isPuzzle(kind) ? new PuzzleScene(kind as PuzzleKind) : scenes[kind]!();
     this.timers.after(0.35, () => void this.game.scenes.go(scene, { fade: 0.3, color: 0xfff6e8 }));
@@ -457,30 +468,24 @@ export class WorldScene extends Scene {
     this.bazyl.position.set(right, h - 10);
     // Strony krain obok siebie; domki między przewodnikami.
     this.pages.x = -this.realm * w;
-    const span = right - left - 230;
+    // Siatka kafelków między przewodnikami, pod nazwą krainy; równe odstępy, nic na siebie nie nachodzi.
+    const areaL = left + 110;
+    const areaR = right - 110;
+    const top = safe.top + 190;
+    const bottom = h - safe.bottom - 24;
     REALMS.forEach((realm, r) => {
-      /** Ustawia rząd i zwraca górną krawędź najwyższego domku (z emblematem). */
-      const place = (kinds: Activity[], y: number, maxScale: number, shift = 0): number => {
-        const scale = Math.min(maxScale, span / kinds.length / 270);
-        let top = y;
-        kinds.forEach((kind, i) => {
+      const rows = realm.rows.length;
+      const cols = Math.max(...realm.rows.map((row) => row.length));
+      const gap = 26;
+      const size = Math.min(260, (areaR - areaL - gap * (cols - 1)) / cols, (bottom - top - gap * (rows - 1)) / rows);
+      const cy = (top + bottom) / 2;
+      realm.rows.forEach((row, ri) => {
+        row.forEach((kind, i) => {
           const house = this.houses.get(kind)!;
-          house.position.set(r * w + left + 115 + (span * (i + 0.5 + shift)) / kinds.length, y);
-          house.scale.set(scale);
-          top = Math.min(top, y + house.getLocalBounds().minY * scale);
+          house.position.set(r * w + (areaL + areaR) / 2 + (i - (row.length - 1) / 2) * (size + gap), cy + (ri - (rows - 1) / 2) * (size + gap));
+          house.scale.set(size / 300);
         });
-        return top;
-      };
-      if (realm.rows.length > 1) {
-        // Przedni rząd mniejszy, gdy jest go mało (dwa duże domki zasłaniały tylne); tylny stoi nad nim,
-        // przesunięty o pół miejsca, żeby emblematy nie nachodziły na siebie.
-        const front = realm.rows[1]!;
-        const top = place(front, h - 40, front.length < 3 ? 0.72 : 0.9);
-        const back = realm.rows[0]!;
-        const stagger = back.length === front.length && front.length < 4 ? 0.18 : 0;
-        place(back, Math.max(h * 0.5 + (front.length < 4 ? 45 : 75), top + 25), 0.62, -stagger);
-        for (const kind of front) this.houses.get(kind)!.x += (span * stagger) / front.length;
-      } else place(realm.rows[0]!, h - 70, 1.25);
+      });
     });
     this.album.position.set(w - safe.right - 110, 90 + safe.top);
     this.gate.position.set(safe.left + 60, 60 + safe.top);
