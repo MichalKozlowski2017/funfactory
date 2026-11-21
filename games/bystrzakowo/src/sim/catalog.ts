@@ -75,7 +75,7 @@ export const ITEMS: Item[] = [
     ['pies', 'Pies', '', 's', 'a cute puppy dog standing, side view'],
     ['krowa', 'Krowa', '', 's', 'a cute cow standing, side view'],
     ['slon', 'Słoń', '', 's', 'a cute baby elephant standing, side view'],
-    ['kurczak', 'Kurczaczek', 'zolty', 'c', 'a fluffy yellow chick'],
+    ['kurczak', 'Kurczaczek', 'zolty', 'c', 'a tiny cute fluffy yellow baby chick with big friendly black eyes, a small orange beak and little orange feet, standing, front three-quarter view'],
     ['ryba', 'Rybka', 'pomaranczowy', 'sc', 'a cute orange fish, side view'],
     ['zaba', 'Żaba', 'zielony', 's', 'a cute green frog sitting'],
     ['kaczka', 'Kaczka', 'bialy', 'sc', 'a cute adult white farm duck with an orange beak and orange feet, standing tall, side view'],
