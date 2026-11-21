@@ -74,6 +74,9 @@ sprite pracownia/stacja-wzory-22.png dom-wzory 560
 sprite pracownia/dom-memory-21.png dom-memory 560
 sprite pracownia/stacja-ksztalty-22.png dom-ksztalty 560
 sprite pracownia/stacja-cyfry-22.png dom-cyfry 560
+sprite pracownia/stacja-sylaby-22.png dom-sylaby 560
+sprite pracownia/dom-emocje-21.png dom-emocje 560
+sprite pracownia/stacja-melodia-22.png dom-melodia 560
 # Emocje: minki (najnowsza wersja każdej).
 mkdir -p $OUT/emocje
 for id in wesoly smutny zly zdziwiony przestraszony spiacy; do
