@@ -15,7 +15,7 @@ import { ITEM_NAMES } from '../src/sim/names.ts';
 import { wordsOf } from '../src/sim/syllables.ts';
 import { voiceLines, type Guide } from '../src/voice-lines.ts';
 
-type L = 'en' | 'de';
+type L = 'en' | 'de' | 'es';
 type Text = string | Record<Guide, string>;
 
 /** Kwestie wspólne (klucz bez przedrostka głosu). */
@@ -86,6 +86,70 @@ const T: Record<L, Record<string, Text>> = {
     'ruch-lata': 'Things that fly!',
     'ruch-plywa': 'Things that swim!',
   },
+  es: {
+    'brawo-1': '¡Bravo!',
+    'brawo-2': '¡Muy bien!',
+    'brawo-3': '¡Súper, sigue así!',
+    'brawo-4': '¡Maravilloso!',
+    'brawo-5': '¡Qué listo eres!',
+    'oj-1': 'Uy, inténtalo otra vez.',
+    'oj-2': 'Mmm, no es ese. ¡Inténtalo de nuevo!',
+    nagroda: '¡Bravo! ¡Ganas una calcomanía nueva!',
+    witaj: { lusia: '¡Hola! Soy Lusia, y este es mi amigo Basil. ¡Elige una casita y juguemos juntos!', bazyl: '¡Hola! Soy Basil. ¡Ven, va a ser divertido!' },
+    pomoc: { lusia: 'Mira con atención. ¡Tú puedes!', bazyl: '¡Anda, toca una imagen!' },
+    'kraina-polana': '¡Esta es la Pradera de Acertijos! Elige una casita.',
+    'kraina-spi': 'Este mundo todavía está dormido. ¡Pídeselo a mamá o a papá!',
+    'kraina-sciezka': '¡Este es mi Sendero! Aquí dibujamos con el dedo.',
+    'kraina-pracownia': '¡Este es el Pequeño Estudio! Aquí puedes pintar y crear.',
+    kropki: '¡Une los puntos en orden! Empieza por el uno.',
+    memory: '¡Encuentra las parejas de imágenes iguales!',
+    dobranoc: '¡Por hoy ya jugamos bastante! Lusia y Basil se van a dormir. ¡Hasta mañana!',
+    melodia: '¡Escucha mi melodía y tócala igual!',
+    sylaby: '¡Ordena las sílabas y luego leemos juntos!',
+    kolorowanka: 'Elige un color y toca el dibujo. ¡Píntalo como quieras!',
+    'kolorowanka-gotowe': '¡Qué bonito! Cuando termines, toca la flecha verde.',
+    naklejanka: '¡Haz tu propio dibujo con calcomanías! Arrastra una calcomanía a la pradera.',
+    litery: '¡Dibuja la letra con el dedo! Empieza en el punto verde.',
+    cyfry: '¡Dibuja el número con el dedo! Empieza en el punto verde.',
+    cienie: '¿De quién es esta sombra? Toca la imagen correcta.',
+    liczenie: '¡Cuenta cuántos hay!',
+    'liczenie-dotyk': 'Tócalos uno por uno y cuenta conmigo.',
+    album: 'Este es tu álbum de calcomanías. ¡Colecciónalas todas!',
+    'liczba-0': '¡Cero! No hay nada.',
+    krainy: '¡Toca los círculos de colores de arriba para visitar otros mundos!',
+    historyjki: '¿Qué pasó primero? ¡Ordena las imágenes!',
+    'kraina-warsztat': '¡Bienvenido a mi taller! Aquí arrastramos y ordenamos.',
+    wzory: '¿Qué sigue? ¡Arrastra la imagen que falta!',
+    ksztalty: '¡Mete cada bloque en su agujero!',
+    pasuje: '¿Cuál sobra? Toca esa imagen.',
+    ukladanka: '¡Arma la imagen! Arrastra las piezas a su lugar.',
+    przeciagnij: 'Sujeta una imagen con el dedo y arrástrala a la caja.',
+    'sort-domy': '¿Dónde viven estos animales? ¡Lleva a cada uno a su casa!',
+    'sort-kategorie': '¡Clasifica! Cada cosa va en su caja.',
+    'sort-kolory': '¡Pon cada cosa en la cubeta del mismo color!',
+    'sort-pory': '¿Qué usamos en verano y qué en invierno?',
+    'sort-ruch': '¿Cómo se mueven estas cosas? ¡Clasifícalas!',
+    'sort-wielkosc': '¿Qué animales son grandes y cuáles son pequeños?',
+    'kat-kuchnia': '¡Aquí van las cosas de la cocina!',
+    'kat-owoce': '¡Aquí van las frutas!',
+    'kat-pojazdy': '¡Aquí van los vehículos!',
+    'kat-ubrania': '¡Aquí va la ropa!',
+    'kat-warzywa': '¡Aquí van las verduras!',
+    'kat-zabawki': '¡Aquí van los juguetes!',
+    'kat-zwierzeta': '¡Aquí van los animales!',
+    'dom-afryka': '¡En África!',
+    'dom-las': '¡En el bosque!',
+    'dom-lod': '¡Donde hay hielo y nieve!',
+    'dom-wies': '¡En la granja!',
+    'dom-woda': '¡En el agua!',
+    'pora-lato': '¡Para el verano!',
+    'pora-zima': '¡Para el invierno!',
+    'rozmiar-duze': '¡Animales grandes!',
+    'rozmiar-male': '¡Animales pequeños!',
+    'ruch-jezdzi': '¡Lo que rueda!',
+    'ruch-lata': '¡Lo que vuela!',
+    'ruch-plywa': '¡Lo que nada!',
+  },
   de: {
     'brawo-1': 'Bravo!',
     'brawo-2': 'Toll gemacht!',
@@ -154,6 +218,7 @@ const T: Record<L, Record<string, Text>> = {
 
 const NUM: Record<L, string[]> = {
   en: ['One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten'],
+  es: ['¡Uno', '¡Dos', '¡Tres', '¡Cuatro', '¡Cinco', '¡Seis', '¡Siete', '¡Ocho', '¡Nueve', '¡Diez'],
   de: ['Eins', 'Zwei', 'Drei', 'Vier', 'Fünf', 'Sechs', 'Sieben', 'Acht', 'Neun', 'Zehn'],
 };
 
@@ -168,6 +233,17 @@ const COLORS: Record<L, Record<string, [show: string, bucket: string]>> = {
     fioletowy: ['Show me something purple!', 'Purple bucket!'],
     brazowy: ['Show me something brown!', 'Brown bucket!'],
     bialy: ['Show me something white!', 'White bucket!'],
+  },
+  es: {
+    czerwony: ['¡Muéstrame algo rojo!', '¡Cubeta roja!'],
+    zolty: ['¡Muéstrame algo amarillo!', '¡Cubeta amarilla!'],
+    zielony: ['¡Muéstrame algo verde!', '¡Cubeta verde!'],
+    niebieski: ['¡Muéstrame algo azul!', '¡Cubeta azul!'],
+    pomaranczowy: ['¡Muéstrame algo naranja!', '¡Cubeta naranja!'],
+    rozowy: ['¡Muéstrame algo rosa!', '¡Cubeta rosa!'],
+    fioletowy: ['¡Muéstrame algo morado!', '¡Cubeta morada!'],
+    brazowy: ['¡Muéstrame algo café!', '¡Cubeta café!'],
+    bialy: ['¡Muéstrame algo blanco!', '¡Cubeta blanca!'],
   },
   de: {
     czerwony: ['Zeig mir etwas Rotes!', 'Roter Eimer!'],
@@ -184,6 +260,7 @@ const COLORS: Record<L, Record<string, [show: string, bucket: string]>> = {
 
 const SHAPES: Record<L, Record<string, string>> = {
   en: { kolo: 'Circle!', kwadrat: 'Square!', trojkat: 'Triangle!', prostokat: 'Rectangle!', gwiazda: 'Star!', serce: 'Heart!', owal: 'Oval!', romb: 'Diamond!' },
+  es: { kolo: '¡Círculo!', kwadrat: '¡Cuadrado!', trojkat: '¡Triángulo!', prostokat: '¡Rectángulo!', gwiazda: '¡Estrella!', serce: '¡Corazón!', owal: '¡Óvalo!', romb: '¡Rombo!' },
   de: { kolo: 'Kreis!', kwadrat: 'Quadrat!', trojkat: 'Dreieck!', prostokat: 'Rechteck!', gwiazda: 'Stern!', serce: 'Herz!', owal: 'Oval!', romb: 'Raute!' },
 };
 
@@ -195,6 +272,14 @@ const EMOTIONS: Record<L, Record<string, [show: string, face: string]>> = {
     zdziwiony: ['Show me a surprised face!', 'A surprised face!'],
     przestraszony: ['Show me a scared face!', 'A scared face!'],
     spiacy: ['Show me a sleepy face!', 'A sleepy face!'],
+  },
+  es: {
+    wesoly: ['¡Muéstrame una carita feliz!', '¡Una carita feliz!'],
+    smutny: ['¡Muéstrame una carita triste!', '¡Una carita triste!'],
+    zly: ['¡Muéstrame una carita enojada!', '¡Una carita enojada!'],
+    zdziwiony: ['¡Muéstrame una carita sorprendida!', '¡Una carita sorprendida!'],
+    przestraszony: ['¡Muéstrame una carita asustada!', '¡Una carita asustada!'],
+    spiacy: ['¡Muéstrame una carita con sueño!', '¡Una carita con sueño!'],
   },
   de: {
     wesoly: ['Zeig mir ein fröhliches Gesicht!', 'Ein fröhliches Gesicht!'],
@@ -209,6 +294,7 @@ const EMOTIONS: Record<L, Record<string, [show: string, face: string]>> = {
 /** „Gdzie jest mama …?”: forma młodego w zdaniu. */
 const MOTHERS: Record<L, Record<string, string>> = {
   en: { kurczak: "Where is the chick's mommy?", cielaczek: "Where is the calf's mommy?", kotek: "Where is the kitten's mommy?", jagniatko: "Where is the lamb's mommy?", prosiaczek: "Where is the piglet's mommy?", zrebak: "Where is the foal's mommy?", kaczatko: "Where is the duckling's mommy?", kijanka: "Where is the tadpole's mommy?" },
+  es: { kurczak: '¿Dónde está la mamá del pollito?', cielaczek: '¿Dónde está la mamá del ternero?', kotek: '¿Dónde está la mamá del gatito?', jagniatko: '¿Dónde está la mamá del corderito?', prosiaczek: '¿Dónde está la mamá del cerdito?', zrebak: '¿Dónde está la mamá del potrillo?', kaczatko: '¿Dónde está la mamá del patito?', kijanka: '¿Dónde está la mamá del renacuajo?' },
   de: { kurczak: 'Wo ist die Mama vom Küken?', cielaczek: 'Wo ist die Mama vom Kälbchen?', kotek: 'Wo ist die Mama vom Kätzchen?', jagniatko: 'Wo ist die Mama vom Lämmchen?', prosiaczek: 'Wo ist die Mama vom Ferkel?', zrebak: 'Wo ist die Mama vom Fohlen?', kaczatko: 'Wo ist die Mama vom Entenküken?', kijanka: 'Wo ist die Mama von der Kaulquappe?' },
 };
 
@@ -224,6 +310,18 @@ const MAZE: Record<L, Record<string, string>> = {
     prosiaczek: 'Lead the piglet to its mommy!',
     pszczola: 'Lead the bee to the flower!',
     wiewiorka: 'Lead the squirrel to the tree!',
+  },
+  es: {
+    cielaczek: '¡Lleva al ternero con su mamá!',
+    kaczatko: '¡Lleva al patito con su mamá!',
+    kotek: '¡Lleva al gatito con su mamá!',
+    krolik: '¡Lleva al conejo a la zanahoria!',
+    kurczak: '¡Lleva al pollito con su mamá!',
+    malpa: '¡Lleva al mono al plátano!',
+    motyl: '¡Lleva a la mariposa a la flor!',
+    prosiaczek: '¡Lleva al cerdito con su mamá!',
+    pszczola: '¡Lleva a la abeja a la flor!',
+    wiewiorka: '¡Lleva a la ardilla al árbol!',
   },
   de: {
     cielaczek: 'Bring das Kälbchen zu seiner Mama!',
@@ -262,6 +360,28 @@ const STORIES: Record<L, Record<string, string>> = {
     samolot: 'First a sheet of paper, then we fold it, and at the end a paper plane!',
     dzien: 'First the sun rises in the morning, then it is daytime, and at the end it is night!',
   },
+  es: {
+    kwiat: '¡Primero una semilla, luego un brote, y al final una flor!',
+    kurczak: '¡Primero un huevo, luego se rompe el cascarón, y al final hay un pollito!',
+    motyl: '¡Primero una oruga, luego un capullo, y al final una mariposa!',
+    balwan: '¡Primero una bola de nieve, luego otra, y al final un muñeco de nieve!',
+    jablko: '¡Primero una manzana entera, luego una mordida, y al final el corazón de la manzana!',
+    lody: '¡Primero un helado lleno, luego cada vez menos, y al final un cono vacío!',
+    zabka: '¡Primero unos huevitos, luego un renacuajo, y al final una rana!',
+    kanapka: '¡Primero el pan, luego la mantequilla, y al final un rico sándwich!',
+    wieza: '¡Primero un bloque, luego dos, y al final una torre alta!',
+    balon: '¡Primero un globo vacío, luego un poco de aire, y al final un globo grande!',
+    tort: '¡Primero mezclamos la masa, luego horneamos, y al final hay un pastel!',
+    zamek: '¡Primero una cubeta de arena, luego una torre de arena, y al final un castillo de arena!',
+    jajko: '¡Primero un huevo, luego lo rompemos en el sartén, y al final un huevo estrellado!',
+    pizza: '¡Primero una bola de masa, luego la salsa, y al final una rica pizza!',
+    swieca: '¡Primero una vela larga, luego cada vez más corta, y al final un cabito chiquito!',
+    kakao: '¡Primero una taza vacía, luego leche, y al final un chocolate calientito!',
+    gniazdo: '¡Primero unas ramitas, luego un nido, y al final un pájaro en el nido!',
+    drzewko: '¡Primero un arbolito chiquito, luego un árbol, y al final un manzano con manzanas!',
+    samolot: '¡Primero una hoja de papel, luego la doblamos, y al final un avión de papel!',
+    dzien: '¡Primero sale el sol en la mañana, luego es de día, y al final es de noche!',
+  },
   de: {
     kwiat: 'Zuerst ein Samen, dann ein Keimling, und am Ende eine Blume!',
     kurczak: 'Zuerst ein Ei, dann bricht die Schale, und am Ende ist da ein kleines Küken!',
@@ -294,7 +414,7 @@ function text(l: L, guide: Guide, line: string): string {
   const key = rest.join('-');
   switch (kind) {
     case 'item':
-      return `${ITEM_NAMES[key]![l]}!`;
+      return l === 'es' ? `¡${ITEM_NAMES[key]![l]}!` : `${ITEM_NAMES[key]![l]}!`;
     case 'liczba':
       return `${NUM[l][Number(key) - 1]}!`;
     case 'kolor':
@@ -317,14 +437,16 @@ function text(l: L, guide: Guide, line: string): string {
       const w = wordsOf(l).find((x) => x.item === key)!;
       const whole = ITEM_NAMES[key]![l];
       const parts = w.syl.map((s, i) => (i === 0 ? s[0] + s.slice(1).toLowerCase() : s.toLowerCase()));
-      return `${parts.join('... ')}... ${whole}!`;
+      return l === 'es' ? `${parts.join('... ')}... ¡${whole}!` : `${parts.join('... ')}... ${whole}!`;
     }
     case 'litera': {
       const x = lettersOf(l).find((y) => y.ch.toLowerCase() === key)!;
       const word = nameOf(itemById(x.item));
+      if (l === 'es') return `¡${x.ch} de ${word.toLowerCase()}!`;
       return l === 'en' ? `${x.ch} is for ${word.toLowerCase()}!` : `${x.ch} wie ${word}!`;
     }
     case 'gloska':
+      if (l === 'es') return `¿Qué empieza con... ${key.toUpperCase()}?`;
       return l === 'en' ? `What starts with... ${key.toUpperCase()}?` : `Was fängt mit... ${key.toUpperCase()} an?`;
   }
   throw new Error(`Brak tłumaczenia: ${l} ${guide}-${line}`);
@@ -332,7 +454,7 @@ function text(l: L, guide: Guide, line: string): string {
 
 const voiceOf = (l: L, g: Guide) => `voices/${g}-${l}`;
 const dir = join(import.meta.dirname, '..', 'voice');
-for (const l of ['en', 'de'] as const) {
+for (const l of ['en', 'de', 'es'] as const) {
   setLang(l as Lang);
   const names = voiceLines(l);
   const lines = (['lusia', 'bazyl'] as const).flatMap((g) => names[g].map((line) => ({ name: `${g}-${line}`, text: text(l, g, line), voice: voiceOf(l, g) })));

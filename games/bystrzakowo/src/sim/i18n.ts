@@ -6,8 +6,9 @@
 import { lang } from './lang.ts';
 import { DE } from './locales/de.ts';
 import { EN } from './locales/en.ts';
+import { ES } from './locales/es.ts';
 
-const DICT = { en: EN, de: DE } as const;
+const DICT = { en: EN, de: DE, es: ES } as const;
 
 export function tr(pl: string, vars?: Record<string, string | number>): string {
   const l = lang();

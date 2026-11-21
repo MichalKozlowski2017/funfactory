@@ -617,7 +617,7 @@ export class ParentPanel extends Container {
     };
     const nameLabel = () => (state.progress.childName ? tr('Imię dziecka: {name}', { name: state.progress.childName }) : tr('Imię dziecka: nie podano'));
     add(this.button(nameLabel(), bw, '#9b7be0', () => this.askName()));
-    const LANG_NAMES: Record<Lang, string> = { pl: 'Polski', en: 'English', de: 'Deutsch' };
+    const LANG_NAMES: Record<Lang, string> = { pl: 'Polski', en: 'English', de: 'Deutsch', es: 'Español' };
     add(
       this.button(tr('Język: {name}', { name: LANG_NAMES[lang()] }), bw, '#5cc36a', () => {
         // Zmiana języka: zapis i ponowne uruchomienie (nagrania lektora wczytują się przy starcie).

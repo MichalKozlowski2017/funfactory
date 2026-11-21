@@ -270,10 +270,17 @@ export const nameOf = (item: Item): string => {
  * Nazwy zaczynające się dwuznakiem (sh, ch, sch, st…) albo z dwóch słów pomijamy: litera nie brzmi
  * tam jak na początku słowa, więc myliłaby dziecko. Zwraca '' dla pominiętych.
  */
-export function firstLetter(name: string, l: 'en' | 'de'): string {
-  const n = name.toLowerCase();
+export function firstLetter(name: string, l: 'en' | 'de' | 'es'): string {
+  // Hiszpański: litera z akcentem liczy się jak bez („Árbol” na A).
+  const n = (l === 'es' ? name.normalize('NFD').replace(/[\u0300-\u036f]/g, '') : name).toLowerCase();
   if (n.includes(' ') || n.includes('-')) return '';
-  const skip = l === 'en' ? ['sh', 'ch', 'th', 'ph', 'wh', 'kn', 'wr', 'gi', 'ge', 'ce', 'ci'] : ['sch', 'ch', 'st', 'sp', 'ph', 'pf', 'qu', 'ei', 'eu', 'au'];
+  const SKIP = {
+    en: ['sh', 'ch', 'th', 'ph', 'wh', 'kn', 'wr', 'gi', 'ge', 'ce', 'ci'],
+    de: ['sch', 'ch', 'st', 'sp', 'ph', 'pf', 'qu', 'ei', 'eu', 'au'],
+    // „h” jest nieme, „ce/ci” i „ge/gi” brzmią inaczej niż nazwa litery, dwuznaki ch, ll, qu.
+    es: ['h', 'ch', 'll', 'qu', 'gu', 'ce', 'ci', 'ge', 'gi'],
+  };
+  const skip = SKIP[l];
   if (skip.some((d) => n.startsWith(d))) return '';
   return n[0]!;
 }

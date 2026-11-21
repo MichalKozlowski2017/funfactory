@@ -137,7 +137,7 @@ Research oczekiwań rodziców: `docs/bystrzakowo-rodzice.md`.
 
 ## Języki (2026-11-21)
 
-Polski (podstawowy), angielski i niemiecki w jednej aplikacji. Język: z telefonu (spoza listy: angielski),
+Polski (podstawowy), angielski, niemiecki i hiszpański (latynoamerykański, słownictwo meksykańskie) w jednej aplikacji. Język: z telefonu (spoza listy: angielski),
 rodzic zmienia go w Ustawieniach strefy rodzica; w playtestach `?lang=en|de|pl`.
 
 - **Teksty na ekranie**: `tr('polski tekst')` (`src/sim/i18n.ts`), słowniki `src/sim/locales/{en,de}.ts`.
@@ -146,9 +146,9 @@ rodzic zmienia go w Ustawieniach strefy rodzica; w playtestach `?lang=en|de|pl`.
 - **Nazwy obiektów**: `src/sim/names.ts`.
 - **Zabawy zależne od języka**: „Głoski” po angielsku i niemiecku to pierwsza litera słowa (tak uczą tamtejsze przedszkola;
   słowa z dwuznakiem na początku są pomijane), sylaby (`WORDS_EN`, `WORDS_DE`), literki z obiektami z danego języka
-  (po angielsku bez „I”, bo w katalogu nie ma nic na I).
+  (po angielsku bez „I”, po hiszpańsku bez „I”, „K” i „W”, bo w katalogu nie ma do nich obiektów; po hiszpańsku „H” pominięte, bo jest nieme).
 - **Lektor**: `node games/bystrzakowo/scripts/voice-i18n.ts` → `voice/{en,de}.json`, nagrania `scripts/voice-lang.sh en|de`
-  → `public/audio/<język>/<głos>/`. Głosy: rodzime wzorce `lusia-en`, `bazyl-en`, `lusia-de`, `bazyl-de` (z opisu w VoxCPM2);
+  → `public/audio/<język>/<głos>/`. Głosy: rodzime wzorce `lusia-en`, `bazyl-en`, `lusia-de`, `bazyl-de`, `lusia-es`, `bazyl-es` (z opisu w VoxCPM2);
   polskie wzorce czytały angielskie słowa z akcentem („Cat” jak „Cut”). Bazyl to po angielsku i niemiecku Basil.
 - **Do zrobienia przed wydaniem**: odsłuch przez rodzimego użytkownika (Whisper sprawdza tylko zrozumiałość),
   opisy i zrzuty do sklepów w obu językach.

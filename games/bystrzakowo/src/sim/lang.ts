@@ -1,8 +1,8 @@
 /**
- * Język gry: polski (podstawowy), angielski, niemiecki. Ustawiany raz przy starcie (telefon albo wybór
+ * Język gry: polski (podstawowy), angielski, niemiecki, hiszpański (latynoamerykański). Ustawiany raz przy starcie (telefon albo wybór
  * rodzica) i czytany przez logikę zabaw, które od niego zależą (głoski, sylaby, literki, raport).
  */
-export const LANGS = ['pl', 'en', 'de'] as const;
+export const LANGS = ['pl', 'en', 'de', 'es'] as const;
 export type Lang = (typeof LANGS)[number];
 
 let current: Lang = 'pl';

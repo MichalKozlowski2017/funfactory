@@ -78,6 +78,7 @@ export function advance(points: readonly P[], at: number, finger: P, tol: number
  */
 const LETTER_ITEMS: Record<Exclude<Lang, 'pl'>, Record<string, string>> = {
   en: { A: 'jablko', B: 'pilka', D: 'pies', I: '', K: 'latawiec', L: 'lew', M: 'malpa', O: 'sowa', P: 'swinka', S: 'slonce', T: 'traktor', W: 'wieloryb' },
+  es: { A: 'pszczola', B: 'wieloryb', D: 'delfin', I: '', K: '', L: 'lew', M: 'malpa', O: 'niedzwiedz', P: 'pies', S: 'slonce', T: 'zolw', W: '' },
   de: { A: 'malpa', B: 'pilka', D: 'dinozaur', I: 'jez', K: 'kot', L: 'lew', M: 'mysz', O: 'pomarancza', P: 'pingwin', S: 'slonce', T: 'traktor', W: 'wieloryb' },
 };
 

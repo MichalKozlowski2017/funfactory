@@ -67,8 +67,9 @@ export const SOUNDS_PL = ['a', 'o', 'u', 'm', 'l', 'w', 's', 'sz', 'ż', 'ś', '
 /** Angielski i niemiecki: pierwsza litera słowa (tak uczą przedszkola w tych krajach). */
 export const LETTERS_EN = ['a', 'b', 'c', 'd', 'f', 'g', 'h', 'l', 'm', 'o', 'p', 'r', 's', 't', 'w'] as const;
 export const LETTERS_DE = ['a', 'b', 'e', 'f', 'g', 'h', 'k', 'l', 'm', 'p', 'r', 's', 't', 'w', 'z'] as const;
+export const LETTERS_ES = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'l', 'm', 'o', 'p', 'r', 's', 't'] as const;
 /** Głoski (pl) albo litery (en, de) w zabawie „Co zaczyna się na…?” w bieżącym języku. */
-export const soundsOf = (l: Lang = lang()): readonly string[] => (l === 'pl' ? SOUNDS_PL : l === 'en' ? LETTERS_EN : LETTERS_DE);
+export const soundsOf = (l: Lang = lang()): readonly string[] => ({ pl: SOUNDS_PL, en: LETTERS_EN, de: LETTERS_DE, es: LETTERS_ES })[l];
 /** Wszystkie głoski i litery ze wszystkich języków (lista nagrań). */
 export const SOUNDS: readonly string[] = SOUNDS_PL;
 
@@ -81,6 +82,8 @@ const CONFUSABLE: Record<Lang, string[][]> = {
   // Nazwy liter, które się rymują („bee, dee, pee”), i te o tym samym dźwięku (c/k/s).
   en: [['b', 'c', 'd', 'e', 'g', 'p', 't', 'v', 'z'], ['c', 'k', 's'], ['m', 'n']],
   de: [['b', 'c', 'd', 'e', 'g', 'p', 't', 'w'], ['f', 'v'], ['m', 'n'], ['s', 'z']],
+  // „be, ce, de, e, ge, pe, te” się rymują; b i v brzmią tak samo; c, s, z (seseo).
+  es: [['b', 'c', 'd', 'e', 'g', 'p', 't'], ['b', 'v'], ['c', 's', 'z'], ['m', 'n']],
 };
 const confusable = (a: string, b: string) => a === b || CONFUSABLE[lang()].some((g) => g.includes(a) && g.includes(b));
 

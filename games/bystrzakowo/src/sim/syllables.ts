@@ -94,8 +94,32 @@ const WORDS_DE: readonly Word[] = [
   { item: 'trabka', syl: ['TROM', 'PE', 'TE'], level: 2 },
 ];
 
+/** Hiszpański: sylaby jak w szkole (ga-to, pe-rro, ma-ri-po-sa). */
+const WORDS_ES: readonly Word[] = [
+  { item: 'kot', syl: ['GA', 'TO'], level: 0 },
+  { item: 'krowa', syl: ['VA', 'CA'], level: 0 },
+  { item: 'kaczka', syl: ['PA', 'TO'], level: 0 },
+  { item: 'zaba', syl: ['RA', 'NA'], level: 0 },
+  { item: 'niedzwiedz', syl: ['O', 'SO'], level: 0 },
+  { item: 'ksiezyc', syl: ['LU', 'NA'], level: 0 },
+  { item: 'malpa', syl: ['MO', 'NO'], level: 0 },
+  { item: 'pies', syl: ['PE', 'RRO'], level: 1 },
+  { item: 'drzewo', syl: ['ÁR', 'BOL'], level: 1 },
+  { item: 'osmiornica', syl: ['PUL', 'PO'], level: 1 },
+  { item: 'swinka', syl: ['CER', 'DO'], level: 1 },
+  { item: 'koza', syl: ['CA', 'BRA'], level: 1 },
+  { item: 'kubek', syl: ['TA', 'ZA'], level: 1 },
+  { item: 'kon', syl: ['CA', 'BA', 'LLO'], level: 2 },
+  { item: 'krolik', syl: ['CO', 'NE', 'JO'], level: 2 },
+  { item: 'pomidor', syl: ['TO', 'MA', 'TE'], level: 2 },
+  { item: 'pilka', syl: ['PE', 'LO', 'TA'], level: 2 },
+  { item: 'zyrafa', syl: ['JI', 'RA', 'FA'], level: 2 },
+  { item: 'ptak', syl: ['PÁ', 'JA', 'RO'], level: 2 },
+  { item: 'motyl', syl: ['MA', 'RI', 'PO', 'SA'], level: 2 },
+];
+
 /** Słowa w każdym języku (nagrania „czytaj-<obiekt>” są osobne dla każdego języka). */
-export const WORDS_BY_LANG: Record<Lang, readonly Word[]> = { pl: WORDS_PL, en: WORDS_EN, de: WORDS_DE };
+export const WORDS_BY_LANG: Record<Lang, readonly Word[]> = { pl: WORDS_PL, en: WORDS_EN, de: WORDS_DE, es: WORDS_ES };
 /** Słowa w bieżącym języku. */
 export const wordsOf = (l: Lang = lang()): readonly Word[] => WORDS_BY_LANG[l];
 /** Polskie słowa (zgodność wstecz). */

@@ -257,6 +257,11 @@ export function formatRange(from: string, to: string): string {
     if (m1 !== m2) return `${a} ${d1} – ${b} ${d2}, ${y2}`;
     return `${b} ${d1}–${d2}, ${y2}`;
   }
+  if (l === 'es') {
+    if (y1 !== y2) return `${d1} de ${a} de ${y1} – ${d2} de ${b} de ${y2}`;
+    if (m1 !== m2) return `${d1} de ${a} – ${d2} de ${b} de ${y2}`;
+    return `${d1}–${d2} de ${b} de ${y2}`;
+  }
   if (l === 'de') {
     if (y1 !== y2) return `${d1}. ${a} ${y1} – ${d2}. ${b} ${y2}`;
     if (m1 !== m2) return `${d1}. ${a} – ${d2}. ${b} ${y2}`;

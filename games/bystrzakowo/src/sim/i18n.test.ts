@@ -56,12 +56,14 @@ describe('tłumaczenia', () => {
     for (let i = 0; i < 4; i++) addTask(j, day, 'historyjki', i % 2);
     addTask(j, day, 'kolorowanka', 0);
     addTime(j, day, 900);
-    for (const l of ['en', 'de'] as const) {
+    const first = { en: 'Sam counts up to 4 without mistakes.', de: 'Sam zählt fehlerfrei bis 4.', es: 'Sam cuenta hasta 4 sin errores.' };
+    for (const l of ['en', 'de', 'es'] as const) {
       setLang(l);
       const r = makeReport({ journal: j, levels: {}, name: 'Sam', today: day });
       const text = JSON.stringify([r.weekText, r.skills.map((s) => [s.title, s.lines]), r.tips, r.highlights, r.firsts]);
-      expect(text, l).not.toMatch(/[ąćęłńóśźż]|Dziecko|liczy|kolory|tygodni/);
-      expect(r.skills[0]!.lines[0]).toBe(l === 'en' ? 'Sam counts up to 4 without mistakes.' : 'Sam zählt fehlerfrei bis 4.');
+      // Hiszpański też ma „ó”, więc sprawdzamy litery typowo polskie.
+      expect(text, l).not.toMatch(/[ąćęłńśźż]|Dziecko|liczy|kolory|tygodni/);
+      expect(r.skills[0]!.lines[0]).toBe(first[l]);
     }
   });
 
@@ -70,5 +72,7 @@ describe('tłumaczenia', () => {
     expect(formatRange('2026-11-15', '2026-11-21')).toBe('November 15–21, 2026');
     setLang('de');
     expect(formatRange('2026-11-28', '2026-12-04')).toBe('28. November – 4. Dezember 2026');
+    setLang('es');
+    expect(formatRange('2026-11-15', '2026-11-21')).toBe('15–21 de noviembre de 2026');
   });
 });
