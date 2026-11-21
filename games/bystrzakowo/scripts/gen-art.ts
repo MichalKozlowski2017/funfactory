@@ -111,6 +111,11 @@ if (process.argv.includes('--dodatki')) {
     { out: 'pracownia', prefix: 'stacja-ksztalty', args: ['--workflow', 'flux2-sprite', '--count', '2', '--prompt', sprite('a wooden children shape sorter box with a circle, a square and a triangle hole and colorful blocks next to it, front view')] },
     { out: 'pracownia', prefix: 'stacja-cyfry', args: ['--workflow', 'flux2-sprite', '--count', '2', '--prompt', sprite('a small wooden board standing on a little stand with big colorful numbers 1 2 3 made of dots, front view')] },
   );
+  tasks.push(
+    { out: 'pracownia', prefix: 'stacja-sylaby', args: ['--workflow', 'flux2-sprite', '--count', '2', '--prompt', sprite('a small stack of colorful wooden alphabet toy blocks with big letters, front view')] },
+    { out: 'pracownia', prefix: 'dom-emocje', args: ['--workflow', 'flux2-sprite', '--prompt', `a tiny cozy cottage with a round wooden door, a yellow roof and a round window shaped like a smiling face, front view, single object, centered, ${STYLE}, plain light gray background`] },
+    { out: 'pracownia', prefix: 'stacja-melodia', args: ['--workflow', 'flux2-sprite', '--count', '2', '--prompt', sprite('a colorful children wooden xylophone with rainbow bars and two mallets, front view')] },
+  );
   // Emocje: ta sama postać (ten sam seed), różne miny. Wyraźne, przesadzone, jak w książeczkach dla maluchów.
   const face = (what: string) => `a cute round little child head with short brown hair and big eyes, ${what}, very clear exaggerated expression for toddlers, front view, single object, centered, ${STYLE}, plain light gray background`;
   for (const [id, what] of [
@@ -149,6 +154,11 @@ for (const item of ITEMS) {
   tasks.push({ out: 'items', prefix: item.id, args: ['--workflow', 'flux2-sprite', '--prompt', prompt] });
 }
 
+// Zadania spoza katalogu (tła, stanowiska, znaki): pomijamy te, które mają już plik z tym seedem.
+for (let i = tasks.length - 1; i >= 0; i--) {
+  const t = tasks[i]!;
+  if (t.out !== 'items' && existsSync(join(raw, t.out, `${t.prefix}-${SEED}.png`))) tasks.splice(i, 1);
+}
 console.log(`Do wygenerowania: ${tasks.length}`);
 for (const dir of ['items', 'extra', 'warsztat', 'sciezka', 'pracownia', 'kolorowanki', 'emocje']) mkdirSync(join(raw, dir), { recursive: true });
 // Postęp liczony w obrazkach (zadanie z --count N daje N plików .png).

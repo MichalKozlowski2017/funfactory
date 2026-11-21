@@ -21,6 +21,7 @@ import { PatternScene } from './patterns.ts';
 import { PuzzleScene } from './puzzle.ts';
 import { drawShape, ShapeScene } from './shapes.ts';
 import { SortScene } from './sort.ts';
+import { SyllableScene } from './syllables.ts';
 import { StickerScene } from './stickers.ts';
 
 /** Obrazek na zakładce krainy (obiekt z katalogu). */
@@ -407,7 +408,7 @@ export class WorldScene extends Scene {
     void squash(this.tweens, house, 0.18);
     const p = this.toLocal(house.getGlobalPosition());
     this.particles.burst(p.x, p.y - 120, { count: 24, speed: [200, 520], life: [0.4, 0.8], gravity: 900, scale: [0.6, 1.2], colors: COLORS.confetti });
-    const scenes: Record<string, () => Scene> = { memory: () => new MemoryScene(), emocje: () => new EmotionScene(), sortowanie: () => new SortScene(), ukladanka: () => new JigsawScene(), wzory: () => new PatternScene(), ksztalty: () => new ShapeScene(), kropki: () => new DotsScene(), litery: () => new LetterScene('litery'), cyfry: () => new LetterScene('cyfry'), kolorowanka: () => new ColoringScene(), naklejanka: () => new StickerScene(), melodia: () => new MelodyScene(), labirynt: () => new MazeScene() };
+    const scenes: Record<string, () => Scene> = { memory: () => new MemoryScene(), emocje: () => new EmotionScene(), sortowanie: () => new SortScene(), ukladanka: () => new JigsawScene(), wzory: () => new PatternScene(), ksztalty: () => new ShapeScene(), sylaby: () => new SyllableScene(), kropki: () => new DotsScene(), litery: () => new LetterScene('litery'), cyfry: () => new LetterScene('cyfry'), kolorowanka: () => new ColoringScene(), naklejanka: () => new StickerScene(), melodia: () => new MelodyScene(), labirynt: () => new MazeScene() };
     const scene = isPuzzle(kind) ? new PuzzleScene(kind as PuzzleKind) : scenes[kind]!();
     this.timers.after(0.35, () => void this.game.scenes.go(scene, { fade: 0.3, color: 0xfff6e8 }));
   }

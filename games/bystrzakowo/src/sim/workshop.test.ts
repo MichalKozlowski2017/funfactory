@@ -122,3 +122,25 @@ describe('melodia', () => {
     expect(melodyLength(2, 3)).toBe(5);
   });
 });
+
+describe('sylaby', () => {
+  it('sylaby składają się w nazwę obrazka, kafelki pomieszane', async () => {
+    const { WORDS, makeSyllableRound, scramble, SYLLABLE_ROUND } = await import('./syllables.ts');
+    const strip = (s: string) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/ł/g, 'l');
+    for (const w of WORDS) {
+      const item = ITEMS.find((i) => i.id === w.item)!;
+      expect(item, w.item).toBeDefined();
+      // Złożone sylaby to nazwa obiektu albo jej rdzeń (Kotek, Autko -> AUTO? sprawdzamy początek).
+      expect(strip(w.syl.join('')), w.item).toBe(strip(item.name));
+    }
+    const rng = new Rng(4);
+    for (const level of [0, 1, 2]) {
+      const r = makeSyllableRound(rng, level);
+      expect(r.length).toBe(SYLLABLE_ROUND);
+      for (const w of r) {
+        const s = scramble(rng, w.syl);
+        expect(s.some((v, i) => v !== i)).toBe(true);
+      }
+    }
+  });
+});

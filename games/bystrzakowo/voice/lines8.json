@@ -1,0 +1,98 @@
+{
+ "voice": "voices/alt",
+ "tries": 10,
+ "lines": [
+  {
+   "name": "lusia-sylaby",
+   "text": "Ułóż sylaby po kolei, a potem przeczytamy razem!"
+  },
+  {
+   "name": "lusia-czytaj-koza",
+   "text": "Ko... za... Koza!"
+  },
+  {
+   "name": "lusia-czytaj-zaba",
+   "text": "Ża... ba... Żaba!"
+  },
+  {
+   "name": "lusia-czytaj-sowa",
+   "text": "So... wa... Sowa!"
+  },
+  {
+   "name": "lusia-czytaj-foka",
+   "text": "Fo... ka... Foka!"
+  },
+  {
+   "name": "lusia-czytaj-lodka",
+   "text": "Łód... ka... Łódka!"
+  },
+  {
+   "name": "lusia-czytaj-kura",
+   "text": "Ku... ra... Kura!"
+  },
+  {
+   "name": "lusia-czytaj-lalka",
+   "text": "Lal... ka... Lalka!"
+  },
+  {
+   "name": "lusia-czytaj-kotek",
+   "text": "Ko... tek... Kotek!"
+  },
+  {
+   "name": "lusia-czytaj-ryba",
+   "text": "Ryb... ka... Rybka!"
+  },
+  {
+   "name": "lusia-czytaj-auto",
+   "text": "Aut... ko... Autko!"
+  },
+  {
+   "name": "lusia-czytaj-banan",
+   "text": "Ba... nan... Banan!"
+  },
+  {
+   "name": "lusia-czytaj-rower",
+   "text": "Ro... wer... Rower!"
+  },
+  {
+   "name": "lusia-czytaj-pilka",
+   "text": "Pił... ka... Piłka!"
+  },
+  {
+   "name": "lusia-czytaj-motyl",
+   "text": "Mo... tyl... Motyl!"
+  },
+  {
+   "name": "lusia-czytaj-kubek",
+   "text": "Ku... bek... Kubek!"
+  },
+  {
+   "name": "lusia-czytaj-malina",
+   "text": "Ma... li... na... Malina!"
+  },
+  {
+   "name": "lusia-czytaj-pomidor",
+   "text": "Po... mi... dor... Pomidor!"
+  },
+  {
+   "name": "lusia-czytaj-samolot",
+   "text": "Sa... mo... lot... Samolot!"
+  },
+  {
+   "name": "lusia-czytaj-parasol",
+   "text": "Pa... ra... sol... Parasol!"
+  },
+  {
+   "name": "lusia-czytaj-rakieta",
+   "text": "Ra... kie... ta... Rakieta!"
+  },
+  {
+   "name": "lusia-czytaj-balonik",
+   "text": "Ba... lo... nik... Balonik!"
+  },
+  {
+   "name": "lusia-czytaj-kapelusz",
+   "text": "Ka... pe... lusz... Kapelusz!"
+  }
+ ]
+}
