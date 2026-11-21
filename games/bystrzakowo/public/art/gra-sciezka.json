@@ -1,0 +1,16 @@
+{
+  "workflow": "flux2.json",
+  "PROMPT": "a completely empty soft light green grassy meadow ground seen from above with a few tiny flowers only at the edges, very simple and calm, lots of empty space, no objects, no characters, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, bright cheerful pastel colors, cute and friendly",
+  "NEGATIVE": "",
+  "SEED": 22,
+  "WIDTH": 1536,
+  "HEIGHT": 864,
+  "PREFIX": "tlo-sciezka-gra",
+  "STEPS": 20,
+  "GUIDANCE": 4,
+  "BPM": 100,
+  "DURATION": 60,
+  "KEY": "A minor",
+  "LYRICS": "[Instrumental]",
+  "created": "2026-11-21T10:46:26.421Z"
+}

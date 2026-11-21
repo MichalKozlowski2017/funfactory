@@ -1,0 +1,54 @@
+{
+ "voice": "voices/alt",
+ "tries": 8,
+ "lines": [
+  {
+   "name": "lusia-kraina-sciezka",
+   "text": "To moja Ścieżka! Tutaj prowadzimy palcem."
+  },
+  {
+   "name": "lusia-kropki",
+   "text": "Połącz kropki po kolei! Zacznij od jedynki."
+  },
+  {
+   "name": "lusia-labirynt-kurczak",
+   "text": "Zaprowadź kurczaczka do mamy!"
+  },
+  {
+   "name": "lusia-labirynt-kotek",
+   "text": "Zaprowadź kotka do mamy!"
+  },
+  {
+   "name": "lusia-labirynt-prosiaczek",
+   "text": "Zaprowadź prosiaczka do mamy!"
+  },
+  {
+   "name": "lusia-labirynt-cielaczek",
+   "text": "Zaprowadź cielaczka do mamy!"
+  },
+  {
+   "name": "lusia-labirynt-kaczatko",
+   "text": "Zaprowadź kaczątko do mamy!"
+  },
+  {
+   "name": "lusia-labirynt-pszczola",
+   "text": "Zaprowadź pszczółkę do kwiatka!"
+  },
+  {
+   "name": "lusia-labirynt-motyl",
+   "text": "Zaprowadź motylka do kwiatka!"
+  },
+  {
+   "name": "lusia-labirynt-krolik",
+   "text": "Zaprowadź królika do marchewki!"
+  },
+  {
+   "name": "lusia-labirynt-malpa",
+   "text": "Zaprowadź małpkę do banana!"
+  },
+  {
+   "name": "lusia-labirynt-wiewiorka",
+   "text": "Zaprowadź wiewiórkę do drzewa!"
+  }
+ ]
+}

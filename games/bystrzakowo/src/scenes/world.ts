@@ -8,14 +8,16 @@ import { saveState, state } from '../state.ts';
 import { COLORS, cover, label, sfx } from '../ui.ts';
 import { ParentGate, ParentPanel } from '../parent.ts';
 import { AlbumScene } from './album.ts';
+import { DotsScene } from './dots.ts';
 import { JigsawScene } from './jigsaw.ts';
+import { MazeScene } from './maze.ts';
 import { PuzzleScene } from './puzzle.ts';
 import { SortScene } from './sort.ts';
 
 /** Obrazek na zakładce krainy (obiekt z katalogu). */
-const TAB_ICON: Record<string, string> = { polana: 'kwiatek', warsztat: 'klocek' };
+const TAB_ICON: Record<string, string> = { polana: 'kwiatek', warsztat: 'klocek', sciezka: 'grzyb' };
 /** Kolor zakładki krainy. */
-const TAB_COLOR: Record<string, number> = { polana: 0x7ad7a0, warsztat: 0xf0a960 };
+const TAB_COLOR: Record<string, number> = { polana: 0x7ad7a0, warsztat: 0xf0a960, sciezka: 0x8fb8ff };
 
 /**
  * Świat Bystrzakowa: krainy przewijane w bok (gest albo zakładki u góry). Każda kraina to inny rodzaj
@@ -245,6 +247,28 @@ export class WorldScene extends Scene {
       g.poly([-8, -26, 8, -26, 8, -14, 15, -14, 0, -2, -15, -14, -8, -14]).fill({ color: COLORS.sun }).stroke({ color: COLORS.ink, width: 3, join: 'round' });
       c.addChild(g);
     } else if (kind === 'ukladanka') c.addChild(puzzlePiece());
+    else if (kind === 'kropki') {
+      // Trzy kropki połączone linią.
+      const g = new Graphics().moveTo(-24, 14).lineTo(0, -20).lineTo(24, 14).stroke({ color: 0xff7a8a, width: 5, cap: 'round', join: 'round' });
+      for (const [x, y] of [
+        [-24, 14],
+        [0, -20],
+        [24, 14],
+      ] as const)
+        g.circle(x, y, 9).fill({ color: 0xffffff }).stroke({ color: COLORS.ink, width: 3 });
+      c.addChild(g);
+    } else if (kind === 'labirynt') {
+      // Mały labirynt: zakręcona ścieżka.
+      const g = new Graphics()
+        .roundRect(-28, -28, 56, 56, 8)
+        .stroke({ color: 0x4fa65a, width: 6 })
+        .moveTo(-28, -8)
+        .lineTo(8, -8)
+        .moveTo(-8, 10)
+        .lineTo(28, 10)
+        .stroke({ color: 0x4fa65a, width: 6, cap: 'round' });
+      c.addChild(g);
+    }
     return c;
   }
 
@@ -267,7 +291,8 @@ export class WorldScene extends Scene {
     void squash(this.tweens, house, 0.18);
     const p = this.toLocal(house.getGlobalPosition());
     this.particles.burst(p.x, p.y - 120, { count: 24, speed: [200, 520], life: [0.4, 0.8], gravity: 900, scale: [0.6, 1.2], colors: COLORS.confetti });
-    const scene = isPuzzle(kind) ? new PuzzleScene(kind as PuzzleKind) : kind === 'sortowanie' ? new SortScene() : new JigsawScene();
+    const scenes: Record<string, () => Scene> = { sortowanie: () => new SortScene(), ukladanka: () => new JigsawScene(), kropki: () => new DotsScene(), labirynt: () => new MazeScene() };
+    const scene = isPuzzle(kind) ? new PuzzleScene(kind as PuzzleKind) : scenes[kind]!();
     this.timers.after(0.35, () => void this.game.scenes.go(scene, { fade: 0.3, color: 0xfff6e8 }));
   }
 

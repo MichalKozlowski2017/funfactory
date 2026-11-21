@@ -1,0 +1,16 @@
+{
+  "workflow": "flux2.json",
+  "PROMPT": "wide view of a sunny forest clearing with a winding light dirt path, round trees at the edges, small mushrooms and flowers, wooden signposts, large empty grassy space in the middle and bottom, no characters, no animals, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, bright cheerful pastel colors, cute and friendly",
+  "NEGATIVE": "",
+  "SEED": 21,
+  "WIDTH": 1536,
+  "HEIGHT": 864,
+  "PREFIX": "tlo-sciezka",
+  "STEPS": 20,
+  "GUIDANCE": 4,
+  "BPM": 100,
+  "DURATION": 60,
+  "KEY": "A minor",
+  "LYRICS": "[Instrumental]",
+  "created": "2026-11-21T10:41:36.245Z"
+}

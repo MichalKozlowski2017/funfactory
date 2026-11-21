@@ -1,0 +1,66 @@
+import { describe, expect, it } from 'vitest';
+import { Rng } from '@funfactory/core';
+import { ITEMS } from './catalog.ts';
+import { dotCount, evenDots, hitsDot, makeDotsRound, radialContour, DOTS_ROUND } from './dots.ts';
+import { canStep, makeMaze, makeMazeRound, MAZE_PAIRS, MAZE_ROUND, mazeSize, path } from './maze.ts';
+
+describe('łączenie kropek', () => {
+  /** Koło o promieniu 20 na masce 64×64. */
+  const disc = () => {
+    const w = 64;
+    const m = new Uint8Array(w * w);
+    for (let y = 0; y < w; y++) for (let x = 0; x < w; x++) if (Math.hypot(x - 32, y - 32) <= 20) m[y * w + x] = 1;
+    return { m, w };
+  };
+
+  it('kontur koła leży na jego brzegu', () => {
+    const { m, w } = disc();
+    const c = radialContour(m, w, w, 72);
+    expect(c.length).toBe(72);
+    for (const p of c) expect(Math.hypot(p.x * w - 32, p.y * w - 32)).toBeCloseTo(20, -0.5);
+  });
+
+  it('kropki równo po obwodzie, pierwsza na górze', () => {
+    const { m, w } = disc();
+    const dots = evenDots(radialContour(m, w, w), 8);
+    expect(dots.length).toBe(8);
+    expect(dots[0]!.y).toBeLessThan(0.25);
+    const gaps = dots.map((d, i) => Math.hypot(dots[(i + 1) % 8]!.x - d.x, dots[(i + 1) % 8]!.y - d.y));
+    for (const g of gaps) expect(g).toBeCloseTo(gaps[0]!, 2);
+  });
+
+  it('liczba kropek rośnie z poziomem do dziesięciu, runda bez powtórzeń', () => {
+    expect([0, 1, 2].map(dotCount)).toEqual([5, 8, 10]);
+    const round = makeDotsRound(new Rng(2));
+    expect(round.length).toBe(DOTS_ROUND);
+    expect(new Set(round).size).toBe(DOTS_ROUND);
+    expect(hitsDot({ x: 10, y: 10 }, { x: 40, y: 10 }, 40)).toBe(true);
+  });
+});
+
+describe('labirynt', () => {
+  it('z każdego pola da się dojść do każdego (labirynt doskonały)', () => {
+    const rng = new Rng(4);
+    for (const level of [0, 1, 2])
+      for (let i = 0; i < 30; i++) {
+        const { cols, rows } = mazeSize(level);
+        const maze = makeMaze(rng, cols, rows);
+        const route = path(maze, 0, 0, cols - 1, rows - 1);
+        expect(route[0]).toEqual([0, 0]);
+        expect(route[route.length - 1]).toEqual([cols - 1, rows - 1]);
+        for (let k = 1; k < route.length; k++) expect(canStep(maze, ...route[k - 1]!, ...route[k]!)).toBe(true);
+        // Doskonały: liczba przejść = liczba pól - 1.
+        let open = 0;
+        for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) open += maze.walls[r]![c]!.filter((w) => !w).length;
+        expect(open / 2).toBe(cols * rows - 1);
+      }
+  });
+
+  it('pary bohater–cel istnieją w katalogu', () => {
+    for (const [a, b] of MAZE_PAIRS) {
+      expect(ITEMS.some((i) => i.id === a)).toBe(true);
+      expect(ITEMS.some((i) => i.id === b)).toBe(true);
+    }
+    expect(makeMazeRound(new Rng(1)).length).toBe(MAZE_ROUND);
+  });
+});

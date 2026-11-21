@@ -61,6 +61,18 @@ if (process.argv.includes('--znaki')) {
     tasks.push({ out: 'warsztat', prefix: id!, args: ['--workflow', 'flux2-sprite', '--prompt', sign(what!)] });
 }
 
+if (process.argv.includes('--sciezka')) {
+  const bg = (what: string) => `${what}, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, bright cheerful pastel colors, cute and friendly`;
+  const sprite = (what: string) => `${what}, single object, centered, ${STYLE}, no face on objects, plain light gray background`;
+  const wide = ['--workflow', 'flux2', '--width', '1536', '--height', '864', '--count', '2'];
+  tasks.push(
+    { out: 'sciezka', prefix: 'tlo-sciezka', args: [...wide, '--prompt', bg('wide view of a sunny forest clearing with a winding light dirt path, round trees at the edges, small mushrooms and flowers, wooden signposts, large empty grassy space in the middle and bottom, no characters, no animals')] },
+    { out: 'sciezka', prefix: 'tlo-sciezka-gra', args: [...wide, '--prompt', bg('a completely empty soft light green grassy meadow ground seen from above with a few tiny flowers only at the edges, very simple and calm, lots of empty space, no objects, no characters')] },
+    { out: 'sciezka', prefix: 'stacja-kropki', args: ['--workflow', 'flux2-sprite', '--count', '2', '--prompt', sprite('a small green chalkboard on a wooden easel with colorful dots connected by a line forming a star shape, front view')] },
+    { out: 'sciezka', prefix: 'stacja-labirynt', args: ['--workflow', 'flux2-sprite', '--count', '2', '--prompt', sprite('a small square green hedge maze garden seen from slightly above, with a little wooden gate')] },
+  );
+}
+
 if (process.argv.includes('--warsztat')) {
   const bg = (what: string) => `${what}, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, bright cheerful pastel colors, cute and friendly`;
   const sprite = (what: string) => `${what}, single object, centered, ${STYLE}, no face on objects, plain light gray background`;
@@ -78,7 +90,7 @@ if (process.argv.includes('--warsztat')) {
 }
 
 for (const item of ITEMS) {
-  if (process.argv.includes('--warsztat') && !only) break;
+  if ((process.argv.includes('--warsztat') || process.argv.includes('--sciezka') || process.argv.includes('--znaki')) && !only) break;
   if (only && !only.has(item.id)) continue;
   if (!only && existsSync(join(repo, 'games/bystrzakowo/public/art/items', `${item.id}.webp`))) continue;
   if (existsSync(join(raw, 'items', `${item.id}-${SEED}.png`))) continue;
@@ -87,7 +99,7 @@ for (const item of ITEMS) {
 }
 
 console.log(`Do wygenerowania: ${tasks.length}`);
-for (const dir of ['items', 'extra', 'warsztat']) mkdirSync(join(raw, dir), { recursive: true });
+for (const dir of ['items', 'extra', 'warsztat', 'sciezka']) mkdirSync(join(raw, dir), { recursive: true });
 // Postęp liczony w obrazkach (zadanie z --count N daje N plików .png).
 const images = tasks.reduce((n, t) => n + (t.args.includes('--count') ? Number(t.args[t.args.indexOf('--count') + 1]) : t.args.includes('ace15') ? 0 : 1), 0);
 execFileSync(job, ['bystrzakowo-items', 'Bystrzakowo: grafiki', String(images), '--dir', raw, '--glob', '*'], { stdio: 'inherit' });
