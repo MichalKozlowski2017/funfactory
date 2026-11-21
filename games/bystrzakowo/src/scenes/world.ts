@@ -59,6 +59,8 @@ export class WorldScene extends Scene {
   private swipeX: number | null = null;
   /** Ekran „dobranoc” po limicie czasu (zdejmuje go tylko rodzic zębatką). */
   private sleep: Container | null = null;
+  /** Kontenery przewodników (pozycja i skala zależne od ekranu). */
+  private readonly guideBoxes: Container[] = [];
 
   override async enter(): Promise<void> {
     this.art = await loadArt();
@@ -141,7 +143,11 @@ export class WorldScene extends Scene {
         void squash(this.tweens, sprite, 0.12);
         say(this.game, guide, 'witaj');
       });
-      this.addChild(sprite);
+      // Postać w kontenerze: resize skaluje i przesuwa kontener, a animacje postaci działają na jej własnej skali.
+      const box = new Container();
+      box.addChild(sprite);
+      this.guideBoxes.push(box);
+      this.addChild(box);
       idleBreath(this.tweens, sprite, 0.03, 1.8 + (guide === 'bazyl' ? 0.3 : 0));
     }
 
@@ -208,9 +214,10 @@ export class WorldScene extends Scene {
     // Zzz nad przewodnikami.
     for (const guide of [this.lusia, this.bazyl]) {
       guide.tint = 0x9a94c8;
+      const box = guide.parent!;
       for (let k = 0; k < 3; k++) {
         const z = label('z', 34 + k * 8, this.game.pixelRatio, '#ffffff', '#1d1a4a');
-        z.position.set(guide.x + 40 + k * 26, guide.y - 330 - k * 30);
+        z.position.set(box.x + (40 + k * 26) * box.scale.x, box.y - (330 + k * 30) * box.scale.y);
         z.alpha = 0;
         this.tweens.to(z, { alpha: 1, y: z.y - 20 }, { duration: 1.2, delay: k * 0.4, yoyo: true, repeat: -1, ease: 'sineInOut' });
         o.addChild(z);
@@ -547,19 +554,30 @@ export class WorldScene extends Scene {
     this.title.position.set(w / 2, safe.top + 145);
     const left = safe.left + 150;
     const right = w - safe.right - 150;
-    this.lusia.position.set(left, h - 10);
-    this.bazyl.position.set(right, h - 10);
     // Strony krain obok siebie; domki między przewodnikami.
     this.pages.x = -this.realm * w;
     // Siatka kafelków między przewodnikami, pod nazwą krainy; równe odstępy, nic na siebie nie nachodzi.
-    const areaL = left + 110;
-    const areaR = right - 110;
+    // Na węższych ekranach (iPad 4:3) kafelki między przewodnikami byłyby za małe: wtedy zajmują całą
+    // szerokość, a Lusia i Bazyl są mniejsi i stoją w dolnych rogach za kafelkami.
     const top = safe.top + 190;
     const bottom = h - safe.bottom - 24;
+    const gap = 26;
+    const maxCols = Math.max(...REALMS.map((realm) => Math.max(...realm.rows.map((row) => row.length))));
+    const narrow = (right - left - 220 - gap * (maxCols - 1)) / maxCols < 200;
+    const areaL = narrow ? safe.left + 40 : left + 110;
+    const areaR = narrow ? w - safe.right - 40 : right - 110;
+    const [lusiaBox, bazylBox] = this.guideBoxes as [Container, Container];
+    for (const box of this.guideBoxes) box.scale.set(narrow ? 0.62 : 1);
+    lusiaBox.position.set(narrow ? safe.left + 70 : left, h - 10);
+    bazylBox.position.set(narrow ? w - safe.right - 70 : right, h - 10);
+    // Na wąskim ekranie za kafelkami, na szerokim tuż nad nimi (jak dotąd).
+    for (const box of this.guideBoxes) {
+      this.removeChild(box);
+      this.addChildAt(box, this.getChildIndex(this.pages) + (narrow ? 0 : 1));
+    }
     REALMS.forEach((realm, r) => {
       const rows = realm.rows.length;
       const cols = Math.max(...realm.rows.map((row) => row.length));
-      const gap = 26;
       const size = Math.min(260, (areaR - areaL - gap * (cols - 1)) / cols, (bottom - top - gap * (rows - 1)) / rows);
       const cy = (top + bottom) / 2;
       realm.rows.forEach((row, ri) => {
