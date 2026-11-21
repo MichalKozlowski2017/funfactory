@@ -7,7 +7,7 @@ cd "$(dirname "$0")/../.."
 IN=assets-raw/bystrzakowo-store/shots
 OUT=games/bystrzakowo/store/screens
 ART=games/bystrzakowo/public/art
-FONT=games/bystrzakowo/public/fonts/baloo2.ttf
+FONT=tools/store/baloo2-800.ttf  # Baloo 2 ExtraBold (statyczny wariant z czcionki gry, OFL)
 BG=("" "$ART/polana.jpg" "$ART/krajobrazy/las.jpg" "$ART/kraina-warsztat.jpg" "$ART/kraina-sciezka.jpg" "$ART/krajobrazy/plaza.jpg" "$ART/kraina-pracownia.jpg" "$ART/krajobrazy/farma.jpg" "$ART/krajobrazy/zima.jpg")
 caption() {
   local lang=$1 n=$2
