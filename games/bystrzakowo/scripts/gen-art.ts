@@ -144,6 +144,37 @@ if (process.argv.includes('--historyjki')) {
   for (const [id, frames] of stories) frames.forEach((what, i) => tasks.push({ out: 'historyjki', prefix: `${id}-${i + 1}`, args: ['--workflow', 'flux2-sprite', '--prompt', frame(what)] }));
 }
 
+if (process.argv.includes('--kolorowanki2')) {
+  // Prostsze kolorowanki dla maluchów: kilka dużych pól, bez drobnych detali (palec 3-latka).
+  const page = (what: string) => `very simple children coloring book page for toddlers aged 2 to 3 of ${what}, only 6 to 10 big closed areas, extremely thick bold black outlines, no small details, no stripes, no patterns, no scales, no texture lines, no tiny eyes details, big chunky rounded shapes, object fills the whole page, pure white background, no shading, no gray, no color`;
+  for (const [id, what] of [
+    ['ryba', 'a round chubby fish with one big tail fin'],
+    ['zolw', 'a chubby turtle with a big round shell made of four big plates'],
+    ['motyl', 'a butterfly with four big round wings'],
+    ['kwiatek', 'a big flower with five round petals, a round center, a stem and two big leaves'],
+    ['domek', 'a little house with a big roof, a door and one round window'],
+    ['sowa', 'a chubby round owl with big eyes and two wings'],
+    ['slon', 'a chubby baby elephant with big ears, sitting'],
+  ])
+    tasks.push({ out: 'kolorowanki', prefix: id!, args: ['--workflow', 'flux2', '--count', '2', '--prompt', page(what!)] });
+}
+
+if (process.argv.includes('--polana')) {
+  // Stanowiska Polany Zagadek: obrazek mówi, na czym polega zabawa (zamiast jednakowych domków).
+  const sprite = (what: string, face = false) => `${what}, single object, centered, ${STYLE}${face ? '' : ', no face on objects'}, plain light gray background`;
+  const two = ['--workflow', 'flux2-sprite', '--count', '2', '--prompt'];
+  tasks.push(
+    { out: 'polana', prefix: 'stacja-kolory', args: [...two, sprite('four small open paint jars in a row, red, yellow, blue and green paint, with a paintbrush, front view')] },
+    { out: 'polana', prefix: 'stacja-gloski', args: [...two, sprite('an open children picture alphabet book showing a big letter A on one page and a red apple on the other page, front view')] },
+    { out: 'polana', prefix: 'stacja-mamy', args: [...two, sprite('a big mother hen and a tiny fluffy yellow chick standing side by side, looking at each other lovingly', true)] },
+    { out: 'polana', prefix: 'stacja-memory', args: [...two, sprite('six small square memory game cards lying in a grid on a little wooden board, four face down with a purple back and a yellow star, two turned face up showing the same red apple, seen slightly from above')] },
+    { out: 'polana', prefix: 'stacja-cienie', args: [...two, sprite('a small cute orange cat figurine standing next to its flat dark purple silhouette cutout of the same shape, on a small wooden stand, front view')] },
+    { out: 'polana', prefix: 'stacja-pasuje', args: [...two, sprite('three identical red apples and one small blue toy car standing in a row on a little wooden shelf, front view')] },
+    { out: 'polana', prefix: 'stacja-liczenie', args: [...two, sprite('a small wooden counting tray with five round hollows, three of them holding shiny red apples, and a little abacus next to it, seen slightly from above')] },
+    { out: 'polana', prefix: 'stacja-emocje', args: [...two, sprite('three round cards standing on a little wooden stand, showing a happy smiling face, a sad face and a surprised face, simple cartoon faces, front view', true)] },
+  );
+}
+
 if (process.argv.includes('--warsztat')) {
   const bg = (what: string) => `${what}, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, bright cheerful pastel colors, cute and friendly`;
   const sprite = (what: string) => `${what}, single object, centered, ${STYLE}, no face on objects, plain light gray background`;
@@ -161,7 +192,7 @@ if (process.argv.includes('--warsztat')) {
 }
 
 for (const item of ITEMS) {
-  if ((process.argv.includes('--warsztat') || process.argv.includes('--sciezka') || process.argv.includes('--znaki') || process.argv.includes('--pracownia') || process.argv.includes('--dodatki') || process.argv.includes('--historyjki')) && !only) break;
+  if ((process.argv.includes('--warsztat') || process.argv.includes('--sciezka') || process.argv.includes('--znaki') || process.argv.includes('--pracownia') || process.argv.includes('--dodatki') || process.argv.includes('--historyjki') || process.argv.includes('--polana') || process.argv.includes('--kolorowanki2')) && !only) break;
   if (only && !only.has(item.id)) continue;
   if (!only && existsSync(join(repo, 'games/bystrzakowo/public/art/items', `${item.id}.webp`))) continue;
   if (existsSync(join(raw, 'items', `${item.id}-${SEED}.png`))) continue;
@@ -175,7 +206,7 @@ for (let i = tasks.length - 1; i >= 0; i--) {
   if (t.out !== 'items' && existsSync(join(raw, t.out, `${t.prefix}-${SEED}.png`))) tasks.splice(i, 1);
 }
 console.log(`Do wygenerowania: ${tasks.length}`);
-for (const dir of ['items', 'extra', 'warsztat', 'sciezka', 'pracownia', 'kolorowanki', 'emocje', 'historyjki']) mkdirSync(join(raw, dir), { recursive: true });
+for (const dir of ['items', 'extra', 'warsztat', 'sciezka', 'pracownia', 'kolorowanki', 'emocje', 'historyjki', 'polana']) mkdirSync(join(raw, dir), { recursive: true });
 // Postęp liczony w obrazkach (zadanie z --count N daje N plików .png).
 const images = tasks.reduce((n, t) => n + (t.args.includes('--count') ? Number(t.args[t.args.indexOf('--count') + 1]) : t.args.includes('ace15') ? 0 : 1), 0);
 execFileSync(job, ['bystrzakowo-items', 'Bystrzakowo: grafiki', String(images), '--dir', raw, '--glob', '*'], { stdio: 'inherit' });
