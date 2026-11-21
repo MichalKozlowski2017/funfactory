@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { newProgress } from './progress.ts';
-import { addPicture, depthScale, gallery, MAX_PICTURES, removePicture } from './stickers.ts';
+import { addPicture, depthScale, gallery, MAX_PICTURES, removePicture, stickerScale } from './stickers.ts';
 
 const sticker = { id: 'kot', x: 0.5, y: 0.5, flip: false };
 
@@ -45,7 +45,9 @@ describe('naklejanka', () => {
     expect(gallery(p).pictures).toEqual([{ bg: 'polana', items: [] }]);
   });
 
-  it('naklejki dalej (wyżej) są mniejsze', () => {
+  it('naklejki dalej (wyżej) są mniejsze, ale słońce na niebie nie maleje', () => {
     expect(depthScale(0.2)).toBeLessThan(depthScale(0.9));
+    expect(stickerScale('slonce', 0.1)).toBe(stickerScale('slonce', 0.9));
+    expect(stickerScale('kot', 0.1)).toBeLessThan(stickerScale('kot', 0.9));
   });
 });

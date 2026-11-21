@@ -2,7 +2,7 @@ import { Assets, Container, Graphics, Rectangle, Sprite, type FederatedPointerEv
 import { haptics } from '@funfactory/core';
 import { dotTexture, Particles, popIn, popOut, pulse, Scene, setRestScale, squash, type View } from '@funfactory/kit2d';
 import { loadArt, say, startMusic, type Art } from '../assets.ts';
-import { addPicture, depthScale, gallery, LANDSCAPES, MAX_PICTURES, removePicture, type Landscape, type Picture } from '../sim/stickers.ts';
+import { addPicture, gallery, stickerScale, LANDSCAPES, MAX_PICTURES, removePicture, type Landscape, type Picture } from '../sim/stickers.ts';
 import { saveState, state } from '../state.ts';
 import { COLORS, cover, IconButton, sfx } from '../ui.ts';
 
@@ -90,6 +90,17 @@ export class StickerScene extends Scene {
     this.on('globalpointermove', (e) => this.move(e));
     this.on('pointerup', (e) => this.up(e));
     this.on('pointerupoutside', (e) => this.up(e));
+    // iOS anuluje dotyk (drugi palec, gest systemowy, dłoń na ekranie) bez „puszczenia”: kończymy przeciąganie.
+    this.on('pointercancel', () => this.endDrag());
+    const cancel = () => this.endDrag();
+    window.addEventListener('pointercancel', cancel);
+    window.addEventListener('blur', cancel);
+    document.addEventListener('visibilitychange', cancel);
+    this.dispose = () => {
+      window.removeEventListener('pointercancel', cancel);
+      window.removeEventListener('blur', cancel);
+      document.removeEventListener('visibilitychange', cancel);
+    };
     this.on('pointerdown', () => startMusic(this.game));
 
     this.load(gallery(state.progress).current, false);
@@ -191,7 +202,7 @@ export class StickerScene extends Scene {
   private fit(p: Placed): void {
     const v = p.view;
     const area = this.game.view.height - TRAY_H;
-    const k = (STICKER * depthScale(v.y / area)) / Math.max(v.texture.width, v.texture.height);
+    const k = (STICKER * stickerScale(p.id, v.y / area)) / Math.max(v.texture.width, v.texture.height);
     // Skala spoczynkowa dla animacji (squash/popIn wracają do niej, a nie do pierwszego rozmiaru).
     this.tweens.killOf(v.scale);
     setRestScale(v, p.flip ? -k : k, k);
@@ -212,7 +223,8 @@ export class StickerScene extends Scene {
   }
 
   private grabFromTray(id: string, e: FederatedPointerEvent): void {
-    if (this.drag) return;
+    // Poprzednie przeciąganie bez „puszczenia” (zgubione zdarzenie) nie może zablokować sceny.
+    if (this.drag) this.endDrag();
     const at = this.toLocal(e.global);
     const p = this.place(id, at.x, at.y);
     haptics.tap();
@@ -223,7 +235,7 @@ export class StickerScene extends Scene {
   }
 
   private grab(p: Placed, e: FederatedPointerEvent): void {
-    if (this.drag) return;
+    if (this.drag) this.endDrag();
     const at = this.toLocal(e.global);
     p.view.zIndex = 1e6; // na wierzch w trakcie przeciągania
     this.drag = { p, dx: p.view.x - at.x, dy: p.view.y - at.y, id: e.pointerId, moved: false, x0: at.x, y0: at.y };
@@ -252,8 +264,13 @@ export class StickerScene extends Scene {
   }
 
   private up(e: FederatedPointerEvent): void {
+    if (this.drag && e.pointerId === this.drag.id) this.endDrag();
+  }
+
+  /** Koniec przeciągania (puszczenie palca albo anulowanie dotyku). */
+  private endDrag(): void {
     const d = this.drag;
-    if (!d || e.pointerId !== d.id) return;
+    if (!d) return;
     this.drag = null;
     const p = d.p;
     const v = p.view;
@@ -441,7 +458,7 @@ export class StickerScene extends Scene {
       const tex = this.art.items.get(s.id);
       if (!tex) continue;
       const sp = new Sprite({ texture: tex, anchor: 0.5 });
-      const sk = (STICKER * depthScale((s.y * h) / (h - TRAY_H))) / Math.max(tex.width, tex.height);
+      const sk = (STICKER * stickerScale(s.id, (s.y * h) / (h - TRAY_H))) / Math.max(tex.width, tex.height);
       sp.scale.set(s.flip ? -sk : sk, sk);
       sp.position.set(s.x * w, s.y * h);
       inner.addChild(sp);
@@ -465,6 +482,12 @@ export class StickerScene extends Scene {
   }
 
   // ——— Reszta ———
+
+  private dispose: (() => void) | null = null;
+
+  override exit(): void {
+    this.dispose?.();
+  }
 
   private leave(): void {
     if (this.leaving) return;

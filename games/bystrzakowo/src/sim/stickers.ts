@@ -75,3 +75,11 @@ export function depthScale(y: number): number {
   const t = Math.max(0, Math.min(1, y));
   return 0.4 + 1.0 * t;
 }
+
+/** Rzeczy z nieba: na górze obrazka są naturalnie, więc nie maleją z perspektywą. */
+export const SKY = new Set(['slonce', 'chmurka', 'gwiazdka', 'ksiezyc', 'tecza', 'samolot', 'helikopter', 'rakieta', 'latawiec', 'balonik', 'ptak']);
+
+/** Skala naklejki: stała dla rzeczy z nieba, dla reszty perspektywa. */
+export function stickerScale(id: string, y: number): number {
+  return SKY.has(id) ? 1 : depthScale(y);
+}
