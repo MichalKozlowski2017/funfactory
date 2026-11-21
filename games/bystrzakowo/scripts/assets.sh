@@ -105,6 +105,9 @@ for x in domek-32 kwiatek-31 motyl-31 ryba-31 slon-31 sowa-31 zolw-32; do
   magick "$f" -colorspace gray -resize 640x640 -threshold 55% -morphology Erode Disk:1.5 -strip "$OUT/kolorowanki/${x%-*}.png"
   cp "${f%.png}.json" "$OUT/kolorowanki/${x%-*}.json"
 done
+# Krajobrazy naklejanki.
+mkdir -p $OUT/krajobrazy
+for id in farma kosmos las morze plaza zima; do background krajobrazy/$id-21.png krajobrazy/$id; done
 background proto/tlo-polana-21.png polana
 background proto/tlo-zagadka-21.png tlo-zagadka
 du -sh $OUT

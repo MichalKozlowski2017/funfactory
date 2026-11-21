@@ -1,0 +1,16 @@
+{
+  "workflow": "flux2.json",
+  "PROMPT": "wide landscape scene of a sunny sandy beach with calm blue sea, a few small waves and a bright sky with fluffy clouds, the bottom two thirds is a big open empty flat area for placing stickers, low horizon detail, no characters, no animals, no people, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft lighting, bright cheerful pastel colors, cute and friendly",
+  "NEGATIVE": "",
+  "SEED": 21,
+  "WIDTH": 1536,
+  "HEIGHT": 864,
+  "PREFIX": "plaza",
+  "STEPS": 20,
+  "GUIDANCE": 4,
+  "BPM": 100,
+  "DURATION": 60,
+  "KEY": "A minor",
+  "LYRICS": "[Instrumental]",
+  "created": "2026-11-21T16:24:33.101Z"
+}
