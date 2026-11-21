@@ -5,8 +5,8 @@
 import { PUZZLE_KINDS, type PuzzleKind } from './puzzles.ts';
 
 /** Zabawy Warsztatu (przeciągnij i ułóż). */
-export type WorkshopKind = 'sortowanie' | 'ukladanka' | 'wzory';
-export const WORKSHOP_KINDS: readonly WorkshopKind[] = ['sortowanie', 'ukladanka', 'wzory'];
+export type WorkshopKind = 'sortowanie' | 'ukladanka' | 'wzory' | 'ksztalty';
+export const WORKSHOP_KINDS: readonly WorkshopKind[] = ['sortowanie', 'ukladanka', 'wzory', 'ksztalty'];
 
 /** Zabawy Polany poza zagadkami z wyborem (pamięć). */
 export type MeadowKind = 'memory';
@@ -37,8 +37,8 @@ export interface Realm {
 
 export const REALMS: readonly Realm[] = [
   { id: 'polana', name: 'Polana Zagadek', guide: 'lusia', rows: [['kolory', 'gloski', 'mamy', 'memory'], ['cienie', 'pasuje', 'liczenie']] },
-  { id: 'warsztat', name: 'Warsztat Bazyla', guide: 'bazyl', rows: [['sortowanie', 'ukladanka', 'wzory']] },
-  { id: 'sciezka', name: 'Ścieżka Lusi', guide: 'lusia', rows: [['kropki', 'labirynt', 'litery', 'cyfry']] },
+  { id: 'warsztat', name: 'Warsztat Bazyla', guide: 'bazyl', rows: [['wzory', 'ksztalty'], ['sortowanie', 'ukladanka']] },
+  { id: 'sciezka', name: 'Ścieżka Lusi', guide: 'lusia', rows: [['litery', 'cyfry'], ['kropki', 'labirynt']] },
   { id: 'pracownia', name: 'Pracownia Malucha', guide: 'lusia', rows: [['kolorowanka', 'naklejanka']] },
 ];
 

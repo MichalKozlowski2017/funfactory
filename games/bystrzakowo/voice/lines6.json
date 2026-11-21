@@ -109,6 +109,51 @@
    "name": "lusia-liczba-0",
    "text": "Zero! Nie ma nic.",
    "voice": "voices/alt"
+  },
+  {
+   "name": "bazyl-ksztalty",
+   "text": "Włóż każdy klocek do jego dziurki!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-ksztalt-kolo",
+   "text": "Koło!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-ksztalt-kwadrat",
+   "text": "Kwadrat!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-ksztalt-trojkat",
+   "text": "Trójkąt!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-ksztalt-prostokat",
+   "text": "Prostokąt!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-ksztalt-gwiazda",
+   "text": "Gwiazda!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-ksztalt-serce",
+   "text": "Serce!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-ksztalt-owal",
+   "text": "Owal!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-ksztalt-romb",
+   "text": "Romb!",
+   "voice": "voices/prezenter"
   }
  ]
 }

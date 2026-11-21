@@ -93,3 +93,17 @@ describe('co dalej (wzory)', () => {
       }
   });
 });
+
+describe('sorter kształtów', () => {
+  it('różne kształty, liczba rośnie z poziomem', async () => {
+    const { makeShapeBoard, shapeCount } = await import('./shapes.ts');
+    const rng = new Rng(21);
+    for (const level of [0, 1, 2])
+      for (let i = 0; i < 100; i++) {
+        const b = makeShapeBoard(rng, level);
+        expect(b.length).toBe(shapeCount(level));
+        expect(new Set(b).size).toBe(b.length);
+        if (level === 0) expect(b.every((s) => ['kolo', 'kwadrat', 'trojkat'].includes(s))).toBe(true);
+      }
+  });
+});
