@@ -42,6 +42,14 @@ export const sfx = {
       { wave: 'triangle', freq: 1320, duration: 0.32, volume: 0.22, delay: 0.16 },
     ]),
   bad: (s: Sound) => s.synth([{ wave: 'sine', freq: 300, freqEnd: 220, duration: 0.22, volume: 0.25 }]),
+  /** Świst lecącego obiektu. */
+  whoosh: (s: Sound) => s.synth([{ wave: 'noise', freq: 900, freqEnd: 2600, duration: 0.32, volume: 0.07, filter: 'bandpass', filterFreq: 1400 }]),
+  /** Plum: obiekt wpada do skrzynki. */
+  plop: (s: Sound) =>
+    s.synth([
+      { wave: 'sine', freq: 520, freqEnd: 150, duration: 0.16, volume: 0.35 },
+      { wave: 'triangle', freq: 880, freqEnd: 1320, duration: 0.07, volume: 0.15, delay: 0.05 },
+    ]),
   pop: (s: Sound, pitch = 1) => s.synth([{ wave: 'sine', freq: 420, freqEnd: 900, duration: 0.08, volume: 0.22 }], { pitch }),
   fanfare: (s: Sound) =>
     s.synth([
