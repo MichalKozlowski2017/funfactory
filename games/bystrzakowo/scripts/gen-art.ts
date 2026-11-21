@@ -49,6 +49,18 @@ if (extra) {
   });
 }
 
+if (process.argv.includes('--znaki')) {
+  // Znaki skrzynek segregowania (nie są obiektami katalogu).
+  const sign = (what: string) => `${what}, single object, centered, ${STYLE}, no face on objects, plain light gray background`;
+  for (const [id, what] of [
+    ['droga', 'a short curvy piece of road with a dashed white line and a tiny traffic light'],
+    ['balwan', 'a cute snowman with a carrot nose, a scarf and a little hat'],
+    ['palma', 'a single palm tree on a small sandy island with savanna grass'],
+    ['kra', 'a small white ice floe with snow and a tiny icicle, floating on a bit of blue water'],
+  ])
+    tasks.push({ out: 'warsztat', prefix: id!, args: ['--workflow', 'flux2-sprite', '--prompt', sign(what!)] });
+}
+
 if (process.argv.includes('--warsztat')) {
   const bg = (what: string) => `${what}, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, bright cheerful pastel colors, cute and friendly`;
   const sprite = (what: string) => `${what}, single object, centered, ${STYLE}, no face on objects, plain light gray background`;

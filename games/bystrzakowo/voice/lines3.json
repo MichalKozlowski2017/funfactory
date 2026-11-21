@@ -1,14 +1,27 @@
-{"voice": "voices/prezenter", "tries": 8, "lines": [
-  {"name": "bazyl-kraina-warsztat", "text": "Witaj w moim warsztacie! Tutaj przeciągamy i układamy."},
-  {"name": "lusia-kraina-polana", "text": "To Polana Zagadek! Wybierz domek.", "voice": "voices/alt"},
-  {"name": "bazyl-sort-owoce-warzywa", "text": "Owoce do skrzynki z jabłkiem, a warzywa do skrzynki z marchewką!"},
-  {"name": "bazyl-sort-zwierzeta-pojazdy", "text": "Zwierzątka do skrzynki z kotkiem, a pojazdy do skrzynki z autkiem!"},
-  {"name": "bazyl-sort-ubrania-kuchnia", "text": "Ubrania do skrzynki z koszulką, a rzeczy z kuchni do skrzynki z kubkiem!"},
-  {"name": "bazyl-sort-kolory", "text": "Włóż każdą rzecz do wiaderka w takim samym kolorze!"},
-  {"name": "bazyl-sort-domy-wies-las", "text": "Kto mieszka na wsi, a kto w lesie? Zaprowadź zwierzątka do domu!"},
-  {"name": "bazyl-sort-domy-wies-woda", "text": "Kto mieszka na wsi, a kto w wodzie? Zaprowadź zwierzątka do domu!"},
-  {"name": "bazyl-sort-domy-las-woda", "text": "Kto mieszka w lesie, a kto w wodzie? Zaprowadź zwierzątka do domu!"},
-  {"name": "bazyl-sort-domy-wies-las-woda", "text": "Kto mieszka na wsi, kto w lesie, a kto w wodzie?"},
-  {"name": "bazyl-ukladanka", "text": "Ułóż obrazek! Przeciągnij kawałki na swoje miejsca."},
-  {"name": "bazyl-przeciagnij", "text": "Złap obrazek palcem i przeciągnij go do skrzynki."}
-]}
+{
+ "voice": "voices/prezenter",
+ "tries": 8,
+ "lines": [
+  {
+   "name": "bazyl-kraina-warsztat",
+   "text": "Witaj w moim warsztacie! Tutaj przeciągamy i układamy."
+  },
+  {
+   "name": "lusia-kraina-polana",
+   "text": "To Polana Zagadek! Wybierz domek.",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "bazyl-sort-kolory",
+   "text": "Włóż każdą rzecz do wiaderka w takim samym kolorze!"
+  },
+  {
+   "name": "bazyl-ukladanka",
+   "text": "Ułóż obrazek! Przeciągnij kawałki na swoje miejsca."
+  },
+  {
+   "name": "bazyl-przeciagnij",
+   "text": "Złap obrazek palcem i przeciągnij go do skrzynki."
+  }
+ ]
+}

@@ -24,18 +24,8 @@ export interface Item {
   mother?: string;
   /** Dopełniacz nazwy młodego: „Gdzie jest mama kurczaczka?”. */
   genitive?: string;
-  /** Gdzie mieszka zwierzę (segregowanie „kto gdzie mieszka”). */
-  home?: Home;
 }
 
-export type Home = 'wies' | 'las' | 'woda';
-
-/** Domy zwierząt: tylko oczywiste dla przedszkolaka (bez żaby, żółwia, ptaków, które pasują w kilka miejsc). */
-const HOMES: Record<Home, string[]> = {
-  wies: ['kot', 'pies', 'krowa', 'kura', 'kaczka', 'swinka', 'owca', 'kon', 'kurczak', 'cielaczek', 'prosiaczek', 'jagniatko', 'zrebak'],
-  las: ['jez', 'wiewiorka', 'sowa', 'niedzwiedz'],
-  woda: ['ryba', 'krab', 'osmiornica'],
-};
 
 type Row = [id: string, name: string, color: Color | '', flags: string, prompt: string];
 
@@ -72,9 +62,15 @@ const LOOKALIKES: string[][] = [
   ['krowa', 'cielaczek'],
   ['owca', 'jagniatko'],
   ['swinka', 'prosiaczek'],
-  ['kon', 'zrebak', 'zebra', 'konik'],
-  ['kaczka', 'kaczatko', 'kurczak'],
-  ['mis', 'niedzwiedz'],
+  ['kon', 'zrebak', 'zebra', 'konik', 'osiolek', 'sarna'],
+  ['kaczka', 'kaczatko', 'kurczak', 'ges'],
+  ['mis', 'niedzwiedz', 'mispolarny'],
+  ['owca', 'koza'],
+  ['swinka', 'dzik'],
+  ['krolik', 'zajac'],
+  ['wieloryb', 'delfin'],
+  ['foka', 'mors'],
+  ['hipopotam', 'nosorozec'],
   ['ogorek', 'groszek'],
   ['auto', 'ciezarowka', 'straz', 'autobus'],
 ];
@@ -121,6 +117,29 @@ export const ITEMS: Item[] = [
     ['osmiornica', 'Ośmiornica', 'fioletowy', 's', 'a cute purple octopus'],
     ['ptak', 'Ptaszek', 'niebieski', 'c', 'a cute little blue bird, side view'],
     ['dinozaur', 'Dinozaur', 'zielony', 's', 'a cute green dinosaur with a long tail, side view'],
+    // Las
+    ['lis', 'Lis', 'pomaranczowy', 's', 'a cute orange fox with a white-tipped fluffy tail, standing, side view'],
+    ['zajac', 'Zajączek', '', 's', 'a cute brown wild hare with very long ears, sitting, side view'],
+    ['dzik', 'Dzik', 'brazowy', 's', 'a cute dark brown wild boar with small tusks, standing, side view'],
+    ['sarna', 'Sarenka', 'brazowy', 's', 'a cute young roe deer with white spots, standing, side view'],
+    ['dzieciol', 'Dzięcioł', '', 's', 'a cute black and white woodpecker with a red cap, side view'],
+    // Woda
+    ['wieloryb', 'Wieloryb', 'niebieski', 's', 'a cute big blue whale with a small water spout, side view'],
+    ['delfin', 'Delfin', '', 's', 'a cute grey-blue dolphin jumping, side view'],
+    ['meduza', 'Meduza', 'rozowy', 'sc', 'a cute pink jellyfish with wavy tentacles'],
+    ['konikmorski', 'Konik morski', 'pomaranczowy', 'sc', 'a cute orange seahorse, side view'],
+    // Wieś
+    ['koza', 'Koza', 'bialy', 's', 'a cute white goat with small horns and a little beard, standing, side view'],
+    ['osiolek', 'Osiołek', '', 's', 'a cute grey donkey with long ears, standing, side view'],
+    ['indyk', 'Indyk', '', 's', 'a cute brown turkey with a big round fanned tail, side view'],
+    ['ges', 'Gęś', 'bialy', 's', 'a cute white farm goose with an orange beak, standing, side view'],
+    // Lód i śnieg
+    ['foka', 'Foka', '', 's', 'a cute grey seal lying on its belly, side view'],
+    ['mors', 'Mors', 'brazowy', 's', 'a cute brown walrus with two white tusks, side view'],
+    ['mispolarny', 'Miś polarny', 'bialy', 's', 'a cute white polar bear standing on four legs, side view'],
+    // Afryka
+    ['hipopotam', 'Hipopotam', '', 's', 'a cute purple-grey hippopotamus standing, side view'],
+    ['nosorozec', 'Nosorożec', '', 's', 'a cute grey rhinoceros with a horn, standing, side view'],
   ]),
   ...rows('owoce', [
     ['jablko', 'Jabłko', 'czerwony', 'sc', 'a shiny red apple with a leaf'],
@@ -177,6 +196,7 @@ export const ITEMS: Item[] = [
     ['balonik', 'Balonik', 'czerwony', 'sc', 'a red balloon on a string'],
     ['trabka', 'Trąbka', 'zolty', 's', 'a yellow toy trumpet'],
     ['wiaderko', 'Wiaderko', 'niebieski', 's', 'a blue sand bucket with a handle'],
+    ['sanki', 'Sanki', '', 's', 'small wooden children sled with red runners, side view'],
   ]),
   ...rows('kuchnia', [
     ['kubek', 'Kubek', 'niebieski', 's', 'a blue mug'],
@@ -200,6 +220,11 @@ export const ITEMS: Item[] = [
     ['rekawiczki', 'Rękawiczki', 'zielony', 's', 'a pair of green mittens'],
     ['kalosze', 'Kalosze', 'zolty', 's', 'a pair of yellow rain boots'],
     ['parasol', 'Parasol', 'czerwony', 's', 'an open red umbrella'],
+    ['okulary', 'Okulary', '', 's', 'a pair of colorful children sunglasses, front view'],
+    ['kapelusz', 'Kapelusz', 'zolty', 's', 'a yellow straw sun hat with a ribbon'],
+    ['sandaly', 'Sandały', '', 's', 'a pair of colorful children summer sandals'],
+    ['stroj', 'Strój kąpielowy', '', '', 'a colorful children one-piece swimsuit with polka dots'],
+    ['kurtka', 'Kurtka', 'czerwony', 's', 'a puffy red children winter jacket with a hood'],
   ]),
   ...rows('natura', [
     ['slonce', 'Słońce', 'zolty', 's', 'a smiling yellow sun'],
@@ -213,11 +238,7 @@ export const ITEMS: Item[] = [
     ['muszelka', 'Muszelka', 'rozowy', 'sc', 'a pink seashell'],
   ]),
 ]
-  .map((item) => (BABIES[item.id] ? { ...item, mother: BABIES[item.id]![0], genitive: BABIES[item.id]![1] } : item))
-  .map((item) => {
-    const home = (Object.keys(HOMES) as Home[]).find((h) => HOMES[h].includes(item.id));
-    return home ? { ...item, home } : item;
-  });
+  .map((item) => (BABIES[item.id] ? { ...item, mother: BABIES[item.id]![0], genitive: BABIES[item.id]![1] } : item));
 
 /**
  * Zostawia w katalogu tylko obiekty o podanych id (np. te, których grafika się wczytała).

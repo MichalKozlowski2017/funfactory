@@ -3,7 +3,7 @@ import { Rng } from '@funfactory/core';
 import { ITEMS } from './catalog.ts';
 import { JIGSAW_ROUND, jigsawGrid, makeJigsawRound, snaps } from './jigsaw.ts';
 import { ACTIVITIES, REALMS } from './realms.ts';
-import { binCount, CATEGORY_SIGN, makeSortRound, makeSortTask, rulesFor, SORT_LINES, SORT_ROUND, sortCount, sortPromptLine } from './sorting.ts';
+import { belongs, binCount, binLine, makeSortRound, makeSortTask, rulesFor, SORT_LINES, SORT_ROUND, SORT_RULES, sortCount, sortPromptLine } from './sorting.ts';
 
 const levels = [0, 1, 2];
 
@@ -25,17 +25,22 @@ describe('segregowanie', () => {
           expect(t.bins.length).toBe(binCount(level));
           expect(t.items.length).toBe(sortCount(level));
           expect(new Set(t.items.map((x) => x.item.id)).size).toBe(t.items.length);
-          const fits = (item: (typeof ITEMS)[number], key: string) => item.category === key || item.color === key || item.home === key;
+          expect(new Set(t.bins.map((b) => b.key)).size).toBe(t.bins.length);
           for (const { item, bin } of t.items) {
-            expect(fits(item, t.bins[bin]!.key)).toBe(true);
-            t.bins.forEach((b, j) => j !== bin && expect(fits(item, b.key), `${item.id} pasuje też do ${b.key}`).toBe(false));
+            expect(belongs(rule, t.bins[bin]!.key, item)).toBe(true);
+            t.bins.forEach((b, j) => j !== bin && expect(belongs(rule, b.key, item), `${item.id} pasuje też do ${b.key}`).toBe(false));
             // Obrazek ze znaku skrzynki nie trafia do segregowania.
             expect(t.bins.some((b) => b.sign === item.id)).toBe(false);
           }
-          // Każda skrzynka coś dostaje.
           t.bins.forEach((_, j) => expect(t.items.some((x) => x.bin === j)).toBe(true));
           expect(SORT_LINES).toContain(sortPromptLine(t));
+          for (const b of t.bins) expect(SORT_LINES).toContain(binLine(rule, b.key));
         }
+  });
+
+  it('wszystkie reguły są dostępne na niższych poziomach, a na najwyższym co najmniej trzy', () => {
+    expect(rulesFor(0)).toEqual([...SORT_RULES]);
+    expect(rulesFor(2).length).toBeGreaterThanOrEqual(3);
   });
 
   it('runda ma różne reguły', () => {
@@ -44,8 +49,14 @@ describe('segregowanie', () => {
     expect(new Set(round.map((t) => t.rule)).size).toBe(SORT_ROUND);
   });
 
-  it('znaki kategorii istnieją w katalogu', () => {
-    for (const id of Object.values(CATEGORY_SIGN)) expect(ITEMS.some((i) => i.id === id)).toBe(true);
+  it('dużo różnych zestawów skrzynek (gra nie jest powtarzalna)', () => {
+    const rng = new Rng(11);
+    const combos = new Set<string>();
+    for (let i = 0; i < 2000; i++) {
+      const t = makeSortTask(rng, 1, rng.pick(rulesFor(1)));
+      combos.add(`${t.rule}:${t.bins.map((b) => b.key).sort().join('+')}`);
+    }
+    expect(combos.size).toBeGreaterThan(40);
   });
 });
 

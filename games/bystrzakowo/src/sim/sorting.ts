@@ -1,18 +1,19 @@
 /**
  * Segregowanie (Warsztat Bazyla): obiekty przeciąga się do 2–3 skrzynek według reguły.
- * Reguły: kategorie (owoce i warzywa…), kolory (wiaderka) i „kto gdzie mieszka” (wieś, las, woda).
+ * Każda reguła to zestaw grup (kategorie, kolory, domy zwierząt, pory roku, wielkość, ruch);
+ * zadanie losuje 2–3 grupy, które do siebie nie są podobne, i po kilka obiektów z każdej.
+ * Polecenie lektora: pytanie reguły (`sort-<reguła>`), potem nazwa każdej skrzynki (`binLine`).
  */
 import type { Rng } from '@funfactory/core';
-import { ITEMS, type Category, type Color, type Home, type Item } from './catalog.ts';
+import { ITEMS, type Category, type Color, type Item } from './catalog.ts';
 import { MAX_LEVEL } from './puzzles.ts';
 
-export type SortRule = 'kategorie' | 'kolory' | 'domy';
+export type SortRule = 'kategorie' | 'kolory' | 'domy' | 'pory' | 'wielkosc' | 'ruch';
+export const SORT_RULES: readonly SortRule[] = ['kategorie', 'kolory', 'domy', 'pory', 'wielkosc', 'ruch'];
 
-/** Skrzynka: co do niej pasuje i co jest na jej znaku. */
+/** Skrzynka: klucz grupy i obrazek na znaku (obiekt z katalogu albo grafika Warsztatu; kolory: brak, wiaderko jest w kolorze). */
 export interface Bin {
-  /** Kategoria, kolor albo dom. */
   key: string;
-  /** Obrazek na znaku skrzynki: id obiektu z katalogu (kategorie) albo grafiki Warsztatu (domy). Kolory: brak, wiaderko jest w kolorze. */
   sign?: string;
 }
 
@@ -25,19 +26,76 @@ export interface SortTask {
 
 export const SORT_ROUND = 3;
 
-/** Pary kategorii (z obrazkiem na znaku), łatwe do rozróżnienia dla przedszkolaka. */
-const CATEGORY_PAIRS: [Category, Category][] = [
-  ['owoce', 'warzywa'],
-  ['zwierzeta', 'pojazdy'],
-  ['ubrania', 'kuchnia'],
-];
-/** Obrazek na skrzynce kategorii (ten obiekt nie trafia do segregowania). */
-export const CATEGORY_SIGN: Partial<Record<Category, string>> = { owoce: 'jablko', warzywa: 'marchewka', zwierzeta: 'kot', pojazdy: 'auto', ubrania: 'koszulka', kuchnia: 'kubek' };
-const HOME_SIGN: Record<Home, string> = { wies: 'stodola', las: 'drzewo', woda: 'staw' };
+/** Grupa reguły: klucz, znak i członkowie (id z katalogu; brakujące w katalogu są pomijane). */
+interface GroupDef {
+  key: string;
+  sign?: string;
+  ids: () => string[];
+}
+
+const ids = (list: string[]) => () => list;
+const byCategory = (c: Category) => () => ITEMS.filter((i) => i.category === c).map((i) => i.id);
 /** Obiekty z dużą plamą drugiego koloru (kukurydza: żółta z zielonymi liśćmi): nie do wiaderek. */
-const TWO_TONE = ['kukurydza', 'ananas'];
-/** Kolory wiaderek: wyraźnie różne. */
-const BUCKET_COLORS: Color[] = ['czerwony', 'zolty', 'zielony', 'niebieski'];
+const TWO_TONE = ['kukurydza', 'ananas', 'biedronka', 'pszczola'];
+const byColor = (c: Color) => () => ITEMS.filter((i) => i.color === c && !TWO_TONE.includes(i.id)).map((i) => i.id);
+
+const GROUPS: Record<SortRule, GroupDef[]> = {
+  kategorie: [
+    { key: 'owoce', sign: 'jablko', ids: byCategory('owoce') },
+    { key: 'warzywa', sign: 'marchewka', ids: byCategory('warzywa') },
+    { key: 'zwierzeta', sign: 'kot', ids: byCategory('zwierzeta') },
+    { key: 'pojazdy', sign: 'auto', ids: byCategory('pojazdy') },
+    { key: 'ubrania', sign: 'koszulka', ids: byCategory('ubrania') },
+    { key: 'kuchnia', sign: 'kubek', ids: byCategory('kuchnia') },
+    { key: 'zabawki', sign: 'pilka', ids: byCategory('zabawki') },
+  ],
+  kolory: (['czerwony', 'zolty', 'zielony', 'niebieski', 'pomaranczowy', 'rozowy', 'fioletowy', 'brazowy', 'bialy'] as Color[]).map((c) => ({ key: c, ids: byColor(c) })),
+  domy: [
+    { key: 'wies', sign: 'stodola', ids: ids(['kot', 'pies', 'krowa', 'kura', 'kaczka', 'swinka', 'owca', 'kon', 'kurczak', 'cielaczek', 'prosiaczek', 'jagniatko', 'zrebak', 'koza', 'osiolek', 'indyk', 'ges']) },
+    { key: 'las', sign: 'drzewo', ids: ids(['jez', 'wiewiorka', 'sowa', 'niedzwiedz', 'lis', 'zajac', 'dzik', 'sarna', 'dzieciol']) },
+    { key: 'woda', sign: 'staw', ids: ids(['ryba', 'krab', 'osmiornica', 'wieloryb', 'delfin', 'meduza', 'konikmorski']) },
+    { key: 'afryka', sign: 'palma', ids: ids(['lew', 'zyrafa', 'zebra', 'slon', 'malpa', 'hipopotam', 'nosorozec']) },
+    { key: 'lod', sign: 'kra', ids: ids(['pingwin', 'foka', 'mors', 'mispolarny']) },
+  ],
+  pory: [
+    { key: 'lato', sign: 'slonce', ids: ids(['okulary', 'kapelusz', 'sandaly', 'stroj']) },
+    { key: 'zima', sign: 'balwan', ids: ids(['czapka', 'szalik', 'rekawiczki', 'kurtka', 'sanki']) },
+  ],
+  wielkosc: [
+    { key: 'duze', sign: 'slon', ids: ids(['zyrafa', 'wieloryb', 'hipopotam', 'nosorozec', 'niedzwiedz', 'kon', 'krowa', 'mispolarny']) },
+    { key: 'male', sign: 'mysz', ids: ids(['biedronka', 'pszczola', 'slimak', 'motyl', 'kurczak', 'jez', 'ptak']) },
+  ],
+  ruch: [
+    { key: 'lata', sign: 'chmurka', ids: ids(['ptak', 'sowa', 'motyl', 'pszczola', 'dzieciol', 'samolot', 'helikopter', 'rakieta', 'latawiec', 'biedronka']) },
+    { key: 'plywa', sign: 'staw', ids: ids(['ryba', 'delfin', 'wieloryb', 'meduza', 'lodka', 'osmiornica', 'konikmorski']) },
+    { key: 'jezdzi', sign: 'droga', ids: ids(['auto', 'autobus', 'rower', 'traktor', 'pociag', 'hulajnoga', 'straz', 'ciezarowka']) },
+  ],
+};
+
+/**
+ * Grupy, których nie stawiamy obok siebie, bo dziecko mogłoby uznać obiekt za pasujący do obu
+ * (pingwin pływa, zabawkowe autko jest zabawką, różowy i czerwony są bliskie).
+ */
+const CLASH: Record<SortRule, [string, string][]> = {
+  kategorie: [
+    ['zabawki', 'pojazdy'],
+    ['zabawki', 'zwierzeta'],
+    ['owoce', 'kuchnia'],
+    ['warzywa', 'kuchnia'],
+  ],
+  kolory: [
+    ['czerwony', 'rozowy'],
+    ['czerwony', 'pomaranczowy'],
+    ['zolty', 'pomaranczowy'],
+    ['rozowy', 'fioletowy'],
+    ['brazowy', 'pomaranczowy'],
+    ['bialy', 'zolty'],
+  ],
+  domy: [['woda', 'lod']],
+  pory: [],
+  wielkosc: [],
+  ruch: [],
+};
 
 /** Liczba obiektów do posegregowania na poziomie. */
 export const sortCount = (level: number): number => [4, 6, 6][clamp(level)] as number;
@@ -45,34 +103,61 @@ export const sortCount = (level: number): number => [4, 6, 6][clamp(level)] as n
 export const binCount = (level: number): number => (clamp(level) >= MAX_LEVEL ? 3 : 2);
 const clamp = (level: number) => Math.max(0, Math.min(MAX_LEVEL, Math.round(level)));
 
-/** Reguły dostępne na poziomie (na najwyższym trzy skrzynki: kolory albo domy). */
-export function rulesFor(level: number): SortRule[] {
-  return binCount(level) === 3 ? ['kolory', 'domy'] : ['kategorie', 'kolory', 'domy'];
+const present = () => new Set(ITEMS.map((i) => i.id));
+
+/** Grupy reguły z członkami obecnymi w katalogu (bez obiektu ze znaku). */
+function groups(rule: SortRule): { key: string; sign?: string; members: Item[] }[] {
+  const have = present();
+  return GROUPS[rule].map((g) => ({
+    key: g.key,
+    sign: g.sign,
+    members: g
+      .ids()
+      .filter((id) => have.has(id) && id !== g.sign)
+      .map((id) => ITEMS.find((i) => i.id === id)!),
+  }));
 }
+
+/** Czy obiekt należy do grupy (do testów: każdy obiekt pasuje dokładnie do jednej skrzynki zadania). */
+export function belongs(rule: SortRule, key: string, item: Item): boolean {
+  return groups(rule).some((g) => g.key === key && g.members.includes(item));
+}
+
+const clash = (rule: SortRule, a: string, b: string) => CLASH[rule].some(([x, y]) => (x === a && y === b) || (x === b && y === a));
+
+/** Losuje `n` grup bez konfliktów, każda z co najmniej `need` członkami. Null, gdy się nie da. */
+function pickGroups(rng: Rng, rule: SortRule, n: number, need: number) {
+  const pool = rng.shuffle(groups(rule).filter((g) => g.members.length >= need));
+  const out: typeof pool = [];
+  for (const g of pool) {
+    if (out.length >= n) break;
+    if (out.some((o) => clash(rule, o.key, g.key))) continue;
+    // Obiekt należący do dwóch wybranych grup byłby niejednoznaczny: grupa musi mieć dość „własnych”.
+    out.push(g);
+  }
+  return out.length === n ? out : null;
+}
+
+/** Reguły dostępne na poziomie (z co najmniej tyloma grupami, ile skrzynek). */
+export function rulesFor(level: number): SortRule[] {
+  const n = binCount(level);
+  const need = Math.ceil(sortCount(level) / n);
+  return SORT_RULES.filter((r) => pickGroups(rngStub, r, n, need) !== null);
+}
+
+/** Deterministyczny „rng” do sprawdzania dostępności reguł (bez tasowania). */
+const rngStub = { shuffle: <T>(a: T[]) => a } as unknown as Rng;
 
 export function makeSortTask(rng: Rng, level: number, rule: SortRule): SortTask {
   const nBins = binCount(level);
   const count = sortCount(level);
-  let bins: Bin[];
-  let pools: Item[][];
-  if (rule === 'kategorie') {
-    const pair = rng.pick(CATEGORY_PAIRS.filter(([a, b]) => ITEMS.some((i) => i.category === a) && ITEMS.some((i) => i.category === b)));
-    bins = pair.map((c) => ({ key: c, sign: CATEGORY_SIGN[c] }));
-    pools = pair.map((c) => ITEMS.filter((i) => i.category === c && i.id !== CATEGORY_SIGN[c]));
-  } else if (rule === 'kolory') {
-    const colored = ITEMS.filter((i) => i.color && !TWO_TONE.includes(i.id));
-    const colors = rng.shuffle(BUCKET_COLORS.filter((c) => colored.filter((i) => i.color === c).length >= 2)).slice(0, nBins);
-    bins = colors.map((c) => ({ key: c }));
-    pools = colors.map((c) => colored.filter((i) => i.color === c));
-  } else {
-    const homes = rng.shuffle((['wies', 'las', 'woda'] as Home[]).filter((h) => ITEMS.filter((i) => i.home === h).length >= 2)).slice(0, nBins);
-    bins = homes.map((h) => ({ key: h, sign: HOME_SIGN[h] }));
-    pools = homes.map((h) => ITEMS.filter((i) => i.home === h));
-  }
-  // Po równo do każdej skrzynki (reszta do losowych), każda dostaje co najmniej jeden obiekt.
-  const per = bins.map((_, b) => Math.floor(count / bins.length) + (b < count % bins.length ? 1 : 0));
-  const items = rng.shuffle(bins.flatMap((_, b) => rng.shuffle(pools[b]!).slice(0, per[b]).map((item) => ({ item, bin: b }))));
-  return { rule, bins, items };
+  const per = Array.from({ length: nBins }, (_, b) => Math.floor(count / nBins) + (b < count % nBins ? 1 : 0));
+  const chosen = pickGroups(rng, rule, nBins, Math.max(...per)) ?? pickGroups(rngStub, rule, nBins, 1)!;
+  const keys = chosen.map((g) => g.key);
+  // Obiekt może być w kilku grupach reguły (np. ptak: lata i jest mały) – bierzemy tylko jednoznaczne.
+  const own = chosen.map((g) => g.members.filter((m) => keys.filter((k) => belongs(rule, k, m)).length === 1));
+  const items = rng.shuffle(chosen.flatMap((_, b) => rng.shuffle(own[b]!).slice(0, per[b]).map((item) => ({ item, bin: b }))));
+  return { rule, bins: chosen.map((g) => ({ key: g.key, sign: g.sign })), items };
 }
 
 /** Runda segregowania: różne reguły po kolei. */
@@ -81,24 +166,17 @@ export function makeSortRound(rng: Rng, level: number): SortTask[] {
   return Array.from({ length: SORT_ROUND }, (_, i) => makeSortTask(rng, level, rules[i % rules.length]!));
 }
 
-/** Nagranie polecenia, np. "sort-owoce-warzywa", "sort-kolory", "sort-domy-wies-las". */
-export function sortPromptLine(task: SortTask): string {
-  if (task.rule === 'kolory') return 'sort-kolory';
-  const keys = task.bins.map((b) => b.key);
-  if (task.rule === 'kategorie') return `sort-${keys.join('-')}`;
-  // Domy: nazwa stała niezależnie od kolejności skrzynek.
-  const order: Home[] = ['wies', 'las', 'woda'];
-  return `sort-domy-${order.filter((h) => keys.includes(h)).join('-')}`;
+/** Pytanie reguły, np. "sort-domy". */
+export const sortPromptLine = (task: SortTask): string => `sort-${task.rule}`;
+
+/** Nazwa skrzynki czytana po pytaniu i po jej dotknięciu, np. "kat-owoce", "barwa-zolty", "dom-las". */
+export function binLine(rule: SortRule, key: string): string {
+  const prefix: Record<SortRule, string> = { kategorie: 'kat', kolory: 'barwa', domy: 'dom', pory: 'pora', wielkosc: 'rozmiar', ruch: 'ruch' };
+  return `${prefix[rule]}-${key}`;
 }
 
-/** Wszystkie możliwe nagrania poleceń segregowania (do listy lektora i testów). */
-export const SORT_LINES: readonly string[] = [
-  'sort-owoce-warzywa',
-  'sort-zwierzeta-pojazdy',
-  'sort-ubrania-kuchnia',
-  'sort-kolory',
-  'sort-domy-wies-las',
-  'sort-domy-wies-woda',
-  'sort-domy-las-woda',
-  'sort-domy-wies-las-woda',
-];
+/** Wszystkie nagrania segregowania (do listy lektora i testów). */
+export const SORT_LINES: readonly string[] = [...SORT_RULES.map((r) => `sort-${r}`), ...SORT_RULES.flatMap((r) => GROUPS[r].map((g) => binLine(r, g.key)))];
+
+/** Obrazki znaków skrzynek spoza katalogu (grafiki Warsztatu). */
+export const SIGN_ART = ['stodola', 'staw', 'palma', 'kra', 'balwan', 'droga'];

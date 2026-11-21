@@ -1,0 +1,354 @@
+{
+ "voice": "voices/prezenter",
+ "tries": 8,
+ "lines": [
+  {
+   "name": "bazyl-sort-kategorie",
+   "text": "Posegreguj! Każda rzecz do swojej skrzynki."
+  },
+  {
+   "name": "bazyl-sort-domy",
+   "text": "Gdzie mieszkają te zwierzątka? Zaprowadź każde do jego domu!"
+  },
+  {
+   "name": "bazyl-sort-pory",
+   "text": "Co nosimy latem, a co zimą?"
+  },
+  {
+   "name": "bazyl-sort-wielkosc",
+   "text": "Które zwierzęta są duże, a które małe?"
+  },
+  {
+   "name": "bazyl-sort-ruch",
+   "text": "Jak się poruszają te rzeczy? Posegreguj je!"
+  },
+  {
+   "name": "bazyl-kat-owoce",
+   "text": "Tutaj owoce!"
+  },
+  {
+   "name": "bazyl-kat-warzywa",
+   "text": "Tutaj warzywa!"
+  },
+  {
+   "name": "bazyl-kat-zwierzeta",
+   "text": "Tutaj zwierzątka!"
+  },
+  {
+   "name": "bazyl-kat-pojazdy",
+   "text": "Tutaj pojazdy!"
+  },
+  {
+   "name": "bazyl-kat-ubrania",
+   "text": "Tutaj ubrania!"
+  },
+  {
+   "name": "bazyl-kat-kuchnia",
+   "text": "Tutaj rzeczy z kuchni!"
+  },
+  {
+   "name": "bazyl-kat-zabawki",
+   "text": "Tutaj zabawki!"
+  },
+  {
+   "name": "bazyl-barwa-czerwony",
+   "text": "Czerwone wiaderko!"
+  },
+  {
+   "name": "bazyl-barwa-zolty",
+   "text": "Żółte wiaderko!"
+  },
+  {
+   "name": "bazyl-barwa-zielony",
+   "text": "Zielone wiaderko!"
+  },
+  {
+   "name": "bazyl-barwa-niebieski",
+   "text": "Niebieskie wiaderko!"
+  },
+  {
+   "name": "bazyl-barwa-pomaranczowy",
+   "text": "Pomarańczowe wiaderko!"
+  },
+  {
+   "name": "bazyl-barwa-rozowy",
+   "text": "Różowe wiaderko!"
+  },
+  {
+   "name": "bazyl-barwa-fioletowy",
+   "text": "Fioletowe wiaderko!"
+  },
+  {
+   "name": "bazyl-barwa-brazowy",
+   "text": "Brązowe wiaderko!"
+  },
+  {
+   "name": "bazyl-barwa-bialy",
+   "text": "Białe wiaderko!"
+  },
+  {
+   "name": "bazyl-dom-wies",
+   "text": "Na wsi!"
+  },
+  {
+   "name": "bazyl-dom-las",
+   "text": "W lesie!"
+  },
+  {
+   "name": "bazyl-dom-woda",
+   "text": "W wodzie!"
+  },
+  {
+   "name": "bazyl-dom-afryka",
+   "text": "W Afryce!"
+  },
+  {
+   "name": "bazyl-dom-lod",
+   "text": "Tam, gdzie lód i śnieg!"
+  },
+  {
+   "name": "bazyl-pora-lato",
+   "text": "Na lato!"
+  },
+  {
+   "name": "bazyl-pora-zima",
+   "text": "Na zimę!"
+  },
+  {
+   "name": "bazyl-rozmiar-duze",
+   "text": "Duże zwierzęta!"
+  },
+  {
+   "name": "bazyl-rozmiar-male",
+   "text": "Małe zwierzątka!"
+  },
+  {
+   "name": "bazyl-ruch-lata",
+   "text": "To, co lata!"
+  },
+  {
+   "name": "bazyl-ruch-plywa",
+   "text": "To, co pływa!"
+  },
+  {
+   "name": "bazyl-ruch-jezdzi",
+   "text": "To, co jeździ!"
+  },
+  {
+   "name": "lusia-item-lis",
+   "text": "Lis!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "bazyl-item-lis",
+   "text": "Lis!"
+  },
+  {
+   "name": "lusia-item-zajac",
+   "text": "Zajączek!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "bazyl-item-zajac",
+   "text": "Zajączek!"
+  },
+  {
+   "name": "lusia-item-dzik",
+   "text": "Dzik!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "bazyl-item-dzik",
+   "text": "Dzik!"
+  },
+  {
+   "name": "lusia-item-sarna",
+   "text": "Sarenka!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "bazyl-item-sarna",
+   "text": "Sarenka!"
+  },
+  {
+   "name": "lusia-item-dzieciol",
+   "text": "Dzięcioł!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "bazyl-item-dzieciol",
+   "text": "Dzięcioł!"
+  },
+  {
+   "name": "lusia-item-wieloryb",
+   "text": "Wieloryb!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "bazyl-item-wieloryb",
+   "text": "Wieloryb!"
+  },
+  {
+   "name": "lusia-item-delfin",
+   "text": "Delfin!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "bazyl-item-delfin",
+   "text": "Delfin!"
+  },
+  {
+   "name": "lusia-item-meduza",
+   "text": "Meduza!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "bazyl-item-meduza",
+   "text": "Meduza!"
+  },
+  {
+   "name": "lusia-item-konikmorski",
+   "text": "Konik morski!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "bazyl-item-konikmorski",
+   "text": "Konik morski!"
+  },
+  {
+   "name": "lusia-item-koza",
+   "text": "Koza!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "bazyl-item-koza",
+   "text": "Koza!"
+  },
+  {
+   "name": "lusia-item-osiolek",
+   "text": "Osiołek!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "bazyl-item-osiolek",
+   "text": "Osiołek!"
+  },
+  {
+   "name": "lusia-item-indyk",
+   "text": "Indyk!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "bazyl-item-indyk",
+   "text": "Indyk!"
+  },
+  {
+   "name": "lusia-item-ges",
+   "text": "Gęś!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "bazyl-item-ges",
+   "text": "Gęś!"
+  },
+  {
+   "name": "lusia-item-foka",
+   "text": "Foka!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "bazyl-item-foka",
+   "text": "Foka!"
+  },
+  {
+   "name": "lusia-item-mors",
+   "text": "Mors!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "bazyl-item-mors",
+   "text": "Mors!"
+  },
+  {
+   "name": "lusia-item-mispolarny",
+   "text": "Miś polarny!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "bazyl-item-mispolarny",
+   "text": "Miś polarny!"
+  },
+  {
+   "name": "lusia-item-hipopotam",
+   "text": "Hipopotam!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "bazyl-item-hipopotam",
+   "text": "Hipopotam!"
+  },
+  {
+   "name": "lusia-item-nosorozec",
+   "text": "Nosorożec!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "bazyl-item-nosorozec",
+   "text": "Nosorożec!"
+  },
+  {
+   "name": "lusia-item-okulary",
+   "text": "Okulary!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "bazyl-item-okulary",
+   "text": "Okulary!"
+  },
+  {
+   "name": "lusia-item-kapelusz",
+   "text": "Kapelusz!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "bazyl-item-kapelusz",
+   "text": "Kapelusz!"
+  },
+  {
+   "name": "lusia-item-sandaly",
+   "text": "Sandały!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "bazyl-item-sandaly",
+   "text": "Sandały!"
+  },
+  {
+   "name": "lusia-item-stroj",
+   "text": "Strój kąpielowy!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "bazyl-item-stroj",
+   "text": "Strój kąpielowy!"
+  },
+  {
+   "name": "lusia-item-kurtka",
+   "text": "Kurtka!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "bazyl-item-kurtka",
+   "text": "Kurtka!"
+  },
+  {
+   "name": "lusia-item-sanki",
+   "text": "Sanki!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "bazyl-item-sanki",
+   "text": "Sanki!"
+  }
+ ]
+}

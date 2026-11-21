@@ -1,9 +1,9 @@
 import { Container, Graphics, Sprite, type Point } from 'pixi.js';
 import { haptics } from '@funfactory/core';
-import { popIn } from '@funfactory/kit2d';
+import { popIn, squash } from '@funfactory/kit2d';
 import { say } from '../assets.ts';
 import type { Color, Item } from '../sim/catalog.ts';
-import { makeSortRound, sortPromptLine, type SortTask } from '../sim/sorting.ts';
+import { binLine, makeSortRound, sortPromptLine, type SortTask } from '../sim/sorting.ts';
 import { state } from '../state.ts';
 import { COLORS, draggable, sfx } from '../ui.ts';
 import { PAINT } from './puzzle.ts';
@@ -31,6 +31,8 @@ interface BinView {
   /** Obiekty już włożone (za przednią ścianką skrzynki). */
   pile: Container;
   box: Container;
+  /** Nagranie nazwy skrzynki (np. "dom-las"). */
+  line: string;
   /** Grafika pojemnika (tył) i przednia ścianka nad obiektami; skalowane razem. */
   back: Container;
   front: Container;
@@ -74,19 +76,51 @@ export class SortScene extends RoundScene {
 
   protected show(): void {
     const t = this.task;
-    this.bins = t.bins.map((bin) => this.binView(t.rule === 'kolory' ? (bin.key as Color) : null, bin.sign));
+    this.bins = t.bins.map((bin) => this.binView(t.rule === 'kolory' ? (bin.key as Color) : null, bin.sign, binLine(t.rule, bin.key)));
     this.pieces = t.items.map(({ item, bin }) => this.piece(item, bin));
     [...this.bins.map((b) => b.view), ...this.pieces.map((p) => p.view)].forEach((c, i) => {
       void popIn(this.tweens, c, 0.4, i * 0.06);
       this.timers.after(i * 0.06, () => sfx.pop(this.game.sound, 0.9 + i * 0.05));
     });
-    this.timers.after(0.4, () => {
-      const len = say(this.game, this.guide, this.promptLine());
-      if (this.index === 0 && state.progress.levels.sortowanie === 0) this.timers.after(len + 0.3, () => say(this.game, this.guide, 'przeciagnij'));
-    });
+    this.timers.after(0.4, () => this.announce());
   }
 
-  private binView(color: Color | null, sign: string | undefined): BinView {
+  /** Pytanie reguły, potem nazwa każdej skrzynki (skrzynka podskakuje, gdy Bazyl ją nazywa). */
+  private announce(): void {
+    const len = say(this.game, this.guide, this.promptLine());
+    let at = len + 0.25;
+    const index = this.index;
+    for (const bin of this.bins) {
+      this.timers.after(at, () => {
+        if (this.index !== index || this.dragging) return;
+        this.nameBin(bin);
+      });
+      at += 1.1;
+    }
+    if (this.index === 0 && state.progress.levels.sortowanie === 0)
+      this.timers.after(at + 0.1, () => {
+        if (this.index === index && !this.dragging) say(this.game, this.guide, 'przeciagnij');
+      });
+  }
+
+  /** Nazwa skrzynki (też po jej dotknięciu): lektor i podskok. */
+  private nameBin(bin: BinView): void {
+    say(this.game, this.guide, bin.line);
+    // Podskok samego pojemnika (warstwa `box`), żeby nie gryzł się z kołysaniem po wrzuceniu.
+    this.tweens.killOf(bin.box);
+    bin.box.y = 0;
+    void this.tweens.to(bin.box, { y: -26 }, { duration: 0.14, ease: 'quadOut', yoyo: true, repeat: 1 }).done.then(() => (bin.box.y = 0));
+    const sign = bin.view.children.find((c) => c.label === 'sign');
+    if (sign) void squash(this.tweens, sign, 0.2);
+  }
+
+  protected override repeatPrompt(): void {
+    if (this.busy || this.overlay) return;
+    this.idle = 0;
+    this.announce();
+  }
+
+  private binView(color: Color | null, sign: string | undefined, line: string): BinView {
     const view = new Container();
     // Pojemnik w trzech warstwach: tył, obiekty w środku, przednia ścianka (ta sama grafika przycięta
     // do linii brzegu). Dzięki temu obiekty wystają z wnętrza, a nie leżą za pojemnikiem.
@@ -140,7 +174,16 @@ export class SortScene extends RoundScene {
     }
     this.layer.addChild(view);
     const splash = color ? [PAINT[color], PAINT[color], 0xffffff] : COLORS.confetti;
-    return { view, pile, box, back, front, width: 0, height: 0, splash, rim: texture ? 1 - shape.mouth : 0.9, sink: shape.sink };
+    const bin: BinView = { view, pile, box, back, front, line, width: 0, height: 0, splash, rim: texture ? 1 - shape.mouth : 0.9, sink: shape.sink };
+    // Dotknięcie skrzynki: jej nazwa.
+    view.eventMode = 'static';
+    view.cursor = 'pointer';
+    view.on('pointertap', () => {
+      if (this.dragging || this.busy) return;
+      this.idle = 0;
+      this.nameBin(bin);
+    });
+    return bin;
   }
 
   private piece(item: Item, bin: number): Piece {
