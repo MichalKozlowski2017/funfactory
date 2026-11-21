@@ -11,10 +11,11 @@ import { RoundScene } from './round.ts';
 
 /**
  * Kształt otworu pojemnika w ułamkach grafiki (zmierzone na plikach z Fluxa): `mouth` to wysokość linii
- * brzegu od góry, `rx`/`ry` półosie elipsy otworu (0 = prosta krawędź, jak przednia deska skrzynki).
+ * brzegu od góry, `rx`/`ry` półosie elipsy otworu (0 = prosta krawędź, jak przednia deska skrzynki),
+ * `sink`: jak głęboko obiekt siedzi (ułamek jego rozmiaru poniżej brzegu; skrzynka jest płytsza).
  */
-const BUCKET = { mouth: 0.43, rx: 0.4, ry: 0.07 };
-const CRATE = { mouth: 0.4, rx: 0, ry: 0 };
+const BUCKET = { mouth: 0.43, rx: 0.4, ry: 0.07, sink: 0.25 };
+const CRATE = { mouth: 0.4, rx: 0, ry: 0, sink: 0.05 };
 
 /** Obiekt do posegregowania: kafelek z obrazkiem, który przeciąga się do skrzynki. */
 interface Piece {
@@ -39,6 +40,8 @@ interface BinView {
   splash: number[];
   /** Wysokość brzegu jako ułamek wysokości grafiki (wiaderko ma nad brzegiem pałąk). */
   rim: number;
+  /** Głębokość osadzenia obiektu (ułamek jego rozmiaru poniżej brzegu). */
+  sink: number;
 }
 
 /**
@@ -137,7 +140,7 @@ export class SortScene extends RoundScene {
     }
     this.layer.addChild(view);
     const splash = color ? [PAINT[color], PAINT[color], 0xffffff] : COLORS.confetti;
-    return { view, pile, box, back, front, width: 0, height: 0, splash, rim: texture ? 1 - shape.mouth : 0.9 };
+    return { view, pile, box, back, front, width: 0, height: 0, splash, rim: texture ? 1 - shape.mouth : 0.9, sink: shape.sink };
   }
 
   private piece(item: Item, bin: number): Piece {
@@ -184,15 +187,23 @@ export class SortScene extends RoundScene {
     this.tweens.to(piece.view.scale, { x: 1, y: 1 }, { duration: 0.2 });
   }
 
-  /** Miejsce n-tego obiektu w stosiku (wystaje ponad brzeg skrzynki). */
+  /** Rozmiar obrazka w pojemniku (mieści się w otworze, po trzy obok siebie). */
+  private itemSize(bin: BinView): number {
+    return bin.width * 0.3;
+  }
+
+  /** Miejsce n-tego obiektu w pojemniku: w obrębie otworu, wystaje tylko górna część. */
   private pileSlot(bin: BinView, n: number): { x: number; y: number } {
-    return { x: ((n % 3) - 1) * bin.width * 0.24 + (Math.floor(n / 3) % 2) * 20, y: -bin.height * bin.rim - 8 - Math.floor(n / 3) * 14 };
+    const size = this.itemSize(bin);
+    const col = [0, -0.21, 0.21][n % 3]!;
+    const row = Math.floor(n / 3);
+    return { x: (col + (row % 2) * 0.1) * bin.width, y: -bin.height * bin.rim + size * bin.sink - row * 10 };
   }
 
   /**
-   * Obiekt wpada do skrzynki: kafelek znika, obrazek leci łukiem z fikołkiem nad skrzynkę,
-   * wpada za przednią ściankę (plum, skrzynka przysiada i się kołysze, tryskają kropelki),
-   * potem wyskakuje i zostaje w stosiku. Nad skrzynką unosi się gwiazdka.
+   * Obiekt wpada do pojemnika. Najpierw leci łukiem z fikołkiem nad otwór (przed pojemnikiem),
+   * potem przechodzi za przednią ściankę i spada pionowo przez otwór: plum, pojemnik przysiada
+   * i się kołysze, tryskają kropelki, a obiekt podskakuje i zostaje w środku, wystając tylko trochę.
    */
   private put(piece: Piece): void {
     piece.done = true;
@@ -205,12 +216,15 @@ export class SortScene extends RoundScene {
     // Lot: bez kafelka, sam obrazek.
     const plate = v.children[0]!;
     this.tweens.to(plate, { alpha: 0 }, { duration: 0.15 });
+    const size = this.itemSize(bin);
+    const pic = v.children[1] as Sprite;
+    const s1 = size / (Math.max(pic.texture.width, pic.texture.height) * pic.scale.x);
     const start = { x: v.x, y: v.y };
-    const rim = { x: bin.view.x + slot.x * 0.5, y: bin.view.y - bin.height * bin.rim };
-    const apex = { x: (start.x + rim.x) / 2, y: Math.min(start.y, rim.y) - 150 };
+    // Punkt nad otworem: cały obrazek jeszcze nad brzegiem.
+    const above = { x: bin.view.x + slot.x, y: bin.view.y - bin.height * bin.rim - size * 0.75 };
+    const apex = { x: (start.x + above.x) / 2, y: Math.min(start.y, above.y) - 130 };
     const s0 = v.scale.x;
-    const s1 = Math.min(bin.width * 0.42, 118) / Math.max(v.height / s0, 1) / 0.8;
-    const spin = (rim.x >= start.x ? 1 : -1) * Math.PI * 2;
+    const spin = (above.x >= start.x ? 1 : -1) * Math.PI * 2;
     sfx.whoosh(this.game.sound);
     haptics.tap();
     const len = say(this.game, this.guide, `item-${piece.item.id}`);
@@ -220,38 +234,43 @@ export class SortScene extends RoundScene {
         { t: 0 },
         { t: 1 },
         {
-          duration: 0.6,
+          duration: 0.5,
+          ease: 'sineInOut',
           onUpdate: (t) => {
-            // Krzywa Béziera: start -> wierzchołek -> brzeg skrzynki; pod koniec przyspiesza w dół.
-            const u = t * t * (3 - 2 * t) * 0.6 + t * 0.4;
-            const a = (1 - u) * (1 - u);
-            const b = 2 * (1 - u) * u;
-            const c = u * u;
-            v.position.set(a * start.x + b * apex.x + c * rim.x, a * start.y + b * apex.y + c * rim.y);
-            v.rotation = spin * (1 - (1 - t) ** 2);
+            const a = (1 - t) * (1 - t);
+            const b = 2 * (1 - t) * t;
+            const c = t * t;
+            v.position.set(a * start.x + b * apex.x + c * above.x, a * start.y + b * apex.y + c * above.y);
+            v.rotation = spin * t;
             v.scale.set(s0 + (s1 - s0) * t);
           },
         },
-      ).done
-      .then(() => this.land(piece, bin, slot, s1));
-    if (this.pieces.every((p) => p.done)) this.solved(len + 0.5);
+      )
+      .done.then(() => this.sink(piece, bin, slot, s1));
+    if (this.pieces.every((p) => p.done)) this.solved(len + 0.6);
   }
 
   private flying(bin: BinView): number {
     return (bin as BinView & { inFlight?: number }).inFlight ?? 0;
   }
 
-  /** Lądowanie w skrzynce: za przednią ściankę, plum, kropelki, wyskok do stosiku. */
-  private land(piece: Piece, bin: BinView, slot: { x: number; y: number }, scale: number): void {
+  /** Spadek przez otwór: obiekt jest już za przednią ścianką (w stosiku), więc znika w środku. */
+  private sink(piece: Piece, bin: BinView, slot: { x: number; y: number }, scale: number): void {
     const v = piece.view;
-    (bin as BinView & { inFlight?: number }).inFlight = Math.max(0, this.flying(bin) - 1);
-    // Do stosiku (za przednią ściankę) we współrzędnych skrzynki.
     v.rotation = 0;
+    v.scale.set(scale);
     v.position.set(v.x - bin.view.x, v.y - bin.view.y);
     bin.pile.addChild(v);
+    const deep = slot.y + this.itemSize(bin) * 0.9;
+    void this.tweens.to(v, { y: deep }, { duration: 0.16, ease: 'quadIn' }).done.then(() => this.land(piece, bin, slot));
+  }
+
+  /** Plum: pojemnik przysiada i się kołysze, kropelki, gwiazdka, obiekt podskakuje na swoje miejsce. */
+  private land(piece: Piece, bin: BinView, slot: { x: number; y: number }): void {
+    const v = piece.view;
+    (bin as BinView & { inFlight?: number }).inFlight = Math.max(0, this.flying(bin) - 1);
     sfx.plop(this.game.sound);
     haptics.hit();
-    // Skrzynka przysiada i sprężyście wraca, potem się kołysze.
     const box = bin.box;
     this.tweens.killOf(box.scale);
     box.scale.set(1.14, 0.8);
@@ -259,16 +278,10 @@ export class SortScene extends RoundScene {
     this.tweens.killOf(bin.view);
     bin.view.rotation = 0;
     void this.tweens.to(bin.view, { rotation: 0.07 }, { duration: 0.09, yoyo: true, repeat: 3, ease: 'sineInOut' }).done.then(() => (bin.view.rotation = 0));
-    // Kropelki z brzegu w górę.
     const top = { x: bin.view.x, y: bin.view.y - bin.height * bin.rim };
-    this.particles.burst(top.x, top.y, { count: 32, speed: [300, 700], life: [0.5, 1], gravity: 1400, scale: [1, 2], angle: -Math.PI / 2, spread: 1.6, colors: bin.splash });
-    this.floatStar(top.x, top.y - 40);
-    // Obiekt chowa się w skrzynce i wyskakuje na swoje miejsce w stosiku.
-    v.y = slot.y + bin.height * 0.5;
-    v.x = slot.x;
-    v.scale.set(scale * 0.9);
-    void this.tweens.to(v, { y: slot.y }, { duration: 0.42, delay: 0.06, ease: 'backOut' });
-    this.tweens.to(v.scale, { x: scale, y: scale }, { duration: 0.3, delay: 0.06, ease: 'backOut' });
+    this.particles.burst(top.x + slot.x, top.y, { count: 32, speed: [300, 700], life: [0.5, 1], gravity: 1400, scale: [1, 2], angle: -Math.PI / 2, spread: 1.4, colors: bin.splash });
+    this.floatStar(top.x, top.y - 60);
+    void this.tweens.to(v, { y: slot.y }, { duration: 0.38, delay: 0.05, ease: 'backOut' });
   }
 
   /** Gwiazdka unosząca się nad skrzynką. */
