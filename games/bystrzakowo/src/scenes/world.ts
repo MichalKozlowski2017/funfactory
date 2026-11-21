@@ -27,6 +27,7 @@ import { SortScene } from './sort.ts';
 import { StoryScene } from './stories.ts';
 import { SyllableScene } from './syllables.ts';
 import { StickerScene } from './stickers.ts';
+import { tr } from '../sim/i18n.ts';
 
 /** Obrazek na zakładce krainy (obiekt z katalogu). */
 const TAB_ICON: Record<string, string> = { polana: 'kwiatek', warsztat: 'klocek', sciezka: 'grzyb', pracownia: 'tecza' };
@@ -85,7 +86,7 @@ export class WorldScene extends Scene {
         sprite.scale.set(Math.min(190 / sprite.texture.height, 240 / sprite.texture.width));
         sprite.y = -14;
         // Podpis zabawy na dole kafelka.
-        const name = label(ACTIVITY_NAMES[kind], 40, pr * 2, '#ffffff');
+        const name = label(tr(ACTIVITY_NAMES[kind]), 40, pr * 2, '#ffffff');
         name.scale.set(Math.min(1, 260 / name.width));
         name.y = 112;
         const emblem = this.emblem(kind, catShadow);
@@ -105,7 +106,7 @@ export class WorldScene extends Scene {
     this.applyLocks();
 
     // Zakładki krain i nazwa bieżącej.
-    this.title = label(REALMS[this.realm]!.name, 56, pr, '#ffb347');
+    this.title = label(tr(REALMS[this.realm]!.name), 56, pr, '#ffb347');
     REALMS.forEach((realm, i) => {
       const tab = new Container();
       tab.addChild(new Graphics());
@@ -200,7 +201,7 @@ export class WorldScene extends Scene {
       this.tweens.to(star, { alpha: 0.2 }, { duration: this.game.rng.range(0.8, 1.8), yoyo: true, repeat: -1, ease: 'sineInOut' });
       o.addChild(star);
     }
-    const text = label('Dobranoc!', 72, this.game.pixelRatio, '#fff3b0', '#1d1a4a');
+    const text = label(tr('Dobranoc!'), 72, this.game.pixelRatio, '#fff3b0', '#1d1a4a');
     text.position.set(w / 2, h * 0.52);
     o.addChild(text);
     // Zzz nad przewodnikami.
@@ -288,7 +289,7 @@ export class WorldScene extends Scene {
       cover(back, this.game.view.width, this.game.view.height);
       front.alpha = 0;
     });
-    this.title.text = realm.name;
+    this.title.text = tr(realm.name);
     void popIn(this.tweens, this.title, 0.35);
     this.drawTabs();
     const guide = realm.guide === 'lusia' ? this.lusia : this.bazyl;

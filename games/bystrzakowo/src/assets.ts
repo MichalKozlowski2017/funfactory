@@ -1,15 +1,12 @@
 import { Assets, type Texture } from 'pixi.js';
 import { pixelsToTexture, type Game } from '@funfactory/kit2d';
-import { ITEMS, keepOnly, type Color } from './sim/catalog.ts';
+import { ITEMS, keepOnly } from './sim/catalog.ts';
+import { SIGN_ART } from './sim/sorting.ts';
+import { lang } from './sim/lang.ts';
+import { voiceLines, type Guide } from './voice-lines.ts';
 import { state } from './state.ts';
-import { SOUNDS, soundSlug } from './sim/puzzles.ts';
 import { ACTIVITIES, REALMS, type Activity, type RealmId } from './sim/realms.ts';
-import { SIGN_ART, SORT_LINES } from './sim/sorting.ts';
-import { MAZE_PAIRS } from './sim/maze.ts';
-import { LETTERS } from './sim/letters.ts';
-import { SHAPES } from './sim/shapes.ts';
 import { EMOTIONS } from './sim/emotions.ts';
-import { WORDS } from './sim/syllables.ts';
 import { FRAMES, STORIES } from './sim/stories.ts';
 
 /**
@@ -121,16 +118,7 @@ export async function loadArt(): Promise<Art> {
 /** Kadr historyjki (null, gdy grafiki brak). */
 export const storyFrame = (story: string, i: number): Texture | null => art?.stories.get(`${story}-${i + 1}`) ?? null;
 
-/** Nagrania lektora: public/audio/<lusia|bazyl>/<nazwa>.m4a, w Sound pod nazwą "<głos>-<nazwa>". */
-export type Guide = 'lusia' | 'bazyl';
-
-export const COLORS_SPOKEN: readonly Color[] = ['czerwony', 'zolty', 'zielony', 'niebieski', 'pomaranczowy', 'rozowy', 'fioletowy', 'brazowy', 'bialy'];
-
-const COMMON = ['brawo-1', 'brawo-2', 'brawo-3', 'brawo-4', 'brawo-5', 'oj-1', 'oj-2', 'nagroda', 'witaj', 'pomoc', ...ITEMS.map((i) => `item-${i.id}`)];
-const VOICE: Record<Guide, string[]> = {
-  lusia: [...COMMON, 'kraina-polana', 'kraina-spi', 'kraina-sciezka', 'kropki', 'memory', 'kraina-pracownia', 'dobranoc', 'melodia', 'sylaby', ...WORDS.map((w) => `czytaj-${w.item}`), 'kolorowanka', 'kolorowanka-gotowe', 'naklejanka', 'litery', 'cyfry', 'liczba-0', ...LETTERS.map((l) => `litera-${l.ch.toLowerCase()}`), ...MAZE_PAIRS.map(([hero]) => `labirynt-${hero}`), 'cienie', 'liczenie', 'liczenie-dotyk', 'album', ...Array.from({ length: 10 }, (_, i) => `liczba-${i + 1}`), ...SOUNDS.map((s) => `gloska-${soundSlug(s)}`)],
-  bazyl: [...COMMON, 'krainy', 'historyjki', ...STORIES.map((x) => `historia-${x}`), ...EMOTIONS.flatMap((e) => [`emocje-${e}`, `minka-${e}`]), 'kraina-warsztat', 'wzory', 'ksztalty', ...SHAPES.map((x) => `ksztalt-${x}`), 'pasuje', 'ukladanka', 'przeciagnij', ...SORT_LINES, ...COLORS_SPOKEN.map((c) => `kolor-${c}`), ...ITEMS.filter((i) => i.mother).map((i) => `mama-${i.id}`)],
-};
+export type { Guide } from './voice-lines.ts';
 
 export function registerVoice(game: Game): void {
   // Bez lektora gra nie ma sensu, więc gra też w trybie cichym (rodzice często mają wyciszony telefon).
@@ -139,8 +127,12 @@ export function registerVoice(game: Game): void {
   game.sound.recoverAfterBackground = true;
   // Mowa i cicha muzyka: 24 kHz wystarczy, a zdekodowane nagrania zajmują połowę pamięci.
   game.sound.sampleRate = 24000;
+  // Nagrania w języku gry: polskie w audio/<głos>/, pozostałe w audio/<język>/<głos>/.
+  const l = lang();
+  const VOICE = voiceLines(l);
+  const dir = l === 'pl' ? 'audio' : `audio/${l}`;
   for (const guide of ['lusia', 'bazyl'] as const)
-    for (const line of VOICE[guide]) game.sound.add(`${guide}-${line}`, url(`audio/${guide}/${line}.m4a`));
+    for (const line of VOICE[guide]) game.sound.add(`${guide}-${line}`, url(`${dir}/${guide}/${line}.m4a`));
   game.sound.add('muzyka', url('audio/muzyka.m4a'));
   // Na starcie tylko polecenia i reakcje; nazwy obiektów (większość nagrań) dekoduje runda, która ich potrzebuje.
   void game.sound.load([...VOICE.lusia.map((l) => `lusia-${l}`), ...VOICE.bazyl.map((l) => `bazyl-${l}`), 'muzyka'].filter((n) => !n.includes('-item-')));

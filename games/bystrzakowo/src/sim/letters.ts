@@ -4,6 +4,7 @@
  * Współrzędne w polu litery 0..1 (szerokość × wysokość).
  */
 import type { Rng } from '@funfactory/core';
+import { lang, type Lang } from './lang.ts';
 import { ITEMS } from './catalog.ts';
 import { MAX_LEVEL } from './puzzles.ts';
 
@@ -71,10 +72,25 @@ export function advance(points: readonly P[], at: number, finger: P, tol: number
 }
 
 /** Litery do rundy: z poziomu dziecka i niższych, z obrazkiem w katalogu, bez powtórzeń. */
+/**
+ * Obiekt do litery w każdym języku („A jak autko”, „A is for apple”, „A wie Affe”). Pusty: litera nie
+ * pojawia się w tym języku (po angielsku nie ma w katalogu nic na „I”).
+ */
+const LETTER_ITEMS: Record<Exclude<Lang, 'pl'>, Record<string, string>> = {
+  en: { A: 'jablko', B: 'pilka', D: 'pies', I: '', K: 'latawiec', L: 'lew', M: 'malpa', O: 'sowa', P: 'swinka', S: 'slonce', T: 'traktor', W: 'wieloryb' },
+  de: { A: 'malpa', B: 'pilka', D: 'dinozaur', I: 'jez', K: 'kot', L: 'lew', M: 'mysz', O: 'pomarancza', P: 'pingwin', S: 'slonce', T: 'traktor', W: 'wieloryb' },
+};
+
+/** Litery w języku `l` z obiektem z tego języka (bez liter, do których nie ma obiektu). */
+export function lettersOf(l: Lang = lang()): Letter[] {
+  if (l === 'pl') return [...LETTERS];
+  return LETTERS.map((x) => ({ ...x, item: LETTER_ITEMS[l][x.ch] ?? '' })).filter((x) => x.item);
+}
+
 export function makeLetterRound(rng: Rng, level: number): Letter[] {
   const l = Math.max(0, Math.min(MAX_LEVEL, Math.round(level)));
   const have = new Set(ITEMS.map((i) => i.id));
-  const ok = LETTERS.filter((x) => x.level <= l && have.has(x.item));
+  const ok = lettersOf().filter((x) => x.level <= l && have.has(x.item));
   // Najpierw litery z bieżącego poziomu (nowe), potem powtórka.
   const fresh = rng.shuffle(ok.filter((x) => x.level === l));
   const old = rng.shuffle(ok.filter((x) => x.level < l));

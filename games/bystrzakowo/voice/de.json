@@ -1,0 +1,2437 @@
+{
+ "voice": "voices/alt",
+ "lang": "de",
+ "tries": 8,
+ "lines": [
+  {
+   "name": "lusia-brawo-1",
+   "text": "Bravo!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-brawo-2",
+   "text": "Toll gemacht!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-brawo-3",
+   "text": "Super, weiter so!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-brawo-4",
+   "text": "Wunderbar!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-brawo-5",
+   "text": "Du bist ja ein kluger Kopf!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-oj-1",
+   "text": "Hoppla, versuch es noch mal.",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-oj-2",
+   "text": "Hmm, das ist es nicht. Versuch es noch einmal!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-nagroda",
+   "text": "Bravo! Du bekommst einen neuen Sticker!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-witaj",
+   "text": "Hallo! Ich bin Lusia, und das ist mein Freund Basil. Such dir ein Häuschen aus und lass uns zusammen spielen!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-pomoc",
+   "text": "Schau genau hin. Du schaffst das!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-kot",
+   "text": "Katze!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-pies",
+   "text": "Hund!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-krowa",
+   "text": "Kuh!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-slon",
+   "text": "Elefant!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-kurczak",
+   "text": "Küken!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-ryba",
+   "text": "Fisch!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-zaba",
+   "text": "Frosch!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-kaczka",
+   "text": "Ente!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-kura",
+   "text": "Huhn!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-cielaczek",
+   "text": "Kälbchen!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-kotek",
+   "text": "Kätzchen!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-owca",
+   "text": "Schaf!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-jagniatko",
+   "text": "Lämmchen!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-swinka",
+   "text": "Schwein!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-prosiaczek",
+   "text": "Ferkel!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-kon",
+   "text": "Pferd!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-zrebak",
+   "text": "Fohlen!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-kaczatko",
+   "text": "Entenküken!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-kijanka",
+   "text": "Kaulquappe!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-lew",
+   "text": "Löwe!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-zyrafa",
+   "text": "Giraffe!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-malpa",
+   "text": "Affe!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-zebra",
+   "text": "Zebra!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-niedzwiedz",
+   "text": "Bär!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-jez",
+   "text": "Igel!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-wiewiorka",
+   "text": "Eichhörnchen!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-sowa",
+   "text": "Eule!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-motyl",
+   "text": "Schmetterling!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-biedronka",
+   "text": "Marienkäfer!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-pszczola",
+   "text": "Biene!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-slimak",
+   "text": "Schnecke!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-krolik",
+   "text": "Kaninchen!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-mysz",
+   "text": "Maus!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-pingwin",
+   "text": "Pinguin!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-zolw",
+   "text": "Schildkröte!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-krab",
+   "text": "Krebs!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-osmiornica",
+   "text": "Krake!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-ptak",
+   "text": "Vogel!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-dinozaur",
+   "text": "Dinosaurier!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-lis",
+   "text": "Fuchs!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-zajac",
+   "text": "Hase!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-dzik",
+   "text": "Wildschwein!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-sarna",
+   "text": "Reh!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-dzieciol",
+   "text": "Specht!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-wieloryb",
+   "text": "Wal!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-delfin",
+   "text": "Delfin!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-meduza",
+   "text": "Qualle!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-konikmorski",
+   "text": "Seepferdchen!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-koza",
+   "text": "Ziege!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-osiolek",
+   "text": "Esel!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-indyk",
+   "text": "Truthahn!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-ges",
+   "text": "Gans!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-foka",
+   "text": "Robbe!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-mors",
+   "text": "Walross!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-mispolarny",
+   "text": "Eisbär!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-hipopotam",
+   "text": "Nilpferd!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-nosorozec",
+   "text": "Nashorn!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-jablko",
+   "text": "Apfel!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-banan",
+   "text": "Banane!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-gruszka",
+   "text": "Birne!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-truskawka",
+   "text": "Erdbeere!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-sliwka",
+   "text": "Pflaume!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-wisnia",
+   "text": "Kirschen!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-pomarancza",
+   "text": "Orange!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-cytryna",
+   "text": "Zitrone!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-winogrona",
+   "text": "Trauben!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-arbuz",
+   "text": "Wassermelone!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-ananas",
+   "text": "Ananas!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-malina",
+   "text": "Himbeere!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-marchewka",
+   "text": "Karotte!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-pomidor",
+   "text": "Tomate!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-ogorek",
+   "text": "Gurke!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-ziemniak",
+   "text": "Kartoffel!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-kukurydza",
+   "text": "Mais!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-papryka",
+   "text": "Paprika!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-brokul",
+   "text": "Brokkoli!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-dynia",
+   "text": "Kürbis!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-groszek",
+   "text": "Erbsen!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-rzodkiewka",
+   "text": "Radieschen!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-grzyb",
+   "text": "Pilz!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-cebula",
+   "text": "Zwiebel!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-auto",
+   "text": "Auto!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-rower",
+   "text": "Fahrrad!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-samolot",
+   "text": "Flugzeug!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-lodka",
+   "text": "Boot!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-autobus",
+   "text": "Bus!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-pociag",
+   "text": "Zug!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-traktor",
+   "text": "Traktor!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-helikopter",
+   "text": "Hubschrauber!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-rakieta",
+   "text": "Rakete!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-hulajnoga",
+   "text": "Roller!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-skuter",
+   "text": "Motorroller!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-straz",
+   "text": "Feuerwehrauto!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-ciezarowka",
+   "text": "Lastwagen!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-pilka",
+   "text": "Ball!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-mis",
+   "text": "Teddybär!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-klocek",
+   "text": "Bauklotz!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-lalka",
+   "text": "Puppe!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-latawiec",
+   "text": "Drachen!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-bebenek",
+   "text": "Trommel!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-konik",
+   "text": "Schaukelpferd!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-baczek",
+   "text": "Kreisel!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-robot",
+   "text": "Roboter!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-balonik",
+   "text": "Luftballon!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-trabka",
+   "text": "Trompete!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-wiaderko",
+   "text": "Eimer!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-sanki",
+   "text": "Schlitten!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-kubek",
+   "text": "Tasse!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-talerz",
+   "text": "Teller!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-lyzka",
+   "text": "Löffel!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-widelec",
+   "text": "Gabel!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-garnek",
+   "text": "Topf!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-czajnik",
+   "text": "Wasserkocher!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-miska",
+   "text": "Schüssel!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-patelnia",
+   "text": "Pfanne!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-butelka",
+   "text": "Fläschchen!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-czapka",
+   "text": "Mütze!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-szalik",
+   "text": "Schal!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-but",
+   "text": "Schuh!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-skarpetka",
+   "text": "Socke!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-koszulka",
+   "text": "T-Shirt!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-spodnie",
+   "text": "Hose!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-sukienka",
+   "text": "Kleid!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-rekawiczki",
+   "text": "Fäustlinge!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-kalosze",
+   "text": "Gummistiefel!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-parasol",
+   "text": "Regenschirm!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-okulary",
+   "text": "Sonnenbrille!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-kapelusz",
+   "text": "Sonnenhut!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-sandaly",
+   "text": "Sandalen!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-stroj",
+   "text": "Badeanzug!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-kurtka",
+   "text": "Jacke!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-slonce",
+   "text": "Sonne!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-chmurka",
+   "text": "Wolke!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-gwiazdka",
+   "text": "Stern!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-ksiezyc",
+   "text": "Mond!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-kwiatek",
+   "text": "Blume!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-drzewo",
+   "text": "Baum!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-lisc",
+   "text": "Blatt!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-tecza",
+   "text": "Regenbogen!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-item-muszelka",
+   "text": "Muschel!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-kraina-polana",
+   "text": "Das ist die Rätselwiese! Such dir ein Häuschen aus.",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-kraina-spi",
+   "text": "Dieses Land schläft noch. Frag Mama oder Papa!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-kraina-sciezka",
+   "text": "Das ist mein Pfad! Hier malen wir mit dem Finger.",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-kropki",
+   "text": "Verbinde die Punkte der Reihe nach! Fang bei der Eins an.",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-memory",
+   "text": "Finde Paare mit gleichen Bildern!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-kraina-pracownia",
+   "text": "Das ist das kleine Atelier! Hier kannst du malen und basteln.",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-dobranoc",
+   "text": "Für heute ist genug gespielt! Lusia und Basil gehen schlafen. Bis morgen!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-melodia",
+   "text": "Hör dir meine Melodie an und spiel sie genauso nach!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-sylaby",
+   "text": "Leg die Silben in die richtige Reihenfolge, dann lesen wir zusammen!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-czytaj-kaczka",
+   "text": "En... te... Ente!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-czytaj-pszczola",
+   "text": "Bie... ne... Biene!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-czytaj-wiaderko",
+   "text": "Ei... mer... Eimer!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-czytaj-gruszka",
+   "text": "Bir... ne... Birne!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-czytaj-widelec",
+   "text": "Ga... bel... Gabel!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-czytaj-lalka",
+   "text": "Pup... pe... Puppe!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-czytaj-kot",
+   "text": "Kat... ze... Katze!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-czytaj-kubek",
+   "text": "Tas... se... Tasse!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-czytaj-malpa",
+   "text": "Af... fe... Affe!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-czytaj-slonce",
+   "text": "Son... ne... Sonne!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-czytaj-chmurka",
+   "text": "Wol... ke... Wolke!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-czytaj-kwiatek",
+   "text": "Blu... me... Blume!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-czytaj-hulajnoga",
+   "text": "Rol... ler... Roller!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-czytaj-banan",
+   "text": "Ba... na... ne... Banane!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-czytaj-pomidor",
+   "text": "To... ma... te... Tomate!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-czytaj-rakieta",
+   "text": "Ra... ke... te... Rakete!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-czytaj-cytryna",
+   "text": "Zi... tro... ne... Zitrone!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-czytaj-slon",
+   "text": "E... le... fant... Elefant!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-czytaj-ananas",
+   "text": "A... na... nas... Ananas!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-czytaj-papryka",
+   "text": "Pa... pri... ka... Paprika!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-czytaj-trabka",
+   "text": "Trom... pe... te... Trompete!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-kolorowanka",
+   "text": "Such dir eine Farbe aus und tipp auf das Bild. Mal es an, wie du willst!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-kolorowanka-gotowe",
+   "text": "Wunderschön! Wenn du fertig bist, tipp auf den grünen Pfeil.",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-naklejanka",
+   "text": "Mach dein eigenes Stickerbild! Zieh einen Sticker auf die Wiese.",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-litery",
+   "text": "Schreib den Buchstaben mit dem Finger! Fang beim grünen Punkt an.",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-cyfry",
+   "text": "Schreib die Zahl mit dem Finger! Fang beim grünen Punkt an.",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-liczba-0",
+   "text": "Null! Da ist nichts.",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-litera-i",
+   "text": "I wie Igel!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-litera-l",
+   "text": "L wie Löwe!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-litera-t",
+   "text": "T wie Traktor!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-litera-o",
+   "text": "O wie Orange!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-litera-a",
+   "text": "A wie Affe!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-litera-m",
+   "text": "M wie Maus!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-litera-w",
+   "text": "W wie Wal!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-litera-k",
+   "text": "K wie Katze!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-litera-p",
+   "text": "P wie Pinguin!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-litera-d",
+   "text": "D wie Dinosaurier!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-litera-b",
+   "text": "B wie Ball!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-litera-s",
+   "text": "S wie Sonne!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-labirynt-kurczak",
+   "text": "Bring das Küken zu seiner Mama!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-labirynt-kotek",
+   "text": "Bring das Kätzchen zu seiner Mama!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-labirynt-prosiaczek",
+   "text": "Bring das Ferkel zu seiner Mama!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-labirynt-cielaczek",
+   "text": "Bring das Kälbchen zu seiner Mama!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-labirynt-kaczatko",
+   "text": "Bring das Entenküken zu seiner Mama!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-labirynt-pszczola",
+   "text": "Bring die Biene zur Blume!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-labirynt-motyl",
+   "text": "Bring den Schmetterling zur Blume!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-labirynt-krolik",
+   "text": "Bring das Kaninchen zur Karotte!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-labirynt-malpa",
+   "text": "Bring den Affen zur Banane!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-labirynt-wiewiorka",
+   "text": "Bring das Eichhörnchen zum Baum!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-cienie",
+   "text": "Wessen Schatten ist das? Tipp auf das richtige Bild.",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-liczenie",
+   "text": "Zähl mal, wie viele es sind!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-liczenie-dotyk",
+   "text": "Tipp sie der Reihe nach an und zähl mit mir.",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-album",
+   "text": "Das ist dein Stickeralbum. Sammle sie alle!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-liczba-1",
+   "text": "Eins!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-liczba-2",
+   "text": "Zwei!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-liczba-3",
+   "text": "Drei!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-liczba-4",
+   "text": "Vier!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-liczba-5",
+   "text": "Fünf!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-liczba-6",
+   "text": "Sechs!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-liczba-7",
+   "text": "Sieben!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-liczba-8",
+   "text": "Acht!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-liczba-9",
+   "text": "Neun!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-liczba-10",
+   "text": "Zehn!",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-gloska-a",
+   "text": "Was fängt mit... A an?",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-gloska-b",
+   "text": "Was fängt mit... B an?",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-gloska-e",
+   "text": "Was fängt mit... E an?",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-gloska-f",
+   "text": "Was fängt mit... F an?",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-gloska-g",
+   "text": "Was fängt mit... G an?",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-gloska-h",
+   "text": "Was fängt mit... H an?",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-gloska-k",
+   "text": "Was fängt mit... K an?",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-gloska-l",
+   "text": "Was fängt mit... L an?",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-gloska-m",
+   "text": "Was fängt mit... M an?",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-gloska-p",
+   "text": "Was fängt mit... P an?",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-gloska-r",
+   "text": "Was fängt mit... R an?",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-gloska-s",
+   "text": "Was fängt mit... S an?",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-gloska-t",
+   "text": "Was fängt mit... T an?",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-gloska-w",
+   "text": "Was fängt mit... W an?",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-gloska-z",
+   "text": "Was fängt mit... Z an?",
+   "voice": "voices/alt"
+  },
+  {
+   "name": "bazyl-brawo-1",
+   "text": "Bravo!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-brawo-2",
+   "text": "Toll gemacht!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-brawo-3",
+   "text": "Super, weiter so!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-brawo-4",
+   "text": "Wunderbar!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-brawo-5",
+   "text": "Du bist ja ein kluger Kopf!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-oj-1",
+   "text": "Hoppla, versuch es noch mal.",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-oj-2",
+   "text": "Hmm, das ist es nicht. Versuch es noch einmal!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-nagroda",
+   "text": "Bravo! Du bekommst einen neuen Sticker!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-witaj",
+   "text": "Hey! Ich bin Basil. Komm, das wird lustig!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-pomoc",
+   "text": "Na los, tipp auf ein Bild!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-kot",
+   "text": "Katze!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-pies",
+   "text": "Hund!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-krowa",
+   "text": "Kuh!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-slon",
+   "text": "Elefant!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-kurczak",
+   "text": "Küken!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-ryba",
+   "text": "Fisch!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-zaba",
+   "text": "Frosch!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-kaczka",
+   "text": "Ente!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-kura",
+   "text": "Huhn!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-cielaczek",
+   "text": "Kälbchen!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-kotek",
+   "text": "Kätzchen!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-owca",
+   "text": "Schaf!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-jagniatko",
+   "text": "Lämmchen!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-swinka",
+   "text": "Schwein!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-prosiaczek",
+   "text": "Ferkel!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-kon",
+   "text": "Pferd!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-zrebak",
+   "text": "Fohlen!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-kaczatko",
+   "text": "Entenküken!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-kijanka",
+   "text": "Kaulquappe!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-lew",
+   "text": "Löwe!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-zyrafa",
+   "text": "Giraffe!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-malpa",
+   "text": "Affe!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-zebra",
+   "text": "Zebra!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-niedzwiedz",
+   "text": "Bär!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-jez",
+   "text": "Igel!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-wiewiorka",
+   "text": "Eichhörnchen!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-sowa",
+   "text": "Eule!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-motyl",
+   "text": "Schmetterling!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-biedronka",
+   "text": "Marienkäfer!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-pszczola",
+   "text": "Biene!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-slimak",
+   "text": "Schnecke!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-krolik",
+   "text": "Kaninchen!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-mysz",
+   "text": "Maus!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-pingwin",
+   "text": "Pinguin!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-zolw",
+   "text": "Schildkröte!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-krab",
+   "text": "Krebs!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-osmiornica",
+   "text": "Krake!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-ptak",
+   "text": "Vogel!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-dinozaur",
+   "text": "Dinosaurier!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-lis",
+   "text": "Fuchs!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-zajac",
+   "text": "Hase!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-dzik",
+   "text": "Wildschwein!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-sarna",
+   "text": "Reh!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-dzieciol",
+   "text": "Specht!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-wieloryb",
+   "text": "Wal!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-delfin",
+   "text": "Delfin!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-meduza",
+   "text": "Qualle!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-konikmorski",
+   "text": "Seepferdchen!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-koza",
+   "text": "Ziege!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-osiolek",
+   "text": "Esel!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-indyk",
+   "text": "Truthahn!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-ges",
+   "text": "Gans!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-foka",
+   "text": "Robbe!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-mors",
+   "text": "Walross!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-mispolarny",
+   "text": "Eisbär!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-hipopotam",
+   "text": "Nilpferd!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-nosorozec",
+   "text": "Nashorn!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-jablko",
+   "text": "Apfel!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-banan",
+   "text": "Banane!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-gruszka",
+   "text": "Birne!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-truskawka",
+   "text": "Erdbeere!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-sliwka",
+   "text": "Pflaume!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-wisnia",
+   "text": "Kirschen!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-pomarancza",
+   "text": "Orange!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-cytryna",
+   "text": "Zitrone!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-winogrona",
+   "text": "Trauben!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-arbuz",
+   "text": "Wassermelone!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-ananas",
+   "text": "Ananas!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-malina",
+   "text": "Himbeere!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-marchewka",
+   "text": "Karotte!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-pomidor",
+   "text": "Tomate!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-ogorek",
+   "text": "Gurke!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-ziemniak",
+   "text": "Kartoffel!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-kukurydza",
+   "text": "Mais!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-papryka",
+   "text": "Paprika!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-brokul",
+   "text": "Brokkoli!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-dynia",
+   "text": "Kürbis!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-groszek",
+   "text": "Erbsen!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-rzodkiewka",
+   "text": "Radieschen!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-grzyb",
+   "text": "Pilz!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-cebula",
+   "text": "Zwiebel!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-auto",
+   "text": "Auto!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-rower",
+   "text": "Fahrrad!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-samolot",
+   "text": "Flugzeug!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-lodka",
+   "text": "Boot!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-autobus",
+   "text": "Bus!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-pociag",
+   "text": "Zug!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-traktor",
+   "text": "Traktor!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-helikopter",
+   "text": "Hubschrauber!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-rakieta",
+   "text": "Rakete!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-hulajnoga",
+   "text": "Roller!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-skuter",
+   "text": "Motorroller!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-straz",
+   "text": "Feuerwehrauto!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-ciezarowka",
+   "text": "Lastwagen!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-pilka",
+   "text": "Ball!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-mis",
+   "text": "Teddybär!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-klocek",
+   "text": "Bauklotz!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-lalka",
+   "text": "Puppe!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-latawiec",
+   "text": "Drachen!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-bebenek",
+   "text": "Trommel!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-konik",
+   "text": "Schaukelpferd!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-baczek",
+   "text": "Kreisel!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-robot",
+   "text": "Roboter!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-balonik",
+   "text": "Luftballon!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-trabka",
+   "text": "Trompete!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-wiaderko",
+   "text": "Eimer!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-sanki",
+   "text": "Schlitten!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-kubek",
+   "text": "Tasse!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-talerz",
+   "text": "Teller!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-lyzka",
+   "text": "Löffel!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-widelec",
+   "text": "Gabel!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-garnek",
+   "text": "Topf!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-czajnik",
+   "text": "Wasserkocher!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-miska",
+   "text": "Schüssel!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-patelnia",
+   "text": "Pfanne!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-butelka",
+   "text": "Fläschchen!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-czapka",
+   "text": "Mütze!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-szalik",
+   "text": "Schal!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-but",
+   "text": "Schuh!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-skarpetka",
+   "text": "Socke!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-koszulka",
+   "text": "T-Shirt!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-spodnie",
+   "text": "Hose!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-sukienka",
+   "text": "Kleid!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-rekawiczki",
+   "text": "Fäustlinge!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-kalosze",
+   "text": "Gummistiefel!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-parasol",
+   "text": "Regenschirm!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-okulary",
+   "text": "Sonnenbrille!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-kapelusz",
+   "text": "Sonnenhut!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-sandaly",
+   "text": "Sandalen!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-stroj",
+   "text": "Badeanzug!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-kurtka",
+   "text": "Jacke!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-slonce",
+   "text": "Sonne!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-chmurka",
+   "text": "Wolke!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-gwiazdka",
+   "text": "Stern!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-ksiezyc",
+   "text": "Mond!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-kwiatek",
+   "text": "Blume!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-drzewo",
+   "text": "Baum!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-lisc",
+   "text": "Blatt!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-tecza",
+   "text": "Regenbogen!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-item-muszelka",
+   "text": "Muschel!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-krainy",
+   "text": "Tipp oben auf die bunten Kreise, um andere Länder zu besuchen!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-historyjki",
+   "text": "Was war zuerst? Leg die Bilder der Reihe nach!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-historia-kwiat",
+   "text": "Zuerst ein Samen, dann ein Keimling, und am Ende eine Blume!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-historia-kurczak",
+   "text": "Zuerst ein Ei, dann bricht die Schale, und am Ende ist da ein kleines Küken!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-historia-motyl",
+   "text": "Zuerst eine Raupe, dann ein Kokon, und am Ende ein Schmetterling!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-historia-balwan",
+   "text": "Zuerst eine Schneekugel, dann noch eine, und am Ende ein Schneemann!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-historia-jablko",
+   "text": "Zuerst ein ganzer Apfel, dann ein Biss, und am Ende ein Apfelgriebs!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-historia-lody",
+   "text": "Zuerst ein volles Eis, dann immer weniger, und am Ende eine leere Waffel!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-historia-zabka",
+   "text": "Zuerst kleine Eier, dann eine Kaulquappe, und am Ende ein Frosch!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-historia-kanapka",
+   "text": "Zuerst das Brot, dann die Butter, und am Ende ein leckeres Butterbrot!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-historia-wieza",
+   "text": "Zuerst ein Klotz, dann zwei, und am Ende ein hoher Turm!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-historia-balon",
+   "text": "Zuerst ein leerer Ballon, dann ein bisschen Luft, und am Ende ein großer Ballon!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-historia-tort",
+   "text": "Zuerst rühren wir den Teig, dann backen wir, und am Ende gibt es eine Torte!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-historia-zamek",
+   "text": "Zuerst ein Eimer Sand, dann ein Sandturm, und am Ende eine Sandburg!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-historia-jajko",
+   "text": "Zuerst ein Ei, dann schlagen wir es in die Pfanne, und am Ende ein Spiegelei!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-historia-pizza",
+   "text": "Zuerst eine Teigkugel, dann die Soße, und am Ende eine leckere Pizza!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-historia-swieca",
+   "text": "Zuerst eine lange Kerze, dann immer kürzer, und am Ende ein kleiner Stummel!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-historia-kakao",
+   "text": "Zuerst eine leere Tasse, dann Milch, und am Ende warmer Kakao!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-historia-gniazdo",
+   "text": "Zuerst ein paar Zweige, dann ein Nest, und am Ende ein Vogel im Nest!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-historia-drzewko",
+   "text": "Zuerst ein kleiner Setzling, dann ein Bäumchen, und am Ende ein Apfelbaum mit Äpfeln!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-historia-samolot",
+   "text": "Zuerst ein Blatt Papier, dann falten wir es, und am Ende ein Papierflieger!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-historia-dzien",
+   "text": "Zuerst geht morgens die Sonne auf, dann ist Tag, und am Ende ist Nacht!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-emocje-wesoly",
+   "text": "Zeig mir ein fröhliches Gesicht!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-minka-wesoly",
+   "text": "Ein fröhliches Gesicht!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-emocje-smutny",
+   "text": "Zeig mir ein trauriges Gesicht!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-minka-smutny",
+   "text": "Ein trauriges Gesicht!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-emocje-zly",
+   "text": "Zeig mir ein wütendes Gesicht!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-minka-zly",
+   "text": "Ein wütendes Gesicht!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-emocje-zdziwiony",
+   "text": "Zeig mir ein überraschtes Gesicht!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-minka-zdziwiony",
+   "text": "Ein überraschtes Gesicht!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-emocje-przestraszony",
+   "text": "Zeig mir ein ängstliches Gesicht!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-minka-przestraszony",
+   "text": "Ein ängstliches Gesicht!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-emocje-spiacy",
+   "text": "Zeig mir ein müdes Gesicht!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-minka-spiacy",
+   "text": "Ein müdes Gesicht!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-kraina-warsztat",
+   "text": "Willkommen in meiner Werkstatt! Hier ziehen und sortieren wir.",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-wzory",
+   "text": "Was kommt als Nächstes? Zieh das fehlende Bild hin!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-ksztalty",
+   "text": "Steck jeden Klotz in sein Loch!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-ksztalt-kolo",
+   "text": "Kreis!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-ksztalt-kwadrat",
+   "text": "Quadrat!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-ksztalt-trojkat",
+   "text": "Dreieck!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-ksztalt-prostokat",
+   "text": "Rechteck!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-ksztalt-gwiazda",
+   "text": "Stern!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-ksztalt-serce",
+   "text": "Herz!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-ksztalt-owal",
+   "text": "Oval!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-ksztalt-romb",
+   "text": "Raute!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-pasuje",
+   "text": "Was passt hier nicht? Tipp auf dieses Bild.",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-ukladanka",
+   "text": "Setz das Bild zusammen! Zieh die Teile an ihren Platz.",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-przeciagnij",
+   "text": "Halte ein Bild mit dem Finger fest und zieh es in die Kiste.",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-sort-kategorie",
+   "text": "Sortier mal! Jedes Ding kommt in seine Kiste.",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-sort-kolory",
+   "text": "Leg jedes Ding in den Eimer mit der gleichen Farbe!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-sort-domy",
+   "text": "Wo wohnen diese Tiere? Bring jedes nach Hause!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-sort-pory",
+   "text": "Was tragen wir im Sommer, und was im Winter?",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-sort-wielkosc",
+   "text": "Welche Tiere sind groß, und welche sind klein?",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-sort-ruch",
+   "text": "Wie bewegen sich diese Dinge? Sortier sie!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-kat-owoce",
+   "text": "Hier kommt das Obst hin!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-kat-warzywa",
+   "text": "Hier kommt das Gemüse hin!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-kat-zwierzeta",
+   "text": "Hier kommen die Tiere hin!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-kat-pojazdy",
+   "text": "Hier kommen die Fahrzeuge hin!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-kat-ubrania",
+   "text": "Hier kommt die Kleidung hin!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-kat-kuchnia",
+   "text": "Hier kommen Küchensachen hin!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-kat-zabawki",
+   "text": "Hier kommt das Spielzeug hin!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-barwa-czerwony",
+   "text": "Roter Eimer!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-barwa-zolty",
+   "text": "Gelber Eimer!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-barwa-zielony",
+   "text": "Grüner Eimer!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-barwa-niebieski",
+   "text": "Blauer Eimer!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-barwa-pomaranczowy",
+   "text": "Oranger Eimer!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-barwa-rozowy",
+   "text": "Rosa Eimer!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-barwa-fioletowy",
+   "text": "Lila Eimer!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-barwa-brazowy",
+   "text": "Brauner Eimer!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-barwa-bialy",
+   "text": "Weißer Eimer!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-dom-wies",
+   "text": "Auf dem Bauernhof!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-dom-las",
+   "text": "Im Wald!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-dom-woda",
+   "text": "Im Wasser!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-dom-afryka",
+   "text": "In Afrika!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-dom-lod",
+   "text": "Wo es Eis und Schnee gibt!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-pora-lato",
+   "text": "Für den Sommer!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-pora-zima",
+   "text": "Für den Winter!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-rozmiar-duze",
+   "text": "Große Tiere!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-rozmiar-male",
+   "text": "Kleine Tiere!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-ruch-lata",
+   "text": "Was fliegt!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-ruch-plywa",
+   "text": "Was schwimmt!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-ruch-jezdzi",
+   "text": "Was fährt!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-kolor-czerwony",
+   "text": "Zeig mir etwas Rotes!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-kolor-zolty",
+   "text": "Zeig mir etwas Gelbes!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-kolor-zielony",
+   "text": "Zeig mir etwas Grünes!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-kolor-niebieski",
+   "text": "Zeig mir etwas Blaues!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-kolor-pomaranczowy",
+   "text": "Zeig mir etwas Oranges!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-kolor-rozowy",
+   "text": "Zeig mir etwas Rosanes!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-kolor-fioletowy",
+   "text": "Zeig mir etwas Lilanes!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-kolor-brazowy",
+   "text": "Zeig mir etwas Braunes!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-kolor-bialy",
+   "text": "Zeig mir etwas Weißes!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-mama-kurczak",
+   "text": "Wo ist die Mama vom Küken?",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-mama-cielaczek",
+   "text": "Wo ist die Mama vom Kälbchen?",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-mama-kotek",
+   "text": "Wo ist die Mama vom Kätzchen?",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-mama-jagniatko",
+   "text": "Wo ist die Mama vom Lämmchen?",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-mama-prosiaczek",
+   "text": "Wo ist die Mama vom Ferkel?",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-mama-zrebak",
+   "text": "Wo ist die Mama vom Fohlen?",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-mama-kaczatko",
+   "text": "Wo ist die Mama vom Entenküken?",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-mama-kijanka",
+   "text": "Wo ist die Mama von der Kaulquappe?",
+   "voice": "voices/prezenter"
+  }
+ ]
+}

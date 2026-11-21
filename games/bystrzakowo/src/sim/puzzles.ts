@@ -1,5 +1,6 @@
 import type { Rng } from '@funfactory/core';
-import { firstSound, ITEMS, lookalike, type Category, type Color, type Item } from './catalog.ts';
+import { lang, type Lang } from './lang.ts';
+import { ITEMS, lookalike, startOf, type Category, type Color, type Item } from './catalog.ts';
 
 /**
  * Silniki zagadek: z katalogu i poziomu trudności (0..MAX_LEVEL) generują pytania.
@@ -62,19 +63,26 @@ export type Question = ShadowQuestion | OddQuestion | CountQuestion | ColorQuest
  * Głoski, o które pytamy (lektor ma do nich nagrania „gloska-<głoska>”). Pomijamy zwarte (k, p, t, b, d, g),
  * bo w izolacji brzmią jak sylaby („ka”, „pe”) i myliłyby dzieci.
  */
-export const SOUNDS = ['a', 'o', 'u', 'm', 'l', 'w', 's', 'sz', 'ż', 'ś', 'r', 'h', 'z', 'cz', 'j', 'n', 'ł'] as const;
+export const SOUNDS_PL = ['a', 'o', 'u', 'm', 'l', 'w', 's', 'sz', 'ż', 'ś', 'r', 'h', 'z', 'cz', 'j', 'n', 'ł'] as const;
+/** Angielski i niemiecki: pierwsza litera słowa (tak uczą przedszkola w tych krajach). */
+export const LETTERS_EN = ['a', 'b', 'c', 'd', 'f', 'g', 'h', 'l', 'm', 'o', 'p', 'r', 's', 't', 'w'] as const;
+export const LETTERS_DE = ['a', 'b', 'e', 'f', 'g', 'h', 'k', 'l', 'm', 'p', 'r', 's', 't', 'w', 'z'] as const;
+/** Głoski (pl) albo litery (en, de) w zabawie „Co zaczyna się na…?” w bieżącym języku. */
+export const soundsOf = (l: Lang = lang()): readonly string[] => (l === 'pl' ? SOUNDS_PL : l === 'en' ? LETTERS_EN : LETTERS_DE);
+/** Wszystkie głoski i litery ze wszystkich języków (lista nagrań). */
+export const SOUNDS: readonly string[] = SOUNDS_PL;
 
 /** Nazwa pliku nagrania głoski (bez polskich znaków w nazwach plików). */
 export const soundSlug = (sound: string): string => sound.replace('ż', 'zh').replace('ś', 'si').replace('ł', 'lw').replace('ź', 'zi');
 
 /** Głoski łatwe do pomylenia: zmyłki nie mogą być z tej samej grupy co odpowiedź. */
-const CONFUSABLE: string[][] = [
-  ['s', 'ś', 'sz', 'z', 'ź', 'ż', 'c', 'ć', 'cz', 'dz', 'dź', 'dż'],
-  ['l', 'ł', 'r'],
-  ['o', 'u'],
-  ['m', 'n', 'ń'],
-];
-const confusable = (a: string, b: string) => a === b || CONFUSABLE.some((g) => g.includes(a) && g.includes(b));
+const CONFUSABLE: Record<Lang, string[][]> = {
+  pl: [['s', 'ś', 'sz', 'z', 'ź', 'ż', 'c', 'ć', 'cz', 'dz', 'dź', 'dż'], ['l', 'ł', 'r'], ['o', 'u'], ['m', 'n', 'ń']],
+  // Nazwy liter, które się rymują („bee, dee, pee”), i te o tym samym dźwięku (c/k/s).
+  en: [['b', 'c', 'd', 'e', 'g', 'p', 't', 'v', 'z'], ['c', 'k', 's'], ['m', 'n']],
+  de: [['b', 'c', 'd', 'e', 'g', 'p', 't', 'w'], ['f', 'v'], ['m', 'n'], ['s', 'z']],
+};
+const confusable = (a: string, b: string) => a === b || CONFUSABLE[lang()].some((g) => g.includes(a) && g.includes(b));
 
 /** Liczba odpowiedzi do wyboru na danym poziomie. */
 export const optionCount = (level: number): number => [2, 3, 4][clampLevel(level)] as number;
@@ -171,14 +179,14 @@ export function colorQuestion(rng: Rng, level: number, recent: readonly string[]
 }
 
 export function soundQuestion(rng: Rng, level: number, recent: readonly string[] = []): SoundQuestion {
-  const known = new Set<string>(SOUNDS);
-  const pool = ITEMS.filter((i) => known.has(firstSound(i.name)));
+  const known = new Set<string>(soundsOf());
+  const pool = ITEMS.filter((i) => known.has(startOf(i)));
   const target = freshPick(rng, pool, recent);
-  const sound = firstSound(target.name);
+  const sound = startOf(target);
   const n = Math.max(3, optionCount(level));
   const decoys = take(
     rng,
-    ITEMS.filter((i) => !confusable(firstSound(i.name), sound)),
+    ITEMS.filter((i) => startOf(i) !== '' && !confusable(startOf(i), sound)),
     n - 1,
   );
   return { kind: 'gloski', sound, target, options: rng.shuffle([target, ...decoys]) };

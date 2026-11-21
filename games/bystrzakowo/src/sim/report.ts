@@ -5,11 +5,13 @@
  * Zdania są w czasie teraźniejszym i bez form zależnych od płci („Zosia liczy”, „Staś liczy”),
  * imię zawsze w mianowniku, więc nie trzeba pytać o płeć ani odmieniać imion.
  */
-import { DIGITS, LETTERS } from './letters.ts';
+import { DIGITS, lettersOf } from './letters.ts';
 import { factsOf, mastered, shiftDay, struggling, summarize, type Journal } from './journal.ts';
+import { lang } from './lang.ts';
 import type { Activity } from './realms.ts';
+import { REPORT_TEXT, type Domain, type ReportText } from './report-text.ts';
 
-export type Domain = 'liczby' | 'litery' | 'kolory' | 'emocje' | 'logika' | 'tworczosc';
+export type { Domain } from './report-text.ts';
 
 export interface SkillLine {
   domain: Domain;
@@ -38,106 +40,19 @@ export interface ReportInput {
   today: string;
 }
 
-const COLOR_NAMES: Record<string, string> = {
-  czerwony: 'czerwony',
-  zolty: 'żółty',
-  zielony: 'zielony',
-  niebieski: 'niebieski',
-  pomaranczowy: 'pomarańczowy',
-  rozowy: 'różowy',
-  fioletowy: 'fioletowy',
-  brazowy: 'brązowy',
-  bialy: 'biały',
-};
-const SHAPE_NAMES: Record<string, string> = { kolo: 'koło', kwadrat: 'kwadrat', trojkat: 'trójkąt', prostokat: 'prostokąt', gwiazda: 'gwiazda', serce: 'serce', owal: 'owal', romb: 'romb' };
-const EMOTION_NAMES: Record<string, string> = { wesoly: 'radość', smutny: 'smutek', zly: 'złość', zdziwiony: 'zdziwienie', przestraszony: 'strach', spiacy: 'senność' };
-
 const LOGIC: Activity[] = ['cienie', 'pasuje', 'mamy', 'wzory', 'sortowanie', 'historyjki', 'memory', 'ukladanka', 'labirynt'];
-/** Co dziecko robi w zagadkach logicznych (opis i odmiana „1 / 2 / 5 …”). */
-const LOGIC_LINES: Partial<Record<Activity, [string, string, string, string]>> = {
-  historyjki: ['Układa historyjki w dobrej kolejności', 'historyjka', 'historyjki', 'historyjek'],
-  memory: ['Znajduje pary w grze w pary', 'plansza', 'plansze', 'plansz'],
-  sortowanie: ['Segreguje według kategorii, koloru i wielkości', 'zadanie', 'zadania', 'zadań'],
-  wzory: ['Dokańcza wzory i rytmy', 'wzór', 'wzory', 'wzorów'],
-  cienie: ['Dopasowuje przedmioty do cieni', 'cień', 'cienie', 'cieni'],
-  pasuje: ['Wskazuje, co nie pasuje do reszty', 'zagadka', 'zagadki', 'zagadek'],
-  mamy: ['Łączy zwierzątka z ich mamami', 'para', 'pary', 'par'],
-  ukladanka: ['Składa układanki', 'układanka', 'układanki', 'układanek'],
-  labirynt: ['Przechodzi labirynty', 'labirynt', 'labirynty', 'labiryntów'],
-};
 
-/** Jak idzie, z liczby pomyłek na zadanie. */
-const quality = (misses: number, tasks: number): [string, number] => {
+/** Jak idzie, z liczby pomyłek na zadanie: indeks opisu (0 dobrze .. 2 trudno) i gwiazdki. */
+const quality = (misses: number, tasks: number): [number, number] => {
   const r = misses / Math.max(1, tasks);
-  return r < 0.15 ? ['prawie bez pomyłek', 3] : r < 0.5 ? ['czasem z pomyłką', 2] : ['jeszcze często z pomyłkami', 1];
+  return r < 0.15 ? [0, 3] : r < 0.5 ? [1, 2] : [2, 1];
 };
-
-/** „Pierwsze razy” w każdej zabawie (kolejność: od najbardziej „dumnych”). */
-const FIRSTS: [Activity, string][] = [
-  ['historyjki', 'pierwsza ułożona historyjka'],
-  ['litery', 'pierwsza narysowana literka'],
-  ['cyfry', 'pierwsza narysowana cyferka'],
-  ['sylaby', 'pierwsze słowo ułożone z sylab'],
-  ['ukladanka', 'pierwsza ułożona układanka'],
-  ['melodia', 'pierwsza powtórzona melodia'],
-  ['kolorowanka', 'pierwsza kolorowanka'],
-  ['naklejanka', 'pierwszy obrazek z naklejek'],
-  ['kropki', 'pierwszy obrazek z kropek'],
-  ['labirynt', 'pierwszy przebyty labirynt'],
-  ['wzory', 'pierwszy dokończony wzór'],
-  ['memory', 'pierwsza gra w pary'],
-  ['sortowanie', 'pierwsze segregowanie'],
-  ['liczenie', 'pierwsze liczenie'],
-  ['gloski', 'pierwsze głoski'],
-  ['kolory', 'pierwsze kolory'],
-  ['ksztalty', 'pierwsze kształty'],
-  ['emocje', 'pierwsze minki'],
-  ['cienie', 'pierwsze cienie'],
-  ['pasuje', 'pierwsze „co nie pasuje”'],
-  ['mamy', 'pierwsze mamy zwierzątek'],
-];
 
 const capital = (s: string) => s[0]!.toUpperCase() + s.slice(1);
 
-export const TIPS: Record<Domain, string[]> = {
-  liczby: [
-    'Na spacerze liczcie razem schody, auta albo ptaki. Niech dziecko dotyka palcem każdej liczonej rzeczy.',
-    'Przy nakrywaniu do stołu poproś: „podaj cztery łyżki”. Liczenie w codziennych sprawach uczy najlepiej.',
-    'Zagrajcie w chowanego i liczcie na głos do dziesięciu, raz Ty, raz dziecko.',
-  ],
-  litery: [
-    'Zabawa „Co zaczyna się na…?”: szukajcie w domu rzeczy na głoskę „m” (miska, miś, mleko).',
-    'Narysuj palcem literkę na plecach dziecka i niech zgadnie, jaka to. Potem zamiana.',
-    'Na szyldach i w sklepie szukajcie pierwszej litery imienia dziecka.',
-    'Wyklaskujcie sylaby w imionach domowników: ma-ma, ta-ta, bab-cia.',
-  ],
-  kolory: [
-    'Kolorowe łowy: kto pierwszy znajdzie w pokoju trzy zielone rzeczy?',
-    'Przy sprzątaniu klocków sortujcie je według kolorów albo kształtów.',
-    'Szukajcie kształtów na spacerze: okrągłe koła, kwadratowe okna, trójkątne dachy.',
-  ],
-  emocje: [
-    'Przy czytaniu książeczki zapytaj: „jak myślisz, co teraz czuje ten miś?”.',
-    'Pokazujcie sobie miny przed lustrem: wesołą, smutną, zdziwioną. Kto zgadnie, jaka to?',
-    'Wieczorem porozmawiajcie, co dziś było wesołe, a co smutne.',
-  ],
-  logika: [
-    'Po spacerze albo pieczeniu poproś, żeby dziecko opowiedziało po kolei: co było najpierw, a co potem.',
-    'Ułóżcie z kredek rytm: czerwona, niebieska, czerwona… Co będzie dalej?',
-    'Zagrajcie w „Co zniknęło?”: połóż cztery przedmioty, dziecko zamyka oczy, a Ty jeden chowasz.',
-  ],
-  tworczosc: [
-    'Powieście razem rysunek dziecka na lodówce. Dziecko widzi, że jego praca jest ważna.',
-    'Zróbcie domowy koncert: garnki, łyżki i pudełka jako bębenki.',
-  ],
-};
+/** Wskazówki w bieżącym języku (polskie: zgodność z testami). */
+export const TIPS = REPORT_TEXT.pl.tips;
 
-const list = (xs: string[]) => xs.join(', ');
-const plural = (n: number, one: string, few: string, many: string) => {
-  const t = n % 100;
-  const u = n % 10;
-  return n === 1 ? one : u >= 2 && u <= 4 && (t < 12 || t > 14) ? few : many;
-};
 
 /** Ile dni opanowanych / próbowanych w grupie umiejętności. */
 function split(m: Map<string, string>): { ok: string[]; hard: string[]; tried: string[] } {
@@ -158,8 +73,9 @@ function totals(j: Journal): Partial<Record<Activity, number>> {
 }
 
 export function makeReport(input: ReportInput): Report {
-  const { journal: j, levels, today } = input;
-  const who = input.name?.trim() || 'Dziecko';
+  const { journal: j, today } = input;
+  const P = REPORT_TEXT[lang()];
+  const who = input.name?.trim() || P.child;
   const from = shiftDay(today, -6);
   const w = summarize(j, from, today);
   const minutes = Math.round(w.sec / 60);
@@ -175,16 +91,16 @@ export function makeReport(input: ReportInput): Report {
     let upTo = 0;
     while (okSet.has(upTo + 1)) upTo++;
     const okSorted = [...okSet].sort((a, b) => a - b);
-    if (upTo >= 2) lines.push(`${who} liczy bez pomyłek do ${upTo}.`);
-    else if (okSorted.length) lines.push(`${who} bez pomyłek liczy zbiory po ${list(okSorted.map(String))} przedmiotów, mniejsze liczby jeszcze ćwiczy.`);
-    else if (counts.tried.length) lines.push(`${who} ćwiczy liczenie przedmiotów.`);
+    if (upTo >= 2) lines.push(P.countUpTo(who, upTo));
+    else if (okSorted.length) lines.push(P.countSets(who, okSorted.map(String)));
+    else if (counts.tried.length) lines.push(P.countPractice(who));
     const hard = counts.hard.map(Number).sort((a, b) => a - b);
-    if (hard.length) lines.push(`Jeszcze sprawiają kłopot: ${list(hard.map(String))}.`);
-    if (digits.length) lines.push(`Narysowane cyferki: ${list(digits)} (${digits.length} z ${DIGITS.length}).`);
-    if (all.kropki) lines.push(`Obrazki z kropek połączone po kolei: ${all.kropki}.`);
-    if (!lines.length) lines.push('Liczenia jeszcze nie było. Zajrzyjcie na Polanę Zagadek („Liczenie”) i na Ścieżkę Lusi („Cyferki”).');
+    if (hard.length) lines.push(P.countHard(hard.map(String)));
+    if (digits.length) lines.push(P.digitsDrawn(digits, DIGITS.length));
+    if (all.kropki) lines.push(P.dots(all.kropki));
+    if (!lines.length) lines.push(P.countNone);
     const stars = counts.tried.length ? starsOf(counts.ok.length, counts.tried.length) : digits.length || all.kropki ? 1 : 0;
-    skills.push({ domain: 'liczby', title: 'Liczby i liczenie', lines, stars });
+    skills.push({ domain: 'liczby', title: P.titles.liczby, lines, stars });
   }
 
   // Litery i głoski.
@@ -192,14 +108,14 @@ export function makeReport(input: ReportInput): Report {
     const sounds = split(factsOf(j, 'gloska'));
     const letters = [...factsOf(j, 'litera').keys()];
     const lines: string[] = [];
-    if (sounds.ok.length) lines.push(`${who} słyszy, od jakiej głoski zaczyna się słowo: ${list(sounds.ok.map((s) => `„${s}”`))}.`);
-    else if (sounds.tried.length) lines.push(`${who} ćwiczy słuchanie pierwszej głoski w słowach.`);
-    if (sounds.hard.length) lines.push(`Trudniejsze głoski: ${list(sounds.hard.map((s) => `„${s}”`))}.`);
-    if (letters.length) lines.push(`Narysowane literki: ${list(letters)} (${letters.length} z ${LETTERS.length}).`);
-    if (all.sylaby) lines.push(`Słowa ułożone z sylab: ${all.sylaby}.`);
-    if (!lines.length) lines.push('Głosek i liter jeszcze nie było. Spróbujcie zabaw „Głoski”, „Sylaby” i „Literki”.');
+    if (sounds.ok.length) lines.push(P.soundsOk(who, sounds.ok.map(P.sound)));
+    else if (sounds.tried.length) lines.push(P.soundsPractice(who));
+    if (sounds.hard.length) lines.push(P.soundsHard(sounds.hard.map(P.sound)));
+    if (letters.length) lines.push(P.lettersDrawn(letters, lettersOf().length));
+    if (all.sylaby) lines.push(P.syllables(all.sylaby));
+    if (!lines.length) lines.push(P.lettersNone);
     const stars = sounds.tried.length ? starsOf(sounds.ok.length, sounds.tried.length) : letters.length || all.sylaby ? 1 : 0;
-    skills.push({ domain: 'litery', title: 'Głoski i literki', lines, stars });
+    skills.push({ domain: 'litery', title: P.titles.litery, lines, stars });
   }
 
   // Kolory i kształty.
@@ -207,25 +123,28 @@ export function makeReport(input: ReportInput): Report {
     const colors = split(factsOf(j, 'kolor'));
     const shapes = split(factsOf(j, 'ksztalt'));
     const lines: string[] = [];
-    if (colors.ok.length) lines.push(`${who} rozpoznaje kolory: ${list(colors.ok.map((c) => COLOR_NAMES[c] ?? c))}.`);
-    if (colors.hard.length) lines.push(`Myli się jeszcze przy kolorach: ${list(colors.hard.map((c) => COLOR_NAMES[c] ?? c))}.`);
-    if (shapes.ok.length) lines.push(`Dopasowuje kształty: ${list(shapes.ok.map((s) => SHAPE_NAMES[s] ?? s))}.`);
-    if (shapes.hard.length) lines.push(`Trudniejsze kształty: ${list(shapes.hard.map((s) => SHAPE_NAMES[s] ?? s))}.`);
-    if (!lines.length && (colors.tried.length || shapes.tried.length)) lines.push(`${who} ćwiczy kolory i kształty.`);
-    if (!lines.length) lines.push('Kolorów i kształtów jeszcze nie było. Spróbujcie zabaw „Kolory” i „Kształty”.');
+    const cn = (c: string) => P.colors[c] ?? c;
+    const sn = (x: string) => P.shapes[x] ?? x;
+    if (colors.ok.length) lines.push(P.colorsOk(who, colors.ok.map(cn)));
+    if (colors.hard.length) lines.push(P.colorsHard(colors.hard.map(cn)));
+    if (shapes.ok.length) lines.push(P.shapesOk(shapes.ok.map(sn)));
+    if (shapes.hard.length) lines.push(P.shapesHard(shapes.hard.map(sn)));
+    if (!lines.length && (colors.tried.length || shapes.tried.length)) lines.push(P.colorsPractice(who));
+    if (!lines.length) lines.push(P.colorsNone);
     const tried = colors.tried.length + shapes.tried.length;
-    skills.push({ domain: 'kolory', title: 'Kolory i kształty', lines, stars: starsOf(colors.ok.length + shapes.ok.length, tried) });
+    skills.push({ domain: 'kolory', title: P.titles.kolory, lines, stars: starsOf(colors.ok.length + shapes.ok.length, tried) });
   }
 
   // Emocje.
   {
     const em = split(factsOf(j, 'emocja'));
     const lines: string[] = [];
-    if (em.ok.length) lines.push(`${who} rozpoznaje na buziach: ${list(em.ok.map((e) => EMOTION_NAMES[e] ?? e))}.`);
-    if (em.hard.length) lines.push(`Trudniej idzie z: ${list(em.hard.map((e) => EMOTION_NAMES[e] ?? e))}.`);
-    if (!lines.length && em.tried.length) lines.push(`${who} uczy się rozpoznawać emocje.`);
-    if (!lines.length) lines.push('Emocji jeszcze nie było. Spróbujcie zabawy „Minki”.');
-    skills.push({ domain: 'emocje', title: 'Emocje', lines, stars: starsOf(em.ok.length, em.tried.length) });
+    const en = (e: string) => P.emotions[e] ?? e;
+    if (em.ok.length) lines.push(P.emoOk(who, em.ok.map(en)));
+    if (em.hard.length) lines.push(P.emoHard(em.hard.map(en)));
+    if (!lines.length && em.tried.length) lines.push(P.emoPractice(who));
+    if (!lines.length) lines.push(P.emoNone);
+    skills.push({ domain: 'emocje', title: P.titles.emocje, lines, stars: starsOf(em.ok.length, em.tried.length) });
   }
 
   // Logika, spostrzegawczość, pamięć.
@@ -235,62 +154,60 @@ export function makeReport(input: ReportInput): Report {
     const lines: string[] = [];
     let stars = 0;
     for (const a of played.slice(0, 4)) {
-      const [what, one, few, many] = LOGIC_LINES[a]!;
+      const [what, count] = P.logic[a]!;
       const n = w.acts[a]!;
       const [how, s] = quality(w.misses[a] ?? 0, n);
-      lines.push(`${what}: ${n} ${plural(n, one, few, many)}, ${how}.`);
+      lines.push(`${what}: ${count(n)}, ${P.quality[how]}.`);
       stars += s;
     }
-    if (played.length > 4) lines.push(`I jeszcze: ${list(played.slice(4).map((a) => LOGIC_LINES[a]![0].toLowerCase()))}.`);
-    if (!played.length) lines.push(LOGIC.some((a) => all[a]) ? 'W tym tygodniu bez zagadek logicznych. Wcześniejsze postępy są zapisane.' : 'Zagadek logicznych jeszcze nie było: cienie, wzory, historyjki, pary, układanki.');
+    if (played.length > 4) lines.push(P.logicMore(played.slice(4).map((a) => P.logic[a]![0])));
+    if (!played.length) lines.push(LOGIC.some((a) => all[a]) ? P.logicNoneWeek : P.logicNone);
     const avgStars = played.length ? Math.round(stars / Math.min(4, played.length)) : LOGIC.some((a) => all[a]) ? 1 : 0;
-    skills.push({ domain: 'logika', title: 'Logika i spostrzegawczość', lines, stars: avgStars });
+    skills.push({ domain: 'logika', title: P.titles.logika, lines, stars: avgStars });
   }
 
   // Twórczość.
   {
     const parts: string[] = [];
-    if (all.kolorowanka) parts.push(`pokolorowane obrazki: ${all.kolorowanka}`);
-    if (all.naklejanka) parts.push(`obrazki z naklejek: ${all.naklejanka}`);
-    if (all.melodia) parts.push(`zagrane melodie: ${all.melodia}`);
-    const lines = parts.length ? [`Razem ${list(parts)}.`, 'Prace dziecka znajdziesz w zakładce „Album”.'] : ['Pracowni Malucha jeszcze nie było: kolorowanki, naklejki i melodie.'];
-    skills.push({ domain: 'tworczosc', title: 'Twórczość', lines, stars: Math.min(3, parts.length) });
+    if (all.kolorowanka) parts.push(P.creative.kolorowanka(all.kolorowanka));
+    if (all.naklejanka) parts.push(P.creative.naklejanka(all.naklejanka));
+    if (all.melodia) parts.push(P.creative.melodia(all.melodia));
+    const lines = parts.length ? [P.creative.sum(parts), P.creative.album] : [P.creative.none];
+    skills.push({ domain: 'tworczosc', title: P.titles.tworczosc, lines, stars: Math.min(3, parts.length) });
   }
 
   return {
     who,
     week: { from, to: today, days: w.days, minutes, tasks: w.tasks },
-    weekText: w.days
-      ? `Ostatnie 7 dni: ${w.days} ${plural(w.days, 'dzień', 'dni', 'dni')} zabawy, razem ${minutes} min, ${w.tasks} ${plural(w.tasks, 'rozwiązane zadanie', 'rozwiązane zadania', 'rozwiązanych zadań')}.`
-      : 'W ostatnich 7 dniach nie było zabawy.',
+    weekText: w.days ? P.week(w.days, minutes, w.tasks) : P.weekNone,
     skills,
-    tips: pickTips(skills, today),
-    highlights: highlights(j, w.acts, from, today),
-    firsts: firstsIn(j, from, today),
+    tips: pickTips(P, skills, today),
+    highlights: highlights(P, j, w.acts, from, today),
+    firsts: firstsIn(P, j, from, today),
   };
 }
 
-function firstsIn(j: Journal, from: string, to: string): string[] {
-  return FIRSTS.filter(([a]) => {
+function firstsIn(P: ReportText, j: Journal, from: string, to: string): string[] {
+  return P.firsts.filter(([a]) => {
     const d = j.firsts?.[a];
     return !!d && d >= from && d <= to;
   }).map(([, s]) => s);
 }
 
 /** Dwie wskazówki: najpierw z dziedziny, która idzie najsłabiej (albo której jeszcze nie było). */
-function pickTips(skills: SkillLine[], today: string): string[] {
+function pickTips(P: ReportText, skills: SkillLine[], today: string): string[] {
   const [y, m, d] = today.split('-').map(Number) as [number, number, number];
   const week = Math.floor(Date.UTC(y, m - 1, d) / (7 * 86_400_000));
   const order = [...skills].filter((s) => s.domain !== 'tworczosc').sort((a, b) => a.stars - b.stars || TIP_ORDER.indexOf(a.domain) - TIP_ORDER.indexOf(b.domain));
   return order.slice(0, 2).map((s) => {
-    const tips = TIPS[s.domain];
+    const tips = P.tips[s.domain];
     return tips[week % tips.length]!;
   });
 }
 const TIP_ORDER: Domain[] = ['liczby', 'litery', 'kolory', 'emocje', 'logika', 'tworczosc'];
 
 /** Najważniejsze sukcesy tygodnia (do pocztówki), najwyżej trzy. */
-function highlights(j: Journal, acts: Partial<Record<Activity, number>>, from: string, to: string): string[] {
+function highlights(P: ReportText, j: Journal, acts: Partial<Record<Activity, number>>, from: string, to: string): string[] {
   const fresh = (group: string) =>
     Object.entries(j.learned)
       .filter(([k, d]) => k.startsWith(group + ':') && d >= from && d <= to)
@@ -301,42 +218,51 @@ function highlights(j: Journal, acts: Partial<Record<Activity, number>>, from: s
   if (nums.length) {
     let upTo = 0;
     while (mastered(j.facts[`liczba:${upTo + 1}`])) upTo++;
-    out.push(upTo >= Math.max(...nums) && upTo >= 2 ? `Liczenie do ${upTo}` : `Policzone bez pomyłki: ${list(nums.sort((a, b) => a - b).map(String))}`);
+    out.push(upTo >= Math.max(...nums) && upTo >= 2 ? P.hl.countTo(upTo) : P.hl.counted(nums.sort((a, b) => a - b).map(String)));
   }
   const letters = fresh('litera');
-  if (letters.length) out.push(`${letters.length > 1 ? 'Nowe literki' : 'Nowa literka'}: ${list(letters)}`);
+  if (letters.length) out.push(P.hl.letters(letters));
   const sounds = fresh('gloska');
-  if (sounds.length) out.push(`${sounds.length > 1 ? 'Głoski' : 'Głoska'} na początku słowa: ${list(sounds.map((s) => `„${s}”`))}`);
+  if (sounds.length) out.push(P.hl.sounds(sounds.map(P.sound)));
   const colors = fresh('kolor');
-  if (colors.length) out.push(`${colors.length > 1 ? 'Nowe kolory' : 'Nowy kolor'}: ${list(colors.map((c) => COLOR_NAMES[c] ?? c))}`);
+  if (colors.length) out.push(P.hl.colors(colors.map((c) => P.colors[c] ?? c)));
   const digits = fresh('cyfra');
-  if (digits.length) out.push(`${digits.length > 1 ? 'Nowe cyferki' : 'Nowa cyferka'}: ${list(digits)}`);
+  if (digits.length) out.push(P.hl.digits(digits));
   const shapes = fresh('ksztalt');
-  if (shapes.length) out.push(`Kształty: ${list(shapes.map((s) => SHAPE_NAMES[s] ?? s))}`);
+  if (shapes.length) out.push(P.hl.shapes(shapes.map((x) => P.shapes[x] ?? x)));
   const emotions = fresh('emocja');
-  if (emotions.length) out.push(`Emocje: ${list(emotions.map((e) => EMOTION_NAMES[e] ?? e))}`);
+  if (emotions.length) out.push(P.hl.emotions(emotions.map((e) => P.emotions[e] ?? e)));
   // Pierwsze razy (w pierwszych dniach to one są największymi sukcesami).
-  for (const f of firstsIn(j, from, to).slice(0, 3)) out.push(capital(f));
+  for (const f of firstsIn(P, j, from, to).slice(0, 3)) out.push(capital(f));
   // Uzupełnienie liczbami z tygodnia.
-  const counts: [Activity, string, string, string][] = [
-    ['historyjki', 'ułożona historyjka', 'ułożone historyjki', 'ułożonych historyjek'],
-    ['kolorowanka', 'pokolorowany obrazek', 'pokolorowane obrazki', 'pokolorowanych obrazków'],
-    ['ukladanka', 'ułożona układanka', 'ułożone układanki', 'ułożonych układanek'],
-    ['melodia', 'zagrana melodia', 'zagrane melodie', 'zagranych melodii'],
-  ];
-  for (const [a, one, few, many] of counts) if ((acts[a] ?? 0) > 0) out.push(`${acts[a]} ${plural(acts[a]!, one, few, many)}`);
+  for (const [a, count] of P.hl.counts) if ((acts[a] ?? 0) > 0) out.push(count(acts[a]!));
   const total = Object.values(acts).reduce((n, x) => n + (x ?? 0), 0);
-  if (total) out.push(`${total} ${plural(total, 'rozwiązane zadanie', 'rozwiązane zadania', 'rozwiązanych zadań')}`);
+  if (total) out.push(P.hl.tasks(total));
   return out.slice(0, 3);
 }
 
-const MONTHS = ['stycznia', 'lutego', 'marca', 'kwietnia', 'maja', 'czerwca', 'lipca', 'sierpnia', 'września', 'października', 'listopada', 'grudnia'];
-
-/** „15–21 listopada 2026”, „28 listopada – 4 grudnia 2026”, przez Nowy Rok z oboma latami. */
+/**
+ * Zakres tygodnia na pocztówce w bieżącym języku:
+ * pl „15–21 listopada 2026”, en „November 15–21, 2026”, de „15.–21. November 2026”.
+ */
 export function formatRange(from: string, to: string): string {
+  const M = REPORT_TEXT[lang()].months;
   const [y1, m1, d1] = from.split('-').map(Number) as [number, number, number];
   const [y2, m2, d2] = to.split('-').map(Number) as [number, number, number];
-  if (y1 !== y2) return `${d1} ${MONTHS[m1 - 1]} ${y1} – ${d2} ${MONTHS[m2 - 1]} ${y2}`;
-  if (m1 !== m2) return `${d1} ${MONTHS[m1 - 1]} – ${d2} ${MONTHS[m2 - 1]} ${y2}`;
-  return `${d1}–${d2} ${MONTHS[m2 - 1]} ${y2}`;
+  const l = lang();
+  const a = M[m1 - 1]!;
+  const b = M[m2 - 1]!;
+  if (l === 'en') {
+    if (y1 !== y2) return `${a} ${d1}, ${y1} – ${b} ${d2}, ${y2}`;
+    if (m1 !== m2) return `${a} ${d1} – ${b} ${d2}, ${y2}`;
+    return `${b} ${d1}–${d2}, ${y2}`;
+  }
+  if (l === 'de') {
+    if (y1 !== y2) return `${d1}. ${a} ${y1} – ${d2}. ${b} ${y2}`;
+    if (m1 !== m2) return `${d1}. ${a} – ${d2}. ${b} ${y2}`;
+    return `${d1}.–${d2}. ${b} ${y2}`;
+  }
+  if (y1 !== y2) return `${d1} ${a} ${y1} – ${d2} ${b} ${y2}`;
+  if (m1 !== m2) return `${d1} ${a} – ${d2} ${b} ${y2}`;
+  return `${d1}–${d2} ${b} ${y2}`;
 }

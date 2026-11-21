@@ -12,6 +12,8 @@ import { gallery, type Landscape, type Picture } from './sim/stickers.ts';
 import { saveState, state } from './state.ts';
 import { LIMITS, reset as resetSession } from './session.ts';
 import { COLORS, FONT as GAME_FONT } from './ui.ts';
+import { tr } from './sim/i18n.ts';
+import { lang, LANGS, type Lang } from './sim/lang.ts';
 
 const HOLD = 2;
 const FONT = 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif';
@@ -224,19 +226,19 @@ export class ParentPanel extends Container {
     for (const c of [...this.bar.removeChildren(), ...this.content.removeChildren()]) c.destroy({ children: true });
     const { x, y, w } = this.box;
     // Pasek: tytuł (gdy się mieści), zakładki, zamknięcie.
-    const close = this.button('Zamknij', 170, '#5cc36a', () => this.onClose(), 80, 26);
+    const close = this.button(tr('Zamknij'), 170, '#5cc36a', () => this.onClose(), 80, 26);
     close.position.set(x + w - 24 - 85, y + 58);
     const showTitle = w > 1180;
     const left = x + 24 + (showTitle ? 250 : 0);
     const room = x + w - 24 - 170 - 20 - left;
     const tw = Math.min(210, (room - 3 * 12) / 4);
     if (showTitle) {
-      const title = this.text('Dla rodzica', 38, { weight: '800' });
+      const title = this.text(tr('Dla rodzica'), 38, { weight: '800' });
       title.position.set(x + 30, y + 34);
       this.bar.addChild(title);
     }
     TABS.forEach(([id, name], i) => {
-      const b = this.button(name, tw, id === this.tab ? '#ff9f5a' : '#c9b8a6', () => this.setTab(id), 80, tw < 180 ? 24 : 27);
+      const b = this.button(tr(name), tw, id === this.tab ? '#ff9f5a' : '#c9b8a6', () => this.setTab(id), 80, tw < 180 ? 24 : 27);
       b.position.set(left + tw / 2 + i * (tw + 12), y + 58);
       this.bar.addChild(b);
     });
@@ -283,12 +285,14 @@ export class ParentPanel extends Container {
     const t = trial();
     const title = t.active
       ? t.left > 0
-        ? `Pełny dostęp próbny: jeszcze ${t.left} ${t.left === 1 ? 'dzień' : 'dni'} zabawy po dzisiejszym`
-        : 'Pełny dostęp próbny: dziś ostatni dzień'
-      : 'Próba się skończyła: otwarta jest Polana Zagadek';
+        ? t.left === 1
+          ? tr('Pełny dostęp próbny: jeszcze 1 dzień zabawy po dzisiejszym')
+          : tr('Pełny dostęp próbny: jeszcze {n} dni zabawy po dzisiejszym', { n: t.left })
+        : tr('Pełny dostęp próbny: dziś ostatni dzień')
+      : tr('Próba się skończyła: otwarta jest Polana Zagadek');
     const body = t.active
-      ? 'Liczą się tylko dni, w które dziecko się bawi. Potem zostaje Polana Zagadek, a pełna wersja otwiera wszystkie krainy, pełny raport i pocztówkę na zawsze. Jednorazowo, bez subskrypcji i reklam.'
-      : 'Pełna wersja otwiera Warsztat Bazyla, Ścieżkę Lusi i Pracownię Malucha, pełny raport i pocztówkę tygodnia. Jednorazowo, bez subskrypcji i reklam, na wszystkich urządzeniach rodziny.';
+      ? tr('Liczą się tylko dni, w które dziecko się bawi. Potem zostaje Polana Zagadek, a pełna wersja otwiera wszystkie krainy, pełny raport i pocztówkę na zawsze. Jednorazowo, bez subskrypcji i reklam.')
+      : tr('Pełna wersja otwiera Warsztat Bazyla, Ścieżkę Lusi i Pracownię Malucha, pełny raport i pocztówkę tygodnia. Jednorazowo, bez subskrypcji i reklam, na wszystkich urządzeniach rodziny.');
     return this.card({ x, y }, cw, (c, iw) => {
       const tt = this.text(title, 29, { weight: '800', wrap: iw });
       const b = this.text(body, 24, { color: SOFT, wrap: iw });
@@ -296,9 +300,9 @@ export class ParentPanel extends Container {
       c.addChild(tt, b);
       let h = b.y + b.height + 20;
       const bw = Math.min(440, iw);
-      const buy = this.button(this.buying ? 'Chwileczkę…' : this.storePrice ? `Kup pełną wersję – ${this.storePrice}` : 'Kup pełną wersję', bw, '#ff9f5a', () => void this.doBuy(false), 80, 27);
+      const buy = this.button(this.buying ? tr('Chwileczkę…') : this.storePrice ? tr('Kup pełną wersję – {price}', { price: this.storePrice }) : tr('Kup pełną wersję'), bw, '#ff9f5a', () => void this.doBuy(false), 80, 27);
       buy.position.set(bw / 2, h + 40);
-      const rest = this.button('Przywróć zakup', 260, '#c9b8a6', () => void this.doBuy(true), 80, 25);
+      const rest = this.button(tr('Przywróć zakup'), 260, '#c9b8a6', () => void this.doBuy(true), 80, 25);
       const stack = iw < bw + 24 + 260;
       rest.position.set(stack ? 130 : bw + 24 + 130, stack ? h + 140 : h + 40);
       c.addChild(buy, rest);
@@ -327,9 +331,9 @@ export class ParentPanel extends Container {
     } else
       this.shopNote = this.storePrice
         ? restoreOnly
-          ? 'Nie znaleziono zakupu na tym koncie. Sprawdź, czy telefon jest zalogowany na to samo konto co przy zakupie.'
-          : 'Zakup nie został zakończony. Można spróbować jeszcze raz.'
-        : 'Sklep jest niedostępny (brak internetu albo wersja testowa). Spróbuj później.';
+          ? tr('Nie znaleziono zakupu na tym koncie. Sprawdź, czy telefon jest zalogowany na to samo konto co przy zakupie.')
+          : tr('Zakup nie został zakończony. Można spróbować jeszcze raz.')
+        : tr('Sklep jest niedostępny (brak internetu albo wersja testowa). Spróbuj później.');
     this.render();
   }
 
@@ -338,9 +342,9 @@ export class ParentPanel extends Container {
   private renderProgress(cw: number): number {
     const r = this.report();
     let y = 0;
-    const name = this.text(state.progress.childName ? r.who : 'Twoje dziecko', 40, { weight: '800' });
+    const name = this.text(state.progress.childName ? r.who : tr('Twoje dziecko'), 40, { weight: '800' });
     this.content.addChild(name);
-    const edit = this.button(state.progress.childName ? 'Zmień imię' : 'Podaj imię dziecka', state.progress.childName ? 200 : 300, '#9b7be0', () => this.askName(), 70, 24);
+    const edit = this.button(state.progress.childName ? tr('Zmień imię') : tr('Podaj imię dziecka'), state.progress.childName ? 200 : 300, '#9b7be0', () => this.askName(), 70, 24);
     edit.position.set(name.width + 30 + edit.width / 2, 28);
     this.content.addChild(edit);
     y += 70;
@@ -349,8 +353,8 @@ export class ParentPanel extends Container {
     this.content.addChild(week);
     y += week.height + 8;
     if (r.firsts.length) {
-      const more = r.firsts.length > 5 ? ` i jeszcze ${r.firsts.length - 5}` : '';
-      const firsts = this.text(`Nowe w tym tygodniu: ${r.firsts.slice(0, 5).join(', ')}${more}.`, 26, { color: '#3f8a4a', weight: '700', wrap: cw });
+      const more = r.firsts.length > 5 ? tr(' i jeszcze {n}', { n: r.firsts.length - 5 }) : '';
+      const firsts = this.text(tr('Nowe w tym tygodniu: {list}.', { list: r.firsts.slice(0, 5).join(', ') + more }), 26, { color: '#3f8a4a', weight: '700', wrap: cw });
       firsts.y = y;
       this.content.addChild(firsts);
       y += firsts.height + 8;
@@ -361,9 +365,9 @@ export class ParentPanel extends Container {
 
     if (!hasFull()) {
       y += this.card({ x: 0, y }, cw, (c, iw) => {
-        const t = this.text('Pełny raport w pełnej wersji', 30, { weight: '800' });
+        const t = this.text(tr('Pełny raport w pełnej wersji'), 30, { weight: '800' });
         const b = this.text(
-          '• Co dziecko już umie: liczenie, głoski i literki, kolory, kształty, emocje, logika.\n• Co sprawia jeszcze kłopot i nad czym popracować.\n• Pomysły na zabawę bez ekranu, dobrane do postępów.\n• Cotygodniowa pocztówka z sukcesami do wysłania bliskim.',
+          tr('• Co dziecko już umie: liczenie, głoski i literki, kolory, kształty, emocje, logika.\n• Co sprawia jeszcze kłopot i nad czym popracować.\n• Pomysły na zabawę bez ekranu, dobrane do postępów.\n• Cotygodniowa pocztówka z sukcesami do wysłania bliskim.'),
           25,
           { color: SOFT, wrap: iw },
         );
@@ -395,21 +399,21 @@ export class ParentPanel extends Container {
       y += rowH + gap;
     }
     y += this.card({ x: 0, y }, cw, (c, iw) => {
-      const t = this.text('Pomysły na zabawę bez ekranu', 29, { weight: '800' });
+      const t = this.text(tr('Pomysły na zabawę bez ekranu'), 29, { weight: '800' });
       const body = this.text(r.tips.map((x) => `• ${x}`).join('\n'), 25, { color: SOFT, wrap: iw });
       body.y = 50;
       c.addChild(t, body);
       return 50 + body.height;
     }, 0xeef8e8);
     y += 20;
-    const note = this.text('Gwiazdki pokazują, jak dziecku idzie w danej dziedzinie. Wszystko liczy się tylko na tym urządzeniu.', 21, { color: '#9a8b7c', wrap: cw });
+    const note = this.text(tr('Gwiazdki pokazują, jak dziecku idzie w danej dziedzinie. Wszystko liczy się tylko na tym urządzeniu.'), 21, { color: '#9a8b7c', wrap: cw });
     note.y = y;
     this.content.addChild(note);
     return y + note.height + 20;
   }
 
   private askName(): void {
-    const v = window.prompt('Jak ma na imię dziecko? (zostaje tylko na tym urządzeniu)', state.progress.childName ?? '');
+    const v = window.prompt(tr('Jak ma na imię dziecko? (zostaje tylko na tym urządzeniu)'), state.progress.childName ?? '');
     if (v === null) return;
     const name = v.trim().slice(0, 20);
     state.progress.childName = name ? name[0]!.toUpperCase() + name.slice(1) : undefined;
@@ -421,10 +425,10 @@ export class ParentPanel extends Container {
 
   private renderAlbum(cw: number): number {
     const v = this.version;
-    const intro = this.text('Prace dziecka z Pracowni Malucha. Dotknij obrazka, żeby go powiększyć, zapisać albo wysłać.', 25, { color: SOFT, wrap: cw });
+    const intro = this.text(tr('Prace dziecka z Pracowni Malucha. Dotknij obrazka, żeby go powiększyć, zapisać albo wysłać.'), 25, { color: SOFT, wrap: cw });
     this.content.addChild(intro);
     const top = intro.height + 24;
-    const loading = this.text('Wczytuję…', 26, { color: SOFT });
+    const loading = this.text(tr('Wczytuję…'), 26, { color: SOFT });
     loading.y = top;
     this.content.addChild(loading);
     void paintings().then((list) => {
@@ -435,7 +439,7 @@ export class ParentPanel extends Container {
         ...list.map((painting) => ({ kind: 'painting' as const, painting })),
       ];
       if (!items.length) {
-        const empty = this.text('Na razie pusto. Tu pojawią się pokolorowane kolorowanki i obrazki z naklejek.', 27, { wrap: cw });
+        const empty = this.text(tr('Na razie pusto. Tu pojawią się pokolorowane kolorowanki i obrazki z naklejek.'), 27, { wrap: cw });
         empty.y = top;
         this.content.addChild(empty);
         this.contentH = top + empty.height;
@@ -516,17 +520,17 @@ export class ParentPanel extends Container {
       o.destroy({ children: true });
     };
     const y = vh - 70;
-    const share = this.button('Zapisz / wyślij', 280, '#5cb3ff', () => void this.share(it), 84, 28);
+    const share = this.button(tr('Zapisz / wyślij'), 280, '#5cb3ff', () => void this.share(it), 84, 28);
     share.position.set(vw / 2 - 160, y);
-    const back = this.button('Wróć', 200, '#5cc36a', close, 84, 28);
+    const back = this.button(tr('Wróć'), 200, '#5cc36a', close, 84, 28);
     back.position.set(vw / 2 + 120, y);
     o.addChild(share, back);
     if (it.kind === 'painting') {
       let armed = false;
-      const del: Button = this.button('Usuń', 160, '#e8835a', () => {
+      const del: Button = this.button(tr('Usuń'), 160, '#e8835a', () => {
         if (!armed) {
           armed = true;
-          del.setLabel('Na pewno?');
+          del.setLabel(tr('Na pewno?'));
           return;
         }
         void removePainting(it.painting.id).then(() => {
@@ -544,14 +548,14 @@ export class ParentPanel extends Container {
   private async share(it: AlbumItem): Promise<void> {
     haptics.tap();
     if (it.kind === 'painting') {
-      await shareImage(it.painting.img, `bystrzakowo-${it.painting.date}.jpg`, 'Obrazek z Bystrzakowa');
+      await shareImage(it.painting.img, `bystrzakowo-${it.painting.date}.jpg`, tr('Obrazek z Bystrzakowa'));
       return;
     }
     const { width: vw, height: vh } = this.view;
     const pic = pictureView(it.picture, vw, vh, this.art!, this.landscapes!);
     const url = await this.game.app.renderer.extract.base64({ target: pic, format: 'jpg', quality: 0.9, resolution: 1600 / vw, frame: new Rectangle(0, 0, vw, vh) });
     pic.destroy({ children: true });
-    await shareImage(url, `bystrzakowo-naklejki-${today()}.jpg`, 'Obrazek z Bystrzakowa');
+    await shareImage(url, `bystrzakowo-naklejki-${today()}.jpg`, tr('Obrazek z Bystrzakowa'));
   }
 
   // ——— Pocztówka ———
@@ -559,15 +563,15 @@ export class ParentPanel extends Container {
   private renderPostcardTab(cw: number): number {
     if (!hasFull()) {
       return this.card({ x: 0, y: 0 }, cw, (c, iw) => {
-        const t = this.text('Pocztówka tygodnia w pełnej wersji', 30, { weight: '800' });
-        const b = this.text('Co tydzień ładna kartka z Lusią i Bazylem: imię dziecka i jego najważniejsze sukcesy. Można ją zapisać w zdjęciach albo wysłać babci i dziadkowi.', 25, { color: SOFT, wrap: iw });
+        const t = this.text(tr('Pocztówka tygodnia w pełnej wersji'), 30, { weight: '800' });
+        const b = this.text(tr('Co tydzień ładna kartka z Lusią i Bazylem: imię dziecka i jego najważniejsze sukcesy. Można ją zapisać w zdjęciach albo wysłać babci i dziadkowi.'), 25, { color: SOFT, wrap: iw });
         b.y = 54;
         c.addChild(t, b);
         return 54 + b.height;
       }, 0xfff3dd);
     }
     if (!this.art) {
-      this.content.addChild(this.text('Wczytuję…', 26, { color: SOFT }));
+      this.content.addChild(this.text(tr('Wczytuję…'), 26, { color: SOFT }));
       return 60;
     }
     const r = this.report();
@@ -578,11 +582,11 @@ export class ParentPanel extends Container {
     card.x = (cw - POSTCARD_W * k) / 2;
     this.content.addChild(card);
     const y = POSTCARD_H * k + 20;
-    const share = this.button('Zapisz / wyślij pocztówkę', 400, '#5cb3ff', () => void this.sharePostcard(r), 84, 28);
+    const share = this.button(tr('Zapisz / wyślij pocztówkę'), 400, '#5cb3ff', () => void this.sharePostcard(r), 84, 28);
     share.position.set(cw / 2, y + 42);
     this.content.addChild(share);
     if (!state.progress.childName) {
-      const hint = this.button('Dodaj imię dziecka', 300, '#9b7be0', () => this.askName(), 70, 24);
+      const hint = this.button(tr('Dodaj imię dziecka'), 300, '#9b7be0', () => this.askName(), 70, 24);
       hint.position.set(cw / 2 + 380, y + 42);
       this.content.addChild(hint);
     }
@@ -594,14 +598,14 @@ export class ParentPanel extends Container {
     const card = postcard(this.game, this.art!, r, 1);
     const url = await this.game.app.renderer.extract.base64({ target: card, format: 'png', resolution: 1, frame: new Rectangle(0, 0, POSTCARD_W, POSTCARD_H) });
     card.destroy({ children: true });
-    await shareImage(url, `pocztowka-${r.week.to}.png`, 'Pocztówka z Bystrzakowa');
+    await shareImage(url, `pocztowka-${r.week.to}.png`, tr('Pocztówka z Bystrzakowa'));
   }
 
   // ——— Ustawienia ———
 
   private renderSettings(cw: number): number {
     let y = 0;
-    const info = this.text('Bystrzakowo działa bez internetu, bez reklam i nie zbiera żadnych danych. Postępy, imię i prace dziecka zapisują się tylko na tym urządzeniu.', 25, { color: SOFT, wrap: cw });
+    const info = this.text(tr('Bystrzakowo działa bez internetu, bez reklam i nie zbiera żadnych danych. Postępy, imię i prace dziecka zapisują się tylko na tym urządzeniu.'), 25, { color: SOFT, wrap: cw });
     this.content.addChild(info);
     y += info.height + 30;
     const bw = Math.min(520, cw);
@@ -611,9 +615,18 @@ export class ParentPanel extends Container {
       this.content.addChild(b);
       y += 100;
     };
-    const nameLabel = () => (state.progress.childName ? `Imię dziecka: ${state.progress.childName}` : 'Imię dziecka: nie podano');
+    const nameLabel = () => (state.progress.childName ? tr('Imię dziecka: {name}', { name: state.progress.childName }) : tr('Imię dziecka: nie podano'));
     add(this.button(nameLabel(), bw, '#9b7be0', () => this.askName()));
-    const musicLabel = () => (state.progress.music ? 'Muzyka: włączona' : 'Muzyka: wyłączona');
+    const LANG_NAMES: Record<Lang, string> = { pl: 'Polski', en: 'English', de: 'Deutsch' };
+    add(
+      this.button(tr('Język: {name}', { name: LANG_NAMES[lang()] }), bw, '#5cc36a', () => {
+        // Zmiana języka: zapis i ponowne uruchomienie (nagrania lektora wczytują się przy starcie).
+        const next = LANGS[(LANGS.indexOf(lang()) + 1) % LANGS.length]!;
+        state.progress.lang = next;
+        void saveState().then(() => location.reload());
+      }),
+    );
+    const musicLabel = () => (state.progress.music ? tr('Muzyka: włączona') : tr('Muzyka: wyłączona'));
     const music: Button = this.button(musicLabel(), bw, '#5cb3ff', () => {
       state.progress.music = !state.progress.music;
       if (state.progress.music) startMusic(this.game);
@@ -622,7 +635,7 @@ export class ParentPanel extends Container {
       void saveState();
     });
     add(music);
-    const limitLabel = () => (state.progress.limit ? `Czas zabawy: ${state.progress.limit} min` : 'Czas zabawy: bez limitu');
+    const limitLabel = () => (state.progress.limit ? tr('Czas zabawy: {n} min', { n: state.progress.limit }) : tr('Czas zabawy: bez limitu'));
     const limit: Button = this.button(limitLabel(), bw, '#9b7be0', () => {
       const i = LIMITS.indexOf((state.progress.limit ?? 0) as (typeof LIMITS)[number]);
       state.progress.limit = LIMITS[(i + 1) % LIMITS.length];
@@ -631,20 +644,20 @@ export class ParentPanel extends Container {
       void saveState();
     });
     add(limit);
-    const reset: Button = this.button('Wyzeruj postępy', bw, '#e8835a', () => {
+    const reset: Button = this.button(tr('Wyzeruj postępy'), bw, '#e8835a', () => {
       if (!this.confirmReset) {
         this.confirmReset = true;
-        reset.setLabel('Na pewno? Dotknij jeszcze raz');
+        reset.setLabel(tr('Na pewno? Dotknij jeszcze raz'));
         return;
       }
       const { music: m, childName } = state.progress;
       state.progress = { ...newProgress(), music: m, childName };
       void saveState();
-      reset.setLabel('Wyzerowano');
+      reset.setLabel(tr('Wyzerowano'));
     });
     add(reset);
     const t = trial();
-    const ver = this.text(isBought() ? 'Wersja: pełna' : t.active ? 'Wersja: próbna (pełny dostęp)' : 'Wersja: darmowa (Polana Zagadek)', 22, { color: '#9a8b7c' });
+    const ver = this.text(isBought() ? tr('Wersja: pełna') : t.active ? tr('Wersja: próbna (pełny dostęp)') : tr('Wersja: darmowa (Polana Zagadek)'), 22, { color: '#9a8b7c' });
     ver.y = y + 10;
     this.content.addChild(ver);
     y += 60;
@@ -698,14 +711,19 @@ function postcard(game: Game, art: Art, r: Report, resolution: number): Containe
       resolution,
       style: { fontFamily: GAME_FONT, fontSize: size, fontWeight: weight, fill, align: 'center', ...(stroke ? { stroke: { color: stroke, width: size * 0.14, join: 'round' as const } } : {}), wordWrap: true, wordWrapWidth: 760, lineHeight: size * 1.15 },
     });
-  const head = t('Pocztówka z Bystrzakowa', 52, '#ffc94a', '#5a3c28');
+  const head = t(tr('Pocztówka z Bystrzakowa'), 52, '#ffc94a', '#5a3c28');
+  // Jedna linia: dłuższe tytuły (np. po niemiecku) są pomniejszane, żeby nie wchodziły na imię.
+  head.style.wordWrap = false;
+  head.scale.set(Math.min(1, 760 / head.width));
   head.position.set(W / 2, 70);
-  const name = t(state.progress.childName ? r.who : 'Mały Bystrzak', 96, '#ff7a59', '#5a3c28');
+  const name = t(state.progress.childName ? r.who : tr('Mały Bystrzak'), 96, '#ff7a59', '#5a3c28');
+  name.style.wordWrap = false;
+  name.scale.set(Math.min(1, 820 / name.width));
   name.position.set(W / 2, 150);
-  const sub = t(r.week.days ? 'w tym tygodniu:' : 'czeka na wspólną zabawę!', 40, '#5a3c28', undefined, '700');
+  const sub = t(r.week.days ? tr('w tym tygodniu:') : tr('czeka na wspólną zabawę!'), 40, '#5a3c28', undefined, '700');
   sub.position.set(W / 2, 290);
   c.addChild(head, name, sub);
-  const lines = r.week.days ? (r.highlights.length ? r.highlights : ['Pierwsze zabawy w Bystrzakowie']) : [];
+  const lines = r.week.days ? (r.highlights.length ? r.highlights : [tr('Pierwsze zabawy w Bystrzakowie')]) : [];
   lines.forEach((line, i) => {
     const y = 370 + i * 92;
     const star = new Graphics().star(0, 0, 5, 26, 12).fill({ color: COLORS.sun }).stroke({ color: COLORS.ink, width: 5, join: 'round' });

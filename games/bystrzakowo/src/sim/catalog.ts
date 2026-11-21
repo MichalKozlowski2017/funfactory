@@ -3,6 +3,9 @@
  * Grafika: public/art/items/<id>.webp (Flux, styl plastelina; `prompt` = opis obiektu do przegenerowania),
  * nazwa w lektorze: public/audio/<głos>/item-<id>.m4a.
  */
+import { lang } from './lang.ts';
+import { ITEM_NAMES } from './names.ts';
+
 export type Category = 'zwierzeta' | 'owoce' | 'warzywa' | 'pojazdy' | 'zabawki' | 'kuchnia' | 'ubrania' | 'natura';
 
 export type Color = 'czerwony' | 'zolty' | 'zielony' | 'niebieski' | 'pomaranczowy' | 'rozowy' | 'fioletowy' | 'brazowy' | 'bialy';
@@ -255,6 +258,31 @@ export const itemById = (id: string): Item => {
   if (!item) throw new Error(`Brak obiektu ${id}`);
   return item;
 };
+
+/** Nazwa obiektu w bieżącym języku gry. */
+export const nameOf = (item: Item): string => {
+  const l = lang();
+  return l === 'pl' ? item.name : (ITEM_NAMES[item.id]?.[l] ?? item.name);
+};
+
+/**
+ * Pierwsza litera nazwy (angielski, niemiecki: zabawa „Co zaczyna się na…?” jest tam o literach).
+ * Nazwy zaczynające się dwuznakiem (sh, ch, sch, st…) albo z dwóch słów pomijamy: litera nie brzmi
+ * tam jak na początku słowa, więc myliłaby dziecko. Zwraca '' dla pominiętych.
+ */
+export function firstLetter(name: string, l: 'en' | 'de'): string {
+  const n = name.toLowerCase();
+  if (n.includes(' ') || n.includes('-')) return '';
+  const skip = l === 'en' ? ['sh', 'ch', 'th', 'ph', 'wh', 'kn', 'wr', 'gi', 'ge', 'ce', 'ci'] : ['sch', 'ch', 'st', 'sp', 'ph', 'pf', 'qu', 'ei', 'eu', 'au'];
+  if (skip.some((d) => n.startsWith(d))) return '';
+  return n[0]!;
+}
+
+/** Pierwsza głoska (polski) albo litera (angielski, niemiecki) nazwy obiektu w bieżącym języku. */
+export function startOf(item: Item): string {
+  const l = lang();
+  return l === 'pl' ? firstSound(item.name) : firstLetter(nameOf(item), l);
+}
 
 /** Czy obiekt może mieć buzię na obrazku (zwierzęta, słońce). Przedmioty bez buzi: prompt dostaje „no face”. */
 export const hasFace = (item: Item): boolean => item.category === 'zwierzeta' || item.id === 'slonce';

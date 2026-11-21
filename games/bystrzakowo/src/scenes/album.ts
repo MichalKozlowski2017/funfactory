@@ -5,6 +5,7 @@ import { itemVoices, loadArt, say, shadowOf, type Art } from '../assets.ts';
 import { ITEMS } from '../sim/catalog.ts';
 import { state } from '../state.ts';
 import { COLORS, cover, IconButton, label, sfx } from '../ui.ts';
+import { tr } from '../sim/i18n.ts';
 
 const COLS = 6;
 const ROWS = 3;
@@ -36,7 +37,7 @@ export class AlbumScene extends Scene {
     void this.game.sound.load(this.voices);
     const pr = this.game.pixelRatio;
     this.bg = new Sprite(this.art.playBg.polana);
-    this.title = label('Album', 64, pr, '#ff8fb1');
+    this.title = label(tr('Album'), 64, pr, '#ff8fb1');
     const owned = new Set(state.progress.stickers).size;
     this.counter = label(`${owned} / ${ITEMS.length}`, 40, pr, '#ffd23f');
     this.home = new IconButton('home');

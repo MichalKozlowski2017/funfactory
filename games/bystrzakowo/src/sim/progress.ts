@@ -2,6 +2,7 @@ import type { Rng } from '@funfactory/core';
 import { ITEMS } from './catalog.ts';
 import { ACTIVITIES, type Activity } from './realms.ts';
 import type { Journal } from './journal.ts';
+import type { Lang } from './lang.ts';
 import type { Picture } from './stickers.ts';
 
 /** Zapis postępów dziecka. */
@@ -28,6 +29,8 @@ export interface Progress {
   childName?: string;
   /** Ostatnia wizyta rodzica w strefie rodzica (dzień), do kropki „coś nowego”. */
   parentSeen?: string;
+  /** Język wybrany przez rodzica (brak: język telefonu). */
+  lang?: Lang;
   /** Kupiona pełna wersja. */
   full?: boolean;
   /** Dni zabawy w czasie próby pełnej wersji (sim/trial.ts). */
