@@ -11,10 +11,12 @@ b64() { printf "%s" "$1" | base64; }
 for size in ${SIZES:-"ios-6.9:956x440@3" "ipad-13:1376x1032@2" "android:640x360@3"}; do
   name=${size%%:*}; dim=${size#*:}
   for lang in ${LANGS:-pl en de es}; do
-    dir=$OUT/$name-$lang; rm -rf $dir; mkdir -p $dir
+    dir=$OUT/$name-$lang; [ -z "${ONLY:-}" ] && rm -rf $dir; mkdir -p $dir
     kid=$(name_for $lang)
     parent=$(b64 "$C.demoParent('TAB', decodeURIComponent(escape(atob('$(b64 "$kid")'))))")
     run() {
+      # ONLY="6 7": tylko wybrane sceny.
+      case " ${ONLY:-$1} " in *" $1 "*) ;; *) return ;; esac
       rm -rf .shots/store-tmp
       if node tools/playtest/shot.ts games/bystrzakowo --gpu --size $dim --query "lang=$lang&seed=${SEED:-5}&full" --out .shots/store-tmp --steps "$2" >/dev/null 2>&1; then
         cp .shots/store-tmp/*.png $dir/$1.png 2>/dev/null

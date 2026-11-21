@@ -201,7 +201,7 @@ export class ColoringScene extends RoundScene {
       const at = this.labels.indexOf(r);
       const x = (at % SIZE) / k - this.picture.texture.width / 2;
       const y = Math.floor(at / SIZE) / k - this.picture.texture.height / 2;
-      this.choose(PAINTS[(i * 3 + 2) % PAINTS.length]!);
+      this.choose(PAINTS[(i * 3 + 2) % 9]!);
       this.tap({ global: this.picture.toGlobal({ x, y }) } as FederatedPointerEvent);
     });
   }
