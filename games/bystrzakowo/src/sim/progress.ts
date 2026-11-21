@@ -1,6 +1,7 @@
 import type { Rng } from '@funfactory/core';
 import { ITEMS } from './catalog.ts';
 import { ACTIVITIES, type Activity } from './realms.ts';
+import type { Picture } from './stickers.ts';
 
 /** Zapis postępów dziecka. */
 export interface Progress {
@@ -13,8 +14,11 @@ export interface Progress {
   realm: number;
   /** Pokolorowane strony kolorowanki (najpierw nowe). */
   colored?: string[];
-  /** Obrazek z naklejek (pozycje w ułamkach ekranu). */
+  /** Stary zapis: jeden obrazek z naklejek (przenoszony do `pictures`). */
   scene?: { id: string; x: number; y: number; flip: boolean }[];
+  /** Galeria obrazków z naklejek (sim/stickers.ts) i numer bieżącego. */
+  pictures?: Picture[];
+  picture?: number;
   /** Ustawienia ze strefy rodzica. */
   music: boolean;
   /** Limit czasu zabawy w minutach (0 = bez limitu). */

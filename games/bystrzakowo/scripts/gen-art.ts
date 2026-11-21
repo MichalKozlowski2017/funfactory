@@ -144,6 +144,21 @@ if (process.argv.includes('--historyjki')) {
   for (const [id, frames] of stories) frames.forEach((what, i) => tasks.push({ out: 'historyjki', prefix: `${id}-${i + 1}`, args: ['--workflow', 'flux2-sprite', '--prompt', frame(what)] }));
 }
 
+if (process.argv.includes('--krajobrazy')) {
+  // Tła naklejanki: szeroki krajobraz z dużą pustą przestrzenią na naklejki (dolne dwie trzecie).
+  const land = (what: string) => `wide landscape scene of ${what}, the bottom two thirds is a big open empty flat area for placing stickers, low horizon detail, no characters, no animals, no people, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft lighting, bright cheerful pastel colors, cute and friendly`;
+  const wide = ['--workflow', 'flux2', '--width', '1536', '--height', '864', '--count', '2', '--prompt'];
+  for (const [id, what] of [
+    ['plaza', 'a sunny sandy beach with calm blue sea, a few small waves and a bright sky with fluffy clouds'],
+    ['las', 'a sunny forest clearing with big round trees at the edges and a soft green grass meadow'],
+    ['zima', 'a snowy winter meadow with snow covered round hills, a few snowy pine trees at the edges and a pale blue sky'],
+    ['farma', 'a farm meadow with a wooden fence, a small red barn far away on a hill and a sunny sky'],
+    ['morze', 'an underwater sea floor with sand, colorful corals and seaweed at the edges, light blue water with light rays'],
+    ['kosmos', 'outer space with a dark blue starry sky, colorful planets far away and a gray moon surface with round craters at the bottom'],
+  ])
+    tasks.push({ out: 'krajobrazy', prefix: id!, args: [...wide, land(what!)] });
+}
+
 if (process.argv.includes('--kolorowanki2')) {
   // Prostsze kolorowanki dla maluchów: kilka dużych pól, bez drobnych detali (palec 3-latka).
   const page = (what: string) => `very simple children coloring book page for toddlers aged 2 to 3 of ${what}, only 6 to 10 big closed areas, extremely thick bold black outlines, no small details, no stripes, no patterns, no scales, no texture lines, no tiny eyes details, big chunky rounded shapes, object fills the whole page, pure white background, no shading, no gray, no color`;
@@ -192,7 +207,7 @@ if (process.argv.includes('--warsztat')) {
 }
 
 for (const item of ITEMS) {
-  if ((process.argv.includes('--warsztat') || process.argv.includes('--sciezka') || process.argv.includes('--znaki') || process.argv.includes('--pracownia') || process.argv.includes('--dodatki') || process.argv.includes('--historyjki') || process.argv.includes('--polana') || process.argv.includes('--kolorowanki2')) && !only) break;
+  if ((process.argv.includes('--warsztat') || process.argv.includes('--sciezka') || process.argv.includes('--znaki') || process.argv.includes('--pracownia') || process.argv.includes('--dodatki') || process.argv.includes('--historyjki') || process.argv.includes('--polana') || process.argv.includes('--kolorowanki2') || process.argv.includes('--krajobrazy')) && !only) break;
   if (only && !only.has(item.id)) continue;
   if (!only && existsSync(join(repo, 'games/bystrzakowo/public/art/items', `${item.id}.webp`))) continue;
   if (existsSync(join(raw, 'items', `${item.id}-${SEED}.png`))) continue;
@@ -206,7 +221,7 @@ for (let i = tasks.length - 1; i >= 0; i--) {
   if (t.out !== 'items' && existsSync(join(raw, t.out, `${t.prefix}-${SEED}.png`))) tasks.splice(i, 1);
 }
 console.log(`Do wygenerowania: ${tasks.length}`);
-for (const dir of ['items', 'extra', 'warsztat', 'sciezka', 'pracownia', 'kolorowanki', 'emocje', 'historyjki', 'polana']) mkdirSync(join(raw, dir), { recursive: true });
+for (const dir of ['items', 'extra', 'warsztat', 'sciezka', 'pracownia', 'kolorowanki', 'emocje', 'historyjki', 'polana', 'krajobrazy']) mkdirSync(join(raw, dir), { recursive: true });
 // Postęp liczony w obrazkach (zadanie z --count N daje N plików .png).
 const images = tasks.reduce((n, t) => n + (t.args.includes('--count') ? Number(t.args[t.args.indexOf('--count') + 1]) : t.args.includes('ace15') ? 0 : 1), 0);
 execFileSync(job, ['bystrzakowo-items', 'Bystrzakowo: grafiki', String(images), '--dir', raw, '--glob', '*'], { stdio: 'inherit' });

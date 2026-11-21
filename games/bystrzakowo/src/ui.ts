@@ -124,27 +124,53 @@ export class Card extends Container {
   }
 }
 
-/** Okrągły przycisk z ikoną rysowaną w Graphics (dom, strzałka). */
+/** Ikony przycisków (rysowane w Graphics, bez tekstu: dziecko nie czyta). */
+export type Icon = 'home' | 'next' | 'plus' | 'landscape' | 'gallery' | 'trash';
+
+/** Okrągły przycisk z ikoną rysowaną w Graphics. */
 export class IconButton extends Container {
   private readonly press = new Spring(1, 600, 20);
   private readonly face = new Container();
   onTap: (() => void) | null = null;
 
-  constructor(icon: 'home' | 'next', radius = 52) {
+  constructor(icon: Icon, radius = 52, color?: number) {
     super();
     const g = new Graphics()
       .circle(0, 6, radius)
       .fill({ color: 0x000000, alpha: 0.15 })
       .circle(0, 0, radius)
-      .fill({ color: icon === 'next' ? COLORS.good : 0xff9f5a })
+      .fill({ color: color ?? (icon === 'next' || icon === 'plus' ? COLORS.good : 0xff9f5a) })
       .stroke({ color: COLORS.ink, width: 6 });
     const r = radius * 0.5;
     if (icon === 'home') {
       g.poly([-r, 0, 0, -r * 0.95, r, 0]).fill({ color: 0xffffff }).stroke({ color: COLORS.ink, width: 4, join: 'round' });
       g.rect(-r * 0.7, -r * 0.05, r * 1.4, r * 0.95).fill({ color: 0xffffff }).stroke({ color: COLORS.ink, width: 4 });
       g.rect(-r * 0.2, r * 0.35, r * 0.4, r * 0.55).fill({ color: COLORS.ink });
-    } else {
+    } else if (icon === 'next') {
       g.poly([-r * 0.6, -r * 0.8, r * 0.8, 0, -r * 0.6, r * 0.8]).fill({ color: 0xffffff }).stroke({ color: COLORS.ink, width: 5, join: 'round' });
+    } else if (icon === 'plus') {
+      const t = r * 0.32;
+      g.poly([-t, -r, t, -r, t, -t, r, -t, r, t, t, t, t, r, -t, r, -t, t, -r, t, -r, -t, -t, -t]).fill({ color: 0xffffff }).stroke({ color: COLORS.ink, width: 4, join: 'round' });
+    } else if (icon === 'landscape') {
+      // Obrazek z górką i słońcem.
+      g.roundRect(-r, -r * 0.75, r * 2, r * 1.5, r * 0.25).fill({ color: 0x9fdcff }).stroke({ color: COLORS.ink, width: 4 });
+      g.poly([-r, r * 0.75, -r * 0.3, -r * 0.1, r * 0.2, r * 0.45, r * 0.5, r * 0.15, r, r * 0.6, r, r * 0.75]).fill({ color: 0x7ad35a }).stroke({ color: COLORS.ink, width: 3, join: 'round' });
+      g.circle(r * 0.45, -r * 0.35, r * 0.2).fill({ color: COLORS.sun });
+    } else if (icon === 'gallery') {
+      // Dwa obrazki jeden na drugim.
+      for (const [dx, dy, c] of [
+        [r * 0.25, -r * 0.25, 0xffd2e4],
+        [-r * 0.15, r * 0.15, 0xfffaf2],
+      ] as const)
+        g.roundRect(dx - r * 0.7, dy - r * 0.55, r * 1.4, r * 1.1, r * 0.18).fill({ color: c }).stroke({ color: COLORS.ink, width: 4 });
+      g.poly([-r * 0.75, r * 0.65, -r * 0.35, r * 0.1, -r * 0.05, r * 0.45, r * 0.15, r * 0.25, r * 0.5, r * 0.65]).fill({ color: 0x7ad35a });
+      g.circle(r * 0.25, -r * 0.1, r * 0.13).fill({ color: COLORS.sun });
+    } else {
+      // Kosz.
+      g.roundRect(-r * 0.6, -r * 0.45, r * 1.2, r * 1.25, r * 0.15).fill({ color: 0xffffff }).stroke({ color: COLORS.ink, width: 4 });
+      g.roundRect(-r * 0.8, -r * 0.75, r * 1.6, r * 0.28, r * 0.1).fill({ color: 0xffffff }).stroke({ color: COLORS.ink, width: 4 });
+      g.roundRect(-r * 0.22, -r * 0.95, r * 0.44, r * 0.25, r * 0.08).stroke({ color: COLORS.ink, width: 4 });
+      for (const x of [-0.28, 0, 0.28]) g.moveTo(x * r, -r * 0.25).lineTo(x * r, r * 0.6).stroke({ color: COLORS.ink, width: 4, cap: 'round' });
     }
     this.face.addChild(g);
     this.addChild(this.face);
