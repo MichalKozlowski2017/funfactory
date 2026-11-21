@@ -810,7 +810,8 @@ class Sampler {
   private async init(): Promise<void> {
     try {
       const res = await fetch(`${this.base}manifest.json`);
-      if (!res.ok) return;
+      // Capacitor na iOS zwraca dla plików z aplikacji status 0 przy poprawnej treści.
+      if (!res.ok && res.status !== 0) return;
       const manifest = (await res.json()) as { instruments: Record<string, Instrument> };
       const names: string[] = [];
       for (const inst of Object.values(manifest.instruments)) {

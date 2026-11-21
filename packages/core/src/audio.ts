@@ -383,7 +383,9 @@ export class Sound {
       const url = this.pending.get(name);
       p = url
         ? fetch(url)
-            .then((r) => (r.ok ? r.arrayBuffer() : null))
+            // Capacitor na iOS (capacitor://) zwraca dla plików z aplikacji status 0 przy poprawnej treści.
+            .then((r) => (r.ok || r.status === 0 ? r.arrayBuffer() : null))
+            .then((b) => (b && b.byteLength > 0 ? b : null))
             .catch(() => null)
         : Promise.resolve(null);
       this.fetched.set(name, p);
