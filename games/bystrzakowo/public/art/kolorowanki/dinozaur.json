@@ -1,0 +1,16 @@
+{
+  "workflow": "flux2.json",
+  "PROMPT": "children coloring book page of a cute friendly dinosaur, very thick clean black outlines, closed shapes, large simple areas, pure white background, no shading, no gray, no color, no texture, cute and friendly, centered, whole object visible",
+  "NEGATIVE": "",
+  "SEED": 21,
+  "WIDTH": 1024,
+  "HEIGHT": 1024,
+  "PREFIX": "dinozaur",
+  "STEPS": 20,
+  "GUIDANCE": 4,
+  "BPM": 100,
+  "DURATION": 60,
+  "KEY": "A minor",
+  "LYRICS": "[Instrumental]",
+  "created": "2026-11-21T11:26:21.163Z"
+}

@@ -64,6 +64,14 @@ background sciezka/tlo-sciezka-21.png kraina-sciezka
 background sciezka/tlo-sciezka-gra-22.png gra-sciezka
 sprite sciezka/stacja-kropki-21.png dom-kropki 560
 sprite sciezka/stacja-labirynt-22.png dom-labirynt 560
+# Pracownia Malucha i stanowiska dodatkowych zabaw.
+background pracownia/tlo-pracownia-21.png kraina-pracownia
+background pracownia/tlo-pracownia-gra-22.png gra-pracownia
+sprite pracownia/stacja-kolorowanka-21.png dom-kolorowanka 560
+sprite pracownia/stacja-naklejanka-22.png dom-naklejanka 560
+sprite pracownia/stacja-litery-22.png dom-litery 560
+sprite pracownia/stacja-wzory-22.png dom-wzory 560
+sprite pracownia/dom-memory-21.png dom-memory 560
 # Kolorowanki: czyste czarne kontury na białym (próg + pogrubienie linii, żeby obszary były zamknięte).
 mkdir -p $OUT/kolorowanki
 for f in $RAW/kolorowanki/*-21.png; do

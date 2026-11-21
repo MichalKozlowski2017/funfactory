@@ -1,0 +1,16 @@
+{
+  "workflow": "flux2.json",
+  "PROMPT": "a completely empty soft cream colored paper wall with a few tiny colorful paint dots only at the edges, very simple and calm, lots of empty space, no objects, no characters, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, bright cheerful pastel colors, cute and friendly",
+  "NEGATIVE": "",
+  "SEED": 22,
+  "WIDTH": 1536,
+  "HEIGHT": 864,
+  "PREFIX": "tlo-pracownia-gra",
+  "STEPS": 20,
+  "GUIDANCE": 4,
+  "BPM": 100,
+  "DURATION": 60,
+  "KEY": "A minor",
+  "LYRICS": "[Instrumental]",
+  "created": "2026-11-21T11:04:25.687Z"
+}
