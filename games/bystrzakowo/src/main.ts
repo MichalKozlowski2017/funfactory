@@ -12,3 +12,6 @@ registerVoice(game);
 game.app.ticker.add((t) => logTime(t.deltaMS / 1000));
 await game.scenes.go(new WorldScene(), { fade: 0 });
 
+
+// Autopilot do testów strefy rodzica (build z VITE_AUTOPLAY=1 albo ?autoplay).
+if (import.meta.env.VITE_AUTOPLAY || new URLSearchParams(location.search).has('autoplay')) void import('./autoplay.ts').then((m) => m.startAutoplay(game));

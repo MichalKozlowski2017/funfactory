@@ -131,7 +131,21 @@ export class Game {
     this.app.ticker.add((ticker) => {
       if (this.dev) this.dev.frames++;
       this.frameStart = performance.now();
-      this.loop.tick(ticker.deltaMS / 1000);
+      // Wyjątek w klatce nie może zatrzymać gry: Pixi po błędzie nie zamawia kolejnej klatki
+      // i obraz zamiera na zawsze. Zgłaszamy błąd (window 'error') i rysujemy dalej.
+      try {
+        this.loop.tick(ticker.deltaMS / 1000);
+      } catch (e) {
+        reportFrameError(e);
+      }
+    });
+    // Błąd poza logiką klatki (np. w rysowaniu) też zatrzymałby ticker: uruchamiamy go ponownie.
+    window.addEventListener('error', () => {
+      const t = this.app.ticker;
+      if (t.started) {
+        t.stop();
+        t.start();
+      }
     });
     // Po narysowaniu (render ma priorytet LOW): koniec pracy klatki.
     this.app.ticker.add(() => this.measure(), null, UPDATE_PRIORITY.UTILITY);
@@ -219,6 +233,16 @@ export class Game {
   markReady(): void {
     if (this.dev) this.dev.ready = true;
   }
+}
+
+let frameErrors = 0;
+
+/** Błąd z klatki: do konsoli i jako zdarzenie window 'error' (diagnostyka gier), najwyżej 50 razy. */
+function reportFrameError(e: unknown): void {
+  if (frameErrors++ >= 50) return;
+  console.error(e);
+  const message = e instanceof Error ? `${e.message}\n${e.stack ?? ''}` : String(e);
+  window.dispatchEvent(new ErrorEvent('error', { message, error: e }));
 }
 
 function makeSafeProbe(): HTMLDivElement {

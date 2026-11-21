@@ -129,7 +129,9 @@ export function makeReport(input: ReportInput): Report {
     const okSet = new Set(counts.ok.map(Number));
     let upTo = 0;
     while (okSet.has(upTo + 1)) upTo++;
+    const okSorted = [...okSet].sort((a, b) => a - b);
     if (upTo >= 2) lines.push(`${who} liczy bez pomyłek do ${upTo}.`);
+    else if (okSorted.length) lines.push(`${who} bez pomyłek liczy zbiory po ${list(okSorted.map(String))} przedmiotów, mniejsze liczby jeszcze ćwiczy.`);
     else if (counts.tried.length) lines.push(`${who} ćwiczy liczenie przedmiotów.`);
     const hard = counts.hard.map(Number).sort((a, b) => a - b);
     if (hard.length) lines.push(`Jeszcze sprawiają kłopot: ${list(hard.map(String))}.`);
@@ -238,8 +240,13 @@ function highlights(j: Journal, acts: Partial<Record<Activity, number>>, from: s
       .filter(([k, d]) => k.startsWith(group + ':') && d >= from && d <= to)
       .map(([k]) => k.slice(group.length + 1));
   const out: string[] = [];
+  // „Liczenie do N” tylko gdy opanowane są wszystkie liczby od 1 do N.
   const nums = fresh('liczba').map(Number);
-  if (nums.length) out.push(`Liczenie do ${Math.max(...nums)}`);
+  if (nums.length) {
+    let upTo = 0;
+    while (mastered(j.facts[`liczba:${upTo + 1}`])) upTo++;
+    out.push(upTo >= Math.max(...nums) && upTo >= 2 ? `Liczenie do ${upTo}` : `Policzone bez pomyłki: ${list(nums.sort((a, b) => a - b).map(String))}`);
+  }
   const letters = fresh('litera');
   if (letters.length) out.push(`${letters.length > 1 ? 'Nowe literki' : 'Nowa literka'}: ${list(letters)}`);
   const sounds = fresh('gloska');

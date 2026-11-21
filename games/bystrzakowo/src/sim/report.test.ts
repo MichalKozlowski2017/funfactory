@@ -75,6 +75,17 @@ describe('raport dla rodzica', () => {
   });
 });
 
+describe('liczenie bez ciągłości', () => {
+  it('nie pisze „do 7”, gdy mniejsze liczby nie są opanowane', () => {
+    const j = newJournal();
+    for (const n of [5, 7]) for (let i = 0; i < 3; i++) noteFact(j, TODAY, `liczba:${n}`, true);
+    addTask(j, TODAY, 'liczenie', 0);
+    const r = makeReport({ journal: j, levels: {}, name: 'Staś', today: TODAY });
+    expect(r.skills[0]!.lines[0]).toBe('Staś bez pomyłek liczy zbiory po 5, 7 przedmiotów, mniejsze liczby jeszcze ćwiczy.');
+    expect(r.highlights[0]).toBe('Policzone bez pomyłki: 5, 7');
+  });
+});
+
 describe('daty na pocztówce', () => {
   it('formatuje zakres tygodnia', async () => {
     const { formatRange } = await import('./report.ts');
