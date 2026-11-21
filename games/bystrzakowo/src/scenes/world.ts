@@ -459,17 +459,27 @@ export class WorldScene extends Scene {
     this.pages.x = -this.realm * w;
     const span = right - left - 230;
     REALMS.forEach((realm, r) => {
-      const place = (kinds: Activity[], y: number, maxScale: number) => {
+      /** Ustawia rząd i zwraca górną krawędź najwyższego domku (z emblematem). */
+      const place = (kinds: Activity[], y: number, maxScale: number, shift = 0): number => {
         const scale = Math.min(maxScale, span / kinds.length / 270);
+        let top = y;
         kinds.forEach((kind, i) => {
           const house = this.houses.get(kind)!;
-          house.position.set(r * w + left + 115 + (span * (i + 0.5)) / kinds.length, y);
+          house.position.set(r * w + left + 115 + (span * (i + 0.5 + shift)) / kinds.length, y);
           house.scale.set(scale);
+          top = Math.min(top, y + house.getLocalBounds().minY * scale);
         });
+        return top;
       };
       if (realm.rows.length > 1) {
-        place(realm.rows[0]!, h * 0.5 + 75, 0.62);
-        place(realm.rows[1]!, h - 40, 0.9);
+        // Przedni rząd mniejszy, gdy jest go mało (dwa duże domki zasłaniały tylne); tylny stoi nad nim,
+        // przesunięty o pół miejsca, żeby emblematy nie nachodziły na siebie.
+        const front = realm.rows[1]!;
+        const top = place(front, h - 40, front.length < 3 ? 0.72 : 0.9);
+        const back = realm.rows[0]!;
+        const stagger = back.length === front.length && front.length < 3 ? 0.18 : 0;
+        place(back, Math.max(h * 0.5 + 75, top + 25), 0.62, -stagger);
+        for (const kind of front) this.houses.get(kind)!.x += (span * stagger) / front.length;
       } else place(realm.rows[0]!, h - 70, 1.25);
     });
     this.album.position.set(w - safe.right - 110, 90 + safe.top);

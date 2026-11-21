@@ -1,14 +1,14 @@
 import { Container, Graphics, Point, Sprite, Text, type Texture } from 'pixi.js';
 import { haptics, Spring, type Sound } from '@funfactory/core';
 
-/** Krój nagłówków i cyfr (Lilita One, OFL). Ładowany raz w main.ts. */
+/** Krój nagłówków i cyfr (Baloo 2 ExtraBold, OFL; pełne polskie znaki). Ładowany raz w main.ts. */
 export let FONT = 'system-ui, -apple-system, sans-serif';
 
 export async function loadFont(): Promise<void> {
   try {
-    const face = new FontFace('Lilita One', `url(${import.meta.env.BASE_URL}fonts/lilita-one.ttf)`);
+    const face = new FontFace('Baloo 2', `url(${import.meta.env.BASE_URL}fonts/baloo2.ttf)`, { weight: '400 800' });
     document.fonts.add(await face.load());
-    FONT = '"Lilita One", system-ui, sans-serif';
+    FONT = '"Baloo 2", system-ui, sans-serif';
   } catch {
     /* krój systemowy */
   }
@@ -28,7 +28,7 @@ export function label(text: string, size: number, resolution: number, fill = '#f
     text,
     anchor: 0.5,
     resolution,
-    style: { fontFamily: FONT, fontSize: size, fill, stroke: { color: stroke, width: size * 0.16, join: 'round' }, letterSpacing: 1 },
+    style: { fontFamily: FONT, fontSize: size, fontWeight: '800', fill, stroke: { color: stroke, width: size * 0.16, join: 'round' }, letterSpacing: 1 },
   });
 }
 
