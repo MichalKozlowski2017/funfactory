@@ -73,5 +73,5 @@ export function removePicture(p: Progress, index: number): void {
  */
 export function depthScale(y: number): number {
   const t = Math.max(0, Math.min(1, y));
-  return 0.6 + 0.65 * t;
+  return 0.4 + 1.0 * t;
 }
