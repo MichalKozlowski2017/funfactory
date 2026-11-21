@@ -4,6 +4,7 @@ import { Button, type Game, type View } from '@funfactory/kit2d';
 import { startMusic, stopMusic } from './assets.ts';
 import { newProgress } from './sim/progress.ts';
 import { saveState, state } from './state.ts';
+import { LIMITS, reset as resetSession } from './session.ts';
 import { COLORS } from './ui.ts';
 
 const HOLD = 2;
@@ -77,7 +78,7 @@ export class ParentPanel extends Container {
     const info = text('Bystrzakowo działa bez internetu, bez reklam i nie zbiera żadnych danych. Postępy dziecka zapisują się tylko na tym urządzeniu.', 24, '#6b5a4a', '600');
     info.y = 150;
     const musicLabel = () => (state.progress.music ? 'Muzyka: włączona' : 'Muzyka: wyłączona');
-    const music: Button = new Button({ label: musicLabel(), width: 440, height: 88, fontSize: 30, color: '#5cb3ff', resolution: pr, onTap: () => toggleMusic() });
+    const music: Button = new Button({ label: musicLabel(), width: 440, height: 80, fontSize: 30, color: '#5cb3ff', resolution: pr, onTap: () => toggleMusic() });
     const toggleMusic = () => {
       state.progress.music = !state.progress.music;
       if (state.progress.music) startMusic(game);
@@ -85,8 +86,18 @@ export class ParentPanel extends Container {
       music.setLabel(musicLabel());
       void saveState();
     };
-    music.y = 260;
-    const reset: Button = new Button({ label: 'Wyzeruj postępy', width: 440, height: 88, fontSize: 30, color: '#e8835a', resolution: pr, onTap: () => doReset() });
+    music.y = 250;
+    const limitLabel = () => (state.progress.limit ? `Czas zabawy: ${state.progress.limit} min` : 'Czas zabawy: bez limitu');
+    const limit: Button = new Button({ label: limitLabel(), width: 440, height: 80, fontSize: 30, color: '#9b7be0', resolution: pr, onTap: () => nextLimit() });
+    const nextLimit = () => {
+      const i = LIMITS.indexOf((state.progress.limit ?? 0) as (typeof LIMITS)[number]);
+      state.progress.limit = LIMITS[(i + 1) % LIMITS.length];
+      resetSession();
+      limit.setLabel(limitLabel());
+      void saveState();
+    };
+    limit.y = 340;
+    const reset: Button = new Button({ label: 'Wyzeruj postępy', width: 440, height: 80, fontSize: 30, color: '#e8835a', resolution: pr, onTap: () => doReset() });
     const doReset = () => {
       if (!this.confirmReset) {
         this.confirmReset = true;
@@ -98,18 +109,18 @@ export class ParentPanel extends Container {
       void saveState();
       reset.setLabel('Wyzerowano');
     };
-    reset.y = 370;
-    const close = new Button({ label: 'Zamknij', width: 440, height: 88, fontSize: 30, color: '#5cc36a', resolution: pr, onTap: onClose });
-    close.y = 480;
-    this.buttons.push(music, reset, close);
-    this.body.addChild(title, info, music, reset, close);
+    reset.y = 430;
+    const close = new Button({ label: 'Zamknij', width: 440, height: 80, fontSize: 30, color: '#5cc36a', resolution: pr, onTap: onClose });
+    close.y = 520;
+    this.buttons.push(music, limit, reset, close);
+    this.body.addChild(title, info, music, limit, reset, close);
     this.addChild(this.dim, this.panel, this.body);
   }
 
   layout(view: View): void {
     this.dim.clear().rect(0, 0, view.width, view.height).fill({ color: 0x2a1a40, alpha: 0.6 });
     const w = 660;
-    const h = 560;
+    const h = 600;
     const x = (view.width - w) / 2;
     const y = (view.height - h) / 2;
     this.panel.clear().roundRect(x, y, w, h, 36).fill({ color: 0xfffaf2 }).stroke({ color: COLORS.ink, width: 6 });

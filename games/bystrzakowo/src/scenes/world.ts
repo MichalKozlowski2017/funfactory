@@ -1,12 +1,13 @@
 import { Container, Graphics, Sprite, type Text, type Texture } from 'pixi.js';
 import { haptics } from '@funfactory/core';
 import { dotTexture, idleBreath, Particles, popIn, Scene, squash, type View } from '@funfactory/kit2d';
-import { loadArt, say, shadowOf, startMusic, type Art } from '../assets.ts';
+import { loadArt, say, shadowOf, startMusic, stopMusic, type Art } from '../assets.ts';
 import { playable, type PuzzleKind } from '../sim/puzzles.ts';
 import { isPuzzle, REALMS, type Activity } from '../sim/realms.ts';
 import { saveState, state } from '../state.ts';
 import { COLORS, cover, label, sfx } from '../ui.ts';
 import { ParentGate, ParentPanel } from '../parent.ts';
+import { extend, timeIsUp } from '../session.ts';
 import { AlbumScene } from './album.ts';
 import { ColoringScene } from './coloring.ts';
 import { DotsScene } from './dots.ts';
@@ -47,6 +48,8 @@ export class WorldScene extends Scene {
   private gate!: ParentGate;
   private parentPanel: ParentPanel | null = null;
   private swipeX: number | null = null;
+  /** Ekran „dobranoc” po limicie czasu (zdejmuje go tylko rodzic zębatką). */
+  private sleep: Container | null = null;
 
   override async enter(): Promise<void> {
     this.art = await loadArt();
@@ -124,7 +127,7 @@ export class WorldScene extends Scene {
     this.addChild(this.particles.view);
 
     this.gate = new ParentGate();
-    this.gate.onOpen = () => this.openParent();
+    this.gate.onOpen = () => (this.sleep ? this.wake() : this.openParent());
     this.addChild(this.gate);
 
     // Gest w bok przełącza krainę. Pierwsze dotknięcie: muzyka i powitanie.
@@ -144,7 +147,60 @@ export class WorldScene extends Scene {
     };
     this.on('pointerup', (e) => endSwipe(e.global.x));
     this.on('pointerupoutside', (e) => endSwipe(e.global.x));
+    if (timeIsUp()) this.goodnight();
     this.game.markReady();
+  }
+
+  /** Koniec czasu zabawy: noc nad krainą, przewodnicy zasypiają, dotyk zablokowany (poza zębatką rodzica). */
+  private goodnight(): void {
+    const { width: w, height: h } = this.game.view;
+    const o = new Container();
+    o.eventMode = 'static';
+    const night = new Graphics().rect(0, 0, w, h).fill({ color: 0x1d1a4a, alpha: 0.72 });
+    const moon = new Graphics().poly(crescent(70, 30, -22, 62)).fill({ color: 0xfff3b0 });
+    moon.position.set(w / 2, h * 0.3);
+    o.addChild(night, moon);
+    for (let i = 0; i < 24; i++) {
+      const star = new Graphics().star(0, 0, 5, 9, 4).fill({ color: 0xfff3b0 });
+      star.position.set(this.game.rng.range(40, w - 40), this.game.rng.range(30, h * 0.55));
+      star.alpha = this.game.rng.range(0.4, 1);
+      this.tweens.to(star, { alpha: 0.2 }, { duration: this.game.rng.range(0.8, 1.8), yoyo: true, repeat: -1, ease: 'sineInOut' });
+      o.addChild(star);
+    }
+    const text = label('Dobranoc!', 72, this.game.pixelRatio, '#fff3b0', '#1d1a4a');
+    text.position.set(w / 2, h * 0.52);
+    o.addChild(text);
+    // Zzz nad przewodnikami.
+    for (const guide of [this.lusia, this.bazyl]) {
+      guide.tint = 0x9a94c8;
+      for (let k = 0; k < 3; k++) {
+        const z = label('z', 34 + k * 8, this.game.pixelRatio, '#ffffff', '#1d1a4a');
+        z.position.set(guide.x + 40 + k * 26, guide.y - 330 - k * 30);
+        z.alpha = 0;
+        this.tweens.to(z, { alpha: 1, y: z.y - 20 }, { duration: 1.2, delay: k * 0.4, yoyo: true, repeat: -1, ease: 'sineInOut' });
+        o.addChild(z);
+      }
+    }
+    this.sleep = o;
+    this.addChild(o);
+    this.addChild(this.gate);
+    this.timers.after(0.6, () => say(this.game, 'lusia', 'dobranoc'));
+    stopMusic(this.game);
+  }
+
+  /** Playtest: ekran dobranoc (`eval:__ff.game.scenes.current.night()`). */
+  night(): void {
+    this.goodnight();
+  }
+
+  /** Rodzic przedłuża zabawę (zębatka). */
+  private wake(): void {
+    extend();
+    this.sleep?.destroy({ children: true });
+    this.sleep = null;
+    this.lusia.tint = 0xffffff;
+    this.bazyl.tint = 0xffffff;
+    startMusic(this.game);
   }
 
   private albumButton(): Container {
@@ -428,4 +484,36 @@ function puzzlePiece(): Graphics {
     .fill({ color: 0x9b5de5 })
     .stroke({ color: COLORS.ink, width: 4, join: 'round' });
   return g;
+}
+
+/** Rogalik księżyca: koło o promieniu `r` bez koła (cx, cy, ir). */
+function crescent(r: number, cx: number, cy: number, ir: number): number[] {
+  const pts: number[] = [];
+  const n = 90;
+  for (let i = 0; i <= n; i++) {
+    const a = (i / n) * Math.PI * 2;
+    const x = Math.cos(a) * r;
+    const y = Math.sin(a) * r;
+    if (Math.hypot(x - cx, y - cy) >= ir) pts.push(x, y);
+  }
+  // Brzeg wewnętrzny (łuk wycinający) w odwrotnej kolejności.
+  const inner: number[] = [];
+  for (let i = 0; i <= n; i++) {
+    const a = (i / n) * Math.PI * 2;
+    const x = cx + Math.cos(a) * ir;
+    const y = cy + Math.sin(a) * ir;
+    if (Math.hypot(x, y) <= r) inner.push(x, y);
+  }
+  // Punkty zewnętrzne mogą być rozcięte w miejscu kąta 0: obróć tak, żeby zaczynały się za wycięciem.
+  const outer: [number, number][] = [];
+  for (let i = 0; i < pts.length; i += 2) outer.push([pts[i]!, pts[i + 1]!]);
+  let cut = 0;
+  for (let i = 1; i < outer.length; i++) if (Math.hypot(outer[i]![0] - outer[i - 1]![0], outer[i]![1] - outer[i - 1]![1]) > r * 0.2) cut = i;
+  const ring = [...outer.slice(cut), ...outer.slice(0, cut)];
+  const inn: [number, number][] = [];
+  for (let i = 0; i < inner.length; i += 2) inn.push([inner[i]!, inner[i + 1]!]);
+  let icut = 0;
+  for (let i = 1; i < inn.length; i++) if (Math.hypot(inn[i]![0] - inn[i - 1]![0], inn[i]![1] - inn[i - 1]![1]) > ir * 0.2) icut = i;
+  const iring = [...inn.slice(icut), ...inn.slice(0, icut)].reverse();
+  return [...ring, ...iring].flat();
 }

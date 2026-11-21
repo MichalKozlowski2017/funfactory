@@ -1,0 +1,10 @@
+{
+ "voice": "voices/alt",
+ "tries": 8,
+ "lines": [
+  {
+   "name": "lusia-dobranoc",
+   "text": "Na dziś wystarczy zabawy! Lusia i Bazyl idą spać. Do zobaczenia jutro!"
+  }
+ ]
+}

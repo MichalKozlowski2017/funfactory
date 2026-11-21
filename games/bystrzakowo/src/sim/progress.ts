@@ -17,6 +17,8 @@ export interface Progress {
   scene?: { id: string; x: number; y: number; flip: boolean }[];
   /** Ustawienia ze strefy rodzica. */
   music: boolean;
+  /** Limit czasu zabawy w minutach (0 = bez limitu). */
+  limit?: number;
 }
 
 export const newProgress = (): Progress => ({
