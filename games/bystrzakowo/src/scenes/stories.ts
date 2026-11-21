@@ -2,8 +2,8 @@ import { Container, Graphics, Sprite, Texture, type Point } from 'pixi.js';
 import { haptics } from '@funfactory/core';
 import { popIn, pulse } from '@funfactory/kit2d';
 import { say, storyFrame } from '../assets.ts';
-import { FRAMES, makeStoryRound, presetFrames, type Story } from '../sim/stories.ts';
-import { state } from '../state.ts';
+import { FRAMES, makeStoryRound, markStoriesSeen, presetFrames, type Story } from '../sim/stories.ts';
+import { saveState, state } from '../state.ts';
 import { COLORS, draggable, label, sfx } from '../ui.ts';
 import { RoundScene } from './round.ts';
 
@@ -32,8 +32,11 @@ export class StoryScene extends RoundScene {
   }
 
   protected async prepare(): Promise<void> {
-    this.stories = makeStoryRound(this.game.rng);
+    this.stories = makeStoryRound(this.game.rng, state.progress.storiesSeen);
     this.length = this.stories.length;
+    // Od razu zapisujemy jako obejrzane: przerwana runda też się liczy, inaczej po wyjściu wracałyby te same.
+    state.progress.storiesSeen = markStoriesSeen(state.progress.storiesSeen ?? [], this.stories);
+    void saveState();
   }
 
   protected promptLine(): string {

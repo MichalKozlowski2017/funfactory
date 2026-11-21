@@ -12,6 +12,8 @@ export interface Progress {
   rounds: number;
   /** Ostatnio oglądana kraina (powrót z zabawy do tej samej krainy). */
   realm: number;
+  /** Historyjki, które dziecko już widziało w bieżącym „worku” (sim/stories.ts). */
+  storiesSeen?: string[];
   /** Pokolorowane strony kolorowanki (najpierw nowe). */
   colored?: string[];
   /** Stary zapis: jeden obrazek z naklejek (przenoszony do `pictures`). */
