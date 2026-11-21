@@ -79,7 +79,6 @@ describe('memory', () => {
         expect([...ids.values()].every((n) => n === 2)).toBe(true);
         const items = [...new Set(board.map((c) => c.item))];
         for (const a of items) for (const b of items) if (a !== b) expect(lookalike(a, b)).toBe(false);
-        expect(board.filter((c) => c.shadow).length).toBe(level === 2 ? pairCount(level) : 0);
         const g = memoryGrid(board.length);
         expect(g.cols * g.rows).toBeGreaterThanOrEqual(board.length);
       }

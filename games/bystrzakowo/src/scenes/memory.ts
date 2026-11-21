@@ -1,8 +1,8 @@
 import { Container, Graphics, Sprite } from 'pixi.js';
 import { haptics } from '@funfactory/core';
 import { popIn, pulse } from '@funfactory/kit2d';
-import { say, shadowNow, shadowOf } from '../assets.ts';
-import { makeMemoryBoard, MEMORY_ROUND, memoryGrid, memoryMistakes, shadowPairs, type MemoryCard } from '../sim/memory.ts';
+import { say } from '../assets.ts';
+import { makeMemoryBoard, MEMORY_ROUND, memoryGrid, memoryMistakes, type MemoryCard } from '../sim/memory.ts';
 import { state } from '../state.ts';
 import { COLORS, sfx } from '../ui.ts';
 import { RoundScene } from './round.ts';
@@ -18,7 +18,7 @@ interface CardView {
 
 /**
  * Memory (Polana Zagadek): karty odwrócone, odkrywa się po dwie. Para zostaje odkryta i lektor mówi nazwę,
- * inne odwracają się z powrotem. Na najwyższym poziomie para to obrazek i jego cień.
+ * inne odwracają się z powrotem.
  */
 export class MemoryScene extends RoundScene {
   readonly id = 'memory';
@@ -36,7 +36,6 @@ export class MemoryScene extends RoundScene {
     const level = state.progress.levels.memory ?? 0;
     this.boards = Array.from({ length: MEMORY_ROUND }, () => makeMemoryBoard(this.game.rng, level));
     this.length = this.boards.length;
-    if (shadowPairs(level)) await Promise.all(this.boards.flat().map((c) => shadowOf(c.item.id)));
   }
 
   protected override roundItems(): string[] {
@@ -44,7 +43,7 @@ export class MemoryScene extends RoundScene {
   }
 
   protected promptLine(): string {
-    return shadowPairs(state.progress.levels.memory ?? 0) ? 'memory-cien' : 'memory';
+    return 'memory';
   }
 
   protected show(): void {
@@ -55,7 +54,7 @@ export class MemoryScene extends RoundScene {
       const back = new Container();
       back.addChild(new Graphics());
       const front = new Container();
-      const tex = card.shadow ? shadowNow(card.item.id)! : this.art.items.get(card.item.id)!;
+      const tex = this.art.items.get(card.item.id)!;
       front.addChild(new Graphics(), new Sprite({ texture: tex, anchor: 0.5 }));
       front.visible = false;
       view.addChild(back, front);
