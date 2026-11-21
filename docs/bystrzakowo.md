@@ -135,6 +135,24 @@ Do odsłuchu: czytanie sylabami (`lusia-czytaj-*`), Whisper nie umie tego oceni�
 
 Research oczekiwań rodziców: `docs/bystrzakowo-rodzice.md`.
 
+## Języki (2026-11-21)
+
+Polski (podstawowy), angielski i niemiecki w jednej aplikacji. Język: z telefonu (spoza listy: angielski),
+rodzic zmienia go w Ustawieniach strefy rodzica; w playtestach `?lang=en|de|pl`.
+
+- **Teksty na ekranie**: `tr('polski tekst')` (`src/sim/i18n.ts`), słowniki `src/sim/locales/{en,de}.ts`.
+  Test `i18n.test.ts` pilnuje, żeby każdy tekst miał tłumaczenie i żeby w kodzie ekranów nie było polskich napisów poza `tr()`.
+- **Raport dla rodzica**: zdania w `src/sim/report-text.ts` (każdy język osobno, z własną gramatyką liczebników).
+- **Nazwy obiektów**: `src/sim/names.ts`.
+- **Zabawy zależne od języka**: „Głoski” po angielsku i niemiecku to pierwsza litera słowa (tak uczą tamtejsze przedszkola;
+  słowa z dwuznakiem na początku są pomijane), sylaby (`WORDS_EN`, `WORDS_DE`), literki z obiektami z danego języka
+  (po angielsku bez „I”, bo w katalogu nie ma nic na I).
+- **Lektor**: `node games/bystrzakowo/scripts/voice-i18n.ts` → `voice/{en,de}.json`, nagrania `scripts/voice-lang.sh en|de`
+  → `public/audio/<język>/<głos>/`. Głosy: rodzime wzorce `lusia-en`, `bazyl-en`, `lusia-de`, `bazyl-de` (z opisu w VoxCPM2);
+  polskie wzorce czytały angielskie słowa z akcentem („Cat” jak „Cut”). Bazyl to po angielsku i niemiecku Basil.
+- **Do zrobienia przed wydaniem**: odsłuch przez rodzimego użytkownika (Whisper sprawdza tylko zrozumiałość),
+  opisy i zrzuty do sklepów w obu językach.
+
 ## Plan
 
 1. **Prototyp (3 domki: cienie, co nie pasuje, liczenie):** katalog z ~20 obiektami, silniki zagadek w czystym TS z testami, polana z trzema domkami, lektor, naklejka po rundzie. Cel: sprawdzić na dziecku, czy jest zabawnie i zrozumiale.

@@ -1,2427 +1,2427 @@
 {
- "voice": "voices/alt",
+ "voice": "voices/lusia-en",
  "lang": "en",
- "tries": 8,
+ "tries": 10,
  "lines": [
   {
    "name": "lusia-brawo-1",
    "text": "Well done!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-brawo-2",
    "text": "Great job!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-brawo-3",
    "text": "Super, keep it up!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-brawo-4",
    "text": "Wonderful!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-brawo-5",
    "text": "You're so clever!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-oj-1",
    "text": "Oops, try again.",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-oj-2",
    "text": "Hmm, that's not it. Try once more!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-nagroda",
    "text": "Well done! You get a new sticker!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-witaj",
    "text": "Hi! I'm Lusia, and this is my friend Basil. Pick a little house and let's play together!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-pomoc",
    "text": "Look carefully. You can do it!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-kot",
    "text": "Cat!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-pies",
    "text": "Dog!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-krowa",
    "text": "Cow!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-slon",
    "text": "Elephant!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-kurczak",
    "text": "Chick!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-ryba",
    "text": "Fish!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-zaba",
    "text": "Frog!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-kaczka",
    "text": "Duck!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-kura",
    "text": "Hen!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-cielaczek",
    "text": "Calf!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-kotek",
    "text": "Kitten!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-owca",
    "text": "Sheep!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-jagniatko",
    "text": "Lamb!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-swinka",
    "text": "Pig!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-prosiaczek",
    "text": "Piglet!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-kon",
    "text": "Horse!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-zrebak",
    "text": "Foal!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-kaczatko",
    "text": "Duckling!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-kijanka",
    "text": "Tadpole!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-lew",
    "text": "Lion!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-zyrafa",
    "text": "Giraffe!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-malpa",
    "text": "Monkey!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-zebra",
    "text": "Zebra!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-niedzwiedz",
    "text": "Bear!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-jez",
    "text": "Hedgehog!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-wiewiorka",
    "text": "Squirrel!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-sowa",
    "text": "Owl!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-motyl",
    "text": "Butterfly!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-biedronka",
    "text": "Ladybug!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-pszczola",
    "text": "Bee!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-slimak",
    "text": "Snail!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-krolik",
    "text": "Bunny!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-mysz",
    "text": "Mouse!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-pingwin",
    "text": "Penguin!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-zolw",
    "text": "Turtle!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-krab",
    "text": "Crab!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-osmiornica",
    "text": "Octopus!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-ptak",
    "text": "Bird!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-dinozaur",
    "text": "Dinosaur!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-lis",
    "text": "Fox!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-zajac",
    "text": "Hare!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-dzik",
    "text": "Wild boar!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-sarna",
    "text": "Deer!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-dzieciol",
    "text": "Woodpecker!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-wieloryb",
    "text": "Whale!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-delfin",
    "text": "Dolphin!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-meduza",
    "text": "Jellyfish!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-konikmorski",
    "text": "Seahorse!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-koza",
    "text": "Goat!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-osiolek",
    "text": "Donkey!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-indyk",
    "text": "Turkey!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-ges",
    "text": "Goose!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-foka",
    "text": "Seal!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-mors",
    "text": "Walrus!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-mispolarny",
    "text": "Polar bear!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-hipopotam",
    "text": "Hippo!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-nosorozec",
    "text": "Rhino!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-jablko",
    "text": "Apple!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-banan",
    "text": "Banana!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-gruszka",
    "text": "Pear!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-truskawka",
    "text": "Strawberry!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-sliwka",
    "text": "Plum!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-wisnia",
    "text": "Cherries!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-pomarancza",
    "text": "Orange!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-cytryna",
    "text": "Lemon!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-winogrona",
    "text": "Grapes!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-arbuz",
    "text": "Watermelon!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-ananas",
    "text": "Pineapple!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-malina",
    "text": "Raspberry!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-marchewka",
    "text": "Carrot!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-pomidor",
    "text": "Tomato!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-ogorek",
    "text": "Cucumber!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-ziemniak",
    "text": "Potato!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-kukurydza",
    "text": "Corn!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-papryka",
    "text": "Pepper!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-brokul",
    "text": "Broccoli!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-dynia",
    "text": "Pumpkin!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-groszek",
    "text": "Peas!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-rzodkiewka",
    "text": "Radish!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-grzyb",
    "text": "Mushroom!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-cebula",
    "text": "Onion!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-auto",
    "text": "Car!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-rower",
    "text": "Bike!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-samolot",
    "text": "Airplane!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-lodka",
    "text": "Boat!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-autobus",
    "text": "Bus!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-pociag",
    "text": "Train!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-traktor",
    "text": "Tractor!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-helikopter",
    "text": "Helicopter!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-rakieta",
    "text": "Rocket!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-hulajnoga",
    "text": "Kick scooter!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-skuter",
    "text": "Motor scooter!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-straz",
    "text": "Fire truck!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-ciezarowka",
    "text": "Truck!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-pilka",
    "text": "Ball!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-mis",
    "text": "Teddy bear!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-klocek",
    "text": "Block!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-lalka",
    "text": "Doll!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-latawiec",
    "text": "Kite!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-bebenek",
    "text": "Drum!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-konik",
    "text": "Rocking horse!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-baczek",
    "text": "Spinning top!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-robot",
    "text": "Robot!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-balonik",
    "text": "Balloon!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-trabka",
    "text": "Trumpet!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-wiaderko",
    "text": "Bucket!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-sanki",
    "text": "Sled!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-kubek",
    "text": "Mug!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-talerz",
    "text": "Plate!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-lyzka",
    "text": "Spoon!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-widelec",
    "text": "Fork!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-garnek",
    "text": "Pot!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-czajnik",
    "text": "Kettle!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-miska",
    "text": "Bowl!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-patelnia",
    "text": "Frying pan!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-butelka",
    "text": "Bottle!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-czapka",
    "text": "Hat!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-szalik",
    "text": "Scarf!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-but",
    "text": "Shoe!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-skarpetka",
    "text": "Sock!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-koszulka",
    "text": "T-shirt!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-spodnie",
    "text": "Trousers!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-sukienka",
    "text": "Dress!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-rekawiczki",
    "text": "Mittens!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-kalosze",
    "text": "Rain boots!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-parasol",
    "text": "Umbrella!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-okulary",
    "text": "Sunglasses!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-kapelusz",
    "text": "Sun hat!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-sandaly",
    "text": "Sandals!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-stroj",
    "text": "Swimsuit!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-kurtka",
    "text": "Jacket!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-slonce",
    "text": "Sun!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-chmurka",
    "text": "Cloud!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-gwiazdka",
    "text": "Star!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-ksiezyc",
    "text": "Moon!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-kwiatek",
    "text": "Flower!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-drzewo",
    "text": "Tree!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-lisc",
    "text": "Leaf!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-tecza",
    "text": "Rainbow!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-item-muszelka",
    "text": "Seashell!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-kraina-polana",
    "text": "This is Puzzle Meadow! Pick a little house.",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-kraina-spi",
    "text": "This land is still asleep. Ask your mom or dad!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-kraina-sciezka",
    "text": "This is my Path! Here we draw with a finger.",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-kropki",
    "text": "Connect the dots in order! Start with number one.",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-memory",
    "text": "Find pairs of matching pictures!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-kraina-pracownia",
    "text": "This is the Little Studio! Here you can paint and create.",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-dobranoc",
    "text": "That's enough playing for today! Lusia and Basil are going to sleep. See you tomorrow!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-melodia",
    "text": "Listen to my tune and play it the same way!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-sylaby",
    "text": "Put the syllables in order, and then we'll read together!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-czytaj-zebra",
    "text": "Ze... bra... Zebra!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-czytaj-robot",
    "text": "Ro... bot... Robot!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-czytaj-malpa",
    "text": "Mon... key... Monkey!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-czytaj-krolik",
    "text": "Bun... ny... Bunny!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-czytaj-jablko",
    "text": "Ap... ple... Apple!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-czytaj-cytryna",
    "text": "Le... mon... Lemon!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-czytaj-pingwin",
    "text": "Pen... guin... Penguin!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-czytaj-zolw",
    "text": "Tur... tle... Turtle!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-czytaj-rakieta",
    "text": "Rock... et... Rocket!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-czytaj-dynia",
    "text": "Pump... kin... Pumpkin!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-czytaj-tecza",
    "text": "Rain... bow... Rainbow!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-czytaj-delfin",
    "text": "Dol... phin... Dolphin!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-czytaj-kotek",
    "text": "Kit... ten... Kitten!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-czytaj-banan",
    "text": "Ba... na... na... Banana!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-czytaj-pomidor",
    "text": "To... ma... to... Tomato!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-czytaj-ziemniak",
    "text": "Po... ta... to... Potato!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-czytaj-motyl",
    "text": "But... ter... fly... Butterfly!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-czytaj-osmiornica",
    "text": "Oc... to... pus... Octopus!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-czytaj-parasol",
    "text": "Um... brel... la... Umbrella!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-czytaj-dinozaur",
    "text": "Di... no... saur... Dinosaur!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-kolorowanka",
    "text": "Pick a color and touch the picture. Paint it any way you like!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-kolorowanka-gotowe",
    "text": "Beautiful! When you are done, touch the green arrow.",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-naklejanka",
    "text": "Make your own sticker picture! Drag a sticker onto the meadow.",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-litery",
    "text": "Draw the letter with your finger! Start at the green dot.",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-cyfry",
    "text": "Draw the number with your finger! Start at the green dot.",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-liczba-0",
    "text": "Zero! There is nothing.",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-litera-l",
    "text": "L is for lion!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-litera-t",
    "text": "T is for tractor!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-litera-o",
    "text": "O is for owl!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-litera-a",
    "text": "A is for apple!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-litera-m",
    "text": "M is for monkey!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-litera-w",
    "text": "W is for whale!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-litera-k",
    "text": "K is for kite!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-litera-p",
    "text": "P is for pig!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-litera-d",
    "text": "D is for dog!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-litera-b",
    "text": "B is for ball!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-litera-s",
    "text": "S is for sun!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-labirynt-kurczak",
    "text": "Lead the chick to its mommy!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-labirynt-kotek",
    "text": "Lead the kitten to its mommy!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-labirynt-prosiaczek",
    "text": "Lead the piglet to its mommy!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-labirynt-cielaczek",
    "text": "Lead the calf to its mommy!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-labirynt-kaczatko",
    "text": "Lead the duckling to its mommy!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-labirynt-pszczola",
    "text": "Lead the bee to the flower!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-labirynt-motyl",
    "text": "Lead the butterfly to the flower!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-labirynt-krolik",
    "text": "Lead the bunny to the carrot!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-labirynt-malpa",
    "text": "Lead the monkey to the banana!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-labirynt-wiewiorka",
    "text": "Lead the squirrel to the tree!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-cienie",
    "text": "Whose shadow is this? Touch the right picture.",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-liczenie",
    "text": "Count how many there are!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-liczenie-dotyk",
    "text": "Touch them one by one and count with me.",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-album",
    "text": "This is your sticker album. Collect them all!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-liczba-1",
    "text": "One!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-liczba-2",
    "text": "Two!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-liczba-3",
    "text": "Three!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-liczba-4",
    "text": "Four!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-liczba-5",
    "text": "Five!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-liczba-6",
    "text": "Six!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-liczba-7",
    "text": "Seven!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-liczba-8",
    "text": "Eight!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-liczba-9",
    "text": "Nine!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-liczba-10",
    "text": "Ten!",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-gloska-a",
    "text": "What starts with... A?",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-gloska-b",
    "text": "What starts with... B?",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-gloska-c",
    "text": "What starts with... C?",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-gloska-d",
    "text": "What starts with... D?",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-gloska-f",
    "text": "What starts with... F?",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-gloska-g",
    "text": "What starts with... G?",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-gloska-h",
    "text": "What starts with... H?",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-gloska-l",
    "text": "What starts with... L?",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-gloska-m",
    "text": "What starts with... M?",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-gloska-o",
    "text": "What starts with... O?",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-gloska-p",
    "text": "What starts with... P?",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-gloska-r",
    "text": "What starts with... R?",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-gloska-s",
    "text": "What starts with... S?",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-gloska-t",
    "text": "What starts with... T?",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "lusia-gloska-w",
    "text": "What starts with... W?",
-   "voice": "voices/alt"
+   "voice": "voices/lusia-en"
   },
   {
    "name": "bazyl-brawo-1",
    "text": "Well done!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-brawo-2",
    "text": "Great job!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-brawo-3",
    "text": "Super, keep it up!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-brawo-4",
    "text": "Wonderful!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-brawo-5",
    "text": "You're so clever!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-oj-1",
    "text": "Oops, try again.",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-oj-2",
    "text": "Hmm, that's not it. Try once more!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-nagroda",
    "text": "Well done! You get a new sticker!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-witaj",
    "text": "Hey! I'm Basil. Come on, it's going to be fun!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-pomoc",
    "text": "Go on, touch a picture!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-kot",
    "text": "Cat!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-pies",
    "text": "Dog!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-krowa",
    "text": "Cow!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-slon",
    "text": "Elephant!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-kurczak",
    "text": "Chick!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-ryba",
    "text": "Fish!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-zaba",
    "text": "Frog!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-kaczka",
    "text": "Duck!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-kura",
    "text": "Hen!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-cielaczek",
    "text": "Calf!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-kotek",
    "text": "Kitten!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-owca",
    "text": "Sheep!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-jagniatko",
    "text": "Lamb!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-swinka",
    "text": "Pig!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-prosiaczek",
    "text": "Piglet!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-kon",
    "text": "Horse!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-zrebak",
    "text": "Foal!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-kaczatko",
    "text": "Duckling!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-kijanka",
    "text": "Tadpole!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-lew",
    "text": "Lion!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-zyrafa",
    "text": "Giraffe!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-malpa",
    "text": "Monkey!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-zebra",
    "text": "Zebra!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-niedzwiedz",
    "text": "Bear!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-jez",
    "text": "Hedgehog!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-wiewiorka",
    "text": "Squirrel!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-sowa",
    "text": "Owl!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-motyl",
    "text": "Butterfly!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-biedronka",
    "text": "Ladybug!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-pszczola",
    "text": "Bee!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-slimak",
    "text": "Snail!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-krolik",
    "text": "Bunny!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-mysz",
    "text": "Mouse!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-pingwin",
    "text": "Penguin!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-zolw",
    "text": "Turtle!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-krab",
    "text": "Crab!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-osmiornica",
    "text": "Octopus!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-ptak",
    "text": "Bird!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-dinozaur",
    "text": "Dinosaur!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-lis",
    "text": "Fox!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-zajac",
    "text": "Hare!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-dzik",
    "text": "Wild boar!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-sarna",
    "text": "Deer!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-dzieciol",
    "text": "Woodpecker!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-wieloryb",
    "text": "Whale!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-delfin",
    "text": "Dolphin!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-meduza",
    "text": "Jellyfish!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-konikmorski",
    "text": "Seahorse!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-koza",
    "text": "Goat!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-osiolek",
    "text": "Donkey!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-indyk",
    "text": "Turkey!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-ges",
    "text": "Goose!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-foka",
    "text": "Seal!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-mors",
    "text": "Walrus!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-mispolarny",
    "text": "Polar bear!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-hipopotam",
    "text": "Hippo!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-nosorozec",
    "text": "Rhino!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-jablko",
    "text": "Apple!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-banan",
    "text": "Banana!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-gruszka",
    "text": "Pear!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-truskawka",
    "text": "Strawberry!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-sliwka",
    "text": "Plum!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-wisnia",
    "text": "Cherries!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-pomarancza",
    "text": "Orange!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-cytryna",
    "text": "Lemon!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-winogrona",
    "text": "Grapes!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-arbuz",
    "text": "Watermelon!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-ananas",
    "text": "Pineapple!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-malina",
    "text": "Raspberry!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-marchewka",
    "text": "Carrot!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-pomidor",
    "text": "Tomato!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-ogorek",
    "text": "Cucumber!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-ziemniak",
    "text": "Potato!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-kukurydza",
    "text": "Corn!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-papryka",
    "text": "Pepper!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-brokul",
    "text": "Broccoli!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-dynia",
    "text": "Pumpkin!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-groszek",
    "text": "Peas!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-rzodkiewka",
    "text": "Radish!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-grzyb",
    "text": "Mushroom!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-cebula",
    "text": "Onion!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-auto",
    "text": "Car!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-rower",
    "text": "Bike!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-samolot",
    "text": "Airplane!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-lodka",
    "text": "Boat!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-autobus",
    "text": "Bus!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-pociag",
    "text": "Train!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-traktor",
    "text": "Tractor!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-helikopter",
    "text": "Helicopter!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-rakieta",
    "text": "Rocket!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-hulajnoga",
    "text": "Kick scooter!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-skuter",
    "text": "Motor scooter!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-straz",
    "text": "Fire truck!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-ciezarowka",
    "text": "Truck!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-pilka",
    "text": "Ball!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-mis",
    "text": "Teddy bear!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-klocek",
    "text": "Block!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-lalka",
    "text": "Doll!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-latawiec",
    "text": "Kite!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-bebenek",
    "text": "Drum!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-konik",
    "text": "Rocking horse!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-baczek",
    "text": "Spinning top!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-robot",
    "text": "Robot!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-balonik",
    "text": "Balloon!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-trabka",
    "text": "Trumpet!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-wiaderko",
    "text": "Bucket!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-sanki",
    "text": "Sled!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-kubek",
    "text": "Mug!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-talerz",
    "text": "Plate!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-lyzka",
    "text": "Spoon!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-widelec",
    "text": "Fork!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-garnek",
    "text": "Pot!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-czajnik",
    "text": "Kettle!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-miska",
    "text": "Bowl!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-patelnia",
    "text": "Frying pan!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-butelka",
    "text": "Bottle!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-czapka",
    "text": "Hat!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-szalik",
    "text": "Scarf!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-but",
    "text": "Shoe!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-skarpetka",
    "text": "Sock!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-koszulka",
    "text": "T-shirt!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-spodnie",
    "text": "Trousers!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-sukienka",
    "text": "Dress!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-rekawiczki",
    "text": "Mittens!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-kalosze",
    "text": "Rain boots!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-parasol",
    "text": "Umbrella!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-okulary",
    "text": "Sunglasses!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-kapelusz",
    "text": "Sun hat!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-sandaly",
    "text": "Sandals!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-stroj",
    "text": "Swimsuit!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-kurtka",
    "text": "Jacket!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-slonce",
    "text": "Sun!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-chmurka",
    "text": "Cloud!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-gwiazdka",
    "text": "Star!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-ksiezyc",
    "text": "Moon!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-kwiatek",
    "text": "Flower!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-drzewo",
    "text": "Tree!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-lisc",
    "text": "Leaf!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-tecza",
    "text": "Rainbow!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-item-muszelka",
    "text": "Seashell!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-krainy",
    "text": "Touch the colorful circles at the top to visit other lands!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-historyjki",
    "text": "What happened first? Put the pictures in order!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-historia-kwiat",
    "text": "First a seed, then a sprout, and at the end a flower!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-historia-kurczak",
    "text": "First an egg, then the shell cracks, and at the end there's a little chick!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-historia-motyl",
    "text": "First a caterpillar, then a cocoon, and at the end a butterfly!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-historia-balwan",
    "text": "First one snowball, then another, and at the end a snowman!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-historia-jablko",
    "text": "First a whole apple, then a bite, and at the end an apple core!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-historia-lody",
    "text": "First a full ice cream, then less and less, and at the end an empty cone!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-historia-zabka",
    "text": "First little eggs, then a tadpole, and at the end a frog!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-historia-kanapka",
    "text": "First the bread, then the butter, and at the end a yummy sandwich!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-historia-wieza",
    "text": "First one block, then two, and at the end a tall tower!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-historia-balon",
    "text": "First an empty balloon, then a little air, and at the end a big balloon!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-historia-tort",
    "text": "First we mix the batter, then we bake, and at the end there is a cake!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-historia-zamek",
    "text": "First a bucket of sand, then a sand tower, and at the end a sandcastle!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-historia-jajko",
    "text": "First an egg, then we crack it into the pan, and at the end a fried egg!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-historia-pizza",
    "text": "First a ball of dough, then the sauce, and at the end a yummy pizza!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-historia-swieca",
    "text": "First a tall candle, then shorter and shorter, and at the end a tiny stub!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-historia-kakao",
    "text": "First an empty mug, then milk, and at the end warm cocoa!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-historia-gniazdo",
    "text": "First some twigs, then a nest, and at the end a bird in the nest!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-historia-drzewko",
    "text": "First a tiny sapling, then a little tree, and at the end an apple tree with apples!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-historia-samolot",
    "text": "First a sheet of paper, then we fold it, and at the end a paper plane!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-historia-dzien",
    "text": "First the sun rises in the morning, then it is daytime, and at the end it is night!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-emocje-wesoly",
    "text": "Show me a happy face!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-minka-wesoly",
    "text": "A happy face!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-emocje-smutny",
    "text": "Show me a sad face!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-minka-smutny",
    "text": "A sad face!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-emocje-zly",
    "text": "Show me an angry face!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-minka-zly",
    "text": "An angry face!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-emocje-zdziwiony",
    "text": "Show me a surprised face!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-minka-zdziwiony",
    "text": "A surprised face!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-emocje-przestraszony",
    "text": "Show me a scared face!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-minka-przestraszony",
    "text": "A scared face!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-emocje-spiacy",
    "text": "Show me a sleepy face!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-minka-spiacy",
    "text": "A sleepy face!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-kraina-warsztat",
    "text": "Welcome to my workshop! Here we drag and arrange.",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-wzory",
    "text": "What comes next? Drag the missing picture!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-ksztalty",
    "text": "Put each block into its hole!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-ksztalt-kolo",
    "text": "Circle!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-ksztalt-kwadrat",
    "text": "Square!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-ksztalt-trojkat",
    "text": "Triangle!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-ksztalt-prostokat",
    "text": "Rectangle!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-ksztalt-gwiazda",
    "text": "Star!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-ksztalt-serce",
    "text": "Heart!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-ksztalt-owal",
    "text": "Oval!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-ksztalt-romb",
    "text": "Diamond!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-pasuje",
    "text": "What doesn't belong? Touch that picture.",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-ukladanka",
    "text": "Finish the picture! Drag the pieces into their places.",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-przeciagnij",
    "text": "Hold a picture with your finger and drag it to the box.",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-sort-kategorie",
    "text": "Sort them! Each thing goes into its box.",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-sort-kolory",
    "text": "Put each thing into the bucket of the same color!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-sort-domy",
    "text": "Where do these animals live? Take each one to its home!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-sort-pory",
    "text": "What do we wear in summer, and what in winter?",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-sort-wielkosc",
    "text": "Which animals are big, and which are small?",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-sort-ruch",
    "text": "How do these things move? Sort them!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-kat-owoce",
    "text": "Fruit goes here!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-kat-warzywa",
    "text": "Vegetables go here!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-kat-zwierzeta",
    "text": "Animals go here!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-kat-pojazdy",
    "text": "Vehicles go here!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-kat-ubrania",
    "text": "Clothes go here!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-kat-kuchnia",
    "text": "Kitchen things go here!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-kat-zabawki",
    "text": "Toys go here!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-barwa-czerwony",
    "text": "Red bucket!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-barwa-zolty",
    "text": "Yellow bucket!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-barwa-zielony",
    "text": "Green bucket!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-barwa-niebieski",
    "text": "Blue bucket!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-barwa-pomaranczowy",
    "text": "Orange bucket!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-barwa-rozowy",
    "text": "Pink bucket!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-barwa-fioletowy",
    "text": "Purple bucket!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-barwa-brazowy",
    "text": "Brown bucket!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-barwa-bialy",
    "text": "White bucket!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-dom-wies",
    "text": "On the farm!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-dom-las",
    "text": "In the forest!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-dom-woda",
    "text": "In the water!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-dom-afryka",
    "text": "In Africa!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-dom-lod",
    "text": "Where there is ice and snow!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-pora-lato",
    "text": "For summer!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-pora-zima",
    "text": "For winter!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-rozmiar-duze",
    "text": "Big animals!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-rozmiar-male",
    "text": "Little animals!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-ruch-lata",
    "text": "Things that fly!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-ruch-plywa",
    "text": "Things that swim!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-ruch-jezdzi",
    "text": "Things that drive!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-kolor-czerwony",
    "text": "Show me something red!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-kolor-zolty",
    "text": "Show me something yellow!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-kolor-zielony",
    "text": "Show me something green!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-kolor-niebieski",
    "text": "Show me something blue!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-kolor-pomaranczowy",
    "text": "Show me something orange!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-kolor-rozowy",
    "text": "Show me something pink!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-kolor-fioletowy",
    "text": "Show me something purple!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-kolor-brazowy",
    "text": "Show me something brown!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-kolor-bialy",
    "text": "Show me something white!",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-mama-kurczak",
    "text": "Where is the chick's mommy?",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-mama-cielaczek",
    "text": "Where is the calf's mommy?",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-mama-kotek",
    "text": "Where is the kitten's mommy?",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-mama-jagniatko",
    "text": "Where is the lamb's mommy?",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-mama-prosiaczek",
    "text": "Where is the piglet's mommy?",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-mama-zrebak",
    "text": "Where is the foal's mommy?",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-mama-kaczatko",
    "text": "Where is the duckling's mommy?",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   },
   {
    "name": "bazyl-mama-kijanka",
    "text": "Where is the tadpole's mommy?",
-   "voice": "voices/prezenter"
+   "voice": "voices/bazyl-en"
   }
  ]
 }

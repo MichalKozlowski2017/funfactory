@@ -2,7 +2,9 @@
  * Kwestie lektora po angielsku i niemiecku → voice/<język>.json (zadanie dla skilla tts).
  *   node games/bystrzakowo/scripts/voice-i18n.ts
  * Lista nagrań pochodzi z gry (src/voice-lines.ts), więc brak tłumaczenia którejś kwestii przerywa skrypt.
- * Lusia mówi głosem „alt”, Bazyl (po angielsku i niemiecku: Basil) głosem „prezenter”.
+ * Głosy: rodzime wzorce dla każdego języka (voices/lusia-en, bazyl-en, lusia-de, bazyl-de), zrobione z opisu
+ * w VoxCPM2. Polskie wzorce czytały angielskie i niemieckie słowa z akcentem („Cat” jak „Cut”).
+ * Bazyl to po angielsku i niemiecku Basil.
  */
 import { writeFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -328,15 +330,15 @@ function text(l: L, guide: Guide, line: string): string {
   throw new Error(`Brak tłumaczenia: ${l} ${guide}-${line}`);
 }
 
-const VOICE: Record<Guide, string> = { lusia: 'voices/alt', bazyl: 'voices/prezenter' };
+const voiceOf = (l: L, g: Guide) => `voices/${g}-${l}`;
 const dir = join(import.meta.dirname, '..', 'voice');
 for (const l of ['en', 'de'] as const) {
   setLang(l as Lang);
   const names = voiceLines(l);
-  const lines = (['lusia', 'bazyl'] as const).flatMap((g) => names[g].map((line) => ({ name: `${g}-${line}`, text: text(l, g, line), voice: VOICE[g] })));
+  const lines = (['lusia', 'bazyl'] as const).flatMap((g) => names[g].map((line) => ({ name: `${g}-${line}`, text: text(l, g, line), voice: voiceOf(l, g) })));
   // Każda kwestia raz (np. nazwy obiektów są w obu głosach osobno, więc zostają).
   const unique = [...new Map(lines.map((x) => [x.name, x])).values()];
-  writeFileSync(join(dir, `${l}.json`), JSON.stringify({ voice: 'voices/alt', lang: l, tries: 8, lines: unique }, null, 1) + '\n');
+  writeFileSync(join(dir, `${l}.json`), JSON.stringify({ voice: voiceOf(l, 'lusia'), lang: l, tries: 10, lines: unique }, null, 1) + '\n');
   console.log(`${l}: ${unique.length} kwestii`);
 }
 void ITEMS;
