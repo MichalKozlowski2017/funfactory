@@ -94,6 +94,8 @@ const VOICE: Record<Guide, string[]> = {
 };
 
 export function registerVoice(game: Game): void {
+  // Bez lektora gra nie ma sensu, więc gra też w trybie cichym (rodzice często mają wyciszony telefon).
+  game.sound.playThroughSilentMode();
   for (const guide of ['lusia', 'bazyl'] as const)
     for (const line of VOICE[guide]) game.sound.add(`${guide}-${line}`, url(`audio/${guide}/${line}.m4a`));
   game.sound.add('muzyka', url('audio/muzyka.m4a'));

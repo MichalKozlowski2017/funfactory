@@ -114,6 +114,17 @@ export class Sound {
     });
   }
 
+  /**
+   * Gra także przy wyciszonym telefonie (przełącznik trybu cichego na iPhonie). Domyślnie iOS traktuje
+   * Web Audio jak dźwięk otoczenia i przy trybie cichym gra jest niema; tam, gdzie dźwięk jest treścią
+   * (lektor w grze dla dzieci), trzeba tego uniknąć. WebKit od iOS 17 (`navigator.audioSession`),
+   * gdzie indziej nic nie robi.
+   */
+  playThroughSilentMode(): void {
+    const session = (navigator as Navigator & { audioSession?: { type: string } }).audioSession;
+    if (session) session.type = 'playback';
+  }
+
   /** Stan kontekstu audio (do diagnostyki): 'none' przed pierwszym dotknięciem. */
   get state(): string {
     return this.ctx?.state ?? 'none';
