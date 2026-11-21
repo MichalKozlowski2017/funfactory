@@ -25,7 +25,7 @@ background() {
 sprite styl/plastelina-sitting-11.png items/kot 512
 sprite styl/plastelina-leaf-11.png items/jablko 512
 sprite styl/plastelina-car-11.png items/auto 512
-for id in krowa banan rower slon kubek kurczak; do sprite styl2/plastelina-$id-21.png items/$id 512; done
+for id in krowa banan rower slon kubek; do sprite styl2/plastelina-$id-21.png items/$id 512; done
 for id in pies ryba zaba gruszka truskawka samolot lodka pilka mis klocek; do sprite proto/obj-$id-21.png items/$id 512; done
 sprite styl2/plastelina-lisica-21.png lusia 720
 sprite styl2/plastelina-borsuk-21.png bazyl 720
