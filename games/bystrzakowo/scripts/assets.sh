@@ -77,11 +77,19 @@ sprite pracownia/stacja-cyfry-22.png dom-cyfry 560
 sprite pracownia/stacja-sylaby-22.png dom-sylaby 560
 sprite pracownia/dom-emocje-21.png dom-emocje 560
 sprite pracownia/stacja-melodia-22.png dom-melodia 560
+sprite pracownia/stacja-historyjki-22.png dom-historyjki 560
 # Emocje: minki (najnowsza wersja każdej).
 mkdir -p $OUT/emocje
 for id in wesoly smutny zly zdziwiony przestraszony spiacy; do
   f=$(ls -t $RAW/emocje/$id-*.png 2>/dev/null | head -1)
   [ -n "$f" ] && sprite "emocje/$(basename "$f")" "emocje/$id" 400
+done
+# Historyjki: kadry <historyjka>-<1..3>.
+mkdir -p $OUT/historyjki
+for f in $RAW/historyjki/*-21.png; do
+  [ -f "$f" ] || continue
+  id=$(basename "$f" -21.png)
+  sprite "historyjki/$id-21.png" "historyjki/$id" 400
 done
 # Kolorowanki: czyste czarne kontury na białym (próg + pogrubienie linii, żeby obszary były zamknięte).
 mkdir -p $OUT/kolorowanki

@@ -21,6 +21,7 @@ import { PatternScene } from './patterns.ts';
 import { PuzzleScene } from './puzzle.ts';
 import { drawShape, ShapeScene } from './shapes.ts';
 import { SortScene } from './sort.ts';
+import { StoryScene } from './stories.ts';
 import { SyllableScene } from './syllables.ts';
 import { StickerScene } from './stickers.ts';
 
@@ -327,6 +328,13 @@ export class WorldScene extends Scene {
       q.position.set(0, 16);
       c.addChild(g, t, q);
     } else if (kind === 'cyfry') c.addChild(label('3', 52, pr, '#5cb3ff'));
+    else if (kind === 'sylaby') c.addChild(label('MA', 40, pr, '#ff8fb1'));
+    else if (kind === 'historyjki') {
+      // Trzy kadry obok siebie.
+      const g = new Graphics();
+      [0, 1, 2].forEach((i) => g.roundRect(-30 + i * 21, -13, 18, 26, 4).fill({ color: [0xa8e6a1, 0xffd166, 0xff8fb1][i]! }).stroke({ color: COLORS.ink, width: 3 }));
+      c.addChild(g);
+    }
     else if (kind === 'kolorowanka') {
       // Paleta z kleksami farb.
       const g = new Graphics().ellipse(0, 4, 32, 24).fill({ color: 0xf3d9a8 }).stroke({ color: COLORS.ink, width: 3 });
@@ -408,7 +416,7 @@ export class WorldScene extends Scene {
     void squash(this.tweens, house, 0.18);
     const p = this.toLocal(house.getGlobalPosition());
     this.particles.burst(p.x, p.y - 120, { count: 24, speed: [200, 520], life: [0.4, 0.8], gravity: 900, scale: [0.6, 1.2], colors: COLORS.confetti });
-    const scenes: Record<string, () => Scene> = { memory: () => new MemoryScene(), emocje: () => new EmotionScene(), sortowanie: () => new SortScene(), ukladanka: () => new JigsawScene(), wzory: () => new PatternScene(), ksztalty: () => new ShapeScene(), sylaby: () => new SyllableScene(), kropki: () => new DotsScene(), litery: () => new LetterScene('litery'), cyfry: () => new LetterScene('cyfry'), kolorowanka: () => new ColoringScene(), naklejanka: () => new StickerScene(), melodia: () => new MelodyScene(), labirynt: () => new MazeScene() };
+    const scenes: Record<string, () => Scene> = { memory: () => new MemoryScene(), emocje: () => new EmotionScene(), sortowanie: () => new SortScene(), ukladanka: () => new JigsawScene(), wzory: () => new PatternScene(), ksztalty: () => new ShapeScene(), sylaby: () => new SyllableScene(), historyjki: () => new StoryScene(), kropki: () => new DotsScene(), litery: () => new LetterScene('litery'), cyfry: () => new LetterScene('cyfry'), kolorowanka: () => new ColoringScene(), naklejanka: () => new StickerScene(), melodia: () => new MelodyScene(), labirynt: () => new MazeScene() };
     const scene = isPuzzle(kind) ? new PuzzleScene(kind as PuzzleKind) : scenes[kind]!();
     this.timers.after(0.35, () => void this.game.scenes.go(scene, { fade: 0.3, color: 0xfff6e8 }));
   }

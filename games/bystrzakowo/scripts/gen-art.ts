@@ -113,6 +113,7 @@ if (process.argv.includes('--dodatki')) {
   );
   tasks.push(
     { out: 'pracownia', prefix: 'stacja-sylaby', args: ['--workflow', 'flux2-sprite', '--count', '2', '--prompt', sprite('a small stack of colorful wooden alphabet toy blocks with big letters, front view')] },
+    { out: 'pracownia', prefix: 'stacja-historyjki', args: ['--workflow', 'flux2-sprite', '--count', '2', '--prompt', sprite('three small square picture cards standing in a row on a little wooden shelf, showing an egg, a hatching chick and a chick, front view')] },
     { out: 'pracownia', prefix: 'dom-emocje', args: ['--workflow', 'flux2-sprite', '--prompt', `a tiny cozy cottage with a round wooden door, a yellow roof and a round window shaped like a smiling face, front view, single object, centered, ${STYLE}, plain light gray background`] },
     { out: 'pracownia', prefix: 'stacja-melodia', args: ['--workflow', 'flux2-sprite', '--count', '2', '--prompt', sprite('a colorful children wooden xylophone with rainbow bars and two mallets, front view')] },
   );
@@ -127,6 +128,20 @@ if (process.argv.includes('--dodatki')) {
     ['spiacy', 'sleepy, closed eyes, yawning, a little nightcap'],
   ])
     tasks.push({ out: 'emocje', prefix: id!, args: ['--workflow', 'flux2-sprite', '--prompt', face(what!)] });
+}
+
+if (process.argv.includes('--historyjki')) {
+  // Historyjki obrazkowe: po trzy kadry (kolejność zdarzeń), ten sam styl co obiekty.
+  const frame = (what: string) => `${what}, single scene object, centered, ${STYLE}, no text, plain light gray background`;
+  const stories: [string, string[]][] = [
+    ['kwiat', ['a small brown seed in a little pile of soil', 'a tiny green sprout with two leaves growing from a little pile of soil', 'a pink flower in bloom growing from a little pile of soil']],
+    ['kurczak', ['a white egg in a little straw nest', 'a cracked white egg with a tiny yellow chick peeking out, in a little straw nest', 'a fluffy yellow chick standing next to broken egg shells in a little straw nest']],
+    ['motyl', ['a cute green caterpillar on a leaf', 'a brown cocoon hanging from a twig with a leaf', 'a colorful butterfly with open wings sitting on a leaf']],
+    ['balwan', ['one big snowball on snowy ground', 'two snowballs stacked on snowy ground', 'a finished cute snowman with a carrot nose, a hat and a scarf on snowy ground']],
+    ['jablko', ['a whole shiny red apple', 'a red apple with one big bite taken out', 'an apple core']],
+    ['lody', ['a full ice cream cone with two scoops', 'an ice cream cone with one small melting scoop', 'an empty waffle cone with a few drips']],
+  ];
+  for (const [id, frames] of stories) frames.forEach((what, i) => tasks.push({ out: 'historyjki', prefix: `${id}-${i + 1}`, args: ['--workflow', 'flux2-sprite', '--prompt', frame(what)] }));
 }
 
 if (process.argv.includes('--warsztat')) {
@@ -146,7 +161,7 @@ if (process.argv.includes('--warsztat')) {
 }
 
 for (const item of ITEMS) {
-  if ((process.argv.includes('--warsztat') || process.argv.includes('--sciezka') || process.argv.includes('--znaki') || process.argv.includes('--pracownia') || process.argv.includes('--dodatki')) && !only) break;
+  if ((process.argv.includes('--warsztat') || process.argv.includes('--sciezka') || process.argv.includes('--znaki') || process.argv.includes('--pracownia') || process.argv.includes('--dodatki') || process.argv.includes('--historyjki')) && !only) break;
   if (only && !only.has(item.id)) continue;
   if (!only && existsSync(join(repo, 'games/bystrzakowo/public/art/items', `${item.id}.webp`))) continue;
   if (existsSync(join(raw, 'items', `${item.id}-${SEED}.png`))) continue;
@@ -160,7 +175,7 @@ for (let i = tasks.length - 1; i >= 0; i--) {
   if (t.out !== 'items' && existsSync(join(raw, t.out, `${t.prefix}-${SEED}.png`))) tasks.splice(i, 1);
 }
 console.log(`Do wygenerowania: ${tasks.length}`);
-for (const dir of ['items', 'extra', 'warsztat', 'sciezka', 'pracownia', 'kolorowanki', 'emocje']) mkdirSync(join(raw, dir), { recursive: true });
+for (const dir of ['items', 'extra', 'warsztat', 'sciezka', 'pracownia', 'kolorowanki', 'emocje', 'historyjki']) mkdirSync(join(raw, dir), { recursive: true });
 // Postęp liczony w obrazkach (zadanie z --count N daje N plików .png).
 const images = tasks.reduce((n, t) => n + (t.args.includes('--count') ? Number(t.args[t.args.indexOf('--count') + 1]) : t.args.includes('ace15') ? 0 : 1), 0);
 execFileSync(job, ['bystrzakowo-items', 'Bystrzakowo: grafiki', String(images), '--dir', raw, '--glob', '*'], { stdio: 'inherit' });

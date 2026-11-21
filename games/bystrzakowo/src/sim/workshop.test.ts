@@ -144,3 +144,13 @@ describe('sylaby', () => {
     }
   });
 });
+
+describe('historyjki', () => {
+  it('trzy historyjki w rundzie, pierwszy kadr na miejscu tylko na poziomie 0', async () => {
+    const { makeStoryRound, presetFrames, STORY_ROUND } = await import('./stories.ts');
+    const r = makeStoryRound(new Rng(1));
+    expect(r.length).toBe(STORY_ROUND);
+    expect(new Set(r).size).toBe(STORY_ROUND);
+    expect([0, 1, 2].map(presetFrames)).toEqual([1, 0, 0]);
+  });
+});

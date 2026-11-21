@@ -1,0 +1,34 @@
+{
+ "voice": "voices/prezenter",
+ "tries": 8,
+ "lines": [
+  {
+   "name": "bazyl-historyjki",
+   "text": "Co było najpierw? Ułóż obrazki po kolei!"
+  },
+  {
+   "name": "bazyl-historia-kwiat",
+   "text": "Najpierw nasionko, potem kiełek, a na końcu kwiatek!"
+  },
+  {
+   "name": "bazyl-historia-kurczak",
+   "text": "Najpierw jajko, potem pęka skorupka, a na końcu jest kurczaczek!"
+  },
+  {
+   "name": "bazyl-historia-motyl",
+   "text": "Najpierw gąsienica, potem kokon, a na końcu motyl!"
+  },
+  {
+   "name": "bazyl-historia-balwan",
+   "text": "Najpierw jedna kula, potem druga, a na końcu bałwan!"
+  },
+  {
+   "name": "bazyl-historia-jablko",
+   "text": "Najpierw całe jabłko, potem ugryzione, a na końcu ogryzek!"
+  },
+  {
+   "name": "bazyl-historia-lody",
+   "text": "Najpierw pełne lody, potem coraz mniej, a na końcu pusty wafelek!"
+  }
+ ]
+}
