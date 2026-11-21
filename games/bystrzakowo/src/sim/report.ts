@@ -27,6 +27,8 @@ export interface Report {
   skills: SkillLine[];
   tips: string[];
   highlights: string[];
+  /** „Pierwsze razy” z ostatnich 7 dni. */
+  firsts: string[];
 }
 
 export interface ReportInput {
@@ -51,8 +53,51 @@ const SHAPE_NAMES: Record<string, string> = { kolo: 'koło', kwadrat: 'kwadrat',
 const EMOTION_NAMES: Record<string, string> = { wesoly: 'radość', smutny: 'smutek', zly: 'złość', zdziwiony: 'zdziwienie', przestraszony: 'strach', spiacy: 'senność' };
 
 const LOGIC: Activity[] = ['cienie', 'pasuje', 'mamy', 'wzory', 'sortowanie', 'historyjki', 'memory', 'ukladanka', 'labirynt'];
-const LOGIC_NAMES: Partial<Record<Activity, string>> = { cienie: 'cienie', pasuje: 'co nie pasuje', mamy: 'mamy i dzieci', wzory: 'wzory', sortowanie: 'segregowanie', historyjki: 'historyjki', memory: 'pary', ukladanka: 'układanki', labirynt: 'labirynty' };
-const LEVEL_NAMES = ['łatwy', 'średni', 'trudny'];
+/** Co dziecko robi w zagadkach logicznych (opis i odmiana „1 / 2 / 5 …”). */
+const LOGIC_LINES: Partial<Record<Activity, [string, string, string, string]>> = {
+  historyjki: ['Układa historyjki w dobrej kolejności', 'historyjka', 'historyjki', 'historyjek'],
+  memory: ['Znajduje pary w grze w pary', 'plansza', 'plansze', 'plansz'],
+  sortowanie: ['Segreguje według kategorii, koloru i wielkości', 'zadanie', 'zadania', 'zadań'],
+  wzory: ['Dokańcza wzory i rytmy', 'wzór', 'wzory', 'wzorów'],
+  cienie: ['Dopasowuje przedmioty do cieni', 'cień', 'cienie', 'cieni'],
+  pasuje: ['Wskazuje, co nie pasuje do reszty', 'zagadka', 'zagadki', 'zagadek'],
+  mamy: ['Łączy zwierzątka z ich mamami', 'para', 'pary', 'par'],
+  ukladanka: ['Składa układanki', 'układanka', 'układanki', 'układanek'],
+  labirynt: ['Przechodzi labirynty', 'labirynt', 'labirynty', 'labiryntów'],
+};
+
+/** Jak idzie, z liczby pomyłek na zadanie. */
+const quality = (misses: number, tasks: number): [string, number] => {
+  const r = misses / Math.max(1, tasks);
+  return r < 0.15 ? ['prawie bez pomyłek', 3] : r < 0.5 ? ['czasem z pomyłką', 2] : ['jeszcze często z pomyłkami', 1];
+};
+
+/** „Pierwsze razy” w każdej zabawie (kolejność: od najbardziej „dumnych”). */
+const FIRSTS: [Activity, string][] = [
+  ['historyjki', 'pierwsza ułożona historyjka'],
+  ['litery', 'pierwsza narysowana literka'],
+  ['cyfry', 'pierwsza narysowana cyferka'],
+  ['sylaby', 'pierwsze słowo ułożone z sylab'],
+  ['ukladanka', 'pierwsza ułożona układanka'],
+  ['melodia', 'pierwsza powtórzona melodia'],
+  ['kolorowanka', 'pierwsza kolorowanka'],
+  ['naklejanka', 'pierwszy obrazek z naklejek'],
+  ['kropki', 'pierwszy obrazek z kropek'],
+  ['labirynt', 'pierwszy przebyty labirynt'],
+  ['wzory', 'pierwszy dokończony wzór'],
+  ['memory', 'pierwsza gra w pary'],
+  ['sortowanie', 'pierwsze segregowanie'],
+  ['liczenie', 'pierwsze liczenie'],
+  ['gloski', 'pierwsze głoski'],
+  ['kolory', 'pierwsze kolory'],
+  ['ksztalty', 'pierwsze kształty'],
+  ['emocje', 'pierwsze minki'],
+  ['cienie', 'pierwsze cienie'],
+  ['pasuje', 'pierwsze „co nie pasuje”'],
+  ['mamy', 'pierwsze mamy zwierzątek'],
+];
+
+const capital = (s: string) => s[0]!.toUpperCase() + s.slice(1);
 
 export const TIPS: Record<Domain, string[]> = {
   liczby: [
@@ -185,18 +230,21 @@ export function makeReport(input: ReportInput): Report {
 
   // Logika, spostrzegawczość, pamięć.
   {
-    const played = LOGIC.filter((a) => (w.acts[a] ?? 0) > 0);
-    const sum = LOGIC.reduce((n, a) => n + (w.acts[a] ?? 0), 0);
+    // Najczęściej grane zagadki z tygodnia, każda z opisem, liczbą i tym, jak idzie.
+    const played = LOGIC.filter((a) => (w.acts[a] ?? 0) > 0).sort((a, b) => (w.acts[b] ?? 0) - (w.acts[a] ?? 0));
     const lines: string[] = [];
-    if (sum) {
-      lines.push(`W tym tygodniu ${sum} ${plural(sum, 'zadanie', 'zadania', 'zadań')}: ${list(played.map((a) => LOGIC_NAMES[a]!))}.`);
-      const lv = played.map((a) => levels[a] ?? 0);
-      const avg = Math.round(lv.reduce((a, b) => a + b, 0) / lv.length);
-      lines.push(`Poziom trudności: ${LEVEL_NAMES[avg]} (dobiera się sam do postępów).`);
-    } else if (LOGIC.some((a) => all[a])) lines.push('W tym tygodniu bez zagadek logicznych. Wcześniejsze postępy są zapisane.');
-    else lines.push('Zagadek logicznych jeszcze nie było: cienie, wzory, historyjki, pary, układanki.');
-    const anyLevel = Math.max(0, ...LOGIC.filter((a) => all[a]).map((a) => levels[a] ?? 0));
-    skills.push({ domain: 'logika', title: 'Logika i spostrzegawczość', lines, stars: LOGIC.some((a) => all[a]) ? 1 + anyLevel : 0 });
+    let stars = 0;
+    for (const a of played.slice(0, 4)) {
+      const [what, one, few, many] = LOGIC_LINES[a]!;
+      const n = w.acts[a]!;
+      const [how, s] = quality(w.misses[a] ?? 0, n);
+      lines.push(`${what}: ${n} ${plural(n, one, few, many)}, ${how}.`);
+      stars += s;
+    }
+    if (played.length > 4) lines.push(`I jeszcze: ${list(played.slice(4).map((a) => LOGIC_LINES[a]![0].toLowerCase()))}.`);
+    if (!played.length) lines.push(LOGIC.some((a) => all[a]) ? 'W tym tygodniu bez zagadek logicznych. Wcześniejsze postępy są zapisane.' : 'Zagadek logicznych jeszcze nie było: cienie, wzory, historyjki, pary, układanki.');
+    const avgStars = played.length ? Math.round(stars / Math.min(4, played.length)) : LOGIC.some((a) => all[a]) ? 1 : 0;
+    skills.push({ domain: 'logika', title: 'Logika i spostrzegawczość', lines, stars: avgStars });
   }
 
   // Twórczość.
@@ -218,7 +266,15 @@ export function makeReport(input: ReportInput): Report {
     skills,
     tips: pickTips(skills, today),
     highlights: highlights(j, w.acts, from, today),
+    firsts: firstsIn(j, from, today),
   };
+}
+
+function firstsIn(j: Journal, from: string, to: string): string[] {
+  return FIRSTS.filter(([a]) => {
+    const d = j.firsts?.[a];
+    return !!d && d >= from && d <= to;
+  }).map(([, s]) => s);
 }
 
 /** Dwie wskazówki: najpierw z dziedziny, która idzie najsłabiej (albo której jeszcze nie było). */
@@ -259,6 +315,8 @@ function highlights(j: Journal, acts: Partial<Record<Activity, number>>, from: s
   if (shapes.length) out.push(`Kształty: ${list(shapes.map((s) => SHAPE_NAMES[s] ?? s))}`);
   const emotions = fresh('emocja');
   if (emotions.length) out.push(`Emocje: ${list(emotions.map((e) => EMOTION_NAMES[e] ?? e))}`);
+  // Pierwsze razy (w pierwszych dniach to one są największymi sukcesami).
+  for (const f of firstsIn(j, from, to).slice(0, 3)) out.push(capital(f));
   // Uzupełnienie liczbami z tygodnia.
   const counts: [Activity, string, string, string][] = [
     ['historyjki', 'ułożona historyjka', 'ułożone historyjki', 'ułożonych historyjek'],

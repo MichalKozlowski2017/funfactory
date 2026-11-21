@@ -86,6 +86,38 @@ describe('liczenie bez ciągłości', () => {
   });
 });
 
+describe('zgadywanie i konkrety', () => {
+  it('trafienie przy wyborze z dwóch liczy się za pół', () => {
+    expect(mastered('hhh')).toBe(false);
+    expect(mastered('hhhhhh')).toBe(true);
+    expect(mastered('0h11')).toBe(false);
+    expect(mastered('0h111')).toBe(true);
+    const j = newJournal();
+    for (let i = 0; i < 3; i++) noteFact(j, TODAY, 'kolor:zielony', true, true);
+    expect(j.learned['kolor:zielony']).toBeUndefined();
+  });
+
+  it('logika: konkretne zagadki z liczbą i jakością', () => {
+    const j = newJournal();
+    for (let i = 0; i < 6; i++) addTask(j, TODAY, 'historyjki', 0);
+    for (let i = 0; i < 2; i++) addTask(j, TODAY, 'memory', 2);
+    const r = makeReport({ journal: j, levels: {}, today: TODAY });
+    const logic = r.skills.find((s) => s.domain === 'logika')!;
+    expect(logic.lines[0]).toBe('Układa historyjki w dobrej kolejności: 6 historyjek, prawie bez pomyłek.');
+    expect(logic.lines[1]).toBe('Znajduje pary w grze w pary: 2 plansze, jeszcze często z pomyłkami.');
+  });
+
+  it('pierwsze razy trafiają do raportu i na pocztówkę', () => {
+    const j = newJournal();
+    addTask(j, shiftDay(TODAY, -20), 'litery', 0);
+    addTask(j, TODAY, 'historyjki', 0);
+    addTask(j, TODAY, 'litery', 0);
+    const r = makeReport({ journal: j, levels: {}, today: TODAY });
+    expect(r.firsts).toEqual(['pierwsza ułożona historyjka']);
+    expect(r.highlights[0]).toBe('Pierwsza ułożona historyjka');
+  });
+});
+
 describe('daty na pocztówce', () => {
   it('formatuje zakres tygodnia', async () => {
     const { formatRange } = await import('./report.ts');

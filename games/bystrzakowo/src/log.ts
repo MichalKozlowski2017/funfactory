@@ -15,8 +15,9 @@ export function logTask(kind: Activity, misses: number): void {
   addTask(journal(), today(), kind, misses);
 }
 
-export function logFact(fact: string, ok: boolean): void {
-  noteFact(journal(), today(), fact, ok);
+/** `easy`: wybór tylko z dwóch odpowiedzi (łatwo zgadnąć, liczy się za pół). */
+export function logFact(fact: string, ok: boolean, easy = false): void {
+  noteFact(journal(), today(), fact, ok, easy);
 }
 
 let pending = 0;

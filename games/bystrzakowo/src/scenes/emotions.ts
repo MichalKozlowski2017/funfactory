@@ -31,6 +31,10 @@ export class EmotionScene extends RoundScene {
     return [`emocja:${this.q.target}`];
   }
 
+  protected override taskEasy(): boolean {
+    return this.q.options.length <= 2;
+  }
+
   private get q(): EmotionQuestion {
     return this.questions[this.index]!;
   }

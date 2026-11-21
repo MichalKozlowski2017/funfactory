@@ -8,7 +8,7 @@ import { saveState, state } from '../state.ts';
 import { COLORS, cover, label, sfx } from '../ui.ts';
 import { ParentGate, ParentPanel } from '../parent.ts';
 import { journal, today } from '../log.ts';
-import { addTask, addTime, noteFact, shiftDay } from '../sim/journal.ts';
+import { addTask, addTime, noteFact, playDaysAfter, shiftDay } from '../sim/journal.ts';
 import { extend, timeIsUp } from '../session.ts';
 import { AlbumScene } from './album.ts';
 import { ColoringScene } from './coloring.ts';
@@ -149,6 +149,8 @@ export class WorldScene extends Scene {
 
     this.gate = new ParentGate();
     this.gate.onOpen = () => (this.sleep ? this.wake() : this.openParent());
+    // Kropka przy zębatce: od ostatniej wizyty rodzica były co najmniej 3 dni zabawy.
+    this.gate.setBadge(playDaysAfter(journal(), state.progress.parentSeen ?? '') >= 3);
     this.addChild(this.gate);
 
     // Gest w bok przełącza krainę. Pierwsze dotknięcie: muzyka i powitanie.
@@ -468,6 +470,9 @@ export class WorldScene extends Scene {
 
   private openParent(): void {
     if (this.parentPanel) return;
+    state.progress.parentSeen = today();
+    void saveState();
+    this.gate.setBadge(false);
     this.parentPanel = new ParentPanel(this.game, () => {
       this.parentPanel?.destroy({ children: true });
       this.parentPanel = null;

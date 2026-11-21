@@ -62,6 +62,10 @@ export class PuzzleScene extends RoundScene {
     return [];
   }
 
+  protected override taskEasy(): boolean {
+    return this.q.options.length <= 2;
+  }
+
   private get q(): Question {
     return this.questions[this.index]!;
   }

@@ -22,6 +22,9 @@ const FONT = 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif';
  */
 export class ParentGate extends Container {
   private readonly ring = new Graphics();
+  /** Kropka „coś nowego dla rodzica” (po kilku dniach zabawy od ostatniej wizyty). */
+  private readonly badge = new Graphics().circle(0, 0, 13).fill({ color: 0xff7a59 }).stroke({ color: 0xffffff, width: 4 });
+  private time = 0;
   private held = 0;
   private holding = false;
   onOpen: (() => void) | null = null;
@@ -36,7 +39,9 @@ export class ParentGate extends Container {
     }
     g.circle(0, 0, r).fill({ color: 0xffffff }).circle(0, 0, 11).fill({ color: 0xb9b0c8 });
     g.alpha = 0.85;
-    this.addChild(g, this.ring);
+    this.badge.position.set(26, -26);
+    this.badge.visible = false;
+    this.addChild(g, this.ring, this.badge);
     this.eventMode = 'static';
     this.cursor = 'pointer';
     this.hitArea = { contains: (x: number, y: number) => x * x + y * y <= 60 * 60 };
@@ -50,7 +55,13 @@ export class ParentGate extends Container {
     this.on('pointerupoutside', stop);
   }
 
+  setBadge(on: boolean): void {
+    this.badge.visible = on;
+  }
+
   tick(dt: number): void {
+    this.time += dt;
+    if (this.badge.visible) this.badge.scale.set(1 + 0.12 * Math.sin(this.time * 4));
     if (!this.holding) return;
     this.held += dt;
     const t = Math.min(1, this.held / HOLD);
@@ -269,7 +280,15 @@ export class ParentPanel extends Container {
     const week = this.text(r.weekText, 26, { color: SOFT, wrap: cw });
     week.y = y;
     this.content.addChild(week);
-    y += week.height + 24;
+    y += week.height + 8;
+    if (r.firsts.length) {
+      const more = r.firsts.length > 5 ? ` i jeszcze ${r.firsts.length - 5}` : '';
+      const firsts = this.text(`Nowe w tym tygodniu: ${r.firsts.slice(0, 5).join(', ')}${more}.`, 26, { color: '#3f8a4a', weight: '700', wrap: cw });
+      firsts.y = y;
+      this.content.addChild(firsts);
+      y += firsts.height + 8;
+    }
+    y += 16;
 
     if (!hasFull()) {
       y += this.card({ x: 0, y }, cw, (c, iw) => {

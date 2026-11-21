@@ -74,6 +74,10 @@ export abstract class RoundScene extends Scene {
   protected taskFacts(): string[] {
     return [];
   }
+  /** Czy w bieżącym zadaniu wybór był tylko z dwóch odpowiedzi (trafienie liczy się za pół). */
+  protected taskEasy(): boolean {
+    return false;
+  }
   /** Klatka animacji zadania. */
   protected step(_dt: number): void {}
 
@@ -151,7 +155,7 @@ export abstract class RoundScene extends Scene {
     this.solvedAt = this.index;
     this.busy = true;
     logTask(this.kind, this.taskMisses);
-    for (const f of this.taskFacts()) logFact(f, this.taskMisses === 0);
+    for (const f of this.taskFacts()) logFact(f, this.taskMisses === 0, this.taskEasy());
     sfx.good(this.game.sound);
     haptics.success();
     this.jumpGuide();

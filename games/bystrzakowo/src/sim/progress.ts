@@ -26,6 +26,8 @@ export interface Progress {
   journal?: Journal;
   /** Imię dziecka (opcjonalne, tylko na urządzeniu). */
   childName?: string;
+  /** Ostatnia wizyta rodzica w strefie rodzica (dzień), do kropki „coś nowego”. */
+  parentSeen?: string;
   /** Kupiona pełna wersja. */
   full?: boolean;
   /** Ustawienia ze strefy rodzica. */
