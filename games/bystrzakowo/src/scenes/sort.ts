@@ -66,6 +66,10 @@ export class SortScene extends RoundScene {
     this.length = this.tasks.length;
   }
 
+  protected override roundItems(): string[] {
+    return this.tasks.flatMap((t) => t.items.map((x) => x.item.id));
+  }
+
   private get task(): SortTask {
     return this.tasks[this.index]!;
   }

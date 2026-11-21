@@ -1,7 +1,7 @@
 import { Container, Graphics, Sprite, type Text } from 'pixi.js';
 import { haptics } from '@funfactory/core';
 import { popIn, Scene, squash, type View } from '@funfactory/kit2d';
-import { loadArt, say, shadowOf, type Art } from '../assets.ts';
+import { itemVoices, loadArt, say, shadowOf, type Art } from '../assets.ts';
 import { ITEMS } from '../sim/catalog.ts';
 import { state } from '../state.ts';
 import { COLORS, cover, IconButton, label, sfx } from '../ui.ts';
@@ -27,9 +27,13 @@ export class AlbumScene extends Scene {
   private readonly pages = Math.ceil(ITEMS.length / PER_PAGE);
   private dragX: number | null = null;
   private leaving = false;
+  private voices: string[] = [];
 
   override async enter(): Promise<void> {
     this.art = await loadArt();
+    // Nazwy zebranych naklejek (dotknięcie naklejki): wczytane w tle, zwalniane przy wyjściu.
+    this.voices = itemVoices(state.progress.stickers);
+    void this.game.sound.load(this.voices);
     const pr = this.game.pixelRatio;
     this.bg = new Sprite(this.art.playBg.polana);
     this.title = label('Album', 64, pr, '#ff8fb1');
@@ -105,6 +109,7 @@ export class AlbumScene extends Scene {
     if (this.leaving) return;
     this.leaving = true;
     this.game.sound.stopChannel('voice');
+    this.game.sound.unload(this.voices);
     void import('./world.ts').then(({ WorldScene }) => this.game.scenes.go(new WorldScene(), { fade: 0.3, color: 0xfff6e8 }));
   }
 

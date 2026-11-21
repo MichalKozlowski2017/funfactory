@@ -137,11 +137,17 @@ export function registerVoice(game: Game): void {
   game.sound.playThroughSilentMode();
   // Po uśpieniu iPhone'a dźwięk bywa niemy: pierwsze dotknięcie po powrocie odbudowuje go (gra nie ma własnych węzłów audio).
   game.sound.recoverAfterBackground = true;
+  // Mowa i cicha muzyka: 24 kHz wystarczy, a zdekodowane nagrania zajmują połowę pamięci.
+  game.sound.sampleRate = 24000;
   for (const guide of ['lusia', 'bazyl'] as const)
     for (const line of VOICE[guide]) game.sound.add(`${guide}-${line}`, url(`audio/${guide}/${line}.m4a`));
   game.sound.add('muzyka', url('audio/muzyka.m4a'));
-  void game.sound.load();
+  // Na starcie tylko polecenia i reakcje; nazwy obiektów (większość nagrań) dekoduje runda, która ich potrzebuje.
+  void game.sound.load([...VOICE.lusia.map((l) => `lusia-${l}`), ...VOICE.bazyl.map((l) => `bazyl-${l}`), 'muzyka'].filter((n) => !n.includes('-item-')));
 }
+
+/** Nagrania nazw obiektów (oba głosy) do wczytania na rundę i zwolnienia po niej. */
+export const itemVoices = (ids: readonly string[]): string[] => [...new Set(ids)].flatMap((id) => [`lusia-item-${id}`, `bazyl-item-${id}`]);
 
 /** Mówi kwestię przewodnika (ucina poprzednią). Zwraca długość w sekundach (0, gdy nagranie niegotowe). */
 export function say(game: Game, guide: Guide, line: string): number {

@@ -46,6 +46,14 @@ export class PuzzleScene extends RoundScene {
     if (this.puzzle === 'cienie') await Promise.all(this.questions.map((q) => shadowOf((answerOf(q) as Item).id)));
   }
 
+  protected override roundItems(): string[] {
+    return this.questions.flatMap((q) => {
+      const items = (q.options as unknown[]).filter((o): o is Item => typeof o === 'object');
+      if (q.kind === 'liczenie') items.push(q.item);
+      return items.map((i) => i.id);
+    });
+  }
+
   private get q(): Question {
     return this.questions[this.index]!;
   }

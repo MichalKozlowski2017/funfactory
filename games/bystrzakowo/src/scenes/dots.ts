@@ -53,6 +53,10 @@ export class DotsScene extends RoundScene {
     this.shapes = this.items.map((item) => evenDots(contourOf(this.art.items.get(item.id)!.source.resource as CanvasImageSource & { width: number; height: number }), dotCount(level)));
   }
 
+  protected override roundItems(): string[] {
+    return this.items.map((i) => i.id);
+  }
+
   protected promptLine(): string {
     return 'kropki';
   }

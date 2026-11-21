@@ -38,6 +38,10 @@ export class SyllableScene extends RoundScene {
     this.length = this.words.length;
   }
 
+  protected override roundItems(): string[] {
+    return this.words.map((w) => w.item);
+  }
+
   private get word(): Word {
     return this.words[this.index]!;
   }

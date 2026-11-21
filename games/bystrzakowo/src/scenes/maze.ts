@@ -42,6 +42,10 @@ export class MazeScene extends RoundScene {
     this.length = this.pairs.length;
   }
 
+  protected override roundItems(): string[] {
+    return this.pairs.map(([, goal]) => goal);
+  }
+
   private get pair(): [string, string] {
     return this.pairs[this.index]!;
   }

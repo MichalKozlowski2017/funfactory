@@ -39,6 +39,10 @@ export class MemoryScene extends RoundScene {
     if (shadowPairs(level)) await Promise.all(this.boards.flat().map((c) => shadowOf(c.item.id)));
   }
 
+  protected override roundItems(): string[] {
+    return this.boards.flat().map((c) => c.item.id);
+  }
+
   protected promptLine(): string {
     return shadowPairs(state.progress.levels.memory ?? 0) ? 'memory-cien' : 'memory';
   }

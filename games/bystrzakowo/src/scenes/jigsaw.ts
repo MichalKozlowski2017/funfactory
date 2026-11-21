@@ -75,6 +75,10 @@ export class JigsawScene extends RoundScene {
     return pixelsToTexture(ctx.getImageData(0, 0, PIC, PIC));
   }
 
+  protected override roundItems(): string[] {
+    return this.items.map((i) => i.id);
+  }
+
   protected promptLine(): string {
     return 'ukladanka';
   }

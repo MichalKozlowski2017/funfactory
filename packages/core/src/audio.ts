@@ -92,6 +92,11 @@ export class Sound {
    * własnych węzłów audio podpiętych pod `output` (np. Glut buduje na nim szyny muzyki).
    */
   recoverAfterBackground = false;
+  /**
+   * Częstotliwość próbkowania kontekstu (ustawić przed pierwszym dotknięciem). Zdekodowane bufory są
+   * przeliczane na nią, więc 24 kHz zajmuje w pamięci połowę tego co 48 kHz; dla mowy jakość się nie zmienia.
+   */
+  sampleRate: number | null = null;
   private stale = false;
   /** Grająca pętla (muzyka) do wznowienia po odbudowie. */
   private loopRequest: { name: string; opts: PlayOptions } | null = null;
@@ -163,6 +168,18 @@ export class Sound {
     return new Promise((resolve) => {
       this.onContext.push(() => void Promise.all(names.map((name) => this.decode(name))).then(() => resolve()));
     });
+  }
+
+  /**
+   * Zwalnia zdekodowane bufory (zdekodowany dźwięk zajmuje w pamięci wielokrotnie więcej niż plik).
+   * Pobrane bajty też, bo dekodowanie je zużywa; następne `load`/`play` pobierze plik ponownie.
+   */
+  unload(names: string[]): void {
+    for (const name of names) {
+      this.buffers.delete(name);
+      this.starts.delete(name);
+      this.fetched.delete(name);
+    }
   }
 
   /** Czy plik jest zdekodowany i gotowy do natychmiastowego grania. */
@@ -389,7 +406,11 @@ export class Sound {
   private context(): AudioContext | null {
     if (this.ctx) return this.ctx;
     if (typeof AudioContext === 'undefined') return null;
-    this.ctx = new AudioContext();
+    try {
+      this.ctx = this.sampleRate ? new AudioContext({ sampleRate: this.sampleRate }) : new AudioContext();
+    } catch {
+      this.ctx = new AudioContext();
+    }
     this.master = this.ctx.createGain();
     // Wyjście: korekcja wysokich tonów i ogranicznik (muzyka i efekty sumują się tutaj; bez niego głośne
     // chwile mogą przesterować i trzeszczeć).

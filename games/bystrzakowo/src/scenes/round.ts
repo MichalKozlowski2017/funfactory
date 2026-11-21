@@ -1,7 +1,7 @@
 import { Container, Graphics, Sprite } from 'pixi.js';
 import { haptics } from '@funfactory/core';
 import { dotTexture, idleBreath, Particles, popIn, Scene, squash, type View } from '@funfactory/kit2d';
-import { loadArt, say, startMusic, type Art, type Guide } from '../assets.ts';
+import { itemVoices, loadArt, say, startMusic, type Art, type Guide } from '../assets.ts';
 import { pickSticker } from '../sim/progress.ts';
 import { nextLevel } from '../sim/puzzles.ts';
 import { realmOf, type Activity } from '../sim/realms.ts';
@@ -39,6 +39,7 @@ export abstract class RoundScene extends Scene {
   protected idle = 0;
   private hinted = 0;
   private solvedAt = -1;
+  private voices: string[] = [];
   private updateNext: ((dt: number) => void) | null = null;
 
   constructor(kind: Activity, guide: Guide) {
@@ -59,12 +60,19 @@ export abstract class RoundScene extends Scene {
   protected abstract place(): void;
   /** Animacja wejścia (po `place`, więc elementy mają już docelową skalę). */
   protected appear(): void {}
+  /** Obiekty, których nazwy lektor może powiedzieć w tej rundzie (ich nagrania wczytuje się na start rundy). */
+  protected roundItems(): string[] {
+    return [];
+  }
   /** Klatka animacji zadania. */
   protected step(_dt: number): void {}
 
   override async enter(): Promise<void> {
     this.art = await loadArt();
     await this.prepare();
+    // Nazwy obiektów z tej rundy: zdekodowane przed startem (najwyżej 3 s czekania), zwalniane przy wyjściu.
+    this.voices = itemVoices(this.roundItems());
+    await Promise.race([this.game.sound.load(this.voices), new Promise((r) => setTimeout(r, 3000))]);
     this.bg = new Sprite(this.art.playBg[realmOf(this.kind).id]);
     this.guideSprite = new Sprite({ texture: this.guide === 'lusia' ? this.art.lusia : this.art.bazyl, anchor: { x: 0.5, y: 1 } });
     this.guideSprite.scale.set(300 / this.guideSprite.texture.height);
@@ -204,6 +212,7 @@ export abstract class RoundScene extends Scene {
     if (this.leaving) return;
     this.leaving = true;
     this.game.sound.stopChannel('voice');
+    this.game.sound.unload(this.voices);
     void import('./world.ts').then(({ WorldScene }) => this.game.scenes.go(new WorldScene(), { fade: 0.3, color: 0xfff6e8 }));
   }
 
