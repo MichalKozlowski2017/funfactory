@@ -1,8 +1,8 @@
 {
   "workflow": "flux2-sprite.json",
-  "PROMPT": "a whole shiny red apple, single scene object, centered, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, bright cheerful pastel colors, cute and friendly, no text, plain light gray background",
+  "PROMPT": "a whole shiny red apple with a leaf, no face, no eyes, no mouth, single scene object, centered, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, bright cheerful pastel colors, no text, plain light gray background",
   "NEGATIVE": "",
-  "SEED": 21,
+  "SEED": 61,
   "WIDTH": 1024,
   "HEIGHT": 1024,
   "PREFIX": "jablko-1",
@@ -12,5 +12,5 @@
   "DURATION": 60,
   "KEY": "A minor",
   "LYRICS": "[Instrumental]",
-  "created": "2026-11-21T12:33:38.155Z"
+  "created": "2026-11-21T17:15:42.449Z"
 }

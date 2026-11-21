@@ -1,8 +1,8 @@
 {
   "workflow": "flux2-sprite.json",
-  "PROMPT": "a tiny green sprout with two leaves growing from a little pile of soil, single scene object, centered, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, bright cheerful pastel colors, cute and friendly, no text, plain light gray background",
+  "PROMPT": "a tiny green sprout with two leaves growing from a little pile of brown soil, no face, no eyes, no mouth, single scene object, centered, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, bright cheerful pastel colors, no text, plain light gray background",
   "NEGATIVE": "",
-  "SEED": 21,
+  "SEED": 62,
   "WIDTH": 1024,
   "HEIGHT": 1024,
   "PREFIX": "kwiat-2",
@@ -12,5 +12,5 @@
   "DURATION": 60,
   "KEY": "A minor",
   "LYRICS": "[Instrumental]",
-  "created": "2026-11-21T12:19:12.278Z"
+  "created": "2026-11-21T17:09:17.608Z"
 }

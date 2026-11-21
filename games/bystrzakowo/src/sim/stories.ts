@@ -5,7 +5,10 @@
 import type { Rng } from '@funfactory/core';
 import { MAX_LEVEL } from './puzzles.ts';
 
-export const STORIES = ['kwiat', 'kurczak', 'motyl', 'balwan', 'jablko', 'lody'] as const;
+export const STORIES = [
+  'kwiat', 'kurczak', 'motyl', 'balwan', 'jablko', 'lody', 'zabka', 'kanapka', 'wieza', 'balon',
+  'tort', 'zamek', 'jajko', 'pizza', 'swieca', 'kakao', 'gniazdo', 'drzewko', 'samolot', 'dzien',
+] as const;
 export type Story = (typeof STORIES)[number];
 export const FRAMES = 3;
 export const STORY_ROUND = 3;

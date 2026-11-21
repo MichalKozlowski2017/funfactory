@@ -1,0 +1,16 @@
+{
+  "workflow": "flux2-sprite.json",
+  "PROMPT": "a small pile of twigs and straw on a tree branch, no face, no eyes, no mouth, single scene object, centered, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, bright cheerful pastel colors, no text, plain light gray background",
+  "NEGATIVE": "",
+  "SEED": 71,
+  "WIDTH": 1024,
+  "HEIGHT": 1024,
+  "PREFIX": "gniazdo-1",
+  "STEPS": 20,
+  "GUIDANCE": 4,
+  "BPM": 100,
+  "DURATION": 60,
+  "KEY": "A minor",
+  "LYRICS": "[Instrumental]",
+  "created": "2026-11-21T18:47:29.666Z"
+}

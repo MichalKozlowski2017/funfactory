@@ -192,6 +192,33 @@ if (process.argv.includes('--historyjki2')) {
   for (const [id, prompt] of frames) tasks.push({ out: 'historyjki', prefix: id, args: ['--workflow', 'flux2-sprite', '--count', '2', '--prompt', prompt] });
 }
 
+if (process.argv.includes('--historyjki4')) {
+  // Poprawki kadrów z --historyjki2: żabki na skrzeku, klocek z kółkami, napis na mące, dziwna babka z piasku.
+  const base = 'single scene object, centered, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, bright cheerful pastel colors, no text, plain light gray background';
+  const thing = (what: string) => `${what}, no face, no eyes, no mouth, ${base}`;
+  const frames: [string, string][] = [
+    ['zabka-1', thing('frog spawn: a clump of many small round clear jelly balls, each with one tiny black dot inside, floating on a bit of blue pond water, no frogs, no animals')],
+    ['wieza-1', thing('one single plain red cube toy block, no wheels, standing alone')],
+    ['wieza-3', thing('a tall tower of five stacked plain cube toy blocks: red cube at the bottom, yellow cube on it, then green, then blue, and a small red triangle block on the very top')],
+    ['tort-1', thing('a blue mixing bowl with yellow cake batter and a whisk, two brown eggs next to it, no bags, no labels')],
+    ['zamek-2', thing('a smooth sand tower in the exact shape of an upside down bucket, standing on beach sand, a red toy bucket lying on its side next to it')],
+  ];
+  for (const [id, prompt] of frames) tasks.push({ out: 'historyjki', prefix: id, args: ['--workflow', 'flux2-sprite', '--count', '2', '--prompt', prompt] });
+}
+
+if (process.argv.includes('--historyjki5')) {
+  // Poprawki z --historyjki3: biała kartka ginęła na tle, ciasto z kolorową posypką.
+  const base = 'single scene object, centered, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, bright cheerful pastel colors, no text, plain light gray background';
+  const thing = (what: string) => `${what}, no face, no eyes, no mouth, ${base}`;
+  const frames: [string, string][] = [
+    ['pizza-1', thing('one smooth plain beige ball of raw bread dough, no toppings, no sprinkles, no dots, on a small wooden board dusted with white flour')],
+    ['samolot-1', thing('one flat square sheet of light blue paper lying on a small wooden table, seen from the front at an angle')],
+    ['samolot-2', thing('a sheet of light blue paper folded into a simple triangle shape, lying on a small wooden table')],
+    ['samolot-3', thing('a light blue folded paper airplane with pointed nose and two wings, flying, side view')],
+  ];
+  for (const [id, prompt] of frames) tasks.push({ out: 'historyjki', prefix: id, args: ['--workflow', 'flux2-sprite', '--count', '2', '--prompt', prompt] });
+}
+
 if (process.argv.includes('--historyjki3')) {
   // Kolejne historyjki (razem 20).
   const base = 'single scene object, centered, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, bright cheerful pastel colors, no text, plain light gray background';
@@ -289,7 +316,7 @@ if (process.argv.includes('--warsztat')) {
 }
 
 for (const item of ITEMS) {
-  if ((process.argv.includes('--warsztat') || process.argv.includes('--sciezka') || process.argv.includes('--znaki') || process.argv.includes('--pracownia') || process.argv.includes('--dodatki') || process.argv.includes('--historyjki') || process.argv.includes('--polana') || process.argv.includes('--kolorowanki2') || process.argv.includes('--krajobrazy') || process.argv.includes('--balwan') || process.argv.includes('--historyjki2') || process.argv.includes('--historyjki3')) && !only) break;
+  if ((process.argv.includes('--warsztat') || process.argv.includes('--sciezka') || process.argv.includes('--znaki') || process.argv.includes('--pracownia') || process.argv.includes('--dodatki') || process.argv.includes('--historyjki') || process.argv.includes('--polana') || process.argv.includes('--kolorowanki2') || process.argv.includes('--krajobrazy') || process.argv.includes('--balwan') || process.argv.includes('--historyjki2') || process.argv.includes('--historyjki3') || process.argv.includes('--historyjki4') || process.argv.includes('--historyjki5')) && !only) break;
   if (only && !only.has(item.id)) continue;
   if (!only && existsSync(join(repo, 'games/bystrzakowo/public/art/items', `${item.id}.webp`))) continue;
   if (existsSync(join(raw, 'items', `${item.id}-${SEED}.png`))) continue;

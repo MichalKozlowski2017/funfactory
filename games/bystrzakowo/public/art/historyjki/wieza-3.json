@@ -1,0 +1,16 @@
+{
+  "workflow": "flux2-sprite.json",
+  "PROMPT": "a tall tower of five stacked plain cube toy blocks: red cube at the bottom, yellow cube on it, then green, then blue, and a small red triangle block on the very top, no face, no eyes, no mouth, single scene object, centered, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, bright cheerful pastel colors, no text, plain light gray background",
+  "NEGATIVE": "",
+  "SEED": 81,
+  "WIDTH": 1024,
+  "HEIGHT": 1024,
+  "PREFIX": "wieza-3",
+  "STEPS": 20,
+  "GUIDANCE": 4,
+  "BPM": 100,
+  "DURATION": 60,
+  "KEY": "A minor",
+  "LYRICS": "[Instrumental]",
+  "created": "2026-11-21T19:55:55.113Z"
+}

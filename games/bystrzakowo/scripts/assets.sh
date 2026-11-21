@@ -92,7 +92,7 @@ for f in $RAW/historyjki/*-21.png; do
   sprite "historyjki/$id-21.png" "historyjki/$id" 400
 done
 # Wybrane nowsze kadry (poprawki bez twarzy i nowe historyjki); nadpisują wersje -21.
-STORY_PICKS="balwan-1-51 balwan-2-51"
+STORY_PICKS="balwan-1-51 balwan-2-51 kwiat-1-62 kwiat-2-62 kwiat-3-62 kurczak-1-61 jablko-1-61 jablko-2-61 jablko-3-61 lody-1-62 lody-2-61 zabka-2-62 zabka-3-61 kanapka-1-61 kanapka-2-61 kanapka-3-61 wieza-2-61 balon-1-61 balon-2-61 balon-3-61 tort-2-61 tort-3-62 zamek-1-61 zamek-3-61 jajko-1-71 jajko-2-71 jajko-3-71 pizza-2-72 pizza-3-71 swieca-1-72 swieca-2-72 swieca-3-72 kakao-1-71 kakao-2-71 kakao-3-71 gniazdo-1-71 gniazdo-2-71 gniazdo-3-71 drzewko-1-72 drzewko-2-72 drzewko-3-72 dzien-1-71 dzien-2-71 dzien-3-71 samolot-1-92 samolot-2-92 samolot-3-92 zabka-1-82 wieza-1-81 wieza-3-81 tort-1-81 zamek-2-81 pizza-1-91"
 for x in $STORY_PICKS; do sprite "historyjki/$x.png" "historyjki/${x%-*}" 400; done
 # Kolorowanki: czyste czarne kontury na białym (próg + pogrubienie linii, żeby obszary były zamknięte).
 mkdir -p $OUT/kolorowanki
