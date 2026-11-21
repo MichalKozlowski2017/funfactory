@@ -1,8 +1,8 @@
 {
   "workflow": "flux2.json",
-  "PROMPT": "children coloring book page of a cute fish with big fins, very thick clean black outlines, closed shapes, large simple areas, pure white background, no shading, no gray, no color, no texture, cute and friendly, centered, whole object visible",
+  "PROMPT": "very simple children coloring book page for toddlers aged 2 to 3 of a round chubby fish with one big tail fin, only 6 to 10 big closed areas, extremely thick bold black outlines, no small details, no stripes, no patterns, no scales, no texture lines, no tiny eyes details, big chunky rounded shapes, object fills the whole page, pure white background, no shading, no gray, no color",
   "NEGATIVE": "",
-  "SEED": 21,
+  "SEED": 31,
   "WIDTH": 1024,
   "HEIGHT": 1024,
   "PREFIX": "ryba",
@@ -12,5 +12,5 @@
   "DURATION": 60,
   "KEY": "A minor",
   "LYRICS": "[Instrumental]",
-  "created": "2026-11-21T11:21:08.722Z"
+  "created": "2026-11-21T16:06:24.526Z"
 }

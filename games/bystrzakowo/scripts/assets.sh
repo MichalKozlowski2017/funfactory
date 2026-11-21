@@ -99,6 +99,12 @@ for f in $RAW/kolorowanki/*-21.png; do
   magick "$f" -colorspace gray -resize 640x640 -threshold 55% -morphology Erode Disk:1.5 -strip "$OUT/kolorowanki/$id.png"
   cp "${f%.png}.json" "$OUT/kolorowanki/$id.json"
 done
+# Prostsze strony (duże pola dla palca malucha) zastępują pierwsze wersje.
+for x in domek-32 kwiatek-31 motyl-31 ryba-31 slon-31 sowa-31 zolw-32; do
+  f=$RAW/kolorowanki/$x.png
+  magick "$f" -colorspace gray -resize 640x640 -threshold 55% -morphology Erode Disk:1.5 -strip "$OUT/kolorowanki/${x%-*}.png"
+  cp "${f%.png}.json" "$OUT/kolorowanki/${x%-*}.json"
+done
 background proto/tlo-polana-21.png polana
 background proto/tlo-zagadka-21.png tlo-zagadka
 du -sh $OUT
