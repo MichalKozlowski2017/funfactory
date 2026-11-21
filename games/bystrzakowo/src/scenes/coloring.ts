@@ -41,9 +41,17 @@ export class ColoringScene extends RoundScene {
   protected async prepare(): Promise<void> {
     this.length = 1;
     const seen = state.progress.colored ?? [];
-    const fresh = PAGES.filter((p) => !seen.includes(p));
-    this.page = this.game.rng.pick(fresh.length ? fresh : PAGES);
-    const tex = await Assets.load<Texture>(`${URL_BASE}art/kolorowanki/${this.page}.png`);
+    // Najpierw strony jeszcze nie kolorowane; strona, której nie da się wczytać, jest pomijana.
+    const order = [...this.game.rng.shuffle(PAGES.filter((p) => !seen.includes(p))), ...this.game.rng.shuffle(PAGES.filter((p) => seen.includes(p)))];
+    let tex: Texture | null = null;
+    for (const page of order) {
+      tex = await Assets.load<Texture>(`${URL_BASE}art/kolorowanki/${page}.png`).catch(() => null);
+      if (tex) {
+        this.page = page;
+        break;
+      }
+    }
+    if (!tex) throw new Error('Brak stron kolorowanki');
     const src = tex.source.resource as CanvasImageSource;
     const canvas = document.createElement('canvas');
     canvas.width = SIZE;
@@ -192,7 +200,7 @@ export class ColoringScene extends RoundScene {
   protected place(): void {
     if (!this.pixels) return;
     const { width: w, height: h, safe } = this.game.view;
-    const left = safe.left + 260;
+    const left = safe.left + 300;
     const right = w - safe.right - 30;
     const top = safe.top + 105;
     const bottom = h - 25;
