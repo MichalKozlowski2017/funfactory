@@ -3,10 +3,11 @@ import { haptics } from '@funfactory/core';
 import { dotTexture, idleBreath, Particles, popIn, Scene, squash, type View } from '@funfactory/kit2d';
 import { loadArt, say, shadowOf, startMusic, stopMusic, type Art } from '../assets.ts';
 import { playable, type PuzzleKind } from '../sim/puzzles.ts';
-import { ACTIVITY_NAMES, isPuzzle, REALMS, type Activity } from '../sim/realms.ts';
+import { ACTIVITY_NAMES, isPuzzle, realmOf, REALMS, type Activity } from '../sim/realms.ts';
 import { saveState, state } from '../state.ts';
 import { COLORS, cover, label, sfx } from '../ui.ts';
 import { ParentGate, ParentPanel } from '../parent.ts';
+import { realmIsOpen } from '../premium.ts';
 import { journal, today } from '../log.ts';
 import { addTask, addTime, noteFact, playDaysAfter, shiftDay } from '../sim/journal.ts';
 import { extend, timeIsUp } from '../session.ts';
@@ -101,6 +102,7 @@ export class WorldScene extends Scene {
       }
       this.pages.addChild(page);
     });
+    this.applyLocks();
 
     // Zakładki krain i nazwa bieżącej.
     this.title = label(REALMS[this.realm]!.name, 56, pr, '#ffb347');
@@ -434,8 +436,52 @@ export class WorldScene extends Scene {
     this.open(kind, this.houses.get(kind)!);
   }
 
+  /**
+   * Krainy po próbie bez pełnej wersji „śpią”: przyciemnione kafelki z księżycem i „Zzz”.
+   * Wołane też po zakupie w strefie rodzica (kafelki się budzą).
+   */
+  applyLocks(): void {
+    for (const realm of REALMS) {
+      const open = realmIsOpen(realm.id);
+      for (const kind of realm.rows.flat()) {
+        const house = this.houses.get(kind);
+        if (!house) continue;
+        const night = house.getChildByLabel('night');
+        if (open) {
+          night?.destroy({ children: true });
+          continue;
+        }
+        if (night) continue;
+        const o = new Container();
+        o.label = 'night';
+        o.eventMode = 'none';
+        const shade = new Graphics().roundRect(-150, -150, 300, 300, 48).fill({ color: 0x1d1a4a, alpha: 0.5 });
+        const moon = new Graphics().poly(crescent(38, 16, -12, 34)).fill({ color: 0xfff3b0 }).stroke({ color: COLORS.ink, width: 4 });
+        moon.position.set(92, -92);
+        o.addChild(shade, moon);
+        for (let k = 0; k < 3; k++) {
+          const z = label('z', 30 + k * 8, this.game.pixelRatio, '#ffffff', '#1d1a4a');
+          z.position.set(20 + k * 30, -40 - k * 28);
+          this.tweens.to(z, { alpha: 0.25, y: z.y - 12 }, { duration: 1.4, delay: k * 0.35, yoyo: true, repeat: -1, ease: 'sineInOut' });
+          o.addChild(z);
+        }
+        house.addChild(o);
+      }
+    }
+  }
+
+  /** Śpiąca kraina: kafelek się kołysze, Lusia mówi, żeby poprosić rodzica (zakup jest za bramką). */
+  private sleepingTap(house: Container): void {
+    haptics.tap();
+    sfx.pop(this.game.sound, 0.6);
+    void squash(this.tweens, house, 0.1);
+    void squash(this.tweens, this.lusia, 0.12);
+    say(this.game, 'lusia', 'kraina-spi');
+  }
+
   private open(kind: Activity, house: Container): void {
     if (this.leaving) return;
+    if (!realmIsOpen(realmOf(kind).id)) return this.sleepingTap(house);
     this.leaving = true;
     startMusic(this.game);
     haptics.hit();
@@ -473,10 +519,14 @@ export class WorldScene extends Scene {
     state.progress.parentSeen = today();
     void saveState();
     this.gate.setBadge(false);
-    this.parentPanel = new ParentPanel(this.game, () => {
-      this.parentPanel?.destroy({ children: true });
-      this.parentPanel = null;
-    });
+    this.parentPanel = new ParentPanel(
+      this.game,
+      () => {
+        this.parentPanel?.destroy({ children: true });
+        this.parentPanel = null;
+      },
+      () => this.applyLocks(),
+    );
     this.parentPanel.layout(this.game.view);
     this.addChild(this.parentPanel);
   }

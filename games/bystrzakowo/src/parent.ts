@@ -5,7 +5,7 @@ import { Button, type Game, type View } from '@funfactory/kit2d';
 import { loadArt, startMusic, stopMusic, type Art } from './assets.ts';
 import { journal, today } from './log.ts';
 import { loadLandscapes, paintings, pictureView, removePainting, type Painting } from './picture.ts';
-import { hasFull } from './premium.ts';
+import { hasFull, isBought, price, purchase, restorePurchase, trial } from './premium.ts';
 import { newProgress } from './sim/progress.ts';
 import { formatRange, makeReport, type Report } from './sim/report.ts';
 import { gallery, type Landscape, type Picture } from './sim/stickers.ts';
@@ -97,6 +97,10 @@ type AlbumItem = { kind: 'painting'; painting: Painting } | { kind: 'picture'; p
 export class ParentPanel extends Container {
   private readonly game: Game;
   private readonly onClose: () => void;
+  private readonly onUnlock: () => void;
+  private storePrice: string | null = null;
+  private shopNote = '';
+  private buying = false;
   private readonly dim = new Graphics();
   private readonly sheet = new Graphics();
   private readonly bar = new Container();
@@ -117,10 +121,15 @@ export class ParentPanel extends Container {
   private confirmReset = false;
   private version = 0;
 
-  constructor(game: Game, onClose: () => void) {
+  constructor(game: Game, onClose: () => void, onUnlock: () => void = () => {}) {
     super();
     this.game = game;
     this.onClose = onClose;
+    this.onUnlock = onUnlock;
+    void price().then((p) => {
+      this.storePrice = p;
+      if (!this.destroyed && this.view && !isBought()) this.render();
+    });
     this.dim.eventMode = 'static';
     this.viewport.addChild(this.content);
     this.viewport.mask = this.clip;
@@ -266,6 +275,64 @@ export class ParentPanel extends Container {
     return g;
   }
 
+  // ——— Pełna wersja ———
+
+  /** Karta pełnej wersji: stan próby, zakup i przywracanie. Zwraca wysokość (0, gdy kupione). */
+  private shopCard(y: number, cw: number, x = 0): number {
+    if (isBought()) return 0;
+    const t = trial();
+    const title = t.active
+      ? t.left > 0
+        ? `Pełny dostęp próbny: jeszcze ${t.left} ${t.left === 1 ? 'dzień' : 'dni'} zabawy po dzisiejszym`
+        : 'Pełny dostęp próbny: dziś ostatni dzień'
+      : 'Próba się skończyła: otwarta jest Polana Zagadek';
+    const body = t.active
+      ? 'Liczą się tylko dni, w które dziecko się bawi. Potem zostaje Polana Zagadek, a pełna wersja otwiera wszystkie krainy, pełny raport i pocztówkę na zawsze. Jednorazowo, bez subskrypcji i reklam.'
+      : 'Pełna wersja otwiera Warsztat Bazyla, Ścieżkę Lusi i Pracownię Malucha, pełny raport i pocztówkę tygodnia. Jednorazowo, bez subskrypcji i reklam, na wszystkich urządzeniach rodziny.';
+    return this.card({ x, y }, cw, (c, iw) => {
+      const tt = this.text(title, 29, { weight: '800', wrap: iw });
+      const b = this.text(body, 24, { color: SOFT, wrap: iw });
+      b.y = tt.height + 10;
+      c.addChild(tt, b);
+      let h = b.y + b.height + 20;
+      const bw = Math.min(440, iw);
+      const buy = this.button(this.buying ? 'Chwileczkę…' : this.storePrice ? `Kup pełną wersję – ${this.storePrice}` : 'Kup pełną wersję', bw, '#ff9f5a', () => void this.doBuy(false), 80, 27);
+      buy.position.set(bw / 2, h + 40);
+      const rest = this.button('Przywróć zakup', 260, '#c9b8a6', () => void this.doBuy(true), 80, 25);
+      const stack = iw < bw + 24 + 260;
+      rest.position.set(stack ? 130 : bw + 24 + 130, stack ? h + 140 : h + 40);
+      c.addChild(buy, rest);
+      h += stack ? 180 : 80;
+      if (this.shopNote) {
+        const n = this.text(this.shopNote, 22, { color: '#b5563a', wrap: iw });
+        n.y = h + 14;
+        c.addChild(n);
+        h = n.y + n.height;
+      }
+      return h;
+    }, t.active ? 0xeef8e8 : 0xfff3dd);
+  }
+
+  private async doBuy(restoreOnly: boolean): Promise<void> {
+    if (this.buying) return;
+    this.buying = true;
+    this.shopNote = '';
+    this.render();
+    const ok = restoreOnly ? await restorePurchase() : await purchase();
+    this.buying = false;
+    if (this.destroyed) return;
+    if (ok) {
+      haptics.success();
+      this.onUnlock();
+    } else
+      this.shopNote = this.storePrice
+        ? restoreOnly
+          ? 'Nie znaleziono zakupu na tym koncie. Sprawdź, czy telefon jest zalogowany na to samo konto co przy zakupie.'
+          : 'Zakup nie został zakończony. Można spróbować jeszcze raz.'
+        : 'Sklep jest niedostępny (brak internetu albo wersja testowa). Spróbuj później.';
+    this.render();
+  }
+
   // ——— Postępy ———
 
   private renderProgress(cw: number): number {
@@ -289,6 +356,8 @@ export class ParentPanel extends Container {
       y += firsts.height + 8;
     }
     y += 16;
+    const shop = this.shopCard(y, cw);
+    if (shop) y += shop + 24;
 
     if (!hasFull()) {
       y += this.card({ x: 0, y }, cw, (c, iw) => {
@@ -574,10 +643,19 @@ export class ParentPanel extends Container {
       reset.setLabel('Wyzerowano');
     });
     add(reset);
-    const ver = this.text(hasFull() ? 'Wersja: pełna' : 'Wersja: darmowa', 22, { color: '#9a8b7c' });
+    const t = trial();
+    const ver = this.text(isBought() ? 'Wersja: pełna' : t.active ? 'Wersja: próbna (pełny dostęp)' : 'Wersja: darmowa (Polana Zagadek)', 22, { color: '#9a8b7c' });
     ver.y = y + 10;
     this.content.addChild(ver);
-    return y + 60;
+    y += 60;
+    // Pełna wersja: obok przycisków, gdy jest miejsce, inaczej pod nimi.
+    const side = cw - bw - 40;
+    if (side >= 520) {
+      const shop = this.shopCard(info.height + 30, side, bw + 40);
+      return Math.max(y, info.height + 30 + shop) + 30;
+    }
+    const shop = this.shopCard(y, cw);
+    return y + shop + 30;
   }
 
   tick(dt: number): void {

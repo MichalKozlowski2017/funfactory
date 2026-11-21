@@ -23,6 +23,7 @@
     "@capacitor/ios": "^8.6.2",
     "@capacitor/preferences": "^8.0.1",
     "@capacitor/share": "^8.0.3",
+    "@capgo/native-purchases": "8.9.17",
     "@funfactory/art": "workspace:*",
     "@funfactory/core": "workspace:*",
     "@funfactory/kit2d": "workspace:*",

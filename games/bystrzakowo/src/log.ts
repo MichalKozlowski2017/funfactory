@@ -13,6 +13,8 @@ export function journal(): Journal {
 
 export function logTask(kind: Activity, misses: number): void {
   addTask(journal(), today(), kind, misses);
+  // Pierwsze zadanie dnia zużywa dzień próby pełnej wersji (import leniwy: premium importuje log).
+  void import('./premium.ts').then((m) => m.countPlayDay());
 }
 
 /** `easy`: wybór tylko z dwóch odpowiedzi (łatwo zgadnąć, liczy się za pół). */

@@ -30,6 +30,8 @@ export interface Progress {
   parentSeen?: string;
   /** Kupiona pełna wersja. */
   full?: boolean;
+  /** Dni zabawy w czasie próby pełnej wersji (sim/trial.ts). */
+  trialDays?: string[];
   /** Ustawienia ze strefy rodzica. */
   music: boolean;
   /** Limit czasu zabawy w minutach (0 = bez limitu). */

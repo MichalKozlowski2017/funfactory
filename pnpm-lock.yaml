@@ -33,7 +33,7 @@ importers:
         specifier: ^8.6.2
         version: 8.6.2
       '@capacitor/filesystem':
-        specifier: ^8
+        specifier: ^8.1.5
         version: 8.1.5(@capacitor/core@8.6.2)
       '@capacitor/haptics':
         specifier: ^8.0.2
@@ -45,8 +45,11 @@ importers:
         specifier: ^8.0.1
         version: 8.0.1(@capacitor/core@8.6.2)
       '@capacitor/share':
-        specifier: ^8
+        specifier: ^8.0.3
         version: 8.0.3(@capacitor/core@8.6.2)
+      '@capgo/native-purchases':
+        specifier: 8.9.17
+        version: 8.9.17(@capacitor/core@8.6.2)
       '@funfactory/art':
         specifier: workspace:*
         version: link:../../packages/art
@@ -158,7 +161,7 @@ importers:
         specifier: ^8.6.2
         version: 8.6.2
       '@capacitor/filesystem':
-        specifier: ^8
+        specifier: ^8.1.5
         version: 8.1.5(@capacitor/core@8.6.2)
       '@capacitor/haptics':
         specifier: ^8.0.2
@@ -167,8 +170,11 @@ importers:
         specifier: ^8.0.1
         version: 8.0.1(@capacitor/core@8.6.2)
       '@capacitor/share':
-        specifier: ^8
+        specifier: ^8.0.3
         version: 8.0.3(@capacitor/core@8.6.2)
+      '@capgo/native-purchases':
+        specifier: 8.9.17
+        version: 8.9.17(@capacitor/core@8.6.2)
 
   packages/kit2d:
     dependencies:
@@ -228,6 +234,11 @@ packages:
 
   '@capacitor/synapse@1.0.4':
     resolution: {integrity: sha512-/C1FUo8/OkKuAT4nCIu/34ny9siNHr9qtFezu4kxm6GY1wNFxrCFWjfYx5C1tUhVGz3fxBABegupkpjXvjCHrw==}
+
+  '@capgo/native-purchases@8.9.17':
+    resolution: {integrity: sha512-Z2i+aRI9DPqdGLybUNeveD/tlkwUSLx7d5UgSA2V8hO96DWEvN4W+X+5kcjh4hXmlE1sd9imA4bCzJq25jhHvA==}
+    peerDependencies:
+      '@capacitor/core': '>=8.0.0'
 
   '@emnapi/core@2.0.0-beta.2':
     resolution: {integrity: sha512-MzCVoWtcg4Pm2B3je5mMvYMvj3MmBKw+fU7vbsJc9/iT8ip6/eYIHo/Dsm/mr+wsHB6SEyJDuxB09Yy6r/8+4A==}
@@ -1257,6 +1268,10 @@ snapshots:
       '@capacitor/core': 8.6.2
 
   '@capacitor/synapse@1.0.4': {}
+
+  '@capgo/native-purchases@8.9.17(@capacitor/core@8.6.2)':
+    dependencies:
+      '@capacitor/core': 8.6.2
 
   '@emnapi/core@2.0.0-beta.2':
     dependencies:

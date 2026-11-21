@@ -1,0 +1,7 @@
+{
+ "voice": "voices/alt",
+ "tries": 8,
+ "lines": [
+  { "name": "lusia-kraina-spi", "text": "Ta kraina jeszcze śpi. Poproś mamę albo tatę!", "voice": "voices/alt" }
+ ]
+}
