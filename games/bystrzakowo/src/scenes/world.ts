@@ -11,6 +11,8 @@ import { AlbumScene } from './album.ts';
 import { DotsScene } from './dots.ts';
 import { JigsawScene } from './jigsaw.ts';
 import { MazeScene } from './maze.ts';
+import { MemoryScene } from './memory.ts';
+import { PatternScene } from './patterns.ts';
 import { PuzzleScene } from './puzzle.ts';
 import { SortScene } from './sort.ts';
 
@@ -247,7 +249,29 @@ export class WorldScene extends Scene {
       g.poly([-8, -26, 8, -26, 8, -14, 15, -14, 0, -2, -15, -14, -8, -14]).fill({ color: COLORS.sun }).stroke({ color: COLORS.ink, width: 3, join: 'round' });
       c.addChild(g);
     } else if (kind === 'ukladanka') c.addChild(puzzlePiece());
-    else if (kind === 'kropki') {
+    else if (kind === 'wzory') {
+      // Koraliki we wzorze i znak zapytania.
+      const g = new Graphics();
+      [0xff7a8a, 0x5cb3ff, 0xff7a8a, 0x5cb3ff].forEach((color, i) => g.circle(-27 + i * 15, 0, 7).fill({ color }).stroke({ color: COLORS.ink, width: 2 }));
+      c.addChild(g);
+      const q = label('?', 30, pr, '#ff7a8a');
+      q.x = 33;
+      c.addChild(q);
+    } else if (kind === 'memory') {
+      // Dwie karty: rewers i odkryta.
+      const g = new Graphics()
+        .roundRect(-30, -22, 30, 40, 6)
+        .fill({ color: 0x9b7be0 })
+        .stroke({ color: COLORS.ink, width: 3 })
+        .roundRect(2, -18, 30, 40, 6)
+        .fill({ color: 0xfffaf2 })
+        .stroke({ color: COLORS.ink, width: 3 })
+        .star(-15, -2, 5, 8, 4)
+        .fill({ color: COLORS.sun })
+        .circle(17, 2, 8)
+        .fill({ color: 0xff7a8a });
+      c.addChild(g);
+    } else if (kind === 'kropki') {
       // Trzy kropki połączone linią.
       const g = new Graphics().moveTo(-24, 14).lineTo(0, -20).lineTo(24, 14).stroke({ color: 0xff7a8a, width: 5, cap: 'round', join: 'round' });
       for (const [x, y] of [
@@ -291,7 +315,7 @@ export class WorldScene extends Scene {
     void squash(this.tweens, house, 0.18);
     const p = this.toLocal(house.getGlobalPosition());
     this.particles.burst(p.x, p.y - 120, { count: 24, speed: [200, 520], life: [0.4, 0.8], gravity: 900, scale: [0.6, 1.2], colors: COLORS.confetti });
-    const scenes: Record<string, () => Scene> = { sortowanie: () => new SortScene(), ukladanka: () => new JigsawScene(), kropki: () => new DotsScene(), labirynt: () => new MazeScene() };
+    const scenes: Record<string, () => Scene> = { memory: () => new MemoryScene(), sortowanie: () => new SortScene(), ukladanka: () => new JigsawScene(), wzory: () => new PatternScene(), kropki: () => new DotsScene(), labirynt: () => new MazeScene() };
     const scene = isPuzzle(kind) ? new PuzzleScene(kind as PuzzleKind) : scenes[kind]!();
     this.timers.after(0.35, () => void this.game.scenes.go(scene, { fade: 0.3, color: 0xfff6e8 }));
   }

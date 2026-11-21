@@ -1,0 +1,19 @@
+{
+ "voice": "voices/alt",
+ "tries": 8,
+ "lines": [
+  {
+   "name": "lusia-memory",
+   "text": "Znajdź pary takich samych obrazków!"
+  },
+  {
+   "name": "lusia-memory-cien",
+   "text": "Znajdź obrazek i jego cień!"
+  },
+  {
+   "name": "bazyl-wzory",
+   "text": "Co będzie dalej? Przeciągnij brakujący obrazek!",
+   "voice": "voices/prezenter"
+  }
+ ]
+}

@@ -5,16 +5,19 @@
 import { PUZZLE_KINDS, type PuzzleKind } from './puzzles.ts';
 
 /** Zabawy Warsztatu (przeciągnij i ułóż). */
-export type WorkshopKind = 'sortowanie' | 'ukladanka';
-export const WORKSHOP_KINDS: readonly WorkshopKind[] = ['sortowanie', 'ukladanka'];
+export type WorkshopKind = 'sortowanie' | 'ukladanka' | 'wzory';
+export const WORKSHOP_KINDS: readonly WorkshopKind[] = ['sortowanie', 'ukladanka', 'wzory'];
+
+/** Zabawy Polany poza zagadkami z wyborem (pamięć). */
+export type MeadowKind = 'memory';
 
 /** Zabawy Ścieżki Lusi (prowadź palcem). */
 export type PathKind = 'kropki' | 'labirynt';
 export const PATH_KINDS: readonly PathKind[] = ['kropki', 'labirynt'];
 
 /** Każda zabawa w grze (klucz poziomu trudności w zapisie). */
-export type Activity = PuzzleKind | WorkshopKind | PathKind;
-export const ACTIVITIES: readonly Activity[] = [...PUZZLE_KINDS, ...WORKSHOP_KINDS, ...PATH_KINDS];
+export type Activity = PuzzleKind | MeadowKind | WorkshopKind | PathKind;
+export const ACTIVITIES: readonly Activity[] = [...PUZZLE_KINDS, 'memory', ...WORKSHOP_KINDS, ...PATH_KINDS];
 
 export type RealmId = 'polana' | 'warsztat' | 'sciezka';
 
@@ -29,8 +32,8 @@ export interface Realm {
 }
 
 export const REALMS: readonly Realm[] = [
-  { id: 'polana', name: 'Polana Zagadek', guide: 'lusia', rows: [['kolory', 'gloski', 'mamy'], ['cienie', 'pasuje', 'liczenie']] },
-  { id: 'warsztat', name: 'Warsztat Bazyla', guide: 'bazyl', rows: [['sortowanie', 'ukladanka']] },
+  { id: 'polana', name: 'Polana Zagadek', guide: 'lusia', rows: [['kolory', 'gloski', 'mamy', 'memory'], ['cienie', 'pasuje', 'liczenie']] },
+  { id: 'warsztat', name: 'Warsztat Bazyla', guide: 'bazyl', rows: [['sortowanie', 'ukladanka', 'wzory']] },
   { id: 'sciezka', name: 'Ścieżka Lusi', guide: 'lusia', rows: [['kropki', 'labirynt']] },
 ];
 

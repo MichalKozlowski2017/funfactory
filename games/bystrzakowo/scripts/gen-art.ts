@@ -73,6 +73,38 @@ if (process.argv.includes('--sciezka')) {
   );
 }
 
+if (process.argv.includes('--pracownia')) {
+  const bg = (what: string) => `${what}, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, bright cheerful pastel colors, cute and friendly`;
+  const sprite = (what: string) => `${what}, single object, centered, ${STYLE}, no face on objects, plain light gray background`;
+  const wide = ['--workflow', 'flux2', '--width', '1536', '--height', '864', '--count', '2'];
+  tasks.push(
+    { out: 'pracownia', prefix: 'tlo-pracownia', args: [...wide, '--prompt', bg('wide view of a cozy bright children art studio room, easels, jars with brushes and crayons on shelves, colorful paint splashes on the wall, a big window with sunlight, large empty wooden floor in the middle and bottom, no characters, no animals')] },
+    { out: 'pracownia', prefix: 'tlo-pracownia-gra', args: [...wide, '--prompt', bg('a completely empty soft cream colored paper wall with a few tiny colorful paint dots only at the edges, very simple and calm, lots of empty space, no objects, no characters')] },
+    { out: 'pracownia', prefix: 'stacja-kolorowanka', args: ['--workflow', 'flux2-sprite', '--count', '2', '--prompt', sprite('a small wooden easel with a half colored picture of a flower, a paint palette and a brush next to it, front view')] },
+    { out: 'pracownia', prefix: 'stacja-naklejanka', args: ['--workflow', 'flux2-sprite', '--count', '2', '--prompt', sprite('an open children sticker book with colorful round stickers of stars, hearts and animals, front view')] },
+    { out: 'pracownia', prefix: 'dom-memory', args: ['--workflow', 'flux2-sprite', '--prompt', `a tiny cozy cottage with a round wooden door and an orange roof, front view, single object, centered, ${STYLE}, no face on objects, plain light gray background`] },
+    { out: 'pracownia', prefix: 'stacja-wzory', args: ['--workflow', 'flux2-sprite', '--count', '2', '--prompt', sprite('a small wooden children abacus with rows of colorful beads in repeating color patterns, front view')] },
+    { out: 'pracownia', prefix: 'stacja-litery', args: ['--workflow', 'flux2-sprite', '--count', '2', '--prompt', sprite('a small wooden board standing on a little stand with a big letter A made of colorful dots, front view')] },
+  );
+  // Kolorowanki: same kontury, grube linie, białe tło (zamalowywanie dotykiem).
+  const page = (what: string) => `children coloring book page of ${what}, very thick clean black outlines, closed shapes, large simple areas, pure white background, no shading, no gray, no color, no texture, cute and friendly, centered, whole object visible`;
+  for (const [id, what] of [
+    ['kot', 'a cute sitting cat'],
+    ['pies', 'a cute happy puppy'],
+    ['slon', 'a cute baby elephant'],
+    ['ryba', 'a cute fish with big fins'],
+    ['motyl', 'a cute butterfly with big wings'],
+    ['auto', 'a cute small car'],
+    ['kwiatek', 'a big flower with round petals and two leaves'],
+    ['dinozaur', 'a cute friendly dinosaur'],
+    ['zolw', 'a cute turtle with a patterned shell'],
+    ['rakieta', 'a cute rocket with round windows'],
+    ['sowa', 'a cute owl sitting on a branch'],
+    ['domek', 'a little house with a door, two windows and a tree'],
+  ])
+    tasks.push({ out: 'kolorowanki', prefix: id!, args: ['--workflow', 'flux2', '--prompt', page(what!)] });
+}
+
 if (process.argv.includes('--warsztat')) {
   const bg = (what: string) => `${what}, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, bright cheerful pastel colors, cute and friendly`;
   const sprite = (what: string) => `${what}, single object, centered, ${STYLE}, no face on objects, plain light gray background`;
@@ -90,7 +122,7 @@ if (process.argv.includes('--warsztat')) {
 }
 
 for (const item of ITEMS) {
-  if ((process.argv.includes('--warsztat') || process.argv.includes('--sciezka') || process.argv.includes('--znaki')) && !only) break;
+  if ((process.argv.includes('--warsztat') || process.argv.includes('--sciezka') || process.argv.includes('--znaki') || process.argv.includes('--pracownia')) && !only) break;
   if (only && !only.has(item.id)) continue;
   if (!only && existsSync(join(repo, 'games/bystrzakowo/public/art/items', `${item.id}.webp`))) continue;
   if (existsSync(join(raw, 'items', `${item.id}-${SEED}.png`))) continue;
@@ -99,7 +131,7 @@ for (const item of ITEMS) {
 }
 
 console.log(`Do wygenerowania: ${tasks.length}`);
-for (const dir of ['items', 'extra', 'warsztat', 'sciezka']) mkdirSync(join(raw, dir), { recursive: true });
+for (const dir of ['items', 'extra', 'warsztat', 'sciezka', 'pracownia', 'kolorowanki']) mkdirSync(join(raw, dir), { recursive: true });
 // Postęp liczony w obrazkach (zadanie z --count N daje N plików .png).
 const images = tasks.reduce((n, t) => n + (t.args.includes('--count') ? Number(t.args[t.args.indexOf('--count') + 1]) : t.args.includes('ace15') ? 0 : 1), 0);
 execFileSync(job, ['bystrzakowo-items', 'Bystrzakowo: grafiki', String(images), '--dir', raw, '--glob', '*'], { stdio: 'inherit' });

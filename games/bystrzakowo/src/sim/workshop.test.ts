@@ -73,3 +73,23 @@ describe('układanka', () => {
     expect(snaps(90, 0, 200, 200)).toBe(false);
   });
 });
+
+describe('co dalej (wzory)', () => {
+  it('brakujący obrazek wynika ze wzoru i jest wśród odpowiedzi', async () => {
+    const { makePatternTask } = await import('./patterns.ts');
+    const rng = new Rng(13);
+    for (const level of [0, 1, 2])
+      for (let i = 0; i < 300; i++) {
+        const t = makePatternTask(rng, level);
+        expect(t.row.length).toBeGreaterThanOrEqual(6);
+        expect(t.options).toContain(t.row[t.gap]);
+        expect(new Set(t.options).size).toBe(t.options.length);
+        expect(t.options.length).toBeGreaterThanOrEqual(2);
+        // Okres wzoru: najkrótszy p, dla którego row[i] === row[i % p]; brakujący zgodny z nim.
+        const p = [1, 2, 3, 4].find((k) => t.row.every((x, j) => x === t.row[j % k]))!;
+        expect(p).toBeGreaterThan(1);
+        // Jednoznaczność: tylko jedna odpowiedź pasuje do wzoru.
+        expect(t.options.filter((o) => o === t.row[t.gap % p]).length).toBe(1);
+      }
+  });
+});

@@ -112,8 +112,8 @@ export const COLORS_SPOKEN: readonly Color[] = ['czerwony', 'zolty', 'zielony', 
 
 const COMMON = ['brawo-1', 'brawo-2', 'brawo-3', 'brawo-4', 'brawo-5', 'oj-1', 'oj-2', 'nagroda', 'witaj', 'pomoc', ...ITEMS.map((i) => `item-${i.id}`)];
 const VOICE: Record<Guide, string[]> = {
-  lusia: [...COMMON, 'kraina-polana', 'kraina-sciezka', 'kropki', ...MAZE_PAIRS.map(([hero]) => `labirynt-${hero}`), 'cienie', 'liczenie', 'liczenie-dotyk', 'album', ...Array.from({ length: 10 }, (_, i) => `liczba-${i + 1}`), ...SOUNDS.map((s) => `gloska-${soundSlug(s)}`)],
-  bazyl: [...COMMON, 'kraina-warsztat', 'pasuje', 'ukladanka', 'przeciagnij', ...SORT_LINES, ...COLORS_SPOKEN.map((c) => `kolor-${c}`), ...ITEMS.filter((i) => i.mother).map((i) => `mama-${i.id}`)],
+  lusia: [...COMMON, 'kraina-polana', 'kraina-sciezka', 'kropki', 'memory', 'memory-cien', ...MAZE_PAIRS.map(([hero]) => `labirynt-${hero}`), 'cienie', 'liczenie', 'liczenie-dotyk', 'album', ...Array.from({ length: 10 }, (_, i) => `liczba-${i + 1}`), ...SOUNDS.map((s) => `gloska-${soundSlug(s)}`)],
+  bazyl: [...COMMON, 'kraina-warsztat', 'wzory', 'pasuje', 'ukladanka', 'przeciagnij', ...SORT_LINES, ...COLORS_SPOKEN.map((c) => `kolor-${c}`), ...ITEMS.filter((i) => i.mother).map((i) => `mama-${i.id}`)],
 };
 
 export function registerVoice(game: Game): void {

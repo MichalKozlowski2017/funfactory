@@ -64,3 +64,26 @@ describe('labirynt', () => {
     expect(makeMazeRound(new Rng(1)).length).toBe(MAZE_ROUND);
   });
 });
+
+describe('memory', () => {
+  it('każdy obrazek dokładnie dwa razy, bez podobnych, cienie na najwyższym poziomie', async () => {
+    const { makeMemoryBoard, pairCount, memoryGrid, memoryMistakes } = await import('./memory.ts');
+    const { lookalike } = await import('./catalog.ts');
+    const rng = new Rng(8);
+    for (const level of [0, 1, 2])
+      for (let i = 0; i < 50; i++) {
+        const board = makeMemoryBoard(rng, level);
+        expect(board.length).toBe(pairCount(level) * 2);
+        const ids = new Map<string, number>();
+        for (const c of board) ids.set(c.item.id, (ids.get(c.item.id) ?? 0) + 1);
+        expect([...ids.values()].every((n) => n === 2)).toBe(true);
+        const items = [...new Set(board.map((c) => c.item))];
+        for (const a of items) for (const b of items) if (a !== b) expect(lookalike(a, b)).toBe(false);
+        expect(board.filter((c) => c.shadow).length).toBe(level === 2 ? pairCount(level) : 0);
+        const g = memoryGrid(board.length);
+        expect(g.cols * g.rows).toBeGreaterThanOrEqual(board.length);
+      }
+    expect(memoryMistakes(3, 4)).toBe(0);
+    expect(memoryMistakes(12, 4)).toBe(4);
+  });
+});
