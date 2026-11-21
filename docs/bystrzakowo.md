@@ -118,6 +118,17 @@ Kolejność budowy: nawigacja i Warsztat, potem Ścieżka, potem Pracownia, na k
 
 Kod: `src/sim/realms.ts` (krainy i zabawy), `src/scenes/world.ts` (świat), `src/scenes/round.ts` (wspólna rama rundy: przewodnik, gwiazdki, podpowiedzi, naklejka), zabawy w `src/scenes/{puzzle,sort,jigsaw}.ts`, logika w `src/sim/{puzzles,sorting,jigsaw}.ts`.
 
+### Stan krain (2026-11-21, popołudnie)
+
+| Kraina | Zabawy |
+|---|---|
+| Polana Zagadek (Lusia) | cienie, co nie pasuje, liczenie, kolory, głoski, mamy i dzieci, memory (pary, na końcu obrazek i cień), emocje (minki) |
+| Warsztat Bazyla | segregowanie (6 reguł), układanka, co dalej (wzory), sorter kształtów |
+| Ścieżka Lusi | łączenie kropek, labirynt, litery po śladzie (12), cyfry po śladzie (0–9, potem liczenie) |
+| Pracownia Malucha | kolorowanka (12 stron z Fluxa), naklejanka (scena z zebranych naklejek), melodia (cymbałki, powtórz) |
+
+Strefa rodzica: muzyka, limit czasu zabawy (15/30/45 min, potem „Dobranoc” i odblokowanie tylko zębatką), zerowanie postępów. Research oczekiwań rodziców: `docs/bystrzakowo-rodzice.md`.
+
 ## Plan
 
 1. **Prototyp (3 domki: cienie, co nie pasuje, liczenie):** katalog z ~20 obiektami, silniki zagadek w czystym TS z testami, polana z trzema domkami, lektor, naklejka po rundzie. Cel: sprawdzić na dziecku, czy jest zabawnie i zrozumiale.
