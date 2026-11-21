@@ -107,3 +107,18 @@ describe('sorter kształtów', () => {
       }
   });
 });
+
+describe('melodia', () => {
+  it('długość rośnie z poziomem, sztabki w zakresie', async () => {
+    const { makeMelody, barCount, melodyLength, MELODY_ROUND } = await import('./melody.ts');
+    const rng = new Rng(2);
+    for (const level of [0, 1, 2])
+      for (let t = 0; t < MELODY_ROUND; t++) {
+        const m = makeMelody(rng, level, t);
+        expect(m.length).toBe(melodyLength(level, t));
+        expect(m.every((b) => b >= 0 && b < barCount(level))).toBe(true);
+      }
+    expect(melodyLength(0, 0)).toBe(2);
+    expect(melodyLength(2, 3)).toBe(5);
+  });
+});

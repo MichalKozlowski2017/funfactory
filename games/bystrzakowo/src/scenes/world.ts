@@ -14,6 +14,7 @@ import { DotsScene } from './dots.ts';
 import { JigsawScene } from './jigsaw.ts';
 import { MazeScene } from './maze.ts';
 import { LetterScene } from './letters.ts';
+import { MelodyScene } from './melody.ts';
 import { MemoryScene } from './memory.ts';
 import { PatternScene } from './patterns.ts';
 import { PuzzleScene } from './puzzle.ts';
@@ -325,6 +326,11 @@ export class WorldScene extends Scene {
       const g = new Graphics().ellipse(0, 4, 32, 24).fill({ color: 0xf3d9a8 }).stroke({ color: COLORS.ink, width: 3 });
       [0xe8413c, 0xffd23f, 0x3d8bff, 0x7ad35a].forEach((color, i) => g.circle(-16 + (i % 2) * 22 + (i > 1 ? 6 : 0), -6 + Math.floor(i / 2) * 16, 7).fill({ color }));
       c.addChild(g);
+    } else if (kind === 'melodia') {
+      // Trzy sztabki cymbałków.
+      const g = new Graphics();
+      [0xe8413c, 0xffd23f, 0x3d8bff].forEach((color, i) => g.roundRect(-26 + i * 18, -22 + i * 6, 14, 44 - i * 12, 5).fill({ color }).stroke({ color: COLORS.ink, width: 3 }));
+      c.addChild(g);
     } else if (kind === 'naklejanka') {
       // Naklejka-gwiazdka z zagiętym rogiem.
       const g = new Graphics().star(0, 2, 5, 30, 15).fill({ color: COLORS.sun }).stroke({ color: COLORS.ink, width: 3, join: 'round' }).circle(0, 2, 8).fill({ color: 0xff7a8a });
@@ -396,7 +402,7 @@ export class WorldScene extends Scene {
     void squash(this.tweens, house, 0.18);
     const p = this.toLocal(house.getGlobalPosition());
     this.particles.burst(p.x, p.y - 120, { count: 24, speed: [200, 520], life: [0.4, 0.8], gravity: 900, scale: [0.6, 1.2], colors: COLORS.confetti });
-    const scenes: Record<string, () => Scene> = { memory: () => new MemoryScene(), sortowanie: () => new SortScene(), ukladanka: () => new JigsawScene(), wzory: () => new PatternScene(), ksztalty: () => new ShapeScene(), kropki: () => new DotsScene(), litery: () => new LetterScene('litery'), cyfry: () => new LetterScene('cyfry'), kolorowanka: () => new ColoringScene(), naklejanka: () => new StickerScene(), labirynt: () => new MazeScene() };
+    const scenes: Record<string, () => Scene> = { memory: () => new MemoryScene(), sortowanie: () => new SortScene(), ukladanka: () => new JigsawScene(), wzory: () => new PatternScene(), ksztalty: () => new ShapeScene(), kropki: () => new DotsScene(), litery: () => new LetterScene('litery'), cyfry: () => new LetterScene('cyfry'), kolorowanka: () => new ColoringScene(), naklejanka: () => new StickerScene(), melodia: () => new MelodyScene(), labirynt: () => new MazeScene() };
     const scene = isPuzzle(kind) ? new PuzzleScene(kind as PuzzleKind) : scenes[kind]!();
     this.timers.after(0.35, () => void this.game.scenes.go(scene, { fade: 0.3, color: 0xfff6e8 }));
   }
