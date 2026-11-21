@@ -5,7 +5,7 @@ Tekst poniżej wkleja się do App Store Connect → App Review Information → N
 
 ---
 
-Screen recording: attached in the App Review Information section (recorded on iPhone 15 Pro Max, latest iOS). It starts with launching the app and shows the typical flow: first-launch consent prompt, main menu, a full run, game over screen, daily challenge, wardrobe, settings and Game Center leaderboards.
+Screen recording: attached in the App Review Information section (recorded on iPhone 15 Pro Max, latest iOS). It starts with launching the app and shows the typical flow: first-launch consent prompt, main menu, a full run, game over screen, daily challenge, wardrobe, settings and Game Center leaderboards. The UI in the recording is in Polish (device language); the language can be switched to English in Settings, as shown in the recording.
 
 1. Purpose and target audience
 Glut: Sweet Climb is a casual single-player arcade game. The player is a candy slime that climbs up a candy well by slingshot jumps while rising syrup chases it from below. It is a short-session game for casual players (rated 13+). It offers quick, skill-based fun: runs of 1–3 minutes, a best-height record, a daily challenge that is the same level for everyone that day, achievements and cosmetic items (hats, colors, trails) unlocked with candies collected while playing.
