@@ -1,0 +1,16 @@
+{
+  "workflow": "flux2-sprite.json",
+  "PROMPT": "a cute round little child head with short brown hair and big eyes, surprised, round open mouth, raised eyebrows, wide eyes, very clear exaggerated expression for toddlers, front view, single object, centered, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, bright cheerful pastel colors, cute and friendly, plain light gray background",
+  "NEGATIVE": "",
+  "SEED": 21,
+  "WIDTH": 1024,
+  "HEIGHT": 1024,
+  "PREFIX": "zdziwiony",
+  "STEPS": 20,
+  "GUIDANCE": 4,
+  "BPM": 100,
+  "DURATION": 60,
+  "KEY": "A minor",
+  "LYRICS": "[Instrumental]",
+  "created": "2026-11-21T11:41:54.392Z"
+}

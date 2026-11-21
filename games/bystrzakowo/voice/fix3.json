@@ -1,0 +1,15 @@
+{
+ "voice": "voices/alt",
+ "tries": 12,
+ "lines": [
+  {
+   "name": "lusia-litera-t",
+   "text": "Te jak traktor!"
+  },
+  {
+   "name": "bazyl-ksztalt-romb",
+   "text": "Romb!",
+   "voice": "voices/prezenter"
+  }
+ ]
+}

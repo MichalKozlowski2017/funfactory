@@ -123,7 +123,7 @@ if (process.argv.includes('--dodatki')) {
     ['smutny', 'very sad, frowning mouth, a single tear on the cheek'],
     ['zly', 'angry, furrowed eyebrows, red cheeks, pouting'],
     ['zdziwiony', 'surprised, round open mouth, raised eyebrows, wide eyes'],
-    ['przestraszony', 'scared, trembling, worried eyebrows, wide eyes, small open mouth'],
+    ['przestraszony', 'scared and frightened, eyebrows raised high and pulled together, very wide eyes, mouth open in a small scream, hands on cheeks, no tears'],
     ['spiacy', 'sleepy, closed eyes, yawning, a little nightcap'],
   ])
     tasks.push({ out: 'emocje', prefix: id!, args: ['--workflow', 'flux2-sprite', '--prompt', face(what!)] });

@@ -72,6 +72,14 @@ sprite pracownia/stacja-naklejanka-22.png dom-naklejanka 560
 sprite pracownia/stacja-litery-22.png dom-litery 560
 sprite pracownia/stacja-wzory-22.png dom-wzory 560
 sprite pracownia/dom-memory-21.png dom-memory 560
+sprite pracownia/stacja-ksztalty-22.png dom-ksztalty 560
+sprite pracownia/stacja-cyfry-22.png dom-cyfry 560
+# Emocje: minki (najnowsza wersja każdej).
+mkdir -p $OUT/emocje
+for id in wesoly smutny zly zdziwiony przestraszony spiacy; do
+  f=$(ls -t $RAW/emocje/$id-*.png 2>/dev/null | head -1)
+  [ -n "$f" ] && sprite "emocje/$(basename "$f")" "emocje/$id" 400
+done
 # Kolorowanki: czyste czarne kontury na białym (próg + pogrubienie linii, żeby obszary były zamknięte).
 mkdir -p $OUT/kolorowanki
 for f in $RAW/kolorowanki/*-21.png; do
