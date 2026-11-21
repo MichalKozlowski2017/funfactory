@@ -186,7 +186,8 @@
   },
   {
    "name": "bazyl-item-wieloryb",
-   "text": "Wieloryb!"
+   "text": "Wieloryb!",
+   "seed": 202
   },
   {
    "name": "lusia-item-delfin",
