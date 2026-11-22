@@ -2680,6 +2680,126 @@
    "name": "bazyl-mama-sowka",
    "text": "¿Dónde está la mamá del búho bebé?",
    "voice": "voices/bazyl-es"
+  },
+  {
+   "name": "lusia-item-labedz",
+   "text": "Cisne.",
+   "voice": "voices/lusia-es"
+  },
+  {
+   "name": "bazyl-item-labedz",
+   "text": "Cisne.",
+   "voice": "voices/bazyl-es"
+  },
+  {
+   "name": "lusia-item-czapla",
+   "text": "Garza.",
+   "voice": "voices/lusia-es"
+  },
+  {
+   "name": "bazyl-item-czapla",
+   "text": "Garza.",
+   "voice": "voices/bazyl-es"
+  },
+  {
+   "name": "lusia-item-narty",
+   "text": "Esquís.",
+   "voice": "voices/lusia-es"
+  },
+  {
+   "name": "bazyl-item-narty",
+   "text": "Esquís.",
+   "voice": "voices/bazyl-es"
+  },
+  {
+   "name": "lusia-item-namiot",
+   "text": "Tienda.",
+   "voice": "voices/lusia-es"
+  },
+  {
+   "name": "bazyl-item-namiot",
+   "text": "Tienda.",
+   "voice": "voices/bazyl-es"
+  },
+  {
+   "name": "lusia-item-ukulele",
+   "text": "Ukelele.",
+   "voice": "voices/lusia-es"
+  },
+  {
+   "name": "bazyl-item-ukulele",
+   "text": "Ukelele.",
+   "voice": "voices/bazyl-es"
+  },
+  {
+   "name": "lusia-item-zamek",
+   "text": "Castillo de arena.",
+   "voice": "voices/lusia-es"
+  },
+  {
+   "name": "bazyl-item-zamek",
+   "text": "Castillo de arena.",
+   "voice": "voices/bazyl-es"
+  },
+  {
+   "name": "lusia-item-lopatka",
+   "text": "Pala.",
+   "voice": "voices/lusia-es"
+  },
+  {
+   "name": "bazyl-item-lopatka",
+   "text": "Pala.",
+   "voice": "voices/bazyl-es"
+  },
+  {
+   "name": "lusia-item-szklanka",
+   "text": "Vaso de leche.",
+   "voice": "voices/lusia-es"
+  },
+  {
+   "name": "bazyl-item-szklanka",
+   "text": "Vaso de leche.",
+   "voice": "voices/bazyl-es"
+  },
+  {
+   "name": "lusia-item-jajko",
+   "text": "Huevo.",
+   "voice": "voices/lusia-es"
+  },
+  {
+   "name": "bazyl-item-jajko",
+   "text": "Huevo.",
+   "voice": "voices/bazyl-es"
+  },
+  {
+   "name": "lusia-item-szyszka",
+   "text": "Piña.",
+   "voice": "voices/lusia-es"
+  },
+  {
+   "name": "bazyl-item-szyszka",
+   "text": "Piña.",
+   "voice": "voices/bazyl-es"
+  },
+  {
+   "name": "lusia-item-ul",
+   "text": "Colmena.",
+   "voice": "voices/lusia-es"
+  },
+  {
+   "name": "bazyl-item-ul",
+   "text": "Colmena.",
+   "voice": "voices/bazyl-es"
+  },
+  {
+   "name": "lusia-item-sniezynka",
+   "text": "Copo de nieve.",
+   "voice": "voices/lusia-es"
+  },
+  {
+   "name": "bazyl-item-sniezynka",
+   "text": "Copo de nieve.",
+   "voice": "voices/bazyl-es"
   }
  ]
 }

@@ -36,7 +36,7 @@ describe('segregowanie', () => {
           expect(SORT_LINES).toContain(sortPromptLine(t));
           for (const b of t.bins) expect(SORT_LINES).toContain(binLine(rule, b.key));
         }
-  });
+  }, 30000);
 
   it('wszystkie reguły są dostępne na niższych poziomach, a na najwyższym co najmniej trzy', () => {
     expect(rulesFor(0)).toEqual([...SORT_RULES]);

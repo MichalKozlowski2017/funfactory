@@ -2702,6 +2702,126 @@
    "name": "bazyl-mama-sowka",
    "text": "Wo ist die Mama vom Eulenküken?",
    "voice": "voices/bazyl-de"
+  },
+  {
+   "name": "lusia-item-labedz",
+   "text": "Schwan.",
+   "voice": "voices/lusia-de"
+  },
+  {
+   "name": "bazyl-item-labedz",
+   "text": "Schwan.",
+   "voice": "voices/bazyl-de"
+  },
+  {
+   "name": "lusia-item-czapla",
+   "text": "Reiher.",
+   "voice": "voices/lusia-de"
+  },
+  {
+   "name": "bazyl-item-czapla",
+   "text": "Reiher.",
+   "voice": "voices/bazyl-de"
+  },
+  {
+   "name": "lusia-item-narty",
+   "text": "Ski.",
+   "voice": "voices/lusia-de"
+  },
+  {
+   "name": "bazyl-item-narty",
+   "text": "Ski.",
+   "voice": "voices/bazyl-de"
+  },
+  {
+   "name": "lusia-item-namiot",
+   "text": "Zelt.",
+   "voice": "voices/lusia-de"
+  },
+  {
+   "name": "bazyl-item-namiot",
+   "text": "Zelt.",
+   "voice": "voices/bazyl-de"
+  },
+  {
+   "name": "lusia-item-ukulele",
+   "text": "Ukulele.",
+   "voice": "voices/lusia-de"
+  },
+  {
+   "name": "bazyl-item-ukulele",
+   "text": "Ukulele.",
+   "voice": "voices/bazyl-de"
+  },
+  {
+   "name": "lusia-item-zamek",
+   "text": "Sandburg.",
+   "voice": "voices/lusia-de"
+  },
+  {
+   "name": "bazyl-item-zamek",
+   "text": "Sandburg.",
+   "voice": "voices/bazyl-de"
+  },
+  {
+   "name": "lusia-item-lopatka",
+   "text": "Schaufel.",
+   "voice": "voices/lusia-de"
+  },
+  {
+   "name": "bazyl-item-lopatka",
+   "text": "Schaufel.",
+   "voice": "voices/bazyl-de"
+  },
+  {
+   "name": "lusia-item-szklanka",
+   "text": "Glas Milch.",
+   "voice": "voices/lusia-de"
+  },
+  {
+   "name": "bazyl-item-szklanka",
+   "text": "Glas Milch.",
+   "voice": "voices/bazyl-de"
+  },
+  {
+   "name": "lusia-item-jajko",
+   "text": "Ei.",
+   "voice": "voices/lusia-de"
+  },
+  {
+   "name": "bazyl-item-jajko",
+   "text": "Ei.",
+   "voice": "voices/bazyl-de"
+  },
+  {
+   "name": "lusia-item-szyszka",
+   "text": "Tannenzapfen.",
+   "voice": "voices/lusia-de"
+  },
+  {
+   "name": "bazyl-item-szyszka",
+   "text": "Tannenzapfen.",
+   "voice": "voices/bazyl-de"
+  },
+  {
+   "name": "lusia-item-ul",
+   "text": "Bienenstock.",
+   "voice": "voices/lusia-de"
+  },
+  {
+   "name": "bazyl-item-ul",
+   "text": "Bienenstock.",
+   "voice": "voices/bazyl-de"
+  },
+  {
+   "name": "lusia-item-sniezynka",
+   "text": "Schneeflocke.",
+   "voice": "voices/lusia-de"
+  },
+  {
+   "name": "bazyl-item-sniezynka",
+   "text": "Schneeflocke.",
+   "voice": "voices/bazyl-de"
   }
  ]
 }
