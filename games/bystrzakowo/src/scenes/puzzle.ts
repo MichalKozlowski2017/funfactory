@@ -248,7 +248,7 @@ export class PuzzleScene extends RoundScene {
       const n = this.counters.length;
       const perRow = n <= 4 ? n : Math.ceil(n / 2);
       const rows = Math.ceil(n / perRow);
-      const size = Math.min(130, cw / (perRow + 0.5));
+      const size = Math.min(170, cw / (perRow + 0.5));
       this.counters.forEach((c, i) => {
         const r = Math.floor(i / perRow);
         const inRow = Math.min(perRow, n - r * perRow);

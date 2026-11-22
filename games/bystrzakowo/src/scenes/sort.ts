@@ -387,7 +387,7 @@ export class SortScene extends RoundScene {
     });
     // Obiekty u góry: jeden rząd.
     const n = this.pieces.length;
-    const size = Math.min(140, (cw - 24 * (n - 1)) / n);
+    const size = Math.min(170, (cw - 24 * (n - 1)) / n);
     this.pieces.forEach((p, i) => {
       const plate = p.view.children[0] as Graphics;
       plate

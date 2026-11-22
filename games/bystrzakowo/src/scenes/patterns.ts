@@ -142,7 +142,7 @@ export class PatternScene extends RoundScene {
     const right = w - safe.right - 30;
     const n = this.tiles.length;
     const gap = 12;
-    this.size = Math.min(130, (right - left - gap * (n - 1)) / n);
+    this.size = Math.min(170, (right - left - gap * (n - 1)) / n);
     const s = this.size;
     const cx = (left + right) / 2;
     this.tiles.forEach((t, i) => {
