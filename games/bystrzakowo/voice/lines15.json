@@ -176,35 +176,51 @@
   },
   {
    "name": "lusia-litera-f",
-   "text": "F jak foka!"
+   "text": "Efff... jak foka.",
+   "engine": "chatterbox",
+   "seed": 5
   },
   {
    "name": "lusia-litera-h",
-   "text": "H jak hipopotam!"
+   "text": "Ha... jak hipopotam.",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "lusia-litera-n",
-   "text": "N jak nosorożec!"
+   "text": "En... jak nosorożec.",
+   "engine": "chatterbox",
+   "seed": 6
   },
   {
    "name": "lusia-litera-z",
-   "text": "Z jak zebra!"
+   "text": "Zet... jak zebra.",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-litera-c",
-   "text": "Ce, jak cytryna!"
+   "text": "Ce... jak cytryna.",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-litera-r",
-   "text": "R jak rakieta!"
+   "text": "Er... jak rakieta.",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-litera-g",
-   "text": "G jak gruszka!"
+   "text": "Gie... jak gruszka.",
+   "engine": "chatterbox",
+   "seed": 5
   },
   {
    "name": "lusia-litera-j",
-   "text": "Jot jak jabłko!"
+   "text": "Jot... jak jabłko.",
+   "engine": "chatterbox",
+   "seed": 5
   },
   {
    "name": "lusia-czytaj-zebra",
