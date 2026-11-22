@@ -1,0 +1,114 @@
+{
+ "voice": "voices/alt",
+ "tries": 10,
+ "lines": [
+  {
+   "name": "lusia-item-labedz",
+   "text": "Łabędź."
+  },
+  {
+   "name": "bazyl-item-labedz",
+   "text": "Łabędź.",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "lusia-item-czapla",
+   "text": "Czapla."
+  },
+  {
+   "name": "bazyl-item-czapla",
+   "text": "Czapla.",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "lusia-item-narty",
+   "text": "Narty."
+  },
+  {
+   "name": "bazyl-item-narty",
+   "text": "Narty.",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "lusia-item-namiot",
+   "text": "Namiot."
+  },
+  {
+   "name": "bazyl-item-namiot",
+   "text": "Namiot.",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "lusia-item-ukulele",
+   "text": "Ukulele."
+  },
+  {
+   "name": "bazyl-item-ukulele",
+   "text": "Ukulele.",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "lusia-item-zamek",
+   "text": "Zamek z piasku."
+  },
+  {
+   "name": "bazyl-item-zamek",
+   "text": "Zamek z piasku.",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "lusia-item-lopatka",
+   "text": "Łopatka."
+  },
+  {
+   "name": "bazyl-item-lopatka",
+   "text": "Łopatka.",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "lusia-item-szklanka",
+   "text": "Szklanka."
+  },
+  {
+   "name": "bazyl-item-szklanka",
+   "text": "Szklanka.",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "lusia-item-jajko",
+   "text": "Jajko."
+  },
+  {
+   "name": "bazyl-item-jajko",
+   "text": "Jajko.",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "lusia-item-szyszka",
+   "text": "Szyszka."
+  },
+  {
+   "name": "bazyl-item-szyszka",
+   "text": "Szyszka.",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "lusia-item-ul",
+   "text": "Ul."
+  },
+  {
+   "name": "bazyl-item-ul",
+   "text": "Ul.",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "lusia-item-sniezynka",
+   "text": "Śnieżynka."
+  },
+  {
+   "name": "bazyl-item-sniezynka",
+   "text": "Śnieżynka.",
+   "voice": "voices/prezenter"
+  }
+ ]
+}

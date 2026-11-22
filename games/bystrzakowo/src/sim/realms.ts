@@ -50,7 +50,7 @@ export const realmOf = (a: Activity): Realm => REALMS.find((r) => r.rows.some((r
 /** Podpisy zabaw na kafelkach krain (krótkie, żeby mieściły się w jednej linii). */
 export const ACTIVITY_NAMES: Record<Activity, string> = {
   kolory: 'Kolory',
-  gloski: 'Głoski',
+  gloski: 'Pierwsza litera',
   mamy: 'Mamy',
   memory: 'Pary',
   cienie: 'Cienie',

@@ -49,6 +49,20 @@ const WORDS_PL: readonly Word[] = [
   { item: 'tecza', syl: ['TĘ', 'CZA'], level: 0 },
   { item: 'lyzka', syl: ['ŁYŻ', 'KA'], level: 0 },
   { item: 'sanki', syl: ['SAN', 'KI'], level: 0 },
+  { item: 'zebra', syl: ['ZE', 'BRA'], level: 0 },
+  { item: 'krowa', syl: ['KRO', 'WA'], level: 0 },
+  { item: 'miska', syl: ['MIS', 'KA'], level: 1 },
+  { item: 'lisek', syl: ['LI', 'SEK'], level: 1 },
+  { item: 'robot', syl: ['RO', 'BOT'], level: 1 },
+  // Więcej trzech sylab (poziom 2 miał tylko 7 słów).
+  { item: 'zyrafa', syl: ['ŻY', 'RA', 'FA'], level: 2 },
+  { item: 'meduza', syl: ['ME', 'DU', 'ZA'], level: 2 },
+  { item: 'latawiec', syl: ['LA', 'TA', 'WIEC'], level: 2 },
+  { item: 'kalosze', syl: ['KA', 'LO', 'SZE'], level: 2 },
+  { item: 'autobus', syl: ['AU', 'TO', 'BUS'], level: 2 },
+  { item: 'ananas', syl: ['A', 'NA', 'NAS'], level: 2 },
+  { item: 'biedronka', syl: ['BIE', 'DRON', 'KA'], level: 2 },
+  { item: 'cebula', syl: ['CE', 'BU', 'LA'], level: 2 },
 ];
 
 /** Angielski: podział jak przy klaskaniu sylab w przedszkolu (Ba-na-na). */

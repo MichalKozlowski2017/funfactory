@@ -6,7 +6,7 @@ export const EN: Record<string, string> = {
   'Ścieżka Lusi': "Lusia's Path",
   'Pracownia Malucha': 'Little Studio',
   Kolory: 'Colors',
-  Głoski: 'First Letter',
+  'Pierwsza litera': 'First Letter',
   Mamy: 'Mommies',
   Pary: 'Pairs',
   Cienie: 'Shadows',

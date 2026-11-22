@@ -998,92 +998,6 @@
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-gloska-a",
-   "text": "Co zaczyna się na głoskę... a?",
-   "voice": "voices/alt"
-  },
-  {
-   "name": "lusia-gloska-o",
-   "text": "Co zaczyna się na głoskę... o?",
-   "voice": "voices/alt"
-  },
-  {
-   "name": "lusia-gloska-u",
-   "text": "Co zaczyna się na głoskę... u?",
-   "voice": "voices/alt"
-  },
-  {
-   "name": "lusia-gloska-m",
-   "text": "Co zaczyna się na głoskę... m?",
-   "voice": "voices/alt"
-  },
-  {
-   "name": "lusia-gloska-l",
-   "text": "Co zaczyna się na głoskę... l?",
-   "voice": "voices/alt"
-  },
-  {
-   "name": "lusia-gloska-w",
-   "text": "Co zaczyna się na głoskę... w?",
-   "voice": "voices/alt"
-  },
-  {
-   "name": "lusia-gloska-s",
-   "text": "Co zaczyna się na głoskę... s?",
-   "voice": "voices/alt"
-  },
-  {
-   "name": "lusia-gloska-sz",
-   "text": "Co zaczyna się na głoskę... sz?",
-   "voice": "voices/alt"
-  },
-  {
-   "name": "lusia-gloska-zh",
-   "text": "Co zaczyna się na głoskę... ż?",
-   "voice": "voices/alt"
-  },
-  {
-   "name": "lusia-gloska-si",
-   "text": "Co zaczyna się na głoskę... ś?",
-   "voice": "voices/alt"
-  },
-  {
-   "name": "lusia-gloska-r",
-   "text": "Co zaczyna się na głoskę... r?",
-   "voice": "voices/alt"
-  },
-  {
-   "name": "lusia-gloska-h",
-   "text": "Co zaczyna się na głoskę... h?",
-   "voice": "voices/alt"
-  },
-  {
-   "name": "lusia-gloska-z",
-   "text": "Co zaczyna się na głoskę... z?",
-   "voice": "voices/alt"
-  },
-  {
-   "name": "lusia-gloska-cz",
-   "text": "Co zaczyna się na głoskę... czy?",
-   "voice": "voices/alt"
-  },
-  {
-   "name": "lusia-gloska-j",
-   "text": "Co zaczyna się na głoskę... jot?",
-   "voice": "voices/alt",
-   "seed": 40
-  },
-  {
-   "name": "lusia-gloska-n",
-   "text": "Co zaczyna się na głoskę... n?",
-   "voice": "voices/alt"
-  },
-  {
-   "name": "lusia-gloska-lw",
-   "text": "Co zaczyna się na głoskę... ł?",
-   "voice": "voices/alt"
-  },
-  {
    "name": "bazyl-mama-kurczak",
    "text": "Gdzie jest mama kurczaczka?",
    "voice": "voices/prezenter"
@@ -1142,6 +1056,144 @@
    "name": "lusia-kolory-start",
    "text": "Dotknij obrazka w dobrym kolorze.",
    "voice": "voices/alt"
+  },
+  {
+   "name": "lusia-gloska-a",
+   "text": "Co zaczyna się na literę... ... a?",
+   "engine": "chatterbox",
+   "seed": 3
+  },
+  {
+   "name": "lusia-gloska-o",
+   "text": "Co zaczyna się na literę... ... o?",
+   "engine": "chatterbox",
+   "seed": 5
+  },
+  {
+   "name": "lusia-gloska-u",
+   "text": "Co zaczyna się na literę... ... u?",
+   "engine": "chatterbox",
+   "seed": 4
+  },
+  {
+   "name": "lusia-gloska-b",
+   "text": "Co zaczyna się na literę... ... be?",
+   "engine": "chatterbox",
+   "seed": 3
+  },
+  {
+   "name": "lusia-gloska-c",
+   "text": "Co zaczyna się na literę... ... ce?",
+   "engine": "chatterbox",
+   "seed": 2
+  },
+  {
+   "name": "lusia-gloska-d",
+   "text": "Co zaczyna się na literę... ... de?",
+   "engine": "chatterbox",
+   "seed": 6
+  },
+  {
+   "name": "lusia-gloska-f",
+   "text": "Co zaczyna się na literę... ... ef?",
+   "engine": "chatterbox",
+   "seed": 2
+  },
+  {
+   "name": "lusia-gloska-g",
+   "text": "Co zaczyna się na literę... ... gie?",
+   "engine": "chatterbox",
+   "seed": 3
+  },
+  {
+   "name": "lusia-gloska-h",
+   "text": "Co zaczyna się na literę... ... ha?",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-gloska-j",
+   "text": "Co zaczyna się na literę... ... jot?",
+   "engine": "chatterbox",
+   "seed": 5
+  },
+  {
+   "name": "lusia-gloska-k",
+   "text": "Co zaczyna się na literę... ... ka?",
+   "engine": "chatterbox",
+   "seed": 3
+  },
+  {
+   "name": "lusia-gloska-l",
+   "text": "Co zaczyna się na literę... ... el?",
+   "engine": "chatterbox",
+   "seed": 5
+  },
+  {
+   "name": "lusia-gloska-lw",
+   "text": "Co zaczyna się na literę... ... eł?",
+   "engine": "chatterbox",
+   "seed": 3
+  },
+  {
+   "name": "lusia-gloska-m",
+   "text": "Co zaczyna się na literę... ... em?",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-gloska-n",
+   "text": "Co zaczyna się na literę... ... en?",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-gloska-p",
+   "text": "Co zaczyna się na literę... ... pe?",
+   "engine": "chatterbox",
+   "seed": 3
+  },
+  {
+   "name": "lusia-gloska-r",
+   "text": "Co zaczyna się na literę... ... er?",
+   "engine": "chatterbox",
+   "seed": 6
+  },
+  {
+   "name": "lusia-gloska-s",
+   "text": "Co zaczyna się na literę... ... es?",
+   "engine": "chatterbox",
+   "seed": 3
+  },
+  {
+   "name": "lusia-gloska-si",
+   "text": "Co zaczyna się na literę... ... eś?",
+   "engine": "chatterbox",
+   "seed": 6
+  },
+  {
+   "name": "lusia-gloska-t",
+   "text": "Co zaczyna się na literę... ... te?",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-gloska-w",
+   "text": "Co zaczyna się na literę... ... wu?",
+   "engine": "chatterbox",
+   "seed": 5
+  },
+  {
+   "name": "lusia-gloska-z",
+   "text": "Co zaczyna się na literę... ... zet?",
+   "engine": "chatterbox",
+   "seed": 4
+  },
+  {
+   "name": "lusia-gloska-zh",
+   "text": "Co zaczyna się na literę... ... żet?",
+   "engine": "chatterbox",
+   "seed": 4
   }
  ]
 }

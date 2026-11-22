@@ -5,7 +5,7 @@ export const DE: Record<string, string> = {
   'Ścieżka Lusi': 'Lusias Pfad',
   'Pracownia Malucha': 'Kleines Atelier',
   Kolory: 'Farben',
-  Głoski: 'Anlaute',
+  'Pierwsza litera': 'Anlaute',
   Mamy: 'Mamas',
   Pary: 'Paare',
   Cienie: 'Schatten',

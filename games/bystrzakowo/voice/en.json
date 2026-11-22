@@ -2671,6 +2671,126 @@
    "name": "bazyl-mama-sowka",
    "text": "Where is the owlet's mommy?",
    "voice": "voices/bazyl-en-calm"
+  },
+  {
+   "name": "lusia-item-labedz",
+   "text": "Swan.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "bazyl-item-labedz",
+   "text": "Swan.",
+   "voice": "voices/bazyl-en-calm"
+  },
+  {
+   "name": "lusia-item-czapla",
+   "text": "Heron.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "bazyl-item-czapla",
+   "text": "Heron.",
+   "voice": "voices/bazyl-en-calm"
+  },
+  {
+   "name": "lusia-item-narty",
+   "text": "Skis.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "bazyl-item-narty",
+   "text": "Skis.",
+   "voice": "voices/bazyl-en-calm"
+  },
+  {
+   "name": "lusia-item-namiot",
+   "text": "Tent.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "bazyl-item-namiot",
+   "text": "Tent.",
+   "voice": "voices/bazyl-en-calm"
+  },
+  {
+   "name": "lusia-item-ukulele",
+   "text": "Ukulele.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "bazyl-item-ukulele",
+   "text": "Ukulele.",
+   "voice": "voices/bazyl-en-calm"
+  },
+  {
+   "name": "lusia-item-zamek",
+   "text": "Sandcastle.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "bazyl-item-zamek",
+   "text": "Sandcastle.",
+   "voice": "voices/bazyl-en-calm"
+  },
+  {
+   "name": "lusia-item-lopatka",
+   "text": "Shovel.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "bazyl-item-lopatka",
+   "text": "Shovel.",
+   "voice": "voices/bazyl-en-calm"
+  },
+  {
+   "name": "lusia-item-szklanka",
+   "text": "Glass of milk.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "bazyl-item-szklanka",
+   "text": "Glass of milk.",
+   "voice": "voices/bazyl-en-calm"
+  },
+  {
+   "name": "lusia-item-jajko",
+   "text": "Egg.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "bazyl-item-jajko",
+   "text": "Egg.",
+   "voice": "voices/bazyl-en-calm"
+  },
+  {
+   "name": "lusia-item-szyszka",
+   "text": "Pine cone.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "bazyl-item-szyszka",
+   "text": "Pine cone.",
+   "voice": "voices/bazyl-en-calm"
+  },
+  {
+   "name": "lusia-item-ul",
+   "text": "Beehive.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "bazyl-item-ul",
+   "text": "Beehive.",
+   "voice": "voices/bazyl-en-calm"
+  },
+  {
+   "name": "lusia-item-sniezynka",
+   "text": "Snowflake.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "bazyl-item-sniezynka",
+   "text": "Snowflake.",
+   "voice": "voices/bazyl-en-calm"
   }
  ]
 }

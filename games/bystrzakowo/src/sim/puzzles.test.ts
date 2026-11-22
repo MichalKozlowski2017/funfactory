@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { Rng } from '@funfactory/core';
-import { firstSound, ITEMS, lookalike, type Item } from './catalog.ts';
-import { MAX_LEVEL, PUZZLE_KINDS, ROUND_LENGTH, colorQuestion, countQuestion, isCorrect, makeQuestion, makeRound, maxCount, motherQuestion, nextLevel, oddQuestion, optionCount, questionKey, shadowQuestion, soundQuestion } from './puzzles.ts';
+import { firstLetter, ITEMS, lookalike, startOf, type Item } from './catalog.ts';
+import { MAX_LEVEL, PUZZLE_KINDS, ROUND_LENGTH, colorQuestion, countQuestion, isCorrect, makeQuestion, makeRound, maxCount, motherQuestion, nextLevel, oddQuestion, optionCount, questionKey, shadowQuestion, soundQuestion, SOUNDS_PL } from './puzzles.ts';
 
 const levels = [0, 1, 2];
 
@@ -89,27 +89,35 @@ describe('kolory, głoski, mamy', () => {
       }
   });
 
-  it('głoski: dokładnie jeden obiekt zaczyna się na pytaną głoskę', () => {
+  it('pierwsza litera: dokładnie jeden obiekt zaczyna się na pytaną literę', () => {
     const rng = new Rng(5);
     for (const level of levels)
       for (let i = 0; i < 300; i++) {
         const q = soundQuestion(rng, level);
-        expect(q.options.filter((o) => firstSound(o.name) === q.sound)).toEqual([q.target]);
+        expect(q.options.filter((o) => startOf(o) === q.sound)).toEqual([q.target]);
         expect(new Set(q.options).size).toBe(q.options.length);
       }
   });
 
-  it('pierwsza głoska: dwuznaki i rz', () => {
-    expect(firstSound('Szalik')).toBe('sz');
-    expect(firstSound('Rzodkiewka')).toBe('ż');
-    expect(firstSound('Czapka')).toBe('cz');
-    expect(firstSound('Żaba')).toBe('ż');
-    expect(firstSound('Kot')).toBe('k');
-    expect(firstSound('Ziemniak')).toBe('ź');
-    expect(firstSound('Cielaczek')).toBe('ć');
-    expect(firstSound('Niedźwiedź')).toBe('ń');
-    expect(firstSound('Cytryna')).toBe('c');
-    expect(firstSound('Zebra')).toBe('z');
+  it('pierwsza litera: każda litera pada mniej więcej tak samo często, w rundzie bez powtórek', () => {
+    const rng = new Rng(9);
+    const count = new Map<string, number>();
+    for (let r = 0; r < 400; r++) {
+      const round = makeRound('gloski', rng, 1).map((q) => (q.kind === 'gloski' ? q.sound : ''));
+      expect(new Set(round).size).toBe(round.length);
+      for (const s of round) count.set(s, (count.get(s) ?? 0) + 1);
+    }
+    expect(count.size).toBe(SOUNDS_PL.length);
+    const n = [...count.values()];
+    expect(Math.max(...n) / Math.min(...n)).toBeLessThan(1.5);
+  });
+
+  it('pierwsza litera po polsku: dwuznaki i zmiękczenia pomijamy', () => {
+    expect(firstLetter('Kot', 'pl')).toBe('k');
+    expect(firstLetter('Żaba', 'pl')).toBe('ż');
+    expect(firstLetter('Łódka', 'pl')).toBe('ł');
+    expect(firstLetter('Zebra', 'pl')).toBe('z');
+    for (const n of ['Szalik', 'Czapka', 'Rzodkiewka', 'Chmurka', 'Dzik', 'Ziemniak', 'Cielaczek', 'Niedźwiedź', 'Zamek z piasku']) expect(firstLetter(n, 'pl')).toBe('');
   });
 
   it('mamy: odpowiedź to mama, zmyłki to inne dorosłe zwierzęta', () => {

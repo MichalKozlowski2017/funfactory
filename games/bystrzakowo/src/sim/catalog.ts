@@ -3,7 +3,7 @@
  * Grafika: public/art/items/<id>.webp (Flux, styl plastelina; `prompt` = opis obiektu do przegenerowania),
  * nazwa w lektorze: public/audio/<głos>/item-<id>.m4a.
  */
-import { lang } from './lang.ts';
+import { lang, type Lang } from './lang.ts';
 import { ITEM_NAMES } from './names.ts';
 
 export type Category = 'zwierzeta' | 'owoce' | 'warzywa' | 'pojazdy' | 'zabawki' | 'kuchnia' | 'ubrania' | 'natura';
@@ -74,7 +74,7 @@ const LOOKALIKES: string[][] = [
   ['owca', 'jagniatko'],
   ['swinka', 'prosiaczek'],
   ['kon', 'zrebak', 'zebra', 'konik', 'osiolek', 'sarna'],
-  ['kaczka', 'kaczatko', 'kurczak', 'ges'],
+  ['kaczka', 'kaczatko', 'kurczak', 'ges', 'labedz'],
   ['mis', 'niedzwiedz', 'mispolarny'],
   ['owca', 'koza', 'kozlatko', 'jagniatko'],
   ['lis', 'lisek'],
@@ -167,6 +167,9 @@ export const ITEMS: Item[] = [
     // Afryka
     ['hipopotam', 'Hipopotam', '', 's', 'a cute purple-grey hippopotamus standing, side view'],
     ['nosorozec', 'Nosorożec', '', 's', 'a cute grey rhinoceros with a horn, standing, side view'],
+    // Pierwsza litera: więcej obrazków na rzadkie litery.
+    ['labedz', 'Łabędź', 'bialy', 's', 'a cute white swan swimming, side view'],
+    ['czapla', 'Czapla', '', 's', 'a cute grey heron standing on one leg, side view'],
   ]),
   ...rows('owoce', [
     ['jablko', 'Jabłko', 'czerwony', 'sc', 'a shiny red apple with a leaf'],
@@ -225,6 +228,11 @@ export const ITEMS: Item[] = [
     ['trabka', 'Trąbka', 'zolty', 's', 'a yellow toy trumpet'],
     ['wiaderko', 'Wiaderko', 'niebieski', 's', 'a blue sand bucket with a handle'],
     ['sanki', 'Sanki', '', 's', 'an empty small wooden children sled with red runners and nothing on it, side view'],
+    ['narty', 'Narty', 'czerwony', 's', 'a pair of red children skis lying side by side, no poles, no person'],
+    ['namiot', 'Namiot', 'zielony', 's', 'a small green camping tent, front three-quarter view'],
+    ['ukulele', 'Ukulele', '', 's', 'a small wooden ukulele'],
+    ['zamek', 'Zamek z piasku', 'zolty', 's', 'a sandcastle with little towers and a small flag'],
+    ['lopatka', 'Łopatka', 'czerwony', 's', 'a red plastic toy sand shovel'],
   ]),
   ...rows('kuchnia', [
     ['kubek', 'Kubek', 'niebieski', 's', 'a blue mug'],
@@ -236,6 +244,8 @@ export const ITEMS: Item[] = [
     ['miska', 'Miska', 'zolty', 'c', 'a yellow bowl'],
     ['patelnia', 'Patelnia', '', 's', 'a frying pan with a handle'],
     ['butelka', 'Butelka', '', 'sc', 'a baby milk bottle'],
+    ['szklanka', 'Szklanka', 'bialy', 's', 'a plain clear drinking glass filled with white milk, inanimate object, no eyes, no mouth, no arms'],
+    ['jajko', 'Jajko', 'bialy', 'c', 'a plain smooth white chicken egg, simple oval eggshell, inanimate object, no eyes, no beak, no feet'],
   ]),
   ...rows('ubrania', [
     ['czapka', 'Czapka', 'czerwony', 's', 'an empty red knitted winter beanie hat with a white pompom, lying on its own'],
@@ -264,6 +274,9 @@ export const ITEMS: Item[] = [
     ['lisc', 'Listek', 'zielony', 'c', 'a green leaf'],
     ['tecza', 'Tęcza', '', 's', 'a rainbow with clouds at the ends'],
     ['muszelka', 'Muszelka', 'rozowy', 'sc', 'a pink seashell'],
+    ['szyszka', 'Szyszka', 'brazowy', 'sc', 'a brown pine cone'],
+    ['ul', 'Ul', 'zolty', 's', 'a yellow wooden beehive box with a few cute bees around it'],
+    ['sniezynka', 'Śnieżynka', 'niebieski', 'sc', 'a light blue snowflake'],
   ]),
 ]
   .map((item) => (BABIES[item.id] ? { ...item, mother: BABIES[item.id]![0], genitive: BABIES[item.id]![1] } : item));
@@ -293,10 +306,12 @@ export const nameOf = (item: Item): string => {
  * Nazwy zaczynające się dwuznakiem (sh, ch, sch, st…) albo z dwóch słów pomijamy: litera nie brzmi
  * tam jak na początku słowa, więc myliłaby dziecko. Zwraca '' dla pominiętych.
  */
-export function firstLetter(name: string, l: 'en' | 'de' | 'es'): string {
+export function firstLetter(name: string, l: Lang): string {
   // Hiszpański: litera z akcentem liczy się jak bez („Árbol” na A).
   const n = (l === 'es' ? name.normalize('NFD').replace(/[\u0300-\u036f]/g, '') : name).toLowerCase();
   if (n.includes(' ') || n.includes('-')) return '';
+  // Polski: dwuznaki (sz, cz, rz, ch, dz) i zmiękczenia przez „i” (zie-, sie-, nie-, cie-) brzmią inaczej niż sama litera.
+  if (l === 'pl') return /^(sz|cz|rz|ch|dz|dź|dż)|^(dzi|ci|si|zi|ni)[aąeęioóuy]/.test(n) ? '' : n[0]!;
   const SKIP = {
     en: ['sh', 'ch', 'th', 'ph', 'wh', 'kn', 'wr', 'gi', 'ge', 'ce', 'ci'],
     de: ['sch', 'ch', 'st', 'sp', 'ph', 'pf', 'qu', 'ei', 'eu', 'au'],
@@ -308,27 +323,11 @@ export function firstLetter(name: string, l: 'en' | 'de' | 'es'): string {
   return n[0]!;
 }
 
-/** Pierwsza głoska (polski) albo litera (angielski, niemiecki) nazwy obiektu w bieżącym języku. */
+/** Pierwsza litera nazwy obiektu w bieżącym języku (zabawa „Co zaczyna się na literę…?”); '' = obiekt pomijamy. */
 export function startOf(item: Item): string {
-  const l = lang();
-  return l === 'pl' ? firstSound(item.name) : firstLetter(nameOf(item), l);
+  return firstLetter(nameOf(item), lang());
 }
 
 /** Czy obiekt może mieć buzię na obrazku (zwierzęta, słońce). Przedmioty bez buzi: prompt dostaje „no face”. */
 export const hasFace = (item: Item): boolean => item.category === 'zwierzeta' || item.id === 'slonce';
 
-/**
- * Pierwsza głoska nazwy (do zagadki z głoskami). Dwuznaki: sz, cz, rz (= ż), ch (= h), dz, dź, dż.
- * Zwraca zapis głoski, np. "sz", "ż", "k".
- */
-export function firstSound(name: string): string {
-  const n = name.toLowerCase();
-  // Zmiękczenie przez „i” przed samogłoską: cie- = ć, zie- = ź, nie- = ń, sie- = ś, dzie- = dź.
-  const soft = /^(dz|c|z|n|s)i[aąeęioóuy]/.exec(n);
-  if (soft) return { dz: 'dź', c: 'ć', z: 'ź', n: 'ń', s: 'ś' }[soft[1]!]!;
-  for (const d of ['dż', 'dź', 'sz', 'cz', 'dz']) if (n.startsWith(d)) return d;
-  if (n.startsWith('rz')) return 'ż';
-  if (n.startsWith('ch')) return 'h';
-  if (n.startsWith('ó')) return 'u';
-  return n[0]!;
-}

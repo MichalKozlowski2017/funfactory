@@ -41,7 +41,7 @@ export interface ColorQuestion {
   options: Item[];
 }
 
-/** „Co zaczyna się na głoskę sz?”: dokładnie jeden obiekt zaczyna się na `sound`. */
+/** „Co zaczyna się na literę er?”: dokładnie jeden obiekt zaczyna się na `sound` (pierwsza litera). */
 export interface SoundQuestion {
   kind: 'gloski';
   sound: string;
@@ -60,25 +60,27 @@ export interface MotherQuestion {
 export type Question = ShadowQuestion | OddQuestion | CountQuestion | ColorQuestion | SoundQuestion | MotherQuestion;
 
 /**
- * Głoski, o które pytamy (lektor ma do nich nagrania „gloska-<głoska>”). Pomijamy zwarte (k, p, t, b, d, g),
- * bo w izolacji brzmią jak sylaby („ka”, „pe”) i myliłyby dzieci.
+ * Polski: pierwsza litera, o którą pytamy nazwą litery („Co zaczyna się na literę… er?”, nagrania „gloska-<litera>”).
+ * Wcześniej pytaliśmy o głoskę, ale model mowy nie umie powiedzieć samej spółgłoski („sss” wychodziło jako „sy”).
+ * Tylko litery z co najmniej dwoma obrazkami.
  */
-export const SOUNDS_PL = ['a', 'o', 'u', 'm', 'l', 'w', 's', 'sz', 'ż', 'ś', 'r', 'h', 'z', 'cz', 'j', 'n', 'ł'] as const;
+export const SOUNDS_PL = ['a', 'o', 'u', 'b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'ł', 'm', 'n', 'p', 'r', 's', 'ś', 't', 'w', 'z', 'ż'] as const;
 /** Angielski i niemiecki: pierwsza litera słowa (tak uczą przedszkola w tych krajach). */
 export const LETTERS_EN = ['a', 'b', 'c', 'd', 'f', 'g', 'h', 'l', 'm', 'o', 'p', 'r', 's', 't', 'w'] as const;
 export const LETTERS_DE = ['a', 'b', 'e', 'f', 'g', 'h', 'k', 'l', 'm', 'p', 'r', 's', 't', 'w', 'z'] as const;
 export const LETTERS_ES = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'l', 'm', 'o', 'p', 'r', 's', 't'] as const;
-/** Głoski (pl) albo litery (en, de) w zabawie „Co zaczyna się na…?” w bieżącym języku. */
+/** Litery w zabawie „Co zaczyna się na…?” w bieżącym języku. */
 export const soundsOf = (l: Lang = lang()): readonly string[] => ({ pl: SOUNDS_PL, en: LETTERS_EN, de: LETTERS_DE, es: LETTERS_ES })[l];
-/** Wszystkie głoski i litery ze wszystkich języków (lista nagrań). */
+/** Litery polskie (lista nagrań). */
 export const SOUNDS: readonly string[] = SOUNDS_PL;
 
-/** Nazwa pliku nagrania głoski (bez polskich znaków w nazwach plików). */
+/** Nazwa pliku nagrania litery (bez polskich znaków w nazwach plików). */
 export const soundSlug = (sound: string): string => sound.replace('ż', 'zh').replace('ś', 'si').replace('ł', 'lw').replace('ź', 'zi');
 
-/** Głoski łatwe do pomylenia: zmyłki nie mogą być z tej samej grupy co odpowiedź. */
+/** Litery łatwe do pomylenia (podobny dźwięk na początku słowa): zmyłki nie mogą być z tej samej grupy co odpowiedź. */
 const CONFUSABLE: Record<Lang, string[][]> = {
-  pl: [['s', 'ś', 'sz', 'z', 'ź', 'ż', 'c', 'ć', 'cz', 'dz', 'dź', 'dż'], ['l', 'ł', 'r'], ['o', 'u'], ['m', 'n', 'ń']],
+  // ł brzmi jak „u” albo „w”; b/p, d/t, g/k, w/f to pary dźwięczna-bezdźwięczna.
+  pl: [['s', 'ś', 'z', 'ż', 'c'], ['l', 'r'], ['ł', 'u', 'w', 'o'], ['m', 'n'], ['b', 'p'], ['d', 't'], ['g', 'k'], ['w', 'f']],
   // Nazwy liter, które się rymują („bee, dee, pee”), i te o tym samym dźwięku (c/k/s).
   en: [['b', 'c', 'd', 'e', 'g', 'p', 't', 'v', 'z'], ['c', 'k', 's'], ['m', 'n']],
   de: [['b', 'c', 'd', 'e', 'g', 'p', 't', 'w'], ['f', 'v'], ['m', 'n'], ['s', 'z']],
@@ -184,8 +186,13 @@ export function colorQuestion(rng: Rng, level: number, recent: readonly string[]
 export function soundQuestion(rng: Rng, level: number, recent: readonly string[] = []): SoundQuestion {
   const known = new Set<string>(soundsOf());
   const pool = ITEMS.filter((i) => known.has(startOf(i)));
-  const target = freshPick(rng, pool, recent);
-  const sound = startOf(target);
+  // Najpierw litera (każda tak samo często, bez tych z ostatnich zagadek), potem obrazek. Losowanie samego
+  // obrazka pytało o „s” (13 obrazków) wielokrotnie częściej niż o „sz” czy „n”.
+  const sounds = [...new Set(pool.map(startOf))];
+  const recentSounds = new Set(recent.map((id) => ITEMS.find((i) => i.id === id)).filter((i): i is Item => !!i).map(startOf));
+  const freshSounds = sounds.filter((s) => !recentSounds.has(s));
+  const sound = rng.pick(freshSounds.length > 0 ? freshSounds : sounds);
+  const target = freshPick(rng, pool.filter((i) => startOf(i) === sound), recent);
   const n = Math.max(3, optionCount(level));
   const decoys = take(
     rng,

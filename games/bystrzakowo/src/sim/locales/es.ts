@@ -5,7 +5,7 @@ export const ES: Record<string, string> = {
   'Ścieżka Lusi': 'Sendero de Lusia',
   'Pracownia Malucha': 'Pequeño Estudio',
   Kolory: 'Colores',
-  Głoski: 'Primera letra',
+  'Pierwsza litera': 'Primera letra',
   Mamy: 'Mamás',
   Pary: 'Parejas',
   Cienie: 'Sombras',
