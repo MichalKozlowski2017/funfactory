@@ -22,7 +22,7 @@ export interface Art {
   /** Tło krainy i tło zabaw w tej krainie. */
   realmBg: Record<RealmId, Texture>;
   playBg: Record<RealmId, Texture>;
-  /** Warsztat: skrzynka, białe wiaderko (barwione na kolor) i znaki domów zwierząt (stodoła, staw). */
+  /** Warsztat: skrzynka, białe wiaderko (barwione na kolor) i znaki domów zwierząt (stodoła, morze). */
   crate: Texture | null;
   bucket: Texture | null;
   /** Zębatka strefy rodzica. */

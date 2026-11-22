@@ -1,8 +1,8 @@
 {
   "workflow": "flux2-sprite.json",
-  "PROMPT": "a cute toy robot standing, single object, centered, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, bright cheerful pastel colors, cute and friendly, no face on objects, plain light gray background",
+  "PROMPT": "a cute boxy toy robot with a square metal head, a small antenna, round button eyes and little claw hands, gray and red, standing, clearly a machine, single object, centered, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, bright cheerful pastel colors, cute and friendly, no face on objects, plain light gray background",
   "NEGATIVE": "",
-  "SEED": 21,
+  "SEED": 31,
   "WIDTH": 1024,
   "HEIGHT": 1024,
   "PREFIX": "robot",
@@ -12,5 +12,5 @@
   "DURATION": 60,
   "KEY": "A minor",
   "LYRICS": "[Instrumental]",
-  "created": "2026-11-20T23:36:38.765Z"
+  "created": "2026-11-22T23:36:29.329Z"
 }

@@ -53,7 +53,7 @@ const GROUPS: Record<SortRule, GroupDef[]> = {
   domy: [
     { key: 'wies', sign: 'stodola', ids: ids(['kot', 'pies', 'krowa', 'kura', 'kaczka', 'swinka', 'owca', 'kon', 'kurczak', 'cielaczek', 'prosiaczek', 'jagniatko', 'zrebak', 'koza', 'osiolek', 'indyk', 'ges']) },
     { key: 'las', sign: 'drzewo', ids: ids(['jez', 'wiewiorka', 'sowa', 'niedzwiedz', 'lis', 'zajac', 'dzik', 'sarna', 'dzieciol']) },
-    { key: 'woda', sign: 'staw', ids: ids(['ryba', 'krab', 'osmiornica', 'wieloryb', 'delfin', 'meduza', 'konikmorski']) },
+    { key: 'woda', sign: 'morze', ids: ids(['ryba', 'krab', 'osmiornica', 'wieloryb', 'delfin', 'meduza', 'konikmorski']) },
     { key: 'afryka', sign: 'palma', ids: ids(['lew', 'zyrafa', 'zebra', 'slon', 'malpa', 'hipopotam', 'nosorozec']) },
     { key: 'lod', sign: 'kra', ids: ids(['pingwin', 'foka', 'mors', 'mispolarny']) },
   ],
@@ -67,7 +67,7 @@ const GROUPS: Record<SortRule, GroupDef[]> = {
   ],
   ruch: [
     { key: 'lata', sign: 'chmurka', ids: ids(['ptak', 'sowa', 'motyl', 'pszczola', 'dzieciol', 'samolot', 'helikopter', 'rakieta', 'latawiec', 'biedronka']) },
-    { key: 'plywa', sign: 'staw', ids: ids(['ryba', 'delfin', 'wieloryb', 'meduza', 'lodka', 'osmiornica', 'konikmorski']) },
+    { key: 'plywa', sign: 'morze', ids: ids(['ryba', 'delfin', 'wieloryb', 'meduza', 'lodka', 'osmiornica', 'konikmorski']) },
     { key: 'jezdzi', sign: 'droga', ids: ids(['auto', 'autobus', 'rower', 'traktor', 'pociag', 'hulajnoga', 'skuter', 'straz', 'ciezarowka']) },
   ],
 };
@@ -179,4 +179,5 @@ export function binLine(rule: SortRule, key: string): string {
 export const SORT_LINES: readonly string[] = [...SORT_RULES.map((r) => `sort-${r}`), ...SORT_RULES.flatMap((r) => GROUPS[r].map((g) => binLine(r, g.key)))];
 
 /** Obrazki znaków skrzynek spoza katalogu (grafiki Warsztatu). */
-export const SIGN_ART = ['stodola', 'staw', 'palma', 'kra', 'balwan', 'droga'];
+// „morze” zamiast „staw”: wieloryb, delfin i meduza w stawie myliły (test agentem-dzieckiem).
+export const SIGN_ART = ['stodola', 'morze', 'palma', 'kra', 'balwan', 'droga'];
