@@ -153,6 +153,14 @@ rodzic zmienia go w Ustawieniach strefy rodzica; w playtestach `?lang=en|de|pl`.
 - **Do zrobienia przed wydaniem**: odsłuch przez rodzimego użytkownika (Whisper sprawdza tylko zrozumiałość),
   opisy i zrzuty do sklepów w obu językach.
 
+## Testy (2026-11-23)
+
+- `pnpm check`: logika (Vitest), w tym różnorodność i jednoznaczność zagadek.
+- `node games/bystrzakowo/scripts/variety.ts`: ile różnych treści widzi dziecko w każdej zabawie, jak często rundy się powtarzają.
+- `node games/bystrzakowo/scripts/monkey.ts [zabawy] [--taps 50]`: test „małpki” – losowe stuknięcia i przeciągnięcia w każdej zabawie, wyłapuje błędy JS i zawieszenia (zrzuty w `.shots/monkey/`).
+- `node tools/playtest/drive.ts games/bystrzakowo --port 7777 --query "full&lang=pl"`: gra działa w tle i przyjmuje polecenia HTTP (`/shot`, `/tap`, `/drag`, `/wait`, `/eval`) we współrzędnych zrzutu. Na tym działa „agent-dziecko”: subagent, który gra jak 4-latek i raportuje, co dziecko zatrzyma lub zmyli (opis zadania: w historii sesji z 2026-11-22/23). Pierwsze rundy znalazły m.in.: blokadę przeciągania po przerwanym dotyku (`pointercancel`, naprawione w kit2d), za słabą bramkę rodzica (teraz przytrzymanie + mnożenie z 4 odpowiedziami i 30 s blokady), sylaby rozwiązywalne bez czytania, niejednoznaczne historyjki.
+- Nagrania lektora: skill `tts`, automatyczny wybór wariantów (`syl/cb-best.mjs`, `syl/select.mjs`, `syl/sound.mjs`) – powtórzenia, krzyk, szum, budowa kwestii. Właściciel słucha tylko tego, co przeszło.
+
 ## Plan
 
 1. **Prototyp (3 domki: cienie, co nie pasuje, liczenie):** katalog z ~20 obiektami, silniki zagadek w czystym TS z testami, polana z trzema domkami, lektor, naklejka po rundzie. Cel: sprawdzić na dziecku, czy jest zabawnie i zrozumiale.
