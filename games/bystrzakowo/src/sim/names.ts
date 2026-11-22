@@ -29,7 +29,7 @@ export const ITEM_NAMES: Record<string, { en: string; de: string; es: string }> 
   kozlatko: { en: 'Baby goat', de: 'Zicklein', es: 'Cabrito' },
   zyrafka: { en: 'Baby giraffe', de: 'Giraffenbaby', es: 'Jirafita' },
   foczka: { en: 'Seal pup', de: 'Robbenbaby', es: 'Foquita' },
-  sowka: { en: 'Owlet', de: 'Eulenküken', es: 'Buhito' },
+  sowka: { en: 'Owlet', de: 'Eulenküken', es: 'Búho bebé' },
   lew: { en: 'Lion', de: 'Löwe', es: 'León' },
   zyrafa: { en: 'Giraffe', de: 'Giraffe', es: 'Jirafa' },
   malpa: { en: 'Monkey', de: 'Affe', es: 'Mono' },

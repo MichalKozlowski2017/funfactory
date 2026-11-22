@@ -185,7 +185,7 @@
   },
   {
    "name": "lusia-item-sowka",
-   "text": "¡Buhito!",
+   "text": "¡Búho bebé!",
    "voice": "voices/lusia-es"
   },
   {
@@ -1084,7 +1084,7 @@
   },
   {
    "name": "lusia-litera-c",
-   "text": "¡C de conejo!",
+   "text": "¡Ce de conejo!",
    "voice": "voices/lusia-es"
   },
   {
@@ -1189,7 +1189,7 @@
   },
   {
    "name": "lusia-labirynt-sowka",
-   "text": "¡Lleva al buhito con su mamá!",
+   "text": "¡Lleva al búho bebé con su mamá!",
    "voice": "voices/lusia-es"
   },
   {
@@ -1514,7 +1514,7 @@
   },
   {
    "name": "bazyl-item-sowka",
-   "text": "¡Buhito!",
+   "text": "¡Búho bebé!",
    "voice": "voices/bazyl-es"
   },
   {
@@ -2654,7 +2654,7 @@
   },
   {
    "name": "bazyl-mama-sowka",
-   "text": "¿Dónde está la mamá del buhito?",
+   "text": "¿Dónde está la mamá del búho bebé?",
    "voice": "voices/bazyl-es"
   }
  ]

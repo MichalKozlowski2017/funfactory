@@ -294,7 +294,7 @@ const EMOTIONS: Record<L, Record<string, [show: string, face: string]>> = {
 /** „Gdzie jest mama …?”: forma młodego w zdaniu. */
 const MOTHERS: Record<L, Record<string, string>> = {
   en: { kurczak: "Where is the chick's mommy?", cielaczek: "Where is the calf's mommy?", kotek: "Where is the kitten's mommy?", jagniatko: "Where is the lamb's mommy?", prosiaczek: "Where is the piglet's mommy?", zrebak: "Where is the foal's mommy?", kaczatko: "Where is the duckling's mommy?", kijanka: "Where is the tadpole's mommy?", lisek: "Where is the fox cub's mommy?", niedzwiadek: "Where is the bear cub's mommy?", pingwinek: "Where is the penguin chick's mommy?", lwiatko: "Where is the lion cub's mommy?", kozlatko: "Where is the baby goat's mommy?", zyrafka: "Where is the baby giraffe's mommy?", foczka: "Where is the seal pup's mommy?", sowka: "Where is the owlet's mommy?" },
-  es: { kurczak: '¿Dónde está la mamá del pollito?', cielaczek: '¿Dónde está la mamá del ternero?', kotek: '¿Dónde está la mamá del gatito?', jagniatko: '¿Dónde está la mamá del corderito?', prosiaczek: '¿Dónde está la mamá del cerdito?', zrebak: '¿Dónde está la mamá del potrillo?', kaczatko: '¿Dónde está la mamá del patito?', kijanka: '¿Dónde está la mamá del renacuajo?', lisek: "¿Dónde está la mamá del zorrito?", niedzwiadek: "¿Dónde está la mamá del osezno?", pingwinek: "¿Dónde está la mamá del pingüinito?", lwiatko: "¿Dónde está la mamá del leoncito?", kozlatko: "¿Dónde está la mamá del cabrito?", zyrafka: "¿Dónde está la mamá de la jirafita?", foczka: "¿Dónde está la mamá de la foquita?", sowka: "¿Dónde está la mamá del buhito?" },
+  es: { kurczak: '¿Dónde está la mamá del pollito?', cielaczek: '¿Dónde está la mamá del ternero?', kotek: '¿Dónde está la mamá del gatito?', jagniatko: '¿Dónde está la mamá del corderito?', prosiaczek: '¿Dónde está la mamá del cerdito?', zrebak: '¿Dónde está la mamá del potrillo?', kaczatko: '¿Dónde está la mamá del patito?', kijanka: '¿Dónde está la mamá del renacuajo?', lisek: "¿Dónde está la mamá del zorrito?", niedzwiadek: "¿Dónde está la mamá del osezno?", pingwinek: "¿Dónde está la mamá del pingüinito?", lwiatko: "¿Dónde está la mamá del leoncito?", kozlatko: "¿Dónde está la mamá del cabrito?", zyrafka: "¿Dónde está la mamá de la jirafita?", foczka: "¿Dónde está la mamá de la foquita?", sowka: "¿Dónde está la mamá del búho bebé?" },
   de: { kurczak: 'Wo ist die Mama vom Küken?', cielaczek: 'Wo ist die Mama vom Kälbchen?', kotek: 'Wo ist die Mama vom Kätzchen?', jagniatko: 'Wo ist die Mama vom Lämmchen?', prosiaczek: 'Wo ist die Mama vom Ferkel?', zrebak: 'Wo ist die Mama vom Fohlen?', kaczatko: 'Wo ist die Mama vom Entenküken?', kijanka: 'Wo ist die Mama von der Kaulquappe?', lisek: "Wo ist die Mama vom Fuchsjungen?", niedzwiadek: "Wo ist die Mama vom Bärenjungen?", pingwinek: "Wo ist die Mama vom Pinguinküken?", lwiatko: "Wo ist die Mama vom Löwenjungen?", kozlatko: "Wo ist die Mama vom Zicklein?", zyrafka: "Wo ist die Mama vom Giraffenbaby?", foczka: "Wo ist die Mama vom Robbenbaby?", sowka: "Wo ist die Mama vom Eulenküken?" },
 };
 
@@ -337,7 +337,7 @@ const MAZE: Record<L, Record<string, string>> = {
     kozlatko: "¡Lleva al cabrito con su mamá!",
     zyrafka: "¡Lleva a la jirafita con su mamá!",
     foczka: "¡Lleva a la foquita con su mamá!",
-    sowka: "¡Lleva al buhito con su mamá!",
+    sowka: "¡Lleva al búho bebé con su mamá!",
   },
   de: {
     cielaczek: 'Bring das Kälbchen zu seiner Mama!',
@@ -466,8 +466,10 @@ function text(l: L, guide: Guide, line: string): string {
     case 'litera': {
       const x = lettersOf(l).find((y) => y.ch.toLowerCase() === key)!;
       const word = nameOf(itemById(x.item));
-      if (l === 'es') return `¡${x.ch} de ${word.toLowerCase()}!`;
-      return l === 'en' ? `${x.ch} is for ${word.toLowerCase()}!` : `${x.ch} wie ${word}!`;
+      // Litery, które lektor czyta niewyraźnie, zapisane tak, jak się je wymawia.
+      const spoken = ({ de: { G: 'Ge', J: 'Jott' }, es: { C: 'Ce' } } as Record<string, Record<string, string>>)[l]?.[x.ch] ?? x.ch;
+      if (l === 'es') return `¡${spoken} de ${word.toLowerCase()}!`;
+      return l === 'en' ? `${spoken} is for ${word.toLowerCase()}!` : `${spoken} wie ${word}!`;
     }
     case 'gloska':
       if (l === 'es') return `¿Qué empieza con... ${key.toUpperCase()}?`;
