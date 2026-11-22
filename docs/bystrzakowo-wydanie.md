@@ -1,6 +1,6 @@
 # Bystrzakowo 1.0.0: wydanie do sklepów
 
-Stan na 2026-11-22. Kroki **[Ty]** wymagają Twojego konta albo decyzji, kroki **[Claude]** robię sam.
+Stan na 2026-11-22 (rano). AAB i archiwum iOS zbudowane z pełnym lektorem we wszystkich 4 językach. Kroki **[Ty]** wymagają Twojego konta albo decyzji, kroki **[Claude]** robię sam.
 Wzór: wydanie Gluta (`docs/release.md`).
 
 ## Co jest gotowe
@@ -43,7 +43,13 @@ Play Console → Utwórz aplikację: nazwa `Bystrzakowo: zagadki malucha`, aplik
 - Wydanie: najpierw test wewnętrzny z AAB (sprawdzisz zakup na koncie testowym), potem produkcja.
 
 ### 4. Odsłuch lektora
-Przesłuchaj po kilka nagrań w każdym języku (lista w podsumowaniu nocy) i, jeśli możesz, daj je komuś, dla kogo
+Przesłuchaj po kilka nagrań w każdym języku. Najpierw te, przy których Whisper miał wątpliwości
+(`games/bystrzakowo/voice/report-{en,de,es}.json`, pole `ok: false`), szczególnie:
+- en: `ksztalt-prostokat` (Rectangle), `item-skarpetka` (Sock), `item-miska` (Bowl), `item-sowa` (Owl), sylabowanie `czytaj-*`;
+- de: `item-skuter` (Motorroller), `item-prosiaczek` (Ferkel), `item-niedzwiedz` (Bär), `item-sowa` (Eule), `item-ges` (Gans);
+- es: `item-butelka` (Biberón), `item-gruszka` (Pera), `item-garnek` (Olla).
+Pliki: `games/bystrzakowo/public/audio/<język>/<lusia|bazyl>/<kwestia>.m4a`. Złe nagrania podmienię jedną komendą.
+Najlepiej daj je też komuś, dla kogo i, jeśli możesz, daj je komuś, dla kogo
 angielski, niemiecki albo hiszpański jest językiem ojczystym. Whisper sprawdza tylko zrozumiałość.
 
 ### 5. Test z dzieckiem
