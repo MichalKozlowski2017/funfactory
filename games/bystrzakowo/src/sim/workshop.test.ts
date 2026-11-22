@@ -13,6 +13,19 @@ describe('krainy', () => {
     expect(new Set(all).size).toBe(all.length);
     expect([...all].sort()).toEqual([...ACTIVITIES].sort());
   });
+
+  it('pozycja ani kolor kafelka nie zdradzają kolejności (dwie sylaby)', async () => {
+    const { scramble, tileColors } = await import('./syllables.ts');
+    const rng = new Rng(8);
+    let firstLeft = 0, pinkFirst = 0;
+    for (let i = 0; i < 400; i++) {
+      if (scramble(rng, ['A', 'B'])[0] === 0) firstLeft++;
+      if (tileColors(rng, ['pink', 'blue', 'yellow'], 2)[0] === 'pink') pinkFirst++;
+    }
+    expect(firstLeft).toBeGreaterThan(140);
+    expect(firstLeft).toBeLessThan(260);
+    expect(pinkFirst).toBeLessThan(200);
+  });
 });
 
 describe('segregowanie', () => {
@@ -58,6 +71,19 @@ describe('segregowanie', () => {
     }
     expect(combos.size).toBeGreaterThan(40);
   });
+
+  it('pozycja ani kolor kafelka nie zdradzają kolejności (dwie sylaby)', async () => {
+    const { scramble, tileColors } = await import('./syllables.ts');
+    const rng = new Rng(8);
+    let firstLeft = 0, pinkFirst = 0;
+    for (let i = 0; i < 400; i++) {
+      if (scramble(rng, ['A', 'B'])[0] === 0) firstLeft++;
+      if (tileColors(rng, ['pink', 'blue', 'yellow'], 2)[0] === 'pink') pinkFirst++;
+    }
+    expect(firstLeft).toBeGreaterThan(140);
+    expect(firstLeft).toBeLessThan(260);
+    expect(pinkFirst).toBeLessThan(200);
+  });
 });
 
 describe('układanka', () => {
@@ -71,6 +97,19 @@ describe('układanka', () => {
   it('przyciąganie kawałka z tolerancją', () => {
     expect(snaps(30, -20, 200, 200)).toBe(true);
     expect(snaps(90, 0, 200, 200)).toBe(false);
+  });
+
+  it('pozycja ani kolor kafelka nie zdradzają kolejności (dwie sylaby)', async () => {
+    const { scramble, tileColors } = await import('./syllables.ts');
+    const rng = new Rng(8);
+    let firstLeft = 0, pinkFirst = 0;
+    for (let i = 0; i < 400; i++) {
+      if (scramble(rng, ['A', 'B'])[0] === 0) firstLeft++;
+      if (tileColors(rng, ['pink', 'blue', 'yellow'], 2)[0] === 'pink') pinkFirst++;
+    }
+    expect(firstLeft).toBeGreaterThan(140);
+    expect(firstLeft).toBeLessThan(260);
+    expect(pinkFirst).toBeLessThan(200);
   });
 });
 
@@ -92,6 +131,19 @@ describe('co dalej (wzory)', () => {
         expect(t.options.filter((o) => o === t.row[t.gap % p]).length).toBe(1);
       }
   });
+
+  it('pozycja ani kolor kafelka nie zdradzają kolejności (dwie sylaby)', async () => {
+    const { scramble, tileColors } = await import('./syllables.ts');
+    const rng = new Rng(8);
+    let firstLeft = 0, pinkFirst = 0;
+    for (let i = 0; i < 400; i++) {
+      if (scramble(rng, ['A', 'B'])[0] === 0) firstLeft++;
+      if (tileColors(rng, ['pink', 'blue', 'yellow'], 2)[0] === 'pink') pinkFirst++;
+    }
+    expect(firstLeft).toBeGreaterThan(140);
+    expect(firstLeft).toBeLessThan(260);
+    expect(pinkFirst).toBeLessThan(200);
+  });
 });
 
 describe('sorter kształtów', () => {
@@ -105,6 +157,19 @@ describe('sorter kształtów', () => {
         expect(new Set(b).size).toBe(b.length);
         if (level === 0) expect(b.every((s) => ['kolo', 'kwadrat', 'trojkat', 'serce', 'gwiazda'].includes(s))).toBe(true);
       }
+  });
+
+  it('pozycja ani kolor kafelka nie zdradzają kolejności (dwie sylaby)', async () => {
+    const { scramble, tileColors } = await import('./syllables.ts');
+    const rng = new Rng(8);
+    let firstLeft = 0, pinkFirst = 0;
+    for (let i = 0; i < 400; i++) {
+      if (scramble(rng, ['A', 'B'])[0] === 0) firstLeft++;
+      if (tileColors(rng, ['pink', 'blue', 'yellow'], 2)[0] === 'pink') pinkFirst++;
+    }
+    expect(firstLeft).toBeGreaterThan(140);
+    expect(firstLeft).toBeLessThan(260);
+    expect(pinkFirst).toBeLessThan(200);
   });
 });
 
@@ -121,10 +186,23 @@ describe('melodia', () => {
     expect(melodyLength(0, 0)).toBe(2);
     expect(melodyLength(2, 3)).toBe(5);
   });
+
+  it('pozycja ani kolor kafelka nie zdradzają kolejności (dwie sylaby)', async () => {
+    const { scramble, tileColors } = await import('./syllables.ts');
+    const rng = new Rng(8);
+    let firstLeft = 0, pinkFirst = 0;
+    for (let i = 0; i < 400; i++) {
+      if (scramble(rng, ['A', 'B'])[0] === 0) firstLeft++;
+      if (tileColors(rng, ['pink', 'blue', 'yellow'], 2)[0] === 'pink') pinkFirst++;
+    }
+    expect(firstLeft).toBeGreaterThan(140);
+    expect(firstLeft).toBeLessThan(260);
+    expect(pinkFirst).toBeLessThan(200);
+  });
 });
 
 describe('sylaby', () => {
-  it('sylaby składają się w nazwę obrazka, kafelki pomieszane', async () => {
+  it('sylaby składają się w nazwę obrazka, kafelki to permutacja', async () => {
     const { WORDS, makeSyllableRound, scramble, SYLLABLE_ROUND } = await import('./syllables.ts');
     const strip = (s: string) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/ł/g, 'l');
     for (const w of WORDS) {
@@ -139,9 +217,22 @@ describe('sylaby', () => {
       expect(r.length).toBe(SYLLABLE_ROUND);
       for (const w of r) {
         const s = scramble(rng, w.syl);
-        expect(s.some((v, i) => v !== i)).toBe(true);
+        expect([...s].sort()).toEqual(w.syl.map((_, i) => i));
       }
     }
+  });
+
+  it('pozycja ani kolor kafelka nie zdradzają kolejności (dwie sylaby)', async () => {
+    const { scramble, tileColors } = await import('./syllables.ts');
+    const rng = new Rng(8);
+    let firstLeft = 0, pinkFirst = 0;
+    for (let i = 0; i < 400; i++) {
+      if (scramble(rng, ['A', 'B'])[0] === 0) firstLeft++;
+      if (tileColors(rng, ['pink', 'blue', 'yellow'], 2)[0] === 'pink') pinkFirst++;
+    }
+    expect(firstLeft).toBeGreaterThan(140);
+    expect(firstLeft).toBeLessThan(260);
+    expect(pinkFirst).toBeLessThan(200);
   });
 });
 
@@ -152,5 +243,18 @@ describe('historyjki', () => {
     expect(r.length).toBe(STORY_ROUND);
     expect(new Set(r).size).toBe(STORY_ROUND);
     expect([0, 1, 2].map(presetFrames)).toEqual([1, 0, 0]);
+  });
+
+  it('pozycja ani kolor kafelka nie zdradzają kolejności (dwie sylaby)', async () => {
+    const { scramble, tileColors } = await import('./syllables.ts');
+    const rng = new Rng(8);
+    let firstLeft = 0, pinkFirst = 0;
+    for (let i = 0; i < 400; i++) {
+      if (scramble(rng, ['A', 'B'])[0] === 0) firstLeft++;
+      if (tileColors(rng, ['pink', 'blue', 'yellow'], 2)[0] === 'pink') pinkFirst++;
+    }
+    expect(firstLeft).toBeGreaterThan(140);
+    expect(firstLeft).toBeLessThan(260);
+    expect(pinkFirst).toBeLessThan(200);
   });
 });

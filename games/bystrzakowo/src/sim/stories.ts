@@ -5,9 +5,11 @@
 import type { Rng } from '@funfactory/core';
 import { MAX_LEVEL } from './puzzles.ts';
 
+// Bez „swieca” i „samolot”: test agentem-dzieckiem pokazał, że ich kadry są dla 4-latka niejednoznaczne
+// (świeczka prawie się nie zmienia, złożona kartka nie wygląda na etap przed samolotem). Grafiki zostają w repo.
 export const STORIES = [
   'kwiat', 'kurczak', 'motyl', 'balwan', 'jablko', 'lody', 'zabka', 'kanapka', 'wieza', 'balon',
-  'tort', 'zamek', 'jajko', 'pizza', 'swieca', 'kakao', 'gniazdo', 'drzewko', 'samolot', 'dzien',
+  'tort', 'zamek', 'jajko', 'pizza', 'kakao', 'gniazdo', 'drzewko', 'dzien',
 ] as const;
 export type Story = (typeof STORIES)[number];
 export const FRAMES = 3;

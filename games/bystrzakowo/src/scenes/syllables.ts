@@ -2,7 +2,7 @@ import { Container, Graphics, Sprite, type Point } from 'pixi.js';
 import { haptics } from '@funfactory/core';
 import { popIn, pulse } from '@funfactory/kit2d';
 import { say } from '../assets.ts';
-import { makeSyllableRound, scramble, type Word } from '../sim/syllables.ts';
+import { makeSyllableRound, scramble, tileColors, type Word } from '../sim/syllables.ts';
 import { state } from '../state.ts';
 import { COLORS, draggable, label, sfx } from '../ui.ts';
 import { RoundScene } from './round.ts';
@@ -12,6 +12,7 @@ const TILE_COLORS = [0xff8fb1, 0x8fc8ff, 0xffd166];
 interface Tile {
   view: Container;
   index: number;
+  color: number;
   home: { x: number; y: number };
   placed: boolean;
 }
@@ -62,10 +63,11 @@ export class SyllableScene extends RoundScene {
       this.layer.addChild(slot);
       return slot;
     });
+    const colors = tileColors(this.game.rng, TILE_COLORS, w.syl.length);
     this.tiles = scramble(this.game.rng, w.syl).map((index) => {
       const view = new Container();
       view.addChild(new Graphics(), label(w.syl[index]!, 64, this.game.pixelRatio, '#ffffff'));
-      const tile: Tile = { view, index, home: { x: 0, y: 0 }, placed: false };
+      const tile: Tile = { view, index, color: colors[index]!, home: { x: 0, y: 0 }, placed: false };
       draggable(view, {
         canStart: () => !tile.placed && !this.busy && !this.dragging,
         start: () => {
@@ -172,7 +174,7 @@ export class SyllableScene extends RoundScene {
         .roundRect(-s / 2, -s * 0.4 + 6, s, s * 0.8, 22)
         .fill({ color: 0x000000, alpha: 0.14 })
         .roundRect(-s / 2, -s * 0.4, s, s * 0.8, 22)
-        .fill({ color: TILE_COLORS[t.index % TILE_COLORS.length]! })
+        .fill({ color: t.color })
         .stroke({ color: COLORS.ink, width: 5 });
       t.view.hitArea = { contains: (x: number, y: number) => Math.abs(x) <= s / 2 + 8 && Math.abs(y) <= s * 0.4 + 8 };
     });

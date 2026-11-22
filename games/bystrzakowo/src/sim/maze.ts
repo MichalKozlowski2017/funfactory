@@ -115,9 +115,16 @@ export const MAZE_PAIRS: readonly [hero: string, goal: string][] = [
   ['sowka', 'sowa'],
 ];
 
-/** Pary do rundy (bez powtórzeń bohatera), tylko z obrazkami obecnymi w katalogu. */
+/** Bohaterowie poprzedniej rundy: następna runda zaczyna się od innych (o ile starczy par). */
+let lastHeroes = new Set<string>();
+
+/** Pary do rundy (bez powtórzeń bohatera, bez bohaterów z poprzedniej rundy), tylko z obrazkami z katalogu. */
 export function makeMazeRound(rng: Rng): [string, string][] {
   const have = new Set(ITEMS.map((i) => i.id));
   const ok = MAZE_PAIRS.filter(([a, b]) => have.has(a) && have.has(b));
-  return rng.shuffle([...ok]).slice(0, MAZE_ROUND) as [string, string][];
+  const fresh = rng.shuffle(ok.filter(([a]) => !lastHeroes.has(a)));
+  const old = rng.shuffle(ok.filter(([a]) => lastHeroes.has(a)));
+  const round = [...fresh, ...old].slice(0, MAZE_ROUND) as [string, string][];
+  lastHeroes = new Set(round.map(([a]) => a));
+  return round;
 }

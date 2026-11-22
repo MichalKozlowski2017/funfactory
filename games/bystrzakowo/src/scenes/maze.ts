@@ -29,6 +29,7 @@ export class MazeScene extends RoundScene {
   private steps: [number, number][] = [];
   private dragging = false;
   private bumpAt = -1;
+  private bumpedThisDrag = false;
   private time = 0;
   private cell = 80;
   private topLeft = { x: 0, y: 0 };
@@ -68,6 +69,7 @@ export class MazeScene extends RoundScene {
     this.board.on('pointerdown', (e) => {
       if (this.busy) return;
       this.dragging = true;
+      this.bumpedThisDrag = false;
       this.idle = 0;
       this.follow(e);
     });
@@ -90,23 +92,41 @@ export class MazeScene extends RoundScene {
     return { x: this.topLeft.x + (c + 0.5) * this.cell, y: this.topLeft.y + (r + 0.5) * this.cell };
   }
 
-  /** Palec na sąsiednim polu: bohater tam idzie (albo wraca po własnych śladach), jeśli nie ma ściany. */
+  /**
+   * Bohater idzie za palcem pole po polu (albo wraca po własnych śladach). Gdy palec odjedzie dalej niż o jedno
+   * pole (dziecko ciągnie prosto albo po skosie do celu), bohater go dogania korytarzem: krok w osi o większej
+   * różnicy, a gdy tam ściana, w drugiej osi. Ściana liczy się jako pomyłka tylko tuż obok bohatera.
+   */
   private follow(e: FederatedPointerEvent): void {
     if (this.busy) return;
     const p = this.layer.toLocal(e.global);
-    const c = Math.floor((p.x - this.topLeft.x) / this.cell);
-    const r = Math.floor((p.y - this.topLeft.y) / this.cell);
-    const [hc, hr] = this.steps[this.steps.length - 1]!;
-    if (c === hc && r === hr) return;
-    if (Math.abs(c - hc) + Math.abs(r - hr) !== 1) return;
-    if (c < 0 || r < 0 || c >= this.maze.cols || r >= this.maze.rows) return;
-    if (!canStep(this.maze, hc, hr, c, r)) return this.bump(c - hc, r - hr);
-    const prev = this.steps[this.steps.length - 2];
-    if (prev && prev[0] === c && prev[1] === r) this.steps.pop();
-    else this.steps.push([c, r]);
+    const c = Math.max(0, Math.min(this.maze.cols - 1, Math.floor((p.x - this.topLeft.x) / this.cell)));
+    const r = Math.max(0, Math.min(this.maze.rows - 1, Math.floor((p.y - this.topLeft.y) / this.cell)));
+    let moved = false;
+    for (let guard = 0; guard < this.maze.cols + this.maze.rows; guard++) {
+      const [hc, hr] = this.steps[this.steps.length - 1]!;
+      const dx = c - hc, dy = r - hr;
+      if (dx === 0 && dy === 0) break;
+      const sx = Math.sign(dx), sy = Math.sign(dy);
+      const tries: [number, number][] = Math.abs(dx) >= Math.abs(dy) ? [[sx, 0], [0, sy]] : [[0, sy], [sx, 0]];
+      const step = tries.find(([ax, ay]) => (ax || ay) && canStep(this.maze, hc, hr, hc + ax, hr + ay));
+      if (!step) {
+        // Ściana: „oj” tylko gdy palec jest na sąsiednim polu (dziecko naprawdę pcha w ścianę).
+        if (Math.abs(dx) + Math.abs(dy) === 1) this.bump(dx, dy);
+        break;
+      }
+      const [nc, nr] = [hc + step[0], hr + step[1]];
+      const prev = this.steps[this.steps.length - 2];
+      if (prev && prev[0] === nc && prev[1] === nr) this.steps.pop();
+      else this.steps.push([nc, nr]);
+      moved = true;
+      if (nc === this.maze.cols - 1 && nr === this.maze.rows - 1) break;
+    }
+    if (!moved) return;
     this.moveHero();
     this.glow.clear();
-    if (c === this.maze.cols - 1 && r === this.maze.rows - 1) this.arrive();
+    const [ec, er] = this.steps[this.steps.length - 1]!;
+    if (ec === this.maze.cols - 1 && er === this.maze.rows - 1) this.arrive();
   }
 
   private moveHero(): void {
@@ -119,15 +139,17 @@ export class MazeScene extends RoundScene {
     this.drawTrail();
   }
 
-  /** Ściana: bohater odbija się w stronę ruchu; pomyłka liczona raz na sekundę. */
+  /** Ściana: bohater odbija się w stronę ruchu; „oj” najwyżej co 2 s, pomyłka raz na jedno przyłożenie palca. */
   private bump(dx: number, dy: number): void {
-    if (this.time - this.bumpAt < 1) return;
+    if (this.time - this.bumpAt < 2) return;
     this.bumpAt = this.time;
     const [c, r] = this.steps[this.steps.length - 1]!;
     const at = this.center(c, r);
     this.tweens.killOf(this.hero);
     this.hero.position.set(at.x, at.y);
     void this.tweens.to(this.hero, { x: at.x + dx * this.cell * 0.18, y: at.y + dy * this.cell * 0.18 }, { duration: 0.08, yoyo: true, repeat: 1 }).done.then(() => this.hero.position.set(at.x, at.y));
+    if (this.bumpedThisDrag) return;
+    this.bumpedThisDrag = true;
     this.missed();
   }
 

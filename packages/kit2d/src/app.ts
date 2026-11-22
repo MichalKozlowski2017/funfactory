@@ -113,6 +113,14 @@ export class Game {
       preference: 'webgl',
     });
     parent.appendChild(this.app.canvas);
+    // Przerwany dotyk (gest systemowy od krawędzi, powiadomienie, połączenie) to w przeglądarce `pointercancel`,
+    // którego Pixi v8 nie obsługuje: przeciągany obiekt zostawał w połowie drogi i blokował zabawę.
+    // Zamieniamy go na `pointerup` w tym samym miejscu, więc każda obsługa przeciągania kończy się normalnie.
+    this.app.canvas.addEventListener('pointercancel', (e) => {
+      this.app.canvas.dispatchEvent(
+        new PointerEvent('pointerup', { clientX: e.clientX, clientY: e.clientY, pointerId: e.pointerId, pointerType: e.pointerType, isPrimary: e.isPrimary, bubbles: true, cancelable: true, button: 0, buttons: 0 }),
+      );
+    });
     this.app.stage.addChild(this.root);
     this.safeProbe = makeSafeProbe();
     this.app.renderer.on('resize', () => this.layout());

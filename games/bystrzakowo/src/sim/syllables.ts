@@ -167,12 +167,17 @@ export function makeSyllableRound(rng: Rng, level: number): Word[] {
   return mixRound(rng, wordsOf().filter((w) => w.level <= l && have.has(w.item)), l, 'sylaby', SYLLABLE_ROUND, (w) => w.item);
 }
 
-/** Kafelki w losowej kolejności, ale nigdy już ułożone poprawnie. */
+/**
+ * Kafelki w losowej kolejności, czasem także w dobrej. Gdyby nigdy nie były ułożone, przy dwóch sylabach
+ * byłyby zawsze odwrócone i dziecko układałoby „prawy pierwszy” bez czytania (wyłapał to test agentem).
+ * Dziecko i tak przeciąga każdy kafelek do okienka.
+ */
 export function scramble(rng: Rng, syl: string[]): number[] {
-  const idx = syl.map((_, i) => i);
-  for (let k = 0; k < 10; k++) {
-    const s = rng.shuffle([...idx]);
-    if (s.some((v, i) => v !== i)) return s;
-  }
-  return [...idx].reverse();
+  return rng.shuffle(syl.map((_, i) => i));
+}
+
+/** Kolory kafelków słowa: losowe przypisanie, żeby kolor nie zdradzał, która sylaba jest pierwsza. */
+export function tileColors<T>(rng: Rng, palette: readonly T[], n: number): T[] {
+  const p = rng.shuffle([...palette]);
+  return Array.from({ length: n }, (_, i) => p[i % p.length]!);
 }
