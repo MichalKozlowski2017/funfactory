@@ -2049,14 +2049,14 @@
  {
   "name": "lusia-litera-l",
   "text": "L is for lion!",
-  "ok": false,
-  "tries": 10,
-  "seed": 5,
+  "ok": true,
+  "tries": 16,
+  "seed": 101,
   "cer": 0.0,
-  "minp": 0.48,
-  "heard": "L is for Lion.",
+  "minp": 0.5,
+  "heard": "L is for lion.",
   "weak": [
-   "Lion."
+   "lion."
   ]
  },
  {
@@ -2163,15 +2163,13 @@
  {
   "name": "lusia-litera-s",
   "text": "S is for sun!",
-  "ok": false,
-  "tries": 10,
-  "seed": 10,
+  "ok": true,
+  "tries": 6,
+  "seed": 106,
   "cer": 0.0,
-  "minp": 0.44,
-  "heard": "S is for sun.",
-  "weak": [
-   "sun."
-  ]
+  "minp": 0.52,
+  "heard": "S is for Sun.",
+  "weak": []
  },
  {
   "name": "lusia-labirynt-kurczak",
@@ -2341,15 +2339,13 @@
  {
   "name": "lusia-liczba-2",
   "text": "Two!",
-  "ok": false,
-  "tries": 10,
-  "seed": 5,
+  "ok": true,
+  "tries": 2,
+  "seed": 102,
   "cer": 0.0,
-  "minp": 0.47,
+  "minp": 0.52,
   "heard": "Two!",
-  "weak": [
-   "Two!"
-  ]
+  "weak": []
  },
  {
   "name": "lusia-liczba-3",
@@ -3038,12 +3034,12 @@
  {
   "name": "bazyl-item-pszczola",
   "text": "Bee!",
-  "ok": false,
-  "tries": 10,
-  "seed": 1,
-  "cer": 0.667,
-  "minp": 1.0,
-  "heard": "B!",
+  "ok": true,
+  "tries": 5,
+  "seed": 105,
+  "cer": 0.0,
+  "minp": 0.55,
+  "heard": "BEE!",
   "weak": []
  },
  {
@@ -3205,12 +3201,12 @@
  {
   "name": "bazyl-item-wieloryb",
   "text": "Whale!",
-  "ok": false,
-  "tries": 10,
-  "seed": 7,
-  "cer": 0.6,
-  "minp": 0.62,
-  "heard": "WELL!",
+  "ok": true,
+  "tries": 6,
+  "seed": 106,
+  "cer": 0.0,
+  "minp": 0.55,
+  "heard": "WHALE!",
   "weak": []
  },
  {
