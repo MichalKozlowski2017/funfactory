@@ -1069,8 +1069,9 @@
   },
   {
    "name": "lusia-gloska-j",
-   "text": "Co zaczyna się na głoskę... j?",
-   "voice": "voices/alt"
+   "text": "Co zaczyna się na głoskę... jot?",
+   "voice": "voices/alt",
+   "seed": 40
   },
   {
    "name": "lusia-gloska-n",
