@@ -120,7 +120,7 @@ describe('co dalej (wzory)', () => {
     for (const level of [0, 1, 2])
       for (let i = 0; i < 300; i++) {
         const t = makePatternTask(rng, level);
-        expect(t.row.length).toBeGreaterThanOrEqual(6);
+        expect(t.row.length).toBeGreaterThanOrEqual(5); // dwa pełne powtórzenia przed luką
         expect(t.options).toContain(t.row[t.gap]);
         expect(new Set(t.options).size).toBe(t.options.length);
         expect(t.options.length).toBeGreaterThanOrEqual(2);

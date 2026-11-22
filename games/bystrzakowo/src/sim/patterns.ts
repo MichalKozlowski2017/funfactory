@@ -35,8 +35,9 @@ export function makePatternTask(rng: Rng, level: number): PatternTask {
     pick.push(item);
   }
   const map = new Map(letters.map((ch, i) => [ch, pick[i]!]));
-  // Rząd: wzór powtórzony, co najmniej 6 pól (dwa pełne powtórzenia i kawałek).
-  const len = Math.max(6, motif.length * 2 + 1);
+  // Rząd: wzór powtórzony, dwa pełne powtórzenia i kawałek. 5 albo 6 pól, żeby przy AB odpowiedzią
+  // nie był zawsze drugi obrazek (test agentem-dzieckiem: dało się zgadywać bez patrzenia na wzór).
+  const len = Math.max(rng.int(5, 6), motif.length * 2 + 1);
   const row = Array.from({ length: len }, (_, i) => map.get(motif[i % motif.length]!)!);
   // Puste miejsce: na końcu (niższe poziomy), na najwyższym czasem w środku (po pełnym powtórzeniu).
   const gap = l >= MAX_LEVEL && rng.next() < 0.4 ? motif.length + rng.int(0, motif.length - 1) : len - 1;
