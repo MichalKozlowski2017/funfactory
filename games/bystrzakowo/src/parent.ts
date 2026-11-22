@@ -618,14 +618,24 @@ export class ParentPanel extends Container {
     const nameLabel = () => (state.progress.childName ? tr('Imię dziecka: {name}', { name: state.progress.childName }) : tr('Imię dziecka: nie podano'));
     add(this.button(nameLabel(), bw, '#9b7be0', () => this.askName()));
     const LANG_NAMES: Record<Lang, string> = { pl: 'Polski', en: 'English', de: 'Deutsch', es: 'Español' };
-    add(
-      this.button(tr('Język: {name}', { name: LANG_NAMES[lang()] }), bw, '#5cc36a', () => {
-        // Zmiana języka: zapis i ponowne uruchomienie (nagrania lektora wczytują się przy starcie).
-        const next = LANGS[(LANGS.indexOf(lang()) + 1) % LANGS.length]!;
-        state.progress.lang = next;
+    // Język: cztery przyciski obok siebie, wybrany podświetlony. Zmiana: zapis i ponowne uruchomienie
+    // (nagrania lektora wczytują się przy starcie).
+    const langLabel = this.text(tr('Język'), 24, { color: SOFT, weight: '800' });
+    langLabel.position.set(0, y);
+    this.content.addChild(langLabel);
+    y += langLabel.height + 8;
+    const gap = 10;
+    const lw = (bw - gap * (LANGS.length - 1)) / LANGS.length;
+    LANGS.forEach((l, i) => {
+      const b = this.button(LANG_NAMES[l], lw, l === lang() ? '#ff9f5a' : '#c9b8a6', () => {
+        if (l === lang()) return;
+        state.progress.lang = l;
         void saveState().then(() => location.reload());
-      }),
-    );
+      }, 80, 24);
+      b.position.set(lw / 2 + i * (lw + gap), y + 40);
+      this.content.addChild(b);
+    });
+    y += 100;
     const musicLabel = () => (state.progress.music ? tr('Muzyka: włączona') : tr('Muzyka: wyłączona'));
     const music: Button = this.button(musicLabel(), bw, '#5cb3ff', () => {
       state.progress.music = !state.progress.music;

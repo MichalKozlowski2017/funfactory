@@ -72,7 +72,7 @@ export const DE: Record<string, string> = {
   'Wyzeruj postępy': 'Fortschritt zurücksetzen',
   'Na pewno? Dotknij jeszcze raz': 'Sicher? Noch einmal tippen',
   Wyzerowano: 'Zurückgesetzt',
-  'Język: {name}': 'Sprache: {name}',
+  'Język': 'Sprache',
   'Wersja: pełna': 'Version: Vollversion',
   'Wersja: próbna (pełny dostęp)': 'Version: Testphase (voller Zugang)',
   'Wersja: darmowa (Polana Zagadek)': 'Version: kostenlos (Rätselwiese)',

@@ -72,7 +72,7 @@ export const ES: Record<string, string> = {
   'Wyzeruj postępy': 'Borrar el progreso',
   'Na pewno? Dotknij jeszcze raz': '¿Seguro? Toca otra vez',
   Wyzerowano: 'Progreso borrado',
-  'Język: {name}': 'Idioma: {name}',
+  'Język': 'Idioma',
   'Wersja: pełna': 'Versión: completa',
   'Wersja: próbna (pełny dostęp)': 'Versión: prueba (acceso completo)',
   'Wersja: darmowa (Polana Zagadek)': 'Versión: gratis (Pradera de Acertijos)',
