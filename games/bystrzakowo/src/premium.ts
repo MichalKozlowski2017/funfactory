@@ -3,7 +3,7 @@
  * kupi pełną wersję (jednorazowy zakup, bez zewnętrznych serwisów). Pełny raport i pocztówka w strefie
  * rodzica działają tak samo: w próbie i po zakupie.
  *
- * Playtesty: `?free` udaje koniec próby bez zakupu, `?full` udaje kupioną pełną wersję.
+ * Playtesty: `?free` (albo build z `VITE_PREVIEW=free`) udaje koniec próby bez zakupu, `?full` udaje kupioną pełną wersję.
  */
 import { buy, getProduct, owns, restore } from '@funfactory/core/purchases';
 import { today } from './log.ts';
@@ -15,8 +15,9 @@ import { saveState, state } from './state.ts';
 export const PRODUCT_ID = 'bystrzakowo.full';
 
 const query = typeof location !== 'undefined' ? new URLSearchParams(location.search) : new URLSearchParams();
-const PREVIEW_FREE = query.has('free');
-const PREVIEW_FULL = query.has('full');
+// Na telefonie podgląd włącza build z VITE_PREVIEW=free|full (prawdziwy zapis zostaje nietknięty).
+const PREVIEW_FREE = query.has('free') || import.meta.env.VITE_PREVIEW === 'free';
+const PREVIEW_FULL = query.has('full') || import.meta.env.VITE_PREVIEW === 'full';
 
 /** Zapis próby (w podglądzie `?free`: próba wykorzystana). */
 function save(): TrialSave {

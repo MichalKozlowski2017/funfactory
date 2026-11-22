@@ -450,12 +450,15 @@ export class WorldScene extends Scene {
    * Wołane też po zakupie w strefie rodzica (kafelki się budzą).
    */
   applyLocks(): void {
+    const NIGHT_TINT = 0x8a86b8;
     for (const realm of REALMS) {
       const open = realmIsOpen(realm.id);
       for (const kind of realm.rows.flat()) {
         const house = this.houses.get(kind);
         if (!house) continue;
         const night = house.getChildByLabel('night');
+        // Przyciemnienie przez tint całego kafelka (z kółkiem w rogu, które wystaje poza płytkę).
+        for (const ch of house.children) if (ch.label !== 'night') ch.tint = open ? 0xffffff : NIGHT_TINT;
         if (open) {
           night?.destroy({ children: true });
           continue;
@@ -464,10 +467,9 @@ export class WorldScene extends Scene {
         const o = new Container();
         o.label = 'night';
         o.eventMode = 'none';
-        const shade = new Graphics().roundRect(-150, -150, 300, 300, 48).fill({ color: 0x1d1a4a, alpha: 0.5 });
         const moon = new Graphics().poly(crescent(38, 16, -12, 34)).fill({ color: 0xfff3b0 }).stroke({ color: COLORS.ink, width: 4 });
         moon.position.set(92, -92);
-        o.addChild(shade, moon);
+        o.addChild(moon);
         for (let k = 0; k < 3; k++) {
           const z = label('z', 30 + k * 8, this.game.pixelRatio, '#ffffff', '#1d1a4a');
           z.position.set(20 + k * 30, -40 - k * 28);
