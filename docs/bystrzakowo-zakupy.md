@@ -27,7 +27,7 @@ Identyfikator produktu w obu sklepach: **`bystrzakowo.full`**.
 
 ## Zachowanie w grze
 - Dzień próby liczy się przy pierwszym rozwiązanym zadaniu dnia (dni zabawy, nie kalendarzowe).
-- Po próbie krainy poza Polaną „śpią” (księżyc, Zzz); dotknięcie: Lusia „Ta kraina jeszcze śpi. Poproś mamę albo tatę!”.
+- Po próbie krainy poza Polaną „śpią” (księżyc, Zzz); dotknięcie: Lusia „Ta kraina jeszcze śpi, zawołaj kogoś dorosłego!”.
 - Zakup i „Przywróć zakup” tylko w strefie rodzica (za bramką): zakładki Postępy i Ustawienia.
 - Przy starcie gra po cichu sprawdza zakup (np. po reinstalacji albo zakup przez Chmurę rodzinną).
 - Playtesty: `?free` (koniec próby bez zakupu), `?full` (kupione).
