@@ -153,8 +153,9 @@
   },
   {
    "name": "bazyl-ksztalt-romb",
-   "text": "Romb!",
-   "voice": "voices/prezenter"
+   "text": "Romb.",
+   "voice": "voices/prezenter",
+   "seed": 77
   }
  ]
 }
