@@ -247,8 +247,10 @@ export class ColoringScene extends RoundScene {
         .fill({ color: 0x000000, alpha: 0.15 })
         .circle(0, 0, r)
         .fill({ color })
-        .stroke({ color: on ? COLORS.sun : COLORS.ink, width: on ? 8 : 4 });
-      (c as Container).hitArea = new Rectangle(-40, -40, 80, 80);
+        .stroke({ color: COLORS.ink, width: on ? 6 : 4 });
+      // Wybrany kolor: powiększony i z białym pierścieniem w ciemnej obwódce (żółta obwódka znikała na żółtej farbie).
+      if (on) ((c as Container).children[0] as Graphics).circle(0, 0, r + 9).stroke({ color: 0xffffff, width: 6 }).circle(0, 0, r + 13).stroke({ color: COLORS.ink, width: 3 });
+      (c as Container).hitArea = new Rectangle(-44, -44, 88, 88);
     });
   }
 

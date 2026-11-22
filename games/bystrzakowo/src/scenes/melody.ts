@@ -13,6 +13,9 @@ const BAR_COLORS = [0xe8413c, 0xff8a2b, 0xffd23f, 0x7ad35a, 0x3d8bff, 0x9b5de5];
  * Melodia (Pracownia Malucha): Lusia gra kilka dźwięków na cymbałkach (sztabki świecą), dziecko powtarza.
  * Pomyłka: sztabka kręci głową i melodia gra jeszcze raz (bez przegrywania).
  */
+/** Kolor przygaszonych sztabek w czasie pokazu melodii. */
+const DIM = 0x9a9a9a;
+
 export class MelodyScene extends RoundScene {
   readonly id = 'melody';
   private bars: Container[] = [];
@@ -76,8 +79,8 @@ export class MelodyScene extends RoundScene {
     this.glow(bar, BAR_COLORS[i]!);
     // W czasie pokazu grająca sztabka na chwilę rozbłyska z przygaszenia.
     if (this.playing) {
-      bar.alpha = 1;
-      this.tweens.to(bar, { alpha: 0.55 }, { duration: 0.5, delay: 0.25 });
+      bar.tint = 0xffffff;
+      this.timers.after(0.6, () => this.playing && (bar.tint = DIM));
     }
   }
 
@@ -108,9 +111,8 @@ export class MelodyScene extends RoundScene {
   private listen(on: boolean): void {
     this.playing = on;
     for (const [i, b] of this.bars.entries()) {
-      // Koniec pokazu: zatrzymujemy opóźnione przygaszenie ostatniej sztabki (przy pomyłce nie, bo sztabka się trzęsie).
-      if (!on) this.tweens.killOf(b);
-      this.tweens.to(b, { alpha: on ? 0.55 : 1 }, { duration: 0.2 });
+      // Przyciemnienie kolorem, nie przezroczystością (przez półprzezroczyste sztabki prześwitywała rama).
+      b.tint = on ? DIM : 0xffffff;
       if (!on) this.timers.after(i * 0.04, () => void squash(this.tweens, b, 0.1));
     }
   }

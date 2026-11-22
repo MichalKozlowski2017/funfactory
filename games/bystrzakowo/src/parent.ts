@@ -24,13 +24,14 @@ const FONT = 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif';
  */
 /**
  * Druga część bramki dla rodzica: po przytrzymaniu zębatki pytanie, którego przedszkolak nie rozwiąże
- * (mnożenie, trzy odpowiedzi). Samo przytrzymanie 4-latek przechodził łatwo (test agentem-dzieckiem).
- * Zła odpowiedź albo stuknięcie obok zamyka pytanie.
+ * (mnożenie, cztery odpowiedzi). Samo przytrzymanie 4-latek przechodził łatwo (test agentem-dzieckiem).
+ * Stuknięcie obok zamyka pytanie, zła odpowiedź dodatkowo blokuje bramkę na 30 s (losowe stukanie: 1/4 szansy
+ * najwyżej co pół minuty).
  */
 export class AdultCheck extends Container {
   private readonly buttons: Button[] = [];
 
-  constructor(game: Game, onPass: () => void, onClose: () => void) {
+  constructor(game: Game, onPass: () => void, onClose: () => void, onFail: () => void = onClose) {
     super();
     const { width: w, height: h } = game.view;
     const pr = game.pixelRatio;
@@ -42,16 +43,16 @@ export class AdultCheck extends Container {
     card.position.set(w / 2, h / 2);
     card.eventMode = 'static';
     const a = game.rng.int(6, 9), b = game.rng.int(6, 9), ok = a * b;
-    const wrong = game.rng.shuffle([ok + a, ok - b, ok + 10, ok - 10, ok + b].filter((x) => x !== ok && x > 0)).slice(0, 2);
+    const wrong = game.rng.shuffle([...new Set([ok + a, ok - b, ok + 10, ok - 10, ok + b, ok - a])].filter((x) => x !== ok && x > 0)).slice(0, 3);
     const t1 = new Text({ text: tr('Dla dorosłych'), style: { fontFamily: GAME_FONT, fontSize: 30, fill: '#8a7a6a', fontWeight: '800' }, resolution: pr, anchor: 0.5 });
     t1.position.set(0, -ch / 2 + 44);
     const t2 = new Text({ text: `${a} × ${b} = ?`, style: { fontFamily: GAME_FONT, fontSize: 64, fill: '#3b2a20', fontWeight: '900' }, resolution: pr, anchor: 0.5 });
     t2.position.set(0, -20);
     card.addChild(t1, t2);
     const opts = game.rng.shuffle([ok, ...wrong]);
-    const bw = (cw - 80) / 3;
+    const bw = (cw - 80) / 4;
     opts.forEach((v, i) => {
-      const btn = new Button({ label: String(v), width: bw - 12, height: 92, color: '#5cb3ff', fontFamily: GAME_FONT, fontSize: 40, resolution: pr, onTap: () => (v === ok ? onPass() : onClose()) });
+      const btn = new Button({ label: String(v), width: bw - 12, height: 92, color: '#5cb3ff', fontFamily: GAME_FONT, fontSize: 40, resolution: pr, onTap: () => (v === ok ? onPass() : onFail()) });
       btn.position.set(-cw / 2 + 40 + bw * (i + 0.5), ch / 2 - 70);
       card.addChild(btn);
       this.buttons.push(btn);

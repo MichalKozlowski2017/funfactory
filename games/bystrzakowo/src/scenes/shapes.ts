@@ -106,6 +106,7 @@ export class ShapeScene extends RoundScene {
         tap: () => this.tapHint(),
         canStart: () => !piece.done && !this.busy && !this.dragging,
         start: () => {
+          this.tweens.killOf(view);
           this.dragging = true;
           this.idle = 0;
           this.tweens.killOf(view.scale);
@@ -168,9 +169,10 @@ export class ShapeScene extends RoundScene {
   protected hint(): void {
     const p = this.pieces.find((x) => !x.done);
     if (!p) return;
-    void this.tweens
-      .to(p.view, { x: p.home.x + (p.hole.x - p.home.x) * 0.4, y: p.home.y + (p.hole.y - p.home.y) * 0.4 }, { duration: 0.45, ease: 'sineInOut', yoyo: true, repeat: 1 })
-      .done.then(() => p.view.position.set(p.home.x, p.home.y));
+    // Chwycenie elementu przerywa podpowiedź; wtedy nie cofamy go na start (dziecko mogło go już położyć).
+    const tw = this.tweens
+      .to(p.view, { x: p.home.x + (p.hole.x - p.home.x) * 0.4, y: p.home.y + (p.hole.y - p.home.y) * 0.4 }, { duration: 0.45, ease: 'sineInOut', yoyo: true, repeat: 1 });
+    void tw.done.then(() => !tw.killed && p.view.position.set(p.home.x, p.home.y));
   }
 
   protected place(): void {

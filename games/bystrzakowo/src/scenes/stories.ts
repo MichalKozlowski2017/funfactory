@@ -65,6 +65,7 @@ export class StoryScene extends RoundScene {
           tap: () => this.tapHint(),
           canStart: () => !card.placed && !this.busy && !this.dragging,
           start: () => {
+            this.tweens.killOf(view);
             this.dragging = true;
             this.idle = 0;
             this.tweens.killOf(view.scale);
@@ -132,9 +133,10 @@ export class StoryScene extends RoundScene {
     const c = [...this.cards].filter((x) => !x.placed).sort((a, b) => a.frame - b.frame)[0];
     if (!c) return;
     const s = this.slots[c.frame]!;
-    void this.tweens
-      .to(c.view, { x: c.home.x + (s.x - c.home.x) * 0.4, y: c.home.y + (s.y - c.home.y) * 0.4 }, { duration: 0.45, ease: 'sineInOut', yoyo: true, repeat: 1 })
-      .done.then(() => c.view.position.set(c.home.x, c.home.y));
+    // Chwycenie elementu przerywa podpowiedź; wtedy nie cofamy go na start (dziecko mogło go już położyć).
+    const tw = this.tweens
+      .to(c.view, { x: c.home.x + (s.x - c.home.x) * 0.4, y: c.home.y + (s.y - c.home.y) * 0.4 }, { duration: 0.45, ease: 'sineInOut', yoyo: true, repeat: 1 });
+    void tw.done.then(() => !tw.killed && c.view.position.set(c.home.x, c.home.y));
   }
 
   protected place(): void {

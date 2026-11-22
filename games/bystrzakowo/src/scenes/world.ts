@@ -513,18 +513,29 @@ export class WorldScene extends Scene {
   }
 
   private adultCheck: AdultCheck | null = null;
+  /** Po złej odpowiedzi bramka nie otwiera pytania do tej chwili (performance.now, ms). */
+  private static gateLockedUntil = 0;
 
   /** Pytanie dla dorosłego przed strefą rodzica (i przed wybudzeniem po limicie czasu). */
   private askAdult(then: () => void): void {
     if (this.adultCheck || this.parentPanel) return;
+    if (performance.now() < WorldScene.gateLockedUntil) return void haptics.hit();
     const close = () => {
       this.adultCheck?.destroy({ children: true });
       this.adultCheck = null;
     };
-    this.adultCheck = new AdultCheck(this.game, () => {
-      close();
-      then();
-    }, close);
+    this.adultCheck = new AdultCheck(
+      this.game,
+      () => {
+        close();
+        then();
+      },
+      close,
+      () => {
+        WorldScene.gateLockedUntil = performance.now() + 30_000;
+        close();
+      },
+    );
     this.addChild(this.adultCheck);
   }
 

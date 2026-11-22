@@ -72,6 +72,7 @@ export class SyllableScene extends RoundScene {
         tap: () => this.tapHint(),
         canStart: () => !tile.placed && !this.busy && !this.dragging,
         start: () => {
+          this.tweens.killOf(view);
           this.dragging = true;
           this.idle = 0;
           this.tweens.killOf(view.scale);
@@ -141,9 +142,10 @@ export class SyllableScene extends RoundScene {
     const t = [...this.tiles].filter((x) => !x.placed).sort((a, b) => a.index - b.index)[0];
     if (!t) return;
     const s = this.slots[t.index]!;
-    void this.tweens
-      .to(t.view, { x: t.home.x + (s.x - t.home.x) * 0.4, y: t.home.y + (s.y - t.home.y) * 0.4 }, { duration: 0.45, ease: 'sineInOut', yoyo: true, repeat: 1 })
-      .done.then(() => t.view.position.set(t.home.x, t.home.y));
+    // Chwycenie elementu przerywa podpowiedź; wtedy nie cofamy go na start (dziecko mogło go już położyć).
+    const tw = this.tweens
+      .to(t.view, { x: t.home.x + (s.x - t.home.x) * 0.4, y: t.home.y + (s.y - t.home.y) * 0.4 }, { duration: 0.45, ease: 'sineInOut', yoyo: true, repeat: 1 });
+    void tw.done.then(() => !tw.killed && t.view.position.set(t.home.x, t.home.y));
   }
 
   protected place(): void {

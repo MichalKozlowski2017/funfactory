@@ -164,6 +164,10 @@ export class LetterScene extends RoundScene {
     this.start.clear();
     this.guideLine.clear();
     const pic = this.picture!;
+    // Puls względem środka litery (tusz jest rysowany we współrzędnych warstwy, więc bez tego „odjeżdżał” w bok).
+    const cx = this.box.x + this.box.w / 2, cy = this.box.y + this.box.h / 2;
+    this.ink.pivot.set(cx, cy);
+    this.ink.position.set(cx, cy);
     void pulse(this.tweens, this.ink, 0.08, 0.35);
     if (this.digits) return this.countOut(Number(this.letter.ch));
     pic.visible = true;

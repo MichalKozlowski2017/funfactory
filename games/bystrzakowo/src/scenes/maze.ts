@@ -30,6 +30,7 @@ export class MazeScene extends RoundScene {
   private dragging = false;
   private bumpAt = -1;
   private bumpedThisDrag = false;
+  private movedAt = -10;
   private time = 0;
   private cell = 80;
   private topLeft = { x: 0, y: 0 };
@@ -111,8 +112,9 @@ export class MazeScene extends RoundScene {
       const tries: [number, number][] = Math.abs(dx) >= Math.abs(dy) ? [[sx, 0], [0, sy]] : [[0, sy], [sx, 0]];
       const step = tries.find(([ax, ay]) => (ax || ay) && canStep(this.maze, hc, hr, hc + ax, hr + ay));
       if (!step) {
-        // Ściana: „oj” tylko gdy palec jest na sąsiednim polu (dziecko naprawdę pcha w ścianę).
-        if (Math.abs(dx) + Math.abs(dy) === 1) this.bump(dx, dy);
+        // Ściana: „oj” tylko gdy palec jest na sąsiednim polu, a bohater od chwili stoi (dziecko naprawdę pcha
+        // w ścianę). Przy płynnym ruchu po skosie palec przecina pola za ścianą i to nie jest pomyłka.
+        if (Math.abs(dx) + Math.abs(dy) === 1 && this.time - this.movedAt > 0.5) this.bump(dx, dy);
         break;
       }
       const [nc, nr] = [hc + step[0], hr + step[1]];
@@ -123,6 +125,7 @@ export class MazeScene extends RoundScene {
       if (nc === this.maze.cols - 1 && nr === this.maze.rows - 1) break;
     }
     if (!moved) return;
+    this.movedAt = this.time;
     this.moveHero();
     this.glow.clear();
     const [ec, er] = this.steps[this.steps.length - 1]!;

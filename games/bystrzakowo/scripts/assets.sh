@@ -59,6 +59,7 @@ sprite warsztat/wiadro-21.png warsztat/wiadro 512
 sprite warsztat/stodola-21.png warsztat/stodola 256
 sprite warsztat/staw-21.png warsztat/staw 256
 for id in droga balwan palma kra; do sprite warsztat/$id-21.png warsztat/$id 256; done
+[ -f $RAW/warsztat/morze-21.png ] && sprite warsztat/morze-21.png warsztat/morze 256
 # Ścieżka Lusi: tło krainy, tło zabaw, stanowiska.
 background sciezka/tlo-sciezka-21.png kraina-sciezka
 background sciezka/tlo-sciezka-gra-22.png gra-sciezka

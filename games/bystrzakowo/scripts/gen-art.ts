@@ -57,6 +57,8 @@ if (process.argv.includes('--znaki')) {
     ['balwan', 'a cute snowman with a carrot nose, a scarf and a little hat'],
     ['palma', 'a single palm tree on a small sandy island with savanna grass'],
     ['kra', 'a small white ice floe with snow and a tiny icicle, floating on a bit of blue water'],
+    // Morze zamiast stawu: w „wodzie” są wieloryb, delfin, meduza (test agentem: zwierzęta morskie w stawie mylą).
+    ['morze', 'a small round patch of blue sea with big waves and white foam, a starfish and a seashell on a bit of sand in front'],
   ])
     tasks.push({ out: 'warsztat', prefix: id!, args: ['--workflow', 'flux2-sprite', '--prompt', sign(what!)] });
 }

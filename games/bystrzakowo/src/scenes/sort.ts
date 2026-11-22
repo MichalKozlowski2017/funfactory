@@ -200,6 +200,7 @@ export class SortScene extends RoundScene {
       tap: () => this.tapHint(),
       canStart: () => !piece.done && !this.busy && !this.dragging,
       start: () => {
+        this.tweens.killOf(view);
         this.dragging = true;
         this.idle = 0;
         this.tweens.killOf(view.scale);
@@ -357,7 +358,9 @@ export class SortScene extends RoundScene {
     const bin = this.bins[p.bin]!.view;
     const tx = p.home.x + (bin.x - p.home.x) * 0.35;
     const ty = p.home.y + (bin.y - 200 - p.home.y) * 0.35;
-    void this.tweens.to(p.view, { x: tx, y: ty }, { duration: 0.45, ease: 'sineInOut', yoyo: true, repeat: 1 }).done.then(() => p.view.position.set(p.home.x, p.home.y));
+    // Chwycenie elementu przerywa podpowiedź; wtedy nie cofamy go na start (dziecko mogło go już położyć).
+    const tw = this.tweens.to(p.view, { x: tx, y: ty }, { duration: 0.45, ease: 'sineInOut', yoyo: true, repeat: 1 });
+    void tw.done.then(() => !tw.killed && p.view.position.set(p.home.x, p.home.y));
   }
 
   protected place(): void {
