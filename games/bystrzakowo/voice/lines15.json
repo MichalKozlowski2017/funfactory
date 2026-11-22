@@ -205,6 +205,71 @@
   {
    "name": "lusia-litera-j",
    "text": "Jot jak jabłko!"
+  },
+  {
+   "name": "lusia-czytaj-zebra",
+   "text": "Ze... Bra... ... Zebra.",
+   "engine": "chatterbox"
+  },
+  {
+   "name": "lusia-czytaj-krowa",
+   "text": "Kro... Wa... ... Krowa.",
+   "engine": "chatterbox"
+  },
+  {
+   "name": "lusia-czytaj-miska",
+   "text": "Mis... Ka... ... Miska.",
+   "engine": "chatterbox"
+  },
+  {
+   "name": "lusia-czytaj-lisek",
+   "text": "Li... Sek... ... Lisek.",
+   "engine": "chatterbox"
+  },
+  {
+   "name": "lusia-czytaj-robot",
+   "text": "Ro... Bot... ... Robot.",
+   "engine": "chatterbox"
+  },
+  {
+   "name": "lusia-czytaj-zyrafa",
+   "text": "Ży... Ra... Fa... ... Żyrafa.",
+   "engine": "chatterbox"
+  },
+  {
+   "name": "lusia-czytaj-meduza",
+   "text": "Me... Du... Za... ... Meduza.",
+   "engine": "chatterbox"
+  },
+  {
+   "name": "lusia-czytaj-latawiec",
+   "text": "La... Ta... Wiec... ... Latawiec.",
+   "engine": "chatterbox"
+  },
+  {
+   "name": "lusia-czytaj-kalosze",
+   "text": "Ka... Lo... Sze... ... Kalosze.",
+   "engine": "chatterbox"
+  },
+  {
+   "name": "lusia-czytaj-autobus",
+   "text": "Au... To... Bus... ... Autobus.",
+   "engine": "chatterbox"
+  },
+  {
+   "name": "lusia-czytaj-ananas",
+   "text": "A... Na... Nas... ... Ananas.",
+   "engine": "chatterbox"
+  },
+  {
+   "name": "lusia-czytaj-biedronka",
+   "text": "Bie... Dron... Ka... ... Biedronka.",
+   "engine": "chatterbox"
+  },
+  {
+   "name": "lusia-czytaj-cebula",
+   "text": "Ce... Bu... La... ... Cebula.",
+   "engine": "chatterbox"
   }
  ]
 }
