@@ -1666,13 +1666,13 @@
  },
  {
   "name": "lusia-kraina-spi",
-  "text": "Dieses Land schläft noch. Frag Mama oder Papa!",
+  "text": "Dieses Land schläft noch. Frag einen Erwachsenen!",
   "ok": true,
   "tries": 1,
   "seed": 1,
   "cer": 0.0,
   "minp": 0.98,
-  "heard": "Dieses Land schläft noch, frag Mama oder Papa.",
+  "heard": "Dieses Land schläft noch, frag einen Erwachsenen.",
   "weak": []
  },
  {

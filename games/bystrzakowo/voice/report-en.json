@@ -1666,13 +1666,13 @@
  },
  {
   "name": "lusia-kraina-spi",
-  "text": "This land is still asleep. Ask your mom or dad!",
+  "text": "This land is still asleep. Ask a grown-up!",
   "ok": true,
   "tries": 1,
   "seed": 1,
   "cer": 0.0,
-  "minp": 0.88,
-  "heard": "This land is still asleep. Ask your mom or dad.",
+  "minp": 0.9,
+  "heard": "This land is still asleep. Ask a grown-up.",
   "weak": []
  },
  {
