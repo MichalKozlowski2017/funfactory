@@ -26,6 +26,9 @@ export class LetterScene extends RoundScene {
   private track = new Graphics();
   private ink = new Graphics();
   private start = new Graphics();
+  /** Strzałki „›” płynące wzdłuż kreski od kropki startowej (kierunek rysowania). */
+  private guideLine = new Graphics();
+  private guideT = 0;
   private pad = new Graphics();
   private picture: Sprite | null = null;
   private box = { x: 0, y: 0, w: 0, h: 0 };
@@ -67,19 +70,20 @@ export class LetterScene extends RoundScene {
     this.track = new Graphics();
     this.ink = new Graphics();
     this.start = new Graphics();
+    this.guideLine = new Graphics();
     this.pad = new Graphics();
     // Cyfry: obrazek do liczenia losowany z małych obiektów (np. 3 jabłka).
     const item = this.digits ? this.game.rng.pick(ITEMS.filter((i) => i.countable)).id : this.letter.item;
     this.picture = new Sprite({ texture: this.art.items.get(item)!, anchor: 0.5 });
     this.picture.visible = false;
     this.counted = [];
-    for (const v of [this.track, this.ink, this.start, this.picture]) v.eventMode = 'none';
+    for (const v of [this.track, this.ink, this.guideLine, this.start, this.picture]) v.eventMode = 'none';
     this.pad.eventMode = 'static';
     this.pad.on('pointerdown', (e) => this.down(e));
     this.pad.on('globalpointermove', (e) => this.tracing && this.trace(e));
     this.pad.on('pointerup', () => (this.tracing = false));
     this.pad.on('pointerupoutside', () => (this.tracing = false));
-    this.layer.addChild(this.pad, this.track, this.ink, this.start, this.picture);
+    this.layer.addChild(this.pad, this.track, this.ink, this.guideLine, this.start, this.picture);
     this.timers.after(0.4, () => say(this.game, this.guide, this.promptLine()));
   }
 
@@ -135,6 +139,7 @@ export class LetterScene extends RoundScene {
   private complete(): void {
     this.busy = true;
     this.start.clear();
+    this.guideLine.clear();
     const pic = this.picture!;
     void pulse(this.tweens, this.ink, 0.08, 0.35);
     if (this.digits) return this.countOut(Number(this.letter.ch));
@@ -204,19 +209,62 @@ export class LetterScene extends RoundScene {
     });
   }
 
-  /** Zielona kropka na początku kreski i mała strzałka w stronę ruchu. */
+  /** Zielona kropka (plastelina: poświata i odblask) na początku bieżącej kreski. */
   private drawStart(): void {
     const pts = this.strokes[this.stroke];
     const g = this.start.clear();
     if (!pts) return;
     const [x, y] = this.toScreen(pts[0]!);
-    const [x2, y2] = this.toScreen(pts[Math.min(4, pts.length - 1)]!);
-    const a = Math.atan2(y2 - y, x2 - x);
     const r = this.box.h * 0.05;
     this.start.position.set(x, y);
+    g.circle(0, 0, r * 1.55).fill({ color: COLORS.good, alpha: 0.25 });
     g.circle(0, 0, r).fill({ color: COLORS.good }).stroke({ color: COLORS.ink, width: 4 });
-    const tip = r * 2.1;
-    g.poly([Math.cos(a) * tip, Math.sin(a) * tip, Math.cos(a + 2.6) * r * 1.2 + Math.cos(a) * r, Math.sin(a + 2.6) * r * 1.2 + Math.sin(a) * r, Math.cos(a - 2.6) * r * 1.2 + Math.cos(a) * r, Math.sin(a - 2.6) * r * 1.2 + Math.sin(a) * r]).fill({ color: COLORS.good }).stroke({ color: COLORS.ink, width: 3, join: 'round' });
+    g.ellipse(-r * 0.3, -r * 0.35, r * 0.32, r * 0.2).fill({ color: 0xffffff, alpha: 0.55 });
+  }
+
+  /** Punkt kreski w odległości `d` (px) od początku i kąt kierunku w tym miejscu; null za końcem kreski. */
+  private along(pts: readonly P[], d: number): { x: number; y: number; a: number } | null {
+    let left = d;
+    for (let i = 1; i < pts.length; i++) {
+      const [x0, y0] = this.toScreen(pts[i - 1]!);
+      const [x1, y1] = this.toScreen(pts[i]!);
+      const len = Math.hypot(x1 - x0, y1 - y0);
+      if (left <= len && len > 0) {
+        const t = left / len;
+        return { x: x0 + (x1 - x0) * t, y: y0 + (y1 - y0) * t, a: Math.atan2(y1 - y0, x1 - x0) };
+      }
+      left -= len;
+    }
+    return null;
+  }
+
+  /** Strzałki „›” płyną po kresce od kropki, dopóki dziecko nie zacznie rysować. */
+  private drawGuide(dt: number): void {
+    const g = this.guideLine.clear();
+    const pts = this.strokes[this.stroke];
+    if (!pts || this.busy || this.tracing || this.at > 0) return;
+    this.guideT += dt;
+    const r = this.box.h * 0.05;
+    const gap = r * 1.7;
+    const shift = (this.guideT * gap * 0.9) % gap;
+    for (let k = 0; k < 4; k++) {
+      const d = r * 1.9 + k * gap + shift;
+      const p = this.along(pts, d);
+      if (!p) break;
+      // Pojawianie się przy kropce i znikanie na końcu wężyka.
+      const alpha = Math.min(1, (d - r * 1.9) / (gap * 0.6)) * (1 - Math.max(0, (d - r * 1.9 - gap * 2.6) / (gap * 1.4)));
+      if (alpha <= 0.02) continue;
+      const w = r * 0.75;
+      const back = (s: number) => [p.x - Math.cos(p.a + s) * w, p.y - Math.sin(p.a + s) * w] as const;
+      const [ax, ay] = back(0.75);
+      const [bx, by] = back(-0.75);
+      g.moveTo(ax, ay).lineTo(p.x, p.y).lineTo(bx, by).stroke({ color: COLORS.ink, width: r * 0.55, cap: 'round', join: 'round', alpha: alpha * 0.85 });
+      g.moveTo(ax, ay).lineTo(p.x, p.y).lineTo(bx, by).stroke({ color: COLORS.good, width: r * 0.34, cap: 'round', join: 'round', alpha });
+    }
+  }
+
+  protected override step(dt: number): void {
+    this.drawGuide(dt);
   }
 
   protected place(): void {
