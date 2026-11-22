@@ -14,7 +14,8 @@ const dir = process.argv[2]!;
 const langs = process.argv.slice(3).length ? process.argv.slice(3) : ['pl', 'en', 'de', 'es'];
 const skill = join(homedir(), '.claude/skills/tts');
 const ps = join(homedir(), '.claude/skills/comfyui/scripts/legion-ps.sh');
-const SEEDS = [11, 23, 37, 51, 73];
+// Druga runda: inne seedy (VOICE_SEEDS="101,131,..."), bo te same dają te same warianty.
+const SEEDS = process.env.VOICE_SEEDS ? process.env.VOICE_SEEDS.split(',').map(Number) : [11, 23, 37, 51, 73];
 
 interface Check {
   name: string;
