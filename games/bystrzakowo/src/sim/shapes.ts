@@ -20,7 +20,8 @@ export const shapeCount = (level: number): number => [3, 4, 5][clamp(level)] as 
 /** Kształty jednej planszy: podstawowe zawsze, potem coraz trudniejsze. */
 export function makeShapeBoard(rng: Rng, level: number): Shape[] {
   const l = clamp(level);
-  const pool = l === 0 ? BASIC : l === 1 ? [...BASIC, ...MIDDLE] : [...BASIC, ...MIDDLE, ...HARD];
+  // Poziom 0: trzy z pięciu łatwych (serce i gwiazda są wyraziste), żeby plansze się nie powtarzały.
+  const pool = l === 0 ? [...BASIC, 'serce', 'gwiazda'] as Shape[] : l === 1 ? [...BASIC, ...MIDDLE] : [...BASIC, ...MIDDLE, ...HARD];
   // Na najwyższym poziomie zawsze choć jedna para podobnych (owal z kołem albo romb z kwadratem).
   const must = l >= MAX_LEVEL ? [rng.pick(HARD)] : [];
   const rest = rng.shuffle(pool.filter((s) => !must.includes(s))).slice(0, shapeCount(level) - must.length);

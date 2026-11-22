@@ -149,6 +149,46 @@
    "voice": "voices/lusia-de"
   },
   {
+   "name": "lusia-item-lisek",
+   "text": "Fuchsjunges!",
+   "voice": "voices/lusia-de"
+  },
+  {
+   "name": "lusia-item-niedzwiadek",
+   "text": "Bärenjunges!",
+   "voice": "voices/lusia-de"
+  },
+  {
+   "name": "lusia-item-pingwinek",
+   "text": "Pinguinküken!",
+   "voice": "voices/lusia-de"
+  },
+  {
+   "name": "lusia-item-lwiatko",
+   "text": "Löwenjunges!",
+   "voice": "voices/lusia-de"
+  },
+  {
+   "name": "lusia-item-kozlatko",
+   "text": "Zicklein!",
+   "voice": "voices/lusia-de"
+  },
+  {
+   "name": "lusia-item-zyrafka",
+   "text": "Giraffenbaby!",
+   "voice": "voices/lusia-de"
+  },
+  {
+   "name": "lusia-item-foczka",
+   "text": "Robbenbaby!",
+   "voice": "voices/lusia-de"
+  },
+  {
+   "name": "lusia-item-sowka",
+   "text": "Eulenküken!",
+   "voice": "voices/lusia-de"
+  },
+  {
    "name": "lusia-item-lew",
    "text": "Löwe!",
    "voice": "voices/lusia-de"
@@ -925,6 +965,30 @@
    "tries": 3
   },
   {
+   "name": "lusia-czytaj-spodnie",
+   "text": "Ho... se... Hose!",
+   "voice": "voices/lusia-de",
+   "tries": 3
+  },
+  {
+   "name": "lusia-czytaj-czapka",
+   "text": "Müt... ze... Mütze!",
+   "voice": "voices/lusia-de",
+   "tries": 3
+  },
+  {
+   "name": "lusia-czytaj-ogorek",
+   "text": "Gur... ke... Gurke!",
+   "voice": "voices/lusia-de",
+   "tries": 3
+  },
+  {
+   "name": "lusia-czytaj-zajac",
+   "text": "Ha... se... Hase!",
+   "voice": "voices/lusia-de",
+   "tries": 3
+  },
+  {
    "name": "lusia-kolorowanka",
    "text": "Such dir eine Farbe aus und tipp auf das Bild. Mal es an, wie du willst!",
    "voice": "voices/lusia-de"
@@ -1015,6 +1079,46 @@
    "voice": "voices/lusia-de"
   },
   {
+   "name": "lusia-litera-e",
+   "text": "E wie Elefant!",
+   "voice": "voices/lusia-de"
+  },
+  {
+   "name": "lusia-litera-f",
+   "text": "F wie Fisch!",
+   "voice": "voices/lusia-de"
+  },
+  {
+   "name": "lusia-litera-h",
+   "text": "H wie Hund!",
+   "voice": "voices/lusia-de"
+  },
+  {
+   "name": "lusia-litera-n",
+   "text": "N wie Nashorn!",
+   "voice": "voices/lusia-de"
+  },
+  {
+   "name": "lusia-litera-z",
+   "text": "Z wie Zebra!",
+   "voice": "voices/lusia-de"
+  },
+  {
+   "name": "lusia-litera-r",
+   "text": "R wie Rakete!",
+   "voice": "voices/lusia-de"
+  },
+  {
+   "name": "lusia-litera-g",
+   "text": "G wie Gans!",
+   "voice": "voices/lusia-de"
+  },
+  {
+   "name": "lusia-litera-j",
+   "text": "J wie Jacke!",
+   "voice": "voices/lusia-de"
+  },
+  {
    "name": "lusia-labirynt-kurczak",
    "text": "Bring das Küken zu seiner Mama!",
    "voice": "voices/lusia-de"
@@ -1062,6 +1166,46 @@
   {
    "name": "lusia-labirynt-wiewiorka",
    "text": "Bring das Eichhörnchen zum Baum!",
+   "voice": "voices/lusia-de"
+  },
+  {
+   "name": "lusia-labirynt-lisek",
+   "text": "Bring das Fuchsjunge zu seiner Mama!",
+   "voice": "voices/lusia-de"
+  },
+  {
+   "name": "lusia-labirynt-niedzwiadek",
+   "text": "Bring das Bärenjunge zu seiner Mama!",
+   "voice": "voices/lusia-de"
+  },
+  {
+   "name": "lusia-labirynt-pingwinek",
+   "text": "Bring das Pinguinküken zu seiner Mama!",
+   "voice": "voices/lusia-de"
+  },
+  {
+   "name": "lusia-labirynt-lwiatko",
+   "text": "Bring das Löwenjunge zu seiner Mama!",
+   "voice": "voices/lusia-de"
+  },
+  {
+   "name": "lusia-labirynt-kozlatko",
+   "text": "Bring das Zicklein zu seiner Mama!",
+   "voice": "voices/lusia-de"
+  },
+  {
+   "name": "lusia-labirynt-zyrafka",
+   "text": "Bring das Giraffenbaby zu seiner Mama!",
+   "voice": "voices/lusia-de"
+  },
+  {
+   "name": "lusia-labirynt-foczka",
+   "text": "Bring das Robbenbaby zu seiner Mama!",
+   "voice": "voices/lusia-de"
+  },
+  {
+   "name": "lusia-labirynt-sowka",
+   "text": "Bring das Eulenküken zu seiner Mama!",
    "voice": "voices/lusia-de"
   },
   {
@@ -1352,6 +1496,46 @@
   {
    "name": "bazyl-item-kijanka",
    "text": "Kaulquappe!",
+   "voice": "voices/bazyl-de"
+  },
+  {
+   "name": "bazyl-item-lisek",
+   "text": "Fuchsjunges!",
+   "voice": "voices/bazyl-de"
+  },
+  {
+   "name": "bazyl-item-niedzwiadek",
+   "text": "Bärenjunges!",
+   "voice": "voices/bazyl-de"
+  },
+  {
+   "name": "bazyl-item-pingwinek",
+   "text": "Pinguinküken!",
+   "voice": "voices/bazyl-de"
+  },
+  {
+   "name": "bazyl-item-lwiatko",
+   "text": "Löwenjunges!",
+   "voice": "voices/bazyl-de"
+  },
+  {
+   "name": "bazyl-item-kozlatko",
+   "text": "Zicklein!",
+   "voice": "voices/bazyl-de"
+  },
+  {
+   "name": "bazyl-item-zyrafka",
+   "text": "Giraffenbaby!",
+   "voice": "voices/bazyl-de"
+  },
+  {
+   "name": "bazyl-item-foczka",
+   "text": "Robbenbaby!",
+   "voice": "voices/bazyl-de"
+  },
+  {
+   "name": "bazyl-item-sowka",
+   "text": "Eulenküken!",
    "voice": "voices/bazyl-de"
   },
   {
@@ -2452,6 +2636,46 @@
   {
    "name": "bazyl-mama-kijanka",
    "text": "Wo ist die Mama von der Kaulquappe?",
+   "voice": "voices/bazyl-de"
+  },
+  {
+   "name": "bazyl-mama-lisek",
+   "text": "Wo ist die Mama vom Fuchsjungen?",
+   "voice": "voices/bazyl-de"
+  },
+  {
+   "name": "bazyl-mama-niedzwiadek",
+   "text": "Wo ist die Mama vom Bärenjungen?",
+   "voice": "voices/bazyl-de"
+  },
+  {
+   "name": "bazyl-mama-pingwinek",
+   "text": "Wo ist die Mama vom Pinguinküken?",
+   "voice": "voices/bazyl-de"
+  },
+  {
+   "name": "bazyl-mama-lwiatko",
+   "text": "Wo ist die Mama vom Löwenjungen?",
+   "voice": "voices/bazyl-de"
+  },
+  {
+   "name": "bazyl-mama-kozlatko",
+   "text": "Wo ist die Mama vom Zicklein?",
+   "voice": "voices/bazyl-de"
+  },
+  {
+   "name": "bazyl-mama-zyrafka",
+   "text": "Wo ist die Mama vom Giraffenbaby?",
+   "voice": "voices/bazyl-de"
+  },
+  {
+   "name": "bazyl-mama-foczka",
+   "text": "Wo ist die Mama vom Robbenbaby?",
+   "voice": "voices/bazyl-de"
+  },
+  {
+   "name": "bazyl-mama-sowka",
+   "text": "Wo ist die Mama vom Eulenküken?",
    "voice": "voices/bazyl-de"
   }
  ]

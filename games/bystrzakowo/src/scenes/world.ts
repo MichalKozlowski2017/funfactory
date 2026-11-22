@@ -435,8 +435,9 @@ export class WorldScene extends Scene {
     return c;
   }
 
-  /** Playtest: wejście do zabawy (`eval:__ff.game.scenes.current.play('sortowanie')`). */
-  play(kind: Activity): void {
+  /** Playtest: wejście do zabawy (`eval:__ff.game.scenes.current.play('sortowanie', 2)`; poziom opcjonalny). */
+  play(kind: Activity, level?: number): void {
+    if (level !== undefined) state.progress.levels[kind] = level;
     const i = REALMS.findIndex((r) => r.rows.some((row) => row.includes(kind)));
     if (i !== this.realm) {
       this.realm = i;

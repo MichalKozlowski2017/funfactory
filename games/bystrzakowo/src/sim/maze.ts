@@ -105,6 +105,14 @@ export const MAZE_PAIRS: readonly [hero: string, goal: string][] = [
   ['krolik', 'marchewka'],
   ['malpa', 'banan'],
   ['wiewiorka', 'drzewo'],
+  ['lisek', 'lis'],
+  ['niedzwiadek', 'niedzwiedz'],
+  ['pingwinek', 'pingwin'],
+  ['lwiatko', 'lew'],
+  ['kozlatko', 'koza'],
+  ['zyrafka', 'zyrafa'],
+  ['foczka', 'foka'],
+  ['sowka', 'sowa'],
 ];
 
 /** Pary do rundy (bez powtórzeń bohatera), tylko z obrazkami obecnymi w katalogu. */

@@ -43,6 +43,17 @@ export const LETTERS: readonly Letter[] = [
   { ch: 'D', item: 'dinozaur', level: 2, strokes: [[[0.25, 0], [0.25, 1]], [[0.25, 0], ...arc(0.42, 0.5, 0.4, 0.5, -90, 90, 20), [0.25, 1]]] },
   { ch: 'B', item: 'banan', level: 2, strokes: [[[0.25, 0], [0.25, 1]], [[0.25, 0], ...arc(0.47, 0.24, 0.26, 0.24, -90, 90, 12), ...arc(0.5, 0.74, 0.32, 0.26, -90, 90, 12), [0.25, 1]]] },
   { ch: 'S', item: 'slon', level: 2, strokes: [[...arc(0.5, 0.25, 0.3, 0.25, -15, -270, 16), ...arc(0.5, 0.75, 0.3, 0.25, -90, 165, 16).slice(1)]] },
+  // Dalsze litery (item '' = w tym języku brak dobrego obrazka, litera się nie pojawia).
+  { ch: 'E', item: '', level: 0, strokes: [[[0.78, 0], [0.25, 0], [0.25, 1], [0.78, 1]], [[0.25, 0.5], [0.7, 0.5]]] },
+  { ch: 'F', item: 'foka', level: 0, strokes: [[[0.78, 0], [0.25, 0], [0.25, 1]], [[0.25, 0.5], [0.7, 0.5]]] },
+  { ch: 'H', item: 'hipopotam', level: 0, strokes: [[[0.22, 0], [0.22, 1]], [[0.78, 0], [0.78, 1]], [[0.22, 0.5], [0.78, 0.5]]] },
+  { ch: 'N', item: 'nosorozec', level: 1, strokes: [[[0.2, 1], [0.2, 0], [0.8, 1], [0.8, 0]]] },
+  { ch: 'Z', item: 'zebra', level: 1, strokes: [[[0.18, 0], [0.82, 0], [0.18, 1], [0.82, 1]]] },
+  { ch: 'U', item: '', level: 1, strokes: [[[0.2, 0], [0.2, 0.62], ...arc(0.5, 0.62, 0.3, 0.38, 180, 0, 16), [0.8, 0]]] },
+  { ch: 'C', item: 'cytryna', level: 1, strokes: [arc(0.55, 0.5, 0.4, 0.5, -40, -320, 24)] },
+  { ch: 'R', item: 'rakieta', level: 2, strokes: [[[0.25, 1], [0.25, 0]], [[0.25, 0], ...arc(0.5, 0.25, 0.3, 0.25, -90, 90, 14), [0.25, 0.5]], [[0.45, 0.5], [0.82, 1]]] },
+  { ch: 'G', item: 'gruszka', level: 2, strokes: [[...arc(0.55, 0.5, 0.4, 0.5, -40, -360, 26), [0.6, 0.5]]] },
+  { ch: 'J', item: 'jablko', level: 2, strokes: [[[0.7, 0], [0.7, 0.68], ...arc(0.45, 0.68, 0.25, 0.32, 0, 180, 14)]] },
 ];
 
 /** Kreska jako gęsty ciąg punktów co `step` (w jednostkach pola litery). */
@@ -77,25 +88,41 @@ export function advance(points: readonly P[], at: number, finger: P, tol: number
  * pojawia się w tym języku (po angielsku nie ma w katalogu nic na „I”).
  */
 const LETTER_ITEMS: Record<Exclude<Lang, 'pl'>, Record<string, string>> = {
-  en: { A: 'jablko', B: 'pilka', D: 'pies', I: '', K: 'latawiec', L: 'lew', M: 'malpa', O: 'sowa', P: 'swinka', S: 'slonce', T: 'traktor', W: 'wieloryb' },
-  es: { A: 'pszczola', B: 'wieloryb', D: 'delfin', I: '', K: '', L: 'lew', M: 'malpa', O: 'niedzwiedz', P: 'pies', S: 'slonce', T: 'zolw', W: '' },
-  de: { A: 'malpa', B: 'pilka', D: 'dinozaur', I: 'jez', K: 'kot', L: 'lew', M: 'mysz', O: 'pomarancza', P: 'pingwin', S: 'slonce', T: 'traktor', W: 'wieloryb' },
+  en: { A: 'jablko', B: 'pilka', D: 'pies', I: '', K: 'latawiec', L: 'lew', M: 'malpa', O: 'sowa', P: 'swinka', S: 'slonce', T: 'traktor', W: 'wieloryb', E: 'slon', F: 'ryba', H: 'kon', N: '', Z: 'zebra', U: 'parasol', C: 'kot', R: 'rakieta', G: 'koza', J: 'meduza' },
+  es: { A: 'pszczola', B: 'wieloryb', D: 'delfin', I: '', K: '', L: 'lew', M: 'malpa', O: 'niedzwiedz', P: 'pies', S: 'slonce', T: 'zolw', W: '', E: 'slon', F: 'foka', H: '', N: 'chmurka', Z: 'lis', U: 'winogrona', C: 'krolik', R: 'zaba', G: 'kot', J: 'zyrafa' },
+  de: { A: 'malpa', B: 'pilka', D: 'dinozaur', I: 'jez', K: 'kot', L: 'lew', M: 'mysz', O: 'pomarancza', P: 'pingwin', S: 'slonce', T: 'traktor', W: 'wieloryb', E: 'slon', F: 'ryba', H: 'pies', N: 'nosorozec', Z: 'zebra', U: '', C: '', R: 'rakieta', G: 'ges', J: 'kurtka' },
 };
 
 /** Litery w języku `l` z obiektem z tego języka (bez liter, do których nie ma obiektu). */
 export function lettersOf(l: Lang = lang()): Letter[] {
-  if (l === 'pl') return [...LETTERS];
+  if (l === 'pl') return LETTERS.filter((x) => x.item);
   return LETTERS.map((x) => ({ ...x, item: LETTER_ITEMS[l][x.ch] ?? '' })).filter((x) => x.item);
 }
 
 export function makeLetterRound(rng: Rng, level: number): Letter[] {
   const l = Math.max(0, Math.min(MAX_LEVEL, Math.round(level)));
   const have = new Set(ITEMS.map((i) => i.id));
-  const ok = lettersOf().filter((x) => x.level <= l && have.has(x.item));
-  // Najpierw litery z bieżącego poziomu (nowe), potem powtórka.
-  const fresh = rng.shuffle(ok.filter((x) => x.level === l));
-  const old = rng.shuffle(ok.filter((x) => x.level < l));
-  return [...fresh, ...old].slice(0, LETTER_ROUND);
+  return mixRound(rng, lettersOf().filter((x) => x.level <= l && have.has(x.item)), l, 'litery');
+}
+
+/** Ostatnia runda każdej zabawy (w tej sesji), żeby dwie kolejne nie były takie same. */
+const lastRound = new Map<string, string>();
+
+/**
+ * Runda z puli: dwie z bieżącego poziomu (nowe), reszta z niższych (powtórka), a gdy niższych brak,
+ * wszystkie z bieżącego. Nigdy dokładnie ten sam zestaw co poprzednio.
+ */
+export function mixRound<T extends { level: number }>(rng: Rng, pool: readonly T[], level: number, key: string, n = LETTER_ROUND, id: (x: T) => string = (x) => (x as unknown as Letter).ch): T[] {
+  let out: T[] = [];
+  for (let k = 0; k < 8; k++) {
+    const fresh = rng.shuffle(pool.filter((x) => x.level === level));
+    const old = rng.shuffle(pool.filter((x) => x.level < level));
+    const nFresh = old.length ? Math.min(fresh.length, n - 1) : n;
+    out = rng.shuffle([...fresh.slice(0, nFresh), ...old.slice(0, n - Math.min(nFresh, fresh.length))]).slice(0, n);
+    if (out.map(id).sort().join() !== lastRound.get(key)) break;
+  }
+  lastRound.set(key, out.map(id).sort().join());
+  return out;
 }
 
 /** Tolerancja śladu (ułamek wysokości litery): młodsze dzieci rysują mniej dokładnie. */
@@ -106,7 +133,7 @@ export const DIGITS: readonly Letter[] = [
   { ch: '1', item: '', level: 0, strokes: [[[0.28, 0.22], [0.6, 0], [0.6, 1]]] },
   { ch: '7', item: '', level: 0, strokes: [[[0.15, 0], [0.85, 0], [0.4, 1]]] },
   { ch: '4', item: '', level: 0, strokes: [[[0.6, 0], [0.12, 0.68], [0.9, 0.68]], [[0.65, 0.35], [0.65, 1]]] },
-  { ch: '0', item: '', level: 1, strokes: [arc(0.5, 0.5, 0.34, 0.5, -90, 270, 28)] },
+  { ch: '0', item: '', level: 0, strokes: [arc(0.5, 0.5, 0.34, 0.5, -90, 270, 28)] },
   { ch: '2', item: '', level: 1, strokes: [[...arc(0.5, 0.28, 0.32, 0.28, -170, 25, 14), [0.15, 1], [0.85, 1]]] },
   { ch: '3', item: '', level: 1, strokes: [[...arc(0.5, 0.25, 0.3, 0.25, -160, 90, 14), ...arc(0.5, 0.75, 0.32, 0.25, -90, 160, 14).slice(1)]] },
   { ch: '5', item: '', level: 1, strokes: [[[0.8, 0], [0.27, 0], [0.22, 0.45], ...arc(0.48, 0.68, 0.32, 0.32, -125, 150, 16)]] },
@@ -115,9 +142,8 @@ export const DIGITS: readonly Letter[] = [
   { ch: '9', item: '', level: 2, strokes: [[...arc(0.5, 0.3, 0.32, 0.3, 0, -360, 24), [0.8, 1]]] },
 ];
 
-/** Cyfry do rundy: z poziomu dziecka (nowe najpierw) i niższych. */
+/** Cyfry do rundy: nowe z poziomu dziecka wymieszane z powtórką niższych. */
 export function makeDigitRound(rng: Rng, level: number): Letter[] {
   const l = Math.max(0, Math.min(MAX_LEVEL, Math.round(level)));
-  const ok = DIGITS.filter((x) => x.level <= l);
-  return [...rng.shuffle(ok.filter((x) => x.level === l)), ...rng.shuffle(ok.filter((x) => x.level < l))].slice(0, LETTER_ROUND);
+  return mixRound(rng, DIGITS.filter((x) => x.level <= l), l, 'cyfry');
 }

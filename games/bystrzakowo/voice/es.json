@@ -149,6 +149,46 @@
    "voice": "voices/lusia-es"
   },
   {
+   "name": "lusia-item-lisek",
+   "text": "¡Zorrito!",
+   "voice": "voices/lusia-es"
+  },
+  {
+   "name": "lusia-item-niedzwiadek",
+   "text": "¡Osezno!",
+   "voice": "voices/lusia-es"
+  },
+  {
+   "name": "lusia-item-pingwinek",
+   "text": "¡Pingüinito!",
+   "voice": "voices/lusia-es"
+  },
+  {
+   "name": "lusia-item-lwiatko",
+   "text": "¡Leoncito!",
+   "voice": "voices/lusia-es"
+  },
+  {
+   "name": "lusia-item-kozlatko",
+   "text": "¡Cabrito!",
+   "voice": "voices/lusia-es"
+  },
+  {
+   "name": "lusia-item-zyrafka",
+   "text": "¡Jirafita!",
+   "voice": "voices/lusia-es"
+  },
+  {
+   "name": "lusia-item-foczka",
+   "text": "¡Foquita!",
+   "voice": "voices/lusia-es"
+  },
+  {
+   "name": "lusia-item-sowka",
+   "text": "¡Buhito!",
+   "voice": "voices/lusia-es"
+  },
+  {
    "name": "lusia-item-lew",
    "text": "¡León!",
    "voice": "voices/lusia-es"
@@ -919,6 +959,30 @@
    "tries": 3
   },
   {
+   "name": "lusia-czytaj-foka",
+   "text": "Fo... ca... ¡Foca!",
+   "voice": "voices/lusia-es",
+   "tries": 3
+  },
+  {
+   "name": "lusia-czytaj-chmurka",
+   "text": "Nu... be... ¡Nube!",
+   "voice": "voices/lusia-es",
+   "tries": 3
+  },
+  {
+   "name": "lusia-czytaj-gruszka",
+   "text": "Pe... ra... ¡Pera!",
+   "voice": "voices/lusia-es",
+   "tries": 3
+  },
+  {
+   "name": "lusia-czytaj-ziemniak",
+   "text": "Pa... pa... ¡Papa!",
+   "voice": "voices/lusia-es",
+   "tries": 3
+  },
+  {
    "name": "lusia-kolorowanka",
    "text": "Elige un color y toca el dibujo. ¡Píntalo como quieras!",
    "voice": "voices/lusia-es"
@@ -994,6 +1058,51 @@
    "voice": "voices/lusia-es"
   },
   {
+   "name": "lusia-litera-e",
+   "text": "¡E de elefante!",
+   "voice": "voices/lusia-es"
+  },
+  {
+   "name": "lusia-litera-f",
+   "text": "¡F de foca!",
+   "voice": "voices/lusia-es"
+  },
+  {
+   "name": "lusia-litera-n",
+   "text": "¡N de nube!",
+   "voice": "voices/lusia-es"
+  },
+  {
+   "name": "lusia-litera-z",
+   "text": "¡Z de zorro!",
+   "voice": "voices/lusia-es"
+  },
+  {
+   "name": "lusia-litera-u",
+   "text": "¡U de uvas!",
+   "voice": "voices/lusia-es"
+  },
+  {
+   "name": "lusia-litera-c",
+   "text": "¡C de conejo!",
+   "voice": "voices/lusia-es"
+  },
+  {
+   "name": "lusia-litera-r",
+   "text": "¡R de rana!",
+   "voice": "voices/lusia-es"
+  },
+  {
+   "name": "lusia-litera-g",
+   "text": "¡G de gato!",
+   "voice": "voices/lusia-es"
+  },
+  {
+   "name": "lusia-litera-j",
+   "text": "¡J de jirafa!",
+   "voice": "voices/lusia-es"
+  },
+  {
    "name": "lusia-labirynt-kurczak",
    "text": "¡Lleva al pollito con su mamá!",
    "voice": "voices/lusia-es"
@@ -1041,6 +1150,46 @@
   {
    "name": "lusia-labirynt-wiewiorka",
    "text": "¡Lleva a la ardilla al árbol!",
+   "voice": "voices/lusia-es"
+  },
+  {
+   "name": "lusia-labirynt-lisek",
+   "text": "¡Lleva al zorrito con su mamá!",
+   "voice": "voices/lusia-es"
+  },
+  {
+   "name": "lusia-labirynt-niedzwiadek",
+   "text": "¡Lleva al osezno con su mamá!",
+   "voice": "voices/lusia-es"
+  },
+  {
+   "name": "lusia-labirynt-pingwinek",
+   "text": "¡Lleva al pingüinito con su mamá!",
+   "voice": "voices/lusia-es"
+  },
+  {
+   "name": "lusia-labirynt-lwiatko",
+   "text": "¡Lleva al leoncito con su mamá!",
+   "voice": "voices/lusia-es"
+  },
+  {
+   "name": "lusia-labirynt-kozlatko",
+   "text": "¡Lleva al cabrito con su mamá!",
+   "voice": "voices/lusia-es"
+  },
+  {
+   "name": "lusia-labirynt-zyrafka",
+   "text": "¡Lleva a la jirafita con su mamá!",
+   "voice": "voices/lusia-es"
+  },
+  {
+   "name": "lusia-labirynt-foczka",
+   "text": "¡Lleva a la foquita con su mamá!",
+   "voice": "voices/lusia-es"
+  },
+  {
+   "name": "lusia-labirynt-sowka",
+   "text": "¡Lleva al buhito con su mamá!",
    "voice": "voices/lusia-es"
   },
   {
@@ -1326,6 +1475,46 @@
   {
    "name": "bazyl-item-kijanka",
    "text": "¡Renacuajo!",
+   "voice": "voices/bazyl-es"
+  },
+  {
+   "name": "bazyl-item-lisek",
+   "text": "¡Zorrito!",
+   "voice": "voices/bazyl-es"
+  },
+  {
+   "name": "bazyl-item-niedzwiadek",
+   "text": "¡Osezno!",
+   "voice": "voices/bazyl-es"
+  },
+  {
+   "name": "bazyl-item-pingwinek",
+   "text": "¡Pingüinito!",
+   "voice": "voices/bazyl-es"
+  },
+  {
+   "name": "bazyl-item-lwiatko",
+   "text": "¡Leoncito!",
+   "voice": "voices/bazyl-es"
+  },
+  {
+   "name": "bazyl-item-kozlatko",
+   "text": "¡Cabrito!",
+   "voice": "voices/bazyl-es"
+  },
+  {
+   "name": "bazyl-item-zyrafka",
+   "text": "¡Jirafita!",
+   "voice": "voices/bazyl-es"
+  },
+  {
+   "name": "bazyl-item-foczka",
+   "text": "¡Foquita!",
+   "voice": "voices/bazyl-es"
+  },
+  {
+   "name": "bazyl-item-sowka",
+   "text": "¡Buhito!",
    "voice": "voices/bazyl-es"
   },
   {
@@ -2426,6 +2615,46 @@
   {
    "name": "bazyl-mama-kijanka",
    "text": "¿Dónde está la mamá del renacuajo?",
+   "voice": "voices/bazyl-es"
+  },
+  {
+   "name": "bazyl-mama-lisek",
+   "text": "¿Dónde está la mamá del zorrito?",
+   "voice": "voices/bazyl-es"
+  },
+  {
+   "name": "bazyl-mama-niedzwiadek",
+   "text": "¿Dónde está la mamá del osezno?",
+   "voice": "voices/bazyl-es"
+  },
+  {
+   "name": "bazyl-mama-pingwinek",
+   "text": "¿Dónde está la mamá del pingüinito?",
+   "voice": "voices/bazyl-es"
+  },
+  {
+   "name": "bazyl-mama-lwiatko",
+   "text": "¿Dónde está la mamá del leoncito?",
+   "voice": "voices/bazyl-es"
+  },
+  {
+   "name": "bazyl-mama-kozlatko",
+   "text": "¿Dónde está la mamá del cabrito?",
+   "voice": "voices/bazyl-es"
+  },
+  {
+   "name": "bazyl-mama-zyrafka",
+   "text": "¿Dónde está la mamá de la jirafita?",
+   "voice": "voices/bazyl-es"
+  },
+  {
+   "name": "bazyl-mama-foczka",
+   "text": "¿Dónde está la mamá de la foquita?",
+   "voice": "voices/bazyl-es"
+  },
+  {
+   "name": "bazyl-mama-sowka",
+   "text": "¿Dónde está la mamá del buhito?",
    "voice": "voices/bazyl-es"
   }
  ]

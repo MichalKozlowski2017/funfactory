@@ -6,6 +6,7 @@
 import type { Rng } from '@funfactory/core';
 import { ITEMS } from './catalog.ts';
 import { lang, type Lang } from './lang.ts';
+import { mixRound } from './letters.ts';
 import { MAX_LEVEL } from './puzzles.ts';
 
 export const SYLLABLE_ROUND = 4;
@@ -43,6 +44,11 @@ const WORDS_PL: readonly Word[] = [
   { item: 'rakieta', syl: ['RA', 'KIE', 'TA'], level: 2 },
   { item: 'balonik', syl: ['BA', 'LO', 'NIK'], level: 2 },
   { item: 'kapelusz', syl: ['KA', 'PE', 'LUSZ'], level: 2 },
+  // Dodatkowe proste słowa (więcej różnorodności na poziomie 0).
+  { item: 'dynia', syl: ['DY', 'NIA'], level: 0 },
+  { item: 'tecza', syl: ['TĘ', 'CZA'], level: 0 },
+  { item: 'lyzka', syl: ['ŁYŻ', 'KA'], level: 0 },
+  { item: 'sanki', syl: ['SAN', 'KI'], level: 0 },
 ];
 
 /** Angielski: podział jak przy klaskaniu sylab w przedszkolu (Ba-na-na). */
@@ -67,6 +73,11 @@ const WORDS_EN: readonly Word[] = [
   { item: 'osmiornica', syl: ['OC', 'TO', 'PUS'], level: 2 },
   { item: 'parasol', syl: ['UM', 'BREL', 'LA'], level: 2 },
   { item: 'dinozaur', syl: ['DI', 'NO', 'SAUR'], level: 2 },
+  // Dodatkowe proste słowa (więcej różnorodności na poziomie 0).
+  { item: 'marchewka', syl: ['CAR', 'ROT'], level: 0 },
+  { item: 'balonik', syl: ['BAL', 'LOON'], level: 0 },
+  { item: 'traktor', syl: ['TRAC', 'TOR'], level: 0 },
+  { item: 'muszelka', syl: ['SEA', 'SHELL'], level: 0 },
 ];
 
 /** Niemiecki: Silbenklatschen jak w Kita (Ka-tze → Kat-ze). */
@@ -92,6 +103,11 @@ const WORDS_DE: readonly Word[] = [
   { item: 'ananas', syl: ['A', 'NA', 'NAS'], level: 2 },
   { item: 'papryka', syl: ['PA', 'PRI', 'KA'], level: 2 },
   { item: 'trabka', syl: ['TROM', 'PE', 'TE'], level: 2 },
+  // Dodatkowe proste słowa (więcej różnorodności na poziomie 0).
+  { item: 'spodnie', syl: ['HO', 'SE'], level: 0 },
+  { item: 'czapka', syl: ['MÜT', 'ZE'], level: 0 },
+  { item: 'ogorek', syl: ['GUR', 'KE'], level: 0 },
+  { item: 'zajac', syl: ['HA', 'SE'], level: 0 },
 ];
 
 /** Hiszpański: sylaby jak w szkole (ga-to, pe-rro, ma-ri-po-sa). */
@@ -116,6 +132,11 @@ const WORDS_ES: readonly Word[] = [
   { item: 'zyrafa', syl: ['JI', 'RA', 'FA'], level: 2 },
   { item: 'ptak', syl: ['PÁ', 'JA', 'RO'], level: 2 },
   { item: 'motyl', syl: ['MA', 'RI', 'PO', 'SA'], level: 2 },
+  // Dodatkowe proste słowa (więcej różnorodności na poziomie 0).
+  { item: 'foka', syl: ['FO', 'CA'], level: 0 },
+  { item: 'chmurka', syl: ['NU', 'BE'], level: 0 },
+  { item: 'gruszka', syl: ['PE', 'RA'], level: 0 },
+  { item: 'ziemniak', syl: ['PA', 'PA'], level: 0 },
 ];
 
 /** Słowa w każdym języku (nagrania „czytaj-<obiekt>” są osobne dla każdego języka). */
@@ -125,12 +146,11 @@ export const wordsOf = (l: Lang = lang()): readonly Word[] => WORDS_BY_LANG[l];
 /** Polskie słowa (zgodność wstecz). */
 export const WORDS: readonly Word[] = WORDS_PL;
 
-/** Słowa do rundy: z poziomu dziecka (nowe najpierw) i niższych, z obrazkiem w katalogu. */
+/** Słowa do rundy: nowe z poziomu dziecka wymieszane z powtórką niższych, z obrazkiem w katalogu. */
 export function makeSyllableRound(rng: Rng, level: number): Word[] {
   const l = Math.max(0, Math.min(MAX_LEVEL, Math.round(level)));
   const have = new Set(ITEMS.map((i) => i.id));
-  const ok = wordsOf().filter((w) => w.level <= l && have.has(w.item));
-  return [...rng.shuffle(ok.filter((w) => w.level === l)), ...rng.shuffle(ok.filter((w) => w.level < l))].slice(0, SYLLABLE_ROUND);
+  return mixRound(rng, wordsOf().filter((w) => w.level <= l && have.has(w.item)), l, 'sylaby', SYLLABLE_ROUND, (w) => w.item);
 }
 
 /** Kafelki w losowej kolejności, ale nigdy już ułożone poprawnie. */

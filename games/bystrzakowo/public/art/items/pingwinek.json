@@ -1,0 +1,16 @@
+{
+  "workflow": "flux2-sprite.json",
+  "PROMPT": "a tiny cute fluffy grey baby penguin chick with an oversized head and big eyes, standing, front three-quarter view, single object, centered, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, bright cheerful pastel colors, cute and friendly, plain light gray background",
+  "NEGATIVE": "",
+  "SEED": 21,
+  "WIDTH": 1024,
+  "HEIGHT": 1024,
+  "PREFIX": "pingwinek",
+  "STEPS": 20,
+  "GUIDANCE": 4,
+  "BPM": 100,
+  "DURATION": 60,
+  "KEY": "A minor",
+  "LYRICS": "[Instrumental]",
+  "created": "2026-11-22T10:14:02.189Z"
+}

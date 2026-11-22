@@ -1,0 +1,202 @@
+{
+ "voice": "voices/alt",
+ "tries": 8,
+ "lines": [
+  {
+   "name": "lusia-item-lisek",
+   "text": "Lisek!"
+  },
+  {
+   "name": "bazyl-item-lisek",
+   "text": "Lisek!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-mama-lisek",
+   "text": "Gdzie jest mama liska?",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "lusia-labirynt-lisek",
+   "text": "Zaprowadź liska do mamy!"
+  },
+  {
+   "name": "lusia-item-niedzwiadek",
+   "text": "Niedźwiadek!"
+  },
+  {
+   "name": "bazyl-item-niedzwiadek",
+   "text": "Niedźwiadek!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-mama-niedzwiadek",
+   "text": "Gdzie jest mama niedźwiadka?",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "lusia-labirynt-niedzwiadek",
+   "text": "Zaprowadź niedźwiadka do mamy!"
+  },
+  {
+   "name": "lusia-item-pingwinek",
+   "text": "Pingwinek!"
+  },
+  {
+   "name": "bazyl-item-pingwinek",
+   "text": "Pingwinek!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-mama-pingwinek",
+   "text": "Gdzie jest mama pingwinka?",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "lusia-labirynt-pingwinek",
+   "text": "Zaprowadź pingwinka do mamy!"
+  },
+  {
+   "name": "lusia-item-lwiatko",
+   "text": "Lwiątko!"
+  },
+  {
+   "name": "bazyl-item-lwiatko",
+   "text": "Lwiątko!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-mama-lwiatko",
+   "text": "Gdzie jest mama lwiątka?",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "lusia-labirynt-lwiatko",
+   "text": "Zaprowadź lwiątka do mamy!"
+  },
+  {
+   "name": "lusia-item-kozlatko",
+   "text": "Koźlątko!"
+  },
+  {
+   "name": "bazyl-item-kozlatko",
+   "text": "Koźlątko!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-mama-kozlatko",
+   "text": "Gdzie jest mama koźlątka?",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "lusia-labirynt-kozlatko",
+   "text": "Zaprowadź koźlątka do mamy!"
+  },
+  {
+   "name": "lusia-item-zyrafka",
+   "text": "Żyrafka!"
+  },
+  {
+   "name": "bazyl-item-zyrafka",
+   "text": "Żyrafka!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-mama-zyrafka",
+   "text": "Gdzie jest mama żyrafki?",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "lusia-labirynt-zyrafka",
+   "text": "Zaprowadź żyrafki do mamy!"
+  },
+  {
+   "name": "lusia-item-foczka",
+   "text": "Foczka!"
+  },
+  {
+   "name": "bazyl-item-foczka",
+   "text": "Foczka!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-mama-foczka",
+   "text": "Gdzie jest mama foczki?",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "lusia-labirynt-foczka",
+   "text": "Zaprowadź foczki do mamy!"
+  },
+  {
+   "name": "lusia-item-sowka",
+   "text": "Sówka!"
+  },
+  {
+   "name": "bazyl-item-sowka",
+   "text": "Sówka!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-mama-sowka",
+   "text": "Gdzie jest mama sówki?",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "lusia-labirynt-sowka",
+   "text": "Zaprowadź sówki do mamy!"
+  },
+  {
+   "name": "lusia-czytaj-dynia",
+   "text": "Dy... nia... Dynia!",
+   "tries": 3
+  },
+  {
+   "name": "lusia-czytaj-tecza",
+   "text": "Tę... cza... Tęcza!",
+   "tries": 3
+  },
+  {
+   "name": "lusia-czytaj-lyzka",
+   "text": "Łyż... ka... Łyżka!",
+   "tries": 3
+  },
+  {
+   "name": "lusia-czytaj-sanki",
+   "text": "San... ki... Sanki!",
+   "tries": 3
+  },
+  {
+   "name": "lusia-litera-f",
+   "text": "F jak foka!"
+  },
+  {
+   "name": "lusia-litera-h",
+   "text": "H jak hipopotam!"
+  },
+  {
+   "name": "lusia-litera-n",
+   "text": "N jak nosorożec!"
+  },
+  {
+   "name": "lusia-litera-z",
+   "text": "Z jak zebra!"
+  },
+  {
+   "name": "lusia-litera-c",
+   "text": "C jak cytryna!"
+  },
+  {
+   "name": "lusia-litera-r",
+   "text": "R jak rakieta!"
+  },
+  {
+   "name": "lusia-litera-g",
+   "text": "G jak gruszka!"
+  },
+  {
+   "name": "lusia-litera-j",
+   "text": "J jak jabłko!"
+  }
+ ]
+}

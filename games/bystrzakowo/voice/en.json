@@ -149,6 +149,46 @@
    "voice": "voices/lusia-en"
   },
   {
+   "name": "lusia-item-lisek",
+   "text": "Fox cub!",
+   "voice": "voices/lusia-en"
+  },
+  {
+   "name": "lusia-item-niedzwiadek",
+   "text": "Bear cub!",
+   "voice": "voices/lusia-en"
+  },
+  {
+   "name": "lusia-item-pingwinek",
+   "text": "Penguin chick!",
+   "voice": "voices/lusia-en"
+  },
+  {
+   "name": "lusia-item-lwiatko",
+   "text": "Lion cub!",
+   "voice": "voices/lusia-en"
+  },
+  {
+   "name": "lusia-item-kozlatko",
+   "text": "Baby goat!",
+   "voice": "voices/lusia-en"
+  },
+  {
+   "name": "lusia-item-zyrafka",
+   "text": "Baby giraffe!",
+   "voice": "voices/lusia-en"
+  },
+  {
+   "name": "lusia-item-foczka",
+   "text": "Seal pup!",
+   "voice": "voices/lusia-en"
+  },
+  {
+   "name": "lusia-item-sowka",
+   "text": "Owlet!",
+   "voice": "voices/lusia-en"
+  },
+  {
    "name": "lusia-item-lew",
    "text": "Lion!",
    "voice": "voices/lusia-en"
@@ -919,6 +959,30 @@
    "tries": 3
   },
   {
+   "name": "lusia-czytaj-marchewka",
+   "text": "Car... rot... Carrot!",
+   "voice": "voices/lusia-en",
+   "tries": 3
+  },
+  {
+   "name": "lusia-czytaj-balonik",
+   "text": "Bal... loon... Balloon!",
+   "voice": "voices/lusia-en",
+   "tries": 3
+  },
+  {
+   "name": "lusia-czytaj-traktor",
+   "text": "Trac... tor... Tractor!",
+   "voice": "voices/lusia-en",
+   "tries": 3
+  },
+  {
+   "name": "lusia-czytaj-muszelka",
+   "text": "Sea... shell... Seashell!",
+   "voice": "voices/lusia-en",
+   "tries": 3
+  },
+  {
    "name": "lusia-kolorowanka",
    "text": "Pick a color and touch the picture. Paint it any way you like!",
    "voice": "voices/lusia-en"
@@ -1004,6 +1068,51 @@
    "voice": "voices/lusia-en"
   },
   {
+   "name": "lusia-litera-e",
+   "text": "E is for elephant!",
+   "voice": "voices/lusia-en"
+  },
+  {
+   "name": "lusia-litera-f",
+   "text": "F is for fish!",
+   "voice": "voices/lusia-en"
+  },
+  {
+   "name": "lusia-litera-h",
+   "text": "H is for horse!",
+   "voice": "voices/lusia-en"
+  },
+  {
+   "name": "lusia-litera-z",
+   "text": "Z is for zebra!",
+   "voice": "voices/lusia-en"
+  },
+  {
+   "name": "lusia-litera-u",
+   "text": "U is for umbrella!",
+   "voice": "voices/lusia-en"
+  },
+  {
+   "name": "lusia-litera-c",
+   "text": "C is for cat!",
+   "voice": "voices/lusia-en"
+  },
+  {
+   "name": "lusia-litera-r",
+   "text": "R is for rocket!",
+   "voice": "voices/lusia-en"
+  },
+  {
+   "name": "lusia-litera-g",
+   "text": "G is for goat!",
+   "voice": "voices/lusia-en"
+  },
+  {
+   "name": "lusia-litera-j",
+   "text": "J is for jellyfish!",
+   "voice": "voices/lusia-en"
+  },
+  {
    "name": "lusia-labirynt-kurczak",
    "text": "Lead the chick to its mommy!",
    "voice": "voices/lusia-en"
@@ -1051,6 +1160,46 @@
   {
    "name": "lusia-labirynt-wiewiorka",
    "text": "Lead the squirrel to the tree!",
+   "voice": "voices/lusia-en"
+  },
+  {
+   "name": "lusia-labirynt-lisek",
+   "text": "Lead the fox cub to its mommy!",
+   "voice": "voices/lusia-en"
+  },
+  {
+   "name": "lusia-labirynt-niedzwiadek",
+   "text": "Lead the bear cub to its mommy!",
+   "voice": "voices/lusia-en"
+  },
+  {
+   "name": "lusia-labirynt-pingwinek",
+   "text": "Lead the penguin chick to its mommy!",
+   "voice": "voices/lusia-en"
+  },
+  {
+   "name": "lusia-labirynt-lwiatko",
+   "text": "Lead the lion cub to its mommy!",
+   "voice": "voices/lusia-en"
+  },
+  {
+   "name": "lusia-labirynt-kozlatko",
+   "text": "Lead the baby goat to its mommy!",
+   "voice": "voices/lusia-en"
+  },
+  {
+   "name": "lusia-labirynt-zyrafka",
+   "text": "Lead the baby giraffe to its mommy!",
+   "voice": "voices/lusia-en"
+  },
+  {
+   "name": "lusia-labirynt-foczka",
+   "text": "Lead the seal pup to its mommy!",
+   "voice": "voices/lusia-en"
+  },
+  {
+   "name": "lusia-labirynt-sowka",
+   "text": "Lead the owlet to its mommy!",
    "voice": "voices/lusia-en"
   },
   {
@@ -1341,6 +1490,46 @@
   {
    "name": "bazyl-item-kijanka",
    "text": "Tadpole!",
+   "voice": "voices/bazyl-en"
+  },
+  {
+   "name": "bazyl-item-lisek",
+   "text": "Fox cub!",
+   "voice": "voices/bazyl-en"
+  },
+  {
+   "name": "bazyl-item-niedzwiadek",
+   "text": "Bear cub!",
+   "voice": "voices/bazyl-en"
+  },
+  {
+   "name": "bazyl-item-pingwinek",
+   "text": "Penguin chick!",
+   "voice": "voices/bazyl-en"
+  },
+  {
+   "name": "bazyl-item-lwiatko",
+   "text": "Lion cub!",
+   "voice": "voices/bazyl-en"
+  },
+  {
+   "name": "bazyl-item-kozlatko",
+   "text": "Baby goat!",
+   "voice": "voices/bazyl-en"
+  },
+  {
+   "name": "bazyl-item-zyrafka",
+   "text": "Baby giraffe!",
+   "voice": "voices/bazyl-en"
+  },
+  {
+   "name": "bazyl-item-foczka",
+   "text": "Seal pup!",
+   "voice": "voices/bazyl-en"
+  },
+  {
+   "name": "bazyl-item-sowka",
+   "text": "Owlet!",
    "voice": "voices/bazyl-en"
   },
   {
@@ -2441,6 +2630,46 @@
   {
    "name": "bazyl-mama-kijanka",
    "text": "Where is the tadpole's mommy?",
+   "voice": "voices/bazyl-en"
+  },
+  {
+   "name": "bazyl-mama-lisek",
+   "text": "Where is the fox cub's mommy?",
+   "voice": "voices/bazyl-en"
+  },
+  {
+   "name": "bazyl-mama-niedzwiadek",
+   "text": "Where is the bear cub's mommy?",
+   "voice": "voices/bazyl-en"
+  },
+  {
+   "name": "bazyl-mama-pingwinek",
+   "text": "Where is the penguin chick's mommy?",
+   "voice": "voices/bazyl-en"
+  },
+  {
+   "name": "bazyl-mama-lwiatko",
+   "text": "Where is the lion cub's mommy?",
+   "voice": "voices/bazyl-en"
+  },
+  {
+   "name": "bazyl-mama-kozlatko",
+   "text": "Where is the baby goat's mommy?",
+   "voice": "voices/bazyl-en"
+  },
+  {
+   "name": "bazyl-mama-zyrafka",
+   "text": "Where is the baby giraffe's mommy?",
+   "voice": "voices/bazyl-en"
+  },
+  {
+   "name": "bazyl-mama-foczka",
+   "text": "Where is the seal pup's mommy?",
+   "voice": "voices/bazyl-en"
+  },
+  {
+   "name": "bazyl-mama-sowka",
+   "text": "Where is the owlet's mommy?",
    "voice": "voices/bazyl-en"
   }
  ]

@@ -114,16 +114,19 @@ export class PuzzleScene extends RoundScene {
         break;
     }
     this.cards = q.kind === 'liczenie' ? q.options.map((n) => this.numberCard(n)) : q.options.map((item) => this.itemCard(item));
-    // Wejście: pyknięcia po kolei.
-    const all: Container[] = [...(this.hero ? [this.hero] : []), ...this.counters.map((c) => c.sprite), ...this.cards];
-    all.forEach((c, i) => {
-      void popIn(this.tweens, c, 0.4, i * 0.06);
-      this.timers.after(i * 0.06, () => sfx.pop(this.game.sound, 0.9 + i * 0.06));
-    });
     // Polecenie lektora. Przy liczeniu za pierwszym razem także podpowiedź „dotykaj i licz”.
     this.timers.after(0.3, () => {
       const len = say(this.game, this.guide, promptLine(q));
       if (q.kind === 'liczenie' && this.index === 0) this.timers.after(len + 0.25, () => say(this.game, 'lusia', 'liczenie-dotyk'));
+    });
+  }
+
+  /** Wejście: pyknięcia po kolei (po ułożeniu, żeby animacja kończyła się na właściwej skali). */
+  protected override appear(): void {
+    const all: Container[] = [...(this.hero ? [this.hero] : []), ...this.counters.map((c) => c.sprite), ...this.cards];
+    all.forEach((c, i) => {
+      void popIn(this.tweens, c, 0.4, i * 0.06);
+      this.timers.after(i * 0.06, () => sfx.pop(this.game.sound, 0.9 + i * 0.06));
     });
   }
 

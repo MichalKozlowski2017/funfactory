@@ -204,8 +204,10 @@ export function motherQuestion(rng: Rng, level: number, recent: readonly string[
   // Zmyłki: inne dorosłe zwierzęta (najpierw inne mamy z tej gry, potem reszta zwierząt).
   const adults = ITEMS.filter((i) => i.category === 'zwierzeta' && !i.mother && !lookalike(i, target) && !lookalike(i, baby));
   const n = Math.max(3, optionCount(level));
-  const preferred = take(rng, adults.filter((a) => mothers.has(a.id)), n - 1);
-  const decoys = preferred.length >= n - 1 ? preferred : [...preferred, ...take(rng, adults, n - 1 - preferred.length, preferred)];
+  // Zmyłki niepodobne do siebie nawzajem (owca i koza obok siebie myliłyby).
+  const preferred = distinct(rng, adults.filter((a) => mothers.has(a.id)), n - 1, target);
+  const rest = distinct(rng, adults.filter((a) => !preferred.some((p) => lookalike(p, a))), n - 1 - preferred.length, target);
+  const decoys = [...preferred, ...rest];
   return { kind: 'mamy', baby, target, options: rng.shuffle([target, ...decoys]) };
 }
 

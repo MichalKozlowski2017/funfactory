@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { Rng } from '@funfactory/core';
+import { ITEM_NAMES } from './names.ts';
 import { ITEMS } from './catalog.ts';
-import { dotCount, evenDots, hitsDot, makeDotsRound, radialContour, DOTS_ROUND } from './dots.ts';
+import { dotCount, evenDots, hitsDot, makeDotsRound, radialContour, traceContour, DOTS_ROUND } from './dots.ts';
 import { canStep, makeMaze, makeMazeRound, MAZE_PAIRS, MAZE_ROUND, mazeSize, path } from './maze.ts';
 
 describe('łączenie kropek', () => {
@@ -87,11 +88,37 @@ describe('memory', () => {
   });
 });
 
+describe('kontur kropek po krawędzi', () => {
+  it('kontur litery L idzie w głąb wklęsłości, a nie na skróty', () => {
+    // Maska w kształcie L: kreska pionowa i pozioma.
+    const w = 60;
+    const m = new Uint8Array(w * w);
+    for (let y = 5; y < 55; y++) for (let x = 5; x < 15; x++) m[y * w + x] = 1;
+    for (let y = 45; y < 55; y++) for (let x = 5; x < 55; x++) m[y * w + x] = 1;
+    const c = traceContour(m, w, w);
+    expect(c.length).toBeGreaterThan(20);
+    // Każdy punkt konturu leży przy masce (żaden nie wisi w pustym rogu L).
+    for (const p of c) {
+      const x = Math.round(p.x * w);
+      const y = Math.round(p.y * w);
+      expect(x < 18 || y > 42, `${x},${y}`).toBe(true);
+    }
+  });
+});
+
 describe('litery po śladzie', () => {
   it('litery mają obrazki w katalogu, kreski w polu 0..1, runda bez powtórzeń', async () => {
-    const { LETTERS, makeLetterRound, LETTER_ROUND, resample, advance } = await import('./letters.ts');
+    const { LETTERS, makeLetterRound, LETTER_ROUND, resample, advance, lettersOf } = await import('./letters.ts');
+    // Obrazek każdej litery (w każdym języku) jest w katalogu; litera bez obrazka w danym języku wypada.
+    for (const lang of ['pl', 'en', 'de', 'es'] as const)
+      for (const x of lettersOf(lang)) {
+        const item = ITEMS.find((i) => i.id === x.item);
+        expect(item, `${lang} ${x.ch}`).toBeDefined();
+        // Nazwa obrazka w tym języku zaczyna się na tę literę (bez akcentów: „Árbol” na A).
+        const name = lang === 'pl' ? item!.name : ITEM_NAMES[item!.id]![lang];
+        expect(name.normalize('NFD')[0]!.toUpperCase(), `${lang} ${x.ch} ${name}`).toBe(x.ch);
+      }
     for (const l of LETTERS) {
-      expect(ITEMS.some((i) => i.id === l.item), l.ch).toBe(true);
       for (const s of l.strokes) for (const [x, y] of s) {
         expect(x).toBeGreaterThanOrEqual(-0.01);
         expect(x).toBeLessThanOrEqual(1.01);

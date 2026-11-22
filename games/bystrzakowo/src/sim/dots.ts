@@ -53,6 +53,89 @@ export function radialContour(mask: Uint8Array, w: number, h: number, rays = 180
   return out;
 }
 
+/**
+ * Zewnętrzna krawędź największej plamy maski (śledzenie sąsiadów Moore'a), wygładzona i przerzedzona.
+ * W przeciwieństwie do konturu z promieni idzie też w głąb wklęsłości (hulajnoga, banan, żyrafa).
+ * Współrzędne znormalizowane do 0..1.
+ */
+export function traceContour(mask: Uint8Array, w: number, h: number, smoothing = 1): Point[] {
+  const at = (x: number, y: number) => x >= 0 && y >= 0 && x < w && y < h && mask[y * w + x] === 1;
+  // Największa plama (zalewanie), żeby drobne okruchy nie zaczynały konturu.
+  const comp = new Int32Array(w * h).fill(-1);
+  let best = -1;
+  let bestSize = 0;
+  let id = 0;
+  for (let i = 0; i < w * h; i++) {
+    if (!mask[i] || comp[i] !== -1) continue;
+    const stack = [i];
+    comp[i] = id;
+    let size = 0;
+    while (stack.length) {
+      const j = stack.pop()!;
+      size++;
+      const x = j % w;
+      const y = (j - x) / w;
+      for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]] as const) {
+        const nx = x + dx;
+        const ny = y + dy;
+        if (at(nx, ny) && comp[ny * w + nx] === -1) {
+          comp[ny * w + nx] = id;
+          stack.push(ny * w + nx);
+        }
+      }
+    }
+    if (size > bestSize) {
+      bestSize = size;
+      best = id;
+    }
+    id++;
+  }
+  if (best < 0) return [];
+  const inBlob = (x: number, y: number) => at(x, y) && comp[y * w + x] === best;
+  let start = -1;
+  for (let i = 0; i < w * h && start < 0; i++) if (comp[i] === best) start = i;
+  const sx = start % w;
+  const sy = (start - sx) / w;
+  // Sąsiedzi zgodnie z ruchem wskazówek zegara, od lewego.
+  const DIRS = [[-1, 0], [-1, -1], [0, -1], [1, -1], [1, 0], [1, 1], [0, 1], [-1, 1]] as const;
+  const out: [number, number][] = [[sx, sy]];
+  let cx = sx;
+  let cy = sy;
+  let back = 0; // kierunek, z którego przyszliśmy (start: z lewej, bo to najwyższy-najbardziej lewy piksel)
+  for (let guard = 0; guard < w * h * 4; guard++) {
+    let found = false;
+    for (let k = 1; k <= 8; k++) {
+      const d = (back + k) % 8;
+      const nx = cx + DIRS[d]![0];
+      const ny = cy + DIRS[d]![1];
+      if (inBlob(nx, ny)) {
+        back = (d + 4) % 8;
+        cx = nx;
+        cy = ny;
+        found = true;
+        break;
+      }
+    }
+    if (!found || (cx === sx && cy === sy)) break;
+    out.push([cx, cy]);
+  }
+  // Wygładzenie (średnia ruchoma) i przerzedzenie co ~1% obwodu.
+  const n = out.length;
+  const r = Math.max(1, Math.round((n / 120) * smoothing));
+  const smooth = out.map((_, i) => {
+    let ax = 0;
+    let ay = 0;
+    for (let k = -r; k <= r; k++) {
+      const p = out[(i + k + n) % n]!;
+      ax += p[0];
+      ay += p[1];
+    }
+    return { x: ax / (2 * r + 1) / w, y: ay / (2 * r + 1) / h };
+  });
+  const step = Math.max(1, Math.floor(n / 200));
+  return smooth.filter((_, i) => i % step === 0);
+}
+
 /** `count` punktów równo po obwodzie zamkniętego wielokąta, zaczynając od najwyższego punktu. */
 export function evenDots(poly: Point[], count: number): Point[] {
   if (poly.length < 3) return [];
@@ -74,9 +157,31 @@ export function evenDots(poly: Point[], count: number): Point[] {
   return out;
 }
 
+/** Najmniejsza odległość między dwiema kropkami (we współrzędnych 0..1). */
+export const minGap = (dots: readonly Point[]): number => {
+  let best = Infinity;
+  for (let i = 0; i < dots.length; i++) for (let j = i + 1; j < dots.length; j++) best = Math.min(best, Math.hypot(dots[i]!.x - dots[j]!.x, dots[i]!.y - dots[j]!.y));
+  return best;
+};
+
+/**
+ * Kropki po krawędzi obrazka. Gdy dwie wypadają za blisko (wąskie wcięcie, np. między uszami), kontur jest
+ * mocniej wygładzany, aż wcięcie zniknie; na końcu wybór wersji z największym odstępem.
+ */
+export function dotsOnEdge(mask: Uint8Array, w: number, h: number, count: number): Point[] {
+  let best: Point[] = [];
+  for (const smoothing of [1, 2, 4, 8]) {
+    const dots = evenDots(traceContour(mask, w, h, smoothing), count);
+    if (!best.length || minGap(dots) > minGap(best)) best = dots;
+    if (minGap(dots) >= 0.11) return dots;
+  }
+  return best;
+}
+
 /** Obrazki do łączenia: o charakterystycznej sylwetce (te same co w cieniach). */
 export function makeDotsRound(rng: Rng): Item[] {
-  const pool = ITEMS.filter((i) => i.shadow);
+  // Balonik ma cienki sznurek: kropki na nim zlewają się w jedną.
+  const pool = ITEMS.filter((i) => i.shadow && i.id !== 'balonik');
   return rng.shuffle(pool.length >= DOTS_ROUND ? pool : ITEMS).slice(0, DOTS_ROUND);
 }
 

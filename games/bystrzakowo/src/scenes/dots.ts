@@ -3,7 +3,7 @@ import { haptics } from '@funfactory/core';
 import { popIn, pulse } from '@funfactory/kit2d';
 import { say, shadowNow, shadowOf } from '../assets.ts';
 import type { Item } from '../sim/catalog.ts';
-import { dotCount, evenDots, hitsDot, makeDotsRound, radialContour, type Point } from '../sim/dots.ts';
+import { dotCount, dotsOnEdge, hitsDot, makeDotsRound, type Point } from '../sim/dots.ts';
 import { state } from '../state.ts';
 import { COLORS, label, sfx } from '../ui.ts';
 import { RoundScene } from './round.ts';
@@ -50,7 +50,7 @@ export class DotsScene extends RoundScene {
     this.items = makeDotsRound(this.game.rng);
     this.length = this.items.length;
     await Promise.all(this.items.map((item) => shadowOf(item.id)));
-    this.shapes = this.items.map((item) => evenDots(contourOf(this.art.items.get(item.id)!.source.resource as CanvasImageSource & { width: number; height: number }), dotCount(level)));
+    this.shapes = this.items.map((item) => dotsOf(this.art.items.get(item.id)!.source.resource as CanvasImageSource & { width: number; height: number }, dotCount(level)));
   }
 
   protected override roundItems(): string[] {
@@ -231,7 +231,7 @@ export class DotsScene extends RoundScene {
 }
 
 /** Kontur obrazka: maska alfa w małej rozdzielczości, potem promienie ze środka masy. */
-function contourOf(src: CanvasImageSource & { width: number; height: number }): Point[] {
+function dotsOf(src: CanvasImageSource & { width: number; height: number }, count: number): Point[] {
   const k = MASK / Math.max(src.width, src.height);
   const w = Math.max(1, Math.round(src.width * k));
   const h = Math.max(1, Math.round(src.height * k));
@@ -243,5 +243,5 @@ function contourOf(src: CanvasImageSource & { width: number; height: number }): 
   const data = ctx.getImageData(0, 0, w, h).data;
   const mask = new Uint8Array(w * h);
   for (let i = 0; i < w * h; i++) mask[i] = (data[i * 4 + 3] as number) > 110 ? 1 : 0;
-  return radialContour(mask, w, h);
+  return dotsOnEdge(mask, w, h, count);
 }
