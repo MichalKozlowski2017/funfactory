@@ -148,23 +148,31 @@
   },
   {
    "name": "lusia-czytaj-dynia",
-   "text": "Dy... nia... Dynia!",
-   "tries": 3
+   "text": "Dy... nia... ... Dynia.",
+   "tries": 3,
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "lusia-czytaj-tecza",
-   "text": "Tę... cza... Tęcza!",
-   "tries": 3
+   "text": "Tę... cza... ... Tęcza.",
+   "tries": 3,
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-czytaj-lyzka",
-   "text": "Łyż... ka... Łyżka!",
-   "tries": 3
+   "text": "Łyż... ka... ... Łyżka.",
+   "tries": 3,
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-czytaj-sanki",
-   "text": "San... ki... Sanki!",
-   "tries": 3
+   "text": "San... ki... ... Sanki.",
+   "tries": 3,
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-litera-f",

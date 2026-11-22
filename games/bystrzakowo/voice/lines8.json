@@ -8,91 +8,135 @@
   },
   {
    "name": "lusia-czytaj-koza",
-   "text": "Ko... za... Koza!"
+   "text": "Ko... za... ... Koza.",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "lusia-czytaj-zaba",
-   "text": "Ża... ba... Żaba!"
+   "text": "Ża... ba... ... Żaba.",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-czytaj-sowa",
-   "text": "So... wa... Sowa!"
+   "text": "So... wa... ... Sowa.",
+   "engine": "chatterbox",
+   "seed": 7
   },
   {
    "name": "lusia-czytaj-foka",
-   "text": "Fo... ka... Foka!"
+   "text": "Fo... ka... ... Foka.",
+   "engine": "chatterbox",
+   "seed": 24
   },
   {
    "name": "lusia-czytaj-lodka",
-   "text": "Łód... ka... Łódka!"
+   "text": "Łód... ka... ... Łódka.",
+   "engine": "chatterbox",
+   "seed": 23
   },
   {
    "name": "lusia-czytaj-kura",
-   "text": "Ku... ra... Kura!"
+   "text": "Ku... ra... ... Kura.",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-czytaj-lalka",
-   "text": "Lal... ka... Lalka!"
+   "text": "Lal... ka... ... Lalka.",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-czytaj-kotek",
-   "text": "Ko... tek... Kotek!"
+   "text": "Ko... tek... ... Kotek.",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-czytaj-ryba",
-   "text": "Ryb... ka... Rybka!"
+   "text": "Ryb... ka... ... Rybka.",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-czytaj-auto",
-   "text": "Aut... ko... Autko!"
+   "text": "Aut... ko... ... Autko.",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-czytaj-banan",
-   "text": "Ba... nan... Banan!"
+   "text": "Ba... nan... ... Banan.",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-czytaj-rower",
-   "text": "Ro... wer... Rower!"
+   "text": "Ro... wer... ... Rower.",
+   "engine": "chatterbox",
+   "seed": 7
   },
   {
    "name": "lusia-czytaj-pilka",
-   "text": "Pił... ka... Piłka!"
+   "text": "Pił... ka... ... Piłka.",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-czytaj-motyl",
-   "text": "Mo... tyl... Motyl!"
+   "text": "Mo... tyl... ... Motyl.",
+   "engine": "chatterbox",
+   "seed": 4
   },
   {
    "name": "lusia-czytaj-kubek",
-   "text": "Ku... bek... Kubek!"
+   "text": "Ku... bek... ... Kubek.",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-czytaj-malina",
-   "text": "Ma... li... na... Malina!"
+   "text": "Ma... li... na... ... Malina.",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-czytaj-pomidor",
-   "text": "Po... mi... dor... Pomidor!"
+   "text": "Po... mi... dor... ... Pomidor.",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-czytaj-samolot",
-   "text": "Sa... mo... lot... Samolot!"
+   "text": "Sa... mo... lot... ... Samolot.",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-czytaj-parasol",
-   "text": "Pa... ra... sol... Parasol!"
+   "text": "Pa... ra... sol... ... Parasol.",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-czytaj-rakieta",
-   "text": "Ra... kie... ta... Rakieta!"
+   "text": "Ra... kie... ta... ... Rakieta.",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-czytaj-balonik",
-   "text": "Ba... lo... nik... Balonik!"
+   "text": "Ba... lo... nik... ... Balonik.",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "lusia-czytaj-kapelusz",
-   "text": "Ka... pe... lusz... Kapelusz!"
+   "text": "Ka... pe... lusz... ... Kapelusz.",
+   "engine": "chatterbox",
+   "seed": 1
   }
  ]
 }
