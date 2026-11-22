@@ -147,8 +147,9 @@
   },
   {
    "name": "bazyl-ksztalt-owal",
-   "text": "Owal!",
-   "voice": "voices/prezenter"
+   "text": "Owal.",
+   "voice": "voices/prezenter",
+   "seed": 5
   },
   {
    "name": "bazyl-ksztalt-romb",
