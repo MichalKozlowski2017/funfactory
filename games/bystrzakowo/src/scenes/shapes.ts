@@ -207,8 +207,19 @@ export class ShapeScene extends RoundScene {
       else p.view.position.set(p.hole.x, p.hole.y);
       const g = (p.view.children[0] as Graphics).clear();
       drawShape(g, p.shape, s * 0.94).fill({ color: COLOR[p.shape] }).stroke({ color: COLORS.ink, width: 5, join: 'round' });
-      // Odblask (plastelina).
-      g.ellipse(-s * 0.15, -s * 0.2, s * 0.12, s * 0.07).fill({ color: 0xffffff, alpha: 0.35 });
+      // Odblask (plastelina), przycięty maską do kształtu klocka (bez maski wystawał poza romb, gwiazdę, trójkąt).
+      let shine = p.view.getChildByLabel('shine') as Graphics | null;
+      let mask = p.view.getChildByLabel('shine-mask') as Graphics | null;
+      if (!shine || !mask) {
+        shine = new Graphics();
+        shine.label = 'shine';
+        mask = new Graphics();
+        mask.label = 'shine-mask';
+        p.view.addChild(shine, mask);
+        shine.mask = mask;
+      }
+      drawShape(mask.clear(), p.shape, s * 0.94 - 10).fill({ color: 0xffffff });
+      shine.clear().ellipse(-s * 0.12, -s * 0.16, s * 0.14, s * 0.08).fill({ color: 0xffffff, alpha: 0.35 });
       p.view.hitArea = { contains: (x: number, y: number) => Math.abs(x) <= s / 2 + 10 && Math.abs(y) <= s / 2 + 10 };
     });
   }
