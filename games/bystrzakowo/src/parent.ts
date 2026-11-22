@@ -31,16 +31,21 @@ export class ParentGate extends Container {
   private holding = false;
   onOpen: (() => void) | null = null;
 
-  constructor() {
+  constructor(gear: Texture | null = null) {
     super();
-    const g = new Graphics();
-    const r = 30;
-    for (let i = 0; i < 8; i++) {
-      const a = (i / 8) * Math.PI * 2;
-      g.roundRect(Math.cos(a) * r - 9, Math.sin(a) * r - 9, 18, 18, 4).fill({ color: 0xffffff });
+    // Kremowe kółko jak zakładki krain, w nim zębatka z plasteliny (bez grafiki: zębatka rysowana).
+    const g = new Graphics().circle(0, 5, 40).fill({ color: 0x000000, alpha: 0.15 }).circle(0, 0, 40).fill({ color: 0xfffaf2 }).stroke({ color: COLORS.ink, width: 4 });
+    if (gear) {
+      const pic = new Sprite({ texture: gear, anchor: 0.5 });
+      pic.scale.set(58 / Math.max(gear.width, gear.height));
+      g.addChild(pic);
+    } else {
+      for (let i = 0; i < 8; i++) {
+        const a = (i / 8) * Math.PI * 2;
+        g.roundRect(Math.cos(a) * 20 - 6, Math.sin(a) * 20 - 6, 12, 12, 3).fill({ color: 0xb9a6e0 });
+      }
+      g.circle(0, 0, 20).fill({ color: 0xb9a6e0 }).circle(0, 0, 8).fill({ color: 0xfffaf2 });
     }
-    g.circle(0, 0, r).fill({ color: 0xffffff }).circle(0, 0, 11).fill({ color: 0xb9b0c8 });
-    g.alpha = 0.85;
     this.badge.position.set(26, -26);
     this.badge.visible = false;
     this.addChild(g, this.ring, this.badge);

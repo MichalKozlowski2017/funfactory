@@ -157,7 +157,7 @@ export class WorldScene extends Scene {
     this.particles = new Particles(dotTexture(this.game.app.renderer, 10), this.game.rng);
     this.addChild(this.particles.view);
 
-    this.gate = new ParentGate();
+    this.gate = new ParentGate(this.art.gear);
     this.gate.onOpen = () => (this.sleep ? this.wake() : this.openParent());
     // Kropka przy zębatce: od ostatniej wizyty rodzica były co najmniej 3 dni zabawy.
     this.gate.setBadge(playDaysAfter(journal(), state.progress.parentSeen ?? '') >= 3);

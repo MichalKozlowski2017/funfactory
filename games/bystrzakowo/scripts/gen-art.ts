@@ -299,6 +299,15 @@ if (process.argv.includes('--polana')) {
   );
 }
 
+if (process.argv.includes('--zebatka')) {
+  // Ikona wejścia do strefy rodzica (zębatka w stylu plasteliny), 4 warianty do wyboru.
+  const sprite = (what: string) => `${what}, single object, centered, ${STYLE}, no face on objects, plain light gray background`;
+  tasks.push(
+    { out: 'extra', prefix: 'zebatka-a', args: ['--workflow', 'flux2-sprite', '--count', '2', '--prompt', sprite('a chubby rounded cogwheel gear icon with a round hole in the middle, soft lilac purple, front view, flat facing the camera')] },
+    { out: 'extra', prefix: 'zebatka-b', args: ['--workflow', 'flux2-sprite', '--count', '2', '--prompt', sprite('a chubby rounded settings gear icon with eight soft round teeth and a small yellow button in the center, warm grey and cream, front view, flat facing the camera')] },
+  );
+}
+
 if (process.argv.includes('--warsztat')) {
   const bg = (what: string) => `${what}, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, bright cheerful pastel colors, cute and friendly`;
   const sprite = (what: string) => `${what}, single object, centered, ${STYLE}, no face on objects, plain light gray background`;
@@ -316,7 +325,7 @@ if (process.argv.includes('--warsztat')) {
 }
 
 for (const item of ITEMS) {
-  if ((process.argv.includes('--warsztat') || process.argv.includes('--sciezka') || process.argv.includes('--znaki') || process.argv.includes('--pracownia') || process.argv.includes('--dodatki') || process.argv.includes('--historyjki') || process.argv.includes('--polana') || process.argv.includes('--kolorowanki2') || process.argv.includes('--krajobrazy') || process.argv.includes('--balwan') || process.argv.includes('--historyjki2') || process.argv.includes('--historyjki3') || process.argv.includes('--historyjki4') || process.argv.includes('--historyjki5')) && !only) break;
+  if ((process.argv.includes('--warsztat') || process.argv.includes('--zebatka') || process.argv.includes('--sciezka') || process.argv.includes('--znaki') || process.argv.includes('--pracownia') || process.argv.includes('--dodatki') || process.argv.includes('--historyjki') || process.argv.includes('--polana') || process.argv.includes('--kolorowanki2') || process.argv.includes('--krajobrazy') || process.argv.includes('--balwan') || process.argv.includes('--historyjki2') || process.argv.includes('--historyjki3') || process.argv.includes('--historyjki4') || process.argv.includes('--historyjki5')) && !only) break;
   if (only && !only.has(item.id)) continue;
   if (!only && existsSync(join(repo, 'games/bystrzakowo/public/art/items', `${item.id}.webp`))) continue;
   if (existsSync(join(raw, 'items', `${item.id}-${SEED}.png`))) continue;

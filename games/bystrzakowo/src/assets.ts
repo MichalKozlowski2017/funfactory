@@ -25,6 +25,8 @@ export interface Art {
   /** Warsztat: skrzynka, białe wiaderko (barwione na kolor) i znaki domów zwierząt (stodoła, staw). */
   crate: Texture | null;
   bucket: Texture | null;
+  /** Zębatka strefy rodzica. */
+  gear: Texture | null;
   signs: Map<string, Texture>;
   /** Minki (zagadka z emocjami). */
   emotions: Map<string, Texture>;
@@ -83,7 +85,7 @@ export async function loadArt(): Promise<Art> {
   if (art) return art;
   const load = (path: string) => Assets.load<Texture>(url(path));
   const opt = (path: string) => load(path).catch(() => null);
-  const [items, lusia, bazyl, houses, realmBg, playBg, crate, bucket, signs, emotions, stories] = await Promise.all([
+  const [items, lusia, bazyl, houses, realmBg, playBg, crate, bucket, signs, emotions, stories, gear] = await Promise.all([
     // Obiekt bez grafiki (np. jeszcze niewygenerowany) po prostu wypada z gry.
     Promise.all(ITEMS.map(async (i) => [i.id, await opt(`art/items/${i.id}.webp`)] as const)),
     load('art/lusia.webp'),
@@ -96,6 +98,7 @@ export async function loadArt(): Promise<Art> {
     Promise.all(SIGN_ART.map(async (id) => [id, await opt(`art/warsztat/${id}.webp`)] as const)),
     Promise.all(EMOTIONS.map(async (id): Promise<readonly [string, Texture | null]> => [id, await opt(`art/emocje/${id}.webp`)])),
     Promise.all(STORIES.flatMap((st) => Array.from({ length: FRAMES }, (_, i) => `${st}-${i + 1}`)).map(async (id): Promise<readonly [string, Texture | null]> => [id, await opt(`art/historyjki/${id}.webp`)])),
+    opt('art/zebatka.webp'),
   ]);
   const loaded = items.filter((e): e is readonly [string, Texture] => e[1] !== null);
   keepOnly(new Set(loaded.map(([id]) => id)));
@@ -108,6 +111,7 @@ export async function loadArt(): Promise<Art> {
     playBg: Object.fromEntries(playBg) as Record<RealmId, Texture>,
     crate,
     bucket,
+    gear,
     signs: new Map(signs.filter((e): e is readonly [string, Texture] => e[1] !== null)),
     emotions: new Map(emotions.filter((e): e is readonly [string, Texture] => e[1] !== null)),
     stories: new Map(stories.filter((e): e is readonly [string, Texture] => e[1] !== null)),
