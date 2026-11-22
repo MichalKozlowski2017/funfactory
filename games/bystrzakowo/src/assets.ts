@@ -6,7 +6,7 @@ import { lang } from './sim/lang.ts';
 import { voiceLines, type Guide } from './voice-lines.ts';
 import { state } from './state.ts';
 import { ACTIVITIES, REALMS, type Activity, type RealmId } from './sim/realms.ts';
-import { EMOTIONS } from './sim/emotions.ts';
+import { EMOTION_CHARS, EMOTIONS } from './sim/emotions.ts';
 import { FRAMES, STORIES } from './sim/stories.ts';
 
 /**
@@ -96,7 +96,12 @@ export async function loadArt(): Promise<Art> {
     opt('art/warsztat/skrzynka.webp'),
     opt('art/warsztat/wiadro.webp'),
     Promise.all(SIGN_ART.map(async (id) => [id, await opt(`art/warsztat/${id}.webp`)] as const)),
-    Promise.all(EMOTIONS.map(async (id): Promise<readonly [string, Texture | null]> => [id, await opt(`art/emocje/${id}.webp`)])),
+    // Minki: klucz „<emocja>:<postać>”; postać „dziecko” to pierwotne pliki bez przyrostka.
+    Promise.all(
+      EMOTIONS.flatMap((id) =>
+        EMOTION_CHARS.map(async (c): Promise<readonly [string, Texture | null]> => [`${id}:${c}`, await opt(c === 'dziecko' ? `art/emocje/${id}.webp` : `art/emocje/${id}-${c}.webp`)]),
+      ),
+    ),
     Promise.all(STORIES.flatMap((st) => Array.from({ length: FRAMES }, (_, i) => `${st}-${i + 1}`)).map(async (id): Promise<readonly [string, Texture | null]> => [id, await opt(`art/historyjki/${id}.webp`)])),
     opt('art/zebatka.webp'),
   ]);

@@ -81,8 +81,13 @@ for x in cienie-21 emocje-22 gloski-22 kolory-22 liczenie-21 mamy-21 memory-22 p
 # Emocje: minki (najnowsza wersja każdej).
 mkdir -p $OUT/emocje
 for id in wesoly smutny zly zdziwiony przestraszony spiacy; do
-  f=$(ls -t $RAW/emocje/$id-*.png 2>/dev/null | head -1)
+  f=$(ls -t $RAW/emocje/$id-[0-9]*.png 2>/dev/null | head -1)
   [ -n "$f" ] && sprite "emocje/$(basename "$f")" "emocje/$id" 400
+  # Kolejne postaci: <emocja>-<postać>-<seed>.png -> emocje/<emocja>-<postać>.webp
+  for c in dziewczynka kotek mis; do
+    f=$(ls -t $RAW/emocje/$id-$c-*.png 2>/dev/null | head -1)
+    [ -n "$f" ] && sprite "emocje/$(basename "$f")" "emocje/$id-$c" 400
+  done
 done
 # Historyjki: kadry <historyjka>-<1..3>.
 mkdir -p $OUT/historyjki

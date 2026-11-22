@@ -37,7 +37,7 @@ const qKey = (q: Question): string => {
 
 const GENS: Record<string, { gen: Gen; langs?: boolean; levels?: number[] }> = {
   ...Object.fromEntries(PUZZLE_KINDS.map((k) => [k, { gen: (r: Rng, l: number) => makeRound(k, r, l).map(qKey), langs: k === 'gloski' }])),
-  emocje: { gen: (r, l) => makeEmotionRound(r, l).map((q) => q.target) },
+  emocje: { gen: (r, l) => makeEmotionRound(r, l).map((q) => `${q.target}:${q.char}`) },
   wzory: { gen: (r, l) => makePatternRound(r, l).map((t) => [...new Set(t.row.map((i) => i.id))].sort().join('+')) },
   ksztalty: { gen: (r, l) => Array.from({ length: SHAPE_ROUND }, () => makeShapeBoard(r, l).slice().sort().join('+')) },
   sortowanie: { gen: (r, l) => makeSortRound(r, l).map((t) => `${t.rule}:${t.bins.map((b) => b.key).sort().join('/')}`) },

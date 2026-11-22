@@ -130,6 +130,26 @@ if (process.argv.includes('--dodatki')) {
     tasks.push({ out: 'emocje', prefix: id!, args: ['--workflow', 'flux2-sprite', '--prompt', face(what!)] });
 }
 
+if (process.argv.includes('--emocje2')) {
+  // Emocje: kolejne postaci z tym samym zestawem min (art/emocje/<emocja>-<postać>.webp).
+  const chars: [string, string][] = [
+    ['dziewczynka', 'a cute round little girl head with two blond pigtails and big eyes'],
+    ['kotek', 'a cute round orange kitten head with big eyes'],
+    ['mis', 'a cute round brown teddy bear head with big eyes'],
+  ];
+  const moods: [string, string][] = [
+    ['wesoly', 'very happy, big open smile, cheerful'],
+    ['smutny', 'very sad, frowning mouth, a single tear on the cheek'],
+    ['zly', 'angry, furrowed eyebrows, red cheeks, pouting'],
+    ['zdziwiony', 'surprised, round open mouth, raised eyebrows, wide eyes'],
+    ['przestraszony', 'scared and frightened, eyebrows raised high and pulled together, very wide eyes, mouth open in a small scream, paws or hands on cheeks, no tears'],
+    ['spiacy', 'sleepy, closed eyes, yawning, a little nightcap'],
+  ];
+  for (const [c, who] of chars)
+    for (const [id, what] of moods)
+      tasks.push({ out: 'emocje', prefix: `${id}-${c}`, args: ['--workflow', 'flux2-sprite', '--prompt', `${who}, ${what}, very clear exaggerated expression for toddlers, front view, single object, centered, ${STYLE}, plain light gray background`] });
+}
+
 if (process.argv.includes('--historyjki')) {
   // Historyjki obrazkowe: po trzy kadry (kolejność zdarzeń), ten sam styl co obiekty.
   const frame = (what: string) => `${what}, single scene object, centered, ${STYLE}, no text, plain light gray background`;
@@ -325,7 +345,7 @@ if (process.argv.includes('--warsztat')) {
 }
 
 for (const item of ITEMS) {
-  if ((process.argv.includes('--warsztat') || process.argv.includes('--zebatka') || process.argv.includes('--sciezka') || process.argv.includes('--znaki') || process.argv.includes('--pracownia') || process.argv.includes('--dodatki') || process.argv.includes('--historyjki') || process.argv.includes('--polana') || process.argv.includes('--kolorowanki2') || process.argv.includes('--krajobrazy') || process.argv.includes('--balwan') || process.argv.includes('--historyjki2') || process.argv.includes('--historyjki3') || process.argv.includes('--historyjki4') || process.argv.includes('--historyjki5')) && !only) break;
+  if ((process.argv.includes('--warsztat') || process.argv.includes('--zebatka') || process.argv.includes('--sciezka') || process.argv.includes('--znaki') || process.argv.includes('--pracownia') || process.argv.includes('--dodatki') || process.argv.includes('--historyjki') || process.argv.includes('--polana') || process.argv.includes('--kolorowanki2') || process.argv.includes('--krajobrazy') || process.argv.includes('--balwan') || process.argv.includes('--historyjki2') || process.argv.includes('--historyjki3') || process.argv.includes('--historyjki4') || process.argv.includes('--historyjki5') || process.argv.includes('--emocje2')) && !only) break;
   if (only && !only.has(item.id)) continue;
   if (!only && existsSync(join(repo, 'games/bystrzakowo/public/art/items', `${item.id}.webp`))) continue;
   if (existsSync(join(raw, 'items', `${item.id}-${SEED}.png`))) continue;

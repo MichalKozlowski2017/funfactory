@@ -1,7 +1,7 @@
 import { Texture } from 'pixi.js';
 import { popIn, pulse } from '@funfactory/kit2d';
 import { say } from '../assets.ts';
-import { makeEmotionRound, type Emotion, type EmotionQuestion } from '../sim/emotions.ts';
+import { EMOTION_CHARS, EMOTIONS, makeEmotionRound, type Emotion, type EmotionQuestion } from '../sim/emotions.ts';
 import { state } from '../state.ts';
 import { Card, label, sfx } from '../ui.ts';
 import { RoundScene } from './round.ts';
@@ -23,7 +23,9 @@ export class EmotionScene extends RoundScene {
   }
 
   protected async prepare(): Promise<void> {
-    this.questions = makeEmotionRound(this.game.rng, state.progress.levels.emocje ?? 0);
+    // Tylko postaci, które mają komplet minek (grafiki mogą jeszcze nie istnieć).
+    const chars = EMOTION_CHARS.filter((c) => EMOTIONS.every((e) => this.art.emotions.has(`${e}:${c}`)));
+    this.questions = makeEmotionRound(this.game.rng, state.progress.levels.emocje ?? 0, chars.length ? chars : ['dziecko']);
     this.length = this.questions.length;
   }
 
@@ -45,7 +47,7 @@ export class EmotionScene extends RoundScene {
 
   protected show(): void {
     this.cards = this.q.options.map((e) => {
-      const tex = this.art.emotions.get(e);
+      const tex = this.art.emotions.get(`${e}:${this.q.char}`);
       const card = new Card(tex ?? Texture.EMPTY, 240);
       if (!tex) {
         card.picture.visible = false;
