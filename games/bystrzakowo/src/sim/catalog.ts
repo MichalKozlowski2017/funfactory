@@ -223,14 +223,14 @@ export const ITEMS: Item[] = [
     ['bebenek', 'Bębenek', 'czerwony', 's', 'a small red toy drum with drumsticks'],
     ['konik', 'Konik na biegunach', '', 's', 'a wooden rocking horse toy, side view'],
     ['baczek', 'Bączek', '', 'sc', 'a colorful spinning top toy'],
-    ['robot', 'Robot', '', 's', 'a cute toy robot standing'],
+    ['robot', 'Robot', '', 's', 'a cute boxy toy robot with a square metal head, a small antenna, round button eyes and little claw hands, gray and red, standing, clearly a machine'], // poprzedni wyglądał jak astronauta
     ['balonik', 'Balonik', 'czerwony', 'sc', 'a red balloon on a string'],
     ['trabka', 'Trąbka', 'zolty', 's', 'a yellow toy trumpet'],
     ['wiaderko', 'Wiaderko', 'niebieski', 's', 'a blue sand bucket with a handle'],
     ['sanki', 'Sanki', '', 's', 'an empty small wooden children sled with red runners and nothing on it, side view'],
     ['narty', 'Narty', 'czerwony', 's', 'a pair of red children skis lying side by side, no poles, no person'],
     ['namiot', 'Namiot', 'zielony', 's', 'a small green camping tent, front three-quarter view'],
-    ['ukulele', 'Ukulele', '', 's', 'a small wooden ukulele'],
+    ['ukulele', 'Gitarka', '', 's', 'a small wooden ukulele'], // dziecko nazwie to gitarą, nie ukulele (test agentem)
     ['zamek', 'Zamek z piasku', 'zolty', 's', 'a sandcastle with little towers and a small flag'],
     ['lopatka', 'Łopatka', 'czerwony', 's', 'a red plastic toy sand shovel'],
   ]),

@@ -155,7 +155,7 @@ export const ITEM_NAMES: Record<string, { en: string; de: string; es: string }> 
   czapla: { en: 'Heron', de: 'Reiher', es: 'Garza' },
   narty: { en: 'Skis', de: 'Ski', es: 'Esquís' },
   namiot: { en: 'Tent', de: 'Zelt', es: 'Tienda' },
-  ukulele: { en: 'Ukulele', de: 'Ukulele', es: 'Ukelele' },
+  ukulele: { en: 'Guitar', de: 'Gitarre', es: 'Guitarra' },
   zamek: { en: 'Sandcastle', de: 'Sandburg', es: 'Castillo de arena' },
   lopatka: { en: 'Shovel', de: 'Schaufel', es: 'Pala' },
   szklanka: { en: 'Glass of milk', de: 'Glas Milch', es: 'Vaso de leche' },

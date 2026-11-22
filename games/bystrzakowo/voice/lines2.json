@@ -1070,12 +1070,6 @@
    "seed": 5
   },
   {
-   "name": "lusia-gloska-u",
-   "text": "Co zaczyna się na literę... ... u?",
-   "engine": "chatterbox",
-   "seed": 4
-  },
-  {
    "name": "lusia-gloska-b",
    "text": "Co zaczyna się na literę... ... be?",
    "engine": "chatterbox",

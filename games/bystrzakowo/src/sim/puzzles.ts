@@ -64,7 +64,7 @@ export type Question = ShadowQuestion | OddQuestion | CountQuestion | ColorQuest
  * Wcześniej pytaliśmy o głoskę, ale model mowy nie umie powiedzieć samej spółgłoski („sss” wychodziło jako „sy”).
  * Tylko litery z co najmniej dwoma obrazkami.
  */
-export const SOUNDS_PL = ['a', 'o', 'u', 'b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'ł', 'm', 'n', 'p', 'r', 's', 'ś', 't', 'w', 'z', 'ż'] as const;
+export const SOUNDS_PL = ['a', 'o', 'b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'ł', 'm', 'n', 'p', 'r', 's', 'ś', 't', 'w', 'z', 'ż'] as const;
 /** Angielski i niemiecki: pierwsza litera słowa (tak uczą przedszkola w tych krajach). */
 export const LETTERS_EN = ['a', 'b', 'c', 'd', 'f', 'g', 'h', 'l', 'm', 'o', 'p', 'r', 's', 't', 'w'] as const;
 export const LETTERS_DE = ['a', 'b', 'e', 'f', 'g', 'h', 'k', 'l', 'm', 'p', 'r', 's', 't', 'w', 'z'] as const;
