@@ -50,7 +50,9 @@ export class MelodyScene extends RoundScene {
       this.layer.addChild(bar);
       return bar;
     });
-    // Polecenie (pierwsze zadanie), potem melodia.
+    // Polecenie (pierwsze zadanie), potem melodia. Do końca pokazu sztabki nie grają (stuknięcia przed pokazem
+    // i tak by przepadły, bo pokaz zeruje postęp).
+    this.listen(true);
     const first = this.index === 0;
     this.timers.after(0.4, () => {
       const len = first ? say(this.game, this.guide, 'melodia') : 0;
@@ -72,6 +74,11 @@ export class MelodyScene extends RoundScene {
     const bar = this.bars[i]!;
     void squash(this.tweens, bar, 0.12);
     this.glow(bar, BAR_COLORS[i]!);
+    // W czasie pokazu grająca sztabka na chwilę rozbłyska z przygaszenia.
+    if (this.playing) {
+      bar.alpha = 1;
+      this.tweens.to(bar, { alpha: 0.55 }, { duration: 0.5, delay: 0.25 });
+    }
   }
 
   private glow(bar: Container, color: number): void {
@@ -87,11 +94,25 @@ export class MelodyScene extends RoundScene {
 
   /** Lusia gra melodię; potem kolej dziecka. */
   private play(): void {
-    this.playing = true;
+    this.listen(true);
     this.pos = 0;
     void squash(this.tweens, this.guideSprite, 0.1);
     this.melody.forEach((b, k) => this.timers.after(k * 0.7, () => this.ring(b)));
-    this.timers.after(this.melody.length * 0.7 + 0.1, () => (this.playing = false));
+    this.timers.after(this.melody.length * 0.7 + 0.1, () => this.listen(false));
+  }
+
+  /**
+   * Faza słuchania (sztabki przygaszone, nie grają) albo kolej dziecka (pełny kolor i podskok wszystkich sztabek).
+   * Bez tego dziecko nie wiedziało, czemu stuknięcia w czasie pokazu nic nie dają.
+   */
+  private listen(on: boolean): void {
+    this.playing = on;
+    for (const [i, b] of this.bars.entries()) {
+      // Koniec pokazu: zatrzymujemy opóźnione przygaszenie ostatniej sztabki (przy pomyłce nie, bo sztabka się trzęsie).
+      if (!on) this.tweens.killOf(b);
+      this.tweens.to(b, { alpha: on ? 0.55 : 1 }, { duration: 0.2 });
+      if (!on) this.timers.after(i * 0.04, () => void squash(this.tweens, b, 0.1));
+    }
   }
 
   private hit(i: number): void {
@@ -109,7 +130,7 @@ export class MelodyScene extends RoundScene {
     const x = bar.x;
     void this.tweens.to(bar, { x: x + 10 }, { duration: 0.05, yoyo: true, repeat: 5 }).done.then(() => (bar.x = x));
     this.missed();
-    this.playing = true;
+    this.listen(true);
     this.timers.after(1.4, () => this.play());
   }
 
