@@ -5,7 +5,7 @@ import { say } from '../assets.ts';
 import type { Item } from '../sim/catalog.ts';
 import { jigsawGrid, makeJigsawRound, snaps } from '../sim/jigsaw.ts';
 import { state } from '../state.ts';
-import { COLORS, draggable, sfx } from '../ui.ts';
+import { COLORS, draggable, sfx, wiggle } from '../ui.ts';
 import { RoundScene } from './round.ts';
 
 /** Rozmiar obrazka układanki w pikselach tekstury. */
@@ -109,6 +109,7 @@ export class JigsawScene extends RoundScene {
         view.addChild(border);
         const piece: PieceView = { view, outline: border, col, row, placed: false, tray: { x: 0, y: 0 } };
         draggable(view, {
+          tap: () => this.tapHint(),
           canStart: () => !piece.placed && !this.busy && !this.dragging,
           start: () => {
             this.dragging = true;
@@ -147,7 +148,10 @@ export class JigsawScene extends RoundScene {
     if (snaps(at.x - slot.x, at.y - slot.y, pw, ph)) return this.lock(p);
     // Upuszczony na planszy w złym miejscu: pomyłka. Poza planszą: po prostu wraca.
     const onBoard = Math.abs(at.x - this.board.x) < this.size / 2 && Math.abs(at.y - this.board.y) < this.size / 2;
-    if (onBoard) this.missed();
+    if (onBoard) {
+      this.missed();
+      wiggle(this.tweens, this.board);
+    }
     this.tweens.to(p.view, { x: p.tray.x, y: p.tray.y }, { duration: 0.3, ease: 'backOut' });
     this.tweens.to(p.view.scale, { x: (this.size / PIC) * this.trayScale, y: (this.size / PIC) * this.trayScale }, { duration: 0.2 });
   }

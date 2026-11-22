@@ -75,7 +75,12 @@ export class MemoryScene extends RoundScene {
     });
   }
 
+  /** Zakrycie niepasującej pary (po czasie albo od razu, gdy dziecko stuka już kolejną kartę). */
+  private closePending: (() => void) | null = null;
+
   private tap(c: CardView): void {
+    // Dwie niepasujące karty są odkryte, a dziecko stuka trzecią: zakrywamy je od razu, zamiast ignorować stuknięcie.
+    if (this.picked.length >= 2 && this.closePending && !c.matched && !this.picked.includes(c)) this.closePending();
     if (this.busy || c.open || c.matched || this.picked.length >= 2) return;
     this.idle = 0;
     haptics.tap();
@@ -103,11 +108,15 @@ export class MemoryScene extends RoundScene {
       });
     } else {
       this.misses++;
-      this.timers.after(1.1, () => {
+      const close = () => {
+        if (this.closePending !== close) return;
+        this.closePending = null;
         this.flip(a, false);
         this.flip(b, false);
         this.picked = [];
-      });
+      };
+      this.closePending = close;
+      this.timers.after(1.1, close);
     }
   }
 

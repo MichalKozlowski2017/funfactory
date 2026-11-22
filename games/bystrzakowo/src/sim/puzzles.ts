@@ -149,12 +149,17 @@ export function oddQuestion(rng: Rng, level: number, recent: readonly string[] =
   return { kind: 'pasuje', odd, options: rng.shuffle([odd, ...members]) };
 }
 
-export function countQuestion(rng: Rng, level: number, recent: readonly string[] = []): CountQuestion {
-  const pool = ITEMS.filter((i) => i.countable);
+/** Postaci z tła Polany (różowa świnka przy lisie): nie liczymy ich, bo dziecko policzyłoby też tę z tła. */
+const IN_BACKGROUND = new Set(['prosiaczek', 'swinka']);
+
+export function countQuestion(rng: Rng, level: number, recent: readonly string[] = [], lastCount = 0): CountQuestion {
+  const pool = ITEMS.filter((i) => i.countable && !IN_BACKGROUND.has(i.id));
   const fresh = pool.filter((i) => !recent.includes(i.id));
   const item = rng.pick(fresh.length > 0 ? fresh : pool);
   const max = maxCount(level);
-  const count = rng.int(1, max);
+  // „Jeden” jest za łatwy i wypadał bardzo często: tylko czasem, i nigdy dwa razy z rzędu ta sama liczba.
+  const counts = Array.from({ length: max }, (_, i) => i + 1).filter((c) => c !== lastCount && (c > 1 || rng.chance(0.25)));
+  const count = rng.pick(counts.length ? counts : [Math.min(2, max)]);
   // Zmyłki: liczby obok prawidłowej (najczęstszy błąd dziecka to pomyłka o 1).
   const near = [count - 1, count + 1, count - 2, count + 2, count + 3].filter((x) => x >= 1 && x <= Math.max(max, 4));
   const n = Math.max(3, optionCount(level));
@@ -259,7 +264,8 @@ export function makeRound(kind: PuzzleKind, rng: Rng, level: number): Question[]
   const out: Question[] = [];
   const recent: string[] = [];
   for (let i = 0; i < ROUND_LENGTH; i++) {
-    const q = makeQuestion(kind, rng, level, recent);
+    const prev = out[out.length - 1];
+    const q = kind === 'liczenie' ? countQuestion(rng, level, recent, prev?.kind === 'liczenie' ? prev.count : 0) : makeQuestion(kind, rng, level, recent);
     recent.push(questionKey(q));
     out.push(q);
   }

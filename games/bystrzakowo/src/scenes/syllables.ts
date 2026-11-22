@@ -69,6 +69,7 @@ export class SyllableScene extends RoundScene {
       view.addChild(new Graphics(), label(w.syl[index]!, 64, this.game.pixelRatio, '#ffffff'));
       const tile: Tile = { view, index, color: colors[index]!, home: { x: 0, y: 0 }, placed: false };
       draggable(view, {
+        tap: () => this.tapHint(),
         canStart: () => !tile.placed && !this.busy && !this.dragging,
         start: () => {
           this.dragging = true;

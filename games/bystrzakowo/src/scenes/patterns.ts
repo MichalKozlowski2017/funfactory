@@ -5,7 +5,7 @@ import { say } from '../assets.ts';
 import type { Item } from '../sim/catalog.ts';
 import { makePatternRound, type PatternTask } from '../sim/patterns.ts';
 import { state } from '../state.ts';
-import { COLORS, draggable, label, sfx } from '../ui.ts';
+import { COLORS, draggable, label, sfx, wiggle } from '../ui.ts';
 import { RoundScene } from './round.ts';
 
 interface Tile {
@@ -58,6 +58,7 @@ export class PatternScene extends RoundScene {
       view.addChild(new Graphics(), new Sprite({ texture: this.art.items.get(item.id)!, anchor: 0.5 }));
       const opt = { view, item, home: { x: 0, y: 0 } };
       draggable(view, {
+        tap: () => this.tapHint(),
         canStart: () => !this.busy && !this.dragging,
         start: () => {
           this.dragging = true;
@@ -86,7 +87,10 @@ export class PatternScene extends RoundScene {
     const gap = this.tiles[this.task.gap]!.view;
     const over = Math.abs(at.x - gap.x) < this.size * 0.75 && Math.abs(at.y - gap.y) < this.size * 0.9;
     if (over && opt.item === this.task.row[this.task.gap]) return this.correct(opt);
-    if (over) this.missed();
+    if (over) {
+      this.missed();
+      wiggle(this.tweens, gap);
+    }
     this.tweens.to(opt.view, { x: opt.home.x, y: opt.home.y }, { duration: 0.3, ease: 'backOut' });
     this.tweens.to(opt.view.scale, { x: 1, y: 1 }, { duration: 0.2 });
   }

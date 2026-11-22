@@ -1,5 +1,5 @@
 import { Container, Graphics, Point, Sprite, Text, type Texture } from 'pixi.js';
-import { haptics, Spring, type Sound } from '@funfactory/core';
+import { haptics, Spring, type Sound, type Tweens } from '@funfactory/core';
 
 /** Krój nagłówków i cyfr (Baloo 2 ExtraBold, OFL; pełne polskie znaki). Ładowany raz w main.ts. */
 export let FONT = 'system-ui, -apple-system, sans-serif';
@@ -206,14 +206,14 @@ export function cover(sprite: Sprite, width: number, height: number): void {
  * Przeciąganie palcem: obiekt idzie za palcem (z zachowanym punktem chwytu), po puszczeniu `drop`
  * dostaje pozycję w układzie rodzica. `canStart` blokuje chwytanie (np. w trakcie animacji).
  */
-export function draggable(obj: Container, handlers: { canStart: () => boolean; start?: () => void; drop: (at: Point) => void }): void {
-  let grab: { dx: number; dy: number; id: number } | null = null;
+export function draggable(obj: Container, handlers: { canStart: () => boolean; start?: () => void; drop: (at: Point) => void; tap?: () => void }): void {
+  let grab: { dx: number; dy: number; id: number; x: number; y: number; moved: number } | null = null;
   obj.eventMode = 'static';
   obj.cursor = 'grab';
   obj.on('pointerdown', (e) => {
     if (grab || !obj.parent || !handlers.canStart()) return;
     const p = obj.parent.toLocal(e.global);
-    grab = { dx: obj.x - p.x, dy: obj.y - p.y, id: e.pointerId };
+    grab = { dx: obj.x - p.x, dy: obj.y - p.y, id: e.pointerId, x: p.x, y: p.y, moved: 0 };
     obj.parent.addChild(obj); // na wierzch
     haptics.tap();
     handlers.start?.();
@@ -221,13 +221,23 @@ export function draggable(obj: Container, handlers: { canStart: () => boolean; s
   obj.on('globalpointermove', (e) => {
     if (!grab || e.pointerId !== grab.id || !obj.parent) return;
     const p = obj.parent.toLocal(e.global);
+    grab.moved = Math.max(grab.moved, Math.hypot(p.x - grab.x, p.y - grab.y));
     obj.position.set(p.x + grab.dx, p.y + grab.dy);
   });
   const end = (e: { pointerId: number }) => {
     if (!grab || e.pointerId !== grab.id) return;
+    const tapped = grab.moved < 16;
     grab = null;
     handlers.drop(new Point(obj.x, obj.y));
+    // Stuknięcie zamiast przeciągnięcia: scena może pokazać, dokąd przeciągnąć (dzieci często tylko stukają).
+    if (tapped) handlers.tap?.();
   };
   obj.on('pointerup', end);
   obj.on('pointerupoutside', end);
+}
+
+/** „Nie” bez słów: obiekt kołysze się na boki (zły ruch widać także bez dźwięku). */
+export function wiggle(tweens: Tweens, obj: Container, angle = 0.14): void {
+  // Bez killOf: obiekt może mieć inne animacje (położenie, skala), kręcimy tylko obrotem.
+  void tweens.to(obj, { rotation: angle }, { duration: 0.06, yoyo: true, repeat: 3 }).done.then(() => (obj.rotation = 0));
 }

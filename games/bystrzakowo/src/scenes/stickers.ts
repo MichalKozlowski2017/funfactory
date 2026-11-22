@@ -246,7 +246,8 @@ export class StickerScene extends Scene {
     v.position.set(at.x + d.dx, at.y + d.dy);
     this.fit(d.p);
     v.zIndex = 1e6;
-    const over = this.trash.visible && Math.hypot(v.x - this.trash.x, v.y - this.trash.y) < 110;
+    // Mały zasięg kosza: naklejka położona przy prawej krawędzi obrazka nie może przypadkiem trafić do kosza.
+    const over = this.trash.visible && Math.hypot(v.x - this.trash.x, v.y - this.trash.y) < 70;
     if (over !== this.overTrash) {
       this.overTrash = over;
       this.tweens.killOf(this.trash.scale);
@@ -385,19 +386,24 @@ export class StickerScene extends Scene {
           this.load(i);
           void saveState();
         });
-        // Kosz: pierwsze dotknięcie uzbraja (kosz czerwienieje, karta się trzęsie), drugie usuwa.
+        // Kosz: pierwsze dotknięcie uzbraja (kosz czerwienieje i przeskakuje w przeciwny róg karty, karta się trzęsie),
+        // usuwa dopiero stuknięcie w kosz w nowym miejscu. Seria szybkich stuknięć w jedno miejsce nie kasuje pracy.
         const del = new IconButton('trash', 30, 0xfffaf2);
-        del.position.set(cw / 2 - 12, -ch / 2 + 12);
+        const rest = { x: cw / 2 - 12, y: -ch / 2 + 12 };
+        del.position.set(rest.x, rest.y);
         let armed = false;
         del.onTap = () => {
           if (!armed) {
             armed = true;
             sfx.pop(this.game.sound, 0.8);
             del.tint = 0xff6b6b;
+            del.position.set(-cw / 2 + 12, ch / 2 - 12);
             void this.tweens.to(card, { rotation: 0.05 }, { duration: 0.06, yoyo: true, repeat: 5 }).done.then(() => (card.rotation = 0));
-            this.timers.after(2.5, () => {
+            this.timers.after(4, () => {
               armed = false;
-              if (!del.destroyed) del.tint = 0xffffff;
+              if (del.destroyed) return;
+              del.tint = 0xffffff;
+              del.position.set(rest.x, rest.y);
             });
             return;
           }

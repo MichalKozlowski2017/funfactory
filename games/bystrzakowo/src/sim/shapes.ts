@@ -18,7 +18,33 @@ const clamp = (level: number) => Math.max(0, Math.min(MAX_LEVEL, Math.round(leve
 export const shapeCount = (level: number): number => [3, 4, 5][clamp(level)] as number;
 
 /** Kształty jednej planszy: podstawowe zawsze, potem coraz trudniejsze. */
+/** Zestaw poprzedniej planszy (posortowany): następna plansza ma być inna. */
+let lastBoard = '';
+
+/** Kolejność klocków bez punktów stałych: żaden klocek nie leży dokładnie pod swoją dziurką. */
+export function derange(rng: Rng, n: number): number[] {
+  const idx = Array.from({ length: n }, (_, i) => i);
+  if (n < 2) return idx;
+  for (let k = 0; k < 50; k++) {
+    const s = rng.shuffle([...idx]);
+    if (s.every((v, i) => v !== i)) return s;
+  }
+  return idx.map((i) => (i + 1) % n);
+}
+
 export function makeShapeBoard(rng: Rng, level: number): Shape[] {
+  for (let k = 0; k < 20; k++) {
+    const b = drawBoard(rng, level);
+    const key = [...b].sort().join(',');
+    if (key !== lastBoard || k === 19) {
+      lastBoard = key;
+      return b;
+    }
+  }
+  return drawBoard(rng, level);
+}
+
+function drawBoard(rng: Rng, level: number): Shape[] {
   const l = clamp(level);
   // Poziom 0: trzy z pięciu łatwych (serce i gwiazda są wyraziste), żeby plansze się nie powtarzały.
   const pool = l === 0 ? [...BASIC, 'serce', 'gwiazda'] as Shape[] : l === 1 ? [...BASIC, ...MIDDLE] : [...BASIC, ...MIDDLE, ...HARD];

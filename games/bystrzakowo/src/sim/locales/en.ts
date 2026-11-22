@@ -74,6 +74,7 @@ export const EN: Record<string, string> = {
   'Wyzeruj postępy': 'Reset progress',
   'Na pewno? Dotknij jeszcze raz': 'Are you sure? Touch again',
   Wyzerowano: 'Progress reset',
+  'Dla dorosłych': 'For grown-ups',
   'Język': 'Language',
   'Wersja: pełna': 'Version: full',
   'Wersja: próbna (pełny dostęp)': 'Version: trial (full access)',

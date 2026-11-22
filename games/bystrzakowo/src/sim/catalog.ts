@@ -183,7 +183,7 @@ export const ITEMS: Item[] = [
     ['winogrona', 'Winogrona', 'fioletowy', 's', 'a bunch of purple grapes'],
     ['arbuz', 'Arbuz', '', 's', 'a slice of watermelon with red flesh and green rind'],
     ['ananas', 'Ananas', 'zolty', 's', 'a pineapple with green leaves'],
-    ['malina', 'Malina', 'rozowy', 'c', 'a pink raspberry'],
+    ['malina', 'Malina', 'czerwony', 'c', 'a pink raspberry'],
   ]),
   ...rows('warzywa', [
     ['marchewka', 'Marchewka', 'pomaranczowy', 'sc', 'an orange carrot with green leaves'],

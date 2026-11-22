@@ -37,6 +37,8 @@ export class ColoringScene extends RoundScene {
   private paint = PAINTS[0]!;
   private done!: IconButton;
   private fills = 0;
+  private smearing = false;
+  private lastRegion = -1;
   private version = 0;
   private box = { x: 0, y: 0, s: 400 };
 
@@ -105,7 +107,15 @@ export class ColoringScene extends RoundScene {
     void pixelsToTexture(this.pixels).then((t) => (this.picture.texture = t));
     this.picture.eventMode = 'static';
     this.picture.cursor = 'pointer';
-    this.picture.on('pointerdown', (e) => this.tap(e));
+    // Stuknięcie wypełnia pole; przesuwanie palcem („smarowanie”, jak robią maluchy) wypełnia kolejne pola pod palcem.
+    this.picture.on('pointerdown', (e) => {
+      this.smearing = true;
+      this.lastRegion = -1;
+      this.tap(e);
+    });
+    this.picture.on('globalpointermove', (e) => this.smearing && this.tap(e));
+    this.picture.on('pointerup', () => (this.smearing = false));
+    this.picture.on('pointerupoutside', () => (this.smearing = false));
     const frame = new Graphics();
     frame.label = 'frame';
     frame.eventMode = 'none';
@@ -122,6 +132,7 @@ export class ColoringScene extends RoundScene {
     });
     this.done = new IconButton('next', 52);
     this.done.onTap = () => this.finishPicture();
+    this.done.visible = false;
     this.layer.addChild(this.done);
     this.drawPalette();
     this.timers.after(0.4, () => say(this.game, this.guide, 'kolorowanka'));
@@ -150,11 +161,15 @@ export class ColoringScene extends RoundScene {
     const x = (p.x + this.picture.texture.width / 2) * k;
     const y = (p.y + this.picture.texture.height / 2) * k;
     const region = regionAt(this.labels, this.sizes, SIZE, SIZE, x, y, 60, TAP_REACH);
-    if (!region) return;
+    if (!region || region === this.lastRegion) return;
+    this.lastRegion = region;
     const d = this.pixels.data;
     const r = (this.paint >> 16) & 255;
     const g = (this.paint >> 8) & 255;
     const b = this.paint & 255;
+    // Pole już w tym kolorze: nic do roboty (przy smarowaniu palec wraca na te same pola).
+    const first = this.labels.indexOf(region);
+    if (first >= 0 && d[first * 4] === r && d[first * 4 + 1] === g && d[first * 4 + 2] === b) return;
     for (let i = 0; i < SIZE * SIZE; i++)
       if (this.labels[i] === region) {
         d[i * 4] = r;
@@ -173,6 +188,11 @@ export class ColoringScene extends RoundScene {
     sfx.plop(this.game.sound);
     const local = this.layer.toLocal(e.global);
     this.particles.burst(local.x, local.y, { count: 14, speed: [120, 320], life: [0.3, 0.6], gravity: 500, scale: [0.6, 1.2], colors: [this.paint, this.paint, 0xffffff] });
+    // Przycisk „gotowe” dopiero po kilku polach: naklejka nie za stuknięcie w „dalej” bez kolorowania.
+    if (this.fills === 3) {
+      this.done.visible = true;
+      void popIn(this.tweens, this.done, 0.4);
+    }
     if (this.fills === 6) {
       void pulse(this.tweens, this.done, 0.25, 0.4);
       say(this.game, this.guide, 'kolorowanka-gotowe');

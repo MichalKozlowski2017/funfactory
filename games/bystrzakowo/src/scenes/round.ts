@@ -38,6 +38,8 @@ export abstract class RoundScene extends Scene {
   protected overlay: Container | null = null;
   protected leaving = false;
   protected idle = 0;
+  private tapHintAt = -10;
+  private clock = 0;
   private hinted = 0;
   private solvedAt = -1;
   /** Pomyłki w bieżącym zadaniu (do dziennika). */
@@ -202,11 +204,16 @@ export abstract class RoundScene extends Scene {
     const pic = new Sprite({ texture: this.art.items.get(id)!, anchor: 0.5 });
     pic.scale.set(230 / Math.max(pic.texture.width, pic.texture.height));
     badge.addChild(star, pic);
+    // ▶ = „graj dalej”: nowa runda tej samej zabawy (dzieci tak to rozumieją); domek = powrót do krainy.
     const next = new IconButton('next', 62);
-    next.position.set(view.width / 2, view.height - 90);
+    next.position.set(view.width / 2 + 70, view.height - 90);
     next.visible = false;
-    next.onTap = () => this.leave();
-    o.addChild(badge, next);
+    next.onTap = () => this.again();
+    const back = new IconButton('home', 50);
+    back.position.set(view.width / 2 - 90, view.height - 90);
+    back.visible = false;
+    back.onTap = () => this.leave();
+    o.addChild(badge, next, back);
     this.overlay = o;
     this.addChild(o);
     this.addChild(this.particles.view);
@@ -220,10 +227,23 @@ export abstract class RoundScene extends Scene {
       );
     const len = say(this.game, this.guide, 'nagroda');
     this.timers.after(Math.max(1.2, len), () => {
-      next.visible = true;
+      next.visible = back.visible = true;
       void popIn(this.tweens, next, 0.4);
-      this.updateNext = (dt) => next.tick(dt);
+      void popIn(this.tweens, back, 0.4, 0.1);
+      this.updateNext = (dt) => {
+        next.tick(dt);
+        back.tick(dt);
+      };
     });
+  }
+
+  /** Kolejna runda tej samej zabawy (z ekranu nagrody). */
+  private again(): void {
+    if (this.leaving) return;
+    this.leaving = true;
+    this.game.sound.stopChannel('voice');
+    this.game.sound.unload(this.voices);
+    void import('./factory.ts').then(({ sceneFor }) => this.game.scenes.go(sceneFor(this.kind), { fade: 0.3, color: 0xfff6e8 }));
   }
 
   protected leave(): void {
@@ -234,7 +254,18 @@ export abstract class RoundScene extends Scene {
     void import('./world.ts').then(({ WorldScene }) => this.game.scenes.go(new WorldScene(), { fade: 0.3, color: 0xfff6e8 }));
   }
 
+  /**
+   * Dziecko stuknęło przeciągany element zamiast go przesunąć: pokazujemy podpowiedź (element podjeżdża
+   * w stronę celu), najwyżej co 3 s.
+   */
+  protected tapHint(): void {
+    if (this.busy || this.clock - this.tapHintAt < 3) return;
+    this.tapHintAt = this.clock;
+    this.hint();
+  }
+
   private idleTick(dt: number): void {
+    this.clock += dt;
     if (this.busy || this.overlay || this.leaving || this.index >= this.length) return;
     this.idle += dt;
     if (this.hinted === 0 && this.idle > IDLE_REPEAT) {

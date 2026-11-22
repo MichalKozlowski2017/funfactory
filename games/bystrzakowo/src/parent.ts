@@ -22,6 +22,48 @@ const FONT = 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif';
  * Zębatka strefy rodzica: trzeba ją przytrzymać przez 2 s (bramka przed dziećmi, wymóg kategorii Kids).
  * Pierścień wokół pokazuje postęp przytrzymania.
  */
+/**
+ * Druga część bramki dla rodzica: po przytrzymaniu zębatki pytanie, którego przedszkolak nie rozwiąże
+ * (mnożenie, trzy odpowiedzi). Samo przytrzymanie 4-latek przechodził łatwo (test agentem-dzieckiem).
+ * Zła odpowiedź albo stuknięcie obok zamyka pytanie.
+ */
+export class AdultCheck extends Container {
+  private readonly buttons: Button[] = [];
+
+  constructor(game: Game, onPass: () => void, onClose: () => void) {
+    super();
+    const { width: w, height: h } = game.view;
+    const pr = game.pixelRatio;
+    const dim = new Graphics().rect(0, 0, w, h).fill({ color: 0x2a1a40, alpha: 0.6 });
+    dim.eventMode = 'static';
+    dim.on('pointertap', onClose);
+    const cw = Math.min(560, w - 40), ch = 300;
+    const card = new Graphics().roundRect(-cw / 2, -ch / 2, cw, ch, 36).fill({ color: 0xfffaf2 }).stroke({ color: COLORS.ink, width: 5 });
+    card.position.set(w / 2, h / 2);
+    card.eventMode = 'static';
+    const a = game.rng.int(6, 9), b = game.rng.int(6, 9), ok = a * b;
+    const wrong = game.rng.shuffle([ok + a, ok - b, ok + 10, ok - 10, ok + b].filter((x) => x !== ok && x > 0)).slice(0, 2);
+    const t1 = new Text({ text: tr('Dla dorosłych'), style: { fontFamily: GAME_FONT, fontSize: 30, fill: '#8a7a6a', fontWeight: '800' }, resolution: pr, anchor: 0.5 });
+    t1.position.set(0, -ch / 2 + 44);
+    const t2 = new Text({ text: `${a} × ${b} = ?`, style: { fontFamily: GAME_FONT, fontSize: 64, fill: '#3b2a20', fontWeight: '900' }, resolution: pr, anchor: 0.5 });
+    t2.position.set(0, -20);
+    card.addChild(t1, t2);
+    const opts = game.rng.shuffle([ok, ...wrong]);
+    const bw = (cw - 80) / 3;
+    opts.forEach((v, i) => {
+      const btn = new Button({ label: String(v), width: bw - 12, height: 92, color: '#5cb3ff', fontFamily: GAME_FONT, fontSize: 40, resolution: pr, onTap: () => (v === ok ? onPass() : onClose()) });
+      btn.position.set(-cw / 2 + 40 + bw * (i + 0.5), ch / 2 - 70);
+      card.addChild(btn);
+      this.buttons.push(btn);
+    });
+    this.addChild(dim, card);
+  }
+
+  tick(dt: number): void {
+    for (const b of this.buttons) b.tick(dt);
+  }
+}
+
 export class ParentGate extends Container {
   private readonly ring = new Graphics();
   /** Kropka „coś nowego dla rodzica” (po kilku dniach zabawy od ostatniej wizyty). */
@@ -52,12 +94,18 @@ export class ParentGate extends Container {
     this.eventMode = 'static';
     this.cursor = 'pointer';
     this.hitArea = { contains: (x: number, y: number) => x * x + y * y <= 60 * 60 };
-    this.on('pointerdown', () => (this.holding = true));
     const stop = () => {
       this.holding = false;
       this.held = 0;
       this.ring.clear();
     };
+    this.on('pointerdown', () => (this.holding = true));
+    // Palec zjechał z zębatki: przytrzymanie przerwane (dziecko, które wodzi palcem po ekranie, nie przejdzie).
+    this.on('globalpointermove', (e) => {
+      if (!this.holding) return;
+      const p = this.toLocal(e.global);
+      if (p.x * p.x + p.y * p.y > 70 * 70) stop();
+    });
     this.on('pointerup', stop);
     this.on('pointerupoutside', stop);
   }

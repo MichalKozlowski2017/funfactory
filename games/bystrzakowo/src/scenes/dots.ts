@@ -113,7 +113,11 @@ export class DotsScene extends RoundScene {
     if (this.busy) return;
     this.idle = 0;
     this.drawing = true;
-    this.check(this.local(e));
+    const p = this.local(e);
+    const before = this.done;
+    this.check(p);
+    // Stuknięcie w inną kropkę niż następna: następna (zielona) pulsuje, żeby było widać, od której zacząć.
+    if (this.done === before && this.points.some((d, i) => i !== this.target && hitsDot(p, d.at, 46))) void pulse(this.tweens, this.points[this.target]!.view, 0.35, 0.4);
   }
 
   private move(e: FederatedPointerEvent): void {

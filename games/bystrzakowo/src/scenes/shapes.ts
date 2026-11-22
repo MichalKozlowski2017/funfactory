@@ -3,7 +3,7 @@ import { haptics } from '@funfactory/core';
 import { popIn, pulse, squash } from '@funfactory/kit2d';
 import { say } from '../assets.ts';
 import { logFact } from '../log.ts';
-import { makeShapeBoard, SHAPE_ROUND, type Shape } from '../sim/shapes.ts';
+import { derange, makeShapeBoard, SHAPE_ROUND, type Shape } from '../sim/shapes.ts';
 import { state } from '../state.ts';
 import { COLORS, draggable, sfx } from '../ui.ts';
 import { RoundScene } from './round.ts';
@@ -96,13 +96,14 @@ export class ShapeScene extends RoundScene {
       return hole;
     });
     // Klocki w innej kolejności niż dziurki.
-    const order = this.game.rng.shuffle(shapes.map((_, i) => i));
+    const order = derange(this.game.rng, shapes.length);
     this.pieces = order.map((i) => {
       const shape = shapes[i]!;
       const view = new Container();
       view.addChild(new Graphics());
       const piece: Piece = { shape, view, hole: holes[i]!, home: { x: 0, y: 0 }, done: false };
       draggable(view, {
+        tap: () => this.tapHint(),
         canStart: () => !piece.done && !this.busy && !this.dragging,
         start: () => {
           this.dragging = true;

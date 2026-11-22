@@ -72,6 +72,7 @@ export const DE: Record<string, string> = {
   'Wyzeruj postępy': 'Fortschritt zurücksetzen',
   'Na pewno? Dotknij jeszcze raz': 'Sicher? Noch einmal tippen',
   Wyzerowano: 'Zurückgesetzt',
+  'Dla dorosłych': 'Für Erwachsene',
   'Język': 'Sprache',
   'Wersja: pełna': 'Version: Vollversion',
   'Wersja: próbna (pełny dostęp)': 'Version: Testphase (voller Zugang)',

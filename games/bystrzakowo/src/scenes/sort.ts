@@ -197,6 +197,7 @@ export class SortScene extends RoundScene {
     view.addChild(plate, pic);
     const piece: Piece = { view, item, bin, home: { x: 0, y: 0 }, done: false };
     draggable(view, {
+      tap: () => this.tapHint(),
       canStart: () => !piece.done && !this.busy && !this.dragging,
       start: () => {
         this.dragging = true;

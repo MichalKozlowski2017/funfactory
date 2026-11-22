@@ -81,8 +81,8 @@ export class LetterScene extends RoundScene {
     this.pad.eventMode = 'static';
     this.pad.on('pointerdown', (e) => this.down(e));
     this.pad.on('globalpointermove', (e) => this.tracing && this.trace(e));
-    this.pad.on('pointerup', () => (this.tracing = false));
-    this.pad.on('pointerupoutside', () => (this.tracing = false));
+    this.pad.on('pointerup', () => this.up());
+    this.pad.on('pointerupoutside', () => this.up());
     this.layer.addChild(this.pad, this.track, this.ink, this.guideLine, this.start, this.picture);
     this.timers.after(0.4, () => say(this.game, this.guide, this.promptLine()));
   }
@@ -104,11 +104,34 @@ export class LetterScene extends RoundScene {
     return [(p.x - this.box.x) / this.box.h, (p.y - this.box.y) / this.box.h];
   }
 
+  /** Postęp w chwili przyłożenia palca i liczba prób z rzędu bez postępu (np. rysowanie od złej strony). */
+  private atDown = 0;
+  private strokeAtDown = 0;
+  private fails = 0;
+
   private down(e: FederatedPointerEvent): void {
     if (this.busy) return;
     this.idle = 0;
     this.tracing = true;
+    this.atDown = this.at;
+    this.strokeAtDown = this.stroke;
     this.trace(e);
+  }
+
+  /**
+   * Palec podniesiony. Dwie próby z rzędu bez postępu: podpowiedź (kropka startu i strzałki), bo dziecko,
+   * które uparcie rysuje od złej strony, ciągle dotyka ekranu i zwykła podpowiedź po bezczynności nie przychodzi.
+   */
+  private up(): void {
+    if (!this.tracing) return;
+    this.tracing = false;
+    if (this.busy) return;
+    if (this.stroke === this.strokeAtDown && this.at === this.atDown) {
+      if (++this.fails >= 2) {
+        this.fails = 0;
+        this.tapHint();
+      }
+    } else this.fails = 0;
   }
 
   private trace(e: FederatedPointerEvent): void {

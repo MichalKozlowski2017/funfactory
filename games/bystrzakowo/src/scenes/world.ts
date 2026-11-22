@@ -6,28 +6,15 @@ import { playable, type PuzzleKind } from '../sim/puzzles.ts';
 import { ACTIVITY_NAMES, isPuzzle, realmOf, REALMS, type Activity } from '../sim/realms.ts';
 import { saveState, state } from '../state.ts';
 import { COLORS, cover, label, sfx } from '../ui.ts';
-import { ParentGate, ParentPanel } from '../parent.ts';
+import { AdultCheck, ParentGate, ParentPanel } from '../parent.ts';
 import { realmIsOpen } from '../premium.ts';
 import { lang } from '../sim/lang.ts';
 import { journal, today } from '../log.ts';
 import { addTask, addTime, noteFact, playDaysAfter, shiftDay } from '../sim/journal.ts';
 import { extend, timeIsUp } from '../session.ts';
 import { AlbumScene } from './album.ts';
-import { ColoringScene } from './coloring.ts';
-import { DotsScene } from './dots.ts';
-import { EmotionScene } from './emotions.ts';
-import { JigsawScene } from './jigsaw.ts';
-import { MazeScene } from './maze.ts';
-import { LetterScene } from './letters.ts';
-import { MelodyScene } from './melody.ts';
-import { MemoryScene } from './memory.ts';
-import { PatternScene } from './patterns.ts';
-import { PuzzleScene } from './puzzle.ts';
-import { drawShape, ShapeScene } from './shapes.ts';
-import { SortScene } from './sort.ts';
-import { StoryScene } from './stories.ts';
-import { SyllableScene } from './syllables.ts';
-import { StickerScene } from './stickers.ts';
+import { drawShape } from './shapes.ts';
+import { sceneFor } from './factory.ts';
 import { tr } from '../sim/i18n.ts';
 
 /** Obrazek na zakładce krainy (obiekt z katalogu). */
@@ -158,7 +145,7 @@ export class WorldScene extends Scene {
     this.addChild(this.particles.view);
 
     this.gate = new ParentGate(this.art.gear);
-    this.gate.onOpen = () => (this.sleep ? this.wake() : this.openParent());
+    this.gate.onOpen = () => this.askAdult(() => (this.sleep ? this.wake() : this.openParent()));
     // Kropka przy zębatce: od ostatniej wizyty rodzica były co najmniej 3 dni zabawy.
     this.gate.setBadge(playDaysAfter(journal(), state.progress.parentSeen ?? '') >= 3);
     this.addChild(this.gate);
@@ -501,8 +488,7 @@ export class WorldScene extends Scene {
     void squash(this.tweens, house, 0.18);
     const p = this.toLocal(house.getGlobalPosition());
     this.particles.burst(p.x, p.y, { count: 24, speed: [200, 520], life: [0.4, 0.8], gravity: 900, scale: [0.6, 1.2], colors: COLORS.confetti });
-    const scenes: Record<string, () => Scene> = { memory: () => new MemoryScene(), emocje: () => new EmotionScene(), sortowanie: () => new SortScene(), ukladanka: () => new JigsawScene(), wzory: () => new PatternScene(), ksztalty: () => new ShapeScene(), sylaby: () => new SyllableScene(), historyjki: () => new StoryScene(), kropki: () => new DotsScene(), litery: () => new LetterScene('litery'), cyfry: () => new LetterScene('cyfry'), kolorowanka: () => new ColoringScene(), naklejanka: () => new StickerScene(), melodia: () => new MelodyScene(), labirynt: () => new MazeScene() };
-    const scene = isPuzzle(kind) ? new PuzzleScene(kind as PuzzleKind) : scenes[kind]!();
+    const scene = sceneFor(kind);
     this.timers.after(0.35, () => void this.game.scenes.go(scene, { fade: 0.3, color: 0xfff6e8 }));
   }
 
@@ -526,6 +512,22 @@ export class WorldScene extends Scene {
     (this.parentPanel as unknown as { setTab(t: string): void }).setTab(tab);
   }
 
+  private adultCheck: AdultCheck | null = null;
+
+  /** Pytanie dla dorosłego przed strefą rodzica (i przed wybudzeniem po limicie czasu). */
+  private askAdult(then: () => void): void {
+    if (this.adultCheck || this.parentPanel) return;
+    const close = () => {
+      this.adultCheck?.destroy({ children: true });
+      this.adultCheck = null;
+    };
+    this.adultCheck = new AdultCheck(this.game, () => {
+      close();
+      then();
+    }, close);
+    this.addChild(this.adultCheck);
+  }
+
   private openParent(): void {
     if (this.parentPanel) return;
     state.progress.parentSeen = today();
@@ -546,6 +548,7 @@ export class WorldScene extends Scene {
   override update(dt: number): void {
     this.particles.update(dt);
     this.gate.tick(dt);
+    this.adultCheck?.tick(dt);
     this.parentPanel?.tick(dt);
   }
 

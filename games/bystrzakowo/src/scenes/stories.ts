@@ -62,6 +62,7 @@ export class StoryScene extends RoundScene {
       const card: Card = { view, frame, home: { x: 0, y: 0 }, placed: frame < preset };
       if (!card.placed)
         draggable(view, {
+          tap: () => this.tapHint(),
           canStart: () => !card.placed && !this.busy && !this.dragging,
           start: () => {
             this.dragging = true;

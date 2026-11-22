@@ -34,7 +34,7 @@ export const LETTERS: readonly Letter[] = [
   { ch: 'I', item: 'indyk', level: 0, strokes: [[[0.5, 0], [0.5, 1]]] },
   { ch: 'L', item: 'lew', level: 0, strokes: [[[0.28, 0], [0.28, 1], [0.78, 1]]] },
   { ch: 'T', item: 'traktor', level: 0, strokes: [[[0.12, 0], [0.88, 0]], [[0.5, 0], [0.5, 1]]] },
-  { ch: 'O', item: 'owca', level: 0, strokes: [arc(0.5, 0.5, 0.38, 0.5, -90, 270, 28)] },
+  { ch: 'O', item: 'owca', level: 0, strokes: [arc(0.5, 0.5, 0.38, 0.5, -90, -450, 28)] }, // od góry w lewo, jak w przedszkolu (i jak C, G)
   { ch: 'A', item: 'auto', level: 1, strokes: [[[0.5, 0], [0.12, 1]], [[0.5, 0], [0.88, 1]], [[0.28, 0.62], [0.72, 0.62]]] },
   { ch: 'M', item: 'motyl', level: 1, strokes: [[[0.12, 1], [0.12, 0], [0.5, 0.6], [0.88, 0], [0.88, 1]]] },
   { ch: 'W', item: 'wieloryb', level: 1, strokes: [[[0.04, 0], [0.27, 1], [0.5, 0.35], [0.73, 1], [0.96, 0]]] },
@@ -133,7 +133,7 @@ export const DIGITS: readonly Letter[] = [
   { ch: '1', item: '', level: 0, strokes: [[[0.28, 0.22], [0.6, 0], [0.6, 1]]] },
   { ch: '7', item: '', level: 0, strokes: [[[0.15, 0], [0.85, 0], [0.4, 1]]] },
   { ch: '4', item: '', level: 0, strokes: [[[0.6, 0], [0.12, 0.68], [0.9, 0.68]], [[0.65, 0.35], [0.65, 1]]] },
-  { ch: '0', item: '', level: 0, strokes: [arc(0.5, 0.5, 0.34, 0.5, -90, 270, 28)] },
+  { ch: '0', item: '', level: 0, strokes: [arc(0.5, 0.5, 0.34, 0.5, -90, -450, 28)] }, // od góry w lewo
   { ch: '2', item: '', level: 1, strokes: [[...arc(0.5, 0.28, 0.32, 0.28, -170, 25, 14), [0.15, 1], [0.85, 1]]] },
   { ch: '3', item: '', level: 1, strokes: [[...arc(0.5, 0.25, 0.3, 0.25, -160, 90, 14), ...arc(0.5, 0.75, 0.32, 0.25, -90, 160, 14).slice(1)]] },
   { ch: '5', item: '', level: 1, strokes: [[[0.8, 0], [0.27, 0], [0.22, 0.45], ...arc(0.48, 0.68, 0.32, 0.32, -125, 150, 16)]] },
