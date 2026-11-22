@@ -259,7 +259,7 @@ const COLORS: Record<L, Record<string, [show: string, bucket: string]>> = {
 };
 
 const SHAPES: Record<L, Record<string, string>> = {
-  en: { kolo: 'Circle!', kwadrat: 'Square!', trojkat: 'Triangle!', prostokat: 'Rectangle!', gwiazda: 'Star!', serce: 'Heart!', owal: 'Oval!', romb: 'Diamond!' },
+  en: { kolo: 'Circle!', kwadrat: 'Square!', trojkat: 'Triangle!', prostokat: 'A rectangle!', gwiazda: 'Star!', serce: 'Heart!', owal: 'Oval!', romb: 'Diamond!' },
   es: { kolo: '¡Círculo!', kwadrat: '¡Cuadrado!', trojkat: '¡Triángulo!', prostokat: '¡Rectángulo!', gwiazda: '¡Estrella!', serce: '¡Corazón!', owal: '¡Óvalo!', romb: '¡Rombo!' },
   de: { kolo: 'Kreis!', kwadrat: 'Quadrat!', trojkat: 'Dreieck!', prostokat: 'Rechteck!', gwiazda: 'Stern!', serce: 'Herz!', owal: 'Oval!', romb: 'Raute!' },
 };
@@ -478,14 +478,17 @@ function text(l: L, guide: Guide, line: string): string {
   throw new Error(`Brak tłumaczenia: ${l} ${guide}-${line}`);
 }
 
-const voiceOf = (l: L, g: Guide) => `voices/${g}-${l}`;
+// Angielski: spokojne głosy (wybór właściciela 22.11.2026, poprzednie „krzyczały”).
+const voiceOf = (l: L, g: Guide) => (l === 'en' ? `voices/${g}-en-calm` : `voices/${g}-${l}`);
+/** Spokojniej: wykrzyknik czytany jest jak okrzyk, więc po angielsku kończymy kropką. */
+const calm = (l: L, t: string) => (l === 'en' ? t.replace(/!/g, '.') : t);
 const dir = join(import.meta.dirname, '..', 'voice');
 for (const l of ['en', 'de', 'es'] as const) {
   setLang(l as Lang);
   const names = voiceLines(l);
   // Sylabowanie Whisper zawsze zapisuje po swojemu („Pumpkin? Pumpkin?”), więc te kwestie dostają mniej prób.
   const lines = (['lusia', 'bazyl'] as const).flatMap((g) =>
-    names[g].map((line) => ({ name: `${g}-${line}`, text: text(l, g, line), voice: voiceOf(l, g), ...(line.startsWith('czytaj-') ? { tries: 3 } : {}) })),
+    names[g].map((line) => ({ name: `${g}-${line}`, text: calm(l, text(l, g, line)), voice: voiceOf(l, g), ...(line.startsWith('czytaj-') ? { tries: 3 } : {}) })),
   );
   // Każda kwestia raz (np. nazwy obiektów są w obu głosach osobno, więc zostają).
   const unique = [...new Map(lines.map((x) => [x.name, x])).values()];
