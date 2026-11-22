@@ -840,153 +840,178 @@
   },
   {
    "name": "lusia-czytaj-kaczka",
-   "text": "En... te... Ente!",
-   "voice": "voices/lusia-de",
-   "tries": 3
+   "text": "En... te... ... Ente.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-czytaj-pszczola",
-   "text": "Bie... ne... Biene!",
-   "voice": "voices/lusia-de",
-   "tries": 3
+   "text": "Bie... ne... ... Biene.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 17
   },
   {
    "name": "lusia-czytaj-wiaderko",
-   "text": "Ei... mer... Eimer!",
-   "voice": "voices/lusia-de",
-   "tries": 3
+   "text": "Ei... mer... ... Eimer.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 5
   },
   {
    "name": "lusia-czytaj-gruszka",
-   "text": "Bir... ne... Birne!",
-   "voice": "voices/lusia-de",
-   "tries": 3
+   "text": "Bir... ne... ... Birne.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-czytaj-widelec",
-   "text": "Ga... bel... Gabel!",
-   "voice": "voices/lusia-de",
-   "tries": 3
+   "text": "Ga... bel... ... Gabel.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 6
   },
   {
    "name": "lusia-czytaj-lalka",
-   "text": "Pup... pe... Puppe!",
-   "voice": "voices/lusia-de",
-   "tries": 3
+   "text": "Pup... pe... ... Puppe.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "lusia-czytaj-kot",
-   "text": "Kat... ze... Katze!",
-   "voice": "voices/lusia-de",
-   "tries": 3
+   "text": "Kat... ze... ... Katze.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 4
   },
   {
    "name": "lusia-czytaj-kubek",
-   "text": "Tas... se... Tasse!",
-   "voice": "voices/lusia-de",
-   "tries": 3
+   "text": "Tas... se... ... Tasse.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 4
   },
   {
    "name": "lusia-czytaj-malpa",
-   "text": "Af... fe... Affe!",
-   "voice": "voices/lusia-de",
-   "tries": 3
+   "text": "Af... fe... ... Affe.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-czytaj-slonce",
-   "text": "Son... ne... Sonne!",
-   "voice": "voices/lusia-de",
-   "tries": 3
+   "text": "Son... ne... ... Sonne.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 41
   },
   {
    "name": "lusia-czytaj-chmurka",
-   "text": "Wol... ke... Wolke!",
-   "voice": "voices/lusia-de",
-   "tries": 3
+   "text": "Wol... ke... ... Wolke.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-czytaj-kwiatek",
-   "text": "Blu... me... Blume!",
-   "voice": "voices/lusia-de",
-   "tries": 3
+   "text": "Blu... me... ... Blume.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 6
   },
   {
    "name": "lusia-czytaj-hulajnoga",
-   "text": "Rol... ler... Roller!",
-   "voice": "voices/lusia-de",
-   "tries": 3
+   "text": "Rol... ler... ... Roller.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 6
   },
   {
    "name": "lusia-czytaj-banan",
-   "text": "Ba... na... ne... Banane!",
-   "voice": "voices/lusia-de",
-   "tries": 3
+   "text": "Ba. na. ne. ... Banane.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 41
   },
   {
    "name": "lusia-czytaj-pomidor",
-   "text": "To... ma... te... Tomate!",
-   "voice": "voices/lusia-de",
-   "tries": 3
+   "text": "To. ma. te. ... Tomate.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 40
   },
   {
    "name": "lusia-czytaj-rakieta",
-   "text": "Ra... ke... te... Rakete!",
-   "voice": "voices/lusia-de",
-   "tries": 3
+   "text": "Ra. ke. te. ... Rakete.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 32
   },
   {
    "name": "lusia-czytaj-cytryna",
-   "text": "Zi... tro... ne... Zitrone!",
-   "voice": "voices/lusia-de",
-   "tries": 3
+   "text": "Zi... tro... ne... ... Zitrone.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 19
   },
   {
    "name": "lusia-czytaj-slon",
-   "text": "E... le... fant... Elefant!",
-   "voice": "voices/lusia-de",
-   "tries": 3
+   "text": "E... le... fant... ... Elefant.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "lusia-czytaj-ananas",
-   "text": "A... na... nas... Ananas!",
-   "voice": "voices/lusia-de",
-   "tries": 3
+   "text": "A. na. nas. ... Ananas.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 37
   },
   {
    "name": "lusia-czytaj-papryka",
-   "text": "Pa... pri... ka... Paprika!",
-   "voice": "voices/lusia-de",
-   "tries": 3
+   "text": "Pa... pri... ka... ... Paprika.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 43
   },
   {
    "name": "lusia-czytaj-trabka",
-   "text": "Trom... pe... te... Trompete!",
-   "voice": "voices/lusia-de",
-   "tries": 3
+   "text": "Trom... pe... te... ... Trompete.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "lusia-czytaj-spodnie",
-   "text": "Ho... se... Hose!",
-   "voice": "voices/lusia-de",
-   "tries": 3
+   "text": "Ho. se. ... Hose.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 44
   },
   {
    "name": "lusia-czytaj-czapka",
-   "text": "Müt... ze... Mütze!",
-   "voice": "voices/lusia-de",
-   "tries": 3
+   "text": "Müt... ze... ... Mütze.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 15
   },
   {
    "name": "lusia-czytaj-ogorek",
-   "text": "Gur... ke... Gurke!",
-   "voice": "voices/lusia-de",
-   "tries": 3
+   "text": "Gur... ke... ... Gurke.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "lusia-czytaj-zajac",
-   "text": "Ha... se... Hase!",
-   "voice": "voices/lusia-de",
-   "tries": 3
+   "text": "Ha... se... ... Hase.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 4
   },
   {
    "name": "lusia-kolorowanka",
