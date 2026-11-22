@@ -1,7 +1,12 @@
 {
- "voice": "voices/alt",
- "tries": 8,
- "lines": [
-  { "name": "lusia-kraina-spi", "text": "Ta kraina jeszcze śpi. Poproś mamę albo tatę!", "voice": "voices/alt" }
- ]
+  "voice": "voices/alt",
+  "tries": 8,
+  "lines": [
+    {
+      "name": "lusia-kraina-spi",
+      "text": "Ta kraina jeszcze śpi, poproś mamę albo tatę!",
+      "voice": "voices/alt",
+      "seed": 40
+    }
+  ]
 }
