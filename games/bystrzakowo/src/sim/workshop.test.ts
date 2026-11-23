@@ -155,7 +155,7 @@ describe('sorter kształtów', () => {
         const b = makeShapeBoard(rng, level);
         expect(b.length).toBe(shapeCount(level));
         expect(new Set(b).size).toBe(b.length);
-        if (level === 0) expect(b.every((s) => ['kolo', 'kwadrat', 'trojkat', 'serce', 'gwiazda'].includes(s))).toBe(true);
+        if (level === 0) expect(b.every((s) => ['kolo', 'kwadrat', 'trojkat', 'serce', 'gwiazda', 'ksiezyc', 'kropla'].includes(s))).toBe(true);
       }
   });
 

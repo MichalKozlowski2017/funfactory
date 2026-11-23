@@ -5,12 +5,14 @@
 import type { Rng } from '@funfactory/core';
 import { MAX_LEVEL } from './puzzles.ts';
 
-export type Shape = 'kolo' | 'kwadrat' | 'trojkat' | 'prostokat' | 'gwiazda' | 'serce' | 'owal' | 'romb';
-export const SHAPES: readonly Shape[] = ['kolo', 'kwadrat', 'trojkat', 'prostokat', 'gwiazda', 'serce', 'owal', 'romb'];
+export type Shape = 'kolo' | 'kwadrat' | 'trojkat' | 'prostokat' | 'gwiazda' | 'serce' | 'owal' | 'romb' | 'ksiezyc' | 'kropla';
+export const SHAPES: readonly Shape[] = ['kolo', 'kwadrat', 'trojkat', 'prostokat', 'gwiazda', 'serce', 'owal', 'romb', 'ksiezyc', 'kropla'];
 
 export const SHAPE_ROUND = 3;
 const BASIC: Shape[] = ['kolo', 'kwadrat', 'trojkat'];
 const MIDDLE: Shape[] = ['prostokat', 'gwiazda', 'serce'];
+/** Wyraziste kształty spoza geometrii (od poziomu 0, żeby plansze się nie powtarzały). */
+const FUN: Shape[] = ['serce', 'gwiazda', 'ksiezyc', 'kropla'];
 const HARD: Shape[] = ['owal', 'romb'];
 
 const clamp = (level: number) => Math.max(0, Math.min(MAX_LEVEL, Math.round(level)));
@@ -46,8 +48,9 @@ export function makeShapeBoard(rng: Rng, level: number): Shape[] {
 
 function drawBoard(rng: Rng, level: number): Shape[] {
   const l = clamp(level);
-  // Poziom 0: trzy z pięciu łatwych (serce i gwiazda są wyraziste), żeby plansze się nie powtarzały.
-  const pool = l === 0 ? [...BASIC, 'serce', 'gwiazda'] as Shape[] : l === 1 ? [...BASIC, ...MIDDLE] : [...BASIC, ...MIDDLE, ...HARD];
+  // Poziom 0: trzy z siedmiu łatwych (serce, gwiazda, księżyc i kropla są wyraziste): 35 różnych plansz zamiast 10.
+  const easy = [...new Set([...BASIC, ...FUN])];
+  const pool = l === 0 ? easy : l === 1 ? [...new Set([...easy, ...MIDDLE])] : [...new Set([...easy, ...MIDDLE, ...HARD])];
   // Na najwyższym poziomie zawsze choć jedna para podobnych (owal z kołem albo romb z kwadratem).
   const must = l >= MAX_LEVEL ? [rng.pick(HARD)] : [];
   const rest = rng.shuffle(pool.filter((s) => !must.includes(s))).slice(0, shapeCount(level) - must.length);

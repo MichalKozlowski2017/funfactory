@@ -189,6 +189,26 @@
    "voice": "voices/lusia-de"
   },
   {
+   "name": "lusia-item-szczeniaczek",
+   "text": "Welpe!",
+   "voice": "voices/lusia-de"
+  },
+  {
+   "name": "lusia-item-kroliczek",
+   "text": "Häschen!",
+   "voice": "voices/lusia-de"
+  },
+  {
+   "name": "lusia-item-sloniatko",
+   "text": "Elefantenbaby!",
+   "voice": "voices/lusia-de"
+  },
+  {
+   "name": "lusia-item-zolwik",
+   "text": "Schildkrötenbaby!",
+   "voice": "voices/lusia-de"
+  },
+  {
    "name": "lusia-item-lew",
    "text": "Löwe!",
    "voice": "voices/lusia-de"
@@ -376,6 +396,16 @@
   {
    "name": "lusia-item-nosorozec",
    "text": "Nashorn!",
+   "voice": "voices/lusia-de"
+  },
+  {
+   "name": "lusia-item-labedz",
+   "text": "Schwan!",
+   "voice": "voices/lusia-de"
+  },
+  {
+   "name": "lusia-item-czapla",
+   "text": "Reiher!",
    "voice": "voices/lusia-de"
   },
   {
@@ -629,6 +659,31 @@
    "voice": "voices/lusia-de"
   },
   {
+   "name": "lusia-item-narty",
+   "text": "Ski!",
+   "voice": "voices/lusia-de"
+  },
+  {
+   "name": "lusia-item-namiot",
+   "text": "Zelt!",
+   "voice": "voices/lusia-de"
+  },
+  {
+   "name": "lusia-item-ukulele",
+   "text": "Gitarre!",
+   "voice": "voices/lusia-de"
+  },
+  {
+   "name": "lusia-item-zamek",
+   "text": "Sandburg!",
+   "voice": "voices/lusia-de"
+  },
+  {
+   "name": "lusia-item-lopatka",
+   "text": "Schaufel!",
+   "voice": "voices/lusia-de"
+  },
+  {
    "name": "lusia-item-kubek",
    "text": "Tasse!",
    "voice": "voices/lusia-de"
@@ -671,6 +726,16 @@
   {
    "name": "lusia-item-butelka",
    "text": "Fläschchen!",
+   "voice": "voices/lusia-de"
+  },
+  {
+   "name": "lusia-item-szklanka",
+   "text": "Glas Milch!",
+   "voice": "voices/lusia-de"
+  },
+  {
+   "name": "lusia-item-jajko",
+   "text": "Ei!",
    "voice": "voices/lusia-de"
   },
   {
@@ -791,6 +856,21 @@
   {
    "name": "lusia-item-muszelka",
    "text": "Muschel!",
+   "voice": "voices/lusia-de"
+  },
+  {
+   "name": "lusia-item-szyszka",
+   "text": "Tannenzapfen!",
+   "voice": "voices/lusia-de"
+  },
+  {
+   "name": "lusia-item-ul",
+   "text": "Bienenstock!",
+   "voice": "voices/lusia-de"
+  },
+  {
+   "name": "lusia-item-sniezynka",
+   "text": "Schneeflocke!",
    "voice": "voices/lusia-de"
   },
   {
@@ -1234,6 +1314,26 @@
    "voice": "voices/lusia-de"
   },
   {
+   "name": "lusia-labirynt-szczeniaczek",
+   "text": "Bring den Welpen zu seiner Mama.",
+   "voice": "voices/lusia-de"
+  },
+  {
+   "name": "lusia-labirynt-kroliczek",
+   "text": "Bring das Häschen zu seiner Mama.",
+   "voice": "voices/lusia-de"
+  },
+  {
+   "name": "lusia-labirynt-sloniatko",
+   "text": "Bring das Elefantenbaby zu seiner Mama.",
+   "voice": "voices/lusia-de"
+  },
+  {
+   "name": "lusia-labirynt-zolwik",
+   "text": "Bring das Schildkrötenbaby zu seiner Mama.",
+   "voice": "voices/lusia-de"
+  },
+  {
    "name": "lusia-cienie",
    "text": "Wessen Schatten ist das? Tipp auf das richtige Bild.",
    "voice": "voices/lusia-de"
@@ -1564,6 +1664,26 @@
    "voice": "voices/bazyl-de"
   },
   {
+   "name": "bazyl-item-szczeniaczek",
+   "text": "Welpe!",
+   "voice": "voices/bazyl-de"
+  },
+  {
+   "name": "bazyl-item-kroliczek",
+   "text": "Häschen!",
+   "voice": "voices/bazyl-de"
+  },
+  {
+   "name": "bazyl-item-sloniatko",
+   "text": "Elefantenbaby!",
+   "voice": "voices/bazyl-de"
+  },
+  {
+   "name": "bazyl-item-zolwik",
+   "text": "Schildkrötenbaby!",
+   "voice": "voices/bazyl-de"
+  },
+  {
    "name": "bazyl-item-lew",
    "text": "Löwe!",
    "voice": "voices/bazyl-de"
@@ -1751,6 +1871,16 @@
   {
    "name": "bazyl-item-nosorozec",
    "text": "Nashorn!",
+   "voice": "voices/bazyl-de"
+  },
+  {
+   "name": "bazyl-item-labedz",
+   "text": "Schwan!",
+   "voice": "voices/bazyl-de"
+  },
+  {
+   "name": "bazyl-item-czapla",
+   "text": "Reiher!",
    "voice": "voices/bazyl-de"
   },
   {
@@ -2004,6 +2134,31 @@
    "voice": "voices/bazyl-de"
   },
   {
+   "name": "bazyl-item-narty",
+   "text": "Ski!",
+   "voice": "voices/bazyl-de"
+  },
+  {
+   "name": "bazyl-item-namiot",
+   "text": "Zelt!",
+   "voice": "voices/bazyl-de"
+  },
+  {
+   "name": "bazyl-item-ukulele",
+   "text": "Gitarre!",
+   "voice": "voices/bazyl-de"
+  },
+  {
+   "name": "bazyl-item-zamek",
+   "text": "Sandburg!",
+   "voice": "voices/bazyl-de"
+  },
+  {
+   "name": "bazyl-item-lopatka",
+   "text": "Schaufel!",
+   "voice": "voices/bazyl-de"
+  },
+  {
    "name": "bazyl-item-kubek",
    "text": "Tasse!",
    "voice": "voices/bazyl-de"
@@ -2046,6 +2201,16 @@
   {
    "name": "bazyl-item-butelka",
    "text": "Fläschchen!",
+   "voice": "voices/bazyl-de"
+  },
+  {
+   "name": "bazyl-item-szklanka",
+   "text": "Glas Milch!",
+   "voice": "voices/bazyl-de"
+  },
+  {
+   "name": "bazyl-item-jajko",
+   "text": "Ei!",
    "voice": "voices/bazyl-de"
   },
   {
@@ -2169,6 +2334,21 @@
    "voice": "voices/bazyl-de"
   },
   {
+   "name": "bazyl-item-szyszka",
+   "text": "Tannenzapfen!",
+   "voice": "voices/bazyl-de"
+  },
+  {
+   "name": "bazyl-item-ul",
+   "text": "Bienenstock!",
+   "voice": "voices/bazyl-de"
+  },
+  {
+   "name": "bazyl-item-sniezynka",
+   "text": "Schneeflocke!",
+   "voice": "voices/bazyl-de"
+  },
+  {
    "name": "bazyl-krainy",
    "text": "Tipp oben auf die bunten Kreise, um andere Länder zu besuchen!",
    "voice": "voices/bazyl-de"
@@ -2249,11 +2429,6 @@
    "voice": "voices/bazyl-de"
   },
   {
-   "name": "bazyl-historia-swieca",
-   "text": "Zuerst eine lange Kerze, dann immer kürzer, und am Ende ein kleiner Stummel!",
-   "voice": "voices/bazyl-de"
-  },
-  {
    "name": "bazyl-historia-kakao",
    "text": "Zuerst eine leere Tasse, dann Milch, und am Ende warmer Kakao!",
    "voice": "voices/bazyl-de"
@@ -2266,11 +2441,6 @@
   {
    "name": "bazyl-historia-drzewko",
    "text": "Zuerst ein kleiner Setzling, dann ein Bäumchen, und am Ende ein Apfelbaum mit Äpfeln!",
-   "voice": "voices/bazyl-de"
-  },
-  {
-   "name": "bazyl-historia-samolot",
-   "text": "Zuerst ein Blatt Papier, dann falten wir es, und am Ende ein Papierflieger!",
    "voice": "voices/bazyl-de"
   },
   {
@@ -2391,6 +2561,16 @@
   {
    "name": "bazyl-ksztalt-romb",
    "text": "Raute!",
+   "voice": "voices/bazyl-de"
+  },
+  {
+   "name": "bazyl-ksztalt-ksiezyc",
+   "text": "Mond!",
+   "voice": "voices/bazyl-de"
+  },
+  {
+   "name": "bazyl-ksztalt-kropla",
+   "text": "Tropfen!",
    "voice": "voices/bazyl-de"
   },
   {
@@ -2704,153 +2884,8 @@
    "voice": "voices/bazyl-de"
   },
   {
-   "name": "lusia-item-labedz",
-   "text": "Schwan.",
-   "voice": "voices/lusia-de"
-  },
-  {
-   "name": "bazyl-item-labedz",
-   "text": "Schwan.",
-   "voice": "voices/bazyl-de"
-  },
-  {
-   "name": "lusia-item-czapla",
-   "text": "Reiher.",
-   "voice": "voices/lusia-de"
-  },
-  {
-   "name": "bazyl-item-czapla",
-   "text": "Reiher.",
-   "voice": "voices/bazyl-de"
-  },
-  {
-   "name": "lusia-item-narty",
-   "text": "Ski.",
-   "voice": "voices/lusia-de"
-  },
-  {
-   "name": "bazyl-item-narty",
-   "text": "Ski.",
-   "voice": "voices/bazyl-de"
-  },
-  {
-   "name": "lusia-item-namiot",
-   "text": "Zelt.",
-   "voice": "voices/lusia-de"
-  },
-  {
-   "name": "bazyl-item-namiot",
-   "text": "Zelt.",
-   "voice": "voices/bazyl-de"
-  },
-  {
-   "name": "lusia-item-ukulele",
-   "text": "Gitarre.",
-   "voice": "voices/lusia-de"
-  },
-  {
-   "name": "bazyl-item-ukulele",
-   "text": "Gitarre.",
-   "voice": "voices/bazyl-de"
-  },
-  {
-   "name": "lusia-item-zamek",
-   "text": "Sandburg.",
-   "voice": "voices/lusia-de"
-  },
-  {
-   "name": "bazyl-item-zamek",
-   "text": "Sandburg.",
-   "voice": "voices/bazyl-de"
-  },
-  {
-   "name": "lusia-item-lopatka",
-   "text": "Schaufel.",
-   "voice": "voices/lusia-de"
-  },
-  {
-   "name": "bazyl-item-lopatka",
-   "text": "Schaufel.",
-   "voice": "voices/bazyl-de"
-  },
-  {
-   "name": "lusia-item-szklanka",
-   "text": "Glas Milch.",
-   "voice": "voices/lusia-de"
-  },
-  {
-   "name": "bazyl-item-szklanka",
-   "text": "Glas Milch.",
-   "voice": "voices/bazyl-de"
-  },
-  {
-   "name": "lusia-item-jajko",
-   "text": "Ei.",
-   "voice": "voices/lusia-de"
-  },
-  {
-   "name": "bazyl-item-jajko",
-   "text": "Ei.",
-   "voice": "voices/bazyl-de"
-  },
-  {
-   "name": "lusia-item-szyszka",
-   "text": "Tannenzapfen.",
-   "voice": "voices/lusia-de"
-  },
-  {
-   "name": "bazyl-item-szyszka",
-   "text": "Tannenzapfen.",
-   "voice": "voices/bazyl-de"
-  },
-  {
-   "name": "lusia-item-ul",
-   "text": "Bienenstock.",
-   "voice": "voices/lusia-de"
-  },
-  {
-   "name": "bazyl-item-ul",
-   "text": "Bienenstock.",
-   "voice": "voices/bazyl-de"
-  },
-  {
-   "name": "lusia-item-sniezynka",
-   "text": "Schneeflocke.",
-   "voice": "voices/lusia-de"
-  },
-  {
-   "name": "bazyl-item-sniezynka",
-   "text": "Schneeflocke.",
-   "voice": "voices/bazyl-de"
-  },
-  {
-   "name": "lusia-item-szczeniaczek",
-   "text": "Welpe.",
-   "voice": "voices/lusia-de"
-  },
-  {
-   "name": "bazyl-item-szczeniaczek",
-   "text": "Welpe.",
-   "voice": "voices/bazyl-de"
-  },
-  {
    "name": "bazyl-mama-szczeniaczek",
    "text": "Wo ist die Mama vom Welpen?",
-   "voice": "voices/bazyl-de"
-  },
-  {
-   "name": "lusia-labirynt-szczeniaczek",
-   "text": "Bring den Welpen zu seiner Mama.",
-   "voice": "voices/lusia-de"
-  },
-  {
-   "name": "lusia-item-kroliczek",
-   "text": "Häschen.",
-   "voice": "voices/lusia-de"
-  },
-  {
-   "name": "bazyl-item-kroliczek",
-   "text": "Häschen.",
    "voice": "voices/bazyl-de"
   },
   {
@@ -2859,49 +2894,14 @@
    "voice": "voices/bazyl-de"
   },
   {
-   "name": "lusia-labirynt-kroliczek",
-   "text": "Bring das Häschen zu seiner Mama.",
-   "voice": "voices/lusia-de"
-  },
-  {
-   "name": "lusia-item-sloniatko",
-   "text": "Elefantenbaby.",
-   "voice": "voices/lusia-de"
-  },
-  {
-   "name": "bazyl-item-sloniatko",
-   "text": "Elefantenbaby.",
-   "voice": "voices/bazyl-de"
-  },
-  {
    "name": "bazyl-mama-sloniatko",
    "text": "Wo ist die Mama vom Elefantenbaby?",
-   "voice": "voices/bazyl-de"
-  },
-  {
-   "name": "lusia-labirynt-sloniatko",
-   "text": "Bring das Elefantenbaby zu seiner Mama.",
-   "voice": "voices/lusia-de"
-  },
-  {
-   "name": "lusia-item-zolwik",
-   "text": "Schildkrötenbaby.",
-   "voice": "voices/lusia-de"
-  },
-  {
-   "name": "bazyl-item-zolwik",
-   "text": "Schildkrötenbaby.",
    "voice": "voices/bazyl-de"
   },
   {
    "name": "bazyl-mama-zolwik",
    "text": "Wo ist die Mama vom Schildkrötenbaby?",
    "voice": "voices/bazyl-de"
-  },
-  {
-   "name": "lusia-labirynt-zolwik",
-   "text": "Bring das Schildkrötenbaby zu seiner Mama.",
-   "voice": "voices/lusia-de"
   }
  ]
 }

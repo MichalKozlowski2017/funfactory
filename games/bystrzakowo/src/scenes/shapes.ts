@@ -17,7 +17,27 @@ const COLOR: Record<Shape, number> = {
   serce: 0xff8fc0,
   owal: 0x9b5de5,
   romb: 0x2fb8b0,
+  ksiezyc: 0xc4cbd8,
+  kropla: 0x4fd2f0,
 };
+
+/** Sierp księżyca: koło o promieniu 1 bez koła (0.45, 0) o promieniu 0.8, przesunięty do środka pola. */
+const MOON: number[] = (() => {
+  const d = 0.45, r = 0.8;
+  const ix = (1 - r * r + d * d) / (2 * d), iy = Math.sqrt(1 - ix * ix);
+  const a0 = Math.atan2(iy, ix), b0 = Math.atan2(iy, ix - d);
+  const pts: number[] = [];
+  const n = 24;
+  for (let i = 0; i <= n; i++) {
+    const a = a0 + ((2 * Math.PI - 2 * a0) * i) / n;
+    pts.push(Math.cos(a), Math.sin(a));
+  }
+  for (let i = 1; i < n; i++) {
+    const b = 2 * Math.PI - b0 - ((2 * Math.PI - 2 * b0) * i) / n;
+    pts.push(d + Math.cos(b) * r, Math.sin(b) * r);
+  }
+  return pts.map((v, i) => (i % 2 === 0 ? v + 0.19 : v));
+})();
 
 /** Rysuje kształt o rozmiarze `s` (środek w 0,0). */
 export function drawShape(g: Graphics, shape: Shape, s: number): Graphics {
@@ -43,6 +63,15 @@ export function drawShape(g: Graphics, shape: Shape, s: number): Graphics {
       return g.ellipse(0, 0, h, h * 0.62);
     case 'romb':
       return g.poly([0, -h, h * 0.72, 0, 0, h, -h * 0.72, 0]);
+    case 'ksiezyc':
+      return g.poly(MOON.map((v) => v * h));
+    case 'kropla':
+      return g
+        .moveTo(0, -h)
+        .bezierCurveTo(h * 0.25, -h * 0.55, h * 0.72, -h * 0.1, h * 0.72, h * 0.25)
+        .arc(0, h * 0.25, h * 0.72, 0, Math.PI)
+        .bezierCurveTo(-h * 0.72, -h * 0.1, -h * 0.25, -h * 0.55, 0, -h)
+        .closePath();
   }
 }
 

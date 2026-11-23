@@ -189,6 +189,26 @@
    "voice": "voices/lusia-en-calm"
   },
   {
+   "name": "lusia-item-szczeniaczek",
+   "text": "Puppy.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-item-kroliczek",
+   "text": "Baby bunny.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-item-sloniatko",
+   "text": "Baby elephant.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-item-zolwik",
+   "text": "Baby turtle.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
    "name": "lusia-item-lew",
    "text": "Lion.",
    "voice": "voices/lusia-en-calm"
@@ -376,6 +396,16 @@
   {
    "name": "lusia-item-nosorozec",
    "text": "Rhino.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-item-labedz",
+   "text": "Swan.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-item-czapla",
+   "text": "Heron.",
    "voice": "voices/lusia-en-calm"
   },
   {
@@ -629,6 +659,31 @@
    "voice": "voices/lusia-en-calm"
   },
   {
+   "name": "lusia-item-narty",
+   "text": "Skis.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-item-namiot",
+   "text": "Tent.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-item-ukulele",
+   "text": "Guitar.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-item-zamek",
+   "text": "Sandcastle.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-item-lopatka",
+   "text": "Shovel.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
    "name": "lusia-item-kubek",
    "text": "Mug.",
    "voice": "voices/lusia-en-calm"
@@ -671,6 +726,16 @@
   {
    "name": "lusia-item-butelka",
    "text": "Bottle.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-item-szklanka",
+   "text": "Glass of milk.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-item-jajko",
+   "text": "Egg.",
    "voice": "voices/lusia-en-calm"
   },
   {
@@ -791,6 +856,21 @@
   {
    "name": "lusia-item-muszelka",
    "text": "Seashell.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-item-szyszka",
+   "text": "Pine cone.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-item-ul",
+   "text": "Beehive.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-item-sniezynka",
+   "text": "Snowflake.",
    "voice": "voices/lusia-en-calm"
   },
   {
@@ -1203,6 +1283,26 @@
    "voice": "voices/lusia-en-calm"
   },
   {
+   "name": "lusia-labirynt-szczeniaczek",
+   "text": "Lead the puppy to its mommy.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-labirynt-kroliczek",
+   "text": "Lead the baby bunny to its mommy.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-labirynt-sloniatko",
+   "text": "Lead the baby elephant to its mommy.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-labirynt-zolwik",
+   "text": "Lead the baby turtle to its mommy.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
    "name": "lusia-cienie",
    "text": "Whose shadow is this? Touch the right picture.",
    "voice": "voices/lusia-en-calm"
@@ -1533,6 +1633,26 @@
    "voice": "voices/bazyl-en-calm"
   },
   {
+   "name": "bazyl-item-szczeniaczek",
+   "text": "Puppy.",
+   "voice": "voices/bazyl-en-calm"
+  },
+  {
+   "name": "bazyl-item-kroliczek",
+   "text": "Baby bunny.",
+   "voice": "voices/bazyl-en-calm"
+  },
+  {
+   "name": "bazyl-item-sloniatko",
+   "text": "Baby elephant.",
+   "voice": "voices/bazyl-en-calm"
+  },
+  {
+   "name": "bazyl-item-zolwik",
+   "text": "Baby turtle.",
+   "voice": "voices/bazyl-en-calm"
+  },
+  {
    "name": "bazyl-item-lew",
    "text": "Lion.",
    "voice": "voices/bazyl-en-calm"
@@ -1720,6 +1840,16 @@
   {
    "name": "bazyl-item-nosorozec",
    "text": "Rhino.",
+   "voice": "voices/bazyl-en-calm"
+  },
+  {
+   "name": "bazyl-item-labedz",
+   "text": "Swan.",
+   "voice": "voices/bazyl-en-calm"
+  },
+  {
+   "name": "bazyl-item-czapla",
+   "text": "Heron.",
    "voice": "voices/bazyl-en-calm"
   },
   {
@@ -1973,6 +2103,31 @@
    "voice": "voices/bazyl-en-calm"
   },
   {
+   "name": "bazyl-item-narty",
+   "text": "Skis.",
+   "voice": "voices/bazyl-en-calm"
+  },
+  {
+   "name": "bazyl-item-namiot",
+   "text": "Tent.",
+   "voice": "voices/bazyl-en-calm"
+  },
+  {
+   "name": "bazyl-item-ukulele",
+   "text": "Guitar.",
+   "voice": "voices/bazyl-en-calm"
+  },
+  {
+   "name": "bazyl-item-zamek",
+   "text": "Sandcastle.",
+   "voice": "voices/bazyl-en-calm"
+  },
+  {
+   "name": "bazyl-item-lopatka",
+   "text": "Shovel.",
+   "voice": "voices/bazyl-en-calm"
+  },
+  {
    "name": "bazyl-item-kubek",
    "text": "Mug.",
    "voice": "voices/bazyl-en-calm"
@@ -2015,6 +2170,16 @@
   {
    "name": "bazyl-item-butelka",
    "text": "Bottle.",
+   "voice": "voices/bazyl-en-calm"
+  },
+  {
+   "name": "bazyl-item-szklanka",
+   "text": "Glass of milk.",
+   "voice": "voices/bazyl-en-calm"
+  },
+  {
+   "name": "bazyl-item-jajko",
+   "text": "Egg.",
    "voice": "voices/bazyl-en-calm"
   },
   {
@@ -2138,6 +2303,21 @@
    "voice": "voices/bazyl-en-calm"
   },
   {
+   "name": "bazyl-item-szyszka",
+   "text": "Pine cone.",
+   "voice": "voices/bazyl-en-calm"
+  },
+  {
+   "name": "bazyl-item-ul",
+   "text": "Beehive.",
+   "voice": "voices/bazyl-en-calm"
+  },
+  {
+   "name": "bazyl-item-sniezynka",
+   "text": "Snowflake.",
+   "voice": "voices/bazyl-en-calm"
+  },
+  {
    "name": "bazyl-krainy",
    "text": "Touch the colorful circles at the top to visit other lands.",
    "voice": "voices/bazyl-en-calm"
@@ -2218,11 +2398,6 @@
    "voice": "voices/bazyl-en-calm"
   },
   {
-   "name": "bazyl-historia-swieca",
-   "text": "First a tall candle, then shorter and shorter, and at the end a tiny stub.",
-   "voice": "voices/bazyl-en-calm"
-  },
-  {
    "name": "bazyl-historia-kakao",
    "text": "First an empty mug, then milk, and at the end warm cocoa.",
    "voice": "voices/bazyl-en-calm"
@@ -2235,11 +2410,6 @@
   {
    "name": "bazyl-historia-drzewko",
    "text": "First a tiny sapling, then a little tree, and at the end an apple tree with apples.",
-   "voice": "voices/bazyl-en-calm"
-  },
-  {
-   "name": "bazyl-historia-samolot",
-   "text": "First a sheet of paper, then we fold it, and at the end a paper plane.",
    "voice": "voices/bazyl-en-calm"
   },
   {
@@ -2360,6 +2530,16 @@
   {
    "name": "bazyl-ksztalt-romb",
    "text": "Diamond.",
+   "voice": "voices/bazyl-en-calm"
+  },
+  {
+   "name": "bazyl-ksztalt-ksiezyc",
+   "text": "Moon.",
+   "voice": "voices/bazyl-en-calm"
+  },
+  {
+   "name": "bazyl-ksztalt-kropla",
+   "text": "Drop.",
    "voice": "voices/bazyl-en-calm"
   },
   {
@@ -2673,153 +2853,8 @@
    "voice": "voices/bazyl-en-calm"
   },
   {
-   "name": "lusia-item-labedz",
-   "text": "Swan.",
-   "voice": "voices/lusia-en-calm"
-  },
-  {
-   "name": "bazyl-item-labedz",
-   "text": "Swan.",
-   "voice": "voices/bazyl-en-calm"
-  },
-  {
-   "name": "lusia-item-czapla",
-   "text": "Heron.",
-   "voice": "voices/lusia-en-calm"
-  },
-  {
-   "name": "bazyl-item-czapla",
-   "text": "Heron.",
-   "voice": "voices/bazyl-en-calm"
-  },
-  {
-   "name": "lusia-item-narty",
-   "text": "Skis.",
-   "voice": "voices/lusia-en-calm"
-  },
-  {
-   "name": "bazyl-item-narty",
-   "text": "Skis.",
-   "voice": "voices/bazyl-en-calm"
-  },
-  {
-   "name": "lusia-item-namiot",
-   "text": "Tent.",
-   "voice": "voices/lusia-en-calm"
-  },
-  {
-   "name": "bazyl-item-namiot",
-   "text": "Tent.",
-   "voice": "voices/bazyl-en-calm"
-  },
-  {
-   "name": "lusia-item-ukulele",
-   "text": "Guitar.",
-   "voice": "voices/lusia-en-calm"
-  },
-  {
-   "name": "bazyl-item-ukulele",
-   "text": "Guitar.",
-   "voice": "voices/bazyl-en-calm"
-  },
-  {
-   "name": "lusia-item-zamek",
-   "text": "Sandcastle.",
-   "voice": "voices/lusia-en-calm"
-  },
-  {
-   "name": "bazyl-item-zamek",
-   "text": "Sandcastle.",
-   "voice": "voices/bazyl-en-calm"
-  },
-  {
-   "name": "lusia-item-lopatka",
-   "text": "Shovel.",
-   "voice": "voices/lusia-en-calm"
-  },
-  {
-   "name": "bazyl-item-lopatka",
-   "text": "Shovel.",
-   "voice": "voices/bazyl-en-calm"
-  },
-  {
-   "name": "lusia-item-szklanka",
-   "text": "Glass of milk.",
-   "voice": "voices/lusia-en-calm"
-  },
-  {
-   "name": "bazyl-item-szklanka",
-   "text": "Glass of milk.",
-   "voice": "voices/bazyl-en-calm"
-  },
-  {
-   "name": "lusia-item-jajko",
-   "text": "Egg.",
-   "voice": "voices/lusia-en-calm"
-  },
-  {
-   "name": "bazyl-item-jajko",
-   "text": "Egg.",
-   "voice": "voices/bazyl-en-calm"
-  },
-  {
-   "name": "lusia-item-szyszka",
-   "text": "Pine cone.",
-   "voice": "voices/lusia-en-calm"
-  },
-  {
-   "name": "bazyl-item-szyszka",
-   "text": "Pine cone.",
-   "voice": "voices/bazyl-en-calm"
-  },
-  {
-   "name": "lusia-item-ul",
-   "text": "Beehive.",
-   "voice": "voices/lusia-en-calm"
-  },
-  {
-   "name": "bazyl-item-ul",
-   "text": "Beehive.",
-   "voice": "voices/bazyl-en-calm"
-  },
-  {
-   "name": "lusia-item-sniezynka",
-   "text": "Snowflake.",
-   "voice": "voices/lusia-en-calm"
-  },
-  {
-   "name": "bazyl-item-sniezynka",
-   "text": "Snowflake.",
-   "voice": "voices/bazyl-en-calm"
-  },
-  {
-   "name": "lusia-item-szczeniaczek",
-   "text": "Puppy.",
-   "voice": "voices/lusia-en-calm"
-  },
-  {
-   "name": "bazyl-item-szczeniaczek",
-   "text": "Puppy.",
-   "voice": "voices/bazyl-en-calm"
-  },
-  {
    "name": "bazyl-mama-szczeniaczek",
    "text": "Where is the puppy's mommy?",
-   "voice": "voices/bazyl-en-calm"
-  },
-  {
-   "name": "lusia-labirynt-szczeniaczek",
-   "text": "Lead the puppy to its mommy.",
-   "voice": "voices/lusia-en-calm"
-  },
-  {
-   "name": "lusia-item-kroliczek",
-   "text": "Baby bunny.",
-   "voice": "voices/lusia-en-calm"
-  },
-  {
-   "name": "bazyl-item-kroliczek",
-   "text": "Baby bunny.",
    "voice": "voices/bazyl-en-calm"
   },
   {
@@ -2828,49 +2863,14 @@
    "voice": "voices/bazyl-en-calm"
   },
   {
-   "name": "lusia-labirynt-kroliczek",
-   "text": "Lead the baby bunny to its mommy.",
-   "voice": "voices/lusia-en-calm"
-  },
-  {
-   "name": "lusia-item-sloniatko",
-   "text": "Baby elephant.",
-   "voice": "voices/lusia-en-calm"
-  },
-  {
-   "name": "bazyl-item-sloniatko",
-   "text": "Baby elephant.",
-   "voice": "voices/bazyl-en-calm"
-  },
-  {
    "name": "bazyl-mama-sloniatko",
    "text": "Where is the baby elephant's mommy?",
-   "voice": "voices/bazyl-en-calm"
-  },
-  {
-   "name": "lusia-labirynt-sloniatko",
-   "text": "Lead the baby elephant to its mommy.",
-   "voice": "voices/lusia-en-calm"
-  },
-  {
-   "name": "lusia-item-zolwik",
-   "text": "Baby turtle.",
-   "voice": "voices/lusia-en-calm"
-  },
-  {
-   "name": "bazyl-item-zolwik",
-   "text": "Baby turtle.",
    "voice": "voices/bazyl-en-calm"
   },
   {
    "name": "bazyl-mama-zolwik",
    "text": "Where is the baby turtle's mommy?",
    "voice": "voices/bazyl-en-calm"
-  },
-  {
-   "name": "lusia-labirynt-zolwik",
-   "text": "Lead the baby turtle to its mommy.",
-   "voice": "voices/lusia-en-calm"
   }
  ]
 }

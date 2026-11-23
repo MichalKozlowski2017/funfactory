@@ -6,7 +6,7 @@
  * w VoxCPM2. Polskie wzorce czytały angielskie i niemieckie słowa z akcentem („Cat” jak „Cut”).
  * Bazyl to po angielsku i niemiecku Basil.
  */
-import { writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { ITEMS, itemById, nameOf } from '../src/sim/catalog.ts';
 import { setLang, type Lang } from '../src/sim/lang.ts';
@@ -259,9 +259,9 @@ const COLORS: Record<L, Record<string, [show: string, bucket: string]>> = {
 };
 
 const SHAPES: Record<L, Record<string, string>> = {
-  en: { kolo: 'Circle!', kwadrat: 'Square!', trojkat: 'Triangle!', prostokat: 'A rectangle!', gwiazda: 'Star!', serce: 'Heart!', owal: 'Oval!', romb: 'Diamond!' },
-  es: { kolo: '¡Círculo!', kwadrat: '¡Cuadrado!', trojkat: '¡Triángulo!', prostokat: '¡Rectángulo!', gwiazda: '¡Estrella!', serce: '¡Corazón!', owal: '¡Óvalo!', romb: '¡Rombo!' },
-  de: { kolo: 'Kreis!', kwadrat: 'Quadrat!', trojkat: 'Dreieck!', prostokat: 'Rechteck!', gwiazda: 'Stern!', serce: 'Herz!', owal: 'Oval!', romb: 'Raute!' },
+  en: { kolo: 'Circle!', kwadrat: 'Square!', trojkat: 'Triangle!', prostokat: 'A rectangle!', gwiazda: 'Star!', serce: 'Heart!', owal: 'Oval!', romb: 'Diamond!', ksiezyc: 'Moon!', kropla: 'Drop!' },
+  es: { kolo: '¡Círculo!', kwadrat: '¡Cuadrado!', trojkat: '¡Triángulo!', prostokat: '¡Rectángulo!', gwiazda: '¡Estrella!', serce: '¡Corazón!', owal: '¡Óvalo!', romb: '¡Rombo!', ksiezyc: '¡Luna!', kropla: '¡Gota!' },
+  de: { kolo: 'Kreis!', kwadrat: 'Quadrat!', trojkat: 'Dreieck!', prostokat: 'Rechteck!', gwiazda: 'Stern!', serce: 'Herz!', owal: 'Oval!', romb: 'Raute!', ksiezyc: 'Mond!', kropla: 'Tropfen!' },
 };
 
 const EMOTIONS: Record<L, Record<string, [show: string, face: string]>> = {
@@ -502,9 +502,14 @@ for (const l of ['en', 'de', 'es'] as const) {
   const lines = (['lusia', 'bazyl'] as const).flatMap((g) =>
     names[g].map((line) => ({ name: `${g}-${line}`, text: calm(l, text(l, g, line)), voice: voiceOf(l, g), ...(line.startsWith('czytaj-') ? { tries: 3 } : {}) })),
   );
+  // Kwestie nagrane innym silnikiem (Chatterbox: własny tekst, seed, próbka głosu) zostają bez zmian.
+  const file = join(dir, `${l}.json`);
+  const kept = new Map<string, { name: string; engine?: string }>(
+    existsSync(file) ? (JSON.parse(readFileSync(file, 'utf8')).lines as { name: string; engine?: string }[]).filter((x) => x.engine).map((x) => [x.name, x]) : [],
+  );
   // Każda kwestia raz (np. nazwy obiektów są w obu głosach osobno, więc zostają).
-  const unique = [...new Map(lines.map((x) => [x.name, x])).values()];
-  writeFileSync(join(dir, `${l}.json`), JSON.stringify({ voice: voiceOf(l, 'lusia'), lang: l, tries: 8, lines: unique }, null, 1) + '\n');
+  const unique = [...new Map(lines.map((x) => [x.name, kept.get(x.name) ?? x])).values()];
+  writeFileSync(file, JSON.stringify({ voice: voiceOf(l, 'lusia'), lang: l, tries: 8, lines: unique }, null, 1) + '\n');
   console.log(`${l}: ${unique.length} kwestii`);
 }
 void ITEMS;

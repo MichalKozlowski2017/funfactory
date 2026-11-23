@@ -6,837 +6,1283 @@
   {
    "name": "lusia-brawo-1",
    "text": "¡Bravo!",
-   "voice": "voices/lusia-es"
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-brawo-2",
    "text": "¡Muy bien!",
-   "voice": "voices/lusia-es"
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-brawo-3",
    "text": "¡Súper, sigue así!",
-   "voice": "voices/lusia-es"
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-brawo-4",
    "text": "¡Maravilloso!",
-   "voice": "voices/lusia-es"
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-brawo-5",
    "text": "¡Qué listo eres!",
-   "voice": "voices/lusia-es"
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "lusia-oj-1",
    "text": "Uy, inténtalo otra vez.",
-   "voice": "voices/lusia-es"
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 6
   },
   {
    "name": "lusia-oj-2",
-   "text": "Mmm, no es ese. ¡Inténtalo de nuevo!",
-   "voice": "voices/lusia-es"
+   "text": "Mmm, no es ese. Inténtalo de nuevo.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-nagroda",
    "text": "¡Bravo! ¡Ganas una calcomanía nueva!",
-   "voice": "voices/lusia-es"
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-witaj",
-   "text": "¡Hola! Soy Lusia, y este es mi amigo Basil. ¡Elige una casita y juguemos juntos!",
-   "voice": "voices/lusia-es"
+   "text": "Hola. Soy Lusia, y este es mi amigo Basil. Elige una casita y juguemos juntos.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-pomoc",
-   "text": "Mira con atención. ¡Tú puedes!",
-   "voice": "voices/lusia-es"
+   "text": "Mira con atención. Tú puedes.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-kot",
-   "text": "¡Gato!",
-   "voice": "voices/lusia-es"
+   "text": "Gato.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-pies",
-   "text": "¡Perro!",
-   "voice": "voices/lusia-es"
+   "text": "Perro.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "lusia-item-krowa",
-   "text": "¡Vaca!",
-   "voice": "voices/lusia-es"
+   "text": "Vaca.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-item-slon",
-   "text": "¡Elefante!",
-   "voice": "voices/lusia-es"
+   "text": "Elefante.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-kurczak",
-   "text": "¡Pollito!",
-   "voice": "voices/lusia-es"
+   "text": "Pollito.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-ryba",
-   "text": "¡Pez!",
-   "voice": "voices/lusia-es"
+   "text": "Pez.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-zaba",
-   "text": "¡Rana!",
-   "voice": "voices/lusia-es"
+   "text": "Rana.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-kaczka",
-   "text": "¡Pato!",
-   "voice": "voices/lusia-es"
+   "text": "Pato.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-kura",
-   "text": "¡Gallina!",
-   "voice": "voices/lusia-es"
+   "text": "Gallina.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-cielaczek",
-   "text": "¡Ternero!",
-   "voice": "voices/lusia-es"
+   "text": "Ternero.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-item-kotek",
-   "text": "¡Gatito!",
-   "voice": "voices/lusia-es"
+   "text": "Gatito.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-owca",
-   "text": "¡Oveja!",
-   "voice": "voices/lusia-es"
+   "text": "Oveja.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-item-jagniatko",
-   "text": "¡Corderito!",
-   "voice": "voices/lusia-es"
+   "text": "Corderito.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-swinka",
-   "text": "¡Cerdo!",
-   "voice": "voices/lusia-es"
+   "text": "Cerdo.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-prosiaczek",
-   "text": "¡Cerdito!",
-   "voice": "voices/lusia-es"
+   "text": "Cerdito.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-item-kon",
-   "text": "¡Caballo!",
-   "voice": "voices/lusia-es"
+   "text": "Caballo.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-zrebak",
-   "text": "¡Potrillo!",
-   "voice": "voices/lusia-es"
+   "text": "Potrillo.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-item-kaczatko",
-   "text": "¡Patito!",
-   "voice": "voices/lusia-es"
+   "text": "Patito.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-item-kijanka",
-   "text": "¡Renacuajo!",
-   "voice": "voices/lusia-es"
+   "text": "Renacuajo.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-lisek",
-   "text": "¡Zorrito!",
-   "voice": "voices/lusia-es"
+   "text": "Zorrito.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-item-niedzwiadek",
-   "text": "¡Osezno!",
-   "voice": "voices/lusia-es"
+   "text": "Osezno.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "lusia-item-pingwinek",
-   "text": "¡Pingüinito!",
-   "voice": "voices/lusia-es"
+   "text": "Pingüinito.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-lwiatko",
-   "text": "¡Leoncito!",
-   "voice": "voices/lusia-es"
+   "text": "Leoncito.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-kozlatko",
-   "text": "¡Cabrito!",
-   "voice": "voices/lusia-es"
+   "text": "Cabrito.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "lusia-item-zyrafka",
-   "text": "¡Jirafita!",
-   "voice": "voices/lusia-es"
+   "text": "Jirafita.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-foczka",
-   "text": "¡Foquita!",
-   "voice": "voices/lusia-es"
+   "text": "Foquita.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-sowka",
-   "text": "¡Búho bebé!",
-   "voice": "voices/lusia-es"
+   "text": "Búho bebé.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
+  },
+  {
+   "name": "lusia-item-szczeniaczek",
+   "text": "Cachorrito.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 4
+  },
+  {
+   "name": "lusia-item-kroliczek",
+   "text": "Conejito.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 5
+  },
+  {
+   "name": "lusia-item-sloniatko",
+   "text": "Elefantito.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 5
+  },
+  {
+   "name": "lusia-item-zolwik",
+   "text": "Tortuguita.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 4
   },
   {
    "name": "lusia-item-lew",
-   "text": "¡León!",
-   "voice": "voices/lusia-es"
+   "text": "León.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "lusia-item-zyrafa",
-   "text": "¡Jirafa!",
-   "voice": "voices/lusia-es"
+   "text": "Jirafa.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "lusia-item-malpa",
-   "text": "¡Mono!",
-   "voice": "voices/lusia-es"
+   "text": "Mono.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-zebra",
-   "text": "¡Cebra!",
-   "voice": "voices/lusia-es"
+   "text": "Cebra.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-niedzwiedz",
-   "text": "¡Oso!",
-   "voice": "voices/lusia-es"
+   "text": "Oso.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-item-jez",
-   "text": "¡Erizo!",
-   "voice": "voices/lusia-es"
+   "text": "Erizo.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "lusia-item-wiewiorka",
-   "text": "¡Ardilla!",
-   "voice": "voices/lusia-es"
+   "text": "Ardilla.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "lusia-item-sowa",
-   "text": "¡Búho!",
-   "voice": "voices/lusia-es"
+   "text": "Búho.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 6
   },
   {
    "name": "lusia-item-motyl",
-   "text": "¡Mariposa!",
-   "voice": "voices/lusia-es"
+   "text": "Mariposa.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-biedronka",
-   "text": "¡Mariquita!",
-   "voice": "voices/lusia-es"
+   "text": "Mariquita.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-pszczola",
-   "text": "¡Abeja!",
-   "voice": "voices/lusia-es"
+   "text": "Abeja.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-slimak",
-   "text": "¡Caracol!",
-   "voice": "voices/lusia-es"
+   "text": "Caracol.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "lusia-item-krolik",
-   "text": "¡Conejo!",
-   "voice": "voices/lusia-es"
+   "text": "Conejo.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 5
   },
   {
    "name": "lusia-item-mysz",
-   "text": "¡Ratón!",
-   "voice": "voices/lusia-es"
+   "text": "Ratón.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-item-pingwin",
-   "text": "¡Pingüino!",
-   "voice": "voices/lusia-es"
+   "text": "Pingüino.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "lusia-item-zolw",
-   "text": "¡Tortuga!",
-   "voice": "voices/lusia-es"
+   "text": "Tortuga.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-krab",
-   "text": "¡Cangrejo!",
-   "voice": "voices/lusia-es"
+   "text": "Cangrejo.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "lusia-item-osmiornica",
-   "text": "¡Pulpo!",
-   "voice": "voices/lusia-es"
+   "text": "Pulpo.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-item-ptak",
-   "text": "¡Pájaro!",
-   "voice": "voices/lusia-es"
+   "text": "Pájaro.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-dinozaur",
-   "text": "¡Dinosaurio!",
-   "voice": "voices/lusia-es"
+   "text": "Dinosaurio.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-item-lis",
-   "text": "¡Zorro!",
-   "voice": "voices/lusia-es"
+   "text": "Zorro.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 4
   },
   {
    "name": "lusia-item-zajac",
-   "text": "¡Liebre!",
-   "voice": "voices/lusia-es"
+   "text": "Liebre.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 6
   },
   {
    "name": "lusia-item-dzik",
-   "text": "¡Jabalí!",
-   "voice": "voices/lusia-es"
+   "text": "Jabalí.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-item-sarna",
-   "text": "¡Ciervo!",
-   "voice": "voices/lusia-es"
+   "text": "Ciervo.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-dzieciol",
-   "text": "¡Pájaro carpintero!",
-   "voice": "voices/lusia-es"
+   "text": "Pájaro carpintero.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-item-wieloryb",
-   "text": "¡Ballena!",
-   "voice": "voices/lusia-es"
+   "text": "Ballena.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-delfin",
-   "text": "¡Delfín!",
-   "voice": "voices/lusia-es"
+   "text": "Delfín.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-item-meduza",
-   "text": "¡Medusa!",
-   "voice": "voices/lusia-es"
+   "text": "Medusa.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "lusia-item-konikmorski",
-   "text": "¡Caballito de mar!",
-   "voice": "voices/lusia-es"
+   "text": "Caballito de mar.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-koza",
-   "text": "¡Cabra!",
-   "voice": "voices/lusia-es"
+   "text": "Cabra.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-item-osiolek",
-   "text": "¡Burro!",
-   "voice": "voices/lusia-es"
+   "text": "Burro.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-indyk",
-   "text": "¡Pavo!",
-   "voice": "voices/lusia-es"
+   "text": "Pavo.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-item-ges",
-   "text": "¡Ganso!",
-   "voice": "voices/lusia-es"
+   "text": "Ganso.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-foka",
-   "text": "¡Foca!",
-   "voice": "voices/lusia-es"
+   "text": "Foca.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "lusia-item-mors",
-   "text": "¡Morsa!",
-   "voice": "voices/lusia-es"
+   "text": "Morsa.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "lusia-item-mispolarny",
-   "text": "¡Oso polar!",
-   "voice": "voices/lusia-es"
+   "text": "Oso polar.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-hipopotam",
-   "text": "¡Hipopótamo!",
-   "voice": "voices/lusia-es"
+   "text": "Hipopótamo.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "lusia-item-nosorozec",
-   "text": "¡Rinoceronte!",
-   "voice": "voices/lusia-es"
+   "text": "Rinoceronte.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
+  },
+  {
+   "name": "lusia-item-labedz",
+   "text": "Cisne.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
+  },
+  {
+   "name": "lusia-item-czapla",
+   "text": "Garza.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "lusia-item-jablko",
-   "text": "¡Manzana!",
-   "voice": "voices/lusia-es"
+   "text": "Manzana.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-item-banan",
-   "text": "¡Plátano!",
-   "voice": "voices/lusia-es"
+   "text": "Plátano.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-item-gruszka",
-   "text": "¡Pera!",
-   "voice": "voices/lusia-es"
+   "text": "Pera.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-truskawka",
-   "text": "¡Fresa!",
-   "voice": "voices/lusia-es"
+   "text": "Fresa.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "lusia-item-sliwka",
-   "text": "¡Ciruela!",
-   "voice": "voices/lusia-es"
+   "text": "Ciruela.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-wisnia",
-   "text": "¡Cerezas!",
-   "voice": "voices/lusia-es"
+   "text": "Cerezas.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-pomarancza",
-   "text": "¡Naranja!",
-   "voice": "voices/lusia-es"
+   "text": "Naranja.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-cytryna",
-   "text": "¡Limón!",
-   "voice": "voices/lusia-es"
+   "text": "Limón.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-item-winogrona",
-   "text": "¡Uvas!",
-   "voice": "voices/lusia-es"
+   "text": "Uvas.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-item-arbuz",
-   "text": "¡Sandía!",
-   "voice": "voices/lusia-es"
+   "text": "Sandía.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-ananas",
-   "text": "¡Piña!",
-   "voice": "voices/lusia-es"
+   "text": "Piña.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-malina",
-   "text": "¡Frambuesa!",
-   "voice": "voices/lusia-es"
+   "text": "Frambuesa.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-marchewka",
-   "text": "¡Zanahoria!",
-   "voice": "voices/lusia-es"
+   "text": "Zanahoria.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-pomidor",
-   "text": "¡Tomate!",
-   "voice": "voices/lusia-es"
+   "text": "Tomate.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-item-ogorek",
-   "text": "¡Pepino!",
-   "voice": "voices/lusia-es"
+   "text": "Pepino.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-ziemniak",
-   "text": "¡Papa!",
-   "voice": "voices/lusia-es"
+   "text": "Papa.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-kukurydza",
-   "text": "¡Maíz!",
-   "voice": "voices/lusia-es"
+   "text": "Maíz.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-item-papryka",
-   "text": "¡Pimiento!",
-   "voice": "voices/lusia-es"
+   "text": "Pimiento.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-item-brokul",
-   "text": "¡Brócoli!",
-   "voice": "voices/lusia-es"
+   "text": "Brócoli.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-dynia",
-   "text": "¡Calabaza!",
-   "voice": "voices/lusia-es"
+   "text": "Calabaza.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-item-groszek",
-   "text": "¡Chícharos!",
-   "voice": "voices/lusia-es"
+   "text": "Chícharos.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-item-rzodkiewka",
-   "text": "¡Rábano!",
-   "voice": "voices/lusia-es"
+   "text": "Rábano.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-item-grzyb",
-   "text": "¡Hongo!",
-   "voice": "voices/lusia-es"
+   "text": "Hongo.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "lusia-item-cebula",
-   "text": "¡Cebolla!",
-   "voice": "voices/lusia-es"
+   "text": "Cebolla.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "lusia-item-auto",
-   "text": "¡Carro!",
-   "voice": "voices/lusia-es"
+   "text": "Carro.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-rower",
-   "text": "¡Bicicleta!",
-   "voice": "voices/lusia-es"
+   "text": "Bicicleta.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-samolot",
-   "text": "¡Avión!",
-   "voice": "voices/lusia-es"
+   "text": "Avión.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-lodka",
-   "text": "¡Barco!",
-   "voice": "voices/lusia-es"
+   "text": "Barco.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-item-autobus",
-   "text": "¡Autobús!",
-   "voice": "voices/lusia-es"
+   "text": "Autobús.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-pociag",
-   "text": "¡Tren!",
-   "voice": "voices/lusia-es"
+   "text": "Tren.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "lusia-item-traktor",
-   "text": "¡Tractor!",
-   "voice": "voices/lusia-es"
+   "text": "Tractor.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-item-helikopter",
-   "text": "¡Helicóptero!",
-   "voice": "voices/lusia-es"
+   "text": "Helicóptero.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-rakieta",
-   "text": "¡Cohete!",
-   "voice": "voices/lusia-es"
+   "text": "Cohete.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-hulajnoga",
-   "text": "¡Monopatín!",
-   "voice": "voices/lusia-es"
+   "text": "Monopatín.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 5
   },
   {
    "name": "lusia-item-skuter",
-   "text": "¡Moto!",
-   "voice": "voices/lusia-es"
+   "text": "Moto.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "lusia-item-straz",
-   "text": "¡Camión de bomberos!",
-   "voice": "voices/lusia-es"
+   "text": "Camión de bomberos.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-ciezarowka",
-   "text": "¡Camión!",
-   "voice": "voices/lusia-es"
+   "text": "Camión.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "lusia-item-pilka",
-   "text": "¡Pelota!",
-   "voice": "voices/lusia-es"
+   "text": "Pelota.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-item-mis",
-   "text": "¡Osito de peluche!",
-   "voice": "voices/lusia-es"
+   "text": "Osito de peluche.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-item-klocek",
-   "text": "¡Bloque!",
-   "voice": "voices/lusia-es"
+   "text": "Bloque.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-lalka",
-   "text": "¡Muñeca!",
-   "voice": "voices/lusia-es"
+   "text": "Muñeca.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-latawiec",
-   "text": "¡Cometa!",
-   "voice": "voices/lusia-es"
+   "text": "Cometa.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-bebenek",
-   "text": "¡Tambor!",
-   "voice": "voices/lusia-es"
+   "text": "Tambor.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-item-konik",
-   "text": "¡Caballito de madera!",
-   "voice": "voices/lusia-es"
+   "text": "Caballito de madera.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-item-baczek",
-   "text": "¡Trompo!",
-   "voice": "voices/lusia-es"
+   "text": "Trompo.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-item-robot",
-   "text": "¡Robot!",
-   "voice": "voices/lusia-es"
+   "text": "Robot.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 5
   },
   {
    "name": "lusia-item-balonik",
-   "text": "¡Globo!",
-   "voice": "voices/lusia-es"
+   "text": "Globo.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "lusia-item-trabka",
-   "text": "¡Trompeta!",
-   "voice": "voices/lusia-es"
+   "text": "Trompeta.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-item-wiaderko",
-   "text": "¡Cubeta!",
-   "voice": "voices/lusia-es"
+   "text": "Cubeta.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-sanki",
-   "text": "¡Trineo!",
-   "voice": "voices/lusia-es"
+   "text": "Trineo.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-item-narty",
+   "text": "Esquís.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
+  },
+  {
+   "name": "lusia-item-namiot",
+   "text": "Tienda.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-item-ukulele",
+   "text": "Ukelele.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-item-zamek",
+   "text": "Castillo de arena.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
+  },
+  {
+   "name": "lusia-item-lopatka",
+   "text": "Pala.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-kubek",
-   "text": "¡Taza!",
-   "voice": "voices/lusia-es"
+   "text": "Taza.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-talerz",
-   "text": "¡Plato!",
-   "voice": "voices/lusia-es"
+   "text": "Plato.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-lyzka",
-   "text": "¡Cuchara!",
-   "voice": "voices/lusia-es"
+   "text": "Cuchara.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "lusia-item-widelec",
-   "text": "¡Tenedor!",
-   "voice": "voices/lusia-es"
+   "text": "Tenedor.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-garnek",
-   "text": "¡Olla!",
-   "voice": "voices/lusia-es"
+   "text": "Olla.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 6
   },
   {
    "name": "lusia-item-czajnik",
-   "text": "¡Tetera!",
-   "voice": "voices/lusia-es"
+   "text": "Tetera.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 6
   },
   {
    "name": "lusia-item-miska",
-   "text": "¡Tazón!",
-   "voice": "voices/lusia-es"
+   "text": "Tazón.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-patelnia",
-   "text": "¡Sartén!",
-   "voice": "voices/lusia-es"
+   "text": "Sartén.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 4
   },
   {
    "name": "lusia-item-butelka",
-   "text": "¡Biberón!",
-   "voice": "voices/lusia-es"
+   "text": "Biberón.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-item-szklanka",
+   "text": "Vaso de leche.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-item-jajko",
+   "text": "Huevo.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-czapka",
-   "text": "¡Gorro!",
-   "voice": "voices/lusia-es"
+   "text": "Gorro.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 4
   },
   {
    "name": "lusia-item-szalik",
-   "text": "¡Bufanda!",
-   "voice": "voices/lusia-es"
+   "text": "Bufanda.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-but",
-   "text": "¡Zapato!",
-   "voice": "voices/lusia-es"
+   "text": "Zapato.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "lusia-item-skarpetka",
-   "text": "¡Calcetín!",
-   "voice": "voices/lusia-es"
+   "text": "Calcetín.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 4
   },
   {
    "name": "lusia-item-koszulka",
-   "text": "¡Camiseta!",
-   "voice": "voices/lusia-es"
+   "text": "Camiseta.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-spodnie",
-   "text": "¡Pantalones!",
-   "voice": "voices/lusia-es"
+   "text": "Pantalones.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-sukienka",
-   "text": "¡Vestido!",
-   "voice": "voices/lusia-es"
+   "text": "Vestido.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "lusia-item-rekawiczki",
-   "text": "¡Manoplas!",
-   "voice": "voices/lusia-es"
+   "text": "Manoplas.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 4
   },
   {
    "name": "lusia-item-kalosze",
-   "text": "¡Botas de lluvia!",
-   "voice": "voices/lusia-es"
+   "text": "Botas de lluvia.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-parasol",
-   "text": "¡Paraguas!",
-   "voice": "voices/lusia-es"
+   "text": "Paraguas.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-item-okulary",
-   "text": "¡Lentes de sol!",
-   "voice": "voices/lusia-es"
+   "text": "Lentes de sol.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "lusia-item-kapelusz",
-   "text": "¡Sombrero!",
-   "voice": "voices/lusia-es"
+   "text": "Sombrero.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-sandaly",
-   "text": "¡Sandalias!",
-   "voice": "voices/lusia-es"
+   "text": "Sandalias.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-stroj",
-   "text": "¡Traje de baño!",
-   "voice": "voices/lusia-es"
+   "text": "Traje de baño.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-item-kurtka",
-   "text": "¡Chaqueta!",
-   "voice": "voices/lusia-es"
+   "text": "Chaqueta.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-slonce",
-   "text": "¡Sol!",
-   "voice": "voices/lusia-es"
+   "text": "Sol.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 4
   },
   {
    "name": "lusia-item-chmurka",
-   "text": "¡Nube!",
-   "voice": "voices/lusia-es"
+   "text": "Nube.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-gwiazdka",
-   "text": "¡Estrella!",
-   "voice": "voices/lusia-es"
+   "text": "Estrella.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-item-ksiezyc",
-   "text": "¡Luna!",
-   "voice": "voices/lusia-es"
+   "text": "Luna.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-item-kwiatek",
-   "text": "¡Flor!",
-   "voice": "voices/lusia-es"
+   "text": "Flor.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "lusia-item-drzewo",
-   "text": "¡Árbol!",
-   "voice": "voices/lusia-es"
+   "text": "Árbol.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-item-lisc",
-   "text": "¡Hoja!",
-   "voice": "voices/lusia-es"
+   "text": "Hoja.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-item-tecza",
-   "text": "¡Arcoíris!",
-   "voice": "voices/lusia-es"
+   "text": "Arcoíris.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-item-muszelka",
-   "text": "¡Concha!",
-   "voice": "voices/lusia-es"
+   "text": "Concha.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
+  },
+  {
+   "name": "lusia-item-szyszka",
+   "text": "Piña.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-item-ul",
+   "text": "Colmena.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 5
+  },
+  {
+   "name": "lusia-item-sniezynka",
+   "text": "Copo de nieve.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-kraina-polana",
-   "text": "¡Esta es la Pradera de Acertijos! Elige una casita.",
-   "voice": "voices/lusia-es"
+   "text": "Esta es la Pradera de Acertijos. Elige una casita.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-kraina-spi",
-   "text": "Este mundo todavía está dormido. ¡Pídele ayuda a un adulto!",
-   "voice": "voices/lusia-es"
+   "text": "Este mundo todavía está dormido. Pídele ayuda a un adulto.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "lusia-kraina-sciezka",
-   "text": "¡Este es mi Sendero! Aquí dibujamos con el dedo.",
-   "voice": "voices/lusia-es"
+   "text": "Este es mi Sendero. Aquí dibujamos con el dedo.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-kropki",
-   "text": "¡Une los puntos en orden! Empieza por el uno.",
-   "voice": "voices/lusia-es"
+   "text": "Une los puntos en orden. Empieza por el uno.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-memory",
-   "text": "¡Encuentra las parejas de imágenes iguales!",
-   "voice": "voices/lusia-es"
+   "text": "Encuentra las parejas de imágenes iguales.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-kraina-pracownia",
-   "text": "¡Este es el Pequeño Estudio! Aquí puedes pintar y crear.",
-   "voice": "voices/lusia-es"
+   "text": "Este es el Pequeño Estudio. Aquí puedes pintar y crear.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-dobranoc",
-   "text": "¡Por hoy ya jugamos bastante! Lusia y Basil se van a dormir. ¡Hasta mañana!",
-   "voice": "voices/lusia-es"
+   "text": "Por hoy ya jugamos bastante. Lusia y Basil se van a dormir. Hasta mañana.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-melodia",
-   "text": "¡Escucha mi melodía y tócala igual!",
-   "voice": "voices/lusia-es"
+   "text": "Escucha mi melodía y tócala igual.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "lusia-sylaby",
-   "text": "¡Ordena las sílabas y luego leemos juntos!",
-   "voice": "voices/lusia-es"
+   "text": "Ordena las sílabas y luego leemos juntos.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "lusia-czytaj-kot",
@@ -1008,1878 +1454,2526 @@
   },
   {
    "name": "lusia-kolorowanka",
-   "text": "Elige un color y toca el dibujo. ¡Píntalo como quieras!",
-   "voice": "voices/lusia-es"
+   "text": "Elige un color y toca el dibujo. Píntalo como quieras.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-kolorowanka-gotowe",
-   "text": "¡Qué bonito! Cuando termines, toca la flecha verde.",
-   "voice": "voices/lusia-es"
+   "text": "Qué bonito. Cuando termines, toca la flecha verde.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-naklejanka",
-   "text": "¡Haz tu propio dibujo con calcomanías! Arrastra una calcomanía a la pradera.",
-   "voice": "voices/lusia-es"
+   "text": "Haz tu propio dibujo con calcomanías. Arrastra una calcomanía a la pradera.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-litery",
-   "text": "¡Dibuja la letra con el dedo! Empieza en el punto verde.",
-   "voice": "voices/lusia-es"
+   "text": "Dibuja la letra con el dedo. Empieza en el punto verde.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "lusia-cyfry",
-   "text": "¡Dibuja el número con el dedo! Empieza en el punto verde.",
-   "voice": "voices/lusia-es"
+   "text": "Dibuja el número con el dedo. Empieza en el punto verde.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-liczba-0",
-   "text": "¡Cero! No hay nada.",
-   "voice": "voices/lusia-es"
+   "text": "Cero. No hay nada.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-litera-l",
-   "text": "¡L de león!",
-   "voice": "voices/lusia-es"
+   "text": "L de león.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "lusia-litera-t",
-   "text": "¡T de tortuga!",
-   "voice": "voices/lusia-es"
+   "text": "T de tortuga.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-litera-o",
-   "text": "¡O de oso!",
-   "voice": "voices/lusia-es"
+   "text": "O de oso.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-litera-a",
-   "text": "¡A de abeja!",
-   "voice": "voices/lusia-es"
+   "text": "A de abeja.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 6
   },
   {
    "name": "lusia-litera-m",
-   "text": "¡M de mono!",
-   "voice": "voices/lusia-es"
+   "text": "M de mono.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-litera-p",
-   "text": "¡P de perro!",
-   "voice": "voices/lusia-es"
+   "text": "P de perro.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-litera-d",
-   "text": "¡D de delfín!",
-   "voice": "voices/lusia-es"
+   "text": "D de delfín.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 4
   },
   {
    "name": "lusia-litera-b",
-   "text": "¡B de ballena!",
-   "voice": "voices/lusia-es"
+   "text": "B de ballena.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-litera-s",
-   "text": "¡S de sol!",
-   "voice": "voices/lusia-es"
+   "text": "S de sol.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "lusia-litera-e",
-   "text": "¡E de elefante!",
-   "voice": "voices/lusia-es"
+   "text": "E de elefante.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-litera-f",
-   "text": "¡F de foca!",
-   "voice": "voices/lusia-es"
+   "text": "F de foca.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-litera-n",
-   "text": "¡N de nube!",
-   "voice": "voices/lusia-es"
+   "text": "N de nube.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-litera-z",
-   "text": "¡Z de zorro!",
-   "voice": "voices/lusia-es"
+   "text": "Z de zorro.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "lusia-litera-u",
-   "text": "¡U de uvas!",
-   "voice": "voices/lusia-es"
+   "text": "U de uvas.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "lusia-litera-c",
-   "text": "¡Ce de conejo!",
-   "voice": "voices/lusia-es"
+   "text": "Ce de conejo.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-litera-r",
-   "text": "¡R de rana!",
-   "voice": "voices/lusia-es"
+   "text": "R de rana.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-litera-g",
-   "text": "¡G de gato!",
-   "voice": "voices/lusia-es"
+   "text": "G de gato.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-litera-j",
-   "text": "¡J de jirafa!",
-   "voice": "voices/lusia-es"
+   "text": "J de jirafa.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 4
   },
   {
    "name": "lusia-labirynt-kurczak",
-   "text": "¡Lleva al pollito con su mamá!",
-   "voice": "voices/lusia-es"
+   "text": "Lleva al pollito con su mamá.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "lusia-labirynt-kotek",
-   "text": "¡Lleva al gatito con su mamá!",
-   "voice": "voices/lusia-es"
+   "text": "Lleva al gatito con su mamá.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-labirynt-prosiaczek",
-   "text": "¡Lleva al cerdito con su mamá!",
-   "voice": "voices/lusia-es"
+   "text": "Lleva al cerdito con su mamá.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-labirynt-cielaczek",
-   "text": "¡Lleva al ternero con su mamá!",
-   "voice": "voices/lusia-es"
+   "text": "Lleva al ternero con su mamá.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "lusia-labirynt-kaczatko",
-   "text": "¡Lleva al patito con su mamá!",
-   "voice": "voices/lusia-es"
+   "text": "Lleva al patito con su mamá.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "lusia-labirynt-pszczola",
-   "text": "¡Lleva a la abeja a la flor!",
-   "voice": "voices/lusia-es"
+   "text": "Lleva a la abeja a la flor.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "lusia-labirynt-motyl",
-   "text": "¡Lleva a la mariposa a la flor!",
-   "voice": "voices/lusia-es"
+   "text": "Lleva a la mariposa a la flor.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "lusia-labirynt-krolik",
-   "text": "¡Lleva al conejo a la zanahoria!",
-   "voice": "voices/lusia-es"
+   "text": "Lleva al conejo a la zanahoria.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "lusia-labirynt-malpa",
-   "text": "¡Lleva al mono al plátano!",
-   "voice": "voices/lusia-es"
+   "text": "Lleva al mono al plátano.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "lusia-labirynt-wiewiorka",
-   "text": "¡Lleva a la ardilla al árbol!",
-   "voice": "voices/lusia-es"
+   "text": "Lleva a la ardilla al árbol.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-labirynt-lisek",
-   "text": "¡Lleva al zorrito con su mamá!",
-   "voice": "voices/lusia-es"
+   "text": "Lleva al zorrito con su mamá.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-labirynt-niedzwiadek",
-   "text": "¡Lleva al osezno con su mamá!",
-   "voice": "voices/lusia-es"
+   "text": "Lleva al osezno con su mamá.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-labirynt-pingwinek",
-   "text": "¡Lleva al pingüinito con su mamá!",
-   "voice": "voices/lusia-es"
+   "text": "Lleva al pingüinito con su mamá.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-labirynt-lwiatko",
-   "text": "¡Lleva al leoncito con su mamá!",
-   "voice": "voices/lusia-es"
+   "text": "Lleva al leoncito con su mamá.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-labirynt-kozlatko",
-   "text": "¡Lleva al cabrito con su mamá!",
-   "voice": "voices/lusia-es"
+   "text": "Lleva al cabrito con su mamá.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-labirynt-zyrafka",
-   "text": "¡Lleva a la jirafita con su mamá!",
-   "voice": "voices/lusia-es"
+   "text": "Lleva a la jirafita con su mamá.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "lusia-labirynt-foczka",
-   "text": "¡Lleva a la foquita con su mamá!",
-   "voice": "voices/lusia-es"
+   "text": "Lleva a la foquita con su mamá.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "lusia-labirynt-sowka",
-   "text": "¡Lleva al búho bebé con su mamá!",
-   "voice": "voices/lusia-es"
+   "text": "Lleva al búho bebé con su mamá.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-labirynt-szczeniaczek",
+   "text": "Lleva al cachorrito con su mamá.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 4
+  },
+  {
+   "name": "lusia-labirynt-kroliczek",
+   "text": "Lleva al conejito con su mamá.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 6
+  },
+  {
+   "name": "lusia-labirynt-sloniatko",
+   "text": "Lleva al elefantito con su mamá.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 5
+  },
+  {
+   "name": "lusia-labirynt-zolwik",
+   "text": "Lleva a la tortuguita con su mamá.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 4
   },
   {
    "name": "lusia-cienie",
    "text": "¿De quién es esta sombra? Toca la imagen correcta.",
-   "voice": "voices/lusia-es"
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-liczenie",
-   "text": "¡Cuenta cuántos hay!",
-   "voice": "voices/lusia-es"
+   "text": "Cuenta cuántos hay.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-liczenie-dotyk",
    "text": "Tócalos uno por uno y cuenta conmigo.",
-   "voice": "voices/lusia-es"
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-album",
-   "text": "Este es tu álbum de calcomanías. ¡Colecciónalas todas!",
-   "voice": "voices/lusia-es"
+   "text": "Este es tu álbum de calcomanías. Colecciónalas todas.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "lusia-liczba-1",
-   "text": "¡Uno!",
-   "voice": "voices/lusia-es"
+   "text": "Uno.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-liczba-2",
-   "text": "¡Dos!",
-   "voice": "voices/lusia-es"
+   "text": "Dos.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-liczba-3",
-   "text": "¡Tres!",
-   "voice": "voices/lusia-es"
+   "text": "Tres.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-liczba-4",
-   "text": "¡Cuatro!",
-   "voice": "voices/lusia-es"
+   "text": "Cuatro.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-liczba-5",
-   "text": "¡Cinco!",
-   "voice": "voices/lusia-es"
+   "text": "Cinco.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "lusia-liczba-6",
-   "text": "¡Seis!",
-   "voice": "voices/lusia-es"
+   "text": "Seis.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-liczba-7",
-   "text": "¡Siete!",
-   "voice": "voices/lusia-es"
+   "text": "Siete.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-liczba-8",
-   "text": "¡Ocho!",
-   "voice": "voices/lusia-es"
+   "text": "Ocho.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-liczba-9",
-   "text": "¡Nueve!",
-   "voice": "voices/lusia-es"
+   "text": "Nueve.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-liczba-10",
-   "text": "¡Diez!",
-   "voice": "voices/lusia-es"
+   "text": "Diez.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-gloska-a",
-   "text": "¿Qué empieza con... A?",
-   "voice": "voices/lusia-es"
+   "text": "¿Qué empieza con.. A?",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-gloska-b",
-   "text": "¿Qué empieza con... B?",
-   "voice": "voices/lusia-es"
+   "text": "¿Qué empieza con.. B?",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-gloska-c",
-   "text": "¿Qué empieza con... C?",
-   "voice": "voices/lusia-es"
+   "text": "¿Qué empieza con.. C?",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-gloska-d",
-   "text": "¿Qué empieza con... D?",
-   "voice": "voices/lusia-es"
+   "text": "¿Qué empieza con.. D?",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-gloska-e",
-   "text": "¿Qué empieza con... E?",
-   "voice": "voices/lusia-es"
+   "text": "¿Qué empieza con.. E?",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-gloska-f",
-   "text": "¿Qué empieza con... F?",
-   "voice": "voices/lusia-es"
+   "text": "¿Qué empieza con.. F?",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "lusia-gloska-g",
-   "text": "¿Qué empieza con... G?",
-   "voice": "voices/lusia-es"
+   "text": "¿Qué empieza con.. G?",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-gloska-l",
-   "text": "¿Qué empieza con... L?",
-   "voice": "voices/lusia-es"
+   "text": "¿Qué empieza con.. L?",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-gloska-m",
-   "text": "¿Qué empieza con... M?",
-   "voice": "voices/lusia-es"
+   "text": "¿Qué empieza con.. M?",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-gloska-o",
-   "text": "¿Qué empieza con... O?",
-   "voice": "voices/lusia-es"
+   "text": "¿Qué empieza con.. O?",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-gloska-p",
-   "text": "¿Qué empieza con... P?",
-   "voice": "voices/lusia-es"
+   "text": "¿Qué empieza con.. P?",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-gloska-r",
-   "text": "¿Qué empieza con... R?",
-   "voice": "voices/lusia-es"
+   "text": "¿Qué empieza con.. R?",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "lusia-gloska-s",
-   "text": "¿Qué empieza con... S?",
-   "voice": "voices/lusia-es"
+   "text": "¿Qué empieza con.. S?",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "lusia-gloska-t",
-   "text": "¿Qué empieza con... T?",
-   "voice": "voices/lusia-es"
+   "text": "¿Qué empieza con.. T?",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "bazyl-brawo-1",
    "text": "¡Bravo!",
-   "voice": "voices/bazyl-es"
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "bazyl-brawo-2",
    "text": "¡Muy bien!",
-   "voice": "voices/bazyl-es"
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "bazyl-brawo-3",
    "text": "¡Súper, sigue así!",
-   "voice": "voices/bazyl-es"
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-brawo-4",
    "text": "¡Maravilloso!",
-   "voice": "voices/bazyl-es"
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-brawo-5",
    "text": "¡Qué listo eres!",
-   "voice": "voices/bazyl-es"
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-oj-1",
    "text": "Uy, inténtalo otra vez.",
-   "voice": "voices/bazyl-es"
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-oj-2",
-   "text": "Mmm, no es ese. ¡Inténtalo de nuevo!",
-   "voice": "voices/bazyl-es"
+   "text": "Mmm, no es ese. Inténtalo de nuevo.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "bazyl-nagroda",
    "text": "¡Bravo! ¡Ganas una calcomanía nueva!",
-   "voice": "voices/bazyl-es"
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-witaj",
-   "text": "¡Hola! Soy Basil. ¡Ven, va a ser divertido!",
-   "voice": "voices/bazyl-es"
+   "text": "Hola. Soy Basil. Ven, va a ser divertido.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-pomoc",
-   "text": "¡Anda, toca una imagen!",
-   "voice": "voices/bazyl-es"
+   "text": "Anda, toca una imagen.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "bazyl-item-kot",
-   "text": "¡Gato!",
-   "voice": "voices/bazyl-es"
+   "text": "Gato.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "bazyl-item-pies",
-   "text": "¡Perro!",
-   "voice": "voices/bazyl-es"
+   "text": "Perro.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-item-krowa",
-   "text": "¡Vaca!",
-   "voice": "voices/bazyl-es"
+   "text": "Vaca.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-item-slon",
-   "text": "¡Elefante!",
-   "voice": "voices/bazyl-es"
+   "text": "Elefante.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-item-kurczak",
-   "text": "¡Pollito!",
-   "voice": "voices/bazyl-es"
+   "text": "Pollito.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-item-ryba",
-   "text": "¡Pez!",
-   "voice": "voices/bazyl-es"
+   "text": "Pez.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "bazyl-item-zaba",
-   "text": "¡Rana!",
-   "voice": "voices/bazyl-es"
+   "text": "Rana.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 6
   },
   {
    "name": "bazyl-item-kaczka",
-   "text": "¡Pato!",
-   "voice": "voices/bazyl-es"
+   "text": "Pato.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-item-kura",
-   "text": "¡Gallina!",
-   "voice": "voices/bazyl-es"
+   "text": "Gallina.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-item-cielaczek",
-   "text": "¡Ternero!",
-   "voice": "voices/bazyl-es"
+   "text": "Ternero.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "bazyl-item-kotek",
-   "text": "¡Gatito!",
-   "voice": "voices/bazyl-es"
+   "text": "Gatito.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-item-owca",
-   "text": "¡Oveja!",
-   "voice": "voices/bazyl-es"
+   "text": "Oveja.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "bazyl-item-jagniatko",
-   "text": "¡Corderito!",
-   "voice": "voices/bazyl-es"
+   "text": "Corderito.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "bazyl-item-swinka",
-   "text": "¡Cerdo!",
-   "voice": "voices/bazyl-es"
+   "text": "Cerdo.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 5
   },
   {
    "name": "bazyl-item-prosiaczek",
-   "text": "¡Cerdito!",
-   "voice": "voices/bazyl-es"
+   "text": "Cerdito.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-item-kon",
-   "text": "¡Caballo!",
-   "voice": "voices/bazyl-es"
+   "text": "Caballo.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "bazyl-item-zrebak",
-   "text": "¡Potrillo!",
-   "voice": "voices/bazyl-es"
+   "text": "Potrillo.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-item-kaczatko",
-   "text": "¡Patito!",
-   "voice": "voices/bazyl-es"
+   "text": "Patito.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-item-kijanka",
-   "text": "¡Renacuajo!",
-   "voice": "voices/bazyl-es"
+   "text": "Renacuajo.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 5
   },
   {
    "name": "bazyl-item-lisek",
-   "text": "¡Zorrito!",
-   "voice": "voices/bazyl-es"
+   "text": "Zorrito.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "bazyl-item-niedzwiadek",
-   "text": "¡Osezno!",
-   "voice": "voices/bazyl-es"
+   "text": "Osezno.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "bazyl-item-pingwinek",
-   "text": "¡Pingüinito!",
-   "voice": "voices/bazyl-es"
+   "text": "Pingüinito.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "bazyl-item-lwiatko",
-   "text": "¡Leoncito!",
-   "voice": "voices/bazyl-es"
+   "text": "Leoncito.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "bazyl-item-kozlatko",
-   "text": "¡Cabrito!",
-   "voice": "voices/bazyl-es"
+   "text": "Cabrito.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-item-zyrafka",
-   "text": "¡Jirafita!",
-   "voice": "voices/bazyl-es"
+   "text": "Jirafita.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 6
   },
   {
    "name": "bazyl-item-foczka",
-   "text": "¡Foquita!",
-   "voice": "voices/bazyl-es"
+   "text": "Foquita.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "bazyl-item-sowka",
-   "text": "¡Búho bebé!",
-   "voice": "voices/bazyl-es"
+   "text": "Búho bebé.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 5
+  },
+  {
+   "name": "bazyl-item-szczeniaczek",
+   "text": "Cachorrito.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 6
+  },
+  {
+   "name": "bazyl-item-kroliczek",
+   "text": "Conejito.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 5
+  },
+  {
+   "name": "bazyl-item-sloniatko",
+   "text": "Elefantito.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 5
+  },
+  {
+   "name": "bazyl-item-zolwik",
+   "text": "Tortuguita.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 4
   },
   {
    "name": "bazyl-item-lew",
-   "text": "¡León!",
-   "voice": "voices/bazyl-es"
+   "text": "León.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 5
   },
   {
    "name": "bazyl-item-zyrafa",
-   "text": "¡Jirafa!",
-   "voice": "voices/bazyl-es"
+   "text": "Jirafa.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 5
   },
   {
    "name": "bazyl-item-malpa",
-   "text": "¡Mono!",
-   "voice": "voices/bazyl-es"
+   "text": "Mono.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-item-zebra",
-   "text": "¡Cebra!",
-   "voice": "voices/bazyl-es"
+   "text": "Cebra.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-item-niedzwiedz",
-   "text": "¡Oso!",
-   "voice": "voices/bazyl-es"
+   "text": "Oso.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-item-jez",
-   "text": "¡Erizo!",
-   "voice": "voices/bazyl-es"
+   "text": "Erizo.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "bazyl-item-wiewiorka",
-   "text": "¡Ardilla!",
-   "voice": "voices/bazyl-es"
+   "text": "Ardilla.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 6
   },
   {
    "name": "bazyl-item-sowa",
-   "text": "¡Búho!",
-   "voice": "voices/bazyl-es"
+   "text": "Búho.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-item-motyl",
-   "text": "¡Mariposa!",
-   "voice": "voices/bazyl-es"
+   "text": "Mariposa.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "bazyl-item-biedronka",
-   "text": "¡Mariquita!",
-   "voice": "voices/bazyl-es"
+   "text": "Mariquita.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "bazyl-item-pszczola",
-   "text": "¡Abeja!",
-   "voice": "voices/bazyl-es"
+   "text": "Abeja.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "bazyl-item-slimak",
-   "text": "¡Caracol!",
-   "voice": "voices/bazyl-es"
+   "text": "Caracol.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-item-krolik",
-   "text": "¡Conejo!",
-   "voice": "voices/bazyl-es"
+   "text": "Conejo.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "bazyl-item-mysz",
-   "text": "¡Ratón!",
-   "voice": "voices/bazyl-es"
+   "text": "Ratón.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "bazyl-item-pingwin",
-   "text": "¡Pingüino!",
-   "voice": "voices/bazyl-es"
+   "text": "Pingüino.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "bazyl-item-zolw",
-   "text": "¡Tortuga!",
-   "voice": "voices/bazyl-es"
+   "text": "Tortuga.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "bazyl-item-krab",
-   "text": "¡Cangrejo!",
-   "voice": "voices/bazyl-es"
+   "text": "Cangrejo.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "bazyl-item-osmiornica",
-   "text": "¡Pulpo!",
-   "voice": "voices/bazyl-es"
+   "text": "Pulpo.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "bazyl-item-ptak",
-   "text": "¡Pájaro!",
-   "voice": "voices/bazyl-es"
+   "text": "Pájaro.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "bazyl-item-dinozaur",
-   "text": "¡Dinosaurio!",
-   "voice": "voices/bazyl-es"
+   "text": "Dinosaurio.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "bazyl-item-lis",
-   "text": "¡Zorro!",
-   "voice": "voices/bazyl-es"
+   "text": "Zorro.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "bazyl-item-zajac",
-   "text": "¡Liebre!",
-   "voice": "voices/bazyl-es"
+   "text": "Liebre.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "bazyl-item-dzik",
-   "text": "¡Jabalí!",
-   "voice": "voices/bazyl-es"
+   "text": "Jabalí.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 4
   },
   {
    "name": "bazyl-item-sarna",
-   "text": "¡Ciervo!",
-   "voice": "voices/bazyl-es"
+   "text": "Ciervo.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "bazyl-item-dzieciol",
-   "text": "¡Pájaro carpintero!",
-   "voice": "voices/bazyl-es"
+   "text": "Pájaro carpintero.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-item-wieloryb",
-   "text": "¡Ballena!",
-   "voice": "voices/bazyl-es"
+   "text": "Ballena.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "bazyl-item-delfin",
-   "text": "¡Delfín!",
-   "voice": "voices/bazyl-es"
+   "text": "Delfín.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "bazyl-item-meduza",
-   "text": "¡Medusa!",
-   "voice": "voices/bazyl-es"
+   "text": "Medusa.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-item-konikmorski",
-   "text": "¡Caballito de mar!",
-   "voice": "voices/bazyl-es"
+   "text": "Caballito de mar.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "bazyl-item-koza",
-   "text": "¡Cabra!",
-   "voice": "voices/bazyl-es"
+   "text": "Cabra.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-item-osiolek",
-   "text": "¡Burro!",
-   "voice": "voices/bazyl-es"
+   "text": "Burro.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "bazyl-item-indyk",
-   "text": "¡Pavo!",
-   "voice": "voices/bazyl-es"
+   "text": "Pavo.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "bazyl-item-ges",
-   "text": "¡Ganso!",
-   "voice": "voices/bazyl-es"
+   "text": "Ganso.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-item-foka",
-   "text": "¡Foca!",
-   "voice": "voices/bazyl-es"
+   "text": "Foca.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "bazyl-item-mors",
-   "text": "¡Morsa!",
-   "voice": "voices/bazyl-es"
+   "text": "Morsa.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-item-mispolarny",
-   "text": "¡Oso polar!",
-   "voice": "voices/bazyl-es"
+   "text": "Oso polar.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "bazyl-item-hipopotam",
-   "text": "¡Hipopótamo!",
-   "voice": "voices/bazyl-es"
+   "text": "Hipopótamo.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "bazyl-item-nosorozec",
-   "text": "¡Rinoceronte!",
-   "voice": "voices/bazyl-es"
+   "text": "Rinoceronte.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 6
+  },
+  {
+   "name": "bazyl-item-labedz",
+   "text": "Cisne.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "bazyl-item-czapla",
+   "text": "Garza.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-item-jablko",
-   "text": "¡Manzana!",
-   "voice": "voices/bazyl-es"
+   "text": "Manzana.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "bazyl-item-banan",
-   "text": "¡Plátano!",
-   "voice": "voices/bazyl-es"
+   "text": "Plátano.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-item-gruszka",
-   "text": "¡Pera!",
-   "voice": "voices/bazyl-es"
+   "text": "Pera.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-item-truskawka",
-   "text": "¡Fresa!",
-   "voice": "voices/bazyl-es"
+   "text": "Fresa.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "bazyl-item-sliwka",
-   "text": "¡Ciruela!",
-   "voice": "voices/bazyl-es"
+   "text": "Ciruela.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-item-wisnia",
-   "text": "¡Cerezas!",
-   "voice": "voices/bazyl-es"
+   "text": "Cerezas.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "bazyl-item-pomarancza",
-   "text": "¡Naranja!",
-   "voice": "voices/bazyl-es"
+   "text": "Naranja.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-item-cytryna",
-   "text": "¡Limón!",
-   "voice": "voices/bazyl-es"
+   "text": "Limón.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 6
   },
   {
    "name": "bazyl-item-winogrona",
-   "text": "¡Uvas!",
-   "voice": "voices/bazyl-es"
+   "text": "Uvas.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-item-arbuz",
-   "text": "¡Sandía!",
-   "voice": "voices/bazyl-es"
+   "text": "Sandía.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "bazyl-item-ananas",
-   "text": "¡Piña!",
-   "voice": "voices/bazyl-es"
+   "text": "Piña.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "bazyl-item-malina",
-   "text": "¡Frambuesa!",
-   "voice": "voices/bazyl-es"
+   "text": "Frambuesa.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-item-marchewka",
-   "text": "¡Zanahoria!",
-   "voice": "voices/bazyl-es"
+   "text": "Zanahoria.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 5
   },
   {
    "name": "bazyl-item-pomidor",
-   "text": "¡Tomate!",
-   "voice": "voices/bazyl-es"
+   "text": "Tomate.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 4
   },
   {
    "name": "bazyl-item-ogorek",
-   "text": "¡Pepino!",
-   "voice": "voices/bazyl-es"
+   "text": "Pepino.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "bazyl-item-ziemniak",
-   "text": "¡Papa!",
-   "voice": "voices/bazyl-es"
+   "text": "Papa.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "bazyl-item-kukurydza",
-   "text": "¡Maíz!",
-   "voice": "voices/bazyl-es"
+   "text": "Maíz.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-item-papryka",
-   "text": "¡Pimiento!",
-   "voice": "voices/bazyl-es"
+   "text": "Pimiento.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-item-brokul",
-   "text": "¡Brócoli!",
-   "voice": "voices/bazyl-es"
+   "text": "Brócoli.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-item-dynia",
-   "text": "¡Calabaza!",
-   "voice": "voices/bazyl-es"
+   "text": "Calabaza.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "bazyl-item-groszek",
-   "text": "¡Chícharos!",
-   "voice": "voices/bazyl-es"
+   "text": "Chícharos.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-item-rzodkiewka",
-   "text": "¡Rábano!",
-   "voice": "voices/bazyl-es"
+   "text": "Rábano.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 5
   },
   {
    "name": "bazyl-item-grzyb",
-   "text": "¡Hongo!",
-   "voice": "voices/bazyl-es"
+   "text": "Hongo.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-item-cebula",
-   "text": "¡Cebolla!",
-   "voice": "voices/bazyl-es"
+   "text": "Cebolla.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 4
   },
   {
    "name": "bazyl-item-auto",
-   "text": "¡Carro!",
-   "voice": "voices/bazyl-es"
+   "text": "Carro.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "bazyl-item-rower",
-   "text": "¡Bicicleta!",
-   "voice": "voices/bazyl-es"
+   "text": "Bicicleta.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-item-samolot",
-   "text": "¡Avión!",
-   "voice": "voices/bazyl-es"
+   "text": "Avión.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "bazyl-item-lodka",
-   "text": "¡Barco!",
-   "voice": "voices/bazyl-es"
+   "text": "Barco.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-item-autobus",
-   "text": "¡Autobús!",
-   "voice": "voices/bazyl-es"
+   "text": "Autobús.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "bazyl-item-pociag",
-   "text": "¡Tren!",
-   "voice": "voices/bazyl-es"
+   "text": "Tren.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 5
   },
   {
    "name": "bazyl-item-traktor",
-   "text": "¡Tractor!",
-   "voice": "voices/bazyl-es"
+   "text": "Tractor.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "bazyl-item-helikopter",
-   "text": "¡Helicóptero!",
-   "voice": "voices/bazyl-es"
+   "text": "Helicóptero.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "bazyl-item-rakieta",
-   "text": "¡Cohete!",
-   "voice": "voices/bazyl-es"
+   "text": "Cohete.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-item-hulajnoga",
-   "text": "¡Monopatín!",
-   "voice": "voices/bazyl-es"
+   "text": "Monopatín.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-item-skuter",
-   "text": "¡Moto!",
-   "voice": "voices/bazyl-es"
+   "text": "Moto.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 4
   },
   {
    "name": "bazyl-item-straz",
-   "text": "¡Camión de bomberos!",
-   "voice": "voices/bazyl-es"
+   "text": "Camión de bomberos.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-item-ciezarowka",
-   "text": "¡Camión!",
-   "voice": "voices/bazyl-es"
+   "text": "Camión.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-item-pilka",
-   "text": "¡Pelota!",
-   "voice": "voices/bazyl-es"
+   "text": "Pelota.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-item-mis",
-   "text": "¡Osito de peluche!",
-   "voice": "voices/bazyl-es"
+   "text": "Osito de peluche.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-item-klocek",
-   "text": "¡Bloque!",
-   "voice": "voices/bazyl-es"
+   "text": "Bloque.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-item-lalka",
-   "text": "¡Muñeca!",
-   "voice": "voices/bazyl-es"
+   "text": "Muñeca.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "bazyl-item-latawiec",
-   "text": "¡Cometa!",
-   "voice": "voices/bazyl-es"
+   "text": "Cometa.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-item-bebenek",
-   "text": "¡Tambor!",
-   "voice": "voices/bazyl-es"
+   "text": "Tambor.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "bazyl-item-konik",
-   "text": "¡Caballito de madera!",
-   "voice": "voices/bazyl-es"
+   "text": "Caballito de madera.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "bazyl-item-baczek",
-   "text": "¡Trompo!",
-   "voice": "voices/bazyl-es"
+   "text": "Trompo.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "bazyl-item-robot",
-   "text": "¡Robot!",
-   "voice": "voices/bazyl-es"
+   "text": "Robot.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "bazyl-item-balonik",
-   "text": "¡Globo!",
-   "voice": "voices/bazyl-es"
+   "text": "Globo.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 5
   },
   {
    "name": "bazyl-item-trabka",
-   "text": "¡Trompeta!",
-   "voice": "voices/bazyl-es"
+   "text": "Trompeta.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "bazyl-item-wiaderko",
-   "text": "¡Cubeta!",
-   "voice": "voices/bazyl-es"
+   "text": "Cubeta.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "bazyl-item-sanki",
-   "text": "¡Trineo!",
-   "voice": "voices/bazyl-es"
+   "text": "Trineo.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 3
+  },
+  {
+   "name": "bazyl-item-narty",
+   "text": "Esquís.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
+  },
+  {
+   "name": "bazyl-item-namiot",
+   "text": "Tienda.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
+  },
+  {
+   "name": "bazyl-item-ukulele",
+   "text": "Ukelele.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "bazyl-item-zamek",
+   "text": "Castillo de arena.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "bazyl-item-lopatka",
+   "text": "Pala.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-item-kubek",
-   "text": "¡Taza!",
-   "voice": "voices/bazyl-es"
+   "text": "Taza.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-item-talerz",
-   "text": "¡Plato!",
-   "voice": "voices/bazyl-es"
+   "text": "Plato.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "bazyl-item-lyzka",
-   "text": "¡Cuchara!",
-   "voice": "voices/bazyl-es"
+   "text": "Cuchara.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-item-widelec",
-   "text": "¡Tenedor!",
-   "voice": "voices/bazyl-es"
+   "text": "Tenedor.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-item-garnek",
-   "text": "¡Olla!",
-   "voice": "voices/bazyl-es"
+   "text": "Olla.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "bazyl-item-czajnik",
-   "text": "¡Tetera!",
-   "voice": "voices/bazyl-es"
+   "text": "Tetera.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-item-miska",
-   "text": "¡Tazón!",
-   "voice": "voices/bazyl-es"
+   "text": "Tazón.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "bazyl-item-patelnia",
-   "text": "¡Sartén!",
-   "voice": "voices/bazyl-es"
+   "text": "Sartén.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-item-butelka",
-   "text": "¡Biberón!",
-   "voice": "voices/bazyl-es"
+   "text": "Biberón.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 6
+  },
+  {
+   "name": "bazyl-item-szklanka",
+   "text": "Vaso de leche.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "bazyl-item-jajko",
+   "text": "Huevo.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 6
   },
   {
    "name": "bazyl-item-czapka",
-   "text": "¡Gorro!",
-   "voice": "voices/bazyl-es"
+   "text": "Gorro.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-item-szalik",
-   "text": "¡Bufanda!",
-   "voice": "voices/bazyl-es"
+   "text": "Bufanda.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "bazyl-item-but",
-   "text": "¡Zapato!",
-   "voice": "voices/bazyl-es"
+   "text": "Zapato.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-item-skarpetka",
-   "text": "¡Calcetín!",
-   "voice": "voices/bazyl-es"
+   "text": "Calcetín.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 4
   },
   {
    "name": "bazyl-item-koszulka",
-   "text": "¡Camiseta!",
-   "voice": "voices/bazyl-es"
+   "text": "Camiseta.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-item-spodnie",
-   "text": "¡Pantalones!",
-   "voice": "voices/bazyl-es"
+   "text": "Pantalones.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-item-sukienka",
-   "text": "¡Vestido!",
-   "voice": "voices/bazyl-es"
+   "text": "Vestido.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "bazyl-item-rekawiczki",
-   "text": "¡Manoplas!",
-   "voice": "voices/bazyl-es"
+   "text": "Manoplas.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-item-kalosze",
-   "text": "¡Botas de lluvia!",
-   "voice": "voices/bazyl-es"
+   "text": "Botas de lluvia.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "bazyl-item-parasol",
-   "text": "¡Paraguas!",
-   "voice": "voices/bazyl-es"
+   "text": "Paraguas.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "bazyl-item-okulary",
-   "text": "¡Lentes de sol!",
-   "voice": "voices/bazyl-es"
+   "text": "Lentes de sol.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-item-kapelusz",
-   "text": "¡Sombrero!",
-   "voice": "voices/bazyl-es"
+   "text": "Sombrero.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-item-sandaly",
-   "text": "¡Sandalias!",
-   "voice": "voices/bazyl-es"
+   "text": "Sandalias.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "bazyl-item-stroj",
-   "text": "¡Traje de baño!",
-   "voice": "voices/bazyl-es"
+   "text": "Traje de baño.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "bazyl-item-kurtka",
-   "text": "¡Chaqueta!",
-   "voice": "voices/bazyl-es"
+   "text": "Chaqueta.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "bazyl-item-slonce",
-   "text": "¡Sol!",
-   "voice": "voices/bazyl-es"
+   "text": "Sol.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 4
   },
   {
    "name": "bazyl-item-chmurka",
-   "text": "¡Nube!",
-   "voice": "voices/bazyl-es"
+   "text": "Nube.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 6
   },
   {
    "name": "bazyl-item-gwiazdka",
-   "text": "¡Estrella!",
-   "voice": "voices/bazyl-es"
+   "text": "Estrella.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "bazyl-item-ksiezyc",
+   "text": "Luna.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "bazyl-item-kwiatek",
+   "text": "Flor.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "bazyl-item-drzewo",
+   "text": "Árbol.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 6
+  },
+  {
+   "name": "bazyl-item-lisc",
+   "text": "Hoja.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "bazyl-item-tecza",
+   "text": "Arcoíris.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 4
+  },
+  {
+   "name": "bazyl-item-muszelka",
+   "text": "Concha.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
+  },
+  {
+   "name": "bazyl-item-szyszka",
+   "text": "Piña.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
+  },
+  {
+   "name": "bazyl-item-ul",
+   "text": "Colmena.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
+  },
+  {
+   "name": "bazyl-item-sniezynka",
+   "text": "Copo de nieve.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
+  },
+  {
+   "name": "bazyl-krainy",
+   "text": "Toca los círculos de colores de arriba para visitar otros mundos.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 3
+  },
+  {
+   "name": "bazyl-historyjki",
+   "text": "¿Qué pasó primero? Ordena las imágenes.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
+  },
+  {
+   "name": "bazyl-historia-kwiat",
+   "text": "Primero una semilla, luego un brote, y al final una flor.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
+  },
+  {
+   "name": "bazyl-historia-kurczak",
+   "text": "Primero un huevo, luego se rompe el cascarón, y al final hay un pollito.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
+  },
+  {
+   "name": "bazyl-historia-motyl",
+   "text": "Primero una oruga, luego un capullo, y al final una mariposa.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 3
+  },
+  {
+   "name": "bazyl-historia-balwan",
+   "text": "Primero una bola de nieve, luego otra, y al final un muñeco de nieve.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "bazyl-historia-jablko",
+   "text": "Primero una manzana entera, luego una mordida, y al final el corazón de la manzana.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
+  },
+  {
+   "name": "bazyl-historia-lody",
+   "text": "Primero un helado lleno, luego cada vez menos, y al final un cono vacío.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
+  },
+  {
+   "name": "bazyl-historia-zabka",
+   "text": "Primero unos huevitos, luego un renacuajo, y al final una rana.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
+  },
+  {
+   "name": "bazyl-historia-kanapka",
+   "text": "Primero el pan, luego la mantequilla, y al final un rico sándwich.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "bazyl-historia-wieza",
+   "text": "Primero un bloque, luego dos, y al final una torre alta.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
+  },
+  {
+   "name": "bazyl-historia-balon",
+   "text": "Primero un globo vacío, luego un poco de aire, y al final un globo grande.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
+  },
+  {
+   "name": "bazyl-historia-tort",
+   "text": "Primero mezclamos la masa, luego horneamos, y al final hay un pastel.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
+  },
+  {
+   "name": "bazyl-historia-zamek",
+   "text": "Primero una cubeta de arena, luego una torre de arena, y al final un castillo de arena.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
+  },
+  {
+   "name": "bazyl-historia-jajko",
+   "text": "Primero un huevo, luego lo rompemos en el sartén, y al final un huevo estrellado.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "bazyl-historia-pizza",
+   "text": "Primero una bola de masa, luego la salsa, y al final una rica pizza.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "bazyl-historia-kakao",
+   "text": "Primero una taza vacía, luego leche, y al final un chocolate calientito.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
+  },
+  {
+   "name": "bazyl-historia-gniazdo",
+   "text": "Primero unas ramitas, luego un nido, y al final un pájaro en el nido.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 3
+  },
+  {
+   "name": "bazyl-historia-drzewko",
+   "text": "Primero un arbolito chiquito, luego un árbol, y al final un manzano con manzanas.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
+  },
+  {
+   "name": "bazyl-historia-dzien",
+   "text": "Primero sale el sol en la mañana, luego es de día, y al final es de noche.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
+  },
+  {
+   "name": "bazyl-emocje-wesoly",
+   "text": "Muéstrame una carita feliz.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 3
+  },
+  {
+   "name": "bazyl-minka-wesoly",
+   "text": "Una carita feliz.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
+  },
+  {
+   "name": "bazyl-emocje-smutny",
+   "text": "Muéstrame una carita triste.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "bazyl-minka-smutny",
+   "text": "Una carita triste.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "bazyl-emocje-zly",
+   "text": "Muéstrame una carita enojada.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "bazyl-minka-zly",
+   "text": "Una carita enojada.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "bazyl-emocje-zdziwiony",
+   "text": "Muéstrame una carita sorprendida.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 3
+  },
+  {
+   "name": "bazyl-minka-zdziwiony",
+   "text": "Una carita sorprendida.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
+  },
+  {
+   "name": "bazyl-emocje-przestraszony",
+   "text": "Muéstrame una carita asustada.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "bazyl-minka-przestraszony",
+   "text": "Una carita asustada.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
+  },
+  {
+   "name": "bazyl-emocje-spiacy",
+   "text": "Muéstrame una carita con sueño.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "bazyl-minka-spiacy",
+   "text": "Una carita con sueño.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
+  },
+  {
+   "name": "bazyl-kraina-warsztat",
+   "text": "Bienvenido a mi taller. Aquí arrastramos y ordenamos.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
+  },
+  {
+   "name": "bazyl-wzory",
+   "text": "¿Qué sigue? Arrastra la imagen que falta.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
+  },
+  {
+   "name": "bazyl-ksztalty",
+   "text": "Mete cada bloque en su agujero.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "bazyl-ksztalt-kolo",
+   "text": "Círculo.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "bazyl-ksztalt-kwadrat",
+   "text": "Cuadrado.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "bazyl-ksztalt-trojkat",
+   "text": "Triángulo.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "bazyl-ksztalt-prostokat",
+   "text": "Rectángulo.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "bazyl-ksztalt-gwiazda",
+   "text": "Estrella.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
+  },
+  {
+   "name": "bazyl-ksztalt-serce",
+   "text": "Corazón.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
+  },
+  {
+   "name": "bazyl-ksztalt-owal",
+   "text": "Óvalo.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
+  },
+  {
+   "name": "bazyl-ksztalt-romb",
+   "text": "Rombo.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "bazyl-ksztalt-ksiezyc",
    "text": "¡Luna!",
    "voice": "voices/bazyl-es"
   },
   {
-   "name": "bazyl-item-kwiatek",
-   "text": "¡Flor!",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "bazyl-item-drzewo",
-   "text": "¡Árbol!",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "bazyl-item-lisc",
-   "text": "¡Hoja!",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "bazyl-item-tecza",
-   "text": "¡Arcoíris!",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "bazyl-item-muszelka",
-   "text": "¡Concha!",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "bazyl-krainy",
-   "text": "¡Toca los círculos de colores de arriba para visitar otros mundos!",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "bazyl-historyjki",
-   "text": "¿Qué pasó primero? ¡Ordena las imágenes!",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "bazyl-historia-kwiat",
-   "text": "¡Primero una semilla, luego un brote, y al final una flor!",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "bazyl-historia-kurczak",
-   "text": "¡Primero un huevo, luego se rompe el cascarón, y al final hay un pollito!",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "bazyl-historia-motyl",
-   "text": "¡Primero una oruga, luego un capullo, y al final una mariposa!",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "bazyl-historia-balwan",
-   "text": "¡Primero una bola de nieve, luego otra, y al final un muñeco de nieve!",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "bazyl-historia-jablko",
-   "text": "¡Primero una manzana entera, luego una mordida, y al final el corazón de la manzana!",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "bazyl-historia-lody",
-   "text": "¡Primero un helado lleno, luego cada vez menos, y al final un cono vacío!",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "bazyl-historia-zabka",
-   "text": "¡Primero unos huevitos, luego un renacuajo, y al final una rana!",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "bazyl-historia-kanapka",
-   "text": "¡Primero el pan, luego la mantequilla, y al final un rico sándwich!",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "bazyl-historia-wieza",
-   "text": "¡Primero un bloque, luego dos, y al final una torre alta!",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "bazyl-historia-balon",
-   "text": "¡Primero un globo vacío, luego un poco de aire, y al final un globo grande!",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "bazyl-historia-tort",
-   "text": "¡Primero mezclamos la masa, luego horneamos, y al final hay un pastel!",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "bazyl-historia-zamek",
-   "text": "¡Primero una cubeta de arena, luego una torre de arena, y al final un castillo de arena!",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "bazyl-historia-jajko",
-   "text": "¡Primero un huevo, luego lo rompemos en el sartén, y al final un huevo estrellado!",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "bazyl-historia-pizza",
-   "text": "¡Primero una bola de masa, luego la salsa, y al final una rica pizza!",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "bazyl-historia-swieca",
-   "text": "¡Primero una vela larga, luego cada vez más corta, y al final un cabito chiquito!",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "bazyl-historia-kakao",
-   "text": "¡Primero una taza vacía, luego leche, y al final un chocolate calientito!",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "bazyl-historia-gniazdo",
-   "text": "¡Primero unas ramitas, luego un nido, y al final un pájaro en el nido!",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "bazyl-historia-drzewko",
-   "text": "¡Primero un arbolito chiquito, luego un árbol, y al final un manzano con manzanas!",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "bazyl-historia-samolot",
-   "text": "¡Primero una hoja de papel, luego la doblamos, y al final un avión de papel!",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "bazyl-historia-dzien",
-   "text": "¡Primero sale el sol en la mañana, luego es de día, y al final es de noche!",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "bazyl-emocje-wesoly",
-   "text": "¡Muéstrame una carita feliz!",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "bazyl-minka-wesoly",
-   "text": "¡Una carita feliz!",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "bazyl-emocje-smutny",
-   "text": "¡Muéstrame una carita triste!",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "bazyl-minka-smutny",
-   "text": "¡Una carita triste!",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "bazyl-emocje-zly",
-   "text": "¡Muéstrame una carita enojada!",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "bazyl-minka-zly",
-   "text": "¡Una carita enojada!",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "bazyl-emocje-zdziwiony",
-   "text": "¡Muéstrame una carita sorprendida!",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "bazyl-minka-zdziwiony",
-   "text": "¡Una carita sorprendida!",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "bazyl-emocje-przestraszony",
-   "text": "¡Muéstrame una carita asustada!",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "bazyl-minka-przestraszony",
-   "text": "¡Una carita asustada!",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "bazyl-emocje-spiacy",
-   "text": "¡Muéstrame una carita con sueño!",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "bazyl-minka-spiacy",
-   "text": "¡Una carita con sueño!",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "bazyl-kraina-warsztat",
-   "text": "¡Bienvenido a mi taller! Aquí arrastramos y ordenamos.",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "bazyl-wzory",
-   "text": "¿Qué sigue? ¡Arrastra la imagen que falta!",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "bazyl-ksztalty",
-   "text": "¡Mete cada bloque en su agujero!",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "bazyl-ksztalt-kolo",
-   "text": "¡Círculo!",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "bazyl-ksztalt-kwadrat",
-   "text": "¡Cuadrado!",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "bazyl-ksztalt-trojkat",
-   "text": "¡Triángulo!",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "bazyl-ksztalt-prostokat",
-   "text": "¡Rectángulo!",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "bazyl-ksztalt-gwiazda",
-   "text": "¡Estrella!",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "bazyl-ksztalt-serce",
-   "text": "¡Corazón!",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "bazyl-ksztalt-owal",
-   "text": "¡Óvalo!",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "bazyl-ksztalt-romb",
-   "text": "¡Rombo!",
+   "name": "bazyl-ksztalt-kropla",
+   "text": "¡Gota!",
    "voice": "voices/bazyl-es"
   },
   {
    "name": "bazyl-pasuje",
    "text": "¿Cuál sobra? Toca esa imagen.",
-   "voice": "voices/bazyl-es"
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "bazyl-ukladanka",
-   "text": "¡Arma la imagen! Arrastra las piezas a su lugar.",
-   "voice": "voices/bazyl-es"
+   "text": "Arma la imagen. Arrastra las piezas a su lugar.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "bazyl-przeciagnij",
    "text": "Sujeta una imagen con el dedo y arrástrala a la caja.",
-   "voice": "voices/bazyl-es"
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "bazyl-sort-kategorie",
-   "text": "¡Clasifica! Cada cosa va en su caja.",
-   "voice": "voices/bazyl-es"
+   "text": "Clasifica. Cada cosa va en su caja.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-sort-kolory",
-   "text": "¡Pon cada cosa en la cubeta del mismo color!",
-   "voice": "voices/bazyl-es"
+   "text": "Pon cada cosa en la cubeta del mismo color.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "bazyl-sort-domy",
-   "text": "¿Dónde viven estos animales? ¡Lleva a cada uno a su casa!",
-   "voice": "voices/bazyl-es"
+   "text": "¿Dónde viven estos animales? Lleva a cada uno a su casa.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-sort-pory",
    "text": "¿Qué usamos en verano y qué en invierno?",
-   "voice": "voices/bazyl-es"
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "bazyl-sort-wielkosc",
    "text": "¿Qué animales son grandes y cuáles son pequeños?",
-   "voice": "voices/bazyl-es"
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "bazyl-sort-ruch",
-   "text": "¿Cómo se mueven estas cosas? ¡Clasifícalas!",
-   "voice": "voices/bazyl-es"
+   "text": "¿Cómo se mueven estas cosas? Clasifícalas.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-kat-owoce",
-   "text": "¡Aquí van las frutas!",
-   "voice": "voices/bazyl-es"
+   "text": "Aquí van las frutas.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "bazyl-kat-warzywa",
-   "text": "¡Aquí van las verduras!",
-   "voice": "voices/bazyl-es"
+   "text": "Aquí van las verduras.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "bazyl-kat-zwierzeta",
-   "text": "¡Aquí van los animales!",
-   "voice": "voices/bazyl-es"
+   "text": "Aquí van los animales.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-kat-pojazdy",
-   "text": "¡Aquí van los vehículos!",
-   "voice": "voices/bazyl-es"
+   "text": "Aquí van los vehículos.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-kat-ubrania",
-   "text": "¡Aquí va la ropa!",
-   "voice": "voices/bazyl-es"
+   "text": "Aquí va la ropa.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-kat-kuchnia",
-   "text": "¡Aquí van las cosas de la cocina!",
-   "voice": "voices/bazyl-es"
+   "text": "Aquí van las cosas de la cocina.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-kat-zabawki",
-   "text": "¡Aquí van los juguetes!",
-   "voice": "voices/bazyl-es"
+   "text": "Aquí van los juguetes.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "bazyl-barwa-czerwony",
-   "text": "¡Cubeta roja!",
-   "voice": "voices/bazyl-es"
+   "text": "Cubeta roja.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "bazyl-barwa-zolty",
-   "text": "¡Cubeta amarilla!",
-   "voice": "voices/bazyl-es"
+   "text": "Cubeta amarilla.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "bazyl-barwa-zielony",
-   "text": "¡Cubeta verde!",
-   "voice": "voices/bazyl-es"
+   "text": "Cubeta verde.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "bazyl-barwa-niebieski",
-   "text": "¡Cubeta azul!",
-   "voice": "voices/bazyl-es"
+   "text": "Cubeta azul.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "bazyl-barwa-pomaranczowy",
-   "text": "¡Cubeta naranja!",
-   "voice": "voices/bazyl-es"
+   "text": "Cubeta naranja.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-barwa-rozowy",
-   "text": "¡Cubeta rosa!",
-   "voice": "voices/bazyl-es"
+   "text": "Cubeta rosa.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "bazyl-barwa-fioletowy",
-   "text": "¡Cubeta morada!",
-   "voice": "voices/bazyl-es"
+   "text": "Cubeta morada.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "bazyl-barwa-brazowy",
-   "text": "¡Cubeta café!",
-   "voice": "voices/bazyl-es"
+   "text": "Cubeta café.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-barwa-bialy",
-   "text": "¡Cubeta blanca!",
-   "voice": "voices/bazyl-es"
+   "text": "Cubeta blanca.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "bazyl-dom-wies",
-   "text": "¡En la granja!",
-   "voice": "voices/bazyl-es"
+   "text": "En la granja.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "bazyl-dom-las",
-   "text": "¡En el bosque!",
-   "voice": "voices/bazyl-es"
+   "text": "En el bosque.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 5
   },
   {
    "name": "bazyl-dom-woda",
-   "text": "¡En el agua!",
-   "voice": "voices/bazyl-es"
+   "text": "En el agua.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "bazyl-dom-afryka",
-   "text": "¡En África!",
-   "voice": "voices/bazyl-es"
+   "text": "En África.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-dom-lod",
-   "text": "¡Donde hay hielo y nieve!",
-   "voice": "voices/bazyl-es"
+   "text": "Donde hay hielo y nieve.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-pora-lato",
-   "text": "¡Para el verano!",
-   "voice": "voices/bazyl-es"
+   "text": "Para el verano.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-pora-zima",
-   "text": "¡Para el invierno!",
-   "voice": "voices/bazyl-es"
+   "text": "Para el invierno.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-rozmiar-duze",
-   "text": "¡Animales grandes!",
-   "voice": "voices/bazyl-es"
+   "text": "Animales grandes.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-rozmiar-male",
-   "text": "¡Animales pequeños!",
-   "voice": "voices/bazyl-es"
+   "text": "Animales pequeños.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-ruch-lata",
-   "text": "¡Lo que vuela!",
-   "voice": "voices/bazyl-es"
+   "text": "Lo que vuela.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "bazyl-ruch-plywa",
-   "text": "¡Lo que nada!",
-   "voice": "voices/bazyl-es"
+   "text": "Lo que nada.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-ruch-jezdzi",
-   "text": "¡Lo que rueda!",
-   "voice": "voices/bazyl-es"
+   "text": "Lo que rueda.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-kolor-czerwony",
-   "text": "¡Muéstrame algo rojo!",
-   "voice": "voices/bazyl-es"
+   "text": "Muéstrame algo rojo.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "bazyl-kolor-zolty",
-   "text": "¡Muéstrame algo amarillo!",
-   "voice": "voices/bazyl-es"
+   "text": "Muéstrame algo amarillo.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-kolor-zielony",
-   "text": "¡Muéstrame algo verde!",
-   "voice": "voices/bazyl-es"
+   "text": "Muéstrame algo verde.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "bazyl-kolor-niebieski",
-   "text": "¡Muéstrame algo azul!",
-   "voice": "voices/bazyl-es"
+   "text": "Muéstrame algo azul.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "bazyl-kolor-pomaranczowy",
-   "text": "¡Muéstrame algo naranja!",
-   "voice": "voices/bazyl-es"
+   "text": "Muéstrame algo naranja.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-kolor-rozowy",
-   "text": "¡Muéstrame algo rosa!",
-   "voice": "voices/bazyl-es"
+   "text": "Muéstrame algo rosa.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-kolor-fioletowy",
-   "text": "¡Muéstrame algo morado!",
-   "voice": "voices/bazyl-es"
+   "text": "Muéstrame algo morado.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "bazyl-kolor-brazowy",
-   "text": "¡Muéstrame algo café!",
-   "voice": "voices/bazyl-es"
+   "text": "Muéstrame algo café.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "bazyl-kolor-bialy",
-   "text": "¡Muéstrame algo blanco!",
-   "voice": "voices/bazyl-es"
+   "text": "Muéstrame algo blanco.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-mama-kurczak",
    "text": "¿Dónde está la mamá del pollito?",
-   "voice": "voices/bazyl-es"
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-mama-cielaczek",
    "text": "¿Dónde está la mamá del ternero?",
-   "voice": "voices/bazyl-es"
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-mama-kotek",
    "text": "¿Dónde está la mamá del gatito?",
-   "voice": "voices/bazyl-es"
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-mama-jagniatko",
    "text": "¿Dónde está la mamá del corderito?",
-   "voice": "voices/bazyl-es"
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "bazyl-mama-prosiaczek",
    "text": "¿Dónde está la mamá del cerdito?",
-   "voice": "voices/bazyl-es"
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "bazyl-mama-zrebak",
    "text": "¿Dónde está la mamá del potrillo?",
-   "voice": "voices/bazyl-es"
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-mama-kaczatko",
    "text": "¿Dónde está la mamá del patito?",
-   "voice": "voices/bazyl-es"
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-mama-kijanka",
    "text": "¿Dónde está la mamá del renacuajo?",
-   "voice": "voices/bazyl-es"
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "bazyl-mama-lisek",
    "text": "¿Dónde está la mamá del zorrito?",
-   "voice": "voices/bazyl-es"
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-mama-niedzwiadek",
    "text": "¿Dónde está la mamá del osezno?",
-   "voice": "voices/bazyl-es"
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-mama-pingwinek",
    "text": "¿Dónde está la mamá del pingüinito?",
-   "voice": "voices/bazyl-es"
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 2
   },
   {
    "name": "bazyl-mama-lwiatko",
    "text": "¿Dónde está la mamá del leoncito?",
-   "voice": "voices/bazyl-es"
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-mama-kozlatko",
    "text": "¿Dónde está la mamá del cabrito?",
-   "voice": "voices/bazyl-es"
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-mama-zyrafka",
    "text": "¿Dónde está la mamá de la jirafita?",
-   "voice": "voices/bazyl-es"
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-mama-foczka",
    "text": "¿Dónde está la mamá de la foquita?",
-   "voice": "voices/bazyl-es"
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 1
   },
   {
    "name": "bazyl-mama-sowka",
    "text": "¿Dónde está la mamá del búho bebé?",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "lusia-item-labedz",
-   "text": "Cisne.",
-   "voice": "voices/lusia-es"
-  },
-  {
-   "name": "bazyl-item-labedz",
-   "text": "Cisne.",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "lusia-item-czapla",
-   "text": "Garza.",
-   "voice": "voices/lusia-es"
-  },
-  {
-   "name": "bazyl-item-czapla",
-   "text": "Garza.",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "lusia-item-narty",
-   "text": "Esquís.",
-   "voice": "voices/lusia-es"
-  },
-  {
-   "name": "bazyl-item-narty",
-   "text": "Esquís.",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "lusia-item-namiot",
-   "text": "Tienda.",
-   "voice": "voices/lusia-es"
-  },
-  {
-   "name": "bazyl-item-namiot",
-   "text": "Tienda.",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "lusia-item-ukulele",
-   "text": "Guitarra.",
-   "voice": "voices/lusia-es"
-  },
-  {
-   "name": "bazyl-item-ukulele",
-   "text": "Guitarra.",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "lusia-item-zamek",
-   "text": "Castillo de arena.",
-   "voice": "voices/lusia-es"
-  },
-  {
-   "name": "bazyl-item-zamek",
-   "text": "Castillo de arena.",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "lusia-item-lopatka",
-   "text": "Pala.",
-   "voice": "voices/lusia-es"
-  },
-  {
-   "name": "bazyl-item-lopatka",
-   "text": "Pala.",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "lusia-item-szklanka",
-   "text": "Vaso de leche.",
-   "voice": "voices/lusia-es"
-  },
-  {
-   "name": "bazyl-item-szklanka",
-   "text": "Vaso de leche.",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "lusia-item-jajko",
-   "text": "Huevo.",
-   "voice": "voices/lusia-es"
-  },
-  {
-   "name": "bazyl-item-jajko",
-   "text": "Huevo.",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "lusia-item-szyszka",
-   "text": "Piña.",
-   "voice": "voices/lusia-es"
-  },
-  {
-   "name": "bazyl-item-szyszka",
-   "text": "Piña.",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "lusia-item-ul",
-   "text": "Colmena.",
-   "voice": "voices/lusia-es"
-  },
-  {
-   "name": "bazyl-item-ul",
-   "text": "Colmena.",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "lusia-item-sniezynka",
-   "text": "Copo de nieve.",
-   "voice": "voices/lusia-es"
-  },
-  {
-   "name": "bazyl-item-sniezynka",
-   "text": "Copo de nieve.",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "lusia-item-szczeniaczek",
-   "text": "Cachorrito.",
-   "voice": "voices/lusia-es"
-  },
-  {
-   "name": "bazyl-item-szczeniaczek",
-   "text": "Cachorrito.",
-   "voice": "voices/bazyl-es"
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 3
   },
   {
    "name": "bazyl-mama-szczeniaczek",
    "text": "¿Dónde está la mamá del cachorrito?",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "lusia-labirynt-szczeniaczek",
-   "text": "Lleva al cachorrito con su mamá.",
-   "voice": "voices/lusia-es"
-  },
-  {
-   "name": "lusia-item-kroliczek",
-   "text": "Conejito.",
-   "voice": "voices/lusia-es"
-  },
-  {
-   "name": "bazyl-item-kroliczek",
-   "text": "Conejito.",
-   "voice": "voices/bazyl-es"
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 6
   },
   {
    "name": "bazyl-mama-kroliczek",
    "text": "¿Dónde está la mamá del conejito?",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "lusia-labirynt-kroliczek",
-   "text": "Lleva al conejito con su mamá.",
-   "voice": "voices/lusia-es"
-  },
-  {
-   "name": "lusia-item-sloniatko",
-   "text": "Elefantito.",
-   "voice": "voices/lusia-es"
-  },
-  {
-   "name": "bazyl-item-sloniatko",
-   "text": "Elefantito.",
-   "voice": "voices/bazyl-es"
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 6
   },
   {
    "name": "bazyl-mama-sloniatko",
    "text": "¿Dónde está la mamá del elefantito?",
-   "voice": "voices/bazyl-es"
-  },
-  {
-   "name": "lusia-labirynt-sloniatko",
-   "text": "Lleva al elefantito con su mamá.",
-   "voice": "voices/lusia-es"
-  },
-  {
-   "name": "lusia-item-zolwik",
-   "text": "Tortuguita.",
-   "voice": "voices/lusia-es"
-  },
-  {
-   "name": "bazyl-item-zolwik",
-   "text": "Tortuguita.",
-   "voice": "voices/bazyl-es"
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 4
   },
   {
    "name": "bazyl-mama-zolwik",
    "text": "¿Dónde está la mamá de la tortuguita?",
-   "voice": "voices/bazyl-es"
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 4
   },
   {
-   "name": "lusia-labirynt-zolwik",
-   "text": "Lleva a la tortuguita con su mamá.",
-   "voice": "voices/lusia-es"
+   "name": "bazyl-historia-swieca",
+   "text": "Primero una vela larga, luego cada vez más corta, y al final un cabito chiquito.",
+   "engine": "chatterbox",
+   "voice": "voices/prezenter",
+   "seed": 1
+  },
+  {
+   "name": "bazyl-historia-samolot",
+   "text": "Primero una hoja de papel, luego la doblamos, y al final un avión de papel.",
+   "engine": "chatterbox",
+   "voice": "voices/prezenter",
+   "seed": 2
   }
  ]
 }

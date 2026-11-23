@@ -241,6 +241,33 @@ if (process.argv.includes('--historyjki5')) {
   for (const [id, prompt] of frames) tasks.push({ out: 'historyjki', prefix: id, args: ['--workflow', 'flux2-sprite', '--count', '2', '--prompt', prompt] });
 }
 
+if (process.argv.includes('--historyjki6')) {
+  // Sześć kolejnych historyjek (razem 24): zmiana widoczna od razu, ten sam przedmiot w każdym kadrze.
+  const base = 'single scene object, centered, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, bright cheerful pastel colors, no text, plain light gray background';
+  const thing = (what: string) => `${what}, no face, no eyes, no mouth, ${base}`;
+  const frames: [string, string][] = [
+    ['banan-1', thing('a whole unpeeled yellow banana lying on a small round white plate')],
+    ['banan-2', thing('a half peeled yellow banana with the peel hanging down and the white fruit showing, lying on a small round white plate')],
+    ['banan-3', thing('only an empty limp yellow banana peel lying on a small round white plate, the fruit is eaten')],
+    ['arbuz-1', thing('a whole round green striped watermelon on a small wooden board')],
+    ['arbuz-2', thing('a green striped watermelon cut into two halves showing red juicy flesh with black seeds, on a small wooden board')],
+    ['arbuz-3', thing('three triangular slices of red watermelon with green rind and black seeds on a small wooden board')],
+    ['akwarium-1', thing('an empty round glass fish bowl with no water, yellow sand and a small green plant at the bottom, blue tinted glass rim')],
+    ['akwarium-2', thing('a round glass fish bowl filled with clear blue water, yellow sand and a small green plant at the bottom, no fish')],
+    ['akwarium-3', thing('a round glass fish bowl filled with clear blue water, yellow sand and a small green plant at the bottom, one orange goldfish swimming inside')],
+    ['prezent-1', thing('a closed gift box wrapped in red paper with a big yellow ribbon bow')],
+    ['prezent-2', thing('a gift box with torn red wrapping paper, the lid half open, a yellow ribbon lying next to it')],
+    ['prezent-3', 'a cute brown teddy bear sitting next to an open empty gift box and torn red wrapping paper, ' + base],
+    ['myjnia-1', thing('a small red toy car covered in brown mud splashes and dirt')],
+    ['myjnia-2', thing('a small red toy car covered in white soap foam and bubbles')],
+    ['myjnia-3', thing('a small shiny clean red toy car with tiny white sparkles around it')],
+    ['babeczka-1', thing('a pink paper muffin cup filled with raw runny yellow cake batter')],
+    ['babeczka-2', thing('a baked golden brown muffin in a pink paper cup')],
+    ['babeczka-3', thing('a muffin in a pink paper cup topped with swirled pink cream frosting and one red cherry')],
+  ];
+  for (const [id, prompt] of frames) tasks.push({ out: 'historyjki', prefix: id, args: ['--workflow', 'flux2-sprite', '--count', '2', '--prompt', prompt] });
+}
+
 if (process.argv.includes('--historyjki3')) {
   // Kolejne historyjki (razem 20).
   const base = 'single scene object, centered, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, bright cheerful pastel colors, no text, plain light gray background';
@@ -347,7 +374,7 @@ if (process.argv.includes('--warsztat')) {
 }
 
 for (const item of ITEMS) {
-  if ((process.argv.includes('--warsztat') || process.argv.includes('--zebatka') || process.argv.includes('--sciezka') || process.argv.includes('--znaki') || process.argv.includes('--pracownia') || process.argv.includes('--dodatki') || process.argv.includes('--historyjki') || process.argv.includes('--polana') || process.argv.includes('--kolorowanki2') || process.argv.includes('--krajobrazy') || process.argv.includes('--balwan') || process.argv.includes('--historyjki2') || process.argv.includes('--historyjki3') || process.argv.includes('--historyjki4') || process.argv.includes('--historyjki5') || process.argv.includes('--emocje2')) && !only) break;
+  if ((process.argv.includes('--warsztat') || process.argv.includes('--zebatka') || process.argv.includes('--sciezka') || process.argv.includes('--znaki') || process.argv.includes('--pracownia') || process.argv.includes('--dodatki') || process.argv.includes('--historyjki') || process.argv.includes('--polana') || process.argv.includes('--kolorowanki2') || process.argv.includes('--krajobrazy') || process.argv.includes('--balwan') || process.argv.includes('--historyjki2') || process.argv.includes('--historyjki3') || process.argv.includes('--historyjki4') || process.argv.includes('--historyjki5') || process.argv.includes('--historyjki6') || process.argv.includes('--emocje2')) && !only) break;
   if (only && !only.has(item.id)) continue;
   if (!only && existsSync(join(repo, 'games/bystrzakowo/public/art/items', `${item.id}.webp`))) continue;
   if (existsSync(join(raw, 'items', `${item.id}-${SEED}.png`))) continue;

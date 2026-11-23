@@ -1,0 +1,14 @@
+{
+ "voice": "voices/prezenter",
+ "tries": 8,
+ "lines": [
+  {
+   "name": "bazyl-ksztalt-ksiezyc",
+   "text": "Księżyc."
+  },
+  {
+   "name": "bazyl-ksztalt-kropla",
+   "text": "Kropla."
+  }
+ ]
+}
