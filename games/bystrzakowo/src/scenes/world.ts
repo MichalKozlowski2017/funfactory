@@ -146,6 +146,7 @@ export class WorldScene extends Scene {
 
     this.gate = new ParentGate(this.art.gear);
     this.gate.onOpen = () => this.askAdult(() => (this.sleep ? this.wake() : this.openParent()));
+    this.gate.onLocked = (n) => this.gateToast(n);
     // Kropka przy zębatce: od ostatniej wizyty rodzica były co najmniej 3 dni zabawy.
     this.gate.setBadge(playDaysAfter(journal(), state.progress.parentSeen ?? '') >= 3);
     this.addChild(this.gate);
@@ -512,14 +513,33 @@ export class WorldScene extends Scene {
     (this.parentPanel as unknown as { setTab(t: string): void }).setTab(tab);
   }
 
+  private toast: Text | null = null;
+
+  /** Bramka zablokowana po złej odpowiedzi: dorosły widzi, za ile może spróbować znowu. */
+  private gateToast(seconds: number): void {
+    haptics.hit();
+    this.toast?.destroy();
+    // Sama liczba sekund (bez zdania): mieści się w każdym języku obok zębatki z odliczającym pierścieniem.
+    const t = label(`${seconds} s`, 30, this.game.pixelRatio, '#ffffff');
+    t.anchor.set(0, 0.5);
+    t.position.set(this.gate.x + 66, this.gate.y);
+    this.addChild(t);
+    this.toast = t;
+    this.timers.after(2.2, () => {
+      if (this.toast !== t) return;
+      void this.tweens.to(t, { alpha: 0 }, { duration: 0.3 }).done.then(() => {
+        if (this.toast === t) this.toast = null;
+        t.destroy();
+      });
+    });
+  }
+
   private adultCheck: AdultCheck | null = null;
-  /** Po złej odpowiedzi bramka nie otwiera pytania do tej chwili (performance.now, ms). */
-  private static gateLockedUntil = 0;
 
   /** Pytanie dla dorosłego przed strefą rodzica (i przed wybudzeniem po limicie czasu). */
   private askAdult(then: () => void): void {
     if (this.adultCheck || this.parentPanel) return;
-    if (performance.now() < WorldScene.gateLockedUntil) return void haptics.hit();
+    if (performance.now() < ParentGate.lockedUntil) return void haptics.hit();
     const close = () => {
       this.adultCheck?.destroy({ children: true });
       this.adultCheck = null;
@@ -532,7 +552,7 @@ export class WorldScene extends Scene {
       },
       close,
       () => {
-        WorldScene.gateLockedUntil = performance.now() + 30_000;
+        ParentGate.lock();
         close();
       },
     );

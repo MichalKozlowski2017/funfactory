@@ -72,7 +72,16 @@ export class ParentGate extends Container {
   private time = 0;
   private held = 0;
   private holding = false;
+  private wasLocked = false;
   onOpen: (() => void) | null = null;
+  /** Próba otwarcia w czasie blokady (po złej odpowiedzi), z liczbą sekund do końca. */
+  onLocked: ((seconds: number) => void) | null = null;
+  /** Po złej odpowiedzi bramka jest zablokowana do tej chwili (performance.now, ms), dla wszystkich scen. */
+  static lockedUntil = 0;
+  static readonly LOCK_MS = 15_000;
+  static lock(): void {
+    ParentGate.lockedUntil = performance.now() + ParentGate.LOCK_MS;
+  }
 
   constructor(gear: Texture | null = null) {
     super();
@@ -118,6 +127,23 @@ export class ParentGate extends Container {
   tick(dt: number): void {
     this.time += dt;
     if (this.badge.visible) this.badge.scale.set(1 + 0.12 * Math.sin(this.time * 4));
+    // Blokada widoczna: przygaszona zębatka i szary pierścień, który znika do końca blokady
+    // (bez tego rodzic myślał, że strefa rodzica przestała działać).
+    const left = ParentGate.lockedUntil - performance.now();
+    if (left > 0) {
+      this.wasLocked = true;
+      this.alpha = 0.5;
+      this.ring.clear().arc(0, 0, 50, -Math.PI / 2, -Math.PI / 2 + (left / ParentGate.LOCK_MS) * Math.PI * 2).stroke({ color: 0x9a8f86, width: 8, cap: 'round' });
+      if (this.holding && this.held === 0) this.onLocked?.(Math.ceil(left / 1000));
+      this.held = this.holding ? this.held + dt : 0;
+      return;
+    }
+    if (this.wasLocked) {
+      this.wasLocked = false;
+      this.alpha = 1;
+      this.ring.clear();
+      this.held = 0;
+    }
     if (!this.holding) return;
     this.held += dt;
     const t = Math.min(1, this.held / HOLD);
