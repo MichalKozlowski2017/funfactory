@@ -10,6 +10,7 @@ import { MAX_LEVEL } from './puzzles.ts';
 export const STORIES = [
   'kwiat', 'kurczak', 'motyl', 'balwan', 'jablko', 'lody', 'zabka', 'kanapka', 'wieza', 'balon',
   'tort', 'zamek', 'jajko', 'pizza', 'kakao', 'gniazdo', 'drzewko', 'dzien',
+  'banan', 'arbuz', 'akwarium', 'prezent', 'myjnia', 'babeczka',
 ] as const;
 export type Story = (typeof STORIES)[number];
 export const FRAMES = 3;

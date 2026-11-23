@@ -21,7 +21,7 @@ import { makeLetterRound, makeDigitRound } from '../src/sim/letters.ts';
 import { makeSyllableRound } from '../src/sim/syllables.ts';
 import { makeMemoryBoard, MEMORY_ROUND } from '../src/sim/memory.ts';
 import { makeMelody, MELODY_ROUND } from '../src/sim/melody.ts';
-import { makeStoryRound, markStoriesSeen } from '../src/sim/stories.ts';
+import { makeStoryRound, markStoriesSeen, STORIES, STORY_ROUND } from '../src/sim/stories.ts';
 
 const N = 300;
 type Gen = (rng: Rng, level: number) => string[];
@@ -100,5 +100,5 @@ setLang('pl');
     if (i) rep += r.filter((s) => prev.includes(s)).length / r.length;
     prev = [...r];
   }
-  console.log(`historyjki        pl  -  ${String(20).padStart(5)} ${pct(rep / (N - 1))}      -     7`);
+  console.log(`historyjki        pl  -  ${String(STORIES.length).padStart(5)} ${pct(rep / (N - 1))}      -  ${String(Math.ceil((STORIES.length * 0.9) / STORY_ROUND)).padStart(4)}`);
 }

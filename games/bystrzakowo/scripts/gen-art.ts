@@ -268,6 +268,17 @@ if (process.argv.includes('--historyjki6')) {
   for (const [id, prompt] of frames) tasks.push({ out: 'historyjki', prefix: id, args: ['--workflow', 'flux2-sprite', '--count', '2', '--prompt', prompt] });
 }
 
+if (process.argv.includes('--historyjki7')) {
+  // Poprawki z --historyjki6: zamiast skórki wychodził cały banan, a surowe ciasto wyglądało jak babeczka z kremem.
+  const base = 'single scene object, centered, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, bright cheerful pastel colors, no text, plain light gray background';
+  const thing = (what: string) => `${what}, no face, no eyes, no mouth, ${base}`;
+  const frames: [string, string][] = [
+    ['banan-3', thing('an empty limp banana peel lying flat, four floppy yellow peel strips spread open like a star, nothing inside the peel, the banana fruit is gone')],
+    ['babeczka-1', thing('a pink paper muffin cup seen from slightly above, half filled with smooth flat runny pale yellow liquid cake batter, glossy flat surface, no swirl, no frosting, no sprinkles')],
+  ];
+  for (const [id, prompt] of frames) tasks.push({ out: 'historyjki', prefix: id, args: ['--workflow', 'flux2-sprite', '--count', '3', '--prompt', prompt] });
+}
+
 if (process.argv.includes('--historyjki3')) {
   // Kolejne historyjki (razem 20).
   const base = 'single scene object, centered, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, bright cheerful pastel colors, no text, plain light gray background';
@@ -374,7 +385,7 @@ if (process.argv.includes('--warsztat')) {
 }
 
 for (const item of ITEMS) {
-  if ((process.argv.includes('--warsztat') || process.argv.includes('--zebatka') || process.argv.includes('--sciezka') || process.argv.includes('--znaki') || process.argv.includes('--pracownia') || process.argv.includes('--dodatki') || process.argv.includes('--historyjki') || process.argv.includes('--polana') || process.argv.includes('--kolorowanki2') || process.argv.includes('--krajobrazy') || process.argv.includes('--balwan') || process.argv.includes('--historyjki2') || process.argv.includes('--historyjki3') || process.argv.includes('--historyjki4') || process.argv.includes('--historyjki5') || process.argv.includes('--historyjki6') || process.argv.includes('--emocje2')) && !only) break;
+  if ((process.argv.includes('--warsztat') || process.argv.includes('--zebatka') || process.argv.includes('--sciezka') || process.argv.includes('--znaki') || process.argv.includes('--pracownia') || process.argv.includes('--dodatki') || process.argv.includes('--historyjki') || process.argv.includes('--polana') || process.argv.includes('--kolorowanki2') || process.argv.includes('--krajobrazy') || process.argv.includes('--balwan') || process.argv.includes('--historyjki2') || process.argv.includes('--historyjki3') || process.argv.includes('--historyjki4') || process.argv.includes('--historyjki5') || process.argv.includes('--historyjki6') || process.argv.includes('--historyjki7') || process.argv.includes('--emocje2')) && !only) break;
   if (only && !only.has(item.id)) continue;
   if (!only && existsSync(join(repo, 'games/bystrzakowo/public/art/items', `${item.id}.webp`))) continue;
   if (existsSync(join(raw, 'items', `${item.id}-${SEED}.png`))) continue;

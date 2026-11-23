@@ -2418,6 +2418,36 @@
    "voice": "voices/bazyl-en-calm"
   },
   {
+   "name": "bazyl-historia-banan",
+   "text": "First a whole banana, then we peel it, and at the end only the peel is left.",
+   "voice": "voices/bazyl-en-calm"
+  },
+  {
+   "name": "bazyl-historia-arbuz",
+   "text": "First a whole watermelon, then we cut it in half, and at the end yummy slices.",
+   "voice": "voices/bazyl-en-calm"
+  },
+  {
+   "name": "bazyl-historia-akwarium",
+   "text": "First an empty fish bowl, then water, and at the end a little fish.",
+   "voice": "voices/bazyl-en-calm"
+  },
+  {
+   "name": "bazyl-historia-prezent",
+   "text": "First a wrapped present, then we open it, and inside there is a teddy bear.",
+   "voice": "voices/bazyl-en-calm"
+  },
+  {
+   "name": "bazyl-historia-myjnia",
+   "text": "First a muddy car, then soap foam, and at the end it is shiny and clean.",
+   "voice": "voices/bazyl-en-calm"
+  },
+  {
+   "name": "bazyl-historia-babeczka",
+   "text": "First batter in a paper cup, then we bake it, and at the end cream and a cherry.",
+   "voice": "voices/bazyl-en-calm"
+  },
+  {
    "name": "bazyl-emocje-wesoly",
    "text": "Show me a happy face.",
    "voice": "voices/bazyl-en-calm"

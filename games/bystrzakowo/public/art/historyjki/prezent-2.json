@@ -1,0 +1,16 @@
+{
+  "workflow": "flux2-sprite.json",
+  "PROMPT": "a gift box with torn red wrapping paper, the lid half open, a yellow ribbon lying next to it, no face, no eyes, no mouth, single scene object, centered, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, bright cheerful pastel colors, no text, plain light gray background",
+  "NEGATIVE": "",
+  "SEED": 102,
+  "WIDTH": 1024,
+  "HEIGHT": 1024,
+  "PREFIX": "prezent-2",
+  "STEPS": 20,
+  "GUIDANCE": 4,
+  "BPM": 100,
+  "DURATION": 60,
+  "KEY": "A minor",
+  "LYRICS": "[Instrumental]",
+  "created": "2026-11-23T06:13:08.903Z"
+}

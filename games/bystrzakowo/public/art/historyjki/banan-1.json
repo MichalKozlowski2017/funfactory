@@ -1,0 +1,16 @@
+{
+  "workflow": "flux2-sprite.json",
+  "PROMPT": "a whole unpeeled yellow banana lying on a small round white plate, no face, no eyes, no mouth, single scene object, centered, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, bright cheerful pastel colors, no text, plain light gray background",
+  "NEGATIVE": "",
+  "SEED": 101,
+  "WIDTH": 1024,
+  "HEIGHT": 1024,
+  "PREFIX": "banan-1",
+  "STEPS": 20,
+  "GUIDANCE": 4,
+  "BPM": 100,
+  "DURATION": 60,
+  "KEY": "A minor",
+  "LYRICS": "[Instrumental]",
+  "created": "2026-11-23T05:45:07.655Z"
+}

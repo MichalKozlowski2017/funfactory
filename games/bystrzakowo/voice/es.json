@@ -3329,6 +3329,36 @@
    "seed": 2
   },
   {
+   "name": "bazyl-historia-banan",
+   "text": "¡Primero un plátano entero, luego lo pelamos, y al final solo queda la cáscara!",
+   "voice": "voices/bazyl-es"
+  },
+  {
+   "name": "bazyl-historia-arbuz",
+   "text": "¡Primero una sandía entera, luego la partimos, y al final ricas rebanadas!",
+   "voice": "voices/bazyl-es"
+  },
+  {
+   "name": "bazyl-historia-akwarium",
+   "text": "¡Primero una pecera vacía, luego agua, y al final un pececito!",
+   "voice": "voices/bazyl-es"
+  },
+  {
+   "name": "bazyl-historia-prezent",
+   "text": "¡Primero un regalo envuelto, luego lo abrimos, y adentro hay un osito!",
+   "voice": "voices/bazyl-es"
+  },
+  {
+   "name": "bazyl-historia-myjnia",
+   "text": "¡Primero un carrito sucio, luego espuma, y al final brilla de limpio!",
+   "voice": "voices/bazyl-es"
+  },
+  {
+   "name": "bazyl-historia-babeczka",
+   "text": "¡Primero masa en un molde de papel, luego lo horneamos, y al final crema y una cereza!",
+   "voice": "voices/bazyl-es"
+  },
+  {
    "name": "bazyl-emocje-wesoly",
    "text": "Muéstrame una carita feliz.",
    "voice": "voices/prezenter",
@@ -3960,20 +3990,6 @@
    "voice": "voices/prezenter",
    "engine": "chatterbox",
    "seed": 4
-  },
-  {
-   "name": "bazyl-historia-swieca",
-   "text": "Primero una vela larga, luego cada vez más corta, y al final un cabito chiquito.",
-   "engine": "chatterbox",
-   "voice": "voices/prezenter",
-   "seed": 1
-  },
-  {
-   "name": "bazyl-historia-samolot",
-   "text": "Primero una hoja de papel, luego la doblamos, y al final un avión de papel.",
-   "engine": "chatterbox",
-   "voice": "voices/prezenter",
-   "seed": 2
   }
  ]
 }
