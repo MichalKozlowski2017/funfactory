@@ -114,13 +114,19 @@ const lastRound = new Map<string, string>();
  */
 export function mixRound<T extends { level: number }>(rng: Rng, pool: readonly T[], level: number, key: string, n = LETTER_ROUND, id: (x: T) => string = (x) => (x as unknown as Letter).ch): T[] {
   let out: T[] = [];
+  // Elementy z poprzedniej rundy na koniec kolejki: kolejna runda (np. „graj dalej”) bierze najpierw inne.
+  const prev = new Set((lastRound.get(key) ?? '').split(','));
+  const newFirst = (xs: T[]) => [...xs.filter((x) => !prev.has(id(x))), ...xs.filter((x) => prev.has(id(x)))];
   for (let k = 0; k < 8; k++) {
-    const fresh = rng.shuffle(pool.filter((x) => x.level === level));
-    const old = rng.shuffle(pool.filter((x) => x.level < level));
+    const fresh = newFirst(rng.shuffle(pool.filter((x) => x.level === level)));
+    const old = newFirst(rng.shuffle(pool.filter((x) => x.level < level)));
     const nFresh = old.length ? Math.min(fresh.length, n - 1) : n;
     out = rng.shuffle([...fresh.slice(0, nFresh), ...old.slice(0, n - Math.min(nFresh, fresh.length))]).slice(0, n);
     if (out.map(id).sort().join() !== lastRound.get(key)) break;
   }
+  // Pierwszy element rundy nie z poprzedniej rundy (dziecko od razu widzi coś nowego).
+  const i = out.findIndex((x) => !prev.has(id(x)));
+  if (i > 0) [out[0], out[i]] = [out[i]!, out[0]!];
   lastRound.set(key, out.map(id).sort().join());
   return out;
 }
