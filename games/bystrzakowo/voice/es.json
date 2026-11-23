@@ -5,35 +5,35 @@
  "lines": [
   {
    "name": "lusia-brawo-1",
-   "text": "¡Bravo!",
-   "voice": "voices/alt",
-   "engine": "chatterbox",
-   "seed": 2
-  },
-  {
-   "name": "lusia-brawo-2",
-   "text": "¡Muy bien!",
+   "text": "Bravo.",
    "voice": "voices/alt",
    "engine": "chatterbox",
    "seed": 1
   },
   {
-   "name": "lusia-brawo-3",
-   "text": "¡Súper, sigue así!",
+   "name": "lusia-brawo-2",
+   "text": "Muy bien.",
    "voice": "voices/alt",
    "engine": "chatterbox",
-   "seed": 2
+   "seed": 5
+  },
+  {
+   "name": "lusia-brawo-3",
+   "text": "Súper, sigue así.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 4
   },
   {
    "name": "lusia-brawo-4",
-   "text": "¡Maravilloso!",
+   "text": "Maravilloso.",
    "voice": "voices/alt",
    "engine": "chatterbox",
-   "seed": 2
+   "seed": 1
   },
   {
    "name": "lusia-brawo-5",
-   "text": "¡Qué listo eres!",
+   "text": "Qué listo eres.",
    "voice": "voices/alt",
    "engine": "chatterbox",
    "seed": 3
@@ -54,10 +54,10 @@
   },
   {
    "name": "lusia-nagroda",
-   "text": "¡Bravo! ¡Ganas una calcomanía nueva!",
+   "text": "Bravo. Ganas una calcomanía nueva.",
    "voice": "voices/alt",
    "engine": "chatterbox",
-   "seed": 2
+   "seed": 6
   },
   {
    "name": "lusia-witaj",
@@ -1972,38 +1972,38 @@
   },
   {
    "name": "bazyl-brawo-1",
-   "text": "¡Bravo!",
+   "text": "Bravo.",
    "voice": "voices/prezenter",
    "engine": "chatterbox",
-   "seed": 2
+   "seed": 1
   },
   {
    "name": "bazyl-brawo-2",
-   "text": "¡Muy bien!",
+   "text": "Muy bien.",
    "voice": "voices/prezenter",
    "engine": "chatterbox",
    "seed": 2
   },
   {
    "name": "bazyl-brawo-3",
-   "text": "¡Súper, sigue así!",
+   "text": "Súper, sigue así.",
    "voice": "voices/prezenter",
    "engine": "chatterbox",
-   "seed": 1
+   "seed": 3
   },
   {
    "name": "bazyl-brawo-4",
-   "text": "¡Maravilloso!",
+   "text": "Maravilloso.",
    "voice": "voices/prezenter",
    "engine": "chatterbox",
-   "seed": 1
+   "seed": 2
   },
   {
    "name": "bazyl-brawo-5",
-   "text": "¡Qué listo eres!",
+   "text": "Qué listo eres.",
    "voice": "voices/prezenter",
    "engine": "chatterbox",
-   "seed": 1
+   "seed": 4
   },
   {
    "name": "bazyl-oj-1",
@@ -2021,7 +2021,7 @@
   },
   {
    "name": "bazyl-nagroda",
-   "text": "¡Bravo! ¡Ganas una calcomanía nueva!",
+   "text": "Bravo. Ganas una calcomanía nueva.",
    "voice": "voices/prezenter",
    "engine": "chatterbox",
    "seed": 1

@@ -5,38 +5,38 @@
  "lines": [
   {
    "name": "lusia-brawo-1",
-   "text": "Bravo!",
+   "text": "Bravo.",
    "voice": "voices/alt",
    "engine": "chatterbox",
-   "seed": 3
+   "seed": 5
   },
   {
    "name": "lusia-brawo-2",
-   "text": "Toll gemacht!",
-   "voice": "voices/alt",
-   "engine": "chatterbox",
-   "seed": 4
-  },
-  {
-   "name": "lusia-brawo-3",
-   "text": "Super, weiter so!",
-   "voice": "voices/alt",
-   "engine": "chatterbox",
-   "seed": 3
-  },
-  {
-   "name": "lusia-brawo-4",
-   "text": "Wunderbar!",
+   "text": "Toll gemacht.",
    "voice": "voices/alt",
    "engine": "chatterbox",
    "seed": 2
   },
   {
-   "name": "lusia-brawo-5",
-   "text": "Du bist ja ein kluger Kopf!",
+   "name": "lusia-brawo-3",
+   "text": "Super, weiter so.",
    "voice": "voices/alt",
    "engine": "chatterbox",
    "seed": 1
+  },
+  {
+   "name": "lusia-brawo-4",
+   "text": "Wunderbar.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 5
+  },
+  {
+   "name": "lusia-brawo-5",
+   "text": "Du bist ja ein kluger Kopf.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 5
   },
   {
    "name": "lusia-oj-1",
@@ -54,10 +54,10 @@
   },
   {
    "name": "lusia-nagroda",
-   "text": "Bravo! Du bekommst einen neuen Sticker!",
+   "text": "Bravo. Du bekommst einen neuen Sticker.",
    "voice": "voices/alt",
    "engine": "chatterbox",
-   "seed": 3
+   "seed": 1
   },
   {
    "name": "lusia-witaj",
@@ -2000,38 +2000,38 @@
   },
   {
    "name": "bazyl-brawo-1",
-   "text": "Bravo!",
+   "text": "Bravo.",
    "voice": "voices/prezenter",
    "engine": "chatterbox",
    "seed": 2
   },
   {
    "name": "bazyl-brawo-2",
-   "text": "Toll gemacht!",
+   "text": "Toll gemacht.",
    "voice": "voices/prezenter",
    "engine": "chatterbox",
-   "seed": 2
+   "seed": 1
   },
   {
    "name": "bazyl-brawo-3",
-   "text": "Super, weiter so!",
+   "text": "Super, weiter so.",
    "voice": "voices/prezenter",
    "engine": "chatterbox",
-   "seed": 1
+   "seed": 3
   },
   {
    "name": "bazyl-brawo-4",
-   "text": "Wunderbar!",
+   "text": "Wunderbar.",
    "voice": "voices/prezenter",
    "engine": "chatterbox",
-   "seed": 1
+   "seed": 6
   },
   {
    "name": "bazyl-brawo-5",
-   "text": "Du bist ja ein kluger Kopf!",
+   "text": "Du bist ja ein kluger Kopf.",
    "voice": "voices/prezenter",
    "engine": "chatterbox",
-   "seed": 1
+   "seed": 5
   },
   {
    "name": "bazyl-oj-1",
@@ -2049,10 +2049,10 @@
   },
   {
    "name": "bazyl-nagroda",
-   "text": "Bravo! Du bekommst einen neuen Sticker!",
+   "text": "Bravo. Du bekommst einen neuen Sticker.",
    "voice": "voices/prezenter",
    "engine": "chatterbox",
-   "seed": 1
+   "seed": 5
   },
   {
    "name": "bazyl-witaj",
