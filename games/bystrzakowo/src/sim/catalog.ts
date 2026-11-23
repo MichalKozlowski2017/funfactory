@@ -62,6 +62,10 @@ const BABIES: Record<string, [mother: string, genitive: string]> = {
   zyrafka: ['zyrafa', 'żyrafki'],
   foczka: ['foka', 'foczki'],
   sowka: ['sowa', 'sówki'],
+  szczeniaczek: ['pies', 'szczeniaczka'],
+  kroliczek: ['krolik', 'króliczka'],
+  sloniatko: ['slon', 'słoniątka'],
+  zolwik: ['zolw', 'żółwika'],
 };
 
 /**
@@ -85,7 +89,10 @@ const LOOKALIKES: string[][] = [
   ['foka', 'foczka', 'mors'],
   ['sowa', 'sowka'],
   ['swinka', 'dzik'],
-  ['krolik', 'zajac'],
+  ['krolik', 'zajac', 'kroliczek'],
+  ['pies', 'szczeniaczek'],
+  ['slon', 'sloniatko'],
+  ['zolw', 'zolwik'],
   ['wieloryb', 'delfin'],
   ['foka', 'mors'],
   ['hulajnoga', 'skuter', 'rower'],
@@ -124,6 +131,11 @@ export const ITEMS: Item[] = [
     ['zyrafka', 'Żyrafka', '', 's', 'a tiny cute newborn baby giraffe with an oversized head, big eyes and a short neck, standing, side view'],
     ['foczka', 'Foczka', '', 's', 'a tiny cute fluffy white baby seal pup with big black eyes, lying on its belly, side view'],
     ['sowka', 'Sówka', '', 's', 'a tiny cute fluffy grey baby owlet with huge round eyes, sitting, front view'],
+    // Mamy: kolejne młode (mamy są już w katalogu), wyraźnie maleńkie, żeby nie mylić z dorosłym.
+    ['szczeniaczek', 'Szczeniaczek', '', 's', 'a tiny fluffy beige newborn puppy with floppy ears and a round chubby body, sitting, side view'],
+    ['kroliczek', 'Króliczek', '', 's', 'a tiny round fluffy grey baby bunny with short ears, curled up small, side view'],
+    ['sloniatko', 'Słoniątko', '', 's', 'a tiny round baby elephant calf with a short trunk and big ears, small and chubby, side view'],
+    ['zolwik', 'Żółwik', '', 's', 'a tiny cute green baby turtle hatching from a cracked white egg'],
     ['lew', 'Lew', '', 's', 'a cute lion with a big fluffy mane sitting'],
     ['zyrafa', 'Żyrafa', 'zolty', 's', 'a cute giraffe with a very long neck standing, side view'],
     ['malpa', 'Małpka', 'brazowy', 's', 'a cute brown monkey sitting'],

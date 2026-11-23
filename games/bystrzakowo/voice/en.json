@@ -2791,6 +2791,86 @@
    "name": "bazyl-item-sniezynka",
    "text": "Snowflake.",
    "voice": "voices/bazyl-en-calm"
+  },
+  {
+   "name": "lusia-item-szczeniaczek",
+   "text": "Puppy.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "bazyl-item-szczeniaczek",
+   "text": "Puppy.",
+   "voice": "voices/bazyl-en-calm"
+  },
+  {
+   "name": "bazyl-mama-szczeniaczek",
+   "text": "Where is the puppy's mommy?",
+   "voice": "voices/bazyl-en-calm"
+  },
+  {
+   "name": "lusia-labirynt-szczeniaczek",
+   "text": "Lead the puppy to its mommy.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-item-kroliczek",
+   "text": "Baby bunny.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "bazyl-item-kroliczek",
+   "text": "Baby bunny.",
+   "voice": "voices/bazyl-en-calm"
+  },
+  {
+   "name": "bazyl-mama-kroliczek",
+   "text": "Where is the baby bunny's mommy?",
+   "voice": "voices/bazyl-en-calm"
+  },
+  {
+   "name": "lusia-labirynt-kroliczek",
+   "text": "Lead the baby bunny to its mommy.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-item-sloniatko",
+   "text": "Baby elephant.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "bazyl-item-sloniatko",
+   "text": "Baby elephant.",
+   "voice": "voices/bazyl-en-calm"
+  },
+  {
+   "name": "bazyl-mama-sloniatko",
+   "text": "Where is the baby elephant's mommy?",
+   "voice": "voices/bazyl-en-calm"
+  },
+  {
+   "name": "lusia-labirynt-sloniatko",
+   "text": "Lead the baby elephant to its mommy.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-item-zolwik",
+   "text": "Baby turtle.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "bazyl-item-zolwik",
+   "text": "Baby turtle.",
+   "voice": "voices/bazyl-en-calm"
+  },
+  {
+   "name": "bazyl-mama-zolwik",
+   "text": "Where is the baby turtle's mommy?",
+   "voice": "voices/bazyl-en-calm"
+  },
+  {
+   "name": "lusia-labirynt-zolwik",
+   "text": "Lead the baby turtle to its mommy.",
+   "voice": "voices/lusia-en-calm"
   }
  ]
 }

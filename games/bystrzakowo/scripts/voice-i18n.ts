@@ -293,9 +293,9 @@ const EMOTIONS: Record<L, Record<string, [show: string, face: string]>> = {
 
 /** „Gdzie jest mama …?”: forma młodego w zdaniu. */
 const MOTHERS: Record<L, Record<string, string>> = {
-  en: { kurczak: "Where is the chick's mommy?", cielaczek: "Where is the calf's mommy?", kotek: "Where is the kitten's mommy?", jagniatko: "Where is the lamb's mommy?", prosiaczek: "Where is the piglet's mommy?", zrebak: "Where is the foal's mommy?", kaczatko: "Where is the duckling's mommy?", kijanka: "Where is the tadpole's mommy?", lisek: "Where is the fox cub's mommy?", niedzwiadek: "Where is the bear cub's mommy?", pingwinek: "Where is the penguin chick's mommy?", lwiatko: "Where is the lion cub's mommy?", kozlatko: "Where is the baby goat's mommy?", zyrafka: "Where is the baby giraffe's mommy?", foczka: "Where is the seal pup's mommy?", sowka: "Where is the owlet's mommy?" },
-  es: { kurczak: '¿Dónde está la mamá del pollito?', cielaczek: '¿Dónde está la mamá del ternero?', kotek: '¿Dónde está la mamá del gatito?', jagniatko: '¿Dónde está la mamá del corderito?', prosiaczek: '¿Dónde está la mamá del cerdito?', zrebak: '¿Dónde está la mamá del potrillo?', kaczatko: '¿Dónde está la mamá del patito?', kijanka: '¿Dónde está la mamá del renacuajo?', lisek: "¿Dónde está la mamá del zorrito?", niedzwiadek: "¿Dónde está la mamá del osezno?", pingwinek: "¿Dónde está la mamá del pingüinito?", lwiatko: "¿Dónde está la mamá del leoncito?", kozlatko: "¿Dónde está la mamá del cabrito?", zyrafka: "¿Dónde está la mamá de la jirafita?", foczka: "¿Dónde está la mamá de la foquita?", sowka: "¿Dónde está la mamá del búho bebé?" },
-  de: { kurczak: 'Wo ist die Mama vom Küken?', cielaczek: 'Wo ist die Mama vom Kälbchen?', kotek: 'Wo ist die Mama vom Kätzchen?', jagniatko: 'Wo ist die Mama vom Lämmchen?', prosiaczek: 'Wo ist die Mama vom Ferkel?', zrebak: 'Wo ist die Mama vom Fohlen?', kaczatko: 'Wo ist die Mama vom Entenküken?', kijanka: 'Wo ist die Mama von der Kaulquappe?', lisek: "Wo ist die Mama vom Fuchsjungen?", niedzwiadek: "Wo ist die Mama vom Bärenjungen?", pingwinek: "Wo ist die Mama vom Pinguinküken?", lwiatko: "Wo ist die Mama vom Löwenjungen?", kozlatko: "Wo ist die Mama vom Zicklein?", zyrafka: "Wo ist die Mama vom Giraffenbaby?", foczka: "Wo ist die Mama vom Robbenbaby?", sowka: "Wo ist die Mama vom Eulenküken?" },
+  en: { kurczak: "Where is the chick's mommy?", cielaczek: "Where is the calf's mommy?", kotek: "Where is the kitten's mommy?", jagniatko: "Where is the lamb's mommy?", prosiaczek: "Where is the piglet's mommy?", zrebak: "Where is the foal's mommy?", kaczatko: "Where is the duckling's mommy?", kijanka: "Where is the tadpole's mommy?", lisek: "Where is the fox cub's mommy?", niedzwiadek: "Where is the bear cub's mommy?", pingwinek: "Where is the penguin chick's mommy?", lwiatko: "Where is the lion cub's mommy?", kozlatko: "Where is the baby goat's mommy?", zyrafka: "Where is the baby giraffe's mommy?", foczka: "Where is the seal pup's mommy?", sowka: "Where is the owlet's mommy?", szczeniaczek: "Where is the puppy's mommy?", kroliczek: "Where is the baby bunny's mommy?", sloniatko: "Where is the baby elephant's mommy?", zolwik: "Where is the baby turtle's mommy?" },
+  es: { kurczak: '¿Dónde está la mamá del pollito?', cielaczek: '¿Dónde está la mamá del ternero?', kotek: '¿Dónde está la mamá del gatito?', jagniatko: '¿Dónde está la mamá del corderito?', prosiaczek: '¿Dónde está la mamá del cerdito?', zrebak: '¿Dónde está la mamá del potrillo?', kaczatko: '¿Dónde está la mamá del patito?', kijanka: '¿Dónde está la mamá del renacuajo?', lisek: "¿Dónde está la mamá del zorrito?", niedzwiadek: "¿Dónde está la mamá del osezno?", pingwinek: "¿Dónde está la mamá del pingüinito?", lwiatko: "¿Dónde está la mamá del leoncito?", kozlatko: "¿Dónde está la mamá del cabrito?", zyrafka: "¿Dónde está la mamá de la jirafita?", foczka: "¿Dónde está la mamá de la foquita?", sowka: "¿Dónde está la mamá del búho bebé?", szczeniaczek: '¿Dónde está la mamá del cachorrito?', kroliczek: '¿Dónde está la mamá del conejito?', sloniatko: '¿Dónde está la mamá del elefantito?', zolwik: '¿Dónde está la mamá de la tortuguita?' },
+  de: { kurczak: 'Wo ist die Mama vom Küken?', cielaczek: 'Wo ist die Mama vom Kälbchen?', kotek: 'Wo ist die Mama vom Kätzchen?', jagniatko: 'Wo ist die Mama vom Lämmchen?', prosiaczek: 'Wo ist die Mama vom Ferkel?', zrebak: 'Wo ist die Mama vom Fohlen?', kaczatko: 'Wo ist die Mama vom Entenküken?', kijanka: 'Wo ist die Mama von der Kaulquappe?', lisek: "Wo ist die Mama vom Fuchsjungen?", niedzwiadek: "Wo ist die Mama vom Bärenjungen?", pingwinek: "Wo ist die Mama vom Pinguinküken?", lwiatko: "Wo ist die Mama vom Löwenjungen?", kozlatko: "Wo ist die Mama vom Zicklein?", zyrafka: "Wo ist die Mama vom Giraffenbaby?", foczka: "Wo ist die Mama vom Robbenbaby?", sowka: "Wo ist die Mama vom Eulenküken?", szczeniaczek: 'Wo ist die Mama vom Welpen?', kroliczek: 'Wo ist die Mama vom Häschen?', sloniatko: 'Wo ist die Mama vom Elefantenbaby?', zolwik: 'Wo ist die Mama vom Schildkrötenbaby?' },
 };
 
 const MAZE: Record<L, Record<string, string>> = {
@@ -318,6 +318,10 @@ const MAZE: Record<L, Record<string, string>> = {
     zyrafka: "Lead the baby giraffe to its mommy!",
     foczka: "Lead the seal pup to its mommy!",
     sowka: "Lead the owlet to its mommy!",
+    szczeniaczek: 'Lead the puppy to its mommy.',
+    kroliczek: 'Lead the baby bunny to its mommy.',
+    sloniatko: 'Lead the baby elephant to its mommy.',
+    zolwik: 'Lead the baby turtle to its mommy.',
   },
   es: {
     cielaczek: '¡Lleva al ternero con su mamá!',
@@ -338,6 +342,10 @@ const MAZE: Record<L, Record<string, string>> = {
     zyrafka: "¡Lleva a la jirafita con su mamá!",
     foczka: "¡Lleva a la foquita con su mamá!",
     sowka: "¡Lleva al búho bebé con su mamá!",
+    szczeniaczek: 'Lleva al cachorrito con su mamá.',
+    kroliczek: 'Lleva al conejito con su mamá.',
+    sloniatko: 'Lleva al elefantito con su mamá.',
+    zolwik: 'Lleva a la tortuguita con su mamá.',
   },
   de: {
     cielaczek: 'Bring das Kälbchen zu seiner Mama!',
@@ -358,6 +366,10 @@ const MAZE: Record<L, Record<string, string>> = {
     zyrafka: "Bring das Giraffenbaby zu seiner Mama!",
     foczka: "Bring das Robbenbaby zu seiner Mama!",
     sowka: "Bring das Eulenküken zu seiner Mama!",
+    szczeniaczek: 'Bring den Welpen zu seiner Mama.',
+    kroliczek: 'Bring das Häschen zu seiner Mama.',
+    sloniatko: 'Bring das Elefantenbaby zu seiner Mama.',
+    zolwik: 'Bring das Schildkrötenbaby zu seiner Mama.',
   },
 };
 

@@ -113,6 +113,10 @@ export const MAZE_PAIRS: readonly [hero: string, goal: string][] = [
   ['zyrafka', 'zyrafa'],
   ['foczka', 'foka'],
   ['sowka', 'sowa'],
+  ['szczeniaczek', 'pies'],
+  ['kroliczek', 'krolik'],
+  ['sloniatko', 'slon'],
+  ['zolwik', 'zolw'],
 ];
 
 /** Bohaterowie poprzedniej rundy: następna runda zaczyna się od innych (o ile starczy par). */

@@ -1,0 +1,78 @@
+{
+ "voice": "voices/alt",
+ "tries": 8,
+ "lines": [
+  {
+   "name": "lusia-item-szczeniaczek",
+   "text": "Szczeniaczek."
+  },
+  {
+   "name": "bazyl-item-szczeniaczek",
+   "text": "Szczeniaczek.",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-mama-szczeniaczek",
+   "text": "Gdzie jest mama szczeniaczka?",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "lusia-labirynt-szczeniaczek",
+   "text": "Zaprowadź szczeniaczka do mamy."
+  },
+  {
+   "name": "lusia-item-kroliczek",
+   "text": "Króliczek."
+  },
+  {
+   "name": "bazyl-item-kroliczek",
+   "text": "Króliczek.",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-mama-kroliczek",
+   "text": "Gdzie jest mama króliczka?",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "lusia-labirynt-kroliczek",
+   "text": "Zaprowadź króliczka do mamy."
+  },
+  {
+   "name": "lusia-item-sloniatko",
+   "text": "Słoniątko."
+  },
+  {
+   "name": "bazyl-item-sloniatko",
+   "text": "Słoniątko.",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-mama-sloniatko",
+   "text": "Gdzie jest mama słoniątka?",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "lusia-labirynt-sloniatko",
+   "text": "Zaprowadź słoniątko do mamy."
+  },
+  {
+   "name": "lusia-item-zolwik",
+   "text": "Żółwik."
+  },
+  {
+   "name": "bazyl-item-zolwik",
+   "text": "Żółwik.",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "bazyl-mama-zolwik",
+   "text": "Gdzie jest mama żółwika?",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "lusia-labirynt-zolwik",
+   "text": "Zaprowadź żółwika do mamy."
+  }
+ ]
+}

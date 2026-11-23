@@ -2822,6 +2822,86 @@
    "name": "bazyl-item-sniezynka",
    "text": "Schneeflocke.",
    "voice": "voices/bazyl-de"
+  },
+  {
+   "name": "lusia-item-szczeniaczek",
+   "text": "Welpe.",
+   "voice": "voices/lusia-de"
+  },
+  {
+   "name": "bazyl-item-szczeniaczek",
+   "text": "Welpe.",
+   "voice": "voices/bazyl-de"
+  },
+  {
+   "name": "bazyl-mama-szczeniaczek",
+   "text": "Wo ist die Mama vom Welpen?",
+   "voice": "voices/bazyl-de"
+  },
+  {
+   "name": "lusia-labirynt-szczeniaczek",
+   "text": "Bring den Welpen zu seiner Mama.",
+   "voice": "voices/lusia-de"
+  },
+  {
+   "name": "lusia-item-kroliczek",
+   "text": "Häschen.",
+   "voice": "voices/lusia-de"
+  },
+  {
+   "name": "bazyl-item-kroliczek",
+   "text": "Häschen.",
+   "voice": "voices/bazyl-de"
+  },
+  {
+   "name": "bazyl-mama-kroliczek",
+   "text": "Wo ist die Mama vom Häschen?",
+   "voice": "voices/bazyl-de"
+  },
+  {
+   "name": "lusia-labirynt-kroliczek",
+   "text": "Bring das Häschen zu seiner Mama.",
+   "voice": "voices/lusia-de"
+  },
+  {
+   "name": "lusia-item-sloniatko",
+   "text": "Elefantenbaby.",
+   "voice": "voices/lusia-de"
+  },
+  {
+   "name": "bazyl-item-sloniatko",
+   "text": "Elefantenbaby.",
+   "voice": "voices/bazyl-de"
+  },
+  {
+   "name": "bazyl-mama-sloniatko",
+   "text": "Wo ist die Mama vom Elefantenbaby?",
+   "voice": "voices/bazyl-de"
+  },
+  {
+   "name": "lusia-labirynt-sloniatko",
+   "text": "Bring das Elefantenbaby zu seiner Mama.",
+   "voice": "voices/lusia-de"
+  },
+  {
+   "name": "lusia-item-zolwik",
+   "text": "Schildkrötenbaby.",
+   "voice": "voices/lusia-de"
+  },
+  {
+   "name": "bazyl-item-zolwik",
+   "text": "Schildkrötenbaby.",
+   "voice": "voices/bazyl-de"
+  },
+  {
+   "name": "bazyl-mama-zolwik",
+   "text": "Wo ist die Mama vom Schildkrötenbaby?",
+   "voice": "voices/bazyl-de"
+  },
+  {
+   "name": "lusia-labirynt-zolwik",
+   "text": "Bring das Schildkrötenbaby zu seiner Mama.",
+   "voice": "voices/lusia-de"
   }
  ]
 }

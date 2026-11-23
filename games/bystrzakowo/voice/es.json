@@ -2800,6 +2800,86 @@
    "name": "bazyl-item-sniezynka",
    "text": "Copo de nieve.",
    "voice": "voices/bazyl-es"
+  },
+  {
+   "name": "lusia-item-szczeniaczek",
+   "text": "Cachorrito.",
+   "voice": "voices/lusia-es"
+  },
+  {
+   "name": "bazyl-item-szczeniaczek",
+   "text": "Cachorrito.",
+   "voice": "voices/bazyl-es"
+  },
+  {
+   "name": "bazyl-mama-szczeniaczek",
+   "text": "¿Dónde está la mamá del cachorrito?",
+   "voice": "voices/bazyl-es"
+  },
+  {
+   "name": "lusia-labirynt-szczeniaczek",
+   "text": "Lleva al cachorrito con su mamá.",
+   "voice": "voices/lusia-es"
+  },
+  {
+   "name": "lusia-item-kroliczek",
+   "text": "Conejito.",
+   "voice": "voices/lusia-es"
+  },
+  {
+   "name": "bazyl-item-kroliczek",
+   "text": "Conejito.",
+   "voice": "voices/bazyl-es"
+  },
+  {
+   "name": "bazyl-mama-kroliczek",
+   "text": "¿Dónde está la mamá del conejito?",
+   "voice": "voices/bazyl-es"
+  },
+  {
+   "name": "lusia-labirynt-kroliczek",
+   "text": "Lleva al conejito con su mamá.",
+   "voice": "voices/lusia-es"
+  },
+  {
+   "name": "lusia-item-sloniatko",
+   "text": "Elefantito.",
+   "voice": "voices/lusia-es"
+  },
+  {
+   "name": "bazyl-item-sloniatko",
+   "text": "Elefantito.",
+   "voice": "voices/bazyl-es"
+  },
+  {
+   "name": "bazyl-mama-sloniatko",
+   "text": "¿Dónde está la mamá del elefantito?",
+   "voice": "voices/bazyl-es"
+  },
+  {
+   "name": "lusia-labirynt-sloniatko",
+   "text": "Lleva al elefantito con su mamá.",
+   "voice": "voices/lusia-es"
+  },
+  {
+   "name": "lusia-item-zolwik",
+   "text": "Tortuguita.",
+   "voice": "voices/lusia-es"
+  },
+  {
+   "name": "bazyl-item-zolwik",
+   "text": "Tortuguita.",
+   "voice": "voices/bazyl-es"
+  },
+  {
+   "name": "bazyl-mama-zolwik",
+   "text": "¿Dónde está la mamá de la tortuguita?",
+   "voice": "voices/bazyl-es"
+  },
+  {
+   "name": "lusia-labirynt-zolwik",
+   "text": "Lleva a la tortuguita con su mamá.",
+   "voice": "voices/lusia-es"
   }
  ]
 }
