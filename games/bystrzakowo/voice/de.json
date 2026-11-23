@@ -225,14 +225,14 @@
    "text": "Pinguinküken.",
    "voice": "voices/alt",
    "engine": "chatterbox",
-   "seed": 3
+   "seed": 9
   },
   {
    "name": "lusia-item-lwiatko",
    "text": "Löwenjunges.",
    "voice": "voices/alt",
    "engine": "chatterbox",
-   "seed": 2
+   "seed": 9
   },
   {
    "name": "lusia-item-kozlatko",
@@ -260,7 +260,7 @@
    "text": "Eulenküken.",
    "voice": "voices/alt",
    "engine": "chatterbox",
-   "seed": 6
+   "seed": 7
   },
   {
    "name": "lusia-item-szczeniaczek",
@@ -288,7 +288,7 @@
    "text": "Schildkrötenbaby.",
    "voice": "voices/alt",
    "engine": "chatterbox",
-   "seed": 6
+   "seed": 7
   },
   {
    "name": "lusia-item-lew",
@@ -302,7 +302,7 @@
    "text": "Giraffe.",
    "voice": "voices/alt",
    "engine": "chatterbox",
-   "seed": 1
+   "seed": 7
   },
   {
    "name": "lusia-item-malpa",
@@ -323,7 +323,7 @@
    "text": "Bär.",
    "voice": "voices/alt",
    "engine": "chatterbox",
-   "seed": 1
+   "seed": 8
   },
   {
    "name": "lusia-item-jez",
@@ -827,7 +827,7 @@
    "text": "Lastwagen.",
    "voice": "voices/alt",
    "engine": "chatterbox",
-   "seed": 4
+   "seed": 8
   },
   {
    "name": "lusia-item-pilka",
@@ -1030,7 +1030,7 @@
    "text": "Ei.",
    "voice": "voices/alt",
    "engine": "chatterbox",
-   "seed": 3
+   "seed": 7
   },
   {
    "name": "lusia-item-czapka",
@@ -1051,7 +1051,7 @@
    "text": "Schuh.",
    "voice": "voices/alt",
    "engine": "chatterbox",
-   "seed": 1
+   "seed": 9
   },
   {
    "name": "lusia-item-skarpetka",
@@ -1534,7 +1534,7 @@
    "text": "A wie Affe.",
    "voice": "voices/alt",
    "engine": "chatterbox",
-   "seed": 1
+   "seed": 8
   },
   {
    "name": "lusia-litera-m",
@@ -1583,7 +1583,7 @@
    "text": "S wie Sonne.",
    "voice": "voices/alt",
    "engine": "chatterbox",
-   "seed": 4
+   "seed": 8
   },
   {
    "name": "lusia-litera-e",
@@ -2255,7 +2255,7 @@
    "text": "Eulenküken.",
    "voice": "voices/prezenter",
    "engine": "chatterbox",
-   "seed": 4
+   "seed": 7
   },
   {
    "name": "bazyl-item-szczeniaczek",
@@ -2276,14 +2276,14 @@
    "text": "Elefantenbaby.",
    "voice": "voices/prezenter",
    "engine": "chatterbox",
-   "seed": 6
+   "seed": 8
   },
   {
    "name": "bazyl-item-zolwik",
    "text": "Schildkrötenbaby.",
    "voice": "voices/prezenter",
    "engine": "chatterbox",
-   "seed": 6
+   "seed": 8
   },
   {
    "name": "bazyl-item-lew",
@@ -2451,7 +2451,7 @@
    "text": "Reh.",
    "voice": "voices/prezenter",
    "engine": "chatterbox",
-   "seed": 3
+   "seed": 9
   },
   {
    "name": "bazyl-item-dzieciol",
@@ -2500,7 +2500,7 @@
    "text": "Esel.",
    "voice": "voices/prezenter",
    "engine": "chatterbox",
-   "seed": 2
+   "seed": 7
   },
   {
    "name": "bazyl-item-indyk",
@@ -2563,7 +2563,7 @@
    "text": "Reiher.",
    "voice": "voices/prezenter",
    "engine": "chatterbox",
-   "seed": 5
+   "seed": 7
   },
   {
    "name": "bazyl-item-jablko",
@@ -2787,7 +2787,7 @@
    "text": "Hubschrauber.",
    "voice": "voices/prezenter",
    "engine": "chatterbox",
-   "seed": 3
+   "seed": 7
   },
   {
    "name": "bazyl-item-rakieta",
@@ -3358,33 +3358,45 @@
   },
   {
    "name": "bazyl-historia-banan",
-   "text": "Zuerst eine ganze Banane, dann schälen wir sie, und am Ende bleibt nur die Schale!",
-   "voice": "voices/bazyl-de"
+   "text": "Zuerst eine ganze Banane, dann schälen wir sie, und am Ende bleibt nur die Schale.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 7
   },
   {
    "name": "bazyl-historia-arbuz",
-   "text": "Zuerst eine ganze Wassermelone, dann schneiden wir sie auf, und am Ende leckere Stücke!",
-   "voice": "voices/bazyl-de"
+   "text": "Zuerst eine ganze Wassermelone, dann schneiden wir sie auf, und am Ende leckere Stücke.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 7
   },
   {
    "name": "bazyl-historia-akwarium",
-   "text": "Zuerst ein leeres Fischglas, dann Wasser, und am Ende ein kleiner Fisch!",
-   "voice": "voices/bazyl-de"
+   "text": "Zuerst ein leeres Fischglas, dann Wasser, und am Ende ein kleiner Fisch.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 8
   },
   {
    "name": "bazyl-historia-prezent",
-   "text": "Zuerst ein eingepacktes Geschenk, dann packen wir es aus, und drin ist ein Teddy!",
-   "voice": "voices/bazyl-de"
+   "text": "Zuerst ein eingepacktes Geschenk, dann packen wir es aus, und drin ist ein Teddy.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 8
   },
   {
    "name": "bazyl-historia-myjnia",
-   "text": "Zuerst ein schmutziges Auto, dann Schaum, und am Ende glänzt es sauber!",
-   "voice": "voices/bazyl-de"
+   "text": "Zuerst ein schmutziges Auto, dann Schaum, und am Ende glänzt es sauber.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 8
   },
   {
    "name": "bazyl-historia-babeczka",
-   "text": "Zuerst Teig im Förmchen, dann backen wir ihn, und am Ende Sahne und eine Kirsche!",
-   "voice": "voices/bazyl-de"
+   "text": "Zuerst Teig im Förmchen, dann backen wir ihn, und am Ende Sahne und eine Kirsche.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 8
   },
   {
    "name": "bazyl-emocje-wesoly",
@@ -3549,13 +3561,17 @@
   },
   {
    "name": "bazyl-ksztalt-ksiezyc",
-   "text": "Mond!",
-   "voice": "voices/bazyl-de"
+   "text": "Mond.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 9
   },
   {
    "name": "bazyl-ksztalt-kropla",
-   "text": "Tropfen!",
-   "voice": "voices/bazyl-de"
+   "text": "Tropfen.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 9
   },
   {
    "name": "bazyl-pasuje",
@@ -4018,6 +4034,20 @@
    "voice": "voices/prezenter",
    "engine": "chatterbox",
    "seed": 4
+  },
+  {
+   "name": "bazyl-historia-swieca",
+   "text": "Zuerst eine lange Kerze, dann immer kürzer, und am Ende ein kleiner Stummel.",
+   "engine": "chatterbox",
+   "voice": "voices/prezenter",
+   "seed": 3
+  },
+  {
+   "name": "bazyl-historia-samolot",
+   "text": "Zuerst ein Blatt Papier, dann falten wir es, und am Ende ein Papierflieger.",
+   "engine": "chatterbox",
+   "voice": "voices/prezenter",
+   "seed": 1
   }
  ]
 }

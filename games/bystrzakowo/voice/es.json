@@ -2269,7 +2269,7 @@
    "text": "Jirafa.",
    "voice": "voices/prezenter",
    "engine": "chatterbox",
-   "seed": 5
+   "seed": 1
   },
   {
    "name": "bazyl-item-malpa",
@@ -2402,7 +2402,7 @@
    "text": "Zorro.",
    "voice": "voices/prezenter",
    "engine": "chatterbox",
-   "seed": 2
+   "seed": 7
   },
   {
    "name": "bazyl-item-zajac",
@@ -2892,7 +2892,7 @@
    "text": "Esquís.",
    "voice": "voices/prezenter",
    "engine": "chatterbox",
-   "seed": 2
+   "seed": 9
   },
   {
    "name": "bazyl-item-namiot",
@@ -3116,7 +3116,7 @@
    "text": "Nube.",
    "voice": "voices/prezenter",
    "engine": "chatterbox",
-   "seed": 6
+   "seed": 8
   },
   {
    "name": "bazyl-item-gwiazdka",
@@ -3330,33 +3330,45 @@
   },
   {
    "name": "bazyl-historia-banan",
-   "text": "¡Primero un plátano entero, luego lo pelamos, y al final solo queda la cáscara!",
-   "voice": "voices/bazyl-es"
+   "text": "Primero un plátano entero, luego lo pelamos, y al final solo queda la cáscara.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 9
   },
   {
    "name": "bazyl-historia-arbuz",
-   "text": "¡Primero una sandía entera, luego la partimos, y al final ricas rebanadas!",
-   "voice": "voices/bazyl-es"
+   "text": "Primero una sandía entera, luego la partimos, y al final ricas rebanadas.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 9
   },
   {
    "name": "bazyl-historia-akwarium",
-   "text": "¡Primero una pecera vacía, luego agua, y al final un pececito!",
-   "voice": "voices/bazyl-es"
+   "text": "Primero una pecera vacía, luego agua, y al final un pececito.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 7
   },
   {
    "name": "bazyl-historia-prezent",
-   "text": "¡Primero un regalo envuelto, luego lo abrimos, y adentro hay un osito!",
-   "voice": "voices/bazyl-es"
+   "text": "Primero un regalo envuelto, luego lo abrimos, y adentro hay un osito.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 7
   },
   {
    "name": "bazyl-historia-myjnia",
-   "text": "¡Primero un carrito sucio, luego espuma, y al final brilla de limpio!",
-   "voice": "voices/bazyl-es"
+   "text": "Primero un carrito sucio, luego espuma, y al final brilla de limpio.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 7
   },
   {
    "name": "bazyl-historia-babeczka",
-   "text": "¡Primero masa en un molde de papel, luego lo horneamos, y al final crema y una cereza!",
-   "voice": "voices/bazyl-es"
+   "text": "Primero masa en un molde de papel, luego lo horneamos, y al final crema y una cereza.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 7
   },
   {
    "name": "bazyl-emocje-wesoly",
@@ -3521,13 +3533,17 @@
   },
   {
    "name": "bazyl-ksztalt-ksiezyc",
-   "text": "¡Luna!",
-   "voice": "voices/bazyl-es"
+   "text": "Luna.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 9
   },
   {
    "name": "bazyl-ksztalt-kropla",
-   "text": "¡Gota!",
-   "voice": "voices/bazyl-es"
+   "text": "Gota.",
+   "voice": "voices/prezenter",
+   "engine": "chatterbox",
+   "seed": 8
   },
   {
    "name": "bazyl-pasuje",
@@ -3990,6 +4006,20 @@
    "voice": "voices/prezenter",
    "engine": "chatterbox",
    "seed": 4
+  },
+  {
+   "name": "bazyl-historia-swieca",
+   "text": "Primero una vela larga, luego cada vez más corta, y al final un cabito chiquito.",
+   "engine": "chatterbox",
+   "voice": "voices/prezenter",
+   "seed": 1
+  },
+  {
+   "name": "bazyl-historia-samolot",
+   "text": "Primero una hoja de papel, luego la doblamos, y al final un avión de papel.",
+   "engine": "chatterbox",
+   "voice": "voices/prezenter",
+   "seed": 2
   }
  ]
 }
