@@ -108,6 +108,8 @@ export class LetterScene extends RoundScene {
   private atDown = 0;
   private strokeAtDown = 0;
   private fails = 0;
+  /** Ruchy palca w tym dotknięciu daleko od bieżącej kreski (rysowanie nie tej kreski). */
+  private offPath = 0;
 
   private down(e: FederatedPointerEvent): void {
     if (this.busy) return;
@@ -115,6 +117,7 @@ export class LetterScene extends RoundScene {
     this.tracing = true;
     this.atDown = this.at;
     this.strokeAtDown = this.stroke;
+    this.offPath = 0;
     this.trace(e);
   }
 
@@ -126,6 +129,12 @@ export class LetterScene extends RoundScene {
     if (!this.tracing) return;
     this.tracing = false;
     if (this.busy) return;
+    // Inna kreska, która tylko zahaczyła o początek bieżącej (w A obie zaczynają się u góry): bez okruchu tuszu.
+    const len = this.strokes[this.stroke]!.length;
+    if (this.stroke === this.strokeAtDown && this.offPath > 5 && this.at - this.atDown < len * 0.4 && this.at !== this.atDown) {
+      this.at = this.atDown;
+      this.drawInk();
+    }
     if (this.stroke === this.strokeAtDown && this.at === this.atDown) {
       if (++this.fails >= 2) {
         this.fails = 0;
@@ -141,7 +150,10 @@ export class LetterScene extends RoundScene {
     const k = this.box.w / this.box.h;
     const scaled = pts.map(([x, y]) => [x * k, y] as P);
     const next = advance(scaled, this.at, f, this.tol);
-    if (next === this.at) return;
+    if (next === this.at) {
+      if (scaled.every(([x, y]) => Math.hypot(x - f[0], y - f[1]) > this.tol * 2)) this.offPath++;
+      return;
+    }
     if (Math.floor(next / 6) > Math.floor(this.at / 6)) sfx.pop(this.game.sound, 1 + (next / pts.length) * 0.6);
     this.at = next;
     this.drawInk();

@@ -367,8 +367,9 @@ export class StickerScene extends Scene {
       const cols = 4;
       const rows = Math.ceil(n / cols);
       const gap = 24;
-      const cw = Math.min(260, (w - 200 - gap * (cols - 1)) / cols);
-      const ch = cw * 0.6;
+      const cw = Math.min(340, (w - 200 - gap * (cols - 1)) / cols);
+      // Karta w proporcjach ekranu: miniatura pokazuje cały obrazek (przy 0.6 naklejki przy brzegach były ucięte).
+      const ch = (cw * h) / w;
       panel.scale.set(Math.min(1, (h - 80) / (rows * (ch + gap))));
       panel.position.set(w / 2, h / 2);
       const at = (i: number) => {

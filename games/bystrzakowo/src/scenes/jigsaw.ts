@@ -120,6 +120,7 @@ export class JigsawScene extends RoundScene {
             this.tweens.to(view.scale, { x: s, y: s }, { duration: 0.12 });
             sfx.pop(this.game.sound, 1.2);
           },
+          move: () => this.keepOnScreen(view),
           drop: (at) => this.drop(piece, at),
         });
         this.pieces.push(piece);
@@ -199,6 +200,15 @@ export class JigsawScene extends RoundScene {
     const tw = this.tweens
       .to(p.view, { x: p.tray.x + (slot.x - p.tray.x) * 0.5, y: p.tray.y + (slot.y - p.tray.y) * 0.5 }, { duration: 0.45, ease: 'sineInOut', yoyo: true, repeat: 1 });
     void tw.done.then(() => !tw.killed && p.view.position.set(p.tray.x, p.tray.y));
+  }
+
+  /** Przeciągany kawałek (już w pełnym rozmiarze) nie wychodzi za krawędź ekranu. */
+  private keepOnScreen(view: Container): void {
+    const { width: w, height: h } = this.game.view;
+    const hw = (this.size / this.grid.cols) / 2;
+    const hh = (this.size / this.grid.rows) / 2;
+    view.x = Math.min(Math.max(view.x, hw), w - hw);
+    view.y = Math.min(Math.max(view.y, hh), h - hh);
   }
 
   protected place(): void {

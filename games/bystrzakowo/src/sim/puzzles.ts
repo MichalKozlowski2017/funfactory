@@ -263,10 +263,20 @@ export function promptLine(q: Question): string {
 export function makeRound(kind: PuzzleKind, rng: Rng, level: number): Question[] {
   const out: Question[] = [];
   const recent: string[] = [];
+  // Obrazki, które już były na ekranie w tej rundzie: zmyłki nie powinny wracać co pytanie
+  // (w Kolorach ta sama czerwona truskawka była zmyłką trzy razy z rzędu).
+  const shown = new Set<string>();
+  const repeats = (q: Question) => (q.kind === 'liczenie' ? 0 : q.options.filter((o) => shown.has(o.id)).length);
   for (let i = 0; i < ROUND_LENGTH; i++) {
     const prev = out[out.length - 1];
-    const q = kind === 'liczenie' ? countQuestion(rng, level, recent, prev?.kind === 'liczenie' ? prev.count : 0) : makeQuestion(kind, rng, level, recent);
+    const make = () => (kind === 'liczenie' ? countQuestion(rng, level, recent, prev?.kind === 'liczenie' ? prev.count : 0) : makeQuestion(kind, rng, level, recent));
+    let q = make();
+    for (let t = 0; t < 8 && repeats(q) > 0; t++) {
+      const alt = make();
+      if (repeats(alt) < repeats(q)) q = alt;
+    }
     recent.push(questionKey(q));
+    if (q.kind !== 'liczenie') for (const o of q.options) shown.add(o.id);
     out.push(q);
   }
   return out;

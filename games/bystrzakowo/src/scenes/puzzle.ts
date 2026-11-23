@@ -111,6 +111,10 @@ export class PuzzleScene extends RoundScene {
         }
         break;
       case 'pasuje':
+        // Podpowiedź bez słów, o co chodzi: dwa takie same kółka i jeden inny trójkąt.
+        this.hero = this.heroCard(Texture.EMPTY);
+        this.hero.picture.visible = false;
+        this.hero.face.addChild(oddIcon());
         break;
     }
     this.cards = q.kind === 'liczenie' ? q.options.map((n) => this.numberCard(n)) : q.options.map((item) => this.itemCard(item));
@@ -238,12 +242,14 @@ export class PuzzleScene extends RoundScene {
         c.position.set(cx + (i - (n - 1) / 2) * (size + gap), y);
       });
     };
-    if (this.hero) {
+    if (this.hero && this.q.kind === 'pasuje') {
+      this.hero.layoutCard(Math.min(170, h * 0.24));
+      this.hero.position.set(cx, 175);
+      row(this.cards, h / 2 + 95, 240);
+    } else if (this.hero) {
       this.hero.layoutCard(Math.min(280, h * 0.38));
       this.hero.position.set(cx, 245);
       row(this.cards, h - 175, 210);
-    } else if (this.q.kind === 'pasuje') {
-      row(this.cards, h / 2 + 30, 250);
     } else {
       const n = this.counters.length;
       const perRow = n <= 4 ? n : Math.ceil(n / 2);
@@ -265,6 +271,18 @@ export class PuzzleScene extends RoundScene {
     for (const c of this.cards) c.tick(dt);
     this.hero?.tick(dt);
   }
+}
+
+/** „Co nie pasuje”: dwa niebieskie kółka i pomarańczowy trójkąt. */
+function oddIcon(): Graphics {
+  const g = new Graphics();
+  const ink = { color: COLORS.ink, width: 6, join: 'round' as const };
+  for (const x of [-80, 0]) g.circle(x, 6, 34).fill({ color: 0x5cb3ff }).stroke(ink);
+  g.poly([88, -34, 128, 40, 48, 40]).fill({ color: 0xff9f5a }).stroke(ink);
+  // Karta ma tu 170 jednostek (rysunek jest w skali karty 280).
+  g.scale.set(0.56);
+  g.pivot.set(7, 3);
+  return g;
 }
 
 /** Plama farby (zagadka z kolorami): gładka, lekko falista kropla z odblaskiem. */

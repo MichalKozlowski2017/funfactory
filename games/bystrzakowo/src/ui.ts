@@ -206,7 +206,7 @@ export function cover(sprite: Sprite, width: number, height: number): void {
  * Przeciąganie palcem: obiekt idzie za palcem (z zachowanym punktem chwytu), po puszczeniu `drop`
  * dostaje pozycję w układzie rodzica. `canStart` blokuje chwytanie (np. w trakcie animacji).
  */
-export function draggable(obj: Container, handlers: { canStart: () => boolean; start?: () => void; drop: (at: Point) => void; tap?: () => void }): void {
+export function draggable(obj: Container, handlers: { canStart: () => boolean; start?: () => void; drop: (at: Point) => void; tap?: () => void; move?: () => void }): void {
   let grab: { dx: number; dy: number; id: number; x: number; y: number; moved: number } | null = null;
   obj.eventMode = 'static';
   obj.cursor = 'grab';
@@ -223,6 +223,7 @@ export function draggable(obj: Container, handlers: { canStart: () => boolean; s
     const p = obj.parent.toLocal(e.global);
     grab.moved = Math.max(grab.moved, Math.hypot(p.x - grab.x, p.y - grab.y));
     obj.position.set(p.x + grab.dx, p.y + grab.dy);
+    handlers.move?.();
   });
   const end = (e: { pointerId: number }) => {
     if (!grab || e.pointerId !== grab.id) return;
