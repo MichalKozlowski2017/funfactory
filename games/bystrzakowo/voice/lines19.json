@@ -1,0 +1,12 @@
+{
+ "voice": "voices/prezenter",
+ "tries": 8,
+ "lines": [
+  { "name": "bazyl-historia-banan", "text": "Najpierw cały banan, potem go obieramy, a na końcu zostaje tylko skórka." },
+  { "name": "bazyl-historia-arbuz", "text": "Najpierw cały arbuz, potem kroimy go na pół, a na końcu pyszne kawałki." },
+  { "name": "bazyl-historia-akwarium", "text": "Najpierw puste akwarium, potem woda, a na końcu mała rybka." },
+  { "name": "bazyl-historia-prezent", "text": "Najpierw zapakowany prezent, potem go otwieramy, a w środku jest miś." },
+  { "name": "bazyl-historia-myjnia", "text": "Najpierw brudne autko, potem piana, a na końcu autko lśni czystością." },
+  { "name": "bazyl-historia-babeczka", "text": "Najpierw ciasto w foremce, potem pieczemy, a na końcu krem i wisienka." }
+ ]
+}

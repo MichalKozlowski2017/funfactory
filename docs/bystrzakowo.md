@@ -160,6 +160,9 @@ rodzic zmienia go w Ustawieniach strefy rodzica; w playtestach `?lang=en|de|pl`.
 - `node games/bystrzakowo/scripts/monkey.ts [zabawy] [--taps 50]`: test „małpki” – losowe stuknięcia i przeciągnięcia w każdej zabawie, wyłapuje błędy JS i zawieszenia (zrzuty w `.shots/monkey/`).
 - `node tools/playtest/drive.ts games/bystrzakowo --port 7777 --query "full&lang=pl"`: gra działa w tle i przyjmuje polecenia HTTP (`/shot`, `/tap`, `/drag`, `/wait`, `/eval`) we współrzędnych zrzutu. Na tym działa „agent-dziecko”: subagent, który gra jak 4-latek i raportuje, co dziecko zatrzyma lub zmyli (opis zadania: w historii sesji z 2026-11-22/23). Pierwsze rundy znalazły m.in.: blokadę przeciągania po przerwanym dotyku (`pointercancel`, naprawione w kit2d), za słabą bramkę rodzica (teraz przytrzymanie + mnożenie z 4 odpowiedziami i 30 s blokady), sylaby rozwiązywalne bez czytania, niejednoznaczne historyjki.
 - Nagrania lektora: skill `tts`, automatyczny wybór wariantów (`syl/cb-best.mjs`, `syl/select.mjs`, `syl/sound.mjs`) – powtórzenia, krzyk, szum, budowa kwestii. Właściciel słucha tylko tego, co przeszło.
+- Pojedyncze słowa z Chatterboxa przycina `syl/word.mjs` (model potrafi coś dopowiedzieć po słowie, a rozpoznawanie mowy tego nie zgłasza); przycięte wersje przechodzą drugą kontrolę (`check.py`) przed instalacją.
+- Niemiecki i hiszpański: cały lektor z Chatterboxa na polskich próbkach Lusi i Bazyla (`voice/<język>.json`: `engine: chatterbox`, `seed`, próbka). `scripts/voice-i18n.ts` nie nadpisuje takich wpisów.
+- Czcionka: w Baloo 2 kreska w „ł” była prawie pozioma i dzieci myliły ł z t; `scripts/font-slash.py` obraca ją o 32°.
 
 ## Plan
 
