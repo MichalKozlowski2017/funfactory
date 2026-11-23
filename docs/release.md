@@ -2,6 +2,8 @@
 
 Stan na 2026-11-19: wszystko, co da się zrobić bez kont i podpisów właściciela, jest gotowe. Kroki oznaczone **[Ty]** wymagają Twojego konta, akceptacji umów albo danych osobowych. Kroki **[Claude]** zrobię, gdy dostanę od Ciebie identyfikatory.
 
+Przed każdą wysyłką do recenzji przejdź poradnik https://github.com/mjmirza/app-store-compliance (lista kontrolna, zasady dla dzieci i gier, Capacitor, terminy polityk Google; po odrzuceniu: `docs/MISTAKE-PATTERNS.md`). Czytamy go ręcznie; skanera nie wpinamy jako hooka, bo blokuje `cap sync` i `xcodebuild archive`.
+
 ## Co jest gotowe
 
 | Rzecz | Gdzie |
