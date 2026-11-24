@@ -16,7 +16,7 @@ export const LETTER_EXAMPLES: Record<Lang, Record<string, [item: string, word: s
     "D": [["dinosaur", "Dinozaur"], ["dolphin", "Delfin"], ["pumpkin", "Dynia"]],
     "E": [["emu", "Emu"], ["elf", "Elf"], ["eclair", "Ekler"]],
     "F": [["seal", "Foka"], ["flamingo", "Flaming"], ["flag", "Flaga"]],
-    "G": [["pear", "Gruszka"], ["ukulele", "Gitarka"], ["little-star", "Gwiazdka"]],
+    "G": [["pear", "Gruszka"], ["ukulele", "Gitara"], ["little-star", "Gwiazdka"]],
     "H": [["hippo", "Hipopotam"], ["helicopter", "Helikopter"], ["scooter", "Hulajnoga"]],
     "I": [["turkey", "Indyk"], ["igloo", "Igloo"]],
     "J": [["apple", "Jabłko"], ["hedgehog", "Jeż"], ["egg", "Jajko"]],

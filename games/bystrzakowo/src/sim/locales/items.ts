@@ -159,7 +159,7 @@ export const ITEM_NAMES: Record<string, { pl: string; en: string; de: string; es
   heron: { pl: 'Czapla', en: 'Heron', de: 'Reiher', es: 'Garza' },
   skis: { pl: 'Narty', en: 'Skis', de: 'Ski', es: 'Esquís' },
   tent: { pl: 'Namiot', en: 'Tent', de: 'Zelt', es: 'Tienda' },
-  ukulele: { pl: 'Gitarka', en: 'Guitar', de: 'Gitarre', es: 'Guitarra' },
+  ukulele: { pl: 'Gitara', en: 'Guitar', de: 'Gitarre', es: 'Guitarra' },
   castle: { pl: 'Zamek z piasku', en: 'Sandcastle', de: 'Sandburg', es: 'Castillo de arena' },
   spade: { pl: 'Łopatka', en: 'Shovel', de: 'Schaufel', es: 'Pala' },
   glass: { pl: 'Szklanka', en: 'Glass of milk', de: 'Glas Milch', es: 'Vaso de leche' },
