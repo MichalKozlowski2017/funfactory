@@ -1,7 +1,7 @@
 /**
  * Zapis do dziennika postępów (strefa rodzica) z poziomu scen. Logika dziennika: sim/journal.ts.
  */
-import { addTask, addTime, dayKey, newJournal, noteFact, prune, type Journal } from './sim/journal.ts';
+import { addTask, addTempo, addTime, dayKey, newJournal, noteFact, prune, type Journal } from './sim/journal.ts';
 import type { Activity } from './sim/realms.ts';
 import { saveState, state } from './state.ts';
 
@@ -12,9 +12,14 @@ export function journal(): Journal {
 }
 
 export function logTask(kind: Activity, misses: number): void {
-  addTask(journal(), today(), kind, misses);
+  addTask(journal(), today(), kind, misses, state.progress.levels[kind]);
   // Pierwsze zadanie dnia zużywa dzień próby pełnej wersji (import leniwy: premium importuje log).
   void import('./premium.ts').then((m) => m.countPlayDay());
+}
+
+/** Czas dobrej odpowiedzi (tempo myślenia) w grupie umiejętności na bieżącym poziomie zabawy. */
+export function logTempo(group: string, kind: Activity, sec: number): void {
+  addTempo(journal(), today(), group, state.progress.levels[kind] ?? 0, sec);
 }
 
 /** `easy`: wybór tylko z dwóch odpowiedzi (łatwo zgadnąć, liczy się za pół). */

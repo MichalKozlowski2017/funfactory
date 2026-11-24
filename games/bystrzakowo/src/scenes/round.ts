@@ -5,7 +5,7 @@ import { itemVoices, loadArt, say, startMusic, type Art, type Guide } from '../a
 import { pickSticker } from '../sim/progress.ts';
 import { nextLevel } from '../sim/puzzles.ts';
 import { realmOf, type Activity } from '../sim/realms.ts';
-import { logFact, logTask } from '../log.ts';
+import { logFact, logTask, logTempo } from '../log.ts';
 import { saveState, state } from '../state.ts';
 import { COLORS, cover, IconButton, sfx } from '../ui.ts';
 import { Hand, type Gesture, type P } from '../hand.ts';
@@ -86,6 +86,16 @@ export abstract class RoundScene extends Scene {
   }
   /** Klatka animacji zadania. */
   protected step(_dt: number): void {}
+  /** Grupa umiejętności do pomiaru tempa (np. „kolor”); null: zabawa bez pomiaru (przeciąganie, rysowanie). */
+  protected tempoGroup(): string | null {
+    return null;
+  }
+  /** Moment końca polecenia (zegar sceny): od niego liczymy czas odpowiedzi. */
+  private askedAt = -1;
+  /** Zabawa zgłasza, że polecenie zabrzmi za `delay` s (zwykle długość nagrania). */
+  protected markAsked(delay: number): void {
+    this.askedAt = this.clock + delay;
+  }
   /** Gest, który pokazuje rączka (współrzędne sceny); null: bez rączki, zostaje zwykła podpowiedź. */
   protected gesture(): Gesture | null {
     return null;
@@ -196,6 +206,11 @@ export abstract class RoundScene extends Scene {
     this.busy = true;
     this.hand.stop();
     logTask(this.kind, this.taskMisses);
+    // Tempo: tylko odpowiedź bez pomyłki, po końcu polecenia, bez długich przerw (dziecko odeszło od tabletu).
+    const group = this.tempoGroup();
+    const took = this.clock - this.askedAt;
+    if (group && this.askedAt >= 0 && this.taskMisses === 0 && took > 0.3 && took < 20) logTempo(group, this.kind, took);
+    this.askedAt = -1;
     for (const f of this.taskFacts()) logFact(f, this.taskMisses === 0, this.taskEasy());
     sfx.good(this.game.sound);
     haptics.success();

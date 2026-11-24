@@ -122,6 +122,7 @@ export class PuzzleScene extends RoundScene {
     // Polecenie lektora. Przy liczeniu za pierwszym razem także podpowiedź „dotykaj i licz”.
     this.timers.after(0.3, () => {
       const len = say(this.game, this.guide, promptLine(q));
+      this.markAsked(len);
       if (q.kind === 'liczenie' && this.index === 0) this.timers.after(len + 0.25, () => say(this.game, 'lusia', 'liczenie-dotyk'));
     });
   }
@@ -222,6 +223,10 @@ export class PuzzleScene extends RoundScene {
   }
 
   /** Dobra karta delikatnie się kołysze. */
+  protected override tempoGroup(): string | null {
+    return ({ kolory: 'kolor', liczenie: 'liczba', gloski: 'gloska' } as Record<string, string>)[this.puzzle] ?? null;
+  }
+
   protected override gesture(): Gesture | null {
     const card = this.cards[(this.q.options as (Item | number)[]).indexOf(answerOf(this.q))];
     return card ? { kind: 'tap', at: [this.spot(card)] } : null;

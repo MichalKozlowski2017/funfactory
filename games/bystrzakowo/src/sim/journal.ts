@@ -19,6 +19,12 @@ export interface DayLog {
   miss: number;
   /** Pomyłki w każdej zabawie. */
   misses?: Partial<Record<Activity, number>>;
+  /** Zadania rozwiązane bez żadnej pomyłki (od wersji ze statystykami; wcześniejsze dni: brak). */
+  clean?: Partial<Record<Activity, number>>;
+  /** Poziom trudności zabawy tego dnia (ostatni), do znaczników „wyższy poziom” na wykresie. */
+  lvl?: Partial<Record<Activity, number>>;
+  /** Czasy dobrych odpowiedzi w dziesiątych sekundy: klucz „<grupa>@<poziom>” (np. „kolor@1”). */
+  ms?: Record<string, number[]>;
 }
 
 export interface Journal {
@@ -55,14 +61,25 @@ export function addTime(j: Journal, key: string, sec: number): void {
   if (sec > 0) day(j, key).sec += sec;
 }
 
-/** Zadanie rozwiązane (z `misses` pomyłkami po drodze). */
-export function addTask(j: Journal, key: string, kind: Activity, misses: number): void {
+/** Zadanie rozwiązane (z `misses` pomyłkami po drodze) na poziomie `level`. */
+export function addTask(j: Journal, key: string, kind: Activity, misses: number, level?: number): void {
   const d = day(j, key);
   d.acts[kind] = (d.acts[kind] ?? 0) + 1;
   d.miss += misses;
   if (misses) (d.misses ??= {})[kind] = (d.misses[kind] ?? 0) + misses;
+  else (d.clean ??= {})[kind] = (d.clean[kind] ?? 0) + 1;
+  if (level !== undefined) (d.lvl ??= {})[kind] = level;
   j.firsts ??= {};
   j.firsts[kind] ??= key;
+}
+
+/** Najwięcej czasów odpowiedzi na grupę i poziom w jednym dniu (zapis zostaje mały). */
+const TEMPO_PER_DAY = 40;
+
+/** Czas dobrej odpowiedzi bez pomyłki (sekundy od końca polecenia) w grupie umiejętności na danym poziomie. */
+export function addTempo(j: Journal, key: string, group: string, level: number, sec: number): void {
+  const list = ((day(j, key).ms ??= {})[`${group}@${level}`] ??= []);
+  if (list.length < TEMPO_PER_DAY) list.push(Math.round(sec * 10));
 }
 
 /**

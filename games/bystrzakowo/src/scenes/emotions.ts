@@ -58,7 +58,7 @@ export class EmotionScene extends RoundScene {
       this.layer.addChild(card);
       return card;
     });
-    this.timers.after(0.3, () => say(this.game, this.guide, this.promptLine()));
+    this.timers.after(0.3, () => this.markAsked(say(this.game, this.guide, this.promptLine())));
   }
 
   protected override appear(): void {
@@ -91,6 +91,10 @@ export class EmotionScene extends RoundScene {
   solve(): void {
     const i = this.q.options.indexOf(this.q.target);
     this.answer(this.cards[i]!, this.q.target);
+  }
+
+  protected override tempoGroup(): string | null {
+    return 'emocja';
   }
 
   protected override gesture(): Gesture | null {
