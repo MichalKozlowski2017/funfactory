@@ -175,7 +175,7 @@ Idiomas: español, inglés, alemán, polaco.
 
 Bystrzakowo is an educational app for children aged 3–6 (Kids category, Ages 5 and Under). All instructions are voiced, so children do not need to read. UI languages: Polish, English, German, Spanish (follows the device language; can be changed in the parent zone).
 
-Parental gate: the parent zone (gear icon, top left) opens only after pressing and holding the gear for 2 seconds. Everything aimed at adults is inside the parent zone: the progress report, the album with the Share button (system share sheet), the weekly postcard, settings, and the in-app purchase.
+Parental gate: the parent zone (gear icon, top left) opens after pressing and holding the gear for 2 seconds. The in-app purchase, "Restore purchase" and every Share button additionally require solving a multiplication question (adult gate). Everything aimed at adults is inside the parent zone: the progress report, the album with the Share button (system share sheet), the weekly postcard, settings, and the in-app purchase.
 
 In-app purchase: one non-consumable product, "bystrzakowo.full" (full version). A fresh install has a free trial of 3 days of play with everything open; after that, only the first land (Puzzle Meadow) stays open and the other lands show a sleeping overlay; tapping them only plays a voice line asking the child to get a parent. The purchase and "Restore purchase" buttons are in the parent zone (Progress and Settings tabs).
 

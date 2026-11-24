@@ -26,10 +26,10 @@ const FONT = 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif';
  * Pierścień wokół pokazuje postęp przytrzymania.
  */
 /**
- * Druga część bramki dla rodzica: po przytrzymaniu zębatki pytanie, którego przedszkolak nie rozwiąże
- * (mnożenie, cztery odpowiedzi). Samo przytrzymanie 4-latek przechodził łatwo (test agentem-dzieckiem).
- * Stuknięcie obok zamyka pytanie, zła odpowiedź dodatkowo blokuje bramkę na 30 s (losowe stukanie: 1/4 szansy
- * najwyżej co pół minuty).
+ * Bramka dla dorosłego przed zakupem i wysłaniem obrazka poza aplikację (wymóg kategorii Kids): pytanie,
+ * którego przedszkolak nie rozwiąże (mnożenie, cztery odpowiedzi). Do samej strefy rodzica wystarcza
+ * przytrzymanie zębatki (decyzja właściciela 2026-11-24). Stuknięcie obok zamyka pytanie, zła odpowiedź
+ * blokuje na 15 s (losowe stukanie: 1/4 szansy najwyżej co 15 s).
  */
 export class AdultCheck extends Container {
   private readonly buttons: Button[] = [];
@@ -183,6 +183,8 @@ export class ParentPanel extends Container {
   private readonly game: Game;
   private readonly onClose: () => void;
   private readonly onUnlock: () => void;
+  /** Bramka dla dorosłego (mnożenie) przed zakupem i wysłaniem czegoś poza aplikację (wymóg kategorii Kids). */
+  private readonly askAdult: (then: () => void) => void;
   private storePrice: string | null = null;
   private shopNote = '';
   private buying = false;
@@ -210,10 +212,11 @@ export class ParentPanel extends Container {
   private confirmReset = false;
   private version = 0;
 
-  constructor(game: Game, onClose: () => void, onUnlock: () => void = () => {}) {
+  constructor(game: Game, onClose: () => void, onUnlock: () => void = () => {}, askAdult: (then: () => void) => void = (then) => then()) {
     super();
     this.game = game;
     this.onClose = onClose;
+    this.askAdult = askAdult;
     this.onUnlock = onUnlock;
     void price().then((p) => {
       this.storePrice = p;
@@ -395,9 +398,9 @@ export class ParentPanel extends Container {
       c.addChild(tt, b);
       let h = b.y + b.height + 20;
       const bw = Math.min(440, iw);
-      const buy = this.button(this.buying ? tr('Chwileczkę…') : this.storePrice ? tr('Kup pełną wersję – {price}', { price: this.storePrice }) : tr('Kup pełną wersję'), bw, '#ff9f5a', () => void this.doBuy(false), 80, 27);
+      const buy = this.button(this.buying ? tr('Chwileczkę…') : this.storePrice ? tr('Kup pełną wersję – {price}', { price: this.storePrice }) : tr('Kup pełną wersję'), bw, '#ff9f5a', () => this.askAdult(() => void this.doBuy(false)), 80, 27);
       buy.position.set(bw / 2, h + 40);
-      const rest = this.button(tr('Przywróć zakup'), 260, '#c9b8a6', () => void this.doBuy(true), 80, 25);
+      const rest = this.button(tr('Przywróć zakup'), 260, '#c9b8a6', () => this.askAdult(() => void this.doBuy(true)), 80, 25);
       const stack = iw < bw + 24 + 260;
       rest.position.set(stack ? 130 : bw + 24 + 130, stack ? h + 140 : h + 40);
       c.addChild(buy, rest);
@@ -609,7 +612,7 @@ export class ParentPanel extends Container {
         const msg = this.text(tr('Wykresy postępów są w pełnej wersji'), 25, { weight: '800' });
         msg.anchor.set(0.5, 0);
         msg.position.set(iw / 2, 52 + 104);
-        const buy = this.button(tr('Odblokuj pełną wersję'), 360, '#4fae5f', () => void this.doBuy(false), 76, 25);
+        const buy = this.button(tr('Odblokuj pełną wersję'), 360, '#4fae5f', () => this.askAdult(() => void this.doBuy(false)), 76, 25);
         buy.position.set(iw / 2, 52 + 190);
         c.addChild(veil, l, msg, buy);
       }
@@ -842,7 +845,7 @@ export class ParentPanel extends Container {
       o.destroy({ children: true });
     };
     const y = vh - 70;
-    const share = this.button(tr('Zapisz / wyślij'), 280, '#5cb3ff', () => void this.share(it), 84, 28);
+    const share = this.button(tr('Zapisz / wyślij'), 280, '#5cb3ff', () => this.askAdult(() => void this.share(it)), 84, 28);
     share.position.set(vw / 2 - 160, y);
     const back = this.button(tr('Wróć'), 200, '#5cc36a', close, 84, 28);
     back.position.set(vw / 2 + 120, y);
@@ -904,7 +907,7 @@ export class ParentPanel extends Container {
     card.x = (cw - POSTCARD_W * k) / 2;
     this.content.addChild(card);
     const y = POSTCARD_H * k + 20;
-    const share = this.button(tr('Zapisz / wyślij pocztówkę'), 400, '#5cb3ff', () => void this.sharePostcard(r), 84, 28);
+    const share = this.button(tr('Zapisz / wyślij pocztówkę'), 400, '#5cb3ff', () => this.askAdult(() => void this.sharePostcard(r)), 84, 28);
     share.position.set(cw / 2, y + 42);
     this.content.addChild(share);
     if (!state.progress.childName) {

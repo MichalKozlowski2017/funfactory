@@ -149,7 +149,9 @@ export class WorldScene extends Scene {
     this.addChild(this.particles.view);
 
     this.gate = new ParentGate(this.art.gear);
-    this.gate.onOpen = () => this.askAdult(() => (this.sleep ? this.wake() : this.openParent()));
+    // Wejście do strefy rodzica: samo przytrzymanie zębatki (decyzja właściciela). Mnożenie zostaje przed zakupem
+    // i wysyłaniem obrazków (askAdult w ParentPanel), bo tego wymaga kategoria Kids.
+    this.gate.onOpen = () => (this.sleep ? this.wake() : this.openParent());
     this.gate.onLocked = (n) => this.gateToast(n);
     // Kropka przy zębatce: od ostatniej wizyty rodzica były co najmniej 3 dni zabawy.
     this.gate.setBadge(playDaysAfter(journal(), state.progress.parentSeen ?? '') >= 3);
@@ -615,7 +617,7 @@ export class WorldScene extends Scene {
 
   /** Pytanie dla dorosłego przed strefą rodzica (i przed wybudzeniem po limicie czasu). */
   private askAdult(then: () => void): void {
-    if (this.adultCheck || this.parentPanel) return;
+    if (this.adultCheck) return;
     if (performance.now() < ParentGate.lockedUntil) return void haptics.hit();
     const close = () => {
       this.adultCheck?.destroy({ children: true });
@@ -648,6 +650,7 @@ export class WorldScene extends Scene {
         this.parentPanel = null;
       },
       () => this.applyLocks(),
+      (then) => this.askAdult(then),
     );
     this.parentPanel.layout(this.game.view);
     this.addChild(this.parentPanel);

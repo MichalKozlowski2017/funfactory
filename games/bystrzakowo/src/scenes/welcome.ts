@@ -108,7 +108,7 @@ export class WelcomeScene extends Scene {
       page === 'hello'
         ? [tr('Witaj w Bystrzakowie!'), tr('Zagadki, liczenie, literki, kształty i historyjki dla dzieci od 3 do 6 lat. Lusia i Bazyl czytają każde polecenie na głos, więc dziecko nie musi umieć czytać. Bez reklam i bez internetu.')]
         : page === 'gate'
-          ? [tr('Strefa rodzica'), tr('Przytrzymaj zębatkę w rogu ekranu, a potem rozwiąż krótkie działanie. Znajdziesz tam postępy dziecka, album prac, limit czasu zabawy, język i dźwięk.')]
+          ? [tr('Strefa rodzica'), tr('Przytrzymaj zębatkę w rogu ekranu przez 2 sekundy. Znajdziesz tam postępy dziecka, album prac, limit czasu zabawy, język i dźwięk. Zakup i wysyłanie obrazków chroni dodatkowo krótkie działanie.')]
           : [tr('{n} dni pełnej wersji', { n }), tr('Przez pierwsze {n} dni zabawy otwarte są wszystkie krainy (liczą się tylko dni, w które dziecko gra). Potem Polana Zagadek zostaje za darmo, a resztę można odblokować jednorazowo w strefie rodzica.', { n })];
     const tx = b.x + b.w * 0.41;
     const tw = b.x + b.w - 50 - tx;
@@ -144,10 +144,10 @@ export class WelcomeScene extends Scene {
     }
   }
 
-  /** Zębatka z rączką i pierścieniem odliczania przytrzymania, obok przykład działania. */
+  /** Zębatka z rączką i pierścieniem odliczania przytrzymania. */
   private gateArt(x: number, y: number): void {
     const gear = new Container();
-    gear.position.set(x, y - 20);
+    gear.position.set(x, y + 10);
     if (this.art.gear) {
       const s = new Sprite({ texture: this.art.gear, anchor: 0.5 });
       s.scale.set(150 / s.texture.height);
@@ -162,24 +162,18 @@ export class WelcomeScene extends Scene {
       hand.position.set(10, 10);
       gear.addChild(hand);
     }
-    const sum = new Container();
-    const plate = new Graphics().roundRect(-95, -42, 190, 84, 22).fill({ color: 0xffffff }).stroke({ color: COLORS.ink, width: 5 });
-    const eq = this.text('3 × 4 = ?', 38, { weight: '800', color: '#9b7be0' });
-    eq.anchor.set(0.5);
-    sum.addChild(plate, eq);
-    sum.position.set(x, y + 150);
-    this.content.addChild(gear, sum);
-    // Przytrzymanie: pierścień rośnie 1,5 s, potem działanie „podskakuje”, pauza i od nowa.
+    this.content.addChild(gear);
+    // Przytrzymanie: pierścień rośnie 2 s (jak przy prawdziwej zębatce), potem zębatka „podskakuje”, pauza i od nowa.
     let popped = false;
     this.anim = (t) => {
-      const k = (t % 2.6) / 1.5;
+      const k = (t % 3) / 2;
       ring.clear();
       if (k <= 1) {
         popped = false;
         ring.arc(0, 0, 98, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * k).stroke({ color: COLORS.sun, width: 14, cap: 'round' });
       } else if (!popped) {
         popped = true;
-        void squash(this.tweens, sum, 0.2);
+        void squash(this.tweens, gear, 0.15);
       }
     };
   }
