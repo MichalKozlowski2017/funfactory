@@ -12,9 +12,12 @@ export const state = {
 };
 
 export async function loadState(): Promise<void> {
-  const loaded = migrateIds(await store.load());
+  const saved = await store.load();
+  const loaded = migrateIds(saved);
   // New fields in the save (e.g. new houses) are filled with defaults.
   state.progress = { ...newProgress(), ...loaded, levels: { ...newProgress().levels, ...loaded.levels } };
+  // A migrated save is written back at once, so the old ids never come back.
+  if (loaded !== saved) await saveState();
 }
 
 export const saveState = (): Promise<void> => store.save(state.progress);
