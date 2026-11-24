@@ -10,18 +10,18 @@ import { RoundScene } from './round.ts';
 import type { Gesture } from '../hand.ts';
 
 /** Kto prowadzi który domek. */
-export const GUIDE: Record<PuzzleKind, Guide> = { cienie: 'lusia', pasuje: 'bazyl', liczenie: 'lusia', kolory: 'bazyl', gloski: 'lusia', mamy: 'bazyl' };
+export const GUIDE: Record<PuzzleKind, Guide> = { shadows: 'lusia', matching: 'bazyl', counting: 'lusia', colors: 'bazyl', phonemes: 'lusia', mothers: 'bazyl' };
 
 export const PAINT: Record<Color, number> = {
-  czerwony: 0xe8413c,
-  zolty: 0xffd23f,
-  zielony: 0x4cbf56,
-  niebieski: 0x3d8bff,
-  pomaranczowy: 0xff8a2b,
-  rozowy: 0xff8fc0,
-  fioletowy: 0x9b5de5,
-  brazowy: 0x9a6236,
-  bialy: 0xffffff,
+  red: 0xe8413c,
+  yellow: 0xffd23f,
+  green: 0x4cbf56,
+  blue: 0x3d8bff,
+  orange: 0xff8a2b,
+  pink: 0xff8fc0,
+  purple: 0x9b5de5,
+  brown: 0x9a6236,
+  white: 0xffffff,
 };
 
 /** Runda zagadek jednego domku Polany: 5 pytań z wyborem odpowiedzi. */
@@ -44,22 +44,22 @@ export class PuzzleScene extends RoundScene {
   protected async prepare(): Promise<void> {
     this.questions = makeRound(this.puzzle, this.game.rng, state.progress.levels[this.puzzle] ?? 0);
     this.length = ROUND_LENGTH;
-    if (this.puzzle === 'cienie') await Promise.all(this.questions.map((q) => shadowOf((answerOf(q) as Item).id)));
+    if (this.puzzle === 'shadows') await Promise.all(this.questions.map((q) => shadowOf((answerOf(q) as Item).id)));
   }
 
   protected override roundItems(): string[] {
     return this.questions.flatMap((q) => {
       const items = (q.options as unknown[]).filter((o): o is Item => typeof o === 'object');
-      if (q.kind === 'liczenie') items.push(q.item);
+      if (q.kind === 'counting') items.push(q.item);
       return items.map((i) => i.id);
     });
   }
 
   protected override taskFacts(): string[] {
     const q = this.q;
-    if (q.kind === 'liczenie') return [`liczba:${q.count}`];
-    if (q.kind === 'kolory') return [`kolor:${q.color}`];
-    if (q.kind === 'gloski') return [`gloska:${q.sound}`];
+    if (q.kind === 'counting') return [`number:${q.count}`];
+    if (q.kind === 'colors') return [`color:${q.color}`];
+    if (q.kind === 'phonemes') return [`phoneme:${q.sound}`];
     return [];
   }
 
@@ -82,25 +82,25 @@ export class PuzzleScene extends RoundScene {
     this.counted = 0;
     const q = this.q;
     switch (q.kind) {
-      case 'cienie':
+      case 'shadows':
         this.hero = this.heroCard(shadowNow(q.target.id) ?? Texture.EMPTY);
         break;
-      case 'mamy':
+      case 'mothers':
         this.hero = this.heroCard(this.art.items.get(q.baby.id)!);
         break;
-      case 'kolory':
+      case 'colors':
         this.hero = this.heroCard(Texture.EMPTY);
         this.hero.picture.visible = false;
         this.hero.face.addChild(paintBlob(PAINT[q.color]));
         break;
-      case 'gloski': {
+      case 'phonemes': {
         this.hero = this.heroCard(Texture.EMPTY);
         this.hero.picture.visible = false;
         const s = q.sound;
         this.hero.face.addChild(label(`${s.charAt(0).toUpperCase()}${s.slice(1)} ${s}`, 110, this.game.pixelRatio, '#ff7a8a'));
         break;
       }
-      case 'liczenie':
+      case 'counting':
         for (let i = 0; i < q.count; i++) {
           const sprite = new Sprite({ texture: this.art.items.get(q.item.id)!, anchor: 0.5 });
           sprite.eventMode = 'static';
@@ -111,19 +111,19 @@ export class PuzzleScene extends RoundScene {
           this.layer.addChild(sprite);
         }
         break;
-      case 'pasuje':
+      case 'matching':
         // Podpowiedź bez słów, o co chodzi: dwa takie same kółka i jeden inny trójkąt.
         this.hero = this.heroCard(Texture.EMPTY);
         this.hero.picture.visible = false;
         this.hero.face.addChild(oddIcon());
         break;
     }
-    this.cards = q.kind === 'liczenie' ? q.options.map((n) => this.numberCard(n)) : q.options.map((item) => this.itemCard(item));
+    this.cards = q.kind === 'counting' ? q.options.map((n) => this.numberCard(n)) : q.options.map((item) => this.itemCard(item));
     // Polecenie lektora. Przy liczeniu za pierwszym razem także podpowiedź „dotykaj i licz”.
     this.timers.after(0.3, () => {
       const len = say(this.game, this.guide, promptLine(q));
       this.markAsked(len);
-      if (q.kind === 'liczenie' && this.index === 0) this.timers.after(len + 0.25, () => say(this.game, 'lusia', 'liczenie-dotyk'));
+      if (q.kind === 'counting' && this.index === 0) this.timers.after(len + 0.25, () => say(this.game, 'lusia', 'counting-touch'));
     });
   }
 
@@ -172,7 +172,7 @@ export class PuzzleScene extends RoundScene {
     void squash(this.tweens, entry.sprite, 0.2);
     haptics.tap();
     sfx.pop(this.game.sound, 1 + this.counted * 0.08);
-    say(this.game, 'lusia', `liczba-${this.counted}`);
+    say(this.game, 'lusia', `number-${this.counted}`);
   }
 
   private answer(card: Card, value: Item | number): void {
@@ -185,13 +185,13 @@ export class PuzzleScene extends RoundScene {
       const local = this.layer.toLocal(card.getGlobalPosition());
       this.burst(local.x, local.y);
       for (const other of this.cards) if (other !== card) this.tweens.to(other, { alpha: 0.35 }, { duration: 0.25 });
-      if (q.kind === 'cienie') this.revealShadow(q.target);
+      if (q.kind === 'shadows') this.revealShadow(q.target);
       else if (this.hero) {
         this.hero.markGood();
         void pulse(this.tweens, this.hero, 0.12, 0.3);
       }
       // Lektor: nazwa (albo liczba), potem pochwała.
-      const first = typeof value === 'number' ? say(this.game, 'lusia', `liczba-${value}`) : say(this.game, this.guide, `item-${value.id}`);
+      const first = typeof value === 'number' ? say(this.game, 'lusia', `number-${value}`) : say(this.game, this.guide, `item-${value.id}`);
       this.solved(first);
     } else {
       card.enabled = false;
@@ -224,7 +224,7 @@ export class PuzzleScene extends RoundScene {
 
   /** Dobra karta delikatnie się kołysze. */
   protected override tempoGroup(): string | null {
-    return ({ kolory: 'kolor', liczenie: 'liczba', gloski: 'gloska' } as Record<string, string>)[this.puzzle] ?? null;
+    return ({ colors: 'color', counting: 'number', phonemes: 'phoneme' } as Record<string, string>)[this.puzzle] ?? null;
   }
 
   protected override gesture(): Gesture | null {
@@ -253,7 +253,7 @@ export class PuzzleScene extends RoundScene {
         c.position.set(cx + (i - (n - 1) / 2) * (size + gap), y);
       });
     };
-    if (this.hero && this.q.kind === 'pasuje') {
+    if (this.hero && this.q.kind === 'matching') {
       this.hero.layoutCard(Math.min(170, h * 0.24));
       this.hero.position.set(cx, 175);
       row(this.cards, h / 2 + 95, 240);

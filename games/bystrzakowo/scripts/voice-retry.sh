@@ -12,7 +12,7 @@ python3 - "$L" "$JOB" <<'PY'
 import json, sys
 l, job = sys.argv[1], sys.argv[2]
 src = {x['name']: x for x in json.load(open(f'voice/{l}.json'))['lines']}
-bad = [x['name'] for x in json.load(open(f'voice/report-{l}.json')) if not x['ok'] and '-czytaj-' not in x['name'] and 'Lusia' not in x['text']]
+bad = [x['name'] for x in json.load(open(f'voice/report-{l}.json')) if not x['ok'] and '-read-' not in x['name'] and 'Lusia' not in x['text']]
 lines = [{**src[n], 'tries': 16, 'seed': 101} for n in bad if n in src]
 json.dump({'voice': f'voices/lusia-{l}', 'lang': l, 'tries': 16, 'lines': lines}, open(job, 'w'), ensure_ascii=False)
 print(f'dogrywka {l}: {len(lines)} kwestii')

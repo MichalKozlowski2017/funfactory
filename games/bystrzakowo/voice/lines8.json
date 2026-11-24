@@ -3,137 +3,137 @@
  "tries": 10,
  "lines": [
   {
-   "name": "lusia-sylaby",
+   "name": "lusia-syllables",
    "text": "Ułóż sylaby po kolei, a potem przeczytamy razem!"
   },
   {
-   "name": "lusia-czytaj-koza",
+   "name": "lusia-read-goat",
    "text": "Ko... za... ... Koza.",
    "engine": "chatterbox",
    "seed": 3
   },
   {
-   "name": "lusia-czytaj-zaba",
+   "name": "lusia-read-frog",
    "text": "Ża... ba... ... Żaba.",
    "engine": "chatterbox",
    "seed": 1
   },
   {
-   "name": "lusia-czytaj-sowa",
+   "name": "lusia-read-owl",
    "text": "So... wa... ... Sowa.",
    "engine": "chatterbox",
    "seed": 7
   },
   {
-   "name": "lusia-czytaj-foka",
+   "name": "lusia-read-seal",
    "text": "Fo... ka... ... Foka.",
    "engine": "chatterbox",
    "seed": 24
   },
   {
-   "name": "lusia-czytaj-lodka",
+   "name": "lusia-read-boat",
    "text": "Łód... ka... ... Łódka.",
    "engine": "chatterbox",
    "seed": 23
   },
   {
-   "name": "lusia-czytaj-kura",
+   "name": "lusia-read-hen",
    "text": "Ku... ra... ... Kura.",
    "engine": "chatterbox",
    "seed": 2
   },
   {
-   "name": "lusia-czytaj-lalka",
+   "name": "lusia-read-lalka",
    "text": "Lal... ka... ... Lalka.",
    "engine": "chatterbox",
    "seed": 2
   },
   {
-   "name": "lusia-czytaj-kotek",
+   "name": "lusia-read-kitten",
    "text": "Ko... tek... ... Kotek.",
    "engine": "chatterbox",
    "seed": 1
   },
   {
-   "name": "lusia-czytaj-ryba",
+   "name": "lusia-read-fish",
    "text": "Ryb... ka... ... Rybka.",
    "engine": "chatterbox",
    "seed": 2
   },
   {
-   "name": "lusia-czytaj-auto",
+   "name": "lusia-read-car",
    "text": "Aut... ko... ... Autko.",
    "engine": "chatterbox",
    "seed": 2
   },
   {
-   "name": "lusia-czytaj-banan",
+   "name": "lusia-read-banana",
    "text": "Ba... nan... ... Banan.",
    "engine": "chatterbox",
    "seed": 1
   },
   {
-   "name": "lusia-czytaj-rower",
+   "name": "lusia-read-bike",
    "text": "Ro... wer... ... Rower.",
    "engine": "chatterbox",
    "seed": 7
   },
   {
-   "name": "lusia-czytaj-pilka",
+   "name": "lusia-read-ball",
    "text": "Pił... ka... ... Piłka.",
    "engine": "chatterbox",
    "seed": 2
   },
   {
-   "name": "lusia-czytaj-motyl",
+   "name": "lusia-read-butterfly",
    "text": "Mo... tyl... ... Motyl.",
    "engine": "chatterbox",
    "seed": 4
   },
   {
-   "name": "lusia-czytaj-kubek",
+   "name": "lusia-read-mug",
    "text": "Ku... bek... ... Kubek.",
    "engine": "chatterbox",
    "seed": 1
   },
   {
-   "name": "lusia-czytaj-malina",
+   "name": "lusia-read-raspberry",
    "text": "Ma... li... na... ... Malina.",
    "engine": "chatterbox",
    "seed": 1
   },
   {
-   "name": "lusia-czytaj-pomidor",
+   "name": "lusia-read-tomato",
    "text": "Po... mi... dor... ... Pomidor.",
    "engine": "chatterbox",
    "seed": 2
   },
   {
-   "name": "lusia-czytaj-samolot",
+   "name": "lusia-read-airplane",
    "text": "Sa... mo... lot... ... Samolot.",
    "engine": "chatterbox",
    "seed": 1
   },
   {
-   "name": "lusia-czytaj-parasol",
+   "name": "lusia-read-umbrella",
    "text": "Pa... ra... sol... ... Parasol.",
    "engine": "chatterbox",
    "seed": 1
   },
   {
-   "name": "lusia-czytaj-rakieta",
+   "name": "lusia-read-rocket",
    "text": "Ra... kie... ta... ... Rakieta.",
    "engine": "chatterbox",
    "seed": 1
   },
   {
-   "name": "lusia-czytaj-balonik",
+   "name": "lusia-read-small-balloon",
    "text": "Ba... lo... nik... ... Balonik.",
    "engine": "chatterbox",
    "seed": 3
   },
   {
-   "name": "lusia-czytaj-kapelusz",
+   "name": "lusia-read-sun-hat",
    "text": "Ka... pe... lusz... ... Kapelusz.",
    "engine": "chatterbox",
    "seed": 1

@@ -4,8 +4,8 @@
  */
 import type { Progress } from './progress.ts';
 
-/** Krajobrazy (tła naklejanki); `polana` to tło Polany Zagadek, reszta z public/art/krajobrazy. */
-export const LANDSCAPES = ['polana', 'plaza', 'las', 'zima', 'farma', 'morze', 'kosmos'] as const;
+/** Krajobrazy (tła naklejanki); `meadow` to tło Polany Zagadek, reszta z public/art/krajobrazy. */
+export const LANDSCAPES = ['meadow', 'beach', 'forest', 'winter', 'farm', 'sea', 'space'] as const;
 export type Landscape = (typeof LANDSCAPES)[number];
 
 /** Najwięcej obrazków w galerii. */
@@ -27,11 +27,11 @@ export interface Picture {
 /** Galeria z postępów; stary zapis (jeden obrazek w `scene`) staje się pierwszym obrazkiem. */
 export function gallery(p: Progress): { pictures: Picture[]; current: number } {
   if (!p.pictures) {
-    p.pictures = [{ bg: 'polana', items: p.scene ?? [] }];
+    p.pictures = [{ bg: 'meadow', items: p.scene ?? [] }];
     p.picture = 0;
     delete p.scene;
   }
-  if (p.pictures.length === 0) p.pictures.push({ bg: 'polana', items: [] });
+  if (p.pictures.length === 0) p.pictures.push({ bg: 'meadow', items: [] });
   p.picture = Math.max(0, Math.min(p.pictures.length - 1, p.picture ?? 0));
   return { pictures: p.pictures, current: p.picture };
 }
@@ -63,7 +63,7 @@ export function removePicture(p: Progress, index: number): void {
   const { pictures, current } = gallery(p);
   if (index < 0 || index >= pictures.length) return;
   pictures.splice(index, 1);
-  if (pictures.length === 0) pictures.push({ bg: 'polana', items: [] });
+  if (pictures.length === 0) pictures.push({ bg: 'meadow', items: [] });
   p.picture = Math.max(0, Math.min(pictures.length - 1, index < current ? current - 1 : current));
 }
 
@@ -77,7 +77,7 @@ export function depthScale(y: number): number {
 }
 
 /** Rzeczy z nieba: na górze obrazka są naturalnie, więc nie maleją z perspektywą. */
-export const SKY = new Set(['slonce', 'chmurka', 'gwiazdka', 'ksiezyc', 'tecza', 'samolot', 'helikopter', 'rakieta', 'latawiec', 'balonik', 'ptak']);
+export const SKY = new Set(['sun', 'cloud', 'little-star', 'moon', 'rainbow', 'airplane', 'helicopter', 'rocket', 'kite', 'small-balloon', 'bird']);
 
 /** Skala naklejki: stała dla rzeczy z nieba, dla reszty perspektywa. */
 export function stickerScale(id: string, y: number): number {

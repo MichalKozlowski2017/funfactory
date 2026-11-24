@@ -8,10 +8,10 @@ import type { Rng } from '@funfactory/core';
 import { ITEMS, type Category, type Color, type Item } from './catalog.ts';
 import { MAX_LEVEL } from './puzzles.ts';
 
-export type SortRule = 'kategorie' | 'kolory' | 'domy' | 'pory' | 'wielkosc' | 'ruch';
-export const SORT_RULES: readonly SortRule[] = ['kategorie', 'kolory', 'domy', 'pory', 'wielkosc', 'ruch'];
+export type SortRule = 'categories' | 'colors' | 'houses' | 'seasons' | 'size' | 'motion';
+export const SORT_RULES: readonly SortRule[] = ['categories', 'colors', 'houses', 'seasons', 'size', 'motion'];
 
-/** Skrzynka: klucz grupy i obrazek na znaku (obiekt z katalogu albo grafika Warsztatu; kolory: brak, wiaderko jest w kolorze). */
+/** Skrzynka: klucz grupy i obrazek na znaku (obiekt z katalogu albo grafika Warsztatu; colors: brak, wiaderko jest w kolorze). */
 export interface Bin {
   key: string;
   sign?: string;
@@ -36,39 +36,39 @@ interface GroupDef {
 const ids = (list: string[]) => () => list;
 const byCategory = (c: Category) => () => ITEMS.filter((i) => i.category === c).map((i) => i.id);
 /** Obiekty z dużą plamą drugiego koloru (kukurydza: żółta z zielonymi liśćmi): nie do wiaderek. */
-const TWO_TONE = ['kukurydza', 'ananas', 'biedronka', 'pszczola'];
+const TWO_TONE = ['corn', 'pineapple', 'ladybug', 'bee'];
 const byColor = (c: Color) => () => ITEMS.filter((i) => i.color === c && !TWO_TONE.includes(i.id)).map((i) => i.id);
 
 const GROUPS: Record<SortRule, GroupDef[]> = {
-  kategorie: [
-    { key: 'owoce', sign: 'jablko', ids: byCategory('owoce') },
-    { key: 'warzywa', sign: 'marchewka', ids: byCategory('warzywa') },
-    { key: 'zwierzeta', sign: 'kot', ids: byCategory('zwierzeta') },
-    { key: 'pojazdy', sign: 'auto', ids: byCategory('pojazdy') },
-    { key: 'ubrania', sign: 'koszulka', ids: byCategory('ubrania') },
-    { key: 'kuchnia', sign: 'kubek', ids: byCategory('kuchnia') },
-    { key: 'zabawki', sign: 'pilka', ids: byCategory('zabawki') },
+  categories: [
+    { key: 'fruit', sign: 'apple', ids: byCategory('fruit') },
+    { key: 'vegetables', sign: 'carrot', ids: byCategory('vegetables') },
+    { key: 'animals', sign: 'cat', ids: byCategory('animals') },
+    { key: 'vehicles', sign: 'car', ids: byCategory('vehicles') },
+    { key: 'clothes', sign: 't-shirt', ids: byCategory('clothes') },
+    { key: 'kitchen', sign: 'mug', ids: byCategory('kitchen') },
+    { key: 'toys', sign: 'ball', ids: byCategory('toys') },
   ],
-  kolory: (['czerwony', 'zolty', 'zielony', 'niebieski', 'pomaranczowy', 'rozowy', 'fioletowy', 'brazowy', 'bialy'] as Color[]).map((c) => ({ key: c, ids: byColor(c) })),
-  domy: [
-    { key: 'wies', sign: 'stodola', ids: ids(['kot', 'pies', 'krowa', 'kura', 'kaczka', 'swinka', 'owca', 'kon', 'kurczak', 'cielaczek', 'prosiaczek', 'jagniatko', 'zrebak', 'koza', 'osiolek', 'indyk', 'ges']) },
-    { key: 'las', sign: 'drzewo', ids: ids(['jez', 'wiewiorka', 'sowa', 'niedzwiedz', 'lis', 'zajac', 'dzik', 'sarna', 'dzieciol']) },
-    { key: 'woda', sign: 'morze', ids: ids(['ryba', 'krab', 'osmiornica', 'wieloryb', 'delfin', 'meduza', 'konikmorski']) },
-    { key: 'afryka', sign: 'palma', ids: ids(['lew', 'zyrafa', 'zebra', 'slon', 'malpa', 'hipopotam', 'nosorozec']) },
-    { key: 'lod', sign: 'kra', ids: ids(['pingwin', 'foka', 'mors', 'mispolarny']) },
+  colors: (['red', 'yellow', 'green', 'blue', 'orange', 'pink', 'purple', 'brown', 'white'] as Color[]).map((c) => ({ key: c, ids: byColor(c) })),
+  houses: [
+    { key: 'village', sign: 'barn', ids: ids(['cat', 'dog', 'cow', 'hen', 'duck', 'pig', 'sheep', 'horse', 'chick', 'calf', 'piglet', 'lamb', 'foal', 'goat', 'donkey', 'turkey', 'goose']) },
+    { key: 'forest', sign: 'tree', ids: ids(['hedgehog', 'squirrel', 'owl', 'bear', 'fox', 'hare', 'boar', 'deer', 'woodpecker']) },
+    { key: 'water', sign: 'sea', ids: ids(['fish', 'crab', 'octopus', 'whale', 'dolphin', 'jellyfish', 'seahorse']) },
+    { key: 'africa', sign: 'palm', ids: ids(['lion', 'giraffe', 'zebra', 'elephant', 'monkey', 'hippo', 'rhino']) },
+    { key: 'ice', sign: 'ice-floe', ids: ids(['penguin', 'seal', 'walrus', 'polar-bear']) },
   ],
-  pory: [
-    { key: 'lato', sign: 'slonce', ids: ids(['okulary', 'kapelusz', 'sandaly', 'stroj']) },
-    { key: 'zima', sign: 'balwan', ids: ids(['czapka', 'szalik', 'rekawiczki', 'kurtka', 'sanki']) },
+  seasons: [
+    { key: 'summer', sign: 'sun', ids: ids(['glasses', 'sun-hat', 'sandals', 'outfit']) },
+    { key: 'winter', sign: 'snowman', ids: ids(['hat', 'scarf', 'mittens', 'jacket', 'sled']) },
   ],
-  wielkosc: [
-    { key: 'duze', sign: 'slon', ids: ids(['zyrafa', 'wieloryb', 'hipopotam', 'nosorozec', 'niedzwiedz', 'kon', 'krowa', 'mispolarny']) },
-    { key: 'male', sign: 'mysz', ids: ids(['biedronka', 'pszczola', 'slimak', 'motyl', 'kurczak', 'jez', 'ptak']) },
+  size: [
+    { key: 'big', sign: 'elephant', ids: ids(['giraffe', 'whale', 'hippo', 'rhino', 'bear', 'horse', 'cow', 'polar-bear']) },
+    { key: 'small', sign: 'mouse', ids: ids(['ladybug', 'bee', 'snail', 'butterfly', 'chick', 'hedgehog', 'bird']) },
   ],
-  ruch: [
-    { key: 'lata', sign: 'chmurka', ids: ids(['ptak', 'sowa', 'motyl', 'pszczola', 'dzieciol', 'samolot', 'helikopter', 'rakieta', 'latawiec', 'biedronka']) },
-    { key: 'plywa', sign: 'morze', ids: ids(['ryba', 'delfin', 'wieloryb', 'meduza', 'lodka', 'osmiornica', 'konikmorski']) },
-    { key: 'jezdzi', sign: 'droga', ids: ids(['auto', 'autobus', 'rower', 'traktor', 'pociag', 'hulajnoga', 'skuter', 'straz', 'ciezarowka']) },
+  motion: [
+    { key: 'flies', sign: 'cloud', ids: ids(['bird', 'owl', 'butterfly', 'bee', 'woodpecker', 'airplane', 'helicopter', 'rocket', 'kite', 'ladybug']) },
+    { key: 'swims', sign: 'sea', ids: ids(['fish', 'dolphin', 'whale', 'jellyfish', 'boat', 'octopus', 'seahorse']) },
+    { key: 'drives', sign: 'road', ids: ids(['car', 'bus', 'bike', 'tractor', 'train', 'scooter', 'moped', 'fire-station', 'truck']) },
   ],
 };
 
@@ -77,24 +77,24 @@ const GROUPS: Record<SortRule, GroupDef[]> = {
  * (pingwin pływa, zabawkowe autko jest zabawką, różowy i czerwony są bliskie).
  */
 const CLASH: Record<SortRule, [string, string][]> = {
-  kategorie: [
-    ['zabawki', 'pojazdy'],
-    ['zabawki', 'zwierzeta'],
-    ['owoce', 'kuchnia'],
-    ['warzywa', 'kuchnia'],
+  categories: [
+    ['toys', 'vehicles'],
+    ['toys', 'animals'],
+    ['fruit', 'kitchen'],
+    ['vegetables', 'kitchen'],
   ],
-  kolory: [
-    ['czerwony', 'rozowy'],
-    ['czerwony', 'pomaranczowy'],
-    ['zolty', 'pomaranczowy'],
-    ['rozowy', 'fioletowy'],
-    ['brazowy', 'pomaranczowy'],
-    ['bialy', 'zolty'],
+  colors: [
+    ['red', 'pink'],
+    ['red', 'orange'],
+    ['yellow', 'orange'],
+    ['pink', 'purple'],
+    ['brown', 'orange'],
+    ['white', 'yellow'],
   ],
-  domy: [['woda', 'lod']],
-  pory: [],
-  wielkosc: [],
-  ruch: [],
+  houses: [['water', 'ice']],
+  seasons: [],
+  size: [],
+  motion: [],
 };
 
 /** Liczba obiektów do posegregowania na poziomie. */
@@ -166,12 +166,12 @@ export function makeSortRound(rng: Rng, level: number): SortTask[] {
   return Array.from({ length: SORT_ROUND }, (_, i) => makeSortTask(rng, level, rules[i % rules.length]!));
 }
 
-/** Pytanie reguły, np. "sort-domy". */
+/** Pytanie reguły, np. "sort-houses". */
 export const sortPromptLine = (task: SortTask): string => `sort-${task.rule}`;
 
-/** Nazwa skrzynki czytana po pytaniu i po jej dotknięciu, np. "kat-owoce", "barwa-zolty", "dom-las". */
+/** Nazwa skrzynki czytana po pytaniu i po jej dotknięciu, np. "category-fruit", "hue-yellow", "house-forest". */
 export function binLine(rule: SortRule, key: string): string {
-  const prefix: Record<SortRule, string> = { kategorie: 'kat', kolory: 'barwa', domy: 'dom', pory: 'pora', wielkosc: 'rozmiar', ruch: 'ruch' };
+  const prefix: Record<SortRule, string> = { categories: 'category', colors: 'hue', houses: 'house', seasons: 'season', size: 'size', motion: 'motion' };
   return `${prefix[rule]}-${key}`;
 }
 
@@ -180,4 +180,4 @@ export const SORT_LINES: readonly string[] = [...SORT_RULES.map((r) => `sort-${r
 
 /** Obrazki znaków skrzynek spoza katalogu (grafiki Warsztatu). */
 // „morze” zamiast „staw”: wieloryb, delfin i meduza w stawie myliły (test agentem-dzieckiem).
-export const SIGN_ART = ['stodola', 'morze', 'palma', 'kra', 'balwan', 'droga'];
+export const SIGN_ART = ['barn', 'sea', 'palm', 'ice-floe', 'snowman', 'road'];

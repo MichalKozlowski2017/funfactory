@@ -4,272 +4,272 @@
  "tries": 8,
  "lines": [
   {
-   "name": "lusia-litera-a-samolot",
+   "name": "lusia-letter-a-airplane",
    "text": "A is for airplane.",
    "lang": "en"
   },
   {
-   "name": "lusia-litera-a-mrowka",
+   "name": "lusia-letter-a-ant",
    "text": "A is for ant.",
    "lang": "en"
   },
   {
-   "name": "lusia-litera-b-niedzwiedz",
+   "name": "lusia-letter-b-bear",
    "text": "B is for bear.",
    "lang": "en"
   },
   {
-   "name": "lusia-litera-b-motyl",
+   "name": "lusia-letter-b-butterfly",
    "text": "B is for butterfly.",
    "lang": "en"
   },
   {
-   "name": "lusia-litera-c-krowa",
+   "name": "lusia-letter-c-cow",
    "text": "C is for cow.",
    "lang": "en"
   },
   {
-   "name": "lusia-litera-c-marchewka",
+   "name": "lusia-letter-c-carrot",
    "text": "C is for carrot.",
    "lang": "en"
   },
   {
-   "name": "lusia-litera-d-kaczka",
+   "name": "lusia-letter-d-duck",
    "text": "D is for duck.",
    "lang": "en"
   },
   {
-   "name": "lusia-litera-d-delfin",
+   "name": "lusia-letter-d-dolphin",
    "text": "D is for dolphin.",
    "lang": "en"
   },
   {
-   "name": "lusia-litera-e-jajko",
+   "name": "lusia-letter-e-egg",
    "text": "E is for egg.",
    "lang": "en"
   },
   {
-   "name": "lusia-litera-e-emu",
+   "name": "lusia-letter-e-emu",
    "text": "E is for emu.",
    "lang": "en"
   },
   {
-   "name": "lusia-litera-f-zaba",
+   "name": "lusia-letter-f-frog",
    "text": "F is for frog.",
    "lang": "en"
   },
   {
-   "name": "lusia-litera-f-lis",
+   "name": "lusia-letter-f-fox",
    "text": "F is for fox.",
    "lang": "en"
   },
   {
-   "name": "lusia-litera-g-zyrafa",
+   "name": "lusia-letter-g-giraffe",
    "text": "G is for giraffe.",
    "lang": "en"
   },
   {
-   "name": "lusia-litera-g-winogrona",
+   "name": "lusia-letter-g-grapes",
    "text": "G is for grapes.",
    "lang": "en"
   },
   {
-   "name": "lusia-litera-h-jez",
+   "name": "lusia-letter-h-hedgehog",
    "text": "H is for hedgehog.",
    "lang": "en"
   },
   {
-   "name": "lusia-litera-h-helikopter",
+   "name": "lusia-letter-h-helicopter",
    "text": "H is for helicopter.",
    "lang": "en"
   },
   {
-   "name": "lusia-litera-i-igloo",
+   "name": "lusia-letter-i-igloo",
    "text": "I is for igloo.",
    "lang": "en"
   },
   {
-   "name": "lusia-litera-i-lody",
+   "name": "lusia-letter-i-ice-cream",
    "text": "I is for ice cream.",
    "lang": "en"
   },
   {
-   "name": "lusia-litera-i-iguana",
+   "name": "lusia-letter-i-iguana",
    "text": "I is for iguana.",
    "lang": "en"
   },
   {
-   "name": "lusia-litera-j-kurtka",
+   "name": "lusia-letter-j-jacket",
    "text": "J is for jacket.",
    "lang": "en"
   },
   {
-   "name": "lusia-litera-j-dzem",
+   "name": "lusia-letter-j-jam",
    "text": "J is for jam.",
    "lang": "en"
   },
   {
-   "name": "lusia-litera-k-kotek",
+   "name": "lusia-letter-k-kitten",
    "text": "K is for kitten.",
    "lang": "en"
   },
   {
-   "name": "lusia-litera-k-czajnik",
+   "name": "lusia-letter-k-kettle",
    "text": "K is for kettle.",
    "lang": "en"
   },
   {
-   "name": "lusia-litera-l-cytryna",
+   "name": "lusia-letter-l-lemon",
    "text": "L is for lemon.",
    "lang": "en"
   },
   {
-   "name": "lusia-litera-l-biedronka",
+   "name": "lusia-letter-l-ladybug",
    "text": "L is for ladybug.",
    "lang": "en"
   },
   {
-   "name": "lusia-litera-m-mysz",
+   "name": "lusia-letter-m-mouse",
    "text": "M is for mouse.",
    "lang": "en"
   },
   {
-   "name": "lusia-litera-m-ksiezyc",
+   "name": "lusia-letter-m-moon",
    "text": "M is for moon.",
    "lang": "en"
   },
   {
-   "name": "lusia-litera-n-gniazdo",
+   "name": "lusia-letter-n-nest",
    "text": "N is for nest.",
    "lang": "en"
   },
   {
-   "name": "lusia-litera-n-orzech",
+   "name": "lusia-letter-n-walnut",
    "text": "N is for nut.",
    "lang": "en"
   },
   {
-   "name": "lusia-litera-n-nos",
+   "name": "lusia-letter-n-nos",
    "text": "N is for nose.",
    "lang": "en"
   },
   {
-   "name": "lusia-litera-o-osmiornica",
+   "name": "lusia-letter-o-octopus",
    "text": "O is for octopus.",
    "lang": "en"
   },
   {
-   "name": "lusia-litera-o-pomarancza",
+   "name": "lusia-letter-o-orange-fruit",
    "text": "O is for orange.",
    "lang": "en"
   },
   {
-   "name": "lusia-litera-p-pingwin",
+   "name": "lusia-letter-p-penguin",
    "text": "P is for penguin.",
    "lang": "en"
   },
   {
-   "name": "lusia-litera-p-gruszka",
+   "name": "lusia-letter-p-pear",
    "text": "P is for pear.",
    "lang": "en"
   },
   {
-   "name": "lusia-litera-q-krolowa",
+   "name": "lusia-letter-q-queen",
    "text": "Q is for queen.",
    "lang": "en"
   },
   {
-   "name": "lusia-litera-q-koldra",
+   "name": "lusia-letter-q-quilt",
    "text": "Q is for quilt.",
    "lang": "en"
   },
   {
-   "name": "lusia-litera-r-nosorozec",
+   "name": "lusia-letter-r-rhino",
    "text": "R is for rhino.",
    "lang": "en"
   },
   {
-   "name": "lusia-litera-r-tecza",
+   "name": "lusia-letter-r-rainbow",
    "text": "R is for rainbow.",
    "lang": "en"
   },
   {
-   "name": "lusia-litera-s-slimak",
+   "name": "lusia-letter-s-snail",
    "text": "S is for snail.",
    "lang": "en"
   },
   {
-   "name": "lusia-litera-s-truskawka",
+   "name": "lusia-letter-s-strawberry",
    "text": "S is for strawberry.",
    "lang": "en"
   },
   {
-   "name": "lusia-litera-t-zolw",
+   "name": "lusia-letter-t-turtle",
    "text": "T is for turtle.",
    "lang": "en"
   },
   {
-   "name": "lusia-litera-t-pociag",
+   "name": "lusia-letter-t-train",
    "text": "T is for train.",
    "lang": "en"
   },
   {
-   "name": "lusia-litera-u-jednorozec",
+   "name": "lusia-letter-u-unicorn",
    "text": "U is for unicorn.",
    "lang": "en"
   },
   {
-   "name": "lusia-litera-u-ufo",
+   "name": "lusia-letter-u-ufo",
    "text": "U is for UFO.",
    "lang": "en"
   },
   {
-   "name": "lusia-litera-v-skrzypce",
+   "name": "lusia-letter-v-violin",
    "text": "V is for violin.",
    "lang": "en"
   },
   {
-   "name": "lusia-litera-v-van",
+   "name": "lusia-letter-v-van",
    "text": "V is for van.",
    "lang": "en"
   },
   {
-   "name": "lusia-litera-v-wazon",
+   "name": "lusia-letter-v-vase",
    "text": "V is for vase.",
    "lang": "en"
   },
   {
-   "name": "lusia-litera-w-arbuz",
+   "name": "lusia-letter-w-watermelon",
    "text": "W is for watermelon.",
    "lang": "en"
   },
   {
-   "name": "lusia-litera-w-mors",
+   "name": "lusia-letter-w-walrus",
    "text": "W is for walrus.",
    "lang": "en"
   },
   {
-   "name": "lusia-litera-y-jojo",
+   "name": "lusia-letter-y-yo-yo",
    "text": "Y is for yo-yo.",
    "lang": "en"
   },
   {
-   "name": "lusia-litera-y-jacht",
+   "name": "lusia-letter-y-yacht",
    "text": "Y is for yacht.",
    "lang": "en"
   },
   {
-   "name": "lusia-litera-y-jak",
+   "name": "lusia-letter-y-yak",
    "text": "Y is for yak.",
    "lang": "en"
   },
   {
-   "name": "lusia-litera-z-cukinia",
+   "name": "lusia-letter-z-zucchini",
    "text": "Z is for zucchini.",
    "lang": "en"
   },
   {
-   "name": "lusia-litera-z-zamek-blyskawiczny",
+   "name": "lusia-letter-z-castle-blyskawiczny",
    "text": "Z is for zipper.",
    "lang": "en"
   }

@@ -42,7 +42,7 @@ export class WelcomeScene extends Scene {
   override async enter(): Promise<void> {
     this.art = await loadArt();
     this.pages = ['hello', 'gate', ...(trial().full ? [] : (['trial'] as Page[])), 'age'];
-    this.bg = new Sprite(this.art.realmBg.polana);
+    this.bg = new Sprite(this.art.realmBg.meadow);
     this.skip = new Button({ label: tr('Pomiń'), width: 170, height: 76, fontSize: 26, color: '#c9b8a6', radius: 22, resolution: this.game.pixelRatio, onTap: () => this.finish(false) });
     this.addChild(this.bg, this.dim, this.card, this.content, this.skip);
     this.resize(this.game.view);

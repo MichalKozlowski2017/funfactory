@@ -98,6 +98,10 @@ if (values.init) await context.addInitScript(values.init);
 const page = await context.newPage();
 const errors: string[] = [];
 page.on('pageerror', (e) => errors.push(`pageerror: ${e.message}`));
+// Missing files (e.g. art a game skips silently): warn, do not fail.
+page.on('response', (r) => {
+  if (r.status() >= 400) console.warn(`HTTP ${r.status()}: ${r.url()}`);
+});
 page.on('console', (msg) => {
   if (msg.type() === 'error') errors.push(`console: ${msg.text()}`);
 });

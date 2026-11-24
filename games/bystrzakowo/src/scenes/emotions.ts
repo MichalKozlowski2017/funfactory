@@ -8,7 +8,7 @@ import { RoundScene } from './round.ts';
 import type { Gesture } from '../hand.ts';
 
 /** Minka zastępcza (gdy grafiki jeszcze nie ma): emotikonka z tekstu. */
-const FALLBACK: Record<Emotion, string> = { wesoly: '😄', smutny: '😢', zly: '😠', zdziwiony: '😮', przestraszony: '😨', spiacy: '😴' };
+const FALLBACK: Record<Emotion, string> = { happy: '😄', sad: '😢', angry: '😠', surprised: '😮', scared: '😨', sleepy: '😴' };
 
 /**
  * Emocje (Polana Zagadek): Bazyl prosi o minkę („Pokaż smutną minkę!”), dziecko wybiera twarz.
@@ -20,18 +20,18 @@ export class EmotionScene extends RoundScene {
   private cards: Card[] = [];
 
   constructor() {
-    super('emocje', 'bazyl');
+    super('emotions', 'bazyl');
   }
 
   protected async prepare(): Promise<void> {
     // Tylko postaci, które mają komplet minek (grafiki mogą jeszcze nie istnieć).
     const chars = EMOTION_CHARS.filter((c) => EMOTIONS.every((e) => this.art.emotions.has(`${e}:${c}`)));
-    this.questions = makeEmotionRound(this.game.rng, state.progress.levels.emocje ?? 0, chars.length ? chars : ['dziecko']);
+    this.questions = makeEmotionRound(this.game.rng, state.progress.levels.emotions ?? 0, chars.length ? chars : ['child']);
     this.length = this.questions.length;
   }
 
   protected override taskFacts(): string[] {
-    return [`emocja:${this.q.target}`];
+    return [`emotion:${this.q.target}`];
   }
 
   protected override taskEasy(): boolean {
@@ -43,7 +43,7 @@ export class EmotionScene extends RoundScene {
   }
 
   protected promptLine(): string {
-    return `emocje-${this.q.target}`;
+    return `emotions-${this.q.target}`;
   }
 
   protected show(): void {
@@ -77,7 +77,7 @@ export class EmotionScene extends RoundScene {
       const at = this.layer.toLocal(card.getGlobalPosition());
       this.burst(at.x, at.y);
       for (const other of this.cards) if (other !== card) this.tweens.to(other, { alpha: 0.35 }, { duration: 0.25 });
-      this.solved(say(this.game, this.guide, `minka-${e}`));
+      this.solved(say(this.game, this.guide, `face-${e}`));
     } else {
       card.enabled = false;
       const x = card.x;
@@ -94,7 +94,7 @@ export class EmotionScene extends RoundScene {
   }
 
   protected override tempoGroup(): string | null {
-    return 'emocja';
+    return 'emotion';
   }
 
   protected override gesture(): Gesture | null {

@@ -92,21 +92,21 @@ export async function loadArt(): Promise<Art> {
     Promise.all(ITEMS.map(async (i) => [i.id, await opt(`art/items/${i.id}.webp`)] as const)),
     load('art/lusia.webp'),
     load('art/bazyl.webp'),
-    Promise.all(ACTIVITIES.map(async (k) => [k, await load(`art/dom-${k}.webp`).catch(() => load('art/dom-cienie.webp'))] as const)),
-    Promise.all(REALMS.map(async (r) => [r.id, await load(`art/kraina-${r.id}.jpg`).catch(() => load('art/polana.jpg'))] as const)),
-    Promise.all(REALMS.map(async (r) => [r.id, await load(`art/gra-${r.id}.jpg`).catch(() => load('art/tlo-zagadka.jpg'))] as const)),
-    opt('art/warsztat/skrzynka.webp'),
-    opt('art/warsztat/wiadro.webp'),
-    Promise.all(SIGN_ART.map(async (id) => [id, await opt(`art/warsztat/${id}.webp`)] as const)),
+    Promise.all(ACTIVITIES.map(async (k) => [k, await load(`art/house-${k}.webp`).catch(() => load('art/house-shadows.webp'))] as const)),
+    Promise.all(REALMS.map(async (r) => [r.id, await load(`art/realm-${r.id}.jpg`).catch(() => load('art/meadow.jpg'))] as const)),
+    Promise.all(REALMS.map(async (r) => [r.id, await load(`art/game-${r.id}.jpg`).catch(() => load('art/background-riddle.jpg'))] as const)),
+    opt('art/workshop/crate.webp'),
+    opt('art/workshop/pail.webp'),
+    Promise.all(SIGN_ART.map(async (id) => [id, await opt(`art/workshop/${id}.webp`)] as const)),
     // Minki: klucz „<emocja>:<postać>”; postać „dziecko” to pierwotne pliki bez przyrostka.
     Promise.all(
       EMOTIONS.flatMap((id) =>
-        EMOTION_CHARS.map(async (c): Promise<readonly [string, Texture | null]> => [`${id}:${c}`, await opt(c === 'dziecko' ? `art/emocje/${id}.webp` : `art/emocje/${id}-${c}.webp`)]),
+        EMOTION_CHARS.map(async (c): Promise<readonly [string, Texture | null]> => [`${id}:${c}`, await opt(c === 'child' ? `art/emotions/${id}.webp` : `art/emotions/${id}-${c}.webp`)]),
       ),
     ),
-    Promise.all(STORIES.flatMap((st) => Array.from({ length: FRAMES }, (_, i) => `${st}-${i + 1}`)).map(async (id): Promise<readonly [string, Texture | null]> => [id, await opt(`art/historyjki/${id}.webp`)])),
-    opt('art/zebatka.webp'),
-    opt('art/raczka.webp'),
+    Promise.all(STORIES.flatMap((st) => Array.from({ length: FRAMES }, (_, i) => `${st}-${i + 1}`)).map(async (id): Promise<readonly [string, Texture | null]> => [id, await opt(`art/stories/${id}.webp`)])),
+    opt('art/gear.webp'),
+    opt('art/hand.webp'),
   ]);
   const loaded = items.filter((e): e is readonly [string, Texture] => e[1] !== null);
   keepOnly(new Set(loaded.map(([id]) => id)));
@@ -146,10 +146,10 @@ export function registerVoice(game: Game): void {
   const dir = l === 'pl' ? 'audio' : `audio/${l}`;
   for (const guide of ['lusia', 'bazyl'] as const)
     for (const line of VOICE[guide]) game.sound.add(`${guide}-${line}`, url(`${dir}/${guide}/${line}.m4a`));
-  game.sound.add('muzyka', url('audio/muzyka.m4a'));
+  game.sound.add('music', url('audio/music.m4a'));
   // Na starcie tylko polecenia i reakcje; nazwy obiektów i zdania o literach („A jak arbuz”, kilkaset nagrań)
   // dekoduje runda, która ich potrzebuje.
-  void game.sound.load([...VOICE.lusia.map((l) => `lusia-${l}`), ...VOICE.bazyl.map((l) => `bazyl-${l}`), 'muzyka'].filter((n) => !n.includes('-item-') && !n.includes('-litera-')));
+  void game.sound.load([...VOICE.lusia.map((l) => `lusia-${l}`), ...VOICE.bazyl.map((l) => `bazyl-${l}`), 'music'].filter((n) => !n.includes('-item-') && !n.includes('-letter-')));
 }
 
 /** Nagrania nazw obiektów (oba głosy) do wczytania na rundę i zwolnienia po niej. */
@@ -164,7 +164,7 @@ export function say(game: Game, guide: Guide, line: string): number {
 let musicOn = false;
 export function startMusic(game: Game): void {
   if (musicOn || !state.progress.music) return;
-  if (game.sound.play('muzyka', { loop: true, volume: 0.16 }) > 0) musicOn = true;
+  if (game.sound.play('music', { loop: true, volume: 0.16 }) > 0) musicOn = true;
 }
 
 export function stopMusic(game: Game): void {

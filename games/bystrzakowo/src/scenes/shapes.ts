@@ -10,16 +10,16 @@ import { RoundScene } from './round.ts';
 import type { Gesture } from '../hand.ts';
 
 const COLOR: Record<Shape, number> = {
-  kolo: 0xe8413c,
-  kwadrat: 0x3d8bff,
-  trojkat: 0xffd23f,
-  prostokat: 0x7ad35a,
-  gwiazda: 0xff8a2b,
-  serce: 0xff8fc0,
-  owal: 0x9b5de5,
-  romb: 0x2fb8b0,
-  ksiezyc: 0xc4cbd8,
-  kropla: 0x4fd2f0,
+  circle: 0xe8413c,
+  square: 0x3d8bff,
+  triangle: 0xffd23f,
+  rectangle: 0x7ad35a,
+  star: 0xff8a2b,
+  heart: 0xff8fc0,
+  oval: 0x9b5de5,
+  rhombus: 0x2fb8b0,
+  moon: 0xc4cbd8,
+  drop: 0x4fd2f0,
 };
 
 /** Sierp księżyca: koło o promieniu 1 bez koła (0.45, 0) o promieniu 0.8, przesunięty do środka pola. */
@@ -44,29 +44,29 @@ const MOON: number[] = (() => {
 export function drawShape(g: Graphics, shape: Shape, s: number): Graphics {
   const h = s / 2;
   switch (shape) {
-    case 'kolo':
+    case 'circle':
       return g.circle(0, 0, h);
-    case 'kwadrat':
+    case 'square':
       return g.roundRect(-h * 0.9, -h * 0.9, s * 0.9, s * 0.9, s * 0.08);
-    case 'trojkat':
+    case 'triangle':
       return g.poly([0, -h, h, h * 0.8, -h, h * 0.8]);
-    case 'prostokat':
+    case 'rectangle':
       return g.roundRect(-h, -h * 0.55, s, s * 0.55, s * 0.06);
-    case 'gwiazda':
+    case 'star':
       return g.star(0, s * 0.05, 5, h, h * 0.45);
-    case 'serce':
+    case 'heart':
       return g
         .moveTo(0, h * 0.85)
         .bezierCurveTo(-h * 1.25, -h * 0.05, -h * 0.55, -h * 1.05, 0, -h * 0.42)
         .bezierCurveTo(h * 0.55, -h * 1.05, h * 1.25, -h * 0.05, 0, h * 0.85)
         .closePath();
-    case 'owal':
+    case 'oval':
       return g.ellipse(0, 0, h, h * 0.62);
-    case 'romb':
+    case 'rhombus':
       return g.poly([0, -h, h * 0.72, 0, 0, h, -h * 0.72, 0]);
-    case 'ksiezyc':
+    case 'moon':
       return g.poly(MOON.map((v) => v * h));
-    case 'kropla':
+    case 'drop':
       return g
         .moveTo(0, -h)
         .bezierCurveTo(h * 0.25, -h * 0.55, h * 0.72, -h * 0.1, h * 0.72, h * 0.25)
@@ -99,17 +99,17 @@ export class ShapeScene extends RoundScene {
   private dragging = false;
 
   constructor() {
-    super('ksztalty', 'bazyl');
+    super('shapes', 'bazyl');
   }
 
   protected async prepare(): Promise<void> {
-    const level = state.progress.levels.ksztalty ?? 0;
+    const level = state.progress.levels.shapes ?? 0;
     this.boards = Array.from({ length: SHAPE_ROUND }, () => makeShapeBoard(this.game.rng, level));
     this.length = this.boards.length;
   }
 
   protected promptLine(): string {
-    return 'ksztalty';
+    return 'shapes';
   }
 
   protected show(): void {
@@ -148,7 +148,7 @@ export class ShapeScene extends RoundScene {
       this.layer.addChild(view);
       return piece;
     });
-    this.timers.after(0.4, () => say(this.game, this.guide, 'ksztalty'));
+    this.timers.after(0.4, () => say(this.game, this.guide, 'shapes'));
   }
 
   protected override appear(): void {
@@ -176,14 +176,14 @@ export class ShapeScene extends RoundScene {
   /** Klocek wskakuje do dziurki: przysiad, „klik”, nazwa kształtu. */
   private fit(p: Piece): void {
     p.done = true;
-    logFact(`ksztalt:${p.shape}`, !p.missed);
+    logFact(`shape:${p.shape}`, !p.missed);
     p.view.eventMode = 'none';
     this.tweens.to(p.view, { x: p.hole.x, y: p.hole.y }, { duration: 0.12, ease: 'quadOut' });
     void this.tweens.to(p.view.scale, { x: 0.92, y: 0.92 }, { duration: 0.12 }).done.then(() => void squash(this.tweens, p.view, 0.15));
     haptics.hit();
     sfx.plop(this.game.sound);
     this.burst(p.hole.x, p.hole.y, 18);
-    const len = say(this.game, this.guide, `ksztalt-${p.shape}`);
+    const len = say(this.game, this.guide, `shape-${p.shape}`);
     if (this.pieces.every((x) => x.done)) {
       this.timers.after(0.3, () => void pulse(this.tweens, this.layer, 0.04, 0.3));
       this.solved(len);

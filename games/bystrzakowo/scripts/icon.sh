@@ -3,7 +3,7 @@
 # Flux rysuje zaokrąglone rogi na białym tle, więc wycinamy środek i skalujemy do pełnego kwadratu.
 set -euo pipefail
 cd "$(dirname "$0")/.."
-SRC=../../assets-raw/bystrzakowo/extra/ikona-21.png
+SRC=../../assets-raw/bystrzakowo/extra/icon-21.png
 BG='#fbd978'
 mkdir -p store
 magick "$SRC" -gravity center -crop 880x880+0+0 +repage -resize 1024x1024 -background "$BG" -alpha remove -alpha off store/icon-1024.png
@@ -26,7 +26,7 @@ cat > $RES/values/ic_launcher_background.xml <<XML
     <color name="ic_launcher_background">$BG</color>
 </resources>
 XML
-echo "ikony gotowe"
+echo "ikony done"
 
 # Ekran startowy: kremowe tło gry, ikona w zaokrąglonym kafelku na środku.
 SPLASH_BG='#fff6e8'

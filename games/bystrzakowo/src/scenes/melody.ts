@@ -27,7 +27,7 @@ export class MelodyScene extends RoundScene {
   private playing = false;
 
   constructor() {
-    super('melodia', 'lusia');
+    super('melody', 'lusia');
   }
 
   protected async prepare(): Promise<void> {
@@ -35,11 +35,11 @@ export class MelodyScene extends RoundScene {
   }
 
   protected promptLine(): string {
-    return 'melodia';
+    return 'melody';
   }
 
   protected show(): void {
-    const level = state.progress.levels.melodia ?? 0;
+    const level = state.progress.levels.melody ?? 0;
     this.melody = makeMelody(this.game.rng, level, this.index);
     this.pos = 0;
     const frame = new Graphics();
@@ -60,7 +60,7 @@ export class MelodyScene extends RoundScene {
     this.listen(true);
     const first = this.index === 0;
     this.timers.after(0.4, () => {
-      const len = first ? say(this.game, this.guide, 'melodia') : 0;
+      const len = first ? say(this.game, this.guide, 'melody') : 0;
       this.timers.after(len + 0.4, () => this.play());
     });
   }

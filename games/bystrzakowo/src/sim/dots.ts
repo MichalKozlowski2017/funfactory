@@ -181,7 +181,7 @@ export function dotsOnEdge(mask: Uint8Array, w: number, h: number, count: number
 /** Obrazki do łączenia: o charakterystycznej sylwetce (te same co w cieniach). */
 export function makeDotsRound(rng: Rng): Item[] {
   // Cienkie części (sznurek balonika, gryf ukulele, trzonek łopatki): kropki i cyfry się na nich tłoczą.
-  const THIN = new Set(['balonik', 'ukulele', 'lopatka']);
+  const THIN = new Set(['small-balloon', 'ukulele', 'spade']);
   const pool = ITEMS.filter((i) => i.shadow && !THIN.has(i.id));
   return rng.shuffle(pool.length >= DOTS_ROUND ? pool : ITEMS).slice(0, DOTS_ROUND);
 }

@@ -5,262 +5,262 @@
  "stretch": 0.12,
  "lines": [
   {
-   "name": "lusia-litera-a-samolot",
+   "name": "lusia-letter-a-airplane",
    "text": "A de avión.",
    "lang": "es"
   },
   {
-   "name": "lusia-litera-a-wiewiorka",
+   "name": "lusia-letter-a-squirrel",
    "text": "A de ardilla.",
    "lang": "es"
   },
   {
-   "name": "lusia-litera-b-lodka",
+   "name": "lusia-letter-b-boat",
    "text": "B de barco.",
    "lang": "es"
   },
   {
-   "name": "lusia-litera-b-rower",
+   "name": "lusia-letter-b-bike",
    "text": "B de bicicleta.",
    "lang": "es"
   },
   {
-   "name": "lusia-litera-c-kon",
+   "name": "lusia-letter-c-horse",
    "text": "Ce de caballo.",
    "lang": "es"
   },
   {
-   "name": "lusia-litera-c-slimak",
+   "name": "lusia-letter-c-snail",
    "text": "Ce de caracol.",
    "lang": "es"
   },
   {
-   "name": "lusia-litera-d-dinozaur",
+   "name": "lusia-letter-d-dinosaur",
    "text": "D de dinosaurio.",
    "lang": "es"
   },
   {
-   "name": "lusia-litera-d-kostka",
+   "name": "lusia-letter-d-dice",
    "text": "D de dado.",
    "lang": "es"
   },
   {
-   "name": "lusia-litera-e-jez",
+   "name": "lusia-letter-e-hedgehog",
    "text": "E de erizo.",
    "lang": "es"
   },
   {
-   "name": "lusia-litera-e-gwiazdka",
+   "name": "lusia-letter-e-little-star",
    "text": "E de estrella.",
    "lang": "es"
   },
   {
-   "name": "lusia-litera-f-truskawka",
+   "name": "lusia-letter-f-strawberry",
    "text": "F de fresa.",
    "lang": "es"
   },
   {
-   "name": "lusia-litera-f-kwiatek",
+   "name": "lusia-letter-f-little-flower",
    "text": "F de flor.",
    "lang": "es"
   },
   {
-   "name": "lusia-litera-g-kura",
+   "name": "lusia-letter-g-hen",
    "text": "G de gallina.",
    "lang": "es"
   },
   {
-   "name": "lusia-litera-g-ukulele",
+   "name": "lusia-letter-g-ukulele",
    "text": "G de guitarra.",
    "lang": "es"
   },
   {
-   "name": "lusia-litera-h-jajko",
+   "name": "lusia-letter-h-egg",
    "text": "Hache de huevo.",
    "lang": "es"
   },
   {
-   "name": "lusia-litera-h-lisc",
+   "name": "lusia-letter-h-leaf",
    "text": "Hache de hoja.",
    "lang": "es"
   },
   {
-   "name": "lusia-litera-h-helikopter",
+   "name": "lusia-letter-h-helicopter",
    "text": "Hache de helicóptero.",
    "lang": "es"
   },
   {
-   "name": "lusia-litera-i-igloo",
+   "name": "lusia-letter-i-igloo",
    "text": "I de iglú.",
    "lang": "es"
   },
   {
-   "name": "lusia-litera-i-iguana",
+   "name": "lusia-letter-i-iguana",
    "text": "I de iguana.",
    "lang": "es"
   },
   {
-   "name": "lusia-litera-i-magnes",
+   "name": "lusia-letter-i-magnet",
    "text": "I de imán.",
    "lang": "es"
   },
   {
-   "name": "lusia-litera-j-dzik",
+   "name": "lusia-letter-j-boar",
    "text": "J de jabalí.",
    "lang": "es"
   },
   {
-   "name": "lusia-litera-j-mydlo",
+   "name": "lusia-letter-j-soap",
    "text": "J de jabón.",
    "lang": "es"
   },
   {
-   "name": "lusia-litera-k-koala",
+   "name": "lusia-letter-k-koala",
    "text": "Ka de koala.",
    "lang": "es"
   },
   {
-   "name": "lusia-litera-k-kiwi",
+   "name": "lusia-letter-k-kiwi",
    "text": "Ka de kiwi.",
    "lang": "es"
   },
   {
-   "name": "lusia-litera-k-kajak",
+   "name": "lusia-letter-k-kayak",
    "text": "Ka de kayak.",
    "lang": "es"
   },
   {
-   "name": "lusia-litera-l-cytryna",
+   "name": "lusia-letter-l-lemon",
    "text": "L de limón.",
    "lang": "es"
   },
   {
-   "name": "lusia-litera-l-ksiezyc",
+   "name": "lusia-letter-l-moon",
    "text": "L de luna.",
    "lang": "es"
   },
   {
-   "name": "lusia-litera-m-motyl",
+   "name": "lusia-letter-m-butterfly",
    "text": "M de mariposa.",
    "lang": "es"
   },
   {
-   "name": "lusia-litera-m-jablko",
+   "name": "lusia-letter-m-apple",
    "text": "M de manzana.",
    "lang": "es"
   },
   {
-   "name": "lusia-litera-n-pomarancza",
+   "name": "lusia-letter-n-orange-fruit",
    "text": "N de naranja.",
    "lang": "es"
   },
   {
-   "name": "lusia-litera-n-gniazdo",
+   "name": "lusia-letter-n-nest",
    "text": "N de nido.",
    "lang": "es"
   },
   {
-   "name": "lusia-litera-ny-nandu",
+   "name": "lusia-letter-ny-nandu",
    "text": "Eñe de ñandú.",
    "lang": "es"
   },
   {
-   "name": "lusia-litera-ny-gnu",
+   "name": "lusia-letter-ny-gnu",
    "text": "Eñe de ñu.",
    "lang": "es"
   },
   {
-   "name": "lusia-litera-o-owca",
+   "name": "lusia-letter-o-sheep",
    "text": "O de oveja.",
    "lang": "es"
   },
   {
-   "name": "lusia-litera-o-garnek",
+   "name": "lusia-letter-o-pot",
    "text": "O de olla.",
    "lang": "es"
   },
   {
-   "name": "lusia-litera-p-kaczka",
+   "name": "lusia-letter-p-duck",
    "text": "P de pato.",
    "lang": "es"
   },
   {
-   "name": "lusia-litera-p-ryba",
+   "name": "lusia-letter-p-fish",
    "text": "P de pez.",
    "lang": "es"
   },
   {
-   "name": "lusia-litera-r-mysz",
+   "name": "lusia-letter-r-mouse",
    "text": "R de ratón.",
    "lang": "es"
   },
   {
-   "name": "lusia-litera-r-robot",
+   "name": "lusia-letter-r-robot",
    "text": "R de robot.",
    "lang": "es"
   },
   {
-   "name": "lusia-litera-s-arbuz",
+   "name": "lusia-letter-s-watermelon",
    "text": "S de sandía.",
    "lang": "es"
   },
   {
-   "name": "lusia-litera-s-kapelusz",
+   "name": "lusia-letter-s-sun-hat",
    "text": "S de sombrero.",
    "lang": "es"
   },
   {
-   "name": "lusia-litera-t-pociag",
+   "name": "lusia-letter-t-train",
    "text": "T de tren.",
    "lang": "es"
   },
   {
-   "name": "lusia-litera-t-pomidor",
+   "name": "lusia-letter-t-tomato",
    "text": "T de tomate.",
    "lang": "es"
   },
   {
-   "name": "lusia-litera-u-jednorozec",
+   "name": "lusia-letter-u-unicorn",
    "text": "U de unicornio.",
    "lang": "es"
   },
   {
-   "name": "lusia-litera-v-krowa",
+   "name": "lusia-letter-v-cow",
    "text": "Uve de vaca.",
    "lang": "es"
   },
   {
-   "name": "lusia-litera-v-sukienka",
+   "name": "lusia-letter-v-dress",
    "text": "Uve de vestido.",
    "lang": "es"
   },
   {
-   "name": "lusia-litera-v-szklanka",
+   "name": "lusia-letter-v-glass",
    "text": "Uve de vaso de leche.",
    "lang": "es"
   },
   {
-   "name": "lusia-litera-y-jojo",
+   "name": "lusia-letter-y-yo-yo",
    "text": "Ye de yoyó.",
    "lang": "es"
   },
   {
-   "name": "lusia-litera-y-jacht",
+   "name": "lusia-letter-y-yacht",
    "text": "Ye de yate.",
    "lang": "es"
   },
   {
-   "name": "lusia-litera-y-jogurt",
+   "name": "lusia-letter-y-yogurt",
    "text": "Ye de yogur.",
    "lang": "es"
   },
   {
-   "name": "lusia-litera-z-marchewka",
+   "name": "lusia-letter-z-carrot",
    "text": "Z de zanahoria.",
    "lang": "es"
   },
   {
-   "name": "lusia-litera-z-but",
+   "name": "lusia-letter-z-shoe",
    "text": "Z de zapato.",
    "lang": "es"
   }

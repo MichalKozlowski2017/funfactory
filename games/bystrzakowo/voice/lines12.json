@@ -2,11 +2,29 @@
  "voice": "voices/prezenter",
  "tries": 8,
  "lines": [
-  { "name": "bazyl-historia-zabka", "text": "Najpierw jajeczka, potem kijanka, a na końcu żabka!" },
-  { "name": "bazyl-historia-kanapka", "text": "Najpierw chlebek, potem masełko, a na końcu pyszna kanapka!" },
-  { "name": "bazyl-historia-wieza", "text": "Najpierw jeden klocek, potem dwa, a na końcu wysoka wieża!" },
-  { "name": "bazyl-historia-balon", "text": "Najpierw pusty balonik, potem trochę nadmuchany, a na końcu wielki balon!" },
-  { "name": "bazyl-historia-tort", "text": "Najpierw mieszamy ciasto, potem pieczemy, a na końcu jest tort!" },
-  { "name": "bazyl-historia-zamek", "text": "Najpierw wiaderko piasku, potem kopczyk, a na końcu zamek z piasku!" }
+  {
+   "name": "bazyl-history-froglet",
+   "text": "Najpierw jajeczka, potem kijanka, a na końcu żabka!"
+  },
+  {
+   "name": "bazyl-history-sandwich",
+   "text": "Najpierw chlebek, potem masełko, a na końcu pyszna kanapka!"
+  },
+  {
+   "name": "bazyl-history-tower",
+   "text": "Najpierw jeden klocek, potem dwa, a na końcu wysoka wieża!"
+  },
+  {
+   "name": "bazyl-history-balloon",
+   "text": "Najpierw pusty balonik, potem trochę nadmuchany, a na końcu wielki balon!"
+  },
+  {
+   "name": "bazyl-history-cake",
+   "text": "Najpierw mieszamy ciasto, potem pieczemy, a na końcu jest tort!"
+  },
+  {
+   "name": "bazyl-history-castle",
+   "text": "Najpierw wiaderko piasku, potem kopczyk, a na końcu zamek z piasku!"
+  }
  ]
 }

@@ -3,325 +3,325 @@
  "tries": 8,
  "lines": [
   {
-   "name": "lusia-litera-a-arbuz",
+   "name": "lusia-letter-a-watermelon",
    "text": "A... jak arbuz.",
    "engine": "chatterbox",
    "seed": 1
   },
   {
-   "name": "lusia-litera-a-ananas",
+   "name": "lusia-letter-a-pineapple",
    "text": "A... jak ananas.",
    "engine": "chatterbox",
    "seed": 1
   },
   {
-   "name": "lusia-litera-b-biedronka",
+   "name": "lusia-letter-b-ladybug",
    "text": "Be... jak biedronka.",
    "engine": "chatterbox",
    "seed": 1
   },
   {
-   "name": "lusia-litera-b-balonik",
+   "name": "lusia-letter-b-small-balloon",
    "text": "Be... jak balonik.",
    "engine": "chatterbox",
    "seed": 2
   },
   {
-   "name": "lusia-litera-c-cebula",
+   "name": "lusia-letter-c-onion",
    "text": "Ce... jak cebula.",
    "engine": "chatterbox",
    "seed": 3
   },
   {
-   "name": "lusia-litera-c-ciezarowka",
+   "name": "lusia-letter-c-truck",
    "text": "Ce... jak ciężarówka.",
    "engine": "chatterbox",
    "seed": 1
   },
   {
-   "name": "lusia-litera-d-delfin",
+   "name": "lusia-letter-d-dolphin",
    "text": "De... jak delfin.",
    "engine": "chatterbox",
    "seed": 1
   },
   {
-   "name": "lusia-litera-d-dynia",
+   "name": "lusia-letter-d-pumpkin",
    "text": "De... jak dynia.",
    "engine": "chatterbox",
    "seed": 1
   },
   {
-   "name": "lusia-litera-e-emu",
+   "name": "lusia-letter-e-emu",
    "text": "E... jak emu.",
    "engine": "chatterbox",
    "seed": 1
   },
   {
-   "name": "lusia-litera-e-elf",
+   "name": "lusia-letter-e-elf",
    "text": "E... jak elf.",
    "engine": "chatterbox",
    "seed": 1
   },
   {
-   "name": "lusia-litera-e-ekler",
+   "name": "lusia-letter-e-eclair",
    "text": "E... jak ekler.",
    "engine": "chatterbox",
    "seed": 2
   },
   {
-   "name": "lusia-litera-f-flaming",
+   "name": "lusia-letter-f-flamingo",
    "text": "Efff... jak flaming.",
    "engine": "chatterbox",
    "seed": 1
   },
   {
-   "name": "lusia-litera-f-flaga",
+   "name": "lusia-letter-f-flag",
    "text": "Efff... jak flaga.",
    "engine": "chatterbox",
    "seed": 1
   },
   {
-   "name": "lusia-litera-g-ukulele",
+   "name": "lusia-letter-g-ukulele",
    "text": "Gie... jak gitarka.",
    "engine": "chatterbox",
    "seed": 2
   },
   {
-   "name": "lusia-litera-g-gwiazdka",
+   "name": "lusia-letter-g-little-star",
    "text": "Gie... jak gwiazdka.",
    "engine": "chatterbox",
    "seed": 1
   },
   {
-   "name": "lusia-litera-h-helikopter",
+   "name": "lusia-letter-h-helicopter",
    "text": "Ha... jak helikopter.",
    "engine": "chatterbox",
    "seed": 1
   },
   {
-   "name": "lusia-litera-i-igloo",
+   "name": "lusia-letter-i-igloo",
    "text": "I... jak igloo.",
    "engine": "chatterbox",
    "seed": 3
   },
   {
-   "name": "lusia-litera-j-jez",
+   "name": "lusia-letter-j-hedgehog",
    "text": "Jot... jak jeż.",
    "engine": "chatterbox",
    "seed": 1
   },
   {
-   "name": "lusia-litera-j-jajko",
+   "name": "lusia-letter-j-egg",
    "text": "Jot... jak jajko.",
    "engine": "chatterbox",
    "seed": 2
   },
   {
-   "name": "lusia-litera-k-krowa",
+   "name": "lusia-letter-k-cow",
    "text": "Ka... jak krowa.",
    "engine": "chatterbox",
    "seed": 1
   },
   {
-   "name": "lusia-litera-k-kaczka",
+   "name": "lusia-letter-k-duck",
    "text": "Ka... jak kaczka.",
    "engine": "chatterbox",
    "seed": 1
   },
   {
-   "name": "lusia-litera-l-lalka",
+   "name": "lusia-letter-l-lalka",
    "text": "El... jak lalka.",
    "engine": "chatterbox",
    "seed": 3
   },
   {
-   "name": "lusia-litera-l-latawiec",
+   "name": "lusia-letter-l-kite",
    "text": "El... jak latawiec.",
    "engine": "chatterbox",
    "seed": 1
   },
   {
-   "name": "lusia-litera-lw-labedz",
+   "name": "lusia-letter-lw-swan",
    "text": "Eł... jak łabędź.",
    "engine": "chatterbox",
    "seed": 3
   },
   {
-   "name": "lusia-litera-lw-lodka",
+   "name": "lusia-letter-lw-boat",
    "text": "Eł... jak łódka.",
    "engine": "chatterbox",
    "seed": 3
   },
   {
-   "name": "lusia-litera-lw-lyzka",
+   "name": "lusia-letter-lw-spoon",
    "text": "Eł... jak łyżka.",
    "engine": "chatterbox",
    "seed": 3
   },
   {
-   "name": "lusia-litera-m-malpa",
+   "name": "lusia-letter-m-monkey",
    "text": "Em... jak małpka.",
    "engine": "chatterbox",
    "seed": 2
   },
   {
-   "name": "lusia-litera-m-marchewka",
+   "name": "lusia-letter-m-carrot",
    "text": "Em... jak marchewka.",
    "engine": "chatterbox",
    "seed": 2
   },
   {
-   "name": "lusia-litera-n-namiot",
+   "name": "lusia-letter-n-tent",
    "text": "En... jak namiot.",
    "engine": "chatterbox",
    "seed": 3
   },
   {
-   "name": "lusia-litera-o-osmiornica",
+   "name": "lusia-letter-o-octopus",
    "text": "O... jak ośmiornica.",
    "engine": "chatterbox",
    "seed": 3
   },
   {
-   "name": "lusia-litera-o-ogorek",
+   "name": "lusia-letter-o-cucumber",
    "text": "O... jak ogórek.",
    "engine": "chatterbox",
    "seed": 3
   },
   {
-   "name": "lusia-litera-p-pingwin",
+   "name": "lusia-letter-p-penguin",
    "text": "Pe... jak pingwin.",
    "engine": "chatterbox",
    "seed": 1
   },
   {
-   "name": "lusia-litera-p-pomidor",
+   "name": "lusia-letter-p-tomato",
    "text": "Pe... jak pomidor.",
    "engine": "chatterbox",
    "seed": 1
   },
   {
-   "name": "lusia-litera-r-rower",
+   "name": "lusia-letter-r-bike",
    "text": "Er... jak rower.",
    "engine": "chatterbox",
    "seed": 3
   },
   {
-   "name": "lusia-litera-r-ryba",
+   "name": "lusia-letter-r-fish",
    "text": "Er... jak rybka.",
    "engine": "chatterbox",
    "seed": 1
   },
   {
-   "name": "lusia-litera-s-sowa",
+   "name": "lusia-letter-s-owl",
    "text": "Es... jak sowa.",
    "engine": "chatterbox",
    "seed": 1
   },
   {
-   "name": "lusia-litera-s-samolot",
+   "name": "lusia-letter-s-airplane",
    "text": "Es... jak samolot.",
    "engine": "chatterbox",
    "seed": 1
   },
   {
-   "name": "lusia-litera-si-slimak",
+   "name": "lusia-letter-si-snail",
    "text": "Eś... jak ślimak.",
    "engine": "chatterbox",
    "seed": 2
   },
   {
-   "name": "lusia-litera-si-sliwka",
+   "name": "lusia-letter-si-plum",
    "text": "Eś... jak śliwka.",
    "engine": "chatterbox",
    "seed": 3
   },
   {
-   "name": "lusia-litera-si-swinka",
+   "name": "lusia-letter-si-pig",
    "text": "Eś... jak świnka.",
    "engine": "chatterbox",
    "seed": 2
   },
   {
-   "name": "lusia-litera-t-truskawka",
+   "name": "lusia-letter-t-strawberry",
    "text": "Te... jak truskawka.",
    "engine": "chatterbox",
    "seed": 3
   },
   {
-   "name": "lusia-litera-t-tecza",
+   "name": "lusia-letter-t-rainbow",
    "text": "Te... jak tęcza.",
    "engine": "chatterbox",
    "seed": 3
   },
   {
-   "name": "lusia-litera-u-ul",
+   "name": "lusia-letter-u-beehive",
    "text": "U... jak ul.",
    "engine": "chatterbox",
    "seed": 2
   },
   {
-   "name": "lusia-litera-u-ucho",
+   "name": "lusia-letter-u-ear",
    "text": "U... jak ucho.",
    "engine": "chatterbox",
    "seed": 2
   },
   {
-   "name": "lusia-litera-u-ufo",
+   "name": "lusia-letter-u-ufo",
    "text": "U... jak UFO.",
    "engine": "chatterbox",
    "seed": 2
   },
   {
-   "name": "lusia-litera-w-wiewiorka",
+   "name": "lusia-letter-w-squirrel",
    "text": "Wu... jak wiewiórka.",
    "engine": "chatterbox",
    "seed": 2
   },
   {
-   "name": "lusia-litera-w-winogrona",
+   "name": "lusia-letter-w-grapes",
    "text": "Wu... jak winogrona.",
    "engine": "chatterbox",
    "seed": 1
   },
   {
-   "name": "lusia-litera-z-zajac",
+   "name": "lusia-letter-z-hare",
    "text": "Zet... jak zajączek.",
    "engine": "chatterbox",
    "seed": 1
   },
   {
-   "name": "lusia-litera-z-ziemniak",
+   "name": "lusia-letter-z-potato",
    "text": "Zet... jak ziemniak.",
    "engine": "chatterbox",
    "seed": 1
   },
   {
-   "name": "lusia-litera-zh-zaba",
+   "name": "lusia-letter-zh-frog",
    "text": "Żet... jak żaba.",
    "engine": "chatterbox",
    "seed": 3
   },
   {
-   "name": "lusia-litera-zh-zyrafa",
+   "name": "lusia-letter-zh-giraffe",
    "text": "Żet... jak żyrafa.",
    "engine": "chatterbox",
    "seed": 2
   },
   {
-   "name": "lusia-litera-h-hulajnoga",
+   "name": "lusia-letter-h-scooter",
    "text": "Ha... jak hulajnoga.",
    "engine": "chatterbox",
    "seed": 8
   },
   {
-   "name": "lusia-litera-n-niedzwiedz",
+   "name": "lusia-letter-n-bear",
    "text": "En... jak niedźwiedź.",
    "engine": "chatterbox",
    "seed": 4
   },
   {
-   "name": "lusia-litera-zh-zolw",
+   "name": "lusia-letter-zh-turtle",
    "text": "Żet... jak żółw.",
    "engine": "chatterbox",
    "seed": 1

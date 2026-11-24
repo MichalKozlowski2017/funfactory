@@ -214,7 +214,7 @@ export abstract class RoundScene extends Scene {
     sfx.bad(this.game.sound);
     haptics.error();
     void squash(this.tweens, this.guideSprite, 0.08);
-    say(this.game, this.guide, `oj-${this.game.rng.int(1, 2)}`);
+    say(this.game, this.guide, `oops-${this.game.rng.int(1, 2)}`);
   }
 
   /**
@@ -238,7 +238,7 @@ export abstract class RoundScene extends Scene {
     haptics.success();
     this.jumpGuide();
     this.timers.after(afterLen + 0.15, () => {
-      const len = say(this.game, this.guide, `brawo-${this.game.rng.int(1, 5)}`);
+      const len = say(this.game, this.guide, `bravo-${this.game.rng.int(1, 5)}`);
       this.timers.after(Math.max(0.8, len) + 0.3, () => this.next());
     });
   }
@@ -301,7 +301,7 @@ export abstract class RoundScene extends Scene {
       this.timers.after(i * 0.25, () =>
         this.particles.burst(view.width * (0.25 + i * 0.25), view.height * 0.35, { count: 50, speed: [250, 750], life: [0.8, 1.6], gravity: 600, scale: [0.6, 1.3], colors: COLORS.confetti }),
       );
-    const len = say(this.game, this.guide, 'nagroda');
+    const len = say(this.game, this.guide, 'reward');
     this.timers.after(Math.max(1.2, len), () => {
       next.visible = back.visible = true;
       void popIn(this.tweens, next, 0.4);
@@ -351,7 +351,7 @@ export abstract class RoundScene extends Scene {
     } else if (this.hinted === 1 && this.idle > IDLE_HINT) {
       this.hinted = 2;
       if (!this.demo()) this.hint();
-      say(this.game, this.guide, 'pomoc');
+      say(this.game, this.guide, 'help');
     }
   }
 

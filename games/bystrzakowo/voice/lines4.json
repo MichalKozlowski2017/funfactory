@@ -3,352 +3,352 @@
  "tries": 8,
  "lines": [
   {
-   "name": "bazyl-sort-kategorie",
+   "name": "bazyl-sort-categories",
    "text": "Posegreguj! Każda rzecz do swojej skrzynki."
   },
   {
-   "name": "bazyl-sort-domy",
+   "name": "bazyl-sort-houses",
    "text": "Gdzie mieszkają te zwierzątka? Zaprowadź każde do jego domu!"
   },
   {
-   "name": "bazyl-sort-pory",
+   "name": "bazyl-sort-seasons",
    "text": "Co nosimy latem, a co zimą?"
   },
   {
-   "name": "bazyl-sort-wielkosc",
+   "name": "bazyl-sort-size",
    "text": "Które zwierzęta są duże, a które małe?"
   },
   {
-   "name": "bazyl-sort-ruch",
+   "name": "bazyl-sort-motion",
    "text": "Jak się poruszają te rzeczy? Posegreguj je!"
   },
   {
-   "name": "bazyl-kat-owoce",
+   "name": "bazyl-category-fruit",
    "text": "Tutaj owoce!"
   },
   {
-   "name": "bazyl-kat-warzywa",
+   "name": "bazyl-category-vegetables",
    "text": "Tutaj warzywa!"
   },
   {
-   "name": "bazyl-kat-zwierzeta",
+   "name": "bazyl-category-animals",
    "text": "Tutaj zwierzątka!"
   },
   {
-   "name": "bazyl-kat-pojazdy",
+   "name": "bazyl-category-vehicles",
    "text": "Tutaj pojazdy!"
   },
   {
-   "name": "bazyl-kat-ubrania",
+   "name": "bazyl-category-clothes",
    "text": "Tutaj ubrania!"
   },
   {
-   "name": "bazyl-kat-kuchnia",
+   "name": "bazyl-category-kitchen",
    "text": "Tutaj rzeczy z kuchni!"
   },
   {
-   "name": "bazyl-kat-zabawki",
+   "name": "bazyl-category-toys",
    "text": "Tutaj zabawki!"
   },
   {
-   "name": "bazyl-barwa-czerwony",
+   "name": "bazyl-hue-red",
    "text": "Czerwone wiaderko!"
   },
   {
-   "name": "bazyl-barwa-zolty",
+   "name": "bazyl-hue-yellow",
    "text": "Żółte wiaderko!"
   },
   {
-   "name": "bazyl-barwa-zielony",
+   "name": "bazyl-hue-green",
    "text": "Zielone wiaderko!"
   },
   {
-   "name": "bazyl-barwa-niebieski",
+   "name": "bazyl-hue-blue",
    "text": "Niebieskie wiaderko!"
   },
   {
-   "name": "bazyl-barwa-pomaranczowy",
+   "name": "bazyl-hue-orange",
    "text": "Pomarańczowe wiaderko!"
   },
   {
-   "name": "bazyl-barwa-rozowy",
+   "name": "bazyl-hue-pink",
    "text": "Różowe wiaderko!"
   },
   {
-   "name": "bazyl-barwa-fioletowy",
+   "name": "bazyl-hue-purple",
    "text": "Fioletowe wiaderko!"
   },
   {
-   "name": "bazyl-barwa-brazowy",
+   "name": "bazyl-hue-brown",
    "text": "Brązowe wiaderko!"
   },
   {
-   "name": "bazyl-barwa-bialy",
+   "name": "bazyl-hue-white",
    "text": "Białe wiaderko!"
   },
   {
-   "name": "bazyl-dom-wies",
+   "name": "bazyl-house-village",
    "text": "Na wsi!"
   },
   {
-   "name": "bazyl-dom-las",
+   "name": "bazyl-house-forest",
    "text": "W lesie!"
   },
   {
-   "name": "bazyl-dom-woda",
+   "name": "bazyl-house-water",
    "text": "W wodzie!"
   },
   {
-   "name": "bazyl-dom-afryka",
+   "name": "bazyl-house-africa",
    "text": "W Afryce!"
   },
   {
-   "name": "bazyl-dom-lod",
+   "name": "bazyl-house-ice",
    "text": "Tam, gdzie lód i śnieg!"
   },
   {
-   "name": "bazyl-pora-lato",
+   "name": "bazyl-season-summer",
    "text": "Na lato!"
   },
   {
-   "name": "bazyl-pora-zima",
+   "name": "bazyl-season-winter",
    "text": "Na zimę!"
   },
   {
-   "name": "bazyl-rozmiar-duze",
+   "name": "bazyl-size-big",
    "text": "Duże zwierzęta!"
   },
   {
-   "name": "bazyl-rozmiar-male",
+   "name": "bazyl-size-small",
    "text": "Małe zwierzątka!"
   },
   {
-   "name": "bazyl-ruch-lata",
+   "name": "bazyl-motion-flies",
    "text": "To, co lata!"
   },
   {
-   "name": "bazyl-ruch-plywa",
+   "name": "bazyl-motion-swims",
    "text": "To, co pływa!"
   },
   {
-   "name": "bazyl-ruch-jezdzi",
+   "name": "bazyl-motion-drives",
    "text": "To, co jeździ!"
   },
   {
-   "name": "lusia-item-lis",
+   "name": "lusia-item-fox",
    "text": "Lis!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-lis",
+   "name": "bazyl-item-fox",
    "text": "Lis!"
   },
   {
-   "name": "lusia-item-zajac",
+   "name": "lusia-item-hare",
    "text": "Zajączek!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-zajac",
+   "name": "bazyl-item-hare",
    "text": "Zajączek!"
   },
   {
-   "name": "lusia-item-dzik",
+   "name": "lusia-item-boar",
    "text": "Dzik!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-dzik",
+   "name": "bazyl-item-boar",
    "text": "Dzik!"
   },
   {
-   "name": "lusia-item-sarna",
+   "name": "lusia-item-deer",
    "text": "Sarenka!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-sarna",
+   "name": "bazyl-item-deer",
    "text": "Sarenka!"
   },
   {
-   "name": "lusia-item-dzieciol",
+   "name": "lusia-item-woodpecker",
    "text": "Dzięcioł!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-dzieciol",
+   "name": "bazyl-item-woodpecker",
    "text": "Dzięcioł!"
   },
   {
-   "name": "lusia-item-wieloryb",
+   "name": "lusia-item-whale",
    "text": "Wieloryb!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-wieloryb",
+   "name": "bazyl-item-whale",
    "text": "Wieloryb!",
    "seed": 202
   },
   {
-   "name": "lusia-item-delfin",
+   "name": "lusia-item-dolphin",
    "text": "Delfin!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-delfin",
+   "name": "bazyl-item-dolphin",
    "text": "Delfin!"
   },
   {
-   "name": "lusia-item-meduza",
+   "name": "lusia-item-jellyfish",
    "text": "Meduza!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-meduza",
+   "name": "bazyl-item-jellyfish",
    "text": "Meduza!"
   },
   {
-   "name": "lusia-item-konikmorski",
+   "name": "lusia-item-seahorse",
    "text": "Konik morski!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-konikmorski",
+   "name": "bazyl-item-seahorse",
    "text": "Konik morski!"
   },
   {
-   "name": "lusia-item-koza",
+   "name": "lusia-item-goat",
    "text": "Koza!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-koza",
+   "name": "bazyl-item-goat",
    "text": "Koza!"
   },
   {
-   "name": "lusia-item-osiolek",
+   "name": "lusia-item-donkey",
    "text": "Osiołek!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-osiolek",
+   "name": "bazyl-item-donkey",
    "text": "Osiołek!"
   },
   {
-   "name": "lusia-item-indyk",
+   "name": "lusia-item-turkey",
    "text": "Indyk!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-indyk",
+   "name": "bazyl-item-turkey",
    "text": "Indyk!"
   },
   {
-   "name": "lusia-item-ges",
+   "name": "lusia-item-goose",
    "text": "Gęś!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-ges",
+   "name": "bazyl-item-goose",
    "text": "Gęś!"
   },
   {
-   "name": "lusia-item-foka",
+   "name": "lusia-item-seal",
    "text": "Foka!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-foka",
+   "name": "bazyl-item-seal",
    "text": "Foka!"
   },
   {
-   "name": "lusia-item-mors",
+   "name": "lusia-item-walrus",
    "text": "Mors!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-mors",
+   "name": "bazyl-item-walrus",
    "text": "Mors!"
   },
   {
-   "name": "lusia-item-mispolarny",
+   "name": "lusia-item-polar-bear",
    "text": "Miś polarny!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-mispolarny",
+   "name": "bazyl-item-polar-bear",
    "text": "Miś polarny!"
   },
   {
-   "name": "lusia-item-hipopotam",
+   "name": "lusia-item-hippo",
    "text": "Hipopotam!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-hipopotam",
+   "name": "bazyl-item-hippo",
    "text": "Hipopotam!"
   },
   {
-   "name": "lusia-item-nosorozec",
+   "name": "lusia-item-rhino",
    "text": "Nosorożec!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-nosorozec",
+   "name": "bazyl-item-rhino",
    "text": "Nosorożec!"
   },
   {
-   "name": "lusia-item-okulary",
+   "name": "lusia-item-glasses",
    "text": "Okulary!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-okulary",
+   "name": "bazyl-item-glasses",
    "text": "Okulary!"
   },
   {
-   "name": "lusia-item-kapelusz",
+   "name": "lusia-item-sun-hat",
    "text": "Kapelusz!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-kapelusz",
+   "name": "bazyl-item-sun-hat",
    "text": "Kapelusz!"
   },
   {
-   "name": "lusia-item-sandaly",
+   "name": "lusia-item-sandals",
    "text": "Sandały!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-sandaly",
+   "name": "bazyl-item-sandals",
    "text": "Sandały!"
   },
   {
-   "name": "lusia-item-stroj",
+   "name": "lusia-item-outfit",
    "text": "Strój kąpielowy!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-stroj",
+   "name": "bazyl-item-outfit",
    "text": "Strój kąpielowy!"
   },
   {
-   "name": "lusia-item-kurtka",
+   "name": "lusia-item-jacket",
    "text": "Kurtka!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-kurtka",
+   "name": "bazyl-item-jacket",
    "text": "Kurtka!"
   },
   {
-   "name": "lusia-item-sanki",
+   "name": "lusia-item-sled",
    "text": "Sanki!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-sanki",
+   "name": "bazyl-item-sled",
    "text": "Sanki!"
   }
  ]

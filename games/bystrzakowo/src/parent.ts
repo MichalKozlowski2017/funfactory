@@ -161,12 +161,12 @@ export class ParentGate extends Container {
   }
 }
 
-type Tab = 'postepy' | 'album' | 'pocztowka' | 'ustawienia';
+type Tab = 'progress' | 'album' | 'postcard' | 'settings';
 const TABS: [Tab, string][] = [
-  ['postepy', 'Postępy'],
+  ['progress', 'Postępy'],
   ['album', 'Album'],
-  ['pocztowka', 'Pocztówka'],
-  ['ustawienia', 'Ustawienia'],
+  ['postcard', 'Pocztówka'],
+  ['settings', 'Ustawienia'],
 ];
 const INK = '#5a3c28';
 const SOFT = '#6b5a4a';
@@ -195,11 +195,11 @@ export class ParentPanel extends Container {
   private readonly content = new Container();
   private readonly clip = new Graphics();
   private buttons: Button[] = [];
-  private tab: Tab = 'postepy';
+  private tab: Tab = 'progress';
   /** Szczegóły umiejętności w zakładce Postępy (null: lista „Przed szkołą”). */
   private skill: SkillId | null = null;
   /** Zakres wykresów: ostatnie dni albo tygodnie (wybór rodzica). */
-  private range: Range = 'tygodnie';
+  private range: Range = 'weeks';
   private view!: View;
   private box = { x: 0, y: 0, w: 0, h: 0 };
   private scroll = 0;
@@ -345,7 +345,7 @@ export class ParentPanel extends Container {
 
     this.content.x = x + 30;
     const cw = w - 60;
-    const h = this.tab === 'postepy' ? (this.skill ? this.renderSkill(cw) : this.renderProgress(cw)) : this.tab === 'album' ? this.renderAlbum(cw) : this.tab === 'pocztowka' ? this.renderPostcardTab(cw) : this.renderSettings(cw);
+    const h = this.tab === 'progress' ? (this.skill ? this.renderSkill(cw) : this.renderProgress(cw)) : this.tab === 'album' ? this.renderAlbum(cw) : this.tab === 'postcard' ? this.renderPostcardTab(cw) : this.renderSettings(cw);
     this.contentH = h;
     this.setScroll(this.scroll);
   }
@@ -552,14 +552,14 @@ export class ParentPanel extends Container {
           l.position.set(sx + 85, h / 2);
           row.addChild(l);
         } else {
-          const ps = accuracy(def, j, 'tygodnie', t);
-          const daily = enoughPoints(ps) ? ps : accuracy(def, j, 'dni', t);
+          const ps = accuracy(def, j, 'weeks', t);
+          const daily = enoughPoints(ps) ? ps : accuracy(def, j, 'days', t);
           if (enoughPoints(daily)) {
             const spark = lineChart({ width: 170, height: h - 16, points: daily, unit: '%', color: 0x5cb3ff, resolution: this.game.pixelRatio, label: () => '', mini: true });
             spark.position.set(sx, 8);
             row.addChild(spark);
           }
-          const sp = def.tempo ? tempo(def, j, 'tygodnie', t)?.speedup : null;
+          const sp = def.tempo ? tempo(def, j, 'weeks', t)?.speedup : null;
           if (sp && sp >= 1.15) {
             const fast = this.text(tr('{x}× szybciej', { x: sp.toLocaleString(lang(), { maximumFractionDigits: 1 }) }), 20, { color: '#3f8a4a', weight: '800' });
             fast.anchor.set(1, 0.5);
@@ -645,8 +645,8 @@ export class ParentPanel extends Container {
     sum.y = y + 10;
     this.content.addChild(sum);
     // Zakres wykresów: wybór rodzica (dni albo tygodnie).
-    (['dni', 'tygodnie'] as const).forEach((r, i) => {
-      const b = this.button(r === 'dni' ? tr('Dni') : tr('Tygodnie'), 170, r === this.range ? '#ff9f5a' : '#c9b8a6', () => {
+    (['days', 'weeks'] as const).forEach((r, i) => {
+      const b = this.button(r === 'days' ? tr('Dni') : tr('Tygodnie'), 170, r === this.range ? '#ff9f5a' : '#c9b8a6', () => {
         this.range = r;
         this.render();
       }, 64, 23);
@@ -684,7 +684,7 @@ export class ParentPanel extends Container {
     }
     if (def.group) {
       const group = def.group;
-      const COLOR: Record<ItemState, number> = { opanowane: 0x5cc36a, cwiczy: 0xffc94a, klopot: 0xf08a6a, nie: 0xd9cfc2 };
+      const COLOR: Record<ItemState, number> = { mastered: 0x5cc36a, practicing: 0xffc94a, trouble: 0xf08a6a, no: 0xd9cfc2 };
       y += this.card({ x: 0, y }, cw, (c, iw) => {
         const t2 = this.text(tr('Co już umie'), 28, { weight: '800' });
         c.addChild(t2);
@@ -718,8 +718,8 @@ export class ParentPanel extends Container {
       c.addChild(t3);
       const lines = ms.map((e) => {
         const date = this.dateLabel(e.day);
-        if (e.kind === 'opanowane') return tr('{date}: opanowane – {item}', { date, item: itemName(def.group ?? '', e.item ?? '') });
-        if (e.kind === 'poziom') return tr('{date}: wyższy poziom trudności', { date });
+        if (e.kind === 'mastered') return tr('{date}: opanowane – {item}', { date, item: itemName(def.group ?? '', e.item ?? '') });
+        if (e.kind === 'level') return tr('{date}: wyższy poziom trudności', { date });
         return tr('{date}: pierwsza zabawa', { date });
       });
       const body = this.text(lines.length ? lines.map((l) => `• ${l}`).join('\n') : tr('Pierwsze odkrycia pojawią się po kilku zabawach.'), 24, { color: SOFT, wrap: iw });
@@ -923,7 +923,7 @@ export class ParentPanel extends Container {
     const card = postcard(this.game, this.art!, r, 1);
     const url = await this.game.app.renderer.extract.base64({ target: card, format: 'png', resolution: 1, frame: new Rectangle(0, 0, POSTCARD_W, POSTCARD_H) });
     card.destroy({ children: true });
-    await shareImage(url, `pocztowka-${r.week.to}.png`, tr('Pocztówka z Bystrzakowa'));
+    await shareImage(url, `postcard-${r.week.to}.png`, tr('Pocztówka z Bystrzakowa'));
   }
 
   // ——— Ustawienia ———

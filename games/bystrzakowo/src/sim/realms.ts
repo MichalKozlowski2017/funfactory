@@ -5,25 +5,25 @@
 import { PUZZLE_KINDS, type PuzzleKind } from './puzzles.ts';
 
 /** Zabawy Warsztatu (przeciągnij i ułóż). */
-export type WorkshopKind = 'sortowanie' | 'ukladanka' | 'wzory' | 'ksztalty' | 'sylaby' | 'historyjki';
-export const WORKSHOP_KINDS: readonly WorkshopKind[] = ['sortowanie', 'ukladanka', 'wzory', 'ksztalty', 'sylaby', 'historyjki'];
+export type WorkshopKind = 'sorting' | 'jigsaw' | 'patterns' | 'shapes' | 'syllables' | 'stories';
+export const WORKSHOP_KINDS: readonly WorkshopKind[] = ['sorting', 'jigsaw', 'patterns', 'shapes', 'syllables', 'stories'];
 
 /** Zabawy Polany poza zagadkami z wyborem (pamięć). */
-export type MeadowKind = 'memory' | 'emocje';
+export type MeadowKind = 'memory' | 'emotions';
 
 /** Zabawy Ścieżki Lusi (prowadź palcem). */
-export type PathKind = 'kropki' | 'labirynt' | 'litery' | 'cyfry';
-export const PATH_KINDS: readonly PathKind[] = ['kropki', 'labirynt', 'litery', 'cyfry'];
+export type PathKind = 'dots' | 'maze' | 'letters' | 'digits';
+export const PATH_KINDS: readonly PathKind[] = ['dots', 'maze', 'letters', 'digits'];
 
 /** Zabawy Pracowni Malucha (twórz, bez złych odpowiedzi). */
-export type StudioKind = 'kolorowanka' | 'naklejanka' | 'melodia';
-export const STUDIO_KINDS: readonly StudioKind[] = ['kolorowanka', 'naklejanka', 'melodia'];
+export type StudioKind = 'coloring' | 'stickers' | 'melody';
+export const STUDIO_KINDS: readonly StudioKind[] = ['coloring', 'stickers', 'melody'];
 
 /** Każda zabawa w grze (klucz poziomu trudności w zapisie). */
 export type Activity = PuzzleKind | MeadowKind | WorkshopKind | PathKind | StudioKind;
-export const ACTIVITIES: readonly Activity[] = [...PUZZLE_KINDS, 'memory', 'emocje', ...WORKSHOP_KINDS, ...PATH_KINDS, ...STUDIO_KINDS];
+export const ACTIVITIES: readonly Activity[] = [...PUZZLE_KINDS, 'memory', 'emotions', ...WORKSHOP_KINDS, ...PATH_KINDS, ...STUDIO_KINDS];
 
-export type RealmId = 'polana' | 'warsztat' | 'sciezka' | 'pracownia';
+export type RealmId = 'meadow' | 'workshop' | 'path' | 'studio';
 
 export interface Realm {
   id: RealmId;
@@ -36,10 +36,10 @@ export interface Realm {
 }
 
 export const REALMS: readonly Realm[] = [
-  { id: 'polana', name: 'Polana Zagadek', guide: 'lusia', rows: [['kolory', 'gloski', 'mamy', 'memory'], ['cienie', 'pasuje', 'liczenie', 'emocje']] },
-  { id: 'warsztat', name: 'Warsztat Bazyla', guide: 'bazyl', rows: [['wzory', 'ksztalty', 'sylaby'], ['sortowanie', 'ukladanka', 'historyjki']] },
-  { id: 'sciezka', name: 'Ścieżka Lusi', guide: 'lusia', rows: [['litery', 'cyfry'], ['kropki', 'labirynt']] },
-  { id: 'pracownia', name: 'Pracownia Malucha', guide: 'lusia', rows: [['kolorowanka', 'naklejanka', 'melodia']] },
+  { id: 'meadow', name: 'Polana Zagadek', guide: 'lusia', rows: [['colors', 'phonemes', 'mothers', 'memory'], ['shadows', 'matching', 'counting', 'emotions']] },
+  { id: 'workshop', name: 'Warsztat Bazyla', guide: 'bazyl', rows: [['patterns', 'shapes', 'syllables'], ['sorting', 'jigsaw', 'stories']] },
+  { id: 'path', name: 'Ścieżka Lusi', guide: 'lusia', rows: [['letters', 'digits'], ['dots', 'maze']] },
+  { id: 'studio', name: 'Pracownia Malucha', guide: 'lusia', rows: [['coloring', 'stickers', 'melody']] },
 ];
 
 export const isPuzzle = (a: Activity): a is PuzzleKind => (PUZZLE_KINDS as readonly string[]).includes(a);
@@ -49,25 +49,25 @@ export const realmOf = (a: Activity): Realm => REALMS.find((r) => r.rows.some((r
 
 /** Podpisy zabaw na kafelkach krain (krótkie, żeby mieściły się w jednej linii). */
 export const ACTIVITY_NAMES: Record<Activity, string> = {
-  kolory: 'Kolory',
-  gloski: 'Pierwsza litera',
-  mamy: 'Mamy',
+  colors: 'Kolory',
+  phonemes: 'Pierwsza litera',
+  mothers: 'Mamy',
   memory: 'Pary',
-  cienie: 'Cienie',
-  pasuje: 'Co nie pasuje?',
-  liczenie: 'Liczenie',
-  emocje: 'Minki',
-  wzory: 'Co dalej?',
-  ksztalty: 'Kształty',
-  sylaby: 'Sylaby',
-  sortowanie: 'Segregowanie',
-  ukladanka: 'Układanka',
-  historyjki: 'Historyjki',
-  litery: 'Literki',
-  cyfry: 'Cyferki',
-  kropki: 'Kropki',
-  labirynt: 'Labirynt',
-  kolorowanka: 'Kolorowanka',
-  naklejanka: 'Naklejki',
-  melodia: 'Melodia',
+  shadows: 'Cienie',
+  matching: 'Co nie pasuje?',
+  counting: 'Liczenie',
+  emotions: 'Minki',
+  patterns: 'Co dalej?',
+  shapes: 'Kształty',
+  syllables: 'Sylaby',
+  sorting: 'Segregowanie',
+  jigsaw: 'Układanka',
+  stories: 'Historyjki',
+  letters: 'Literki',
+  digits: 'Cyferki',
+  dots: 'Kropki',
+  maze: 'Labirynt',
+  coloring: 'Kolorowanka',
+  stickers: 'Naklejki',
+  melody: 'Melodia',
 };

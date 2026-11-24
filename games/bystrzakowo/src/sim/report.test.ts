@@ -4,7 +4,7 @@ import { makeReport } from './report.ts';
 
 const TODAY = '2026-11-21';
 
-describe('dziennik', () => {
+describe('journal', () => {
   it('opanowanie: trzy dobre odpowiedzi z rzędu', () => {
     expect(mastered('011')).toBe(false);
     expect(mastered('0111')).toBe(true);
@@ -14,17 +14,17 @@ describe('dziennik', () => {
 
   it('zapamiętuje dzień opanowania tylko raz', () => {
     const j = newJournal();
-    for (let i = 0; i < 3; i++) noteFact(j, '2026-11-01', 'liczba:3', true);
-    noteFact(j, TODAY, 'liczba:3', true);
-    expect(j.learned['liczba:3']).toBe('2026-11-01');
+    for (let i = 0; i < 3; i++) noteFact(j, '2026-11-01', 'number:3', true);
+    noteFact(j, TODAY, 'number:3', true);
+    expect(j.learned['number:3']).toBe('2026-11-01');
   });
 
   it('podsumowuje tydzień i usuwa stare dni', () => {
     const j = newJournal();
     addTime(j, TODAY, 600);
-    addTask(j, TODAY, 'liczenie', 1);
-    addTask(j, shiftDay(TODAY, -2), 'kolory', 0);
-    addTask(j, shiftDay(TODAY, -200), 'kolory', 0);
+    addTask(j, TODAY, 'counting', 1);
+    addTask(j, shiftDay(TODAY, -2), 'colors', 0);
+    addTask(j, shiftDay(TODAY, -200), 'colors', 0);
     prune(j, TODAY);
     const s = summarize(j, shiftDay(TODAY, -6), TODAY);
     expect(s).toMatchObject({ days: 2, sec: 600, tasks: 2 });
@@ -35,18 +35,18 @@ describe('dziennik', () => {
 describe('raport dla rodzica', () => {
   it('opisuje umiejętności po imieniu, bez form zależnych od płci', () => {
     const j = newJournal();
-    for (const n of [1, 2, 3, 4, 5]) for (let i = 0; i < 3; i++) noteFact(j, TODAY, `liczba:${n}`, true);
-    for (let i = 0; i < 4; i++) noteFact(j, TODAY, 'liczba:7', i % 2 === 0);
-    for (let i = 0; i < 3; i++) noteFact(j, TODAY, 'kolor:zielony', true);
-    noteFact(j, TODAY, 'litera:A', true);
-    addTask(j, TODAY, 'liczenie', 2);
+    for (const n of [1, 2, 3, 4, 5]) for (let i = 0; i < 3; i++) noteFact(j, TODAY, `number:${n}`, true);
+    for (let i = 0; i < 4; i++) noteFact(j, TODAY, 'number:7', i % 2 === 0);
+    for (let i = 0; i < 3; i++) noteFact(j, TODAY, 'color:green', true);
+    noteFact(j, TODAY, 'letter:A', true);
+    addTask(j, TODAY, 'counting', 2);
     addTime(j, TODAY, 1200);
     const r = makeReport({ journal: j, levels: {}, name: 'Zosia', today: TODAY });
-    const liczby = r.skills.find((s) => s.domain === 'liczby')!;
+    const liczby = r.skills.find((s) => s.domain === 'numbers')!;
     expect(liczby.lines[0]).toBe('Zosia liczy bez pomyłek do 5.');
     expect(liczby.lines[1]).toContain('7');
-    expect(r.skills.find((s) => s.domain === 'kolory')!.lines[0]).toBe('Zosia rozpoznaje kolory: zielony.');
-    expect(r.skills.find((s) => s.domain === 'litery')!.lines.join(' ')).toContain('Narysowane literki: A');
+    expect(r.skills.find((s) => s.domain === 'colors')!.lines[0]).toBe('Zosia rozpoznaje kolory: zielony.');
+    expect(r.skills.find((s) => s.domain === 'letters')!.lines.join(' ')).toContain('Narysowane literki: A');
     expect(r.weekText).toContain('1 dzień zabawy, razem 20 min');
     expect(r.highlights[0]).toBe('Liczenie do 5');
     const text = JSON.stringify(r);
@@ -63,23 +63,23 @@ describe('raport dla rodzica', () => {
 
   it('wskazówki dotyczą najsłabszej dziedziny', () => {
     const j = newJournal();
-    for (const c of ['zielony', 'czerwony']) for (let i = 0; i < 3; i++) noteFact(j, TODAY, `kolor:${c}`, true);
-    for (const n of [1, 2]) for (let i = 0; i < 3; i++) noteFact(j, TODAY, `liczba:${n}`, true);
-    for (let i = 0; i < 4; i++) noteFact(j, TODAY, 'gloska:sz', false);
-    for (const e of ['wesoly']) for (let i = 0; i < 3; i++) noteFact(j, TODAY, `emocja:${e}`, true);
-    noteFact(j, TODAY, 'ksztalt:kolo', true);
-    const r = makeReport({ journal: j, levels: { wzory: 1 }, today: TODAY });
+    for (const c of ['green', 'red']) for (let i = 0; i < 3; i++) noteFact(j, TODAY, `color:${c}`, true);
+    for (const n of [1, 2]) for (let i = 0; i < 3; i++) noteFact(j, TODAY, `number:${n}`, true);
+    for (let i = 0; i < 4; i++) noteFact(j, TODAY, 'phoneme:sz', false);
+    for (const e of ['happy']) for (let i = 0; i < 3; i++) noteFact(j, TODAY, `emotion:${e}`, true);
+    noteFact(j, TODAY, 'shape:circle', true);
+    const r = makeReport({ journal: j, levels: { patterns: 1 }, today: TODAY });
     // Logika i głoski najsłabsze (0 i 1 gwiazdka).
     expect(r.tips.length).toBe(2);
-    expect(r.skills.find((s) => s.domain === 'litery')!.stars).toBe(1);
+    expect(r.skills.find((s) => s.domain === 'letters')!.stars).toBe(1);
   });
 });
 
 describe('liczenie bez ciągłości', () => {
   it('nie pisze „do 7”, gdy mniejsze liczby nie są opanowane', () => {
     const j = newJournal();
-    for (const n of [5, 7]) for (let i = 0; i < 3; i++) noteFact(j, TODAY, `liczba:${n}`, true);
-    addTask(j, TODAY, 'liczenie', 0);
+    for (const n of [5, 7]) for (let i = 0; i < 3; i++) noteFact(j, TODAY, `number:${n}`, true);
+    addTask(j, TODAY, 'counting', 0);
     const r = makeReport({ journal: j, levels: {}, name: 'Staś', today: TODAY });
     expect(r.skills[0]!.lines[0]).toBe('Staś bez pomyłek liczy zbiory po 5, 7 przedmiotów, mniejsze liczby jeszcze ćwiczy.');
     expect(r.highlights[0]).toBe('Policzone bez pomyłki: 5, 7');
@@ -93,25 +93,25 @@ describe('zgadywanie i konkrety', () => {
     expect(mastered('0h11')).toBe(false);
     expect(mastered('0h111')).toBe(true);
     const j = newJournal();
-    for (let i = 0; i < 3; i++) noteFact(j, TODAY, 'kolor:zielony', true, true);
-    expect(j.learned['kolor:zielony']).toBeUndefined();
+    for (let i = 0; i < 3; i++) noteFact(j, TODAY, 'color:green', true, true);
+    expect(j.learned['color:green']).toBeUndefined();
   });
 
   it('logika: konkretne zagadki z liczbą i jakością', () => {
     const j = newJournal();
-    for (let i = 0; i < 6; i++) addTask(j, TODAY, 'historyjki', 0);
+    for (let i = 0; i < 6; i++) addTask(j, TODAY, 'stories', 0);
     for (let i = 0; i < 2; i++) addTask(j, TODAY, 'memory', 2);
     const r = makeReport({ journal: j, levels: {}, today: TODAY });
-    const logic = r.skills.find((s) => s.domain === 'logika')!;
+    const logic = r.skills.find((s) => s.domain === 'logic')!;
     expect(logic.lines[0]).toBe('Układa historyjki w dobrej kolejności: 6 historyjek, prawie bez pomyłek.');
     expect(logic.lines[1]).toBe('Znajduje pary w grze w pary: 2 plansze, jeszcze często z pomyłkami.');
   });
 
   it('pierwsze razy trafiają do raportu i na pocztówkę', () => {
     const j = newJournal();
-    addTask(j, shiftDay(TODAY, -20), 'litery', 0);
-    addTask(j, TODAY, 'historyjki', 0);
-    addTask(j, TODAY, 'litery', 0);
+    addTask(j, shiftDay(TODAY, -20), 'letters', 0);
+    addTask(j, TODAY, 'stories', 0);
+    addTask(j, TODAY, 'letters', 0);
     const r = makeReport({ journal: j, levels: {}, today: TODAY });
     expect(r.firsts).toEqual(['pierwsza ułożona historyjka']);
     expect(r.highlights[0]).toBe('Pierwsza ułożona historyjka');

@@ -8,7 +8,7 @@ IN=assets-raw/bystrzakowo-store/shots
 OUT=games/bystrzakowo/store/screens
 ART=games/bystrzakowo/public/art
 FONT=tools/store/baloo2-800.ttf  # Baloo 2 ExtraBold (statyczny wariant z czcionki gry, OFL)
-BG=("" "$ART/polana.jpg" "$ART/krajobrazy/las.jpg" "$ART/kraina-warsztat.jpg" "$ART/kraina-sciezka.jpg" "$ART/krajobrazy/plaza.jpg" "$ART/kraina-pracownia.jpg" "$ART/krajobrazy/farma.jpg" "$ART/krajobrazy/zima.jpg")
+BG=("" "$ART/meadow.jpg" "$ART/landscapes/forest.jpg" "$ART/realm-workshop.jpg" "$ART/realm-path.jpg" "$ART/landscapes/beach.jpg" "$ART/realm-studio.jpg" "$ART/landscapes/farm.jpg" "$ART/landscapes/winter.jpg")
 caption() {
   local lang=$1 n=$2
   case "$lang-$n" in

@@ -29,29 +29,29 @@ for size in ${SIZES:-"ios-6.9:956x440@3" "ipad-13:1376x1032@2" "android:640x360@
 shot:s"
     # 2. Zagadka: czyj to cień?
     run 2 "wait:1500
-eval:$C.play('cienie')
+eval:$C.play('shadows')
 wait:3500
 shot:s"
     # 3. Historyjki do ułożenia.
     run 3 "wait:1500
-eval:$C.play('historyjki')
+eval:$C.play('stories')
 wait:3500
 shot:s"
     # 4. Rysowanie literki palcem.
     run 4 "wait:1500
-eval:$C.play('litery')
+eval:$C.play('letters')
 wait:3500
 shot:s"
     # 5. Naklejanka: obrazek z naklejek.
     run 5 "wait:1500
-eval:$C.play('naklejanka')
+eval:$C.play('stickers')
 wait:3000
 eval:$C.demo()
 wait:800
 shot:s"
     # 6. Kolorowanka w trakcie malowania.
     run 6 "wait:1500
-eval:$C.play('kolorowanka')
+eval:$C.play('coloring')
 wait:3500
 eval:$C.paintDemo(9)
 wait:800

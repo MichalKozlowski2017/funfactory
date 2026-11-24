@@ -3,24 +3,24 @@
  "tries": 8,
  "lines": [
   {
-   "name": "bazyl-kraina-warsztat",
+   "name": "bazyl-realm-workshop",
    "text": "Witaj w moim warsztacie! Tutaj przeciągamy i układamy."
   },
   {
-   "name": "lusia-kraina-polana",
+   "name": "lusia-realm-meadow",
    "text": "To Polana Zagadek! Wybierz domek.",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-sort-kolory",
+   "name": "bazyl-sort-colors",
    "text": "Włóż każdą rzecz do wiaderka w takim samym kolorze!"
   },
   {
-   "name": "bazyl-ukladanka",
+   "name": "bazyl-jigsaw",
    "text": "Ułóż obrazek! Przeciągnij kawałki na swoje miejsca."
   },
   {
-   "name": "bazyl-przeciagnij",
+   "name": "bazyl-drag",
    "text": "Złap obrazek palcem i przeciągnij go do skrzynki."
   }
  ]

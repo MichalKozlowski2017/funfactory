@@ -50,12 +50,12 @@ describe('tłumaczenia', () => {
   it('raport po angielsku i niemiecku bez polskich słów', () => {
     const j = newJournal();
     const day = '2026-11-21';
-    for (const n of [1, 2, 3, 4]) for (let i = 0; i < 3; i++) noteFact(j, day, `liczba:${n}`, true);
-    for (let i = 0; i < 3; i++) noteFact(j, day, 'kolor:zielony', true);
-    for (let i = 0; i < 4; i++) noteFact(j, day, 'gloska:m', i % 2 === 0);
-    noteFact(j, day, 'litera:A', true);
-    for (let i = 0; i < 4; i++) addTask(j, day, 'historyjki', i % 2);
-    addTask(j, day, 'kolorowanka', 0);
+    for (const n of [1, 2, 3, 4]) for (let i = 0; i < 3; i++) noteFact(j, day, `number:${n}`, true);
+    for (let i = 0; i < 3; i++) noteFact(j, day, 'color:green', true);
+    for (let i = 0; i < 4; i++) noteFact(j, day, 'phoneme:m', i % 2 === 0);
+    noteFact(j, day, 'letter:A', true);
+    for (let i = 0; i < 4; i++) addTask(j, day, 'stories', i % 2);
+    addTask(j, day, 'coloring', 0);
     addTime(j, day, 900);
     const first = { en: 'Sam counts up to 4 without mistakes.', de: 'Sam zählt fehlerfrei bis 4.', es: 'Sam cuenta hasta 4 sin errores.' };
     for (const l of ['en', 'de', 'es'] as const) {

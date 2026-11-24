@@ -8,7 +8,7 @@ FONT=tools/store/baloo2-800.ttf  # Baloo 2 ExtraBold (statyczny wariant z czcion
 OUT=games/bystrzakowo/store
 T=$(mktemp -d)
 W=1024; H=500
-magick "$ART/polana.jpg" -resize "${W}x${H}^" -gravity center -extent "${W}x${H}" "$T/bg.png"
+magick "$ART/meadow.jpg" -resize "${W}x${H}^" -gravity center -extent "${W}x${H}" "$T/bg.png"
 magick "$ART/lusia.webp" -trim +repage -resize x330 "$T/lusia.png"
 magick "$ART/bazyl.webp" -trim +repage -resize x330 "$T/bazyl.png"
 txt() { # tekst, wielkość, kolor wypełnienia, kontur, wyjście

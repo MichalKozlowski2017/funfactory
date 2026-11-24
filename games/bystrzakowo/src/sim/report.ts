@@ -40,7 +40,7 @@ export interface ReportInput {
   today: string;
 }
 
-const LOGIC: Activity[] = ['cienie', 'pasuje', 'mamy', 'wzory', 'sortowanie', 'historyjki', 'memory', 'ukladanka', 'labirynt'];
+const LOGIC: Activity[] = ['shadows', 'matching', 'mothers', 'patterns', 'sorting', 'stories', 'memory', 'jigsaw', 'maze'];
 
 /** Jak idzie, z liczby pomyłek na zadanie: indeks opisu (0 dobrze .. 2 trudno) i gwiazdki. */
 const quality = (misses: number, tasks: number): [number, number] => {
@@ -84,8 +84,8 @@ export function makeReport(input: ReportInput): Report {
 
   // Liczby: liczenie (1..8), cyferki (rysowanie), kropki.
   {
-    const counts = split(factsOf(j, 'liczba'));
-    const digits = [...factsOf(j, 'cyfra').keys()].sort();
+    const counts = split(factsOf(j, 'number'));
+    const digits = [...factsOf(j, 'digit').keys()].sort();
     const lines: string[] = [];
     const okSet = new Set(counts.ok.map(Number));
     let upTo = 0;
@@ -97,31 +97,31 @@ export function makeReport(input: ReportInput): Report {
     const hard = counts.hard.map(Number).sort((a, b) => a - b);
     if (hard.length) lines.push(P.countHard(hard.map(String)));
     if (digits.length) lines.push(P.digitsDrawn(digits, DIGITS.length));
-    if (all.kropki) lines.push(P.dots(all.kropki));
+    if (all.dots) lines.push(P.dots(all.dots));
     if (!lines.length) lines.push(P.countNone);
-    const stars = counts.tried.length ? starsOf(counts.ok.length, counts.tried.length) : digits.length || all.kropki ? 1 : 0;
-    skills.push({ domain: 'liczby', title: P.titles.liczby, lines, stars });
+    const stars = counts.tried.length ? starsOf(counts.ok.length, counts.tried.length) : digits.length || all.dots ? 1 : 0;
+    skills.push({ domain: 'numbers', title: P.titles.numbers, lines, stars });
   }
 
   // Litery i głoski.
   {
-    const sounds = split(factsOf(j, 'gloska'));
-    const letters = [...factsOf(j, 'litera').keys()];
+    const sounds = split(factsOf(j, 'phoneme'));
+    const letters = [...factsOf(j, 'letter').keys()];
     const lines: string[] = [];
     if (sounds.ok.length) lines.push(P.soundsOk(who, sounds.ok.map(P.sound)));
     else if (sounds.tried.length) lines.push(P.soundsPractice(who));
     if (sounds.hard.length) lines.push(P.soundsHard(sounds.hard.map(P.sound)));
     if (letters.length) lines.push(P.lettersDrawn(letters, lettersOf().length));
-    if (all.sylaby) lines.push(P.syllables(all.sylaby));
+    if (all.syllables) lines.push(P.syllables(all.syllables));
     if (!lines.length) lines.push(P.lettersNone);
-    const stars = sounds.tried.length ? starsOf(sounds.ok.length, sounds.tried.length) : letters.length || all.sylaby ? 1 : 0;
-    skills.push({ domain: 'litery', title: P.titles.litery, lines, stars });
+    const stars = sounds.tried.length ? starsOf(sounds.ok.length, sounds.tried.length) : letters.length || all.syllables ? 1 : 0;
+    skills.push({ domain: 'letters', title: P.titles.letters, lines, stars });
   }
 
   // Kolory i kształty.
   {
-    const colors = split(factsOf(j, 'kolor'));
-    const shapes = split(factsOf(j, 'ksztalt'));
+    const colors = split(factsOf(j, 'color'));
+    const shapes = split(factsOf(j, 'shape'));
     const lines: string[] = [];
     const cn = (c: string) => P.colors[c] ?? c;
     const sn = (x: string) => P.shapes[x] ?? x;
@@ -132,19 +132,19 @@ export function makeReport(input: ReportInput): Report {
     if (!lines.length && (colors.tried.length || shapes.tried.length)) lines.push(P.colorsPractice(who));
     if (!lines.length) lines.push(P.colorsNone);
     const tried = colors.tried.length + shapes.tried.length;
-    skills.push({ domain: 'kolory', title: P.titles.kolory, lines, stars: starsOf(colors.ok.length + shapes.ok.length, tried) });
+    skills.push({ domain: 'colors', title: P.titles.colors, lines, stars: starsOf(colors.ok.length + shapes.ok.length, tried) });
   }
 
   // Emocje.
   {
-    const em = split(factsOf(j, 'emocja'));
+    const em = split(factsOf(j, 'emotion'));
     const lines: string[] = [];
     const en = (e: string) => P.emotions[e] ?? e;
     if (em.ok.length) lines.push(P.emoOk(who, em.ok.map(en)));
     if (em.hard.length) lines.push(P.emoHard(em.hard.map(en)));
     if (!lines.length && em.tried.length) lines.push(P.emoPractice(who));
     if (!lines.length) lines.push(P.emoNone);
-    skills.push({ domain: 'emocje', title: P.titles.emocje, lines, stars: starsOf(em.ok.length, em.tried.length) });
+    skills.push({ domain: 'emotions', title: P.titles.emotions, lines, stars: starsOf(em.ok.length, em.tried.length) });
   }
 
   // Logika, spostrzegawczość, pamięć.
@@ -163,17 +163,17 @@ export function makeReport(input: ReportInput): Report {
     if (played.length > 4) lines.push(P.logicMore(played.slice(4).map((a) => P.logic[a]![0])));
     if (!played.length) lines.push(LOGIC.some((a) => all[a]) ? P.logicNoneWeek : P.logicNone);
     const avgStars = played.length ? Math.round(stars / Math.min(4, played.length)) : LOGIC.some((a) => all[a]) ? 1 : 0;
-    skills.push({ domain: 'logika', title: P.titles.logika, lines, stars: avgStars });
+    skills.push({ domain: 'logic', title: P.titles.logic, lines, stars: avgStars });
   }
 
   // Twórczość.
   {
     const parts: string[] = [];
-    if (all.kolorowanka) parts.push(P.creative.kolorowanka(all.kolorowanka));
-    if (all.naklejanka) parts.push(P.creative.naklejanka(all.naklejanka));
-    if (all.melodia) parts.push(P.creative.melodia(all.melodia));
+    if (all.coloring) parts.push(P.creative.coloring(all.coloring));
+    if (all.stickers) parts.push(P.creative.stickers(all.stickers));
+    if (all.melody) parts.push(P.creative.melody(all.melody));
     const lines = parts.length ? [P.creative.sum(parts), P.creative.album] : [P.creative.none];
-    skills.push({ domain: 'tworczosc', title: P.titles.tworczosc, lines, stars: Math.min(3, parts.length) });
+    skills.push({ domain: 'creativity', title: P.titles.creativity, lines, stars: Math.min(3, parts.length) });
   }
 
   return {
@@ -198,13 +198,13 @@ function firstsIn(P: ReportText, j: Journal, from: string, to: string): string[]
 function pickTips(P: ReportText, skills: SkillLine[], today: string): string[] {
   const [y, m, d] = today.split('-').map(Number) as [number, number, number];
   const week = Math.floor(Date.UTC(y, m - 1, d) / (7 * 86_400_000));
-  const order = [...skills].filter((s) => s.domain !== 'tworczosc').sort((a, b) => a.stars - b.stars || TIP_ORDER.indexOf(a.domain) - TIP_ORDER.indexOf(b.domain));
+  const order = [...skills].filter((s) => s.domain !== 'creativity').sort((a, b) => a.stars - b.stars || TIP_ORDER.indexOf(a.domain) - TIP_ORDER.indexOf(b.domain));
   return order.slice(0, 2).map((s) => {
     const tips = P.tips[s.domain];
     return tips[week % tips.length]!;
   });
 }
-const TIP_ORDER: Domain[] = ['liczby', 'litery', 'kolory', 'emocje', 'logika', 'tworczosc'];
+const TIP_ORDER: Domain[] = ['numbers', 'letters', 'colors', 'emotions', 'logic', 'creativity'];
 
 /** Najważniejsze sukcesy tygodnia (do pocztówki), najwyżej trzy. */
 function highlights(P: ReportText, j: Journal, acts: Partial<Record<Activity, number>>, from: string, to: string): string[] {
@@ -214,23 +214,23 @@ function highlights(P: ReportText, j: Journal, acts: Partial<Record<Activity, nu
       .map(([k]) => k.slice(group.length + 1));
   const out: string[] = [];
   // „Liczenie do N” tylko gdy opanowane są wszystkie liczby od 1 do N.
-  const nums = fresh('liczba').map(Number);
+  const nums = fresh('number').map(Number);
   if (nums.length) {
     let upTo = 0;
-    while (mastered(j.facts[`liczba:${upTo + 1}`])) upTo++;
+    while (mastered(j.facts[`number:${upTo + 1}`])) upTo++;
     out.push(upTo >= Math.max(...nums) && upTo >= 2 ? P.hl.countTo(upTo) : P.hl.counted(nums.sort((a, b) => a - b).map(String)));
   }
-  const letters = fresh('litera');
+  const letters = fresh('letter');
   if (letters.length) out.push(P.hl.letters(letters));
-  const sounds = fresh('gloska');
+  const sounds = fresh('phoneme');
   if (sounds.length) out.push(P.hl.sounds(sounds.map(P.sound)));
-  const colors = fresh('kolor');
+  const colors = fresh('color');
   if (colors.length) out.push(P.hl.colors(colors.map((c) => P.colors[c] ?? c)));
-  const digits = fresh('cyfra');
+  const digits = fresh('digit');
   if (digits.length) out.push(P.hl.digits(digits));
-  const shapes = fresh('ksztalt');
+  const shapes = fresh('shape');
   if (shapes.length) out.push(P.hl.shapes(shapes.map((x) => P.shapes[x] ?? x)));
-  const emotions = fresh('emocja');
+  const emotions = fresh('emotion');
   if (emotions.length) out.push(P.hl.emotions(emotions.map((e) => P.emotions[e] ?? e)));
   // Pierwsze razy (w pierwszych dniach to one są największymi sukcesami).
   for (const f of firstsIn(P, j, from, to).slice(0, 3)) out.push(capital(f));

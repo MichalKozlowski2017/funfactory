@@ -9,7 +9,7 @@ import { saveState, state } from '../state.ts';
 import { COLORS, cover, IconButton, sfx } from '../ui.ts';
 
 /** Naklejki zawsze dostępne na start (zanim dziecko coś zbierze). */
-const STARTERS = ['slonce', 'chmurka', 'drzewo', 'kwiatek', 'kot', 'pies'];
+const STARTERS = ['sun', 'cloud', 'tree', 'little-flower', 'cat', 'dog'];
 const PER_PAGE = 7;
 
 interface Placed {
@@ -42,7 +42,7 @@ export class StickerScene extends Scene {
   private tools: IconButton[] = [];
   private particles!: Particles;
   private readonly landscapes = new Map<Landscape, Texture>();
-  private bg: Landscape = 'polana';
+  private bg: Landscape = 'meadow';
   private owned: string[] = [];
   private page = 0;
   private placed: Placed[] = [];
@@ -53,7 +53,7 @@ export class StickerScene extends Scene {
   override async enter(): Promise<void> {
     this.art = await loadArt();
     for (const [l, tex] of await loadLandscapes(this.art)) this.landscapes.set(l, tex);
-    this.bgs.push(new Sprite(this.art.realmBg.polana), new Sprite(this.art.realmBg.polana));
+    this.bgs.push(new Sprite(this.art.realmBg.meadow), new Sprite(this.art.realmBg.meadow));
     this.board.sortableChildren = true;
     this.owned = [...new Set([...STARTERS, ...state.progress.stickers])].filter((id) => this.art.items.has(id));
     this.particles = new Particles(dotTexture(this.game.app.renderer, 10), this.game.rng);
@@ -100,7 +100,7 @@ export class StickerScene extends Scene {
     this.game.markReady();
     if (!introduced) {
       introduced = true;
-      this.timers.after(0.4, () => say(this.game, 'lusia', 'naklejanka'));
+      this.timers.after(0.4, () => say(this.game, 'lusia', 'stickers'));
     }
   }
 
@@ -117,7 +117,7 @@ export class StickerScene extends Scene {
     for (const p of this.placed) p.view.destroy();
     this.placed = [];
     const pic = this.picture;
-    this.setBg(this.landscapes.has(pic.bg) ? pic.bg : 'polana', animate);
+    this.setBg(this.landscapes.has(pic.bg) ? pic.bg : 'meadow', animate);
     const { width: w, height: h } = this.game.view;
     for (const s of pic.items) if (this.art.items.has(s.id)) {
       const p = this.place(s.id, s.x * w, s.y * h, s.flip);
@@ -126,7 +126,7 @@ export class StickerScene extends Scene {
   }
 
   private setBg(l: Landscape, animate = true): void {
-    const old = this.landscapes.get(this.bg) ?? this.art.realmBg.polana;
+    const old = this.landscapes.get(this.bg) ?? this.art.realmBg.meadow;
     this.bg = l;
     const [under, over] = this.bgs as [Sprite, Sprite];
     // Przenikanie: stare tło pod spodem, nowe na wierzchu rozjaśnia się.
@@ -480,7 +480,7 @@ export class StickerScene extends Scene {
     if (this.leaving) return;
     this.leaving = true;
     this.save();
-    if (this.placed.length) logTask('naklejanka', 0);
+    if (this.placed.length) logTask('stickers', 0);
     this.game.sound.stopChannel('voice');
     void import('./world.ts').then(({ WorldScene }) => this.game.scenes.go(new WorldScene(), { fade: 0.3, color: 0xfff6e8 }));
   }

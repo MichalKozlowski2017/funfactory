@@ -20,9 +20,9 @@ import { Hand } from '../hand.ts';
 import { markHand, needsHand } from '../sim/onboarding.ts';
 
 /** Obrazek na zakładce krainy (obiekt z katalogu). */
-const TAB_ICON: Record<string, string> = { polana: 'kwiatek', warsztat: 'klocek', sciezka: 'grzyb', pracownia: 'tecza' };
+const TAB_ICON: Record<string, string> = { meadow: 'little-flower', workshop: 'block', path: 'mushroom', studio: 'rainbow' };
 /** Kolor zakładki krainy. */
-const TAB_COLOR: Record<string, number> = { polana: 0x7ad7a0, warsztat: 0xf0a960, sciezka: 0x8fb8ff, pracownia: 0xff8fc0 };
+const TAB_COLOR: Record<string, number> = { meadow: 0x7ad7a0, workshop: 0xf0a960, path: 0x8fb8ff, studio: 0xff8fc0 };
 
 /**
  * Świat Bystrzakowa: krainy przewijane w bok (gest albo zakładki u góry). Każda kraina to inny rodzaj
@@ -55,7 +55,7 @@ export class WorldScene extends Scene {
 
   override async enter(): Promise<void> {
     this.art = await loadArt();
-    const catShadow = await shadowOf('kot');
+    const catShadow = await shadowOf('cat');
     const pr = this.game.pixelRatio;
     this.realm = Math.max(0, Math.min(REALMS.length - 1, state.progress.realm ?? 0));
     this.bgs = [new Sprite(this.art.realmBg[REALMS[this.realm]!.id]), new Sprite(this.art.realmBg[REALMS[this.realm]!.id])];
@@ -132,7 +132,7 @@ export class WorldScene extends Scene {
       sprite.on('pointertap', () => {
         haptics.tap();
         void squash(this.tweens, sprite, 0.12);
-        say(this.game, guide, 'witaj');
+        say(this.game, guide, 'hello');
       });
       // Postać w kontenerze: resize skaluje i przesuwa kontener, a animacje postaci działają na jej własnej skali.
       const box = new Container();
@@ -166,7 +166,7 @@ export class WorldScene extends Scene {
       state.greeted = true;
       this.timers.after(0.15, () => {
         // „Wybierz domek i pobawmy się razem!”: przy pierwszym uruchomieniu rączka od nowa stuka w domek pierwszej zagadki.
-        const len = say(this.game, 'lusia', 'witaj');
+        const len = say(this.game, 'lusia', 'hello');
         if (state.progress.rounds === 0) this.pointFirst();
         else this.timers.after(len + 0.4, () => this.introRealms());
       });
@@ -222,7 +222,7 @@ export class WorldScene extends Scene {
     this.sleep = o;
     this.addChild(o);
     this.addChild(this.gate);
-    this.timers.after(0.6, () => say(this.game, 'lusia', 'dobranoc'));
+    this.timers.after(0.6, () => say(this.game, 'lusia', 'good-night'));
     stopMusic(this.game);
   }
 
@@ -301,7 +301,7 @@ export class WorldScene extends Scene {
     this.drawTabs();
     const guide = realm.guide === 'lusia' ? this.lusia : this.bazyl;
     void squash(this.tweens, guide, 0.12);
-    say(this.game, realm.guide, `kraina-${realm.id}`);
+    say(this.game, realm.guide, `realm-${realm.id}`);
   }
 
   private drawTabs(): void {
@@ -324,22 +324,22 @@ export class WorldScene extends Scene {
     const c = new Container();
     c.addChild(new Graphics().circle(0, 0, 50).fill({ color: COLORS.card }).stroke({ color: COLORS.ink, width: 6 }));
     const pr = this.game.pixelRatio;
-    if (kind === 'cienie') {
+    if (kind === 'shadows') {
       const s = new Sprite({ texture: catShadow, anchor: 0.5 });
       s.scale.set(76 / Math.max(s.texture.width, s.texture.height));
       c.addChild(s);
-    } else if (kind === 'pasuje') c.addChild(label('?', 64, pr, '#ff7a8a'));
-    else if (kind === 'liczenie') c.addChild(label('123', 40, pr, '#5cb3ff'));
-    else if (kind === 'gloski') c.addChild(label('Aa', 48, pr, '#9b5de5'));
-    else if (kind === 'kolory') {
+    } else if (kind === 'matching') c.addChild(label('?', 64, pr, '#ff7a8a'));
+    else if (kind === 'counting') c.addChild(label('123', 40, pr, '#5cb3ff'));
+    else if (kind === 'phonemes') c.addChild(label('Aa', 48, pr, '#9b5de5'));
+    else if (kind === 'colors') {
       const g = new Graphics();
       [0xe8413c, 0xffd23f, 0x3d8bff, 0x4cbf56].forEach((color, i) => {
         const a = (i / 4) * Math.PI * 2 + Math.PI / 4;
         g.circle(Math.cos(a) * 18, Math.sin(a) * 18, 15).fill({ color }).stroke({ color: COLORS.ink, width: 3 });
       });
       c.addChild(g);
-    } else if (kind === 'mamy') c.addChild(hearts());
-    else if (kind === 'sortowanie') {
+    } else if (kind === 'mothers') c.addChild(hearts());
+    else if (kind === 'sorting') {
       // Dwie skrzyneczki ze strzałką w dół.
       const g = new Graphics();
       for (const [x, color] of [
@@ -349,45 +349,45 @@ export class WorldScene extends Scene {
         g.roundRect(x - 15, 4, 30, 22, 5).fill({ color }).stroke({ color: COLORS.ink, width: 3 });
       g.poly([-8, -26, 8, -26, 8, -14, 15, -14, 0, -2, -15, -14, -8, -14]).fill({ color: COLORS.sun }).stroke({ color: COLORS.ink, width: 3, join: 'round' });
       c.addChild(g);
-    } else if (kind === 'ukladanka') c.addChild(puzzlePiece());
-    else if (kind === 'emocje') {
+    } else if (kind === 'jigsaw') c.addChild(puzzlePiece());
+    else if (kind === 'emotions') {
       // Uśmiechnięta buźka.
       const g = new Graphics().circle(0, 0, 30).fill({ color: COLORS.sun }).stroke({ color: COLORS.ink, width: 3 }).circle(-10, -6, 4).fill({ color: COLORS.ink }).circle(10, -6, 4).fill({ color: COLORS.ink }).arc(0, 2, 14, 0.2, Math.PI - 0.2).stroke({ color: COLORS.ink, width: 4, cap: 'round' });
       c.addChild(g);
-    } else if (kind === 'litery') c.addChild(label('A', 52, pr, '#9b5de5'));
-    else if (kind === 'ksztalty') {
+    } else if (kind === 'letters') c.addChild(label('A', 52, pr, '#9b5de5'));
+    else if (kind === 'shapes') {
       const g = new Graphics();
-      drawShape(g.clear(), 'kolo', 26).fill({ color: 0xe8413c }).stroke({ color: COLORS.ink, width: 3 });
-      const t = drawShape(new Graphics(), 'trojkat', 26).fill({ color: 0xffd23f }).stroke({ color: COLORS.ink, width: 3 });
-      const q = drawShape(new Graphics(), 'kwadrat', 26).fill({ color: 0x3d8bff }).stroke({ color: COLORS.ink, width: 3 });
+      drawShape(g.clear(), 'circle', 26).fill({ color: 0xe8413c }).stroke({ color: COLORS.ink, width: 3 });
+      const t = drawShape(new Graphics(), 'triangle', 26).fill({ color: 0xffd23f }).stroke({ color: COLORS.ink, width: 3 });
+      const q = drawShape(new Graphics(), 'square', 26).fill({ color: 0x3d8bff }).stroke({ color: COLORS.ink, width: 3 });
       g.position.set(-18, -10);
       t.position.set(16, -10);
       q.position.set(0, 16);
       c.addChild(g, t, q);
-    } else if (kind === 'cyfry') c.addChild(label('3', 52, pr, '#5cb3ff'));
-    else if (kind === 'sylaby') c.addChild(label('MA', 40, pr, '#ff8fb1'));
-    else if (kind === 'historyjki') {
+    } else if (kind === 'digits') c.addChild(label('3', 52, pr, '#5cb3ff'));
+    else if (kind === 'syllables') c.addChild(label('MA', 40, pr, '#ff8fb1'));
+    else if (kind === 'stories') {
       // Trzy kadry obok siebie.
       const g = new Graphics();
       [0, 1, 2].forEach((i) => g.roundRect(-30 + i * 21, -13, 18, 26, 4).fill({ color: [0xa8e6a1, 0xffd166, 0xff8fb1][i]! }).stroke({ color: COLORS.ink, width: 3 }));
       c.addChild(g);
     }
-    else if (kind === 'kolorowanka') {
+    else if (kind === 'coloring') {
       // Paleta z kleksami farb.
       const g = new Graphics().ellipse(0, 4, 32, 24).fill({ color: 0xf3d9a8 }).stroke({ color: COLORS.ink, width: 3 });
       [0xe8413c, 0xffd23f, 0x3d8bff, 0x7ad35a].forEach((color, i) => g.circle(-16 + (i % 2) * 22 + (i > 1 ? 6 : 0), -6 + Math.floor(i / 2) * 16, 7).fill({ color }));
       c.addChild(g);
-    } else if (kind === 'melodia') {
+    } else if (kind === 'melody') {
       // Trzy sztabki cymbałków.
       const g = new Graphics();
       [0xe8413c, 0xffd23f, 0x3d8bff].forEach((color, i) => g.roundRect(-26 + i * 18, -22 + i * 6, 14, 44 - i * 12, 5).fill({ color }).stroke({ color: COLORS.ink, width: 3 }));
       c.addChild(g);
-    } else if (kind === 'naklejanka') {
+    } else if (kind === 'stickers') {
       // Naklejka-gwiazdka z zagiętym rogiem.
       const g = new Graphics().star(0, 2, 5, 30, 15).fill({ color: COLORS.sun }).stroke({ color: COLORS.ink, width: 3, join: 'round' }).circle(0, 2, 8).fill({ color: 0xff7a8a });
       c.addChild(g);
     }
-    else if (kind === 'wzory') {
+    else if (kind === 'patterns') {
       // Koraliki we wzorze i znak zapytania.
       const g = new Graphics();
       [0xff7a8a, 0x5cb3ff, 0xff7a8a, 0x5cb3ff].forEach((color, i) => g.circle(-27 + i * 15, 0, 7).fill({ color }).stroke({ color: COLORS.ink, width: 2 }));
@@ -409,7 +409,7 @@ export class WorldScene extends Scene {
         .circle(17, 2, 8)
         .fill({ color: 0xff7a8a });
       c.addChild(g);
-    } else if (kind === 'kropki') {
+    } else if (kind === 'dots') {
       // Trzy kropki połączone linią.
       const g = new Graphics().moveTo(-24, 14).lineTo(0, -20).lineTo(24, 14).stroke({ color: 0xff7a8a, width: 5, cap: 'round', join: 'round' });
       for (const [x, y] of [
@@ -419,7 +419,7 @@ export class WorldScene extends Scene {
       ] as const)
         g.circle(x, y, 9).fill({ color: 0xffffff }).stroke({ color: COLORS.ink, width: 3 });
       c.addChild(g);
-    } else if (kind === 'labirynt') {
+    } else if (kind === 'maze') {
       // Mały labirynt: zakręcona ścieżka.
       const g = new Graphics()
         .roundRect(-28, -28, 56, 56, 8)
@@ -434,7 +434,7 @@ export class WorldScene extends Scene {
     return c;
   }
 
-  /** Playtest: wejście do zabawy (`eval:__ff.game.scenes.current.play('sortowanie', 2)`; poziom opcjonalny). */
+  /** Playtest: wejście do zabawy (`eval:__ff.game.scenes.current.play('sorting', 2)`; poziom opcjonalny). */
   play(kind: Activity, level?: number): void {
     if (level !== undefined) state.progress.levels[kind] = level;
     const i = REALMS.findIndex((r) => r.rows.some((row) => row.includes(kind)));
@@ -487,14 +487,14 @@ export class WorldScene extends Scene {
     sfx.pop(this.game.sound, 0.6);
     void squash(this.tweens, house, 0.1);
     void squash(this.tweens, this.lusia, 0.12);
-    say(this.game, 'lusia', 'kraina-spi');
+    say(this.game, 'lusia', 'realm-asleep');
   }
 
   /** Pierwsze uruchomienie: rączka stuka w domek pierwszej zagadki (łatwej, dobranej do wieku). */
   private pointFirst(): void {
     if (this.leaving || this.sleep || this.realm !== 0 || !needsHand(state.progress, 'world')) return;
-    const pick = (state.progress.age ?? 4) <= 4 ? 'kolory' : 'cienie';
-    const house = this.houses.get(pick)?.visible ? this.houses.get(pick) : this.houses.get('cienie');
+    const pick = (state.progress.age ?? 4) <= 4 ? 'colors' : 'shadows';
+    const house = this.houses.get(pick)?.visible ? this.houses.get(pick) : this.houses.get('shadows');
     if (!house) return;
     this.hand.show({ kind: 'tap', at: [this.toLocal(house.getGlobalPosition())] });
     this.addChild(this.hand);
@@ -503,10 +503,10 @@ export class WorldScene extends Scene {
   /** Bazyl pokazuje zakładki krain (podskakują): raz, po pierwszej rundzie. Gracze sprzed powitania to już słyszeli. */
   private introRealms(): void {
     const p = state.progress;
-    if (this.leaving || this.sleep || !p.onboarded || p.rounds === 0 || !needsHand(p, 'krainy')) return;
-    markHand(p, 'krainy');
+    if (this.leaving || this.sleep || !p.onboarded || p.rounds === 0 || !needsHand(p, 'realms')) return;
+    markHand(p, 'realms');
     void saveState();
-    say(this.game, 'bazyl', 'krainy');
+    say(this.game, 'bazyl', 'realms');
     this.tabs.forEach((t, i) => this.timers.after(0.6 + i * 0.25, () => void squash(this.tweens, t, 0.35)));
   }
 
@@ -527,7 +527,7 @@ export class WorldScene extends Scene {
   }
 
   /** Playtest: przykładowy dziennik z tygodnia i strefa rodzica na zakładce `tab`. */
-  demoParent(tab = 'postepy', name = 'Zosia'): void {
+  demoParent(tab = 'progress', name = 'Zosia'): void {
     const j = journal();
     const t = today();
     const rng = this.game.rng;
@@ -535,11 +535,11 @@ export class WorldScene extends Scene {
       const day = shiftDay(t, -d);
       if (d === 2) continue;
       addTime(j, day, 300 + rng.int(0, 900));
-      for (const a of ['liczenie', 'kolory', 'gloski', 'historyjki', 'wzory', 'kolorowanka', 'emocje'] as const) for (let i = rng.int(0, 4); i > 0; i--) addTask(j, day, a, rng.int(0, 1));
+      for (const a of ['counting', 'colors', 'phonemes', 'stories', 'patterns', 'coloring', 'emotions'] as const) for (let i = rng.int(0, 4); i > 0; i--) addTask(j, day, a, rng.int(0, 1));
     }
-    const facts: [string, string][] = [['liczba:1', '111'], ['liczba:2', '111'], ['liczba:3', '1111'], ['liczba:4', '0111'], ['liczba:5', '111'], ['liczba:6', '1010'], ['liczba:7', '0010'],
-      ['kolor:czerwony', '111'], ['kolor:zielony', '111'], ['kolor:fioletowy', '1001'], ['gloska:a', '111'], ['gloska:m', '111'], [lang() === 'pl' ? 'gloska:sz' : 'gloska:r', '0101'],
-      ['litera:A', '11'], ['litera:M', '1'], ['litera:O', '1'], ['emocja:wesoly', '111'], ['emocja:smutny', '111'], ['emocja:zdziwiony', '01'], ['ksztalt:kolo', '111'], ['ksztalt:gwiazda', '0']];
+    const facts: [string, string][] = [['number:1', '111'], ['number:2', '111'], ['number:3', '1111'], ['number:4', '0111'], ['number:5', '111'], ['number:6', '1010'], ['number:7', '0010'],
+      ['color:red', '111'], ['color:green', '111'], ['color:purple', '1001'], ['phoneme:a', '111'], ['phoneme:m', '111'], [lang() === 'pl' ? 'phoneme:sz' : 'phoneme:r', '0101'],
+      ['letter:A', '11'], ['letter:M', '1'], ['letter:O', '1'], ['emotion:happy', '111'], ['emotion:sad', '111'], ['emotion:surprised', '01'], ['shape:circle', '111'], ['shape:star', '0']];
     for (const [f, h] of facts) for (const c of h) noteFact(j, t, f, c === '1');
     state.progress.childName = name || undefined;
     this.openParent();
@@ -548,15 +548,15 @@ export class WorldScene extends Scene {
 
   /**
    * Playtest statystyk: 10 tygodni zabawy (rosnąca samodzielność, wyższe poziomy, szybsze odpowiedzi) i strefa
-   * rodzica na liście „Przed szkołą” albo od razu w szczegółach umiejętności (`eval:…demoStats('kolory')`).
+   * rodzica na liście „Przed szkołą” albo od razu w szczegółach umiejętności (`eval:…demoStats('colors')`).
    */
   demoStats(skill = ''): void {
     const j = journal();
     const t = today();
     const rng = this.game.rng;
     const DAYS = 70;
-    const acts = ['liczenie', 'kolory', 'gloski', 'historyjki', 'wzory', 'emocje', 'sortowanie', 'memory', 'kropki', 'ksztalty', 'sylaby', 'litery', 'cyfry'] as const;
-    const tempoOf: Partial<Record<string, string>> = { liczenie: 'liczba', kolory: 'kolor', gloski: 'gloska', emocje: 'emocja' };
+    const acts = ['counting', 'colors', 'phonemes', 'stories', 'patterns', 'emotions', 'sorting', 'memory', 'dots', 'shapes', 'syllables', 'letters', 'digits'] as const;
+    const tempoOf: Partial<Record<string, string>> = { counting: 'number', colors: 'color', phonemes: 'phoneme', emotions: 'emotion' };
     for (let d = DAYS; d >= 0; d--) {
       if (rng.next() < 0.3) continue;
       const day = shiftDay(t, -d);
@@ -575,7 +575,7 @@ export class WorldScene extends Scene {
         }
       }
       // Opanowywanie elementów w czasie (różne daty odkryć).
-      for (const [g, items] of [['liczba', ['1', '2', '3', '4', '5', '6', '7']], ['kolor', ['czerwony', 'zielony', 'niebieski', 'zolty', 'pomaranczowy', 'rozowy', 'fioletowy']], ['ksztalt', ['kolo', 'kwadrat', 'trojkat', 'gwiazda', 'serce']], ['emocja', ['wesoly', 'smutny', 'zly', 'zdziwiony']], ['gloska', ['a', 'm', 'o', 't', 'p']], ['litera', ['A', 'M', 'O']], ['cyfra', ['1', '2', '3']]] as const) {
+      for (const [g, items] of [['number', ['1', '2', '3', '4', '5', '6', '7']], ['color', ['red', 'green', 'blue', 'yellow', 'orange', 'pink', 'purple']], ['shape', ['circle', 'square', 'triangle', 'star', 'heart']], ['emotion', ['happy', 'sad', 'angry', 'surprised']], ['phoneme', ['a', 'm', 'o', 't', 'p']], ['letter', ['A', 'M', 'O']], ['digit', ['1', '2', '3']]] as const) {
         const n = Math.floor(items.length * Math.min(1, k * 1.2));
         const id = items[rng.int(0, Math.max(0, n - 1))];
         if (n > 0 && id) noteFact(j, day, `${g}:${id}`, rng.next() < 0.85);
@@ -584,7 +584,7 @@ export class WorldScene extends Scene {
     state.progress.childName = 'Zosia';
     this.openParent();
     const panel = this.parentPanel as unknown as { setTab(t: string): void; skill: string | null; scroll: number; render(): void };
-    panel.setTab('postepy');
+    panel.setTab('progress');
     if (skill) {
       panel.skill = skill;
       panel.scroll = 0;

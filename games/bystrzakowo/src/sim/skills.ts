@@ -15,8 +15,8 @@ import { REPORT_TEXT } from './report-text.ts';
 import { SHAPES } from './shapes.ts';
 
 export type SkillId =
-  | 'liczenie' | 'cyfry' | 'kolory' | 'ksztalty' | 'gloski' | 'litery' | 'sylaby'
-  | 'historyjki' | 'wzory' | 'segregowanie' | 'emocje' | 'pamiec' | 'linia';
+  | 'counting' | 'digits' | 'colors' | 'shapes' | 'phonemes' | 'letters' | 'syllables'
+  | 'stories' | 'patterns' | 'classifying' | 'emotions' | 'memory' | 'line';
 
 export interface SkillDef {
   id: SkillId;
@@ -33,37 +33,37 @@ export interface SkillDef {
 }
 
 export const SKILLS: readonly SkillDef[] = [
-  { id: 'liczenie', name: 'Liczy przedmioty', acts: ['liczenie'], group: 'liczba', tempo: 'liczba', tip: 'Liczcie razem schody, guziki albo łyżki przy nakrywaniu do stołu.' },
-  { id: 'cyfry', name: 'Pisze cyfry', acts: ['cyfry'], group: 'cyfra', tip: 'Szukajcie cyfr na spacerze: numery domów, autobusów, ceny w sklepie.' },
-  { id: 'kolory', name: 'Rozpoznaje kolory', acts: ['kolory'], group: 'kolor', tempo: 'kolor', tip: 'Zabawa „Widzę coś czerwonego”: dziecko zgaduje, o czym myślisz.' },
-  { id: 'ksztalty', name: 'Rozpoznaje kształty', acts: ['ksztalty'], group: 'ksztalt', tip: 'Szukajcie kształtów w domu: okrągły talerz, kwadratowe okno, trójkątna kanapka.' },
-  { id: 'gloski', name: 'Pierwsza głoska w słowie', acts: ['gloski'], group: 'gloska', tempo: 'gloska', tip: 'Zabawa w słowa na jedną głoskę: kto wymyśli coś na M?' },
-  { id: 'litery', name: 'Pisze litery', acts: ['litery'], group: 'litera', tip: 'Piszcie litery palcem na plecach albo patykiem na piasku i zgadujcie.' },
-  { id: 'sylaby', name: 'Dzieli słowa na sylaby', acts: ['sylaby'], tip: 'Wyklaskujcie imiona domowników: ma-ma, ta-ta, bab-cia.' },
-  { id: 'historyjki', name: 'Układa historyjkę po kolei', acts: ['historyjki'], tip: 'Po spacerze zapytaj: co było najpierw, a co potem?' },
-  { id: 'wzory', name: 'Kontynuuje wzory i rytmy', acts: ['wzory'], tip: 'Układajcie wzory z klocków albo makaronu: czerwony, niebieski, czerwony…' },
-  { id: 'segregowanie', name: 'Segreguje i porównuje', acts: ['sortowanie', 'pasuje'], tip: 'Przy sprzątaniu segregujcie: klocki do pudełka, misie na półkę, auta do garażu.' },
-  { id: 'emocje', name: 'Rozpoznaje emocje', acts: ['emocje'], group: 'emocja', tempo: 'emocja', tip: 'Przy czytaniu bajki pytaj: jak się teraz czuje bohater? Skąd to wiesz?' },
-  { id: 'pamiec', name: 'Pamięć', acts: ['memory', 'melodia'], tip: 'Gra „Co zniknęło?”: kilka zabawek na stole, jedną chowasz, dziecko zgaduje.' },
-  { id: 'linia', name: 'Prowadzi linię ręką', acts: ['kropki', 'labirynt'], tip: 'Rysujcie po śladzie, łączcie kropki, prowadźcie autko palcem po narysowanej drodze.' },
+  { id: 'counting', name: 'Liczy przedmioty', acts: ['counting'], group: 'number', tempo: 'number', tip: 'Liczcie razem schody, guziki albo łyżki przy nakrywaniu do stołu.' },
+  { id: 'digits', name: 'Pisze cyfry', acts: ['digits'], group: 'digit', tip: 'Szukajcie cyfr na spacerze: numery domów, autobusów, ceny w sklepie.' },
+  { id: 'colors', name: 'Rozpoznaje kolory', acts: ['colors'], group: 'color', tempo: 'color', tip: 'Zabawa „Widzę coś czerwonego”: dziecko zgaduje, o czym myślisz.' },
+  { id: 'shapes', name: 'Rozpoznaje kształty', acts: ['shapes'], group: 'shape', tip: 'Szukajcie kształtów w domu: okrągły talerz, kwadratowe okno, trójkątna kanapka.' },
+  { id: 'phonemes', name: 'Pierwsza głoska w słowie', acts: ['phonemes'], group: 'phoneme', tempo: 'phoneme', tip: 'Zabawa w słowa na jedną głoskę: kto wymyśli coś na M?' },
+  { id: 'letters', name: 'Pisze litery', acts: ['letters'], group: 'letter', tip: 'Piszcie litery palcem na plecach albo patykiem na piasku i zgadujcie.' },
+  { id: 'syllables', name: 'Dzieli słowa na sylaby', acts: ['syllables'], tip: 'Wyklaskujcie imiona domowników: ma-ma, ta-ta, bab-cia.' },
+  { id: 'stories', name: 'Układa historyjkę po kolei', acts: ['stories'], tip: 'Po spacerze zapytaj: co było najpierw, a co potem?' },
+  { id: 'patterns', name: 'Kontynuuje wzory i rytmy', acts: ['patterns'], tip: 'Układajcie wzory z klocków albo makaronu: czerwony, niebieski, czerwony…' },
+  { id: 'classifying', name: 'Segreguje i porównuje', acts: ['sorting', 'matching'], tip: 'Przy sprzątaniu segregujcie: klocki do pudełka, misie na półkę, auta do garażu.' },
+  { id: 'emotions', name: 'Rozpoznaje emocje', acts: ['emotions'], group: 'emotion', tempo: 'emotion', tip: 'Przy czytaniu bajki pytaj: jak się teraz czuje bohater? Skąd to wiesz?' },
+  { id: 'memory', name: 'Pamięć', acts: ['memory', 'melody'], tip: 'Gra „Co zniknęło?”: kilka zabawek na stole, jedną chowasz, dziecko zgaduje.' },
+  { id: 'line', name: 'Prowadzi linię ręką', acts: ['dots', 'maze'], tip: 'Rysujcie po śladzie, łączcie kropki, prowadźcie autko palcem po narysowanej drodze.' },
 ];
 
 /** Wszystkie elementy umiejętności w bieżącym języku (np. liczby 1–8, kolory, litery). */
 export function itemsOf(group: string): string[] {
   switch (group) {
-    case 'liczba':
+    case 'number':
       return ['1', '2', '3', '4', '5', '6', '7', '8'];
-    case 'cyfra':
+    case 'digit':
       return DIGITS.map((d) => d.ch).sort();
-    case 'kolor':
+    case 'color':
       return Object.keys(REPORT_TEXT.pl.colors);
-    case 'ksztalt':
+    case 'shape':
       return [...SHAPES];
-    case 'gloska':
+    case 'phoneme':
       return [...soundsOf()];
-    case 'litera':
+    case 'letter':
       return lettersOf().map((l) => l.ch);
-    case 'emocja':
+    case 'emotion':
       return [...EMOTIONS];
     default:
       return [];
@@ -73,14 +73,14 @@ export function itemsOf(group: string): string[] {
 /** Nazwa elementu na ekranie (kolor, kształt, emocja w bieżącym języku; liczby i litery bez zmian). */
 export function itemName(group: string, id: string): string {
   const P = REPORT_TEXT[lang()];
-  if (group === 'kolor') return P.colors[id] ?? id;
-  if (group === 'ksztalt') return P.shapes[id] ?? id;
-  if (group === 'emocja') return P.emotions[id] ?? id;
-  if (group === 'gloska' || group === 'litera') return id.toUpperCase();
+  if (group === 'color') return P.colors[id] ?? id;
+  if (group === 'shape') return P.shapes[id] ?? id;
+  if (group === 'emotion') return P.emotions[id] ?? id;
+  if (group === 'phoneme' || group === 'letter') return id.toUpperCase();
   return id;
 }
 
-export type ItemState = 'opanowane' | 'cwiczy' | 'klopot' | 'nie';
+export type ItemState = 'mastered' | 'practicing' | 'trouble' | 'no';
 
 export interface Mastery {
   /** 0..1: wypełnienie paska. */
@@ -103,9 +103,9 @@ const cleanIn = (d: DayLog, acts: readonly Activity[]) =>
 export function itemState(j: Journal, group: string, id: string): ItemState {
   const key = `${group}:${id}`;
   const h = j.facts[key];
-  if (j.learned[key] || mastered(h)) return 'opanowane';
-  if (!h) return 'nie';
-  return struggling(h) ? 'klopot' : 'cwiczy';
+  if (j.learned[key] || mastered(h)) return 'mastered';
+  if (!h) return 'no';
+  return struggling(h) ? 'trouble' : 'practicing';
 }
 
 /** Ostatnie 14 dni zabawy: % bez pomyłki (do etapu umiejętności bez elementów). */
@@ -125,7 +125,7 @@ export function mastery(def: SkillDef, j: Journal, levels: Partial<Record<Activi
   const tasks = Object.values(j.days).reduce((s, d) => s + tasksIn(d, def.acts), 0);
   if (def.group) {
     const all = itemsOf(def.group);
-    const ok = all.filter((id) => itemState(j, def.group!, id) === 'opanowane').length;
+    const ok = all.filter((id) => itemState(j, def.group!, id) === 'mastered').length;
     return { value: all.length ? ok / all.length : 0, ok, of: all.length, tasks };
   }
   if (!tasks) return { value: 0, stage: 0, tasks };
@@ -137,7 +137,7 @@ export function mastery(def: SkillDef, j: Journal, levels: Partial<Record<Activi
   return { value: stage / 3, stage, tasks };
 }
 
-export type Range = 'dni' | 'tygodnie';
+export type Range = 'days' | 'weeks';
 
 export interface Point {
   /** Pierwszy dzień okresu (klucz dnia). */
@@ -153,8 +153,8 @@ export interface Point {
 
 /** Okresy wykresu: 14 ostatnich dni albo 12 ostatnich tygodni (kończących się dziś). */
 export function periods(range: Range, today: string): { from: string; to: string }[] {
-  const n = range === 'dni' ? 14 : 12;
-  const len = range === 'dni' ? 1 : 7;
+  const n = range === 'days' ? 14 : 12;
+  const len = range === 'days' ? 1 : 7;
   return Array.from({ length: n }, (_, i) => {
     const to = shiftDay(today, -(n - 1 - i) * len);
     return { from: shiftDay(to, -(len - 1)), to };
@@ -167,7 +167,7 @@ const daysOf = (j: Journal, from: string, to: string): [string, DayLog][] =>
     .sort(([a], [b]) => (a < b ? -1 : 1));
 
 /** Najmniej zadań, żeby okres dostał punkt na wykresie. */
-export const MIN_TASKS: Record<Range, number> = { dni: 3, tygodnie: 5 };
+export const MIN_TASKS: Record<Range, number> = { days: 3, weeks: 5 };
 
 /** Krzywa nauki: % zadań bez pomyłki w każdym okresie i znaczniki wejścia na wyższy poziom. */
 export function accuracy(def: SkillDef, j: Journal, range: Range, today: string): Point[] {
@@ -249,21 +249,21 @@ export interface Milestone {
   day: string;
   /** Element (np. „7”, „zielony”) albo null dla pierwszego razu / wyższego poziomu. */
   item: string | null;
-  kind: 'opanowane' | 'pierwszy' | 'poziom';
+  kind: 'mastered' | 'first' | 'level';
 }
 
 /** Odkrycia: opanowane elementy, pierwszy raz w zabawie, wejścia na wyższy poziom (najnowsze pierwsze). */
 export function milestones(def: SkillDef, j: Journal): Milestone[] {
   const out: Milestone[] = [];
-  if (def.group) for (const [k, day] of Object.entries(j.learned)) if (k.startsWith(def.group + ':')) out.push({ day, item: k.slice(def.group.length + 1), kind: 'opanowane' });
+  if (def.group) for (const [k, day] of Object.entries(j.learned)) if (k.startsWith(def.group + ':')) out.push({ day, item: k.slice(def.group.length + 1), kind: 'mastered' });
   const first = def.acts.map((a) => j.firsts?.[a]).filter((d): d is string => !!d).sort()[0];
-  if (first) out.push({ day: first, item: null, kind: 'pierwszy' });
+  if (first) out.push({ day: first, item: null, kind: 'first' });
   let best = -1;
   for (const [k, d] of daysOf(j, '0000', '9999'))
     for (const a of def.acts) {
       const l = d.lvl?.[a];
       if (l === undefined) continue;
-      if (best >= 0 && l > best) out.push({ day: k, item: null, kind: 'poziom' });
+      if (best >= 0 && l > best) out.push({ day: k, item: null, kind: 'level' });
       best = Math.max(best, l);
     }
   return out.sort((a, b) => (a.day < b.day ? 1 : a.day > b.day ? -1 : 0));

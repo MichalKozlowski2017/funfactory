@@ -32,7 +32,7 @@ export function applyAge(p: Progress, age: number, played: ReadonlySet<Activity>
 export const needsWelcome = (p: Progress): boolean => !p.onboarded && p.rounds === 0;
 
 /** Co rączka (albo pierwsza podpowiedź) już pokazała: zabawa, domek pierwszej zagadki w świecie, zakładki krain. */
-export type HandKey = Activity | 'world' | 'krainy';
+export type HandKey = Activity | 'world' | 'realms';
 
 /** Rączka z pokazem gestu: pierwszy raz w danej zabawie. */
 export const needsHand = (p: Progress, a: HandKey): boolean => !(p.hands ?? []).includes(a);

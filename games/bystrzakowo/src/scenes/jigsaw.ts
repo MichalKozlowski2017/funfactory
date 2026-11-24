@@ -46,11 +46,11 @@ export class JigsawScene extends RoundScene {
   private trayScale = TRAY_MAX;
 
   constructor() {
-    super('ukladanka', 'bazyl');
+    super('jigsaw', 'bazyl');
   }
 
   protected async prepare(): Promise<void> {
-    const level = state.progress.levels.ukladanka ?? 0;
+    const level = state.progress.levels.jigsaw ?? 0;
     this.grid = jigsawGrid(level);
     this.items = makeJigsawRound(this.game.rng);
     this.length = this.items.length;
@@ -81,7 +81,7 @@ export class JigsawScene extends RoundScene {
   }
 
   protected promptLine(): string {
-    return 'ukladanka';
+    return 'jigsaw';
   }
 
   protected show(): void {
@@ -128,7 +128,7 @@ export class JigsawScene extends RoundScene {
       }
     // Kawałki w zasobniku w losowej kolejności.
     for (const p of this.game.rng.shuffle([...this.pieces])) this.layer.addChild(p.view);
-    this.timers.after(0.4, () => say(this.game, this.guide, 'ukladanka'));
+    this.timers.after(0.4, () => say(this.game, this.guide, 'jigsaw'));
   }
 
   protected override appear(): void {

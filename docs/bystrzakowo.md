@@ -80,7 +80,7 @@ Decyzje właściciela: krótkie powitanie rodzica, wiek ustawia start, rączka i
   - 6+: poziom 2.
 
   Dalej trudność dopasowuje się jak dotąd. Wiek można zmienić w strefie rodzica (Ustawienia). Zmiana nie rusza zabaw, w które dziecko już grało. Zerowanie postępów zostawia wiek, imię, język i to, że powitanie już było.
-- **Rączka** (`src/hand.ts`, grafika z Fluxa `ui/raczka-d-302`, grzbiet dłoni):
+- **Rączka** (`src/hand.ts`, grafika z Fluxa `ui/hand-d-302`, grzbiet dłoni):
   - pokazuje gest przy pierwszym razie w każdej zabawie, w pętli, aż dziecko dotknie ekranu;
   - rodzaje gestów: stuknięcie (w dobrą odpowiedź), przeciągnięcie (pierwszy element na swoje miejsce), prowadzenie palcem (kreska litery, kropki, labirynt);
   - w kolorowance pokazuje wybór koloru i stuknięcie w pole, w melodii stuka w sztabki po pokazie Lusi;
@@ -123,7 +123,7 @@ Decyzje właściciela:
 - Dopóki brakuje danych, wykres pokazuje przykładowe dziecko z etykietą „Przykład”. Wykres dzienny ma punkty po 2–3 dniach, czyli jeszcze w czasie próby.
 - Po próbie lista z paskami zostaje widoczna. Wykresy są lekko rozmyte (widać, że linia rośnie), z kłódką i przyciskiem „Odblokuj pełną wersję”.
 
-**Playtest:** `eval:__ff.game.scenes.current.demoStats('kolory')` generuje 10 tygodni zabawy i otwiera szczegóły (pusty argument otwiera listę).
+**Playtest:** `eval:__ff.game.scenes.current.demoStats('colors')` generuje 10 tygodni zabawy i otwiera szczegóły (pusty argument otwiera listę).
 
 ## Tablety i orientacja (2026-11-24)
 
@@ -155,9 +155,9 @@ Alfabety:
 
 - **Kształty:** `LETTERS` w `sim/letters.ts`. Nowe są Ł, V, Y, Q oraz litery ze znakiem nad sobą: Ś (kreska), Ż (kropka) i Ñ (falka). Podstawa litery jest ściśnięta w dół pola (`accented`), znak rysuje się na końcu.
 - **Przykłady:** `LETTER_EXAMPLES[język][litera] = [obiekt, słowo][]`, w sumie 289, co najmniej 2 na literę. Kolejna runda z tą samą literą pokazuje następny przykład.
-- **Obrazki tylko do liter:** `sim/letter-pics.ts` (42 z Fluxa, `gen-art.ts --litery`, 2 warianty, wybrany w `scripts/assets.sh`, pliki `public/art/litery/`). Nie trafiają do innych zagadek ani naklejek. Odrzucone po wygenerowaniu: igła, zamek błyskawiczny, nos (nieczytelne).
-- **Playtest:** `?litery=ŁŚŻ` (tylko dev) wymusza te litery w rundzie.
-- **Nagrania:** `litera-<litera>-<obiekt>`. Polskie znaki w nazwach są zamienione: ł→lw, ś→si, ż→zh, ñ→ny.
+- **Obrazki tylko do liter:** `sim/letter-pics.ts` (42 z Fluxa, `gen-art.ts --letters`, 2 warianty, wybrany w `scripts/assets.sh`, pliki `public/art/letters/`). Nie trafiają do innych zagadek ani naklejek. Odrzucone po wygenerowaniu: igła, zamek błyskawiczny, nos (nieczytelne).
+- **Playtest:** `?letters=ŁŚŻ` (tylko dev) wymusza te litery w rundzie.
+- **Nagrania:** `letter-<litera>-<obiekt>`. Polskie znaki w nazwach są zamienione: ł→lw, ś→si, ż→zh, ñ→ny.
   - Wczytują się na rundę, a nie przy starcie, bo jest ich około 300.
   - Teksty i lista braków: `scripts/letters-voice.ts`. Po polsku lektor czyta nazwę litery („Eś... jak ślimak.”), w innych językach „S is for…”, „Ku wie Qualle.”, „Eñe de ñandú.”.
   - Silniki: Chatterbox z próbką Lusi (pl, de, es), VoxCPM `lusia-en-calm` (en).
@@ -181,7 +181,7 @@ Darmowe: 3 domki w pełni (np. cienie, co nie pasuje, liczenie). Reszta po **jed
 
 ## Produkcja treści
 
-- **Grafika:** Flux 2 na Legionie (`flux2-sprite`), styl **plastelina** (wybór właściciela 2026-11-20, test w `assets-raw/bystrzakowo/styl2/`): „soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, bright cheerful pastel colors, cute and friendly, no face on objects”. Konkurent był wektor (czytelniejszy, spójniejszy). Jeśli plastelina się nie sprawdzi, zmieniamy styl, a katalog trzyma prompty, więc całość da się przegenerować.
+- **Grafika:** Flux 2 na Legionie (`flux2-sprite`), styl **plastelina** (wybór właściciela 2026-11-20, test w `assets-raw/bystrzakowo/style2/`): „soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, bright cheerful pastel colors, cute and friendly, no face on objects”. Konkurent był wektor (czytelniejszy, spójniejszy). Jeśli plastelina się nie sprawdzi, zmieniamy styl, a katalog trzyma prompty, więc całość da się przegenerować.
   - Ryzyka plasteliny: słabsza spójność (Flux dorabia szczegóły, np. nóżki kubka) i mniej czytelne cienie (pełne koła roweru, „bryły”). Dlatego każdy obiekt przechodzi kontrolę: podgląd obiektu i jego cienia, a obiekty o mało charakterystycznej sylwetce nie trafiają do zagadki z cieniami (tag w katalogu). Na start ok. 120–150 obiektów. Przewodnicy i tła polany jako osobne ilustracje, a postacie składane z części animowanych w kodzie.
 - **Lektor:** skill `tts`. Szacunkowo: nazwy obiektów (~150), zdania o obiektach (~150), polecenia zagadek (~80), pochwały i reakcje (~40 na przewodnika), głoski, litery i liczby (~70). Razem ok. 500–600 nagrań. Przy ~5 s na kwestię to około godziny generowania z automatyczną kontrolą wymowy, a potem odsłuch próbki przez właściciela.
 - **Dźwięki zwierząt i efekty:** paczki CC0 (np. Freesound CC0, Kenney) albo synteza.
@@ -230,7 +230,7 @@ Strefa rodzica: muzyka, limit czasu zabawy (15/30/45 min, potem „Dobranoc”, 
 
 Dźwięk: kontekst 24 kHz, na starcie tylko polecenia; nazwy obiektów dekoduje runda (`roundItems`) i zwalnia po wyjściu (ok. 40 MB zamiast 130 MB w pamięci).
 
-Do odsłuchu: czytanie sylabami (`lusia-czytaj-*`), Whisper nie umie tego ocenić; „Romb” (Bazyl) z twardym „p” na końcu; „Dzięcioł” (Bazyl) z miękkim „ł”.
+Do odsłuchu: czytanie sylabami (`lusia-read-*`), Whisper nie umie tego ocenić; „Romb” (Bazyl) z twardym „p” na końcu; „Dzięcioł” (Bazyl) z miękkim „ł”.
 
 Research oczekiwań rodziców: `docs/bystrzakowo-rodzice.md`.
 

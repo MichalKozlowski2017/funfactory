@@ -1,0 +1,21 @@
+{
+ "levels": { "kolory": 2, "litery": 1, "sortowanie": 0, "emocje": 3 },
+ "stickers": ["jablko", "lodz-podwodna", "kotek"],
+ "rounds": 12,
+ "realm": 1,
+ "storiesSeen": ["kanapka", "balwan"],
+ "colored": ["kot", "domek"],
+ "pictures": [{ "bg": "polana", "items": [{ "id": "zyrafa", "x": 10, "y": 20, "flip": false }] }],
+ "picture": 0,
+ "journal": {
+  "days": { "2026-11-20": { "sec": 300, "acts": { "kolory": 4 }, "miss": 1, "misses": { "kolory": 1 }, "clean": { "kolory": 3 }, "lvl": { "kolory": 2 }, "ms": { "kolor@1": [21, 34] } } },
+  "facts": { "kolor:zielony": "2026-11-20", "litera:A": "2026-11-20" },
+  "learned": { "gloska:sz": "2026-11-20" },
+  "firsts": { "litery": "2026-11-20" }
+ },
+ "hands": ["kolory", "krainy"],
+ "childName": "kolory las",
+ "lang": "pl",
+ "trialDays": ["2026-11-20"],
+ "music": true
+}

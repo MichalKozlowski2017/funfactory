@@ -8,7 +8,7 @@ import type { RealmId } from './realms.ts';
 
 export const TRIAL_DAYS = 3;
 /** Kraina zawsze darmowa. */
-export const FREE_REALM: RealmId = 'polana';
+export const FREE_REALM: RealmId = 'meadow';
 
 export interface TrialSave {
   /** Dni zabawy w czasie próby (różne, najwyżej TRIAL_DAYS). */

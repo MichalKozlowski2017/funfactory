@@ -59,7 +59,7 @@ if (process.argv[1] === import.meta.filename) {
     for (const { line, ch, word } of letterLines(l)) {
       const file = join(dir, `${line}.m4a`);
       const item = line.split('-').slice(2).join('-');
-      const legacy = join(dir, `litera-${ch.toLowerCase()}.m4a`);
+      const legacy = join(dir, `letter-${ch.toLowerCase()}.m4a`);
       if (!existsSync(file) && old?.[l][ch] === item && existsSync(legacy)) {
         renameSync(legacy, file);
         renamed++;
@@ -67,7 +67,7 @@ if (process.argv[1] === import.meta.filename) {
       if (!existsSync(file)) missing.push({ name: `lusia-${line}`, text: letterText(l, ch, word), lang: l });
     }
     const job = l === 'en' ? { voice: 'voices/lusia-en-calm', lang: 'en', tries: 8, lines: missing } : { voice: 'voices\\alt.wav', exag: 0.3, cfg: 0.3, stretch: 0.12, lines: missing };
-    writeFileSync(join(game, `voice/litery-${l}.json`), JSON.stringify(job, null, 1) + '\n');
+    writeFileSync(join(game, `voice/letters-${l}.json`), JSON.stringify(job, null, 1) + '\n');
     console.log(`${l}: przemianowane ${renamed}, do nagrania ${missing.length}`);
   }
 }

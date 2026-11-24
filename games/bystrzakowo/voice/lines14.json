@@ -1,12 +1,12 @@
 {
-  "voice": "voices/alt",
-  "tries": 8,
-  "lines": [
-    {
-      "name": "lusia-kraina-spi",
-      "text": "Ta kraina jeszcze śpi, zawołaj kogoś dorosłego!",
-      "voice": "voices/alt",
-      "seed": 40
-    }
-  ]
+ "voice": "voices/alt",
+ "tries": 8,
+ "lines": [
+  {
+   "name": "lusia-realm-asleep",
+   "text": "Ta kraina jeszcze śpi, zawołaj kogoś dorosłego!",
+   "voice": "voices/alt",
+   "seed": 40
+  }
+ ]
 }

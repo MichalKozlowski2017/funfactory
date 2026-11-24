@@ -39,7 +39,7 @@ describe('łączenie kropek', () => {
   });
 });
 
-describe('labirynt', () => {
+describe('maze', () => {
   it('z każdego pola da się dojść do każdego (labirynt doskonały)', () => {
     const rng = new Rng(4);
     for (const level of [0, 1, 2])
@@ -128,7 +128,7 @@ describe('litery po śladzie', () => {
       // Nazwy nagrań bez powtórzeń i tylko ASCII (pliki na każdym systemie).
       const lines = letterLines(lang).map((x) => x.line);
       expect(new Set(lines).size).toBe(lines.length);
-      for (const n of lines) expect(n, n).toMatch(/^litera-[a-z0-9]+-[a-z0-9-]+$/);
+      for (const n of lines) expect(n, n).toMatch(/^letter-[a-z0-9]+-[a-z0-9-]+$/);
     }
     for (const l of LETTERS) {
       for (const s of l.strokes) for (const [x, y] of s) {
@@ -171,7 +171,7 @@ describe('cyfry po śladzie', () => {
   });
 });
 
-describe('emocje', () => {
+describe('emotions', () => {
   it('dobra minka wśród odpowiedzi, bez powtórzeń z rzędu', async () => {
     const { makeEmotionRound, EMOTION_ROUND } = await import('./emotions.ts');
     for (const level of [0, 1, 2]) {

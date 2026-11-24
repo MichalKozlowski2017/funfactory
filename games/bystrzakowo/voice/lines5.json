@@ -3,51 +3,51 @@
  "tries": 8,
  "lines": [
   {
-   "name": "lusia-kraina-sciezka",
+   "name": "lusia-realm-path",
    "text": "To moja Ścieżka! Tutaj prowadzimy palcem."
   },
   {
-   "name": "lusia-kropki",
+   "name": "lusia-dots",
    "text": "Połącz kropki po kolei! Zacznij od jedynki."
   },
   {
-   "name": "lusia-labirynt-kurczak",
+   "name": "lusia-maze-chick",
    "text": "Zaprowadź kurczaczka do mamy!"
   },
   {
-   "name": "lusia-labirynt-kotek",
+   "name": "lusia-maze-kitten",
    "text": "Zaprowadź kotka do mamy!"
   },
   {
-   "name": "lusia-labirynt-prosiaczek",
+   "name": "lusia-maze-piglet",
    "text": "Zaprowadź prosiaczka do mamy!"
   },
   {
-   "name": "lusia-labirynt-cielaczek",
+   "name": "lusia-maze-calf",
    "text": "Zaprowadź cielaczka do mamy!"
   },
   {
-   "name": "lusia-labirynt-kaczatko",
+   "name": "lusia-maze-duckling",
    "text": "Zaprowadź kaczątko do mamy!"
   },
   {
-   "name": "lusia-labirynt-pszczola",
+   "name": "lusia-maze-bee",
    "text": "Zaprowadź pszczółkę do kwiatka!"
   },
   {
-   "name": "lusia-labirynt-motyl",
+   "name": "lusia-maze-butterfly",
    "text": "Zaprowadź motylka do kwiatka!"
   },
   {
-   "name": "lusia-labirynt-krolik",
+   "name": "lusia-maze-rabbit",
    "text": "Zaprowadź królika do marchewki!"
   },
   {
-   "name": "lusia-labirynt-malpa",
+   "name": "lusia-maze-monkey",
    "text": "Zaprowadź małpkę do banana!"
   },
   {
-   "name": "lusia-labirynt-wiewiorka",
+   "name": "lusia-maze-squirrel",
    "text": "Zaprowadź wiewiórkę do drzewa!"
   }
  ]

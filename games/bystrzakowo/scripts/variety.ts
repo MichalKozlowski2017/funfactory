@@ -27,28 +27,28 @@ const N = 300;
 type Gen = (rng: Rng, level: number) => string[];
 
 const qKey = (q: Question): string => {
-  if (q.kind === 'kolory') return `${q.color}:${q.target.id}`;
-  if (q.kind === 'gloski') return `${q.sound}:${q.target.id}`;
-  if (q.kind === 'liczenie') return `${q.count}×${q.item.id}`;
-  if (q.kind === 'pasuje') return q.odd.id;
-  if (q.kind === 'mamy') return q.baby.id;
+  if (q.kind === 'colors') return `${q.color}:${q.target.id}`;
+  if (q.kind === 'phonemes') return `${q.sound}:${q.target.id}`;
+  if (q.kind === 'counting') return `${q.count}×${q.item.id}`;
+  if (q.kind === 'matching') return q.odd.id;
+  if (q.kind === 'mothers') return q.baby.id;
   return q.target.id;
 };
 
 const GENS: Record<string, { gen: Gen; langs?: boolean; levels?: number[] }> = {
-  ...Object.fromEntries(PUZZLE_KINDS.map((k) => [k, { gen: (r: Rng, l: number) => makeRound(k, r, l).map(qKey), langs: k === 'gloski' }])),
-  emocje: { gen: (r, l) => makeEmotionRound(r, l).map((q) => `${q.target}:${q.char}`) },
-  wzory: { gen: (r, l) => makePatternRound(r, l).map((t) => [...new Set(t.row.map((i) => i.id))].sort().join('+')) },
-  ksztalty: { gen: (r, l) => Array.from({ length: SHAPE_ROUND }, () => makeShapeBoard(r, l).slice().sort().join('+')) },
-  sortowanie: { gen: (r, l) => makeSortRound(r, l).map((t) => `${t.rule}:${t.bins.map((b) => b.key).sort().join('/')}`) },
-  ukladanka: { gen: (r) => makeJigsawRound(r).map((i) => i.id), levels: [0] },
-  kropki: { gen: (r) => makeDotsRound(r).map((i) => i.id), levels: [0] },
-  labirynt: { gen: (r) => makeMazeRound(r).map(([a]) => a), levels: [0] },
-  litery: { gen: (r, l) => makeLetterRound(r, l).map((x) => x.ch), langs: true },
-  cyfry: { gen: (r, l) => makeDigitRound(r, l).map((x) => x.ch) },
-  sylaby: { gen: (r, l) => makeSyllableRound(r, l).map((w) => w.item), langs: true },
+  ...Object.fromEntries(PUZZLE_KINDS.map((k) => [k, { gen: (r: Rng, l: number) => makeRound(k, r, l).map(qKey), langs: k === 'phonemes' }])),
+  emotions: { gen: (r, l) => makeEmotionRound(r, l).map((q) => `${q.target}:${q.char}`) },
+  patterns: { gen: (r, l) => makePatternRound(r, l).map((t) => [...new Set(t.row.map((i) => i.id))].sort().join('+')) },
+  shapes: { gen: (r, l) => Array.from({ length: SHAPE_ROUND }, () => makeShapeBoard(r, l).slice().sort().join('+')) },
+  sorting: { gen: (r, l) => makeSortRound(r, l).map((t) => `${t.rule}:${t.bins.map((b) => b.key).sort().join('/')}`) },
+  jigsaw: { gen: (r) => makeJigsawRound(r).map((i) => i.id), levels: [0] },
+  dots: { gen: (r) => makeDotsRound(r).map((i) => i.id), levels: [0] },
+  maze: { gen: (r) => makeMazeRound(r).map(([a]) => a), levels: [0] },
+  letters: { gen: (r, l) => makeLetterRound(r, l).map((x) => x.ch), langs: true },
+  digits: { gen: (r, l) => makeDigitRound(r, l).map((x) => x.ch) },
+  syllables: { gen: (r, l) => makeSyllableRound(r, l).map((w) => w.item), langs: true },
   memory: { gen: (r, l) => Array.from({ length: MEMORY_ROUND }, () => makeMemoryBoard(r, l)).flatMap((b) => [...new Set(b.map((c) => c.item.id))]) },
-  melodia: { gen: (r, l) => Array.from({ length: MELODY_ROUND }, (_, i) => makeMelody(r, l, i).join('')) },
+  melody: { gen: (r, l) => Array.from({ length: MELODY_ROUND }, (_, i) => makeMelody(r, l, i).join('')) },
 };
 
 function measure(gen: Gen, level: number): { pool: number; rep: number; same: number; to90: number } {

@@ -1,5 +1,19 @@
-{"voice": "voices/alt", "tries": 12, "lines": [
-  {"name": "lusia-gloska-cz", "text": "Co zaczyna się na głoskę... czy?"},
-  {"name": "bazyl-item-jez", "text": "Jeż!", "voice": "voices/prezenter"},
-  {"name": "lusia-item-jez", "text": "Jeż!"}
-]}
+{
+ "voice": "voices/alt",
+ "tries": 12,
+ "lines": [
+  {
+   "name": "lusia-phoneme-cz",
+   "text": "Co zaczyna się na głoskę... czy?"
+  },
+  {
+   "name": "bazyl-item-hedgehog",
+   "text": "Jeż!",
+   "voice": "voices/prezenter"
+  },
+  {
+   "name": "lusia-item-hedgehog",
+   "text": "Jeż!"
+  }
+ ]
+}

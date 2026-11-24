@@ -27,11 +27,11 @@ export class PatternScene extends RoundScene {
   private dragging = false;
 
   constructor() {
-    super('wzory', 'bazyl');
+    super('patterns', 'bazyl');
   }
 
   protected async prepare(): Promise<void> {
-    this.tasks = makePatternRound(this.game.rng, state.progress.levels.wzory ?? 0);
+    this.tasks = makePatternRound(this.game.rng, state.progress.levels.patterns ?? 0);
     this.length = this.tasks.length;
   }
 
@@ -40,7 +40,7 @@ export class PatternScene extends RoundScene {
   }
 
   protected promptLine(): string {
-    return 'wzory';
+    return 'patterns';
   }
 
   protected show(): void {
@@ -73,7 +73,7 @@ export class PatternScene extends RoundScene {
       this.layer.addChild(view);
       return opt;
     });
-    this.timers.after(0.4, () => say(this.game, this.guide, 'wzory'));
+    this.timers.after(0.4, () => say(this.game, this.guide, 'patterns'));
   }
 
   protected override appear(): void {

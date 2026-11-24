@@ -36,7 +36,7 @@ export class AlbumScene extends Scene {
     this.voices = itemVoices(state.progress.stickers);
     void this.game.sound.load(this.voices);
     const pr = this.game.pixelRatio;
-    this.bg = new Sprite(this.art.playBg.polana);
+    this.bg = new Sprite(this.art.playBg.meadow);
     this.title = label(tr('Album'), 64, pr, '#ff8fb1');
     const owned = new Set(state.progress.stickers).size;
     this.counter = label(`${owned} / ${ITEMS.length}`, 40, pr, '#ffd23f');

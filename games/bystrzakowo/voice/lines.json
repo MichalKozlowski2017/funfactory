@@ -3,362 +3,362 @@
  "tries": 8,
  "lines": [
   {
-   "name": "lusia-witaj",
+   "name": "lusia-hello",
    "text": "Cześć! Jestem Lusia, a to mój przyjaciel Bazyl. Wybierz domek i pobawmy się razem!",
    "voice": "voices/alt"
   },
   {
-   "name": "lusia-cienie",
+   "name": "lusia-shadows",
    "text": "Czyj to cień? Dotknij właściwego obrazka.",
    "voice": "voices/alt"
   },
   {
-   "name": "lusia-liczenie",
+   "name": "lusia-counting",
    "text": "Policz, ile ich jest!",
    "voice": "voices/alt"
   },
   {
-   "name": "lusia-liczenie-dotyk",
+   "name": "lusia-counting-touch",
    "text": "Dotykaj po kolei i licz razem ze mną.",
    "voice": "voices/alt"
   },
   {
-   "name": "lusia-liczba-1",
+   "name": "lusia-number-1",
    "text": "Jeden!",
    "voice": "voices/alt"
   },
   {
-   "name": "lusia-liczba-2",
+   "name": "lusia-number-2",
    "text": "Dwa!",
    "voice": "voices/alt"
   },
   {
-   "name": "lusia-liczba-3",
+   "name": "lusia-number-3",
    "text": "Trzy!",
    "voice": "voices/alt"
   },
   {
-   "name": "lusia-liczba-4",
+   "name": "lusia-number-4",
    "text": "Cztery!",
    "voice": "voices/alt"
   },
   {
-   "name": "lusia-liczba-5",
+   "name": "lusia-number-5",
    "text": "Pięć!",
    "voice": "voices/alt"
   },
   {
-   "name": "lusia-liczba-6",
+   "name": "lusia-number-6",
    "text": "Sześć!",
    "voice": "voices/alt"
   },
   {
-   "name": "lusia-liczba-7",
+   "name": "lusia-number-7",
    "text": "Siedem!",
    "voice": "voices/alt"
   },
   {
-   "name": "lusia-liczba-8",
+   "name": "lusia-number-8",
    "text": "Osiem!",
    "voice": "voices/alt"
   },
   {
-   "name": "lusia-liczba-9",
+   "name": "lusia-number-9",
    "text": "Dziewięć!",
    "voice": "voices/alt"
   },
   {
-   "name": "lusia-liczba-10",
+   "name": "lusia-number-10",
    "text": "Dziesięć!",
    "voice": "voices/alt"
   },
   {
-   "name": "lusia-brawo-1",
+   "name": "lusia-bravo-1",
    "text": "Brawo!",
    "voice": "voices/alt"
   },
   {
-   "name": "lusia-brawo-2",
+   "name": "lusia-bravo-2",
    "text": "Świetnie!",
    "voice": "voices/alt"
   },
   {
-   "name": "lusia-brawo-3",
+   "name": "lusia-bravo-3",
    "text": "Super, tak trzymaj!",
    "voice": "voices/alt"
   },
   {
-   "name": "lusia-brawo-4",
+   "name": "lusia-bravo-4",
    "text": "Wspaniale!",
    "voice": "voices/alt"
   },
   {
-   "name": "lusia-brawo-5",
+   "name": "lusia-bravo-5",
    "text": "Ale z ciebie bystrzak!",
    "voice": "voices/alt"
   },
   {
-   "name": "lusia-oj-1",
+   "name": "lusia-oops-1",
    "text": "Ojej, spróbuj jeszcze raz.",
    "voice": "voices/alt"
   },
   {
-   "name": "lusia-oj-2",
+   "name": "lusia-oops-2",
    "text": "Hmm, to nie to. Spróbuj jeszcze!",
    "voice": "voices/alt"
   },
   {
-   "name": "lusia-nagroda",
+   "name": "lusia-reward",
    "text": "Brawo! Zdobywasz nową naklejkę!",
    "voice": "voices/alt"
   },
   {
-   "name": "lusia-item-kot",
+   "name": "lusia-item-cat",
    "text": "Kot!",
    "voice": "voices/alt"
   },
   {
-   "name": "lusia-item-pies",
+   "name": "lusia-item-dog",
    "text": "Pies!",
    "voice": "voices/alt"
   },
   {
-   "name": "lusia-item-krowa",
+   "name": "lusia-item-cow",
    "text": "Krowa!",
    "voice": "voices/alt"
   },
   {
-   "name": "lusia-item-slon",
+   "name": "lusia-item-elephant",
    "text": "Słoń!",
    "voice": "voices/alt"
   },
   {
-   "name": "lusia-item-kurczak",
+   "name": "lusia-item-chick",
    "text": "Kurczaczek!",
    "voice": "voices/alt"
   },
   {
-   "name": "lusia-item-ryba",
+   "name": "lusia-item-fish",
    "text": "Rybka!",
    "voice": "voices/alt"
   },
   {
-   "name": "lusia-item-zaba",
+   "name": "lusia-item-frog",
    "text": "Żabka!",
    "voice": "voices/alt"
   },
   {
-   "name": "lusia-item-kaczka",
+   "name": "lusia-item-duck",
    "text": "Kaczka!",
    "voice": "voices/alt"
   },
   {
-   "name": "lusia-item-jablko",
+   "name": "lusia-item-apple",
    "text": "Jabłko!",
    "voice": "voices/alt"
   },
   {
-   "name": "lusia-item-banan",
+   "name": "lusia-item-banana",
    "text": "Banan!",
    "voice": "voices/alt"
   },
   {
-   "name": "lusia-item-gruszka",
+   "name": "lusia-item-pear",
    "text": "Gruszka!",
    "voice": "voices/alt"
   },
   {
-   "name": "lusia-item-truskawka",
+   "name": "lusia-item-strawberry",
    "text": "Truskawka!",
    "voice": "voices/alt"
   },
   {
-   "name": "lusia-item-auto",
+   "name": "lusia-item-car",
    "text": "Autko!",
    "voice": "voices/alt"
   },
   {
-   "name": "lusia-item-rower",
+   "name": "lusia-item-bike",
    "text": "Rower!",
    "voice": "voices/alt"
   },
   {
-   "name": "lusia-item-samolot",
+   "name": "lusia-item-airplane",
    "text": "Samolot!",
    "voice": "voices/alt"
   },
   {
-   "name": "lusia-item-lodka",
+   "name": "lusia-item-boat",
    "text": "Łódka!",
    "voice": "voices/alt"
   },
   {
-   "name": "lusia-item-pilka",
+   "name": "lusia-item-ball",
    "text": "Piłka!",
    "voice": "voices/alt"
   },
   {
-   "name": "lusia-item-mis",
+   "name": "lusia-item-teddy",
    "text": "Miś!",
    "voice": "voices/alt"
   },
   {
-   "name": "lusia-item-klocek",
+   "name": "lusia-item-block",
    "text": "Klocek!",
    "voice": "voices/alt"
   },
   {
-   "name": "lusia-item-kubek",
+   "name": "lusia-item-mug",
    "text": "Kubek!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-witaj",
+   "name": "bazyl-hello",
    "text": "Hej! Ja jestem Bazyl. Chodź, będzie wesoło!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-pasuje",
+   "name": "bazyl-matching",
    "text": "Co tu nie pasuje? Dotknij tego obrazka.",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-brawo-1",
+   "name": "bazyl-bravo-1",
    "text": "Brawo!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-brawo-2",
+   "name": "bazyl-bravo-2",
    "text": "Świetnie!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-brawo-3",
+   "name": "bazyl-bravo-3",
    "text": "Super, tak trzymaj!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-brawo-4",
+   "name": "bazyl-bravo-4",
    "text": "Wspaniale!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-brawo-5",
+   "name": "bazyl-bravo-5",
    "text": "Ale z ciebie bystrzak!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-oj-1",
+   "name": "bazyl-oops-1",
    "text": "Ojej, spróbuj jeszcze raz.",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-oj-2",
+   "name": "bazyl-oops-2",
    "text": "Hmm, to nie to. Spróbuj jeszcze!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-nagroda",
+   "name": "bazyl-reward",
    "text": "Brawo! Zdobywasz nową naklejkę!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-item-kot",
+   "name": "bazyl-item-cat",
    "text": "Kot!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-item-pies",
+   "name": "bazyl-item-dog",
    "text": "Pies!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-item-krowa",
+   "name": "bazyl-item-cow",
    "text": "Krowa!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-item-slon",
+   "name": "bazyl-item-elephant",
    "text": "Słoń!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-item-kurczak",
+   "name": "bazyl-item-chick",
    "text": "Kurczaczek!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-item-ryba",
+   "name": "bazyl-item-fish",
    "text": "Rybka!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-item-zaba",
+   "name": "bazyl-item-frog",
    "text": "Żabka!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-item-kaczka",
+   "name": "bazyl-item-duck",
    "text": "Kaczka!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-item-jablko",
+   "name": "bazyl-item-apple",
    "text": "Jabłko!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-item-banan",
+   "name": "bazyl-item-banana",
    "text": "Banan!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-item-gruszka",
+   "name": "bazyl-item-pear",
    "text": "Gruszka!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-item-truskawka",
+   "name": "bazyl-item-strawberry",
    "text": "Truskawka!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-item-auto",
+   "name": "bazyl-item-car",
    "text": "Autko!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-item-rower",
+   "name": "bazyl-item-bike",
    "text": "Rower!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-item-samolot",
+   "name": "bazyl-item-airplane",
    "text": "Samolot!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-item-lodka",
+   "name": "bazyl-item-boat",
    "text": "Łódka!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-item-pilka",
+   "name": "bazyl-item-ball",
    "text": "Piłka!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-item-mis",
+   "name": "bazyl-item-teddy",
    "text": "Miś!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-item-klocek",
+   "name": "bazyl-item-block",
    "text": "Klocek!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-item-kubek",
+   "name": "bazyl-item-mug",
    "text": "Kubek!",
    "voice": "voices/prezenter"
   }

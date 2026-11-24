@@ -7,6 +7,7 @@ import { SaveStore } from '@funfactory/core';
 import type { Art } from './assets.ts';
 import { LANDSCAPES, stickerScale, type Landscape, type Picture } from './sim/stickers.ts';
 import { cover } from './ui.ts';
+import { IDS_VERSION, LEGACY_STORES, legacyId } from './sim/migrate.ts';
 
 export const TRAY_H = 150;
 /** Rozmiar naklejki w połowie wysokości obrazka (wyżej mniejsza, niżej większa). */
@@ -18,10 +19,10 @@ let landscapes: Promise<Map<Landscape, Texture>> | null = null;
 /** Tła naklejanki (wczytywane raz). */
 export function loadLandscapes(art: Art): Promise<Map<Landscape, Texture>> {
   return (landscapes ??= (async () => {
-    const map = new Map<Landscape, Texture>([['polana', art.realmBg.polana]]);
+    const map = new Map<Landscape, Texture>([['meadow', art.realmBg.meadow]]);
     await Promise.all(
-      LANDSCAPES.filter((l) => l !== 'polana').map(async (l) => {
-        const tex = await Assets.load<Texture>(`${URL_BASE}art/krajobrazy/${l}.jpg`).catch(() => null);
+      LANDSCAPES.filter((l) => l !== 'meadow').map(async (l) => {
+        const tex = await Assets.load<Texture>(`${URL_BASE}art/landscapes/${l}.jpg`).catch(() => null);
         if (tex) map.set(l, tex);
       }),
     );
@@ -32,7 +33,7 @@ export function loadLandscapes(art: Art): Promise<Map<Landscape, Texture>> {
 /** Obrazek z naklejek w rozmiarze `w`×`h` (jak na ekranie naklejanki o tym rozmiarze). */
 export function pictureView(pic: Picture, w: number, h: number, art: Art, bgs: Map<Landscape, Texture>): Container {
   const inner = new Container();
-  const bg = new Sprite(bgs.get(pic.bg) ?? art.realmBg.polana);
+  const bg = new Sprite(bgs.get(pic.bg) ?? art.realmBg.meadow);
   cover(bg, w, h);
   inner.addChild(bg);
   for (const s of pic.items) {
@@ -60,25 +61,34 @@ export interface Painting {
 
 /** Najwięcej zapamiętanych prac (najstarsze wypadają). */
 const MAX_PAINTINGS = 24;
-const store = new SaveStore<{ items: Painting[] }>('bystrzakowo-prace', { items: [] });
+const STORE_KEY = 'bystrzakowo-works';
+const store = new SaveStore<{ items: Painting[]; ids?: number }>(STORE_KEY, { items: [] });
 let cache: Painting[] | null = null;
 
 export async function paintings(): Promise<Painting[]> {
-  return (cache ??= (await store.load()).items);
+  if (cache) return cache;
+  const saved = await store.load();
+  if (saved.ids === undefined) {
+    // Paintings saved before the English rename live under the old key, with old page ids.
+    const old = await new SaveStore<{ items: Painting[] }>(LEGACY_STORES[STORE_KEY]!, { items: [] }).load();
+    saved.items = [...saved.items, ...old.items.map((x) => ({ ...x, page: legacyId(x.page) }))].slice(0, MAX_PAINTINGS);
+    await store.save({ items: saved.items, ids: IDS_VERSION });
+  }
+  return (cache = saved.items);
 }
 
 export async function addPainting(p: Painting): Promise<void> {
   const list = await paintings();
   list.unshift(p);
   list.splice(MAX_PAINTINGS);
-  await store.save({ items: list });
+  await store.save({ items: list, ids: IDS_VERSION });
 }
 
 export async function removePainting(id: string): Promise<void> {
   const list = await paintings();
   const i = list.findIndex((p) => p.id === id);
   if (i >= 0) list.splice(i, 1);
-  await store.save({ items: list });
+  await store.save({ items: list, ids: IDS_VERSION });
 }
 
 /** Piksele obrazka → JPEG data URL o boku `side`. */

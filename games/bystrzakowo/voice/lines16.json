@@ -3,38 +3,38 @@
  "tries": 10,
  "lines": [
   {
-   "name": "lusia-item-labedz",
+   "name": "lusia-item-swan",
    "text": "Łabędź."
   },
   {
-   "name": "bazyl-item-labedz",
+   "name": "bazyl-item-swan",
    "text": "Łabędź.",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-czapla",
+   "name": "lusia-item-heron",
    "text": "Czapla."
   },
   {
-   "name": "bazyl-item-czapla",
+   "name": "bazyl-item-heron",
    "text": "Czapla.",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-narty",
+   "name": "lusia-item-skis",
    "text": "Narty."
   },
   {
-   "name": "bazyl-item-narty",
+   "name": "bazyl-item-skis",
    "text": "Narty.",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-namiot",
+   "name": "lusia-item-tent",
    "text": "Namiot."
   },
   {
-   "name": "bazyl-item-namiot",
+   "name": "bazyl-item-tent",
    "text": "Namiot.",
    "voice": "voices/prezenter"
   },
@@ -48,65 +48,65 @@
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-zamek",
+   "name": "lusia-item-castle",
    "text": "Zamek z piasku."
   },
   {
-   "name": "bazyl-item-zamek",
+   "name": "bazyl-item-castle",
    "text": "Zamek z piasku.",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-lopatka",
+   "name": "lusia-item-spade",
    "text": "Łopatka."
   },
   {
-   "name": "bazyl-item-lopatka",
+   "name": "bazyl-item-spade",
    "text": "Łopatka.",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-szklanka",
+   "name": "lusia-item-glass",
    "text": "Szklanka."
   },
   {
-   "name": "bazyl-item-szklanka",
+   "name": "bazyl-item-glass",
    "text": "Szklanka.",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-jajko",
+   "name": "lusia-item-egg",
    "text": "Jajko."
   },
   {
-   "name": "bazyl-item-jajko",
+   "name": "bazyl-item-egg",
    "text": "Jajko.",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-szyszka",
+   "name": "lusia-item-pine-cone",
    "text": "Szyszka."
   },
   {
-   "name": "bazyl-item-szyszka",
+   "name": "bazyl-item-pine-cone",
    "text": "Szyszka.",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-ul",
+   "name": "lusia-item-beehive",
    "text": "Ul."
   },
   {
-   "name": "bazyl-item-ul",
+   "name": "bazyl-item-beehive",
    "text": "Ul.",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-sniezynka",
+   "name": "lusia-item-snowflake",
    "text": "Śnieżynka."
   },
   {
-   "name": "bazyl-item-sniezynka",
+   "name": "bazyl-item-snowflake",
    "text": "Śnieżynka.",
    "voice": "voices/prezenter"
   }

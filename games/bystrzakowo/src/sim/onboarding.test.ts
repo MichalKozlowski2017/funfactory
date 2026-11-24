@@ -12,13 +12,13 @@ describe('pierwsze uruchomienie', () => {
 
   it('zmiana wieku nie cofa zabaw, w które dziecko już grało', () => {
     const p = newProgress();
-    p.levels.liczenie = 2;
-    applyAge(p, 3, new Set(['liczenie']));
+    p.levels.counting = 2;
+    applyAge(p, 3, new Set(['counting']));
     expect(p.age).toBe(3);
-    expect(p.levels.liczenie).toBe(2);
-    expect(p.levels.kolory).toBe(0);
+    expect(p.levels.counting).toBe(2);
+    expect(p.levels.colors).toBe(0);
     applyAge(p, 6);
-    expect(p.levels.kolory).toBe(2);
+    expect(p.levels.colors).toBe(2);
   });
 
   it('powitanie tylko przy świeżym zapisie', () => {
@@ -33,12 +33,12 @@ describe('pierwsze uruchomienie', () => {
 
   it('rączka raz na zabawę', () => {
     const p = newProgress();
-    expect(needsHand(p, 'sortowanie')).toBe(true);
-    markHand(p, 'sortowanie');
-    markHand(p, 'sortowanie');
-    expect(p.hands).toEqual(['sortowanie']);
-    expect(needsHand(p, 'sortowanie')).toBe(false);
-    expect(needsHand(p, 'kolory')).toBe(true);
+    expect(needsHand(p, 'sorting')).toBe(true);
+    markHand(p, 'sorting');
+    markHand(p, 'sorting');
+    expect(p.hands).toEqual(['sorting']);
+    expect(needsHand(p, 'sorting')).toBe(false);
+    expect(needsHand(p, 'colors')).toBe(true);
   });
 });
 
@@ -46,7 +46,7 @@ describe('wiek w strefie rodzica', () => {
   it('przycisk przełącza wiek po kolei', async () => {
     const { nextAge, playedActivities } = await import('./onboarding.ts');
     expect([undefined, 3, 4, 5, 6].map((a) => nextAge(a))).toEqual([3, 4, 5, 6, 3]);
-    const j = { days: { '2026-11-20': { sec: 60, acts: { liczenie: 3 }, miss: 0 }, '2026-11-21': { sec: 0, acts: { kolory: 1 }, miss: 0 } }, facts: {}, learned: {} };
-    expect([...playedActivities(j)].sort()).toEqual(['kolory', 'liczenie']);
+    const j = { days: { '2026-11-20': { sec: 60, acts: { counting: 3 }, miss: 0 }, '2026-11-21': { sec: 0, acts: { colors: 1 }, miss: 0 } }, facts: {}, learned: {} };
+    expect([...playedActivities(j)].sort()).toEqual(['colors', 'counting']);
   });
 });

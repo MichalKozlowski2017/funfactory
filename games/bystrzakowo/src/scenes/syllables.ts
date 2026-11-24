@@ -32,11 +32,11 @@ export class SyllableScene extends RoundScene {
   private dragging = false;
 
   constructor() {
-    super('sylaby', 'lusia');
+    super('syllables', 'lusia');
   }
 
   protected async prepare(): Promise<void> {
-    this.words = makeSyllableRound(this.game.rng, state.progress.levels.sylaby ?? 0);
+    this.words = makeSyllableRound(this.game.rng, state.progress.levels.syllables ?? 0);
     this.length = this.words.length;
   }
 
@@ -49,7 +49,7 @@ export class SyllableScene extends RoundScene {
   }
 
   protected promptLine(): string {
-    return 'sylaby';
+    return 'syllables';
   }
 
   protected show(): void {
@@ -85,7 +85,7 @@ export class SyllableScene extends RoundScene {
       this.layer.addChild(view);
       return tile;
     });
-    this.timers.after(0.4, () => say(this.game, this.guide, this.index === 0 ? 'sylaby' : `item-${w.item}`));
+    this.timers.after(0.4, () => say(this.game, this.guide, this.index === 0 ? 'syllables' : `item-${w.item}`));
   }
 
   protected override appear(): void {
@@ -117,7 +117,7 @@ export class SyllableScene extends RoundScene {
   /** Czytanie: kafelki podskakują po kolei (sylaby), potem całe słowo i obrazek. */
   private read(): void {
     this.busy = true;
-    const len = say(this.game, this.guide, `czytaj-${this.word.item}`);
+    const len = say(this.game, this.guide, `read-${this.word.item}`);
     const ordered = [...this.tiles].sort((a, b) => a.index - b.index);
     const per = Math.max(0.45, (len * 0.6) / ordered.length);
     ordered.forEach((t, i) =>

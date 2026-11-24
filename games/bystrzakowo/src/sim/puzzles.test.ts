@@ -5,7 +5,7 @@ import { MAX_LEVEL, PUZZLE_KINDS, ROUND_LENGTH, colorQuestion, countQuestion, is
 
 const levels = [0, 1, 2];
 
-describe('katalog', () => {
+describe('catalog', () => {
   it('ma unikalne id i każda kategoria do „co nie pasuje” ma co najmniej 3 obiekty', () => {
     expect(new Set(ITEMS.map((i) => i.id)).size).toBe(ITEMS.length);
     const counts = new Map<string, number>();
@@ -14,7 +14,7 @@ describe('katalog', () => {
   });
 });
 
-describe('cienie', () => {
+describe('shadows', () => {
   it('cel jest wśród odpowiedzi, odpowiedzi są różne i mają sylwetkę', () => {
     const rng = new Rng(1);
     for (const level of levels)
@@ -42,7 +42,7 @@ describe('co nie pasuje', () => {
   });
 });
 
-describe('liczenie', () => {
+describe('counting', () => {
   it('prawidłowa liczba jest wśród odpowiedzi, w zakresie poziomu, bez powtórzeń', () => {
     const rng = new Rng(3);
     for (const level of levels)
@@ -103,7 +103,7 @@ describe('kolory, głoski, mamy', () => {
     const rng = new Rng(9);
     const count = new Map<string, number>();
     for (let r = 0; r < 400; r++) {
-      const round = makeRound('gloski', rng, 1).map((q) => (q.kind === 'gloski' ? q.sound : ''));
+      const round = makeRound('phonemes', rng, 1).map((q) => (q.kind === 'phonemes' ? q.sound : ''));
       expect(new Set(round).size).toBe(round.length);
       for (const s of round) count.set(s, (count.get(s) ?? 0) + 1);
     }
@@ -127,7 +127,7 @@ describe('kolory, głoski, mamy', () => {
         const q = motherQuestion(rng, level);
         expect(q.target.id).toBe(q.baby.mother);
         expect(q.options).toContain(q.target);
-        expect(q.options.every((o) => o.category === 'zwierzeta' && !o.mother)).toBe(true);
+        expect(q.options.every((o) => o.category === 'animals' && !o.mother)).toBe(true);
         expect(new Set(q.options).size).toBe(q.options.length);
         expect(isCorrect(q, q.target)).toBe(true);
       }
@@ -139,15 +139,15 @@ describe('kolory, głoski, mamy', () => {
 
   it('w jednym pytaniu nie ma dwóch podobnych obiektów (kot i kotek, koń i konik)', () => {
     const rng = new Rng(9);
-    for (const kind of ['cienie', 'pasuje', 'mamy'] as const)
+    for (const kind of ['shadows', 'matching', 'mothers'] as const)
       for (const level of levels)
         for (let i = 0; i < 300; i++) {
           const q = makeQuestion(kind, rng, level);
           const opts = q.options as Item[];
           // W „co nie pasuje” podobne mogą być obiekty z grupy, byle nie intruz do reszty.
-          const pairs = q.kind === 'pasuje' ? opts.filter((o) => o !== q.odd).map((o) => [q.odd, o] as const) : opts.flatMap((x, j) => opts.slice(j + 1).map((y) => [x, y] as const));
+          const pairs = q.kind === 'matching' ? opts.filter((o) => o !== q.odd).map((o) => [q.odd, o] as const) : opts.flatMap((x, j) => opts.slice(j + 1).map((y) => [x, y] as const));
           for (const [a, b] of pairs) expect(lookalike(a, b), `${kind}: ${a.id} ~ ${b.id}`).toBe(false);
-          expect(opts.length).toBe(kind === 'cienie' ? optionCount(level) : Math.max(3, optionCount(level)));
+          expect(opts.length).toBe(kind === 'shadows' ? optionCount(level) : Math.max(3, optionCount(level)));
         }
   });
 });

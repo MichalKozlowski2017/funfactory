@@ -42,16 +42,16 @@ export class LetterScene extends RoundScene {
   private counted: Sprite[] = [];
   private readonly pics = new Map<string, Texture | null>();
 
-  constructor(kind: 'litery' | 'cyfry' = 'litery') {
+  constructor(kind: 'letters' | 'digits' = 'letters') {
     super(kind, 'lusia');
-    this.digits = kind === 'cyfry';
+    this.digits = kind === 'digits';
   }
 
   protected async prepare(): Promise<void> {
     const level = state.progress.levels[this.kind] ?? 0;
     this.letters = this.digits ? makeDigitRound(this.game.rng, level) : makeLetterRound(this.game.rng, level);
-    // Playtest (tylko dev): `?litery=ŁŚŻ` wymusza te litery w rundzie, z losowym przykładem.
-    const only = import.meta.env.DEV && !this.digits ? new URLSearchParams(location.search).get('litery') : null;
+    // Playtest (tylko dev): `?letters=ŁŚŻ` wymusza te litery w rundzie, z losowym przykładem.
+    const only = import.meta.env.DEV && !this.digits ? new URLSearchParams(location.search).get('letters') : null;
     if (only) {
       const all = lettersOf();
       this.letters = [...only].flatMap((ch) => {
@@ -65,7 +65,7 @@ export class LetterScene extends RoundScene {
     this.length = this.letters.length;
     // Obrazki tylko do liter (nie ma ich w katalogu): wczytywane na rundę.
     const own = this.letters.map((x) => x.item).filter((id) => LETTER_PIC_IDS.has(id));
-    await Promise.all(own.map(async (id) => this.pics.set(id, await Assets.load<Texture>(`${import.meta.env.BASE_URL}art/litery/${id}.webp`).catch(() => null))));
+    await Promise.all(own.map(async (id) => this.pics.set(id, await Assets.load<Texture>(`${import.meta.env.BASE_URL}art/letters/${id}.webp`).catch(() => null))));
     this.tol = traceTolerance(level);
   }
 
@@ -74,7 +74,7 @@ export class LetterScene extends RoundScene {
   }
 
   protected override taskFacts(): string[] {
-    return [`${this.digits ? 'cyfra' : 'litera'}:${this.letter.ch}`];
+    return [`${this.digits ? 'digit' : 'letter'}:${this.letter.ch}`];
   }
 
   private get letter(): Letter {
@@ -82,7 +82,7 @@ export class LetterScene extends RoundScene {
   }
 
   protected promptLine(): string {
-    return this.digits ? 'cyfry' : 'litery';
+    return this.digits ? 'digits' : 'letters';
   }
 
   protected show(): void {
@@ -234,11 +234,11 @@ export class LetterScene extends RoundScene {
         s.visible = true;
         void popIn(this.tweens, s, 0.3);
         sfx.pop(this.game.sound, 1 + i * 0.07);
-        say(this.game, this.guide, `liczba-${i + 1}`);
+        say(this.game, this.guide, `number-${i + 1}`);
       });
     }
     this.timers.after(0.4 + n * 0.6, () => {
-      const len = n === 0 ? say(this.game, this.guide, 'liczba-0') : 0;
+      const len = n === 0 ? say(this.game, this.guide, 'number-0') : 0;
       this.burst(x0 + (right - x0) / 2, this.box.y + this.box.h / 2, 36);
       this.solved(len);
     });

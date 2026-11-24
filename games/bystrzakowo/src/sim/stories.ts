@@ -8,9 +8,9 @@ import { MAX_LEVEL } from './puzzles.ts';
 // Bez „swieca” i „samolot”: test agentem-dzieckiem pokazał, że ich kadry są dla 4-latka niejednoznaczne
 // (świeczka prawie się nie zmienia, złożona kartka nie wygląda na etap przed samolotem). Grafiki zostają w repo.
 export const STORIES = [
-  'kwiat', 'kurczak', 'motyl', 'balwan', 'jablko', 'lody', 'zabka', 'kanapka', 'wieza', 'balon',
-  'tort', 'zamek', 'jajko', 'pizza', 'kakao', 'gniazdo', 'drzewko', 'dzien',
-  'banan', 'arbuz', 'akwarium', 'prezent', 'myjnia', 'babeczka',
+  'flower', 'chick', 'butterfly', 'snowman', 'apple', 'ice-cream', 'froglet', 'sandwich', 'tower', 'balloon',
+  'cake', 'castle', 'egg', 'pizza', 'cocoa', 'nest', 'small-tree', 'day',
+  'banana', 'watermelon', 'aquarium', 'gift', 'car-wash', 'cupcake',
 ] as const;
 export type Story = (typeof STORIES)[number];
 export const FRAMES = 3;

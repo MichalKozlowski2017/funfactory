@@ -4,6 +4,7 @@ import { ACTIVITIES, type Activity } from './realms.ts';
 import type { Journal } from './journal.ts';
 import type { Lang } from './lang.ts';
 import type { Picture } from './stickers.ts';
+import { IDS_VERSION } from './migrate.ts';
 
 /** Zapis postępów dziecka. */
 export interface Progress {
@@ -45,6 +46,8 @@ export interface Progress {
   music: boolean;
   /** Limit czasu zabawy w minutach (0 = bez limitu). */
   limit?: number;
+  /** Id format version (sim/migrate.ts); missing = old Polish ids. */
+  ids?: number;
 }
 
 export const newProgress = (): Progress => ({

@@ -9,7 +9,7 @@ function grid(rows: string[]) {
   return { w, h, ...labelRegions(w, h, dark) };
 }
 
-describe('kolorowanka', () => {
+describe('coloring', () => {
   // Duże pole (6×6) z wąskim paskiem (1 px) za linią po prawej i maleńkim oczkiem w środku.
   // Duże pole 12×12 z wąskim paskiem (1 px) za linią po prawej i maleńkim oczkiem w środku.
   const rows = Array.from({ length: 14 }, (_, y) => {

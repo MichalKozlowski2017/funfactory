@@ -6,28 +6,28 @@ import { ITEMS, lookalike, startOf, type Category, type Color, type Item } from 
  * Silniki zagadek: z katalogu i poziomu trudności (0..MAX_LEVEL) generują pytania.
  * Czysty TS bez Pixi, żeby dało się testować i stroić.
  */
-export type PuzzleKind = 'cienie' | 'pasuje' | 'liczenie' | 'kolory' | 'gloski' | 'mamy';
-export const PUZZLE_KINDS: readonly PuzzleKind[] = ['cienie', 'pasuje', 'liczenie', 'kolory', 'gloski', 'mamy'];
+export type PuzzleKind = 'shadows' | 'matching' | 'counting' | 'colors' | 'phonemes' | 'mothers';
+export const PUZZLE_KINDS: readonly PuzzleKind[] = ['shadows', 'matching', 'counting', 'colors', 'phonemes', 'mothers'];
 export const MAX_LEVEL = 2;
 export const ROUND_LENGTH = 5;
 
 /** „Czyj to cień?”: duży cień `target`, do wyboru kolorowe obrazki. */
 export interface ShadowQuestion {
-  kind: 'cienie';
+  kind: 'shadows';
   target: Item;
   options: Item[];
 }
 
 /** „Co tu nie pasuje?”: wszystkie oprócz `odd` są z jednej kategorii. */
 export interface OddQuestion {
-  kind: 'pasuje';
+  kind: 'matching';
   odd: Item;
   options: Item[];
 }
 
 /** „Policz, ile ich jest”: `count` sztuk `item`, do wyboru liczby. */
 export interface CountQuestion {
-  kind: 'liczenie';
+  kind: 'counting';
   item: Item;
   count: number;
   options: number[];
@@ -35,7 +35,7 @@ export interface CountQuestion {
 
 /** „Pokaż coś czerwonego”: dokładnie jeden obiekt ma kolor `color`. */
 export interface ColorQuestion {
-  kind: 'kolory';
+  kind: 'colors';
   color: Color;
   target: Item;
   options: Item[];
@@ -43,7 +43,7 @@ export interface ColorQuestion {
 
 /** „Co zaczyna się na literę er?”: dokładnie jeden obiekt zaczyna się na `sound` (pierwsza litera). */
 export interface SoundQuestion {
-  kind: 'gloski';
+  kind: 'phonemes';
   sound: string;
   target: Item;
   options: Item[];
@@ -51,7 +51,7 @@ export interface SoundQuestion {
 
 /** „Gdzie jest mama kurczaczka?”: `baby` u góry, do wyboru dorosłe zwierzęta. */
 export interface MotherQuestion {
-  kind: 'mamy';
+  kind: 'mothers';
   baby: Item;
   target: Item;
   options: Item[];
@@ -119,18 +119,18 @@ export function shadowQuestion(rng: Rng, level: number, recent: readonly string[
   // Na najwyższym poziomie zmyłki z tej samej kategorii (podobniejsze sylwetki).
   const same = pool.filter((i) => i.category === target.category);
   const decoys = distinct(rng, level >= MAX_LEVEL && same.length > n ? same : pool, n - 1, target);
-  return { kind: 'cienie', target, options: rng.shuffle([target, ...decoys]) };
+  return { kind: 'shadows', target, options: rng.shuffle([target, ...decoys]) };
 }
 
 /** Kategorie, których obiekty dziecko może uznać za „pasujące” do siebie. */
 const NEAR: [Category, Category][] = [
-  ['natura', 'zwierzeta'],
-  ['natura', 'owoce'],
-  ['natura', 'warzywa'],
-  ['zabawki', 'pojazdy'],
-  ['zabawki', 'zwierzeta'],
+  ['nature', 'animals'],
+  ['nature', 'fruit'],
+  ['nature', 'vegetables'],
+  ['toys', 'vehicles'],
+  ['toys', 'animals'],
 ];
-const FRUIT_VEG: Category[] = ['owoce', 'warzywa'];
+const FRUIT_VEG: Category[] = ['fruit', 'vegetables'];
 
 export function oddQuestion(rng: Rng, level: number, recent: readonly string[] = []): OddQuestion {
   const n = Math.max(3, optionCount(level));
@@ -146,11 +146,11 @@ export function oddQuestion(rng: Rng, level: number, recent: readonly string[] =
   const freshOdd = others.filter((i) => !recent.includes(i.id));
   const odd = rng.pick(freshOdd.length > 0 ? freshOdd : others);
   const members = take(rng, group.filter((i) => !lookalike(i, odd)), n - 1);
-  return { kind: 'pasuje', odd, options: rng.shuffle([odd, ...members]) };
+  return { kind: 'matching', odd, options: rng.shuffle([odd, ...members]) };
 }
 
 /** Postaci z tła Polany (różowa świnka przy lisie): nie liczymy ich, bo dziecko policzyłoby też tę z tła. */
-const IN_BACKGROUND = new Set(['prosiaczek', 'swinka']);
+const IN_BACKGROUND = new Set(['piglet', 'pig']);
 
 export function countQuestion(rng: Rng, level: number, recent: readonly string[] = [], lastCount = 0): CountQuestion {
   const pool = ITEMS.filter((i) => i.countable && !IN_BACKGROUND.has(i.id));
@@ -164,7 +164,7 @@ export function countQuestion(rng: Rng, level: number, recent: readonly string[]
   const near = [count - 1, count + 1, count - 2, count + 2, count + 3].filter((x) => x >= 1 && x <= Math.max(max, 4));
   const n = Math.max(3, optionCount(level));
   const options = [count, ...near.slice(0, n - 1)].sort((a, b) => a - b);
-  return { kind: 'liczenie', item, count, options };
+  return { kind: 'counting', item, count, options };
 }
 
 const freshPick = <T extends Item>(rng: Rng, pool: readonly T[], recent: readonly string[]): T => {
@@ -185,7 +185,7 @@ export function colorQuestion(rng: Rng, level: number, recent: readonly string[]
     used.add(item.color!);
     decoys.push(item);
   }
-  return { kind: 'kolory', color: target.color!, target, options: rng.shuffle([target, ...decoys]) };
+  return { kind: 'colors', color: target.color!, target, options: rng.shuffle([target, ...decoys]) };
 }
 
 export function soundQuestion(rng: Rng, level: number, recent: readonly string[] = []): SoundQuestion {
@@ -204,7 +204,7 @@ export function soundQuestion(rng: Rng, level: number, recent: readonly string[]
     ITEMS.filter((i) => startOf(i) !== '' && !confusable(startOf(i), sound)),
     n - 1,
   );
-  return { kind: 'gloski', sound, target, options: rng.shuffle([target, ...decoys]) };
+  return { kind: 'phonemes', sound, target, options: rng.shuffle([target, ...decoys]) };
 }
 
 export function motherQuestion(rng: Rng, level: number, recent: readonly string[] = []): MotherQuestion {
@@ -214,48 +214,48 @@ export function motherQuestion(rng: Rng, level: number, recent: readonly string[
   const target = ITEMS.find((i) => i.id === baby.mother)!;
   const mothers = new Set(babies.map((b) => b.mother));
   // Zmyłki: inne dorosłe zwierzęta (najpierw inne mamy z tej gry, potem reszta zwierząt).
-  const adults = ITEMS.filter((i) => i.category === 'zwierzeta' && !i.mother && !lookalike(i, target) && !lookalike(i, baby));
+  const adults = ITEMS.filter((i) => i.category === 'animals' && !i.mother && !lookalike(i, target) && !lookalike(i, baby));
   const n = Math.max(3, optionCount(level));
   // Zmyłki niepodobne do siebie nawzajem (owca i koza obok siebie myliłyby).
   const preferred = distinct(rng, adults.filter((a) => mothers.has(a.id)), n - 1, target);
   const rest = distinct(rng, adults.filter((a) => !preferred.some((p) => lookalike(p, a))), n - 1 - preferred.length, target);
   const decoys = [...preferred, ...rest];
-  return { kind: 'mamy', baby, target, options: rng.shuffle([target, ...decoys]) };
+  return { kind: 'mothers', baby, target, options: rng.shuffle([target, ...decoys]) };
 }
 
 export function makeQuestion(kind: PuzzleKind, rng: Rng, level: number, recent: readonly string[] = []): Question {
   switch (kind) {
-    case 'cienie':
+    case 'shadows':
       return shadowQuestion(rng, level, recent);
-    case 'pasuje':
+    case 'matching':
       return oddQuestion(rng, level, recent);
-    case 'liczenie':
+    case 'counting':
       return countQuestion(rng, level, recent);
-    case 'kolory':
+    case 'colors':
       return colorQuestion(rng, level, recent);
-    case 'gloski':
+    case 'phonemes':
       return soundQuestion(rng, level, recent);
-    case 'mamy':
+    case 'mothers':
       return motherQuestion(rng, level, recent);
   }
 }
 
 /** Obiekt, o który chodzi w pytaniu (dobra odpowiedź albo obiekt do liczenia). */
-export const questionItem = (q: Question): Item => (q.kind === 'pasuje' ? q.odd : q.kind === 'liczenie' ? q.item : q.kind === 'mamy' ? q.baby : q.target);
+export const questionItem = (q: Question): Item => (q.kind === 'matching' ? q.odd : q.kind === 'counting' ? q.item : q.kind === 'mothers' ? q.baby : q.target);
 
 /** Id obiektu, który pytanie „zużywa” (żeby nie powtarzać go w rundzie). */
 export const questionKey = (q: Question): string => questionItem(q).id;
 
 /** Prawidłowa odpowiedź. */
-export const answerOf = (q: Question): Item | number => (q.kind === 'liczenie' ? q.count : q.kind === 'pasuje' ? q.odd : q.target);
+export const answerOf = (q: Question): Item | number => (q.kind === 'counting' ? q.count : q.kind === 'matching' ? q.odd : q.target);
 
 export const isCorrect = (q: Question, answer: Item | number): boolean => answer === answerOf(q);
 
-/** Nagranie polecenia (bez rozszerzenia), np. "kolor-czerwony", "gloska-sz", "mama-kurczak". */
+/** Nagranie polecenia (bez rozszerzenia), np. "color-red", "phoneme-sz", "mother-chick". */
 export function promptLine(q: Question): string {
-  if (q.kind === 'kolory') return `kolor-${q.color}`;
-  if (q.kind === 'gloski') return `gloska-${soundSlug(q.sound)}`;
-  if (q.kind === 'mamy') return `mama-${q.baby.id}`;
+  if (q.kind === 'colors') return `color-${q.color}`;
+  if (q.kind === 'phonemes') return `phoneme-${soundSlug(q.sound)}`;
+  if (q.kind === 'mothers') return `mother-${q.baby.id}`;
   return q.kind;
 }
 
@@ -266,17 +266,17 @@ export function makeRound(kind: PuzzleKind, rng: Rng, level: number): Question[]
   // Obrazki, które już były na ekranie w tej rundzie: zmyłki nie powinny wracać co pytanie
   // (w Kolorach ta sama czerwona truskawka była zmyłką trzy razy z rzędu).
   const shown = new Set<string>();
-  const repeats = (q: Question) => (q.kind === 'liczenie' ? 0 : q.options.filter((o) => shown.has(o.id)).length);
+  const repeats = (q: Question) => (q.kind === 'counting' ? 0 : q.options.filter((o) => shown.has(o.id)).length);
   for (let i = 0; i < ROUND_LENGTH; i++) {
     const prev = out[out.length - 1];
-    const make = () => (kind === 'liczenie' ? countQuestion(rng, level, recent, prev?.kind === 'liczenie' ? prev.count : 0) : makeQuestion(kind, rng, level, recent));
+    const make = () => (kind === 'counting' ? countQuestion(rng, level, recent, prev?.kind === 'counting' ? prev.count : 0) : makeQuestion(kind, rng, level, recent));
     let q = make();
     for (let t = 0; t < 8 && repeats(q) > 0; t++) {
       const alt = make();
       if (repeats(alt) < repeats(q)) q = alt;
     }
     recent.push(questionKey(q));
-    if (q.kind !== 'liczenie') for (const o of q.options) shown.add(o.id);
+    if (q.kind !== 'counting') for (const o of q.options) shown.add(o.id);
     out.push(q);
   }
   return out;
@@ -286,7 +286,7 @@ export function makeRound(kind: PuzzleKind, rng: Rng, level: number): Question[]
 export function playable(kind: PuzzleKind, rng: Rng): boolean {
   try {
     const round = makeRound(kind, rng, MAX_LEVEL);
-    return round.every((q) => q.kind === 'liczenie' || q.options.length >= 3 || (q.kind === 'cienie' && q.options.length >= 2));
+    return round.every((q) => q.kind === 'counting' || q.options.length >= 3 || (q.kind === 'shadows' && q.options.length >= 2));
   } catch {
     return false;
   }

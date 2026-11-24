@@ -15,35 +15,35 @@ describe('statystyki „Przed szkołą”', () => {
   });
 
   it('okresy: 14 dni albo 12 tygodni kończących się dziś', () => {
-    const d = periods('dni', T);
+    const d = periods('days', T);
     expect(d).toHaveLength(14);
     expect(d[13]).toEqual({ from: T, to: T });
-    const w = periods('tygodnie', T);
+    const w = periods('weeks', T);
     expect(w).toHaveLength(12);
     expect(w[11]).toEqual({ from: '2026-12-08', to: T });
   });
 
   it('opanowanie liczone z elementów', () => {
     const j = newJournal();
-    for (let i = 0; i < 3; i++) noteFact(j, T, 'kolor:zielony', true);
-    noteFact(j, T, 'kolor:czerwony', true);
-    for (let i = 0; i < 3; i++) noteFact(j, T, 'kolor:bialy', i === 0);
-    const m = mastery(skill('kolory'), j, {}, T);
+    for (let i = 0; i < 3; i++) noteFact(j, T, 'color:green', true);
+    noteFact(j, T, 'color:red', true);
+    for (let i = 0; i < 3; i++) noteFact(j, T, 'color:white', i === 0);
+    const m = mastery(skill('colors'), j, {}, T);
     expect(m.ok).toBe(1);
-    expect(m.of).toBe(itemsOf('kolor').length);
-    expect(itemState(j, 'kolor', 'zielony')).toBe('opanowane');
-    expect(itemState(j, 'kolor', 'czerwony')).toBe('cwiczy');
-    expect(itemState(j, 'kolor', 'bialy')).toBe('klopot');
-    expect(itemState(j, 'kolor', 'brazowy')).toBe('nie');
+    expect(m.of).toBe(itemsOf('color').length);
+    expect(itemState(j, 'color', 'green')).toBe('mastered');
+    expect(itemState(j, 'color', 'red')).toBe('practicing');
+    expect(itemState(j, 'color', 'white')).toBe('trouble');
+    expect(itemState(j, 'color', 'brown')).toBe('no');
   });
 
   it('krzywa: % bez pomyłki, tylko przy dość wielu zadaniach, znacznik wyższego poziomu', () => {
     const j = newJournal();
     const day = (n: number) => `2026-12-${String(n).padStart(2, '0')}`;
-    for (let i = 0; i < 4; i++) addTask(j, day(10), 'historyjki', i === 0 ? 1 : 0, 0);
-    for (let i = 0; i < 4; i++) addTask(j, day(12), 'historyjki', i < 2 ? 1 : 0, 1);
-    addTask(j, day(13), 'historyjki', 0, 1);
-    const ps = accuracy(skill('historyjki'), j, 'dni', T);
+    for (let i = 0; i < 4; i++) addTask(j, day(10), 'stories', i === 0 ? 1 : 0, 0);
+    for (let i = 0; i < 4; i++) addTask(j, day(12), 'stories', i < 2 ? 1 : 0, 1);
+    addTask(j, day(13), 'stories', 0, 1);
+    const ps = accuracy(skill('stories'), j, 'days', T);
     const byDay = Object.fromEntries(ps.map((p) => [p.to, p]));
     expect(byDay[day(10)]!.value).toBeCloseTo(0.75);
     expect(byDay[day(12)]!.value).toBeCloseTo(0.5);
@@ -54,39 +54,39 @@ describe('statystyki „Przed szkołą”', () => {
 
   it('stare dni bez „clean”: zadania minus pomyłki', () => {
     const j = newJournal();
-    j.days['2026-12-14'] = { sec: 100, acts: { liczenie: 5 }, miss: 2, misses: { liczenie: 2 } };
-    expect(accuracy(skill('liczenie'), j, 'dni', T)[13]!.value).toBeCloseTo(0.6);
+    j.days['2026-12-14'] = { sec: 100, acts: { counting: 5 }, miss: 2, misses: { counting: 2 } };
+    expect(accuracy(skill('counting'), j, 'days', T)[13]!.value).toBeCloseTo(0.6);
   });
 
   it('tempo porównuje ten sam poziom i liczy przyspieszenie', () => {
     const j = newJournal();
     const day = (n: number) => `2026-12-${String(n).padStart(2, '0')}`;
-    for (const [d, s] of [[2, 3], [5, 2.4], [9, 1.8], [12, 1.5]] as const) for (let i = 0; i < 4; i++) addTempo(j, day(d), 'kolor', 1, s);
-    addTempo(j, day(12), 'kolor', 2, 6);
-    const t = tempo(skill('kolory'), j, 'dni', T)!;
+    for (const [d, s] of [[2, 3], [5, 2.4], [9, 1.8], [12, 1.5]] as const) for (let i = 0; i < 4; i++) addTempo(j, day(d), 'color', 1, s);
+    addTempo(j, day(12), 'color', 2, 6);
+    const t = tempo(skill('colors'), j, 'days', T)!;
     expect(t.level).toBe(1);
     expect(t.points.find((p) => p.to === day(12))!.value).toBeCloseTo(1.5);
     expect(t.speedup).toBeCloseTo(2);
-    expect(tempo(skill('historyjki'), j, 'dni', T)).toBeNull();
+    expect(tempo(skill('stories'), j, 'days', T)).toBeNull();
   });
 
   it('odkrycia: opanowane elementy, pierwszy raz, wyższy poziom; najnowsze pierwsze', () => {
     const j = newJournal();
-    addTask(j, '2026-12-01', 'liczenie', 0, 0);
-    addTask(j, '2026-12-05', 'liczenie', 0, 1);
-    for (let i = 0; i < 3; i++) noteFact(j, '2026-12-07', 'liczba:5', true);
-    expect(milestones(skill('liczenie'), j)).toEqual([
-      { day: '2026-12-07', item: '5', kind: 'opanowane' },
-      { day: '2026-12-05', item: null, kind: 'poziom' },
-      { day: '2026-12-01', item: null, kind: 'pierwszy' },
+    addTask(j, '2026-12-01', 'counting', 0, 0);
+    addTask(j, '2026-12-05', 'counting', 0, 1);
+    for (let i = 0; i < 3; i++) noteFact(j, '2026-12-07', 'number:5', true);
+    expect(milestones(skill('counting'), j)).toEqual([
+      { day: '2026-12-07', item: '5', kind: 'mastered' },
+      { day: '2026-12-05', item: null, kind: 'level' },
+      { day: '2026-12-01', item: null, kind: 'first' },
     ]);
   });
 
   it('przykład zamiast pustego wykresu i litery w języku gry', () => {
-    expect(enoughPoints(accuracy(skill('kolory'), newJournal(), 'tygodnie', T))).toBe(false);
-    expect(enoughPoints(sampleAccuracy('tygodnie', T))).toBe(true);
+    expect(enoughPoints(accuracy(skill('colors'), newJournal(), 'weeks', T))).toBe(false);
+    expect(enoughPoints(sampleAccuracy('weeks', T))).toBe(true);
     setLang('de');
-    expect(itemsOf('gloska')).toContain('z');
-    expect(itemsOf('gloska')).not.toContain('ł');
+    expect(itemsOf('phoneme')).toContain('z');
+    expect(itemsOf('phoneme')).not.toContain('ł');
   });
 });

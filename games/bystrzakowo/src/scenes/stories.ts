@@ -29,7 +29,7 @@ export class StoryScene extends RoundScene {
   private dragging = false;
 
   constructor() {
-    super('historyjki', 'bazyl');
+    super('stories', 'bazyl');
   }
 
   protected async prepare(): Promise<void> {
@@ -41,7 +41,7 @@ export class StoryScene extends RoundScene {
   }
 
   protected promptLine(): string {
-    return 'historyjki';
+    return 'stories';
   }
 
   protected show(): void {
@@ -54,7 +54,7 @@ export class StoryScene extends RoundScene {
       this.layer.addChild(slot);
       return slot;
     });
-    const preset = presetFrames(state.progress.levels.historyjki ?? 0);
+    const preset = presetFrames(state.progress.levels.stories ?? 0);
     const order = this.game.rng.shuffle(Array.from({ length: FRAMES }, (_, i) => i).filter((i) => i >= preset));
     const all = [...Array.from({ length: preset }, (_, i) => i), ...order];
     this.cards = all.map((frame) => {
@@ -79,7 +79,7 @@ export class StoryScene extends RoundScene {
       this.layer.addChild(view);
       return card;
     });
-    this.timers.after(0.4, () => say(this.game, this.guide, 'historyjki'));
+    this.timers.after(0.4, () => say(this.game, this.guide, 'stories'));
   }
 
   protected override appear(): void {
@@ -111,7 +111,7 @@ export class StoryScene extends RoundScene {
   /** Historyjka: Bazyl opowiada, kadry podskakują po kolei. */
   private tell(): void {
     this.busy = true;
-    const len = say(this.game, this.guide, `historia-${this.stories[this.index]}`);
+    const len = say(this.game, this.guide, `history-${this.stories[this.index]}`);
     const per = Math.max(0.7, len / FRAMES);
     const sorted = [...this.cards].sort((a, b) => a.frame - b.frame);
     sorted.forEach((c, i) =>

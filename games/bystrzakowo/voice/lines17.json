@@ -3,75 +3,75 @@
  "tries": 8,
  "lines": [
   {
-   "name": "lusia-item-szczeniaczek",
+   "name": "lusia-item-puppy",
    "text": "Szczeniaczek."
   },
   {
-   "name": "bazyl-item-szczeniaczek",
+   "name": "bazyl-item-puppy",
    "text": "Szczeniaczek.",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-mama-szczeniaczek",
+   "name": "bazyl-mother-puppy",
    "text": "Gdzie jest mama szczeniaczka?",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-labirynt-szczeniaczek",
+   "name": "lusia-maze-puppy",
    "text": "Zaprowadź szczeniaczka do mamy."
   },
   {
-   "name": "lusia-item-kroliczek",
+   "name": "lusia-item-bunny",
    "text": "Króliczek."
   },
   {
-   "name": "bazyl-item-kroliczek",
+   "name": "bazyl-item-bunny",
    "text": "Króliczek.",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-mama-kroliczek",
+   "name": "bazyl-mother-bunny",
    "text": "Gdzie jest mama króliczka?",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-labirynt-kroliczek",
+   "name": "lusia-maze-bunny",
    "text": "Zaprowadź króliczka do mamy."
   },
   {
-   "name": "lusia-item-sloniatko",
+   "name": "lusia-item-elephant-calf",
    "text": "Słoniątko."
   },
   {
-   "name": "bazyl-item-sloniatko",
+   "name": "bazyl-item-elephant-calf",
    "text": "Słoniątko.",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-mama-sloniatko",
+   "name": "bazyl-mother-elephant-calf",
    "text": "Gdzie jest mama słoniątka?",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-labirynt-sloniatko",
+   "name": "lusia-maze-elephant-calf",
    "text": "Zaprowadź słoniątko do mamy."
   },
   {
-   "name": "lusia-item-zolwik",
+   "name": "lusia-item-baby-turtle",
    "text": "Żółwik."
   },
   {
-   "name": "bazyl-item-zolwik",
+   "name": "bazyl-item-baby-turtle",
    "text": "Żółwik.",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-mama-zolwik",
+   "name": "bazyl-mother-baby-turtle",
    "text": "Gdzie jest mama żółwika?",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-labirynt-zolwik",
+   "name": "lusia-maze-baby-turtle",
    "text": "Zaprowadź żółwika do mamy."
   }
  ]

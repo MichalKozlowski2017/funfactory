@@ -3,142 +3,142 @@
  "tries": 8,
  "lines": [
   {
-   "name": "lusia-item-kura",
+   "name": "lusia-item-hen",
    "text": "Kura!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-kura",
+   "name": "bazyl-item-hen",
    "text": "Kura!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-cielaczek",
+   "name": "lusia-item-calf",
    "text": "Cielaczek!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-cielaczek",
+   "name": "bazyl-item-calf",
    "text": "Cielaczek!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-kotek",
+   "name": "lusia-item-kitten",
    "text": "Kotek!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-kotek",
+   "name": "bazyl-item-kitten",
    "text": "Kotek!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-owca",
+   "name": "lusia-item-sheep",
    "text": "Owca!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-owca",
+   "name": "bazyl-item-sheep",
    "text": "Owca!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-jagniatko",
+   "name": "lusia-item-lamb",
    "text": "Jagniątko!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-jagniatko",
+   "name": "bazyl-item-lamb",
    "text": "Jagniątko!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-swinka",
+   "name": "lusia-item-pig",
    "text": "Świnka!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-swinka",
+   "name": "bazyl-item-pig",
    "text": "Świnka!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-prosiaczek",
+   "name": "lusia-item-piglet",
    "text": "Prosiaczek!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-prosiaczek",
+   "name": "bazyl-item-piglet",
    "text": "Prosiaczek!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-kon",
+   "name": "lusia-item-horse",
    "text": "Koń!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-kon",
+   "name": "bazyl-item-horse",
    "text": "Koń!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-zrebak",
+   "name": "lusia-item-foal",
    "text": "Źrebaczek!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-zrebak",
+   "name": "bazyl-item-foal",
    "text": "Źrebaczek!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-kaczatko",
+   "name": "lusia-item-duckling",
    "text": "Kaczątko!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-kaczatko",
+   "name": "bazyl-item-duckling",
    "text": "Kaczątko!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-kijanka",
+   "name": "lusia-item-tadpole",
    "text": "Kijanka!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-kijanka",
+   "name": "bazyl-item-tadpole",
    "text": "Kijanka!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-lew",
+   "name": "lusia-item-lion",
    "text": "Lew!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-lew",
+   "name": "bazyl-item-lion",
    "text": "Lew!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-zyrafa",
+   "name": "lusia-item-giraffe",
    "text": "Żyrafa!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-zyrafa",
+   "name": "bazyl-item-giraffe",
    "text": "Żyrafa!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-malpa",
+   "name": "lusia-item-monkey",
    "text": "Małpka!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-malpa",
+   "name": "bazyl-item-monkey",
    "text": "Małpka!",
    "voice": "voices/prezenter"
   },
@@ -153,442 +153,442 @@
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-niedzwiedz",
+   "name": "lusia-item-bear",
    "text": "Niedźwiedź!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-niedzwiedz",
+   "name": "bazyl-item-bear",
    "text": "Niedźwiedź!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-jez",
+   "name": "lusia-item-hedgehog",
    "text": "Jeż!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-jez",
+   "name": "bazyl-item-hedgehog",
    "text": "Jeż!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-wiewiorka",
+   "name": "lusia-item-squirrel",
    "text": "Wiewiórka!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-wiewiorka",
+   "name": "bazyl-item-squirrel",
    "text": "Wiewiórka!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-sowa",
+   "name": "lusia-item-owl",
    "text": "Sowa!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-sowa",
+   "name": "bazyl-item-owl",
    "text": "Sowa!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-motyl",
+   "name": "lusia-item-butterfly",
    "text": "Motyl!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-motyl",
+   "name": "bazyl-item-butterfly",
    "text": "Motyl!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-biedronka",
+   "name": "lusia-item-ladybug",
    "text": "Biedronka!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-biedronka",
+   "name": "bazyl-item-ladybug",
    "text": "Biedronka!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-pszczola",
+   "name": "lusia-item-bee",
    "text": "Pszczółka!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-pszczola",
+   "name": "bazyl-item-bee",
    "text": "Pszczółka!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-slimak",
+   "name": "lusia-item-snail",
    "text": "Ślimak!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-slimak",
+   "name": "bazyl-item-snail",
    "text": "Ślimak!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-krolik",
+   "name": "lusia-item-rabbit",
    "text": "Królik!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-krolik",
+   "name": "bazyl-item-rabbit",
    "text": "Królik!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-mysz",
+   "name": "lusia-item-mouse",
    "text": "Myszka!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-mysz",
+   "name": "bazyl-item-mouse",
    "text": "Myszka!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-pingwin",
+   "name": "lusia-item-penguin",
    "text": "Pingwin!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-pingwin",
+   "name": "bazyl-item-penguin",
    "text": "Pingwin!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-zolw",
+   "name": "lusia-item-turtle",
    "text": "Żółw!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-zolw",
+   "name": "bazyl-item-turtle",
    "text": "Żółw!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-krab",
+   "name": "lusia-item-crab",
    "text": "Krab!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-krab",
+   "name": "bazyl-item-crab",
    "text": "Krab!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-osmiornica",
+   "name": "lusia-item-octopus",
    "text": "Ośmiornica!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-osmiornica",
+   "name": "bazyl-item-octopus",
    "text": "Ośmiornica!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-ptak",
+   "name": "lusia-item-bird",
    "text": "Ptaszek!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-ptak",
+   "name": "bazyl-item-bird",
    "text": "Ptaszek!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-dinozaur",
+   "name": "lusia-item-dinosaur",
    "text": "Dinozaur!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-dinozaur",
+   "name": "bazyl-item-dinosaur",
    "text": "Dinozaur!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-sliwka",
+   "name": "lusia-item-plum",
    "text": "Śliwka!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-sliwka",
+   "name": "bazyl-item-plum",
    "text": "Śliwka!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-wisnia",
+   "name": "lusia-item-cherry",
    "text": "Wisienki!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-wisnia",
+   "name": "bazyl-item-cherry",
    "text": "Wisienki!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-pomarancza",
+   "name": "lusia-item-orange-fruit",
    "text": "Pomarańcza!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-pomarancza",
+   "name": "bazyl-item-orange-fruit",
    "text": "Pomarańcza!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-cytryna",
+   "name": "lusia-item-lemon",
    "text": "Cytryna!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-cytryna",
+   "name": "bazyl-item-lemon",
    "text": "Cytryna!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-winogrona",
+   "name": "lusia-item-grapes",
    "text": "Winogrona!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-winogrona",
+   "name": "bazyl-item-grapes",
    "text": "Winogrona!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-arbuz",
+   "name": "lusia-item-watermelon",
    "text": "Arbuz!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-arbuz",
+   "name": "bazyl-item-watermelon",
    "text": "Arbuz!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-ananas",
+   "name": "lusia-item-pineapple",
    "text": "Ananas!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-ananas",
+   "name": "bazyl-item-pineapple",
    "text": "Ananas!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-malina",
+   "name": "lusia-item-raspberry",
    "text": "Malina!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-malina",
+   "name": "bazyl-item-raspberry",
    "text": "Malina!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-marchewka",
+   "name": "lusia-item-carrot",
    "text": "Marchewka!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-marchewka",
+   "name": "bazyl-item-carrot",
    "text": "Marchewka!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-pomidor",
+   "name": "lusia-item-tomato",
    "text": "Pomidor!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-pomidor",
+   "name": "bazyl-item-tomato",
    "text": "Pomidor!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-ogorek",
+   "name": "lusia-item-cucumber",
    "text": "Ogórek!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-ogorek",
+   "name": "bazyl-item-cucumber",
    "text": "Ogórek!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-ziemniak",
+   "name": "lusia-item-potato",
    "text": "Ziemniak!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-ziemniak",
+   "name": "bazyl-item-potato",
    "text": "Ziemniak!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-kukurydza",
+   "name": "lusia-item-corn",
    "text": "Kukurydza!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-kukurydza",
+   "name": "bazyl-item-corn",
    "text": "Kukurydza!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-papryka",
+   "name": "lusia-item-pepper",
    "text": "Papryka!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-papryka",
+   "name": "bazyl-item-pepper",
    "text": "Papryka!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-brokul",
+   "name": "lusia-item-broccoli",
    "text": "Brokuł!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-brokul",
+   "name": "bazyl-item-broccoli",
    "text": "Brokuł!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-dynia",
+   "name": "lusia-item-pumpkin",
    "text": "Dynia!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-dynia",
+   "name": "bazyl-item-pumpkin",
    "text": "Dynia!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-groszek",
+   "name": "lusia-item-peas",
    "text": "Groszek!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-groszek",
+   "name": "bazyl-item-peas",
    "text": "Groszek!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-rzodkiewka",
+   "name": "lusia-item-radish",
    "text": "Rzodkiewka!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-rzodkiewka",
+   "name": "bazyl-item-radish",
    "text": "Rzodkiewka!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-grzyb",
+   "name": "lusia-item-mushroom",
    "text": "Grzybek!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-grzyb",
+   "name": "bazyl-item-mushroom",
    "text": "Grzybek!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-cebula",
+   "name": "lusia-item-onion",
    "text": "Cebula!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-cebula",
+   "name": "bazyl-item-onion",
    "text": "Cebula!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-autobus",
+   "name": "lusia-item-bus",
    "text": "Autobus!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-autobus",
+   "name": "bazyl-item-bus",
    "text": "Autobus!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-pociag",
+   "name": "lusia-item-train",
    "text": "Pociąg!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-pociag",
+   "name": "bazyl-item-train",
    "text": "Pociąg!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-traktor",
+   "name": "lusia-item-tractor",
    "text": "Traktor!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-traktor",
+   "name": "bazyl-item-tractor",
    "text": "Traktor!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-helikopter",
+   "name": "lusia-item-helicopter",
    "text": "Helikopter!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-helikopter",
+   "name": "bazyl-item-helicopter",
    "text": "Helikopter!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-rakieta",
+   "name": "lusia-item-rocket",
    "text": "Rakieta!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-rakieta",
+   "name": "bazyl-item-rocket",
    "text": "Rakieta!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-hulajnoga",
+   "name": "lusia-item-scooter",
    "text": "Hulajnoga!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-hulajnoga",
+   "name": "bazyl-item-scooter",
    "text": "Hulajnoga!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-straz",
+   "name": "lusia-item-fire-station",
    "text": "Wóz strażacki!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-straz",
+   "name": "bazyl-item-fire-station",
    "text": "Wóz strażacki!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-ciezarowka",
+   "name": "lusia-item-truck",
    "text": "Ciężarówka!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-ciezarowka",
+   "name": "bazyl-item-truck",
    "text": "Ciężarówka!",
    "voice": "voices/prezenter"
   },
@@ -603,42 +603,42 @@
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-latawiec",
+   "name": "lusia-item-kite",
    "text": "Latawiec!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-latawiec",
+   "name": "bazyl-item-kite",
    "text": "Latawiec!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-bebenek",
+   "name": "lusia-item-drum",
    "text": "Bębenek!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-bebenek",
+   "name": "bazyl-item-drum",
    "text": "Bębenek!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-konik",
+   "name": "lusia-item-pony",
    "text": "Konik na biegunach!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-konik",
+   "name": "bazyl-item-pony",
    "text": "Konik na biegunach!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-baczek",
+   "name": "lusia-item-spinning-top",
    "text": "Bączek!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-baczek",
+   "name": "bazyl-item-spinning-top",
    "text": "Bączek!",
    "voice": "voices/prezenter"
   },
@@ -653,387 +653,387 @@
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-balonik",
+   "name": "lusia-item-small-balloon",
    "text": "Balonik!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-balonik",
+   "name": "bazyl-item-small-balloon",
    "text": "Balonik!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-trabka",
+   "name": "lusia-item-trumpet",
    "text": "Trąbka!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-trabka",
+   "name": "bazyl-item-trumpet",
    "text": "Trąbka!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-wiaderko",
+   "name": "lusia-item-bucket",
    "text": "Wiaderko!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-wiaderko",
+   "name": "bazyl-item-bucket",
    "text": "Wiaderko!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-talerz",
+   "name": "lusia-item-plate",
    "text": "Talerz!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-talerz",
+   "name": "bazyl-item-plate",
    "text": "Talerz!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-lyzka",
+   "name": "lusia-item-spoon",
    "text": "Łyżka!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-lyzka",
+   "name": "bazyl-item-spoon",
    "text": "Łyżka!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-widelec",
+   "name": "lusia-item-fork",
    "text": "Widelec!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-widelec",
+   "name": "bazyl-item-fork",
    "text": "Widelec!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-garnek",
+   "name": "lusia-item-pot",
    "text": "Garnek!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-garnek",
+   "name": "bazyl-item-pot",
    "text": "Garnek!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-czajnik",
+   "name": "lusia-item-kettle",
    "text": "Czajnik!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-czajnik",
+   "name": "bazyl-item-kettle",
    "text": "Czajnik!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-miska",
+   "name": "lusia-item-bowl",
    "text": "Miska!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-miska",
+   "name": "bazyl-item-bowl",
    "text": "Miska!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-patelnia",
+   "name": "lusia-item-pan",
    "text": "Patelnia!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-patelnia",
+   "name": "bazyl-item-pan",
    "text": "Patelnia!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-butelka",
+   "name": "lusia-item-bottle",
    "text": "Butelka!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-butelka",
+   "name": "bazyl-item-bottle",
    "text": "Butelka!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-czapka",
+   "name": "lusia-item-hat",
    "text": "Czapka!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-czapka",
+   "name": "bazyl-item-hat",
    "text": "Czapka!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-szalik",
+   "name": "lusia-item-scarf",
    "text": "Szalik!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-szalik",
+   "name": "bazyl-item-scarf",
    "text": "Szalik!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-but",
+   "name": "lusia-item-shoe",
    "text": "Bucik!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-but",
+   "name": "bazyl-item-shoe",
    "text": "Bucik!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-skarpetka",
+   "name": "lusia-item-sock",
    "text": "Skarpetka!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-skarpetka",
+   "name": "bazyl-item-sock",
    "text": "Skarpetka!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-koszulka",
+   "name": "lusia-item-t-shirt",
    "text": "Koszulka!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-koszulka",
+   "name": "bazyl-item-t-shirt",
    "text": "Koszulka!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-spodnie",
+   "name": "lusia-item-trousers",
    "text": "Spodnie!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-spodnie",
+   "name": "bazyl-item-trousers",
    "text": "Spodnie!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-sukienka",
+   "name": "lusia-item-dress",
    "text": "Sukienka!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-sukienka",
+   "name": "bazyl-item-dress",
    "text": "Sukienka!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-rekawiczki",
+   "name": "lusia-item-mittens",
    "text": "Rękawiczki!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-rekawiczki",
+   "name": "bazyl-item-mittens",
    "text": "Rękawiczki!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-kalosze",
+   "name": "lusia-item-rain-boots",
    "text": "Kalosze!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-kalosze",
+   "name": "bazyl-item-rain-boots",
    "text": "Kalosze!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-parasol",
+   "name": "lusia-item-umbrella",
    "text": "Parasol!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-parasol",
+   "name": "bazyl-item-umbrella",
    "text": "Parasol!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-slonce",
+   "name": "lusia-item-sun",
    "text": "Słońce!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-slonce",
+   "name": "bazyl-item-sun",
    "text": "Słońce!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-chmurka",
+   "name": "lusia-item-cloud",
    "text": "Chmurka!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-chmurka",
+   "name": "bazyl-item-cloud",
    "text": "Chmurka!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-gwiazdka",
+   "name": "lusia-item-little-star",
    "text": "Gwiazdka!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-gwiazdka",
+   "name": "bazyl-item-little-star",
    "text": "Gwiazdka!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-ksiezyc",
+   "name": "lusia-item-moon",
    "text": "Księżyc!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-ksiezyc",
+   "name": "bazyl-item-moon",
    "text": "Księżyc!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-kwiatek",
+   "name": "lusia-item-little-flower",
    "text": "Kwiatek!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-kwiatek",
+   "name": "bazyl-item-little-flower",
    "text": "Kwiatek!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-drzewo",
+   "name": "lusia-item-tree",
    "text": "Drzewo!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-drzewo",
+   "name": "bazyl-item-tree",
    "text": "Drzewo!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-lisc",
+   "name": "lusia-item-leaf",
    "text": "Listek!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-lisc",
+   "name": "bazyl-item-leaf",
    "text": "Listek!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-tecza",
+   "name": "lusia-item-rainbow",
    "text": "Tęcza!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-tecza",
+   "name": "bazyl-item-rainbow",
    "text": "Tęcza!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-muszelka",
+   "name": "lusia-item-shell",
    "text": "Muszelka!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-muszelka",
+   "name": "bazyl-item-shell",
    "text": "Muszelka!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-kolor-czerwony",
+   "name": "bazyl-color-red",
    "text": "Pokaż coś czerwonego!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-kolor-zolty",
+   "name": "bazyl-color-yellow",
    "text": "Pokaż coś żółtego!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-kolor-zielony",
+   "name": "bazyl-color-green",
    "text": "Pokaż coś zielonego!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-kolor-niebieski",
+   "name": "bazyl-color-blue",
    "text": "Pokaż coś niebieskiego!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-kolor-pomaranczowy",
+   "name": "bazyl-color-orange",
    "text": "Pokaż coś pomarańczowego!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-kolor-rozowy",
+   "name": "bazyl-color-pink",
    "text": "Pokaż coś różowego!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-kolor-fioletowy",
+   "name": "bazyl-color-purple",
    "text": "Pokaż coś fioletowego!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-kolor-brazowy",
+   "name": "bazyl-color-brown",
    "text": "Pokaż coś brązowego!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-kolor-bialy",
+   "name": "bazyl-color-white",
    "text": "Pokaż coś białego!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-mama-kurczak",
+   "name": "bazyl-mother-chick",
    "text": "Gdzie jest mama kurczaczka?",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-mama-cielaczek",
+   "name": "bazyl-mother-calf",
    "text": "Gdzie jest mama cielaczka?",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-mama-kotek",
+   "name": "bazyl-mother-kitten",
    "text": "Gdzie jest mama kotka?",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-mama-jagniatko",
+   "name": "bazyl-mother-lamb",
    "text": "Gdzie jest mama jagniątka?",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-mama-prosiaczek",
+   "name": "bazyl-mother-piglet",
    "text": "Gdzie jest mama prosiaczka?",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-mama-zrebak",
+   "name": "bazyl-mother-foal",
    "text": "Gdzie jest mama źrebaczka?",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-mama-kaczatko",
+   "name": "bazyl-mother-duckling",
    "text": "Gdzie jest mama kaczątka?",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-mama-kijanka",
+   "name": "bazyl-mother-tadpole",
    "text": "Gdzie jest mama kijanki?",
    "voice": "voices/prezenter"
   },
@@ -1043,148 +1043,148 @@
    "voice": "voices/alt"
   },
   {
-   "name": "lusia-pomoc",
+   "name": "lusia-help",
    "text": "Popatrz uważnie. Dasz radę!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-pomoc",
+   "name": "bazyl-help",
    "text": "Spróbuj, dotknij obrazka!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-kolory-start",
+   "name": "lusia-colors-start",
    "text": "Dotknij obrazka w dobrym kolorze.",
    "voice": "voices/alt"
   },
   {
-   "name": "lusia-gloska-a",
+   "name": "lusia-phoneme-a",
    "text": "Co zaczyna się na literę... ... a?",
    "engine": "chatterbox",
    "seed": 3
   },
   {
-   "name": "lusia-gloska-o",
+   "name": "lusia-phoneme-o",
    "text": "Co zaczyna się na literę... ... o?",
    "engine": "chatterbox",
    "seed": 5
   },
   {
-   "name": "lusia-gloska-b",
+   "name": "lusia-phoneme-b",
    "text": "Co zaczyna się na literę... ... be?",
    "engine": "chatterbox",
    "seed": 3
   },
   {
-   "name": "lusia-gloska-c",
+   "name": "lusia-phoneme-c",
    "text": "Co zaczyna się na literę... ... ce?",
    "engine": "chatterbox",
    "seed": 2
   },
   {
-   "name": "lusia-gloska-d",
+   "name": "lusia-phoneme-d",
    "text": "Co zaczyna się na literę... ... de?",
    "engine": "chatterbox",
    "seed": 6
   },
   {
-   "name": "lusia-gloska-f",
+   "name": "lusia-phoneme-f",
    "text": "Co zaczyna się na literę... ... ef?",
    "engine": "chatterbox",
    "seed": 2
   },
   {
-   "name": "lusia-gloska-g",
+   "name": "lusia-phoneme-g",
    "text": "Co zaczyna się na literę... ... gie?",
    "engine": "chatterbox",
    "seed": 3
   },
   {
-   "name": "lusia-gloska-h",
+   "name": "lusia-phoneme-h",
    "text": "Co zaczyna się na literę... ... ha?",
    "engine": "chatterbox",
    "seed": 1
   },
   {
-   "name": "lusia-gloska-j",
+   "name": "lusia-phoneme-j",
    "text": "Co zaczyna się na literę... ... jot?",
    "engine": "chatterbox",
    "seed": 5
   },
   {
-   "name": "lusia-gloska-k",
+   "name": "lusia-phoneme-k",
    "text": "Co zaczyna się na literę... ... ka?",
    "engine": "chatterbox",
    "seed": 3
   },
   {
-   "name": "lusia-gloska-l",
+   "name": "lusia-phoneme-l",
    "text": "Co zaczyna się na literę... ... el?",
    "engine": "chatterbox",
    "seed": 5
   },
   {
-   "name": "lusia-gloska-lw",
+   "name": "lusia-phoneme-lw",
    "text": "Co zaczyna się na literę... ... eł?",
    "engine": "chatterbox",
    "seed": 3
   },
   {
-   "name": "lusia-gloska-m",
+   "name": "lusia-phoneme-m",
    "text": "Co zaczyna się na literę... ... em?",
    "engine": "chatterbox",
    "seed": 1
   },
   {
-   "name": "lusia-gloska-n",
+   "name": "lusia-phoneme-n",
    "text": "Co zaczyna się na literę... ... en?",
    "engine": "chatterbox",
    "seed": 1
   },
   {
-   "name": "lusia-gloska-p",
+   "name": "lusia-phoneme-p",
    "text": "Co zaczyna się na literę... ... pe?",
    "engine": "chatterbox",
    "seed": 3
   },
   {
-   "name": "lusia-gloska-r",
+   "name": "lusia-phoneme-r",
    "text": "Co zaczyna się na literę... ... er?",
    "engine": "chatterbox",
    "seed": 6
   },
   {
-   "name": "lusia-gloska-s",
+   "name": "lusia-phoneme-s",
    "text": "Co zaczyna się na literę... ... es?",
    "engine": "chatterbox",
    "seed": 3
   },
   {
-   "name": "lusia-gloska-si",
+   "name": "lusia-phoneme-si",
    "text": "Co zaczyna się na literę... ... eś?",
    "engine": "chatterbox",
    "seed": 6
   },
   {
-   "name": "lusia-gloska-t",
+   "name": "lusia-phoneme-t",
    "text": "Co zaczyna się na literę... ... te?",
    "engine": "chatterbox",
    "seed": 1
   },
   {
-   "name": "lusia-gloska-w",
+   "name": "lusia-phoneme-w",
    "text": "Co zaczyna się na literę... ... wu?",
    "engine": "chatterbox",
    "seed": 5
   },
   {
-   "name": "lusia-gloska-z",
+   "name": "lusia-phoneme-z",
    "text": "Co zaczyna się na literę... ... zet?",
    "engine": "chatterbox",
    "seed": 4
   },
   {
-   "name": "lusia-gloska-zh",
+   "name": "lusia-phoneme-zh",
    "text": "Co zaczyna się na literę... ... żet?",
    "engine": "chatterbox",
    "seed": 4

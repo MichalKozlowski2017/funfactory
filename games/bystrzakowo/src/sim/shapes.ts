@@ -5,15 +5,15 @@
 import type { Rng } from '@funfactory/core';
 import { MAX_LEVEL } from './puzzles.ts';
 
-export type Shape = 'kolo' | 'kwadrat' | 'trojkat' | 'prostokat' | 'gwiazda' | 'serce' | 'owal' | 'romb' | 'ksiezyc' | 'kropla';
-export const SHAPES: readonly Shape[] = ['kolo', 'kwadrat', 'trojkat', 'prostokat', 'gwiazda', 'serce', 'owal', 'romb', 'ksiezyc', 'kropla'];
+export type Shape = 'circle' | 'square' | 'triangle' | 'rectangle' | 'star' | 'heart' | 'oval' | 'rhombus' | 'moon' | 'drop';
+export const SHAPES: readonly Shape[] = ['circle', 'square', 'triangle', 'rectangle', 'star', 'heart', 'oval', 'rhombus', 'moon', 'drop'];
 
 export const SHAPE_ROUND = 3;
-const BASIC: Shape[] = ['kolo', 'kwadrat', 'trojkat'];
-const MIDDLE: Shape[] = ['prostokat', 'gwiazda', 'serce'];
+const BASIC: Shape[] = ['circle', 'square', 'triangle'];
+const MIDDLE: Shape[] = ['rectangle', 'star', 'heart'];
 /** Wyraziste kształty spoza geometrii (od poziomu 0, żeby plansze się nie powtarzały). */
-const FUN: Shape[] = ['serce', 'gwiazda', 'ksiezyc', 'kropla'];
-const HARD: Shape[] = ['owal', 'romb'];
+const FUN: Shape[] = ['heart', 'star', 'moon', 'drop'];
+const HARD: Shape[] = ['oval', 'rhombus'];
 
 const clamp = (level: number) => Math.max(0, Math.min(MAX_LEVEL, Math.round(level)));
 /** Liczba kształtów na planszy. */

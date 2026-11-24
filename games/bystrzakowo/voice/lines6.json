@@ -7,176 +7,176 @@
    "text": "Znajdź pary takich samych obrazków!"
   },
   {
-   "name": "lusia-memory-cien",
+   "name": "lusia-memory-shadow",
    "text": "Znajdź obrazek i jego cień!"
   },
   {
-   "name": "bazyl-wzory",
+   "name": "bazyl-patterns",
    "text": "Co będzie dalej? Przeciągnij brakujący obrazek!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-litery",
+   "name": "lusia-letters",
    "text": "Narysuj palcem literę! Zacznij od zielonej kropki.",
    "voice": "voices/alt"
   },
   {
-   "name": "lusia-litera-a-auto",
+   "name": "lusia-letter-a-car",
    "text": "A... jak autko.",
    "voice": "voices/alt",
    "engine": "chatterbox",
    "seed": 1
   },
   {
-   "name": "lusia-litera-i-indyk",
+   "name": "lusia-letter-i-turkey",
    "text": "I... jak indyk.",
    "voice": "voices/alt",
    "engine": "chatterbox",
    "seed": 2
   },
   {
-   "name": "lusia-litera-l-lew",
+   "name": "lusia-letter-l-lion",
    "text": "El... jak lew.",
    "voice": "voices/alt",
    "engine": "chatterbox",
    "seed": 6
   },
   {
-   "name": "lusia-litera-t-traktor",
+   "name": "lusia-letter-t-tractor",
    "text": "Te... jak traktor.",
    "voice": "voices/alt",
    "engine": "chatterbox",
    "seed": 1
   },
   {
-   "name": "lusia-litera-o-owca",
+   "name": "lusia-letter-o-sheep",
    "text": "O... jak owca.",
    "voice": "voices/alt",
    "engine": "chatterbox",
    "seed": 5
   },
   {
-   "name": "lusia-litera-m-motyl",
+   "name": "lusia-letter-m-butterfly",
    "text": "Em... jak motyl.",
    "voice": "voices/alt",
    "engine": "chatterbox",
    "seed": 5
   },
   {
-   "name": "lusia-litera-w-wieloryb",
+   "name": "lusia-letter-w-whale",
    "text": "Wu... jak wieloryb.",
    "voice": "voices/alt",
    "engine": "chatterbox",
    "seed": 3
   },
   {
-   "name": "lusia-litera-k-kot",
+   "name": "lusia-letter-k-cat",
    "text": "Ka... jak kot.",
    "voice": "voices/alt",
    "engine": "chatterbox",
    "seed": 1
   },
   {
-   "name": "lusia-litera-p-pies",
+   "name": "lusia-letter-p-dog",
    "text": "Pe... jak pies.",
    "voice": "voices/alt",
    "engine": "chatterbox",
    "seed": 5
   },
   {
-   "name": "lusia-litera-d-dinozaur",
+   "name": "lusia-letter-d-dinosaur",
    "text": "De... jak dinozaur.",
    "voice": "voices/alt",
    "engine": "chatterbox",
    "seed": 4
   },
   {
-   "name": "lusia-litera-b-banan",
+   "name": "lusia-letter-b-banana",
    "text": "Be... jak banan.",
    "voice": "voices/alt",
    "engine": "chatterbox",
    "seed": 2
   },
   {
-   "name": "lusia-litera-s-slon",
+   "name": "lusia-letter-s-elephant",
    "text": "Es... jak słoń.",
    "voice": "voices/alt",
    "engine": "chatterbox",
    "seed": 3
   },
   {
-   "name": "lusia-kraina-pracownia",
+   "name": "lusia-realm-studio",
    "text": "To Pracownia Malucha! Tutaj możesz malować i tworzyć.",
    "voice": "voices/alt"
   },
   {
-   "name": "lusia-kolorowanka",
+   "name": "lusia-coloring",
    "text": "Wybierz kolor i dotknij obrazka. Pomaluj go, jak chcesz!",
    "voice": "voices/alt"
   },
   {
-   "name": "lusia-kolorowanka-gotowe",
+   "name": "lusia-coloring-done",
    "text": "Pięknie! Kiedy skończysz, dotknij zielonej strzałki.",
    "voice": "voices/alt"
   },
   {
-   "name": "lusia-naklejanka",
+   "name": "lusia-stickers",
    "text": "Ułóż swój obrazek z naklejek! Przeciągnij naklejkę na łąkę.",
    "voice": "voices/alt"
   },
   {
-   "name": "lusia-cyfry",
+   "name": "lusia-digits",
    "text": "Narysuj palcem cyfrę! Zacznij od zielonej kropki.",
    "voice": "voices/alt"
   },
   {
-   "name": "lusia-liczba-0",
+   "name": "lusia-number-0",
    "text": "Zero! Nie ma nic.",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-ksztalty",
+   "name": "bazyl-shapes",
    "text": "Włóż każdy klocek do jego dziurki!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-ksztalt-kolo",
+   "name": "bazyl-shape-circle",
    "text": "Koło!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-ksztalt-kwadrat",
+   "name": "bazyl-shape-square",
    "text": "Kwadrat!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-ksztalt-trojkat",
+   "name": "bazyl-shape-triangle",
    "text": "Trójkąt!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-ksztalt-prostokat",
+   "name": "bazyl-shape-rectangle",
    "text": "Prostokąt!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-ksztalt-gwiazda",
+   "name": "bazyl-shape-star",
    "text": "Gwiazda!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-ksztalt-serce",
+   "name": "bazyl-shape-heart",
    "text": "Serce!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-ksztalt-owal",
+   "name": "bazyl-shape-oval",
    "text": "Owal.",
    "voice": "voices/prezenter",
    "seed": 5
   },
   {
-   "name": "bazyl-ksztalt-romb",
+   "name": "bazyl-shape-rhombus",
    "text": "Romb.",
    "voice": "voices/prezenter",
    "seed": 77

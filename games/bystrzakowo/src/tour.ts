@@ -13,29 +13,29 @@ export const TOUR_STEP = 6;
 export function startTour(game: Game): void {
   const scene = () => game.scenes.current as unknown as Any;
   const steps: [string, () => void][] = [
-    ['powitanie-1', () => {}],
-    ['powitanie-2', () => scene().go(1)],
-    ['powitanie-3', () => scene().go(2)],
-    ['powitanie-4', () => {
+    ['welcome-1', () => {}],
+    ['welcome-2', () => scene().go(1)],
+    ['welcome-3', () => scene().go(2)],
+    ['welcome-4', () => {
       scene().go(3);
       scene().pickAge(5);
     }],
-    ['swiat-raczka', () => scene().finish(true)],
-    ['sortowanie', () => scene().play('sortowanie')],
-    ['litery', () => {
+    ['world-hand', () => scene().finish(true)],
+    ['sorting', () => scene().play('sorting')],
+    ['letters', () => {
       scene().leave();
-      setTimeout(() => scene().play('litery'), 1500);
+      setTimeout(() => scene().play('letters'), 1500);
     }],
-    ['kolorowanka', () => {
+    ['coloring', () => {
       scene().leave();
-      setTimeout(() => scene().play('kolorowanka'), 1500);
+      setTimeout(() => scene().play('coloring'), 1500);
     }],
-    ['statystyki', () => {
+    ['stats', () => {
       scene().leave();
       setTimeout(() => scene().demoStats(''), 1500);
     }],
-    ['statystyki-kolory', () => scene().demoStats('kolory')],
-    ['ustawienia', () => scene().parentPanel.setTab('ustawienia')],
+    ['stats-colors', () => scene().demoStats('colors')],
+    ['settings', () => scene().parentPanel.setTab('settings')],
   ];
   steps.forEach(([name, run], i) =>
     setTimeout(() => {

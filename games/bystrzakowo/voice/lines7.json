@@ -3,70 +3,70 @@
  "tries": 8,
  "lines": [
   {
-   "name": "lusia-dobranoc",
+   "name": "lusia-good-night",
    "text": "Na dziś wystarczy zabawy! Lusia i Bazyl idą spać. Do zobaczenia jutro!"
   },
   {
-   "name": "lusia-melodia",
+   "name": "lusia-melody",
    "text": "Posłuchaj mojej melodii i zagraj ją tak samo!"
   },
   {
-   "name": "bazyl-emocje-wesoly",
+   "name": "bazyl-emotions-happy",
    "text": "Pokaż wesołą minkę!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-minka-wesoly",
+   "name": "bazyl-face-happy",
    "text": "Wesoła minka!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-emocje-smutny",
+   "name": "bazyl-emotions-sad",
    "text": "Pokaż smutną minkę!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-minka-smutny",
+   "name": "bazyl-face-sad",
    "text": "Smutna minka!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-emocje-zly",
+   "name": "bazyl-emotions-angry",
    "text": "Pokaż złą minkę!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-minka-zly",
+   "name": "bazyl-face-angry",
    "text": "Zła minka!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-emocje-zdziwiony",
+   "name": "bazyl-emotions-surprised",
    "text": "Pokaż zdziwioną minkę!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-minka-zdziwiony",
+   "name": "bazyl-face-surprised",
    "text": "Zdziwiona minka!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-emocje-przestraszony",
+   "name": "bazyl-emotions-scared",
    "text": "Pokaż przestraszoną minkę!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-minka-przestraszony",
+   "name": "bazyl-face-scared",
    "text": "Przestraszona minka!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-emocje-spiacy",
+   "name": "bazyl-emotions-sleepy",
    "text": "Pokaż śpiącą minkę!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-minka-spiacy",
+   "name": "bazyl-face-sleepy",
    "text": "Śpiąca minka!",
    "voice": "voices/prezenter"
   }

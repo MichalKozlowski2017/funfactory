@@ -116,7 +116,7 @@ function colorSome(s: Any, n: number, rand: () => number): void {
 }
 
 /** Zabawy z pomiarem tempa (codziennie) i pozostałe (po kolei, po kilka dziennie). */
-const DAILY: Activity[] = ['kolory', 'liczenie', 'gloski', 'emocje'];
+const DAILY: Activity[] = ['colors', 'counting', 'phonemes', 'emotions'];
 const ROUNDS_PER_DAY = 8;
 /** Szansa, że dziecko bawi się danego dnia (ok. 4 dni w tygodniu, z przerwami jak w życiu). */
 const PLAY_CHANCE = 0.58;
@@ -131,7 +131,7 @@ type HistoryStatus = { day: number; days: number; done: boolean; at: string };
  * na końcu data wraca do dziś, a kolejne uruchomienie nic już nie robi.
  */
 function playHistory(game: Game, span: number): void {
-  const status = new SaveStore<HistoryStatus>(`bystrzakowo-historia-${span}`, { day: 0, days: 0, done: false, at: '' });
+  const status = new SaveStore<HistoryStatus>(`bystrzakowo-history-${span}`, { day: 0, days: 0, done: false, at: '' });
   void status.load().then((st) => {
     if (st.done) return console.log('HISTORIA już rozegrana');
     const p = state.progress;
@@ -147,7 +147,7 @@ function runHistory(game: Game, span: number, status: SaveStore<HistoryStatus>):
   const rng = game.rng;
   // Dni zabawy w okresie (ostatni dzień, czyli dziś, zawsze).
   const days = Array.from({ length: span }, (_, i) => i).filter((i) => i === span - 1 || rng.next() < PLAY_CHANCE);
-  const others = ACTIVITIES.filter((a) => !DAILY.includes(a) && a !== 'naklejanka' && a !== 'kolorowanka');
+  const others = ACTIVITIES.filter((a) => !DAILY.includes(a) && a !== 'stickers' && a !== 'coloring');
   const base = new Map<Activity, number>(ACTIVITIES.map((a) => [a, rng.range(0.25, 0.55)]));
   game.sound.muted = true;
   game.loop.timeScale = 3;
@@ -216,7 +216,7 @@ function runHistory(game: Game, span: number, status: SaveStore<HistoryStatus>):
         since = 0;
       }
     } catch (e) {
-      console.warn('historia', e);
+      console.warn('history', e);
       s.leave?.();
     }
     setTimeout(tick, 400);

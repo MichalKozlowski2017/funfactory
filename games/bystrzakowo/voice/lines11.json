@@ -3,12 +3,12 @@
  "tries": 8,
  "lines": [
   {
-   "name": "lusia-item-skuter",
+   "name": "lusia-item-moped",
    "text": "Skuter!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-skuter",
+   "name": "bazyl-item-moped",
    "text": "Skuter!",
    "voice": "voices/prezenter"
   }

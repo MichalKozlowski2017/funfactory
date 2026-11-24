@@ -15,14 +15,14 @@ import { wordsOf } from './sim/syllables.ts';
 
 export type Guide = 'lusia' | 'bazyl';
 
-export const COLORS_SPOKEN: readonly Color[] = ['czerwony', 'zolty', 'zielony', 'niebieski', 'pomaranczowy', 'rozowy', 'fioletowy', 'brazowy', 'bialy'];
+export const COLORS_SPOKEN: readonly Color[] = ['red', 'yellow', 'green', 'blue', 'orange', 'pink', 'purple', 'brown', 'white'];
 
-const COMMON = ['brawo-1', 'brawo-2', 'brawo-3', 'brawo-4', 'brawo-5', 'oj-1', 'oj-2', 'nagroda', 'witaj', 'pomoc', ...ITEMS.map((i) => `item-${i.id}`)];
+const COMMON = ['bravo-1', 'bravo-2', 'bravo-3', 'bravo-4', 'bravo-5', 'oops-1', 'oops-2', 'reward', 'hello', 'help', ...ITEMS.map((i) => `item-${i.id}`)];
 /** Nazwy nagrań każdego przewodnika w języku `l` (bez przedrostka głosu). */
 export function voiceLines(l: Lang): Record<Guide, string[]> {
   return {
-  lusia: [...COMMON, 'kraina-polana', 'kraina-spi', 'kraina-sciezka', 'kropki', 'memory', 'kraina-pracownia', 'dobranoc', 'melodia', 'sylaby', ...wordsOf(l).map((w) => `czytaj-${w.item}`), 'kolorowanka', 'kolorowanka-gotowe', 'naklejanka', 'litery', 'cyfry', 'liczba-0', ...letterLines(l).map((x) => x.line), ...MAZE_PAIRS.map(([hero]) => `labirynt-${hero}`), 'cienie', 'liczenie', 'liczenie-dotyk', 'album', ...Array.from({ length: 10 }, (_, i) => `liczba-${i + 1}`), ...soundsOf(l).map((s) => `gloska-${soundSlug(s)}`)],
-  bazyl: [...COMMON, 'krainy', 'historyjki', ...STORIES.map((x) => `historia-${x}`), ...EMOTIONS.flatMap((e) => [`emocje-${e}`, `minka-${e}`]), 'kraina-warsztat', 'wzory', 'ksztalty', ...SHAPES.map((x) => `ksztalt-${x}`), 'pasuje', 'ukladanka', 'przeciagnij', ...SORT_LINES, ...COLORS_SPOKEN.map((c) => `kolor-${c}`), ...ITEMS.filter((i) => i.mother).map((i) => `mama-${i.id}`)],
+  lusia: [...COMMON, 'realm-meadow', 'realm-asleep', 'realm-path', 'dots', 'memory', 'realm-studio', 'good-night', 'melody', 'syllables', ...wordsOf(l).map((w) => `read-${w.item}`), 'coloring', 'coloring-done', 'stickers', 'letters', 'digits', 'number-0', ...letterLines(l).map((x) => x.line), ...MAZE_PAIRS.map(([hero]) => `maze-${hero}`), 'shadows', 'counting', 'counting-touch', 'album', ...Array.from({ length: 10 }, (_, i) => `number-${i + 1}`), ...soundsOf(l).map((s) => `phoneme-${soundSlug(s)}`)],
+  bazyl: [...COMMON, 'realms', 'stories', ...STORIES.map((x) => `history-${x}`), ...EMOTIONS.flatMap((e) => [`emotions-${e}`, `face-${e}`]), 'realm-workshop', 'patterns', 'shapes', ...SHAPES.map((x) => `shape-${x}`), 'matching', 'jigsaw', 'drag', ...SORT_LINES, ...COLORS_SPOKEN.map((c) => `color-${c}`), ...ITEMS.filter((i) => i.mother).map((i) => `mother-${i.id}`)],
   };
 }
 

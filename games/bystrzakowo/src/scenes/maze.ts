@@ -37,7 +37,7 @@ export class MazeScene extends RoundScene {
   private topLeft = { x: 0, y: 0 };
 
   constructor() {
-    super('labirynt', 'lusia');
+    super('maze', 'lusia');
   }
 
   protected async prepare(): Promise<void> {
@@ -54,11 +54,11 @@ export class MazeScene extends RoundScene {
   }
 
   protected promptLine(): string {
-    return `labirynt-${this.pair[0]}`;
+    return `maze-${this.pair[0]}`;
   }
 
   protected show(): void {
-    const { cols, rows } = mazeSize(state.progress.levels.labirynt ?? 0);
+    const { cols, rows } = mazeSize(state.progress.levels.maze ?? 0);
     this.maze = makeMaze(this.game.rng, cols, rows);
     this.steps = [[0, 0]];
     this.dragging = false;

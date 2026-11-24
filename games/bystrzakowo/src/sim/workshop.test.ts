@@ -7,7 +7,7 @@ import { belongs, binCount, binLine, makeSortRound, makeSortTask, rulesFor, SORT
 
 const levels = [0, 1, 2];
 
-describe('krainy', () => {
+describe('realms', () => {
   it('każda zabawa jest w dokładnie jednej krainie', () => {
     const all = REALMS.flatMap((r) => r.rows.flat());
     expect(new Set(all).size).toBe(all.length);
@@ -28,7 +28,7 @@ describe('krainy', () => {
   });
 });
 
-describe('segregowanie', () => {
+describe('classifying', () => {
   it('każdy obiekt pasuje do swojej skrzynki i do żadnej innej', () => {
     const rng = new Rng(3);
     for (const level of levels)
@@ -155,7 +155,7 @@ describe('sorter kształtów', () => {
         const b = makeShapeBoard(rng, level);
         expect(b.length).toBe(shapeCount(level));
         expect(new Set(b).size).toBe(b.length);
-        if (level === 0) expect(b.every((s) => ['kolo', 'kwadrat', 'trojkat', 'serce', 'gwiazda', 'ksiezyc', 'kropla'].includes(s))).toBe(true);
+        if (level === 0) expect(b.every((s) => ['circle', 'square', 'triangle', 'heart', 'star', 'moon', 'drop'].includes(s))).toBe(true);
       }
   });
 
@@ -173,7 +173,7 @@ describe('sorter kształtów', () => {
   });
 });
 
-describe('melodia', () => {
+describe('melody', () => {
   it('długość rośnie z poziomem, sztabki w zakresie', async () => {
     const { makeMelody, barCount, melodyLength, MELODY_ROUND } = await import('./melody.ts');
     const rng = new Rng(2);
@@ -201,7 +201,7 @@ describe('melodia', () => {
   });
 });
 
-describe('sylaby', () => {
+describe('syllables', () => {
   it('sylaby składają się w nazwę obrazka, kafelki to permutacja', async () => {
     const { WORDS, makeSyllableRound, scramble, SYLLABLE_ROUND } = await import('./syllables.ts');
     const strip = (s: string) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/ł/g, 'l');
@@ -236,7 +236,7 @@ describe('sylaby', () => {
   });
 });
 
-describe('historyjki', () => {
+describe('stories', () => {
   it('trzy historyjki w rundzie, pierwszy kadr na miejscu tylko na poziomie 0', async () => {
     const { makeStoryRound, presetFrames, STORY_ROUND } = await import('./stories.ts');
     const r = makeStoryRound(new Rng(1));

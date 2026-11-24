@@ -22,15 +22,15 @@ background() {
   [ -f "${src%.png}.json" ] && cp "${src%.png}.json" "$dst.json"
 }
 
-sprite styl/plastelina-sitting-11.png items/kot 512
-sprite styl/plastelina-leaf-11.png items/jablko 512
-sprite styl/plastelina-car-11.png items/auto 512
-for id in krowa banan rower slon kubek; do sprite styl2/plastelina-$id-21.png items/$id 512; done
-for id in pies ryba zaba gruszka truskawka samolot lodka pilka mis klocek; do sprite proto/obj-$id-21.png items/$id 512; done
-sprite styl2/plastelina-lisica-21.png lusia 720
-sprite styl2/plastelina-borsuk-21.png bazyl 720
-for k in cienie pasuje liczenie; do sprite proto/dom-$k-21.png dom-$k 560; done
-for k in kolory gloski mamy; do sprite extra/dom-$k-21.png dom-$k 560; done
+sprite style/plasticine-sitting-11.png items/cat 512
+sprite style/plasticine-leaf-11.png items/apple 512
+sprite style/plasticine-car-11.png items/car 512
+for id in cow banana bike elephant mug; do sprite style2/plasticine-$id-21.png items/$id 512; done
+for id in dog fish frog pear strawberry airplane boat ball teddy block; do sprite proto/obj-$id-21.png items/$id 512; done
+sprite style2/plasticine-lisica-21.png lusia 720
+sprite style2/plasticine-borsuk-21.png bazyl 720
+for k in shadows matching counting; do sprite proto/house-$k-21.png house-$k 560; done
+for k in colors phonemes mothers; do sprite extra/house-$k-21.png house-$k 560; done
 # Obiekty katalogu (scripts/gen-art.ts): assets-raw/bystrzakowo/items/<id>-<seed>.png.
 # Przy kilku wersjach (przegenerowanie z innym seedem) wygrywa najnowsza.
 seen=" "
@@ -42,97 +42,97 @@ for f in $(ls -t $RAW/items/*.png 2>/dev/null); do
   sprite "items/$base.png" "items/$id" 512
 done
 # Muzyka (ACE-Step): FLAC -> AAC, cicha pętla w tle.
-mus=$(ls $RAW/extra/muzyka*.flac 2>/dev/null | head -1 || true)
+mus=$(ls $RAW/extra/music*.flac 2>/dev/null | head -1 || true)
 if [ -n "$mus" ]; then
   mkdir -p public/audio
-  ffmpeg -loglevel error -y -i "$mus" -af "loudnorm=I=-20:TP=-2,afade=t=in:d=0.05" -ac 2 -ar 44100 -c:a aac -b:a 96k public/audio/muzyka.m4a
-  cp "${mus%.flac}.json" public/audio/muzyka.json 2>/dev/null || true
+  ffmpeg -loglevel error -y -i "$mus" -af "loudnorm=I=-20:TP=-2,afade=t=in:d=0.05" -ac 2 -ar 44100 -c:a aac -b:a 96k public/audio/music.m4a
+  cp "${mus%.flac}.json" public/audio/music.json 2>/dev/null || true
 fi
 # Warsztat Bazyla: tło krainy, tło zabaw, stanowiska, skrzynka, wiaderko (barwione w grze), znaki domów.
-mkdir -p $OUT/warsztat
-background warsztat/tlo-warsztat-21.png kraina-warsztat
-background warsztat/gra2-32.png gra-warsztat
-sprite warsztat/stacja-sortowanie-22.png dom-sortowanie 560
-sprite warsztat/stacja-ukladanka-22.png dom-ukladanka 560
-sprite warsztat/skrzynka-21.png warsztat/skrzynka 512
-sprite warsztat/wiadro-21.png warsztat/wiadro 512
-sprite warsztat/stodola-21.png warsztat/stodola 256
-sprite warsztat/staw-21.png warsztat/staw 256
-for id in droga balwan palma kra; do sprite warsztat/$id-21.png warsztat/$id 256; done
-[ -f $RAW/warsztat/morze-21.png ] && sprite warsztat/morze-21.png warsztat/morze 256
+mkdir -p $OUT/workshop
+background workshop/background-workshop-21.png realm-workshop
+background workshop/gra2-32.png game-workshop
+sprite workshop/station-sorting-22.png house-sorting 560
+sprite workshop/station-jigsaw-22.png house-jigsaw 560
+sprite workshop/crate-21.png workshop/crate 512
+sprite workshop/pail-21.png workshop/pail 512
+sprite workshop/barn-21.png workshop/barn 256
+sprite workshop/pond-21.png workshop/pond 256
+for id in road snowman palm ice-floe; do sprite workshop/$id-21.png workshop/$id 256; done
+[ -f $RAW/workshop/sea-21.png ] && sprite workshop/sea-21.png workshop/sea 256
 # Ścieżka Lusi: tło krainy, tło zabaw, stanowiska.
-background sciezka/tlo-sciezka-21.png kraina-sciezka
-background sciezka/tlo-sciezka-gra-22.png gra-sciezka
-sprite sciezka/stacja-kropki-21.png dom-kropki 560
-sprite sciezka/stacja-labirynt-22.png dom-labirynt 560
+background path/background-path-21.png realm-path
+background path/background-path-game-22.png game-path
+sprite path/station-dots-21.png house-dots 560
+sprite path/station-maze-22.png house-maze 560
 # Pracownia Malucha i stanowiska dodatkowych zabaw.
-background pracownia/tlo-pracownia-21.png kraina-pracownia
-background pracownia/tlo-pracownia-gra-22.png gra-pracownia
-sprite pracownia/stacja-kolorowanka-21.png dom-kolorowanka 560
-sprite pracownia/stacja-naklejanka-22.png dom-naklejanka 560
-sprite pracownia/stacja-litery-22.png dom-litery 560
-sprite pracownia/stacja-wzory-22.png dom-wzory 560
-sprite pracownia/stacja-ksztalty-22.png dom-ksztalty 560
-sprite pracownia/stacja-cyfry-22.png dom-cyfry 560
-sprite pracownia/stacja-sylaby-22.png dom-sylaby 560
-sprite pracownia/stacja-melodia-22.png dom-melodia 560
-sprite pracownia/stacja-historyjki-22.png dom-historyjki 560
+background studio/background-studio-21.png realm-studio
+background studio/background-studio-game-22.png game-studio
+sprite studio/station-coloring-21.png house-coloring 560
+sprite studio/station-stickers-22.png house-stickers 560
+sprite studio/station-letters-22.png house-letters 560
+sprite studio/station-patterns-22.png house-patterns 560
+sprite studio/station-shapes-22.png house-shapes 560
+sprite studio/station-digits-22.png house-digits 560
+sprite studio/station-syllables-22.png house-syllables 560
+sprite studio/station-melody-22.png house-melody 560
+sprite studio/station-stories-22.png house-stories 560
 # Polana Zagadek: stanowiska mówiące, na czym polega zabawa.
-for x in cienie-21 emocje-22 gloski-22 kolory-22 liczenie-21 mamy-21 memory-22 pasuje-21; do sprite polana/stacja-$x.png dom-${x%-*} 560; done
+for x in shadows-21 emotions-22 phonemes-22 colors-22 counting-21 mothers-21 memory-22 matching-21; do sprite meadow/station-$x.png house-${x%-*} 560; done
 # Emocje: minki (najnowsza wersja każdej).
-mkdir -p $OUT/emocje
-for id in wesoly smutny zly zdziwiony przestraszony spiacy; do
-  f=$(ls -t $RAW/emocje/$id-[0-9]*.png 2>/dev/null | head -1)
-  [ -n "$f" ] && sprite "emocje/$(basename "$f")" "emocje/$id" 400
+mkdir -p $OUT/emotions
+for id in happy sad angry surprised scared sleepy; do
+  f=$(ls -t $RAW/emotions/$id-[0-9]*.png 2>/dev/null | head -1)
+  [ -n "$f" ] && sprite "emotions/$(basename "$f")" "emotions/$id" 400
   # Kolejne postaci: <emocja>-<postać>-<seed>.png -> emocje/<emocja>-<postać>.webp
-  for c in dziewczynka kotek mis; do
-    f=$(ls -t $RAW/emocje/$id-$c-*.png 2>/dev/null | head -1)
-    [ -n "$f" ] && sprite "emocje/$(basename "$f")" "emocje/$id-$c" 400
+  for c in girl kitten teddy; do
+    f=$(ls -t $RAW/emotions/$id-$c-*.png 2>/dev/null | head -1)
+    [ -n "$f" ] && sprite "emotions/$(basename "$f")" "emotions/$id-$c" 400
   done
 done
 # Historyjki: kadry <historyjka>-<1..3>.
-mkdir -p $OUT/historyjki
-for f in $RAW/historyjki/*-21.png; do
+mkdir -p $OUT/stories
+for f in $RAW/stories/*-21.png; do
   [ -f "$f" ] || continue
   id=$(basename "$f" -21.png)
-  sprite "historyjki/$id-21.png" "historyjki/$id" 400
+  sprite "stories/$id-21.png" "stories/$id" 400
 done
 # Wybrane nowsze kadry (poprawki bez twarzy i nowe historyjki); nadpisują wersje -21.
-STORY_PICKS="balwan-1-51 balwan-2-51 kwiat-1-62 kwiat-2-62 kwiat-3-62 kurczak-1-61 jablko-1-61 jablko-2-61 jablko-3-61 lody-1-62 lody-2-61 zabka-2-62 zabka-3-61 kanapka-1-61 kanapka-2-61 kanapka-3-61 wieza-2-61 balon-1-61 balon-2-61 balon-3-61 tort-2-61 tort-3-62 zamek-1-61 zamek-3-61 jajko-1-71 jajko-2-71 jajko-3-71 pizza-2-72 pizza-3-71 swieca-1-72 swieca-2-72 swieca-3-72 kakao-1-71 kakao-2-71 kakao-3-71 gniazdo-1-71 gniazdo-2-71 gniazdo-3-71 drzewko-1-72 drzewko-2-72 drzewko-3-72 dzien-1-71 dzien-2-71 dzien-3-71 samolot-1-92 samolot-2-92 samolot-3-92 zabka-1-82 wieza-1-81 wieza-3-81 tort-1-81 zamek-2-81 pizza-1-91"
-for x in $STORY_PICKS; do sprite "historyjki/$x.png" "historyjki/${x%-*}" 400; done
+STORY_PICKS="snowman-1-51 snowman-2-51 flower-1-62 flower-2-62 flower-3-62 chick-1-61 apple-1-61 apple-2-61 apple-3-61 ice-cream-1-62 ice-cream-2-61 froglet-2-62 froglet-3-61 sandwich-1-61 sandwich-2-61 sandwich-3-61 tower-2-61 balloon-1-61 balloon-2-61 balloon-3-61 cake-2-61 cake-3-62 castle-1-61 castle-3-61 egg-1-71 egg-2-71 egg-3-71 pizza-2-72 pizza-3-71 candle-1-72 candle-2-72 candle-3-72 cocoa-1-71 cocoa-2-71 cocoa-3-71 nest-1-71 nest-2-71 nest-3-71 small-tree-1-72 small-tree-2-72 small-tree-3-72 day-1-71 day-2-71 day-3-71 airplane-1-92 airplane-2-92 airplane-3-92 froglet-1-82 tower-1-81 tower-3-81 cake-1-81 castle-2-81 pizza-1-91"
+for x in $STORY_PICKS; do sprite "stories/$x.png" "stories/${x%-*}" 400; done
 # Sześć kolejnych historyjek (--historyjki6, poprawki --historyjki7).
-STORY_PICKS6="banan-1-101 banan-2-102 banan-3-113 arbuz-1-102 arbuz-2-102 arbuz-3-102 akwarium-1-102 akwarium-2-102 akwarium-3-102 prezent-1-102 prezent-2-102 prezent-3-102 myjnia-1-101 myjnia-2-101 myjnia-3-101 babeczka-1-112 babeczka-2-101 babeczka-3-101"
-for x in $STORY_PICKS6; do sprite "historyjki/$x.png" "historyjki/${x%-*}" 400; done
+STORY_PICKS6="banana-1-101 banana-2-102 banana-3-113 watermelon-1-102 watermelon-2-102 watermelon-3-102 aquarium-1-102 aquarium-2-102 aquarium-3-102 gift-1-102 gift-2-102 gift-3-102 car-wash-1-101 car-wash-2-101 car-wash-3-101 cupcake-1-112 cupcake-2-101 cupcake-3-101"
+for x in $STORY_PICKS6; do sprite "stories/$x.png" "stories/${x%-*}" 400; done
 # Kolorowanki: czyste czarne kontury na białym (próg + pogrubienie linii, żeby obszary były zamknięte).
-mkdir -p $OUT/kolorowanki
-for f in $RAW/kolorowanki/*-21.png; do
+mkdir -p $OUT/coloring-pages
+for f in $RAW/coloring-pages/*-21.png; do
   [ -f "$f" ] || continue
   id=$(basename "$f" -21.png)
-  magick "$f" -colorspace gray -resize 640x640 -threshold 55% -morphology Erode Disk:1.5 -strip "$OUT/kolorowanki/$id.png"
-  cp "${f%.png}.json" "$OUT/kolorowanki/$id.json"
+  magick "$f" -colorspace gray -resize 640x640 -threshold 55% -morphology Erode Disk:1.5 -strip "$OUT/coloring-pages/$id.png"
+  cp "${f%.png}.json" "$OUT/coloring-pages/$id.json"
 done
 # Prostsze strony (duże pola dla palca malucha) zastępują pierwsze wersje.
-for x in domek-32 kwiatek-31 motyl-31 ryba-31 slon-31 sowa-31 zolw-32; do
-  f=$RAW/kolorowanki/$x.png
-  magick "$f" -colorspace gray -resize 640x640 -threshold 55% -morphology Erode Disk:1.5 -strip "$OUT/kolorowanki/${x%-*}.png"
-  cp "${f%.png}.json" "$OUT/kolorowanki/${x%-*}.json"
+for x in little-house-32 little-flower-31 butterfly-31 fish-31 elephant-31 owl-31 turtle-32; do
+  f=$RAW/coloring-pages/$x.png
+  magick "$f" -colorspace gray -resize 640x640 -threshold 55% -morphology Erode Disk:1.5 -strip "$OUT/coloring-pages/${x%-*}.png"
+  cp "${f%.png}.json" "$OUT/coloring-pages/${x%-*}.json"
 done
 # Krajobrazy naklejanki.
-mkdir -p $OUT/krajobrazy
-for id in farma kosmos las morze plaza zima; do background krajobrazy/$id-21.png krajobrazy/$id; done
-background proto/tlo-polana-21.png polana
-background proto/tlo-zagadka-21.png tlo-zagadka
+mkdir -p $OUT/landscapes
+for id in farm space forest sea beach winter; do background landscapes/$id-21.png landscapes/$id; done
+background proto/background-meadow-21.png meadow
+background proto/background-riddle-21.png background-riddle
 # Zębatka strefy rodzica.
-sprite extra/zebatka-a-22.png zebatka 256
+sprite extra/gear-a-22.png gear 256
 # Rączka z samouczka (pokaz gestów); czubek palca: HAND_TIP w src/hand.ts.
-sprite ui/raczka-d-302.png raczka 320
+sprite ui/hand-d-302.png hand 320
 # Obrazki do „Pisze litery” (src/sim/letter-pics.ts): wybrany wariant (seed 401 albo 402).
-mkdir -p $OUT/litery
-for x in emu-401 elf-402 ekler-401 flaming-401 flaga-401 igloo-401 ucho-401 ufo-401 mrowka-402 lody-401 \
-  iguana-402 dzem-401 gniazdo-401 orzech-402 krolowa-402 koldra-401 skrzypce-402 van-401 wazon-402 jojo-401 \
-  jacht-401 jak-402 cukinia-401 jednorozec-402 klaun-402 komputer-402 wiolonczela-402 wyspa-401 jogurt-401 \
-  piekarnik-402 kaczuszka-401 zegar-402 lodz-podwodna-401 wulkan-402 kostka-402 magnes-401 koala-401 kiwi-401 \
-  kajak-402 nandu-402 gnu-402 mydlo-402; do
-  sprite litery/$x.png litery/${x%-*} 512
+mkdir -p $OUT/letters
+for x in emu-401 elf-402 eclair-401 flamingo-401 flag-401 igloo-401 ear-401 ufo-401 ant-402 ice-cream-401 \
+  iguana-402 jam-401 nest-401 walnut-402 queen-402 quilt-401 violin-402 van-401 vase-402 yo-yo-401 \
+  yacht-401 yak-402 zucchini-401 unicorn-402 clown-402 computer-402 cello-402 island-401 yogurt-401 \
+  oven-402 rubber-duck-401 clock-402 submarine-401 volcano-402 dice-402 magnet-401 koala-401 kiwi-401 \
+  kayak-402 nandu-402 gnu-402 soap-402; do
+  sprite letters/$x.png letters/${x%-*} 512
 done
 du -sh $OUT

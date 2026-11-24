@@ -10,8 +10,8 @@ import { COLORS, IconButton, sfx } from '../ui.ts';
 import { RoundScene } from './round.ts';
 import type { Gesture } from '../hand.ts';
 
-/** Strony kolorowanki (public/art/kolorowanki/<id>.png, kontury z Fluxa). */
-export const PAGES = ['kot', 'pies', 'slon', 'ryba', 'motyl', 'auto', 'kwiatek', 'dinozaur', 'zolw', 'rakieta', 'sowa', 'domek'];
+export { PAGES } from '../sim/coloring.ts';
+import { PAGES } from '../sim/coloring.ts';
 /** Rozmiar roboczy obrazka (piksele). */
 const SIZE = 640;
 /** Farby: nasycone, ale miękkie (jak plastelina). */
@@ -44,7 +44,7 @@ export class ColoringScene extends RoundScene {
   private box = { x: 0, y: 0, s: 400 };
 
   constructor() {
-    super('kolorowanka', 'lusia');
+    super('coloring', 'lusia');
   }
 
   protected async prepare(): Promise<void> {
@@ -57,7 +57,7 @@ export class ColoringScene extends RoundScene {
     if (forced && PAGES.includes(forced)) order.unshift(forced);
     let tex: Texture | null = null;
     for (const page of order) {
-      tex = await Assets.load<Texture>(`${URL_BASE}art/kolorowanki/${page}.png`).catch(() => null);
+      tex = await Assets.load<Texture>(`${URL_BASE}art/coloring-pages/${page}.png`).catch(() => null);
       if (tex) {
         this.page = page;
         break;
@@ -99,7 +99,7 @@ export class ColoringScene extends RoundScene {
   }
 
   protected promptLine(): string {
-    return 'kolorowanka';
+    return 'coloring';
   }
 
   protected show(): void {
@@ -136,7 +136,7 @@ export class ColoringScene extends RoundScene {
     this.done.visible = false;
     this.layer.addChild(this.done);
     this.drawPalette();
-    this.timers.after(0.4, () => say(this.game, this.guide, 'kolorowanka'));
+    this.timers.after(0.4, () => say(this.game, this.guide, 'coloring'));
   }
 
   protected override appear(): void {
@@ -196,7 +196,7 @@ export class ColoringScene extends RoundScene {
     }
     if (this.fills === 6) {
       void pulse(this.tweens, this.done, 0.25, 0.4);
-      say(this.game, this.guide, 'kolorowanka-gotowe');
+      say(this.game, this.guide, 'coloring-done');
     }
   }
 

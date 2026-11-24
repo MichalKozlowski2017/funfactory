@@ -19,7 +19,7 @@ export function jigsawGrid(level: number): { cols: number; rows: number } {
 
 /** Obrazki do układania: zwierzęta i pojazdy mają najbardziej charakterystyczne kształty, więc są łatwiejsze. */
 export function makeJigsawRound(rng: Rng): Item[] {
-  const easy = ITEMS.filter((i) => i.category === 'zwierzeta' || i.category === 'pojazdy');
+  const easy = ITEMS.filter((i) => i.category === 'animals' || i.category === 'vehicles');
   const pool = easy.length >= JIGSAW_ROUND ? easy : ITEMS;
   return rng.shuffle(pool).slice(0, JIGSAW_ROUND);
 }

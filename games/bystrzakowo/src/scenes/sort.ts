@@ -32,7 +32,7 @@ interface BinView {
   /** Obiekty już włożone (za przednią ścianką skrzynki). */
   pile: Container;
   box: Container;
-  /** Nagranie nazwy skrzynki (np. "dom-las"). */
+  /** Nagranie nazwy skrzynki (np. "house-forest"). */
   line: string;
   /** Grafika pojemnika (tył) i przednia ścianka nad obiektami; skalowane razem. */
   back: Container;
@@ -59,11 +59,11 @@ export class SortScene extends RoundScene {
   private dragging = false;
 
   constructor() {
-    super('sortowanie', 'bazyl');
+    super('sorting', 'bazyl');
   }
 
   protected async prepare(): Promise<void> {
-    this.tasks = makeSortRound(this.game.rng, state.progress.levels.sortowanie ?? 0);
+    this.tasks = makeSortRound(this.game.rng, state.progress.levels.sorting ?? 0);
     this.length = this.tasks.length;
   }
 
@@ -81,7 +81,7 @@ export class SortScene extends RoundScene {
 
   protected show(): void {
     const t = this.task;
-    this.bins = t.bins.map((bin) => this.binView(t.rule === 'kolory' ? (bin.key as Color) : null, bin.sign, binLine(t.rule, bin.key)));
+    this.bins = t.bins.map((bin) => this.binView(t.rule === 'colors' ? (bin.key as Color) : null, bin.sign, binLine(t.rule, bin.key)));
     this.pieces = t.items.map(({ item, bin }) => this.piece(item, bin));
     [...this.bins.map((b) => b.view), ...this.pieces.map((p) => p.view)].forEach((c, i) => {
       void popIn(this.tweens, c, 0.4, i * 0.06);
@@ -102,9 +102,9 @@ export class SortScene extends RoundScene {
       });
       at += 1.1;
     }
-    if (this.index === 0 && state.progress.levels.sortowanie === 0)
+    if (this.index === 0 && state.progress.levels.sorting === 0)
       this.timers.after(at + 0.1, () => {
-        if (this.index === index && !this.dragging) say(this.game, this.guide, 'przeciagnij');
+        if (this.index === index && !this.dragging) say(this.game, this.guide, 'drag');
       });
   }
 

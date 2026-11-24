@@ -3,11 +3,11 @@
  "tries": 8,
  "lines": [
   {
-   "name": "bazyl-ksztalt-ksiezyc",
+   "name": "bazyl-shape-moon",
    "text": "Księżyc."
   },
   {
-   "name": "bazyl-ksztalt-kropla",
+   "name": "bazyl-shape-drop",
    "text": "Kropla."
   }
  ]

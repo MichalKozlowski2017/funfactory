@@ -3,287 +3,287 @@
  "tries": 8,
  "lines": [
   {
-   "name": "lusia-item-lisek",
+   "name": "lusia-item-fox-cub",
    "text": "Lisek!"
   },
   {
-   "name": "bazyl-item-lisek",
+   "name": "bazyl-item-fox-cub",
    "text": "Lisek!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-mama-lisek",
+   "name": "bazyl-mother-fox-cub",
    "text": "Gdzie jest mama liska?",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-labirynt-lisek",
+   "name": "lusia-maze-fox-cub",
    "text": "Zaprowadź liska do mamy!"
   },
   {
-   "name": "lusia-item-niedzwiadek",
+   "name": "lusia-item-bear-cub",
    "text": "Niedźwiadek!"
   },
   {
-   "name": "bazyl-item-niedzwiadek",
+   "name": "bazyl-item-bear-cub",
    "text": "Niedźwiadek!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-mama-niedzwiadek",
+   "name": "bazyl-mother-bear-cub",
    "text": "Gdzie jest mama niedźwiadka?",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-labirynt-niedzwiadek",
+   "name": "lusia-maze-bear-cub",
    "text": "Zaprowadź niedźwiadka do mamy!"
   },
   {
-   "name": "lusia-item-pingwinek",
+   "name": "lusia-item-penguin-chick",
    "text": "Pingwinek!"
   },
   {
-   "name": "bazyl-item-pingwinek",
+   "name": "bazyl-item-penguin-chick",
    "text": "Pingwinek!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-mama-pingwinek",
+   "name": "bazyl-mother-penguin-chick",
    "text": "Gdzie jest mama pingwinka?",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-labirynt-pingwinek",
+   "name": "lusia-maze-penguin-chick",
    "text": "Zaprowadź pingwinka do mamy!"
   },
   {
-   "name": "lusia-item-lwiatko",
+   "name": "lusia-item-lion-cub",
    "text": "Lwiątko!"
   },
   {
-   "name": "bazyl-item-lwiatko",
+   "name": "bazyl-item-lion-cub",
    "text": "Lwiątko!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-mama-lwiatko",
+   "name": "bazyl-mother-lion-cub",
    "text": "Gdzie jest mama lwiątka?",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-labirynt-lwiatko",
+   "name": "lusia-maze-lion-cub",
    "text": "Zaprowadź lwiątko do mamy!"
   },
   {
-   "name": "lusia-item-kozlatko",
+   "name": "lusia-item-kid-goat",
    "text": "Koźlątko!"
   },
   {
-   "name": "bazyl-item-kozlatko",
+   "name": "bazyl-item-kid-goat",
    "text": "Koźlątko!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-mama-kozlatko",
+   "name": "bazyl-mother-kid-goat",
    "text": "Gdzie jest mama koźlątka?",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-labirynt-kozlatko",
+   "name": "lusia-maze-kid-goat",
    "text": "Zaprowadź koźlątko do mamy!"
   },
   {
-   "name": "lusia-item-zyrafka",
+   "name": "lusia-item-baby-giraffe",
    "text": "Żyrafka!"
   },
   {
-   "name": "bazyl-item-zyrafka",
+   "name": "bazyl-item-baby-giraffe",
    "text": "Żyrafka!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-mama-zyrafka",
+   "name": "bazyl-mother-baby-giraffe",
    "text": "Gdzie jest mama żyrafki?",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-labirynt-zyrafka",
+   "name": "lusia-maze-baby-giraffe",
    "text": "Zaprowadź małą żyrafę do mamy!"
   },
   {
-   "name": "lusia-item-foczka",
+   "name": "lusia-item-seal-pup",
    "text": "Foczka!"
   },
   {
-   "name": "bazyl-item-foczka",
+   "name": "bazyl-item-seal-pup",
    "text": "Foczka!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-mama-foczka",
+   "name": "bazyl-mother-seal-pup",
    "text": "Gdzie jest mama foczki?",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-labirynt-foczka",
+   "name": "lusia-maze-seal-pup",
    "text": "Zaprowadź małą fokę do mamy!"
   },
   {
-   "name": "lusia-item-sowka",
+   "name": "lusia-item-owlet",
    "text": "Sówka!"
   },
   {
-   "name": "bazyl-item-sowka",
+   "name": "bazyl-item-owlet",
    "text": "Sówka!",
    "voice": "voices/prezenter"
   },
   {
-   "name": "bazyl-mama-sowka",
+   "name": "bazyl-mother-owlet",
    "text": "Gdzie jest mama sówki?",
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-labirynt-sowka",
+   "name": "lusia-maze-owlet",
    "text": "Zaprowadź sówkę do mamy!"
   },
   {
-   "name": "lusia-czytaj-dynia",
+   "name": "lusia-read-pumpkin",
    "text": "Dy... nia... ... Dynia.",
    "tries": 3,
    "engine": "chatterbox",
    "seed": 3
   },
   {
-   "name": "lusia-czytaj-tecza",
+   "name": "lusia-read-rainbow",
    "text": "Tę... cza... ... Tęcza.",
    "tries": 3,
    "engine": "chatterbox",
    "seed": 2
   },
   {
-   "name": "lusia-czytaj-lyzka",
+   "name": "lusia-read-spoon",
    "text": "Łyż... ka... ... Łyżka.",
    "tries": 3,
    "engine": "chatterbox",
    "seed": 2
   },
   {
-   "name": "lusia-czytaj-sanki",
+   "name": "lusia-read-sled",
    "text": "San... ki... ... Sanki.",
    "tries": 3,
    "engine": "chatterbox",
    "seed": 2
   },
   {
-   "name": "lusia-litera-f-foka",
+   "name": "lusia-letter-f-seal",
    "text": "Efff... jak foka.",
    "engine": "chatterbox",
    "seed": 5
   },
   {
-   "name": "lusia-litera-h-hipopotam",
+   "name": "lusia-letter-h-hippo",
    "text": "Ha... jak hipopotam.",
    "engine": "chatterbox",
    "seed": 3
   },
   {
-   "name": "lusia-litera-n-nosorozec",
+   "name": "lusia-letter-n-rhino",
    "text": "En... jak nosorożec.",
    "engine": "chatterbox",
    "seed": 6
   },
   {
-   "name": "lusia-litera-z-zebra",
+   "name": "lusia-letter-z-zebra",
    "text": "Zet... jak zebra.",
    "engine": "chatterbox",
    "seed": 1
   },
   {
-   "name": "lusia-litera-c-cytryna",
+   "name": "lusia-letter-c-lemon",
    "text": "Ce... jak cytryna.",
    "engine": "chatterbox",
    "seed": 1
   },
   {
-   "name": "lusia-litera-r-rakieta",
+   "name": "lusia-letter-r-rocket",
    "text": "Er... jak rakieta.",
    "engine": "chatterbox",
    "seed": 2
   },
   {
-   "name": "lusia-litera-g-gruszka",
+   "name": "lusia-letter-g-pear",
    "text": "Gie... jak gruszka.",
    "engine": "chatterbox",
    "seed": 5
   },
   {
-   "name": "lusia-litera-j-jablko",
+   "name": "lusia-letter-j-apple",
    "text": "Jot... jak jabłko.",
    "engine": "chatterbox",
    "seed": 5
   },
   {
-   "name": "lusia-czytaj-zebra",
+   "name": "lusia-read-zebra",
    "text": "Ze... Bra... ... Zebra.",
    "engine": "chatterbox"
   },
   {
-   "name": "lusia-czytaj-krowa",
+   "name": "lusia-read-cow",
    "text": "Kro... Wa... ... Krowa.",
    "engine": "chatterbox"
   },
   {
-   "name": "lusia-czytaj-miska",
+   "name": "lusia-read-bowl",
    "text": "Mis... Ka... ... Miska.",
    "engine": "chatterbox"
   },
   {
-   "name": "lusia-czytaj-lisek",
+   "name": "lusia-read-fox-cub",
    "text": "Li... Sek... ... Lisek.",
    "engine": "chatterbox"
   },
   {
-   "name": "lusia-czytaj-robot",
+   "name": "lusia-read-robot",
    "text": "Ro... Bot... ... Robot.",
    "engine": "chatterbox"
   },
   {
-   "name": "lusia-czytaj-zyrafa",
+   "name": "lusia-read-giraffe",
    "text": "Ży... Ra... Fa... ... Żyrafa.",
    "engine": "chatterbox"
   },
   {
-   "name": "lusia-czytaj-meduza",
+   "name": "lusia-read-jellyfish",
    "text": "Me... Du... Za... ... Meduza.",
    "engine": "chatterbox"
   },
   {
-   "name": "lusia-czytaj-latawiec",
+   "name": "lusia-read-kite",
    "text": "La... Ta... Wiec... ... Latawiec.",
    "engine": "chatterbox"
   },
   {
-   "name": "lusia-czytaj-kalosze",
+   "name": "lusia-read-rain-boots",
    "text": "Ka... Lo... Sze... ... Kalosze.",
    "engine": "chatterbox"
   },
   {
-   "name": "lusia-czytaj-autobus",
+   "name": "lusia-read-bus",
    "text": "Au... To... Bus... ... Autobus.",
    "engine": "chatterbox"
   },
   {
-   "name": "lusia-czytaj-ananas",
+   "name": "lusia-read-pineapple",
    "text": "A... Na... Nas... ... Ananas.",
    "engine": "chatterbox"
   },
   {
-   "name": "lusia-czytaj-biedronka",
+   "name": "lusia-read-ladybug",
    "text": "Bie... Dron... Ka... ... Biedronka.",
    "engine": "chatterbox"
   },
   {
-   "name": "lusia-czytaj-cebula",
+   "name": "lusia-read-onion",
    "text": "Ce... Bu... La... ... Cebula.",
    "engine": "chatterbox"
   }

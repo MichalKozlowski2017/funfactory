@@ -5,18 +5,18 @@
 import type { Rng } from '@funfactory/core';
 import { MAX_LEVEL } from './puzzles.ts';
 
-export type Emotion = 'wesoly' | 'smutny' | 'zly' | 'zdziwiony' | 'przestraszony' | 'spiacy';
-export const EMOTIONS: readonly Emotion[] = ['wesoly', 'smutny', 'zly', 'zdziwiony', 'przestraszony', 'spiacy'];
-const EASY: Emotion[] = ['wesoly', 'smutny', 'zly'];
+export type Emotion = 'happy' | 'sad' | 'angry' | 'surprised' | 'scared' | 'sleepy';
+export const EMOTIONS: readonly Emotion[] = ['happy', 'sad', 'angry', 'surprised', 'scared', 'sleepy'];
+const EASY: Emotion[] = ['happy', 'sad', 'angry'];
 
 export const EMOTION_ROUND = 5;
 
 /**
  * Postaci z minkami: w jednym pytaniu wszystkie karty mają tę samą postać (dziecko porównuje same miny),
  * między pytaniami postać się zmienia, żeby dziecko rozpoznawało emocję, a nie zapamiętywało obrazek.
- * 'dziecko' to pierwotne grafiki art/emocje/<emocja>.webp, pozostałe: art/emocje/<emocja>-<postać>.webp.
+ * 'child' to pierwotne grafiki art/emocje/<emocja>.webp, pozostałe: art/emocje/<emocja>-<postać>.webp.
  */
-export const EMOTION_CHARS = ['dziecko', 'dziewczynka', 'kotek', 'mis'] as const;
+export const EMOTION_CHARS = ['child', 'girl', 'kitten', 'teddy'] as const;
 export type EmotionChar = (typeof EMOTION_CHARS)[number];
 const clamp = (level: number) => Math.max(0, Math.min(MAX_LEVEL, Math.round(level)));
 

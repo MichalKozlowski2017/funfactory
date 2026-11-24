@@ -27,7 +27,7 @@ interface Check {
 /** Podejrzane: litery wyraźnie złe albo głoski znacznie gorsze niż typowe (sylabowanie „czytaj-” pomijamy: tam oba modele się gubią). */
 export function suspicious(r: Check[]): Check[] {
   const mp = [...r].map((x) => x.per).sort((a, b) => a - b)[Math.floor(r.length / 2)]!;
-  return r.filter((x) => !x.name.split('-').slice(1).join('-').startsWith('czytaj') && (x.cer >= 0.34 || x.per >= mp + 0.4));
+  return r.filter((x) => !x.name.split('-').slice(1).join('-').startsWith('read') && (x.cer >= 0.34 || x.per >= mp + 0.4));
 }
 
 const score = (x: { per: number; cer: number }, whisperOk = true) => x.per + x.cer + (whisperOk ? 0 : 0.5);

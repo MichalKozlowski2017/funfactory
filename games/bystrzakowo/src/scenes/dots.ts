@@ -43,11 +43,11 @@ export class DotsScene extends RoundScene {
   private box = { x: 0, y: 0, w: 0, h: 0 };
 
   constructor() {
-    super('kropki', 'lusia');
+    super('dots', 'lusia');
   }
 
   protected async prepare(): Promise<void> {
-    const level = state.progress.levels.kropki ?? 0;
+    const level = state.progress.levels.dots ?? 0;
     this.items = makeDotsRound(this.game.rng);
     this.length = this.items.length;
     await Promise.all(this.items.map((item) => shadowOf(item.id)));
@@ -59,7 +59,7 @@ export class DotsScene extends RoundScene {
   }
 
   protected promptLine(): string {
-    return 'kropki';
+    return 'dots';
   }
 
   protected show(): void {
@@ -93,7 +93,7 @@ export class DotsScene extends RoundScene {
       this.layer.addChild(view);
       return { view, ring, num, at: { x: 0, y: 0 } };
     });
-    this.timers.after(0.4, () => say(this.game, this.guide, 'kropki'));
+    this.timers.after(0.4, () => say(this.game, this.guide, 'dots'));
   }
 
   protected override appear(): void {
@@ -153,7 +153,7 @@ export class DotsScene extends RoundScene {
     void pulse(this.tweens, dot.view, 0.3, 0.25);
     this.burst(dot.at.x, dot.at.y, 8);
     const closed = this.done > this.points.length;
-    if (!closed) say(this.game, this.guide, `liczba-${t + 1}`);
+    if (!closed) say(this.game, this.guide, `number-${t + 1}`);
     this.highlight();
     if (closed) this.complete();
   }

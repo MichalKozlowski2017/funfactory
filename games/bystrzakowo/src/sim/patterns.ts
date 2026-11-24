@@ -27,7 +27,7 @@ export function makePatternTask(rng: Rng, level: number): PatternTask {
   const motif = rng.pick(MOTIFS[l]!);
   const letters = [...new Set(motif)];
   // Obrazki wzoru: wyraziste i różne od siebie (owoce, zabawki, zwierzęta).
-  const pool = rng.shuffle(ITEMS.filter((i) => ['owoce', 'zabawki', 'zwierzeta', 'pojazdy'].includes(i.category)));
+  const pool = rng.shuffle(ITEMS.filter((i) => ['fruit', 'toys', 'animals', 'vehicles'].includes(i.category)));
   const pick: Item[] = [];
   for (const item of pool) {
     if (pick.length >= letters.length + 1) break;
