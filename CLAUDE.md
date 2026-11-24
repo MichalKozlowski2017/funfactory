@@ -80,4 +80,6 @@ Reakcja wizualna (squash/pop/pulse), dźwięk, haptyka, a przy mocnych zdarzenia
 
 ## Język
 
-Kod i identyfikatory po angielsku. Komentarze, dokumentacja i teksty w grach po polsku, chyba że gra ma inną lokalizację.
+Zero polskiego w kodzie: identyfikatory, wartości w danych (id obiektów, zabaw, kluczy zapisu), nazwy plików (także grafik i nagrań) i komentarze po angielsku. Teksty na ekranie trzymaj w słownikach (`locales/pl.ts` itd., klucze po angielsku), nie w kodzie. Dokumentacja (`docs/`) zostaje po polsku.
+
+Wyjątek na razie: Glut (wersja w recenzji sklepu) i pakiety, z których korzysta. Nowy kod pisz już po angielsku.
