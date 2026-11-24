@@ -162,6 +162,23 @@ Alfabety:
   - Teksty i lista braków: `scripts/letters-voice.ts`. Po polsku lektor czyta nazwę litery („Eś... jak ślimak.”), w innych językach „S is for…”, „Ku wie Qualle.”, „Eñe de ñandú.”.
   - Silniki: Chatterbox z próbką Lusi (pl, de, es), VoxCPM `lusia-en-calm` (en).
 
+## Rotacja treści w rundach (2026-11-24)
+
+Prośba właściciela: w „Pisze litery” trzy razy z rzędu wypadło S; litery mają się zmieniać naturalnie, a te sprawiające kłopot mogą wracać częściej.
+- `sim/rotation.ts`: runda bierze elementy, których dziecko najdłużej nie widziało (przy remisie: pokazywane najrzadziej), nic z poprzedniej rundy, chyba że pula jest za mała. Nowe litery po wejściu na wyższy poziom idą pierwsze.
+- Kłopot (ostatnia próba z pomyłką albo 2 pomyłki w 4) = traktowane jak widziane pół cyklu wcześniej, więc wracają ok. 2× częściej, nigdy w dwóch rundach z rzędu.
+- Pamięć w zapisie: `Progress.rotation` (klucze `letters:<język>`, `digits`, `syllables:<język>`). Działa dla liter, cyfr i sylab.
+- Cyfry na poziomie 0 to 4 elementy przy rundzie 3: w każdej rundzie odpoczywa jedna, po kolei.
+
+## Sprawdzanie nagrań lektora (2026-11-24)
+
+Strona odsłuchu: https://claude.ai/artifact/Q5E8oLERasRL9weZYReRmK (wszystkie ~2530 nagrań, skala podejrzeń 0–100, przycisk „Wzór”, oceny Dobrze/Źle zapisywane w bazie strony; Claude je odczytuje).
+- **Skala podejrzeń:** kontrola głosek i liter (`check.py`) porównana z tekstem **i** z wymową wzorcową z Pipera (natywny syntezator na Legionie) słuchaną tymi samymi „uszami”; gdy rozpoznawanie myli się już na wzorcu, jego wynik waży mniej. Do tego pomiar dźwięku: długość względem wzoru, powtórzone słowa, doklejone dźwięki, krzyk na końcu, pauzy.
+- **Poprawki:** podejrzane nagrania przegenerowane w 6 wariantach, wybór najbliższego wzorowi; podmiana tylko przy wyraźnej poprawie (61 nagrań). Potem poprawki z odsłuchu właściciela (9 polskich, m.in. „Jabłko” czytane przez VoxCPM jako „jabuko”: zapis lektora „Japko.”).
+- **Szum i krzyk po końcu mowy:** koniec mowy = ostatnia głoska rozpoznana przez model głosek (`tail.py`); próbne przycięcie przed dźwiękiem po końcu mowy i ponowna kontrola, przycięcie przyjęte tylko, gdy rozpoznawanie słyszy ten sam tekst (19 nagrań, m.in. niemieckie „In Afrika” z 2 s krzyku). Głoski i pojedyncze litery wyłączone z tej poprawki.
+- Szczegóły narzędzi: skill `tts` (sekcje „Wzorcowa wymowa: Piper” i „Szum po końcu mowy”).
+- Do zrobienia: odsłuch przez native speakerów (de, en, es); strona ma interfejs PL/EN/DE.
+
 ## Dla rodzica
 
 - **Strefa rodzica za bramką:** prosta matematyka albo „przytrzymaj trzema palcami”. Tam są ustawienia (głośność, lektor, wybór domków), postępy dziecka i zakup.
@@ -174,7 +191,7 @@ Darmowe: 3 domki w pełni (np. cienie, co nie pasuje, liczenie). Reszta po **jed
 
 ## Wymogi sklepów (Kids / Families)
 
-- Bez reklam i bez analityki firm trzecich. Nasze własne statystyki (jak w Glucie) najlepiej w 1.0 **wyłączyć** albo ograniczyć do zbiorczych liczników bez ID instalacji. Do decyzji przed wydaniem.
+- Bez reklam i bez analityki. **1.0 nie zbiera żadnych danych** (sprawdzone 2026-11-24: w kodzie nie ma połączeń sieciowych poza zakupem w sklepie przez StoreKit / Google Play Billing). App Privacy: „Dane nie są zbierane”; Data safety: brak zbieranych i udostępnianych danych.
 - Bramka rodzicielska przed każdym zakupem, linkiem zewnętrznym i ustawieniem.
 - Polityka prywatności na mkdev, deklaracje „Dane nie są zbierane” albo minimum.
 - Google Play: program „Dla rodzin”, grupa docelowa poniżej 13 lat, zgodność z zasadami treści dla dzieci.
@@ -274,4 +291,3 @@ rodzic zmienia go w Ustawieniach strefy rodzica; w playtestach `?lang=en|de|pl`.
 
 - Imiona i gatunki przewodników (lisica i borsuk to propozycja).
 - Cena i podział darmowe/płatne.
-- Statystyki w 1.0: wyłączone czy zbiorcze bez ID?
