@@ -2,15 +2,15 @@ import type { Lang } from '../lang.ts';
 import type { Word } from '../syllables.ts';
 
 const WORDS_PL: readonly Word[] = [
-  // Dwie sylaby otwarte.
+  // Two open syllables.
   { item: 'goat', syl: ['KO', 'ZA'], level: 0 },
   { item: 'frog', syl: ['ŻA', 'BA'], level: 0 },
   { item: 'owl', syl: ['SO', 'WA'], level: 0 },
   { item: 'seal', syl: ['FO', 'KA'], level: 0 },
   { item: 'boat', syl: ['ŁÓD', 'KA'], level: 1 },
   { item: 'hen', syl: ['KU', 'RA'], level: 0 },
-  { item: 'lalka', syl: ['LAL', 'KA'], level: 1 },
-  // Sylaby zamknięte.
+  { item: 'doll', syl: ['LAL', 'KA'], level: 1 },
+  // Closed syllables.
   { item: 'kitten', syl: ['KO', 'TEK'], level: 1 },
   { item: 'fish', syl: ['RYB', 'KA'], level: 1 },
   { item: 'car', syl: ['AUT', 'KO'], level: 1 },
@@ -19,7 +19,7 @@ const WORDS_PL: readonly Word[] = [
   { item: 'ball', syl: ['PIŁ', 'KA'], level: 1 },
   { item: 'butterfly', syl: ['MO', 'TYL'], level: 1 },
   { item: 'mug', syl: ['KU', 'BEK'], level: 1 },
-  // Trzy sylaby.
+  // Three syllables.
   { item: 'raspberry', syl: ['MA', 'LI', 'NA'], level: 2 },
   { item: 'tomato', syl: ['PO', 'MI', 'DOR'], level: 2 },
   { item: 'airplane', syl: ['SA', 'MO', 'LOT'], level: 2 },
@@ -27,7 +27,7 @@ const WORDS_PL: readonly Word[] = [
   { item: 'rocket', syl: ['RA', 'KIE', 'TA'], level: 2 },
   { item: 'small-balloon', syl: ['BA', 'LO', 'NIK'], level: 2 },
   { item: 'sun-hat', syl: ['KA', 'PE', 'LUSZ'], level: 2 },
-  // Dodatkowe proste słowa (więcej różnorodności na poziomie 0).
+  // Extra simple words (more variety at level 0).
   { item: 'pumpkin', syl: ['DY', 'NIA'], level: 0 },
   { item: 'rainbow', syl: ['TĘ', 'CZA'], level: 0 },
   { item: 'spoon', syl: ['ŁYŻ', 'KA'], level: 0 },
@@ -37,7 +37,7 @@ const WORDS_PL: readonly Word[] = [
   { item: 'bowl', syl: ['MIS', 'KA'], level: 1 },
   { item: 'fox-cub', syl: ['LI', 'SEK'], level: 1 },
   { item: 'robot', syl: ['RO', 'BOT'], level: 1 },
-  // Więcej trzech sylab (poziom 2 miał tylko 7 słów).
+  // More three-syllable words (level 2 had only 7 words).
   { item: 'giraffe', syl: ['ŻY', 'RA', 'FA'], level: 2 },
   { item: 'jellyfish', syl: ['ME', 'DU', 'ZA'], level: 2 },
   { item: 'kite', syl: ['LA', 'TA', 'WIEC'], level: 2 },
@@ -48,7 +48,7 @@ const WORDS_PL: readonly Word[] = [
   { item: 'onion', syl: ['CE', 'BU', 'LA'], level: 2 },
 ];
 
-/** Angielski: podział jak przy klaskaniu sylab w przedszkolu (Ba-na-na). */
+/** English: split as when clapping syllables in preschool (Ba-na-na). */
 const WORDS_EN: readonly Word[] = [
   { item: 'zebra', syl: ['ZE', 'BRA'], level: 0 },
   { item: 'robot', syl: ['RO', 'BOT'], level: 0 },
@@ -70,21 +70,21 @@ const WORDS_EN: readonly Word[] = [
   { item: 'octopus', syl: ['OC', 'TO', 'PUS'], level: 2 },
   { item: 'umbrella', syl: ['UM', 'BREL', 'LA'], level: 2 },
   { item: 'dinosaur', syl: ['DI', 'NO', 'SAUR'], level: 2 },
-  // Dodatkowe proste słowa (więcej różnorodności na poziomie 0).
+  // Extra simple words (more variety at level 0).
   { item: 'carrot', syl: ['CAR', 'ROT'], level: 0 },
   { item: 'small-balloon', syl: ['BAL', 'LOON'], level: 0 },
   { item: 'tractor', syl: ['TRAC', 'TOR'], level: 0 },
   { item: 'shell', syl: ['SEA', 'SHELL'], level: 0 },
 ];
 
-/** Niemiecki: Silbenklatschen jak w Kita (Ka-tze → Kat-ze). */
+/** German: Silbenklatschen as in a Kita (Ka-tze → Kat-ze). */
 const WORDS_DE: readonly Word[] = [
   { item: 'duck', syl: ['EN', 'TE'], level: 0 },
   { item: 'bee', syl: ['BIE', 'NE'], level: 0 },
   { item: 'bucket', syl: ['EI', 'MER'], level: 0 },
   { item: 'pear', syl: ['BIR', 'NE'], level: 0 },
   { item: 'fork', syl: ['GA', 'BEL'], level: 0 },
-  { item: 'lalka', syl: ['PUP', 'PE'], level: 0 },
+  { item: 'doll', syl: ['PUP', 'PE'], level: 0 },
   { item: 'cat', syl: ['KAT', 'ZE'], level: 1 },
   { item: 'mug', syl: ['TAS', 'SE'], level: 1 },
   { item: 'monkey', syl: ['AF', 'FE'], level: 1 },
@@ -100,14 +100,14 @@ const WORDS_DE: readonly Word[] = [
   { item: 'pineapple', syl: ['A', 'NA', 'NAS'], level: 2 },
   { item: 'pepper', syl: ['PA', 'PRI', 'KA'], level: 2 },
   { item: 'trumpet', syl: ['TROM', 'PE', 'TE'], level: 2 },
-  // Dodatkowe proste słowa (więcej różnorodności na poziomie 0).
+  // Extra simple words (more variety at level 0).
   { item: 'trousers', syl: ['HO', 'SE'], level: 0 },
   { item: 'hat', syl: ['MÜT', 'ZE'], level: 0 },
   { item: 'cucumber', syl: ['GUR', 'KE'], level: 0 },
   { item: 'hare', syl: ['HA', 'SE'], level: 0 },
 ];
 
-/** Hiszpański: sylaby jak w szkole (ga-to, pe-rro, ma-ri-po-sa). */
+/** Spanish: syllables as taught in school (ga-to, pe-rro, ma-ri-po-sa). */
 const WORDS_ES: readonly Word[] = [
   { item: 'cat', syl: ['GA', 'TO'], level: 0 },
   { item: 'cow', syl: ['VA', 'CA'], level: 0 },
@@ -129,12 +129,12 @@ const WORDS_ES: readonly Word[] = [
   { item: 'giraffe', syl: ['JI', 'RA', 'FA'], level: 2 },
   { item: 'bird', syl: ['PÁ', 'JA', 'RO'], level: 2 },
   { item: 'butterfly', syl: ['MA', 'RI', 'PO', 'SA'], level: 2 },
-  // Dodatkowe proste słowa (więcej różnorodności na poziomie 0).
+  // Extra simple words (more variety at level 0).
   { item: 'seal', syl: ['FO', 'CA'], level: 0 },
   { item: 'cloud', syl: ['NU', 'BE'], level: 0 },
   { item: 'pear', syl: ['PE', 'RA'], level: 0 },
   { item: 'potato', syl: ['PA', 'PA'], level: 0 },
 ];
 
-/** Słowa w każdym języku (nagrania „czytaj-<obiekt>” są osobne dla każdego języka). */
+/** Words per language (the "read-<item>" recordings are separate for each language). */
 export const WORDS_BY_LANG: Record<Lang, readonly Word[]> = { pl: WORDS_PL, en: WORDS_EN, de: WORDS_DE, es: WORDS_ES };

@@ -1,6 +1,6 @@
 /** English on-screen texts (key: English id). */
 export const EN: Record<string, string> = {
-  // Krainy i zabawy
+  // Realms and activities
   puzzleMeadow: 'Puzzle Meadow',
   basilsWorkshop: 'Basil\'s Workshop',
   lusiasPath: 'Lusia\'s Path',
@@ -26,7 +26,7 @@ export const EN: Record<string, string> = {
   melody: 'Melody',
   goodNight: 'Good night!',
   album: 'Album',
-  // Strefa rodzica
+  // Parent zone
   parents: 'For parents',
   settings: 'Settings',
   close: 'Close',
@@ -70,7 +70,7 @@ export const EN: Record<string, string> = {
   versionFull: 'Version: full',
   versionTrialFullAccess: 'Version: trial (full access)',
   versionFreePuzzleMeadow: 'Version: free (Puzzle Meadow)',
-  // Pełna wersja
+  // Full version
   fullTrialAccessMore: 'Full trial access: {n} more days of play after today',
   fullTrialAccess1: 'Full trial access: 1 more day of play after today',
   fullTrialAccessToday: 'Full trial access: today is the last day',
@@ -165,4 +165,6 @@ export const EN: Record<string, string> = {
   firstTimePlaying: '{date}: first time playing',
   firstDiscoveriesWillAppear: 'The first discoveries will appear after a few games.',
   screenFreePlayIdea: 'Screen-free play idea',
+  // Demo child name for playtests and store screenshots.
+  demoChildName: 'Emma',
 };

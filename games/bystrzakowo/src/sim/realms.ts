@@ -1,25 +1,25 @@
 /**
- * Krainy Bystrzakowa: każda to inny rodzaj zabawy (zob. docs/bystrzakowo.md, „Krainy”).
- * Czysty TS: lista krain i zabaw, bez grafiki.
+ * Realms of Bystrzakowo: each one is a different kind of activity (see docs/bystrzakowo.md, the realms section).
+ * Pure TS: list of realms and activities, no graphics.
  */
 import { PUZZLE_KINDS, type PuzzleKind } from './puzzles.ts';
 
-/** Zabawy Warsztatu (przeciągnij i ułóż). */
+/** Workshop activities (drag and place). */
 export type WorkshopKind = 'sorting' | 'jigsaw' | 'patterns' | 'shapes' | 'syllables' | 'stories';
 export const WORKSHOP_KINDS: readonly WorkshopKind[] = ['sorting', 'jigsaw', 'patterns', 'shapes', 'syllables', 'stories'];
 
-/** Zabawy Polany poza zagadkami z wyborem (pamięć). */
+/** Meadow activities other than multiple-choice puzzles (memory). */
 export type MeadowKind = 'memory' | 'emotions';
 
-/** Zabawy Ścieżki Lusi (prowadź palcem). */
+/** Lusia's Path activities (trace with a finger). */
 export type PathKind = 'dots' | 'maze' | 'letters' | 'digits';
 export const PATH_KINDS: readonly PathKind[] = ['dots', 'maze', 'letters', 'digits'];
 
-/** Zabawy Pracowni Malucha (twórz, bez złych odpowiedzi). */
+/** Little Studio activities (create, no wrong answers). */
 export type StudioKind = 'coloring' | 'stickers' | 'melody';
 export const STUDIO_KINDS: readonly StudioKind[] = ['coloring', 'stickers', 'melody'];
 
-/** Każda zabawa w grze (klucz poziomu trudności w zapisie). */
+/** Every activity in the game (key of the difficulty level in the save). */
 export type Activity = PuzzleKind | MeadowKind | WorkshopKind | PathKind | StudioKind;
 export const ACTIVITIES: readonly Activity[] = [...PUZZLE_KINDS, 'memory', 'emotions', ...WORKSHOP_KINDS, ...PATH_KINDS, ...STUDIO_KINDS];
 
@@ -27,11 +27,11 @@ export type RealmId = 'meadow' | 'workshop' | 'path' | 'studio';
 
 export interface Realm {
   id: RealmId;
-  /** Nazwa na ekranie. */
+  /** Name on screen. */
   name: string;
-  /** Przewodnik, który wita w krainie. */
+  /** Guide who welcomes the child in the realm. */
   guide: 'lusia' | 'bazyl';
-  /** Zabawy: dla polany dwa rzędy (tylny, przedni), dla pozostałych jeden. */
+  /** Activities: two rows for the meadow (back, front), one for the others. */
   rows: Activity[][];
 }
 
@@ -44,10 +44,10 @@ export const REALMS: readonly Realm[] = [
 
 export const isPuzzle = (a: Activity): a is PuzzleKind => (PUZZLE_KINDS as readonly string[]).includes(a);
 
-/** Kraina, w której jest zabawa. */
+/** Realm containing the activity. */
 export const realmOf = (a: Activity): Realm => REALMS.find((r) => r.rows.some((row) => row.includes(a)))!;
 
-/** Podpisy zabaw na kafelkach krain (krótkie, żeby mieściły się w jednej linii). */
+/** Activity labels on the realm tiles (short, so they fit on one line). */
 export const ACTIVITY_NAMES: Record<Activity, string> = {
   colors: 'colors',
   phonemes: 'firstLetter',

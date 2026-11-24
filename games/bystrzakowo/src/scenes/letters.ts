@@ -15,13 +15,13 @@ type P = [number, number];
 const INK = 0x9b5de5;
 
 /**
- * Litery po śladzie (Ścieżka Lusi): gruby szary ślad litery, zielona kropka pokazuje początek kreski.
- * Palec prowadzony po śladzie zostawia kolor; po wszystkich kreskach obok wyskakuje obrazek na tę literę.
+ * Letter tracing (Lusia's Path): a thick gray letter outline, a green dot marks the start of a stroke.
+ * A finger moving along the outline leaves color; after all strokes a picture for that letter pops up beside it.
  */
 export class LetterScene extends RoundScene {
   readonly id = 'letters';
   private letters: Letter[] = [];
-  /** Kreski bieżącej litery jako gęste punkty (w ułamkach pola litery). */
+  /** Strokes of the current letter as dense points (as fractions of the letter box). */
   private strokes: P[][] = [];
   private stroke = 0;
   private at = 0;
@@ -29,7 +29,7 @@ export class LetterScene extends RoundScene {
   private track = new Graphics();
   private ink = new Graphics();
   private start = new Graphics();
-  /** Strzałki „›” płynące wzdłuż kreski od kropki startowej (kierunek rysowania). */
+  /** "›" arrows flowing along the stroke from the start dot (drawing direction). */
   private guideLine = new Graphics();
   private guideT = 0;
   private pad = new Graphics();
@@ -37,7 +37,7 @@ export class LetterScene extends RoundScene {
   private box = { x: 0, y: 0, w: 0, h: 0 };
   private tol = 0.14;
 
-  /** Cyfry: po narysowaniu tyle obrazków, ile mówi cyfra. */
+  /** Digits: after drawing, as many pictures as the digit says. */
   private readonly digits: boolean;
   private counted: Sprite[] = [];
   private readonly pics = new Map<string, Texture | null>();
@@ -50,7 +50,7 @@ export class LetterScene extends RoundScene {
   protected async prepare(): Promise<void> {
     const level = state.progress.levels[this.kind] ?? 0;
     this.letters = this.digits ? makeDigitRound(this.game.rng, level) : makeLetterRound(this.game.rng, level);
-    // Playtest (tylko dev): `?letters=ŁŚŻ` wymusza te litery w rundzie, z losowym przykładem.
+    // Playtest (dev only): `?letters=ABC` forces these letters into the round (handy for diacritic letters), with a random example.
     const only = import.meta.env.DEV && !this.digits ? new URLSearchParams(location.search).get('letters') : null;
     if (only) {
       const all = lettersOf();
@@ -63,7 +63,7 @@ export class LetterScene extends RoundScene {
       });
     }
     this.length = this.letters.length;
-    // Obrazki tylko do liter (nie ma ich w katalogu): wczytywane na rundę.
+    // Letter-only pictures (not in the catalog): loaded per round.
     const own = this.letters.map((x) => x.item).filter((id) => LETTER_PIC_IDS.has(id));
     await Promise.all(own.map(async (id) => this.pics.set(id, await Assets.load<Texture>(`${import.meta.env.BASE_URL}art/letters/${id}.webp`).catch(() => null))));
     this.tol = traceTolerance(level);
@@ -95,7 +95,7 @@ export class LetterScene extends RoundScene {
     this.start = new Graphics();
     this.guideLine = new Graphics();
     this.pad = new Graphics();
-    // Cyfry: obrazek do liczenia losowany z małych obiektów (np. 3 jabłka).
+    // Digits: the counting picture is drawn from small items (e.g. 3 apples).
     const item = this.digits ? this.game.rng.pick(ITEMS.filter((i) => i.countable)).id : this.letter.item;
     this.picture = new Sprite({ texture: this.art.items.get(item) ?? this.pics.get(item) ?? undefined, anchor: 0.5 });
     this.picture.visible = false;
@@ -116,22 +116,22 @@ export class LetterScene extends RoundScene {
     void popIn(this.tweens, this.start, 0.4, 0.3);
   }
 
-  /** Punkt pola litery (0..1) na ekranie. */
+  /** A letter-box point (0..1) on screen. */
   private toScreen([x, y]: P): P {
     return [this.box.x + x * this.box.w, this.box.y + y * this.box.h];
   }
 
   private toLetter(e: FederatedPointerEvent): P {
     const p = this.layer.toLocal(e.global);
-    // Tolerancja liczona w wysokości litery, więc obie osie w tych samych jednostkach.
+    // Tolerance is measured in letter height, so both axes use the same units.
     return [(p.x - this.box.x) / this.box.h, (p.y - this.box.y) / this.box.h];
   }
 
-  /** Postęp w chwili przyłożenia palca i liczba prób z rzędu bez postępu (np. rysowanie od złej strony). */
+  /** Progress at the moment the finger touched down, and the number of consecutive tries without progress (e.g. drawing from the wrong end). */
   private atDown = 0;
   private strokeAtDown = 0;
   private fails = 0;
-  /** Ruchy palca w tym dotknięciu daleko od bieżącej kreski (rysowanie nie tej kreski). */
+  /** Finger moves in this touch far from the current stroke (drawing the wrong stroke). */
   private offPath = 0;
 
   private down(e: FederatedPointerEvent): void {
@@ -145,14 +145,14 @@ export class LetterScene extends RoundScene {
   }
 
   /**
-   * Palec podniesiony. Dwie próby z rzędu bez postępu: podpowiedź (kropka startu i strzałki), bo dziecko,
-   * które uparcie rysuje od złej strony, ciągle dotyka ekranu i zwykła podpowiedź po bezczynności nie przychodzi.
+   * Finger lifted. Two consecutive tries without progress: hint (start dot and arrows), because a child
+   * who keeps drawing from the wrong end is constantly touching the screen, so the regular idle hint never comes.
    */
   private up(): void {
     if (!this.tracing) return;
     this.tracing = false;
     if (this.busy) return;
-    // Inna kreska, która tylko zahaczyła o początek bieżącej (w A obie zaczynają się u góry): bez okruchu tuszu.
+    // A different stroke that merely touched the start of the current one (in A both start at the top): no ink crumb.
     const len = this.strokes[this.stroke]!.length;
     if (this.stroke === this.strokeAtDown && this.offPath > 5 && this.at - this.atDown < len * 0.4 && this.at !== this.atDown) {
       this.at = this.atDown;
@@ -193,13 +193,13 @@ export class LetterScene extends RoundScene {
     this.drawStart();
   }
 
-  /** Litera gotowa: puls, obrazek obok, „A jak autko!”. */
+  /** Letter done: pulse, picture beside it, and "A as in <word>!". */
   private complete(): void {
     this.busy = true;
     this.start.clear();
     this.guideLine.clear();
     const pic = this.picture!;
-    // Puls względem środka litery (tusz jest rysowany we współrzędnych warstwy, więc bez tego „odjeżdżał” w bok).
+    // Pulse around the letter's center (ink is drawn in layer coordinates, so without this it "drifted" sideways).
     const cx = this.box.x + this.box.w / 2, cy = this.box.y + this.box.h / 2;
     this.ink.pivot.set(cx, cy);
     this.ink.position.set(cx, cy);
@@ -212,7 +212,7 @@ export class LetterScene extends RoundScene {
     this.solved(len);
   }
 
-  /** Po cyfrze: obrazki pojawiają się po kolei, Lusia liczy; zero to pusty talerz i „zero”. */
+  /** After a digit: pictures appear one by one, Lusia counts; zero is an empty plate and "zero". */
   private countOut(n: number): void {
     const pic = this.picture!;
     const right = this.stage.width - this.stage.safe.right - 30;
@@ -244,7 +244,7 @@ export class LetterScene extends RoundScene {
     });
   }
 
-  /** Playtest: wszystkie kreski. */
+  /** Playtest: all strokes. */
   solve(): void {
     while (!this.busy) {
       this.at = this.strokes[this.stroke]!.length - 1;
@@ -253,8 +253,8 @@ export class LetterScene extends RoundScene {
     }
   }
 
-  /** Podpowiedź: kropka startowa podskakuje, a strzałka pokazuje kierunek. */
-  /** Prowadzenie palcem po bieżącej kresce litery (od miejsca, w którym dziecko skończyło). */
+  /** Hint: the start dot bounces and an arrow shows the direction. */
+  /** Finger guidance along the current stroke of the letter (from where the child stopped). */
   protected override gesture(): Gesture | null {
     const s = this.strokes[this.stroke];
     if (!s?.length) return null;
@@ -279,7 +279,7 @@ export class LetterScene extends RoundScene {
     });
   }
 
-  /** Zielona kropka (plastelina: poświata i odblask) na początku bieżącej kreski. */
+  /** Green dot (plasticine look: glow and highlight) at the start of the current stroke. */
   private drawStart(): void {
     const pts = this.strokes[this.stroke];
     const g = this.start.clear();
@@ -292,7 +292,7 @@ export class LetterScene extends RoundScene {
     g.ellipse(-r * 0.3, -r * 0.35, r * 0.32, r * 0.2).fill({ color: 0xffffff, alpha: 0.55 });
   }
 
-  /** Punkt kreski w odległości `d` (px) od początku i kąt kierunku w tym miejscu; null za końcem kreski. */
+  /** Stroke point at distance `d` (px) from the start and the direction angle there; null past the end of the stroke. */
   private along(pts: readonly P[], d: number): { x: number; y: number; a: number } | null {
     let left = d;
     for (let i = 1; i < pts.length; i++) {
@@ -308,7 +308,7 @@ export class LetterScene extends RoundScene {
     return null;
   }
 
-  /** Strzałki „›” płyną po kresce od kropki, dopóki dziecko nie zacznie rysować. */
+  /** "›" arrows flow along the stroke from the dot until the child starts drawing. */
   private drawGuide(dt: number): void {
     const g = this.guideLine.clear();
     const pts = this.strokes[this.stroke];
@@ -321,7 +321,7 @@ export class LetterScene extends RoundScene {
       const d = r * 1.9 + k * gap + shift;
       const p = this.along(pts, d);
       if (!p) break;
-      // Pojawianie się przy kropce i znikanie na końcu wężyka.
+      // Fade in near the dot and fade out at the end of the trail.
       const alpha = Math.min(1, (d - r * 1.9) / (gap * 0.6)) * (1 - Math.max(0, (d - r * 1.9 - gap * 2.6) / (gap * 1.4)));
       if (alpha <= 0.02) continue;
       const w = r * 0.75;
@@ -346,7 +346,7 @@ export class LetterScene extends RoundScene {
     const bottom = h - 70;
     const lh = bottom - top;
     const lw = lh * 0.72;
-    // Litera po lewej, miejsce na obrazek po prawej.
+    // Letter on the left, room for the picture on the right.
     const lx = left + (right - left) * 0.36 - lw / 2;
     this.box = { x: lx, y: top, w: lw, h: lh };
     const g = this.track.clear();

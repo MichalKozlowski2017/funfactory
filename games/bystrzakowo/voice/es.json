@@ -851,7 +851,7 @@
    "seed": 1
   },
   {
-   "name": "lusia-item-lalka",
+   "name": "lusia-item-doll",
    "text": "Muñeca.",
    "voice": "voices/alt",
    "engine": "chatterbox",
@@ -2692,7 +2692,7 @@
    "seed": 1
   },
   {
-   "name": "bazyl-item-lalka",
+   "name": "bazyl-item-doll",
    "text": "Muñeca.",
    "voice": "voices/prezenter",
    "engine": "chatterbox",

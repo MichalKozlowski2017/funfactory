@@ -9,16 +9,16 @@ import { COLORS, draggable, sfx, wiggle } from '../ui.ts';
 import { RoundScene } from './round.ts';
 import type { Gesture } from '../hand.ts';
 
-/** Rozmiar obrazka układanki w pikselach tekstury. */
+/** Jigsaw picture size in texture pixels. */
 const PIC = 600;
-/** Pastelowe tła obrazków (kawałki z tłem łatwiej dopasować niż przezroczyste). */
+/** Pastel picture backgrounds (pieces with a background are easier to match than transparent ones). */
 const BACKDROPS = ['#ffe3ec', '#e0f3ff', '#e6f9e0', '#fff3c9', '#efe4ff'];
-/** Kawałki w zasobniku są mniejsze (najwyżej tyle), rosną po złapaniu. */
+/** Pieces in the tray are smaller (at most this), they grow when grabbed. */
 const TRAY_MAX = 0.62;
 
 interface PieceView {
   view: Container;
-  /** Obwódka kawałka w zasobniku (znika po ułożeniu, żeby obrazek był gładki). */
+  /** Piece outline in the tray (disappears once placed, so the picture is seamless). */
   outline: Graphics;
   col: number;
   row: number;
@@ -27,8 +27,8 @@ interface PieceView {
 }
 
 /**
- * Układanka (Warsztat Bazyla): obrazek z katalogu na pastelowym tle, pocięty na 2/4/6 prostokątów.
- * Na planszy blady podgląd całości, kawałki w zasobniku obok. Kawałek blisko swojego miejsca sam się przyciąga.
+ * Jigsaw (Basil's Workshop): a catalog picture on a pastel background, cut into 2/4/6 rectangles.
+ * The board shows a faint preview of the whole, pieces sit in the tray beside it. A piece near its place snaps in by itself.
  */
 export class JigsawScene extends RoundScene {
   readonly id = 'jigsaw';
@@ -39,10 +39,10 @@ export class JigsawScene extends RoundScene {
   private ghost: Sprite | null = null;
   private full: Sprite | null = null;
   private pieces: PieceView[] = [];
-  /** Rozmiar planszy w jednostkach gry. */
+  /** Board size in game units. */
   private size = 400;
   private dragging = false;
-  /** Skala kawałków w zasobniku (dopasowana do miejsca obok planszy). */
+  /** Scale of pieces in the tray (fitted to the space beside the board). */
   private trayScale = TRAY_MAX;
 
   constructor() {
@@ -57,7 +57,7 @@ export class JigsawScene extends RoundScene {
     this.pictures = await Promise.all(this.items.map((item, i) => this.picture(item, BACKDROPS[(i + this.game.rng.int(0, 4)) % BACKDROPS.length]!)));
   }
 
-  /** Obrazek układanki: zaokrąglone pastelowe tło i obiekt na środku (przez ImageBitmap, nie Texture.from(canvas)). */
+  /** Jigsaw picture: rounded pastel background and the item in the center (via ImageBitmap, not Texture.from(canvas)). */
   private async picture(item: Item, backdrop: string): Promise<Texture> {
     const tex = this.art.items.get(item.id)!;
     const src = tex.source.resource as CanvasImageSource & { width: number; height: number };
@@ -103,7 +103,7 @@ export class JigsawScene extends RoundScene {
       for (let col = 0; col < cols; col++) {
         const t = new Texture({ source: tex.source, frame: new Rectangle(col * pw, row * ph, pw, ph) });
         const view = new Container();
-        // Obwódka w pikselach tekstury (kontener skaluje się razem z obrazkiem).
+        // Outline in texture pixels (the container scales together with the picture).
         const shadow = new Graphics().rect(-pw / 2 + 4, -ph / 2 + 10, pw, ph).fill({ color: 0x000000, alpha: 0.18 });
         view.addChild(shadow, new Sprite({ texture: t, anchor: 0.5 }));
         const border = new Graphics().rect(-pw / 2, -ph / 2, pw, ph).stroke({ color: COLORS.ink, width: 8, alignment: 1 });
@@ -126,7 +126,7 @@ export class JigsawScene extends RoundScene {
         });
         this.pieces.push(piece);
       }
-    // Kawałki w zasobniku w losowej kolejności.
+    // Pieces in the tray in random order.
     for (const p of this.game.rng.shuffle([...this.pieces])) this.layer.addChild(p.view);
     this.timers.after(0.4, () => say(this.game, this.guide, 'jigsaw'));
   }
@@ -136,7 +136,7 @@ export class JigsawScene extends RoundScene {
     this.pieces.forEach((p, i) => void popIn(this.tweens, p.view, 0.35, 0.15 + i * 0.06));
   }
 
-  /** Środek miejsca kawałka na planszy (w układzie warstwy). */
+  /** Center of the piece's slot on the board (in layer coordinates). */
   private slot(p: PieceView): { x: number; y: number } {
     const { cols, rows } = this.grid;
     const s = this.size;
@@ -149,7 +149,7 @@ export class JigsawScene extends RoundScene {
     const pw = this.size / this.grid.cols;
     const ph = this.size / this.grid.rows;
     if (snaps(at.x - slot.x, at.y - slot.y, pw, ph)) return this.lock(p);
-    // Upuszczony na planszy w złym miejscu: pomyłka. Poza planszą: po prostu wraca.
+    // Dropped on the board in the wrong place: a mistake. Outside the board: it just goes back.
     const onBoard = Math.abs(at.x - this.board.x) < this.size / 2 && Math.abs(at.y - this.board.y) < this.size / 2;
     if (onBoard) {
       this.missed();
@@ -174,7 +174,7 @@ export class JigsawScene extends RoundScene {
     if (this.pieces.every((x) => x.placed)) this.complete();
   }
 
-  /** Cały obrazek: kawałki znikają pod pełnym obrazkiem, puls, nazwa i pochwała. */
+  /** Whole picture: pieces vanish under the full picture, pulse, name and praise. */
   private complete(): void {
     this.busy = true;
     this.timers.after(0.2, () => {
@@ -187,12 +187,12 @@ export class JigsawScene extends RoundScene {
     });
   }
 
-  /** Playtest: wszystkie kawałki na miejsce. */
+  /** Playtest: all pieces into place. */
   solve(): void {
     for (const p of this.pieces) if (!p.placed) this.lock(p);
   }
 
-  /** Podpowiedź: kawałek podjeżdża w stronę swojego miejsca i wraca. */
+  /** Hint: a piece slides toward its place and back. */
   protected override gesture(): Gesture | null {
     const p = this.pieces.find((x) => !x.placed);
     return p ? { kind: 'drag', from: this.spot(p.view), to: this.slot(p) } : null;
@@ -202,13 +202,13 @@ export class JigsawScene extends RoundScene {
     const p = this.pieces.find((x) => !x.placed);
     if (!p) return;
     const slot = this.slot(p);
-    // Chwycenie elementu przerywa podpowiedź; wtedy nie cofamy go na start (dziecko mogło go już położyć).
+    // Grabbing the item interrupts the hint; then we don't move it back to the start (the child may have placed it already).
     const tw = this.tweens
       .to(p.view, { x: p.tray.x + (slot.x - p.tray.x) * 0.5, y: p.tray.y + (slot.y - p.tray.y) * 0.5 }, { duration: 0.45, ease: 'sineInOut', yoyo: true, repeat: 1 });
     void tw.done.then(() => !tw.killed && p.view.position.set(p.tray.x, p.tray.y));
   }
 
-  /** Przeciągany kawałek (już w pełnym rozmiarze) nie wychodzi za krawędź ekranu. */
+  /** A dragged piece (already full size) doesn't go past the screen edge. */
   private keepOnScreen(view: Container): void {
     const { width: w, height: h } = this.stage;
     const hw = (this.size / this.grid.cols) / 2;
@@ -222,7 +222,7 @@ export class JigsawScene extends RoundScene {
     const { width: w, height: h, safe } = this.stage;
     const left = safe.left + 270;
     const right = w - safe.right - 30;
-    // Plansza po lewej, zasobnik po prawej.
+    // Board on the left, tray on the right.
     const tray = Math.min(300, (right - left) * 0.36);
     this.size = Math.min(h - 200, right - left - tray - 40);
     const s = this.size / PIC;
@@ -239,7 +239,7 @@ export class JigsawScene extends RoundScene {
       .stroke({ color: COLORS.ink, width: 6 })
       .roundRect(-this.size / 2, -this.size / 2, this.size, this.size, 24)
       .fill({ color: 0xfffaf2 });
-    // Zasobnik: kawałki w kolumnach, skala dobrana tak, żeby wszystkie się zmieściły.
+    // Tray: pieces in columns, scale chosen so that all of them fit.
     const { cols, rows } = this.grid;
     const fullW = this.size / cols;
     const fullH = this.size / rows;

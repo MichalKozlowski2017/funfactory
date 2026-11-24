@@ -593,12 +593,12 @@
    "voice": "voices/prezenter"
   },
   {
-   "name": "lusia-item-lalka",
+   "name": "lusia-item-doll",
    "text": "Lalka!",
    "voice": "voices/alt"
   },
   {
-   "name": "bazyl-item-lalka",
+   "name": "bazyl-item-doll",
    "text": "Lalka!",
    "voice": "voices/prezenter"
   },

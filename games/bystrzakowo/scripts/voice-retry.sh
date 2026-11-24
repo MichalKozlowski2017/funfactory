@@ -1,8 +1,8 @@
 #!/bin/bash
-# Dogrywka kwestii, które nie przeszły kontroli Whispera: voice/report-<język>.json → nowe próby (inne ziarna,
-# więcej prób) → podmiana w public/audio/<język>/ tylko tych, które teraz przeszły.
-# Pomija sylabowanie („czytaj-”) i kwestie z imieniem Lusi (Whisper pisze „Lucia”, nagranie jest dobre).
-# Użycie: games/bystrzakowo/scripts/voice-retry.sh en
+# Re-records lines that failed the Whisper check: voice/report-<lang>.json → new attempts (different seeds,
+# more tries) → replaces in public/audio/<lang>/ only the ones that pass now.
+# Skips syllable reading ("-read-") and lines with Lusia's name (Whisper writes "Lucia", the recording is fine).
+# Usage: games/bystrzakowo/scripts/voice-retry.sh en
 set -euo pipefail
 cd "$(dirname "$0")/.."
 L="$1"
@@ -15,7 +15,7 @@ src = {x['name']: x for x in json.load(open(f'voice/{l}.json'))['lines']}
 bad = [x['name'] for x in json.load(open(f'voice/report-{l}.json')) if not x['ok'] and '-read-' not in x['name'] and 'Lusia' not in x['text']]
 lines = [{**src[n], 'tries': 16, 'seed': 101} for n in bad if n in src]
 json.dump({'voice': f'voices/lusia-{l}', 'lang': l, 'tries': 16, 'lines': lines}, open(job, 'w'), ensure_ascii=False)
-print(f'dogrywka {l}: {len(lines)} kwestii')
+print(f'retry {l}: {len(lines)} lines')
 PY
 [ "$(python3 -c "import json;print(len(json.load(open('$JOB'))['lines']))")" = 0 ] && exit 0
 rm -rf "$RAW"; ~/.claude/skills/tts/tts.sh "$JOB" "$RAW" | grep -E "^(OK|ZLE|GOTOWE)" || true
@@ -32,5 +32,5 @@ for x in rep:
     subprocess.run(['ffmpeg', '-loglevel', 'error', '-y', '-i', f'{raw}/{n}.wav', '-af', 'loudnorm=I=-16:TP=-1.5:LRA=11', '-ac', '1', '-ar', '44100', '-c:a', 'aac', '-b:a', '64k', f'public/audio/{l}/{guide}/{line}.m4a'], check=True)
     by[n] = x; fixed += 1
 json.dump(list(by.values()), open(f'voice/report-{l}.json', 'w'), ensure_ascii=False, indent=1)
-print(f'poprawione: {fixed} / {len(rep)}')
+print(f'fixed: {fixed} / {len(rep)}')
 PY

@@ -1,8 +1,8 @@
 /**
- * Druga kontrola wymowy lektora (głoski i litery bez modelu językowego), skill tts: legion/check.py.
+ * Second check of the narrator's pronunciation (phonemes and letters without a language model), tts skill: legion/check.py.
  *   node games/bystrzakowo/scripts/voice-check.ts <out_dir> [pl en de es]
- * Zbiera teksty używanych nagrań, robi WAV-y 16 kHz, wysyła na Legiona i ściąga raporty
- * <out_dir>/check-<język>.json. Ranking: games/bystrzakowo/scripts/voice-rank.ts.
+ * Collects the texts of the recordings in use, makes 16 kHz WAVs, sends them to Legion and downloads the reports
+ * <out_dir>/check-<lang>.json. Ranking: games/bystrzakowo/scripts/voice-rank.ts.
  */
 import { execFileSync } from 'node:child_process';
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
@@ -17,7 +17,7 @@ const langs = (process.argv.slice(3).length ? process.argv.slice(3) : ['pl', 'en
 const skill = join(homedir(), '.claude/skills/tts');
 const ps = join(homedir(), '.claude/skills/comfyui/scripts/legion-ps.sh');
 
-/** Tekst każdego nagrania: polskie z voice/lines*.json (późniejsze pliki nadpisują), obce z voice/<język>.json. */
+/** Text of every recording: Polish from voice/lines*.json (later files override), other languages from voice/<lang>.json. */
 function texts(l: Lang): Map<string, string> {
   const m = new Map<string, string>();
   if (l !== 'pl') {
@@ -44,7 +44,7 @@ for (const l of langs) {
       const src = join(game, 'public/audio', l === 'pl' ? '' : l, g, `${line}.m4a`);
       const text = t.get(name);
       if (!text || !existsSync(src)) {
-        console.log(`pomijam ${l} ${name} (${text ? 'brak pliku' : 'brak tekstu'})`);
+        console.log(`skipping ${l} ${name} (${text ? 'no file' : 'no text'})`);
         continue;
       }
       const wav = join(dir, `${name}.wav`);
@@ -52,7 +52,7 @@ for (const l of langs) {
       items.push({ name, text, wav: `check\\${l}\\${name}.wav` });
     }
   writeFileSync(join(dir, 'manifest.json'), JSON.stringify({ lang: l, items }));
-  console.log(`${l}: ${items.length} nagrań, wysyłam`);
+  console.log(`${l}: ${items.length} recordings, uploading`);
   execFileSync('bash', ['-c', `cd "${out}" && tar czf ${l}.tgz ${l} && scp -q ${l}.tgz legion:Sites/tts/${l}.tgz`]);
   let log = '';
   try {
@@ -66,7 +66,7 @@ $env:PYTHONIOENCODING="utf-8"
       maxBuffer: 1 << 26,
     });
   } catch (e) {
-    // PowerShell zwraca kod ≠ 0 przy ostrzeżeniach; liczy się „GOTOWE” w wyjściu.
+    // PowerShell returns a non-zero code on warnings; what matters is the completion marker printed by check.py in the output.
     log = String((e as { stdout?: string }).stdout ?? e);
   }
   console.log(log.trim().split('\n').slice(-3).join('\n'));

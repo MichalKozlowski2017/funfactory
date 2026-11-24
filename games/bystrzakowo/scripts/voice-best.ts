@@ -1,8 +1,8 @@
 /**
- * Poprawka podejrzanych nagrań lektora: dla każdego nagrania, które druga kontrola (voice-check.ts) uznała za
- * podejrzane, generuje 5 wariantów (różne seedy), ocenia je Whisperem, głoskami i literami (skill tts: legion/check.py)
- * i podmienia plik w public/audio tylko wtedy, gdy najlepszy wariant wypada wyraźnie lepiej niż obecne nagranie.
- *   node games/bystrzakowo/scripts/voice-best.ts <katalog z check-<język>.json> [pl en de es]
+ * Fixes suspicious narrator recordings: for every recording the second check (voice-check.ts) flagged as
+ * suspicious, generates 5 variants (different seeds), scores them with Whisper, phonemes and letters (tts skill: legion/check.py)
+ * and replaces the file in public/audio only when the best variant scores clearly better than the current recording.
+ *   node games/bystrzakowo/scripts/voice-best.ts <dir with check-<lang>.json> [pl en de es]
  */
 import { execFileSync } from 'node:child_process';
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
@@ -14,7 +14,7 @@ const dir = process.argv[2]!;
 const langs = process.argv.slice(3).length ? process.argv.slice(3) : ['pl', 'en', 'de', 'es'];
 const skill = join(homedir(), '.claude/skills/tts');
 const ps = join(homedir(), '.claude/skills/comfyui/scripts/legion-ps.sh');
-// Druga runda: inne seedy (VOICE_SEEDS="101,131,..."), bo te same dają te same warianty.
+// Second round: different seeds (VOICE_SEEDS="101,131,..."), since the same seeds give the same variants.
 const SEEDS = process.env.VOICE_SEEDS ? process.env.VOICE_SEEDS.split(',').map(Number) : [11, 23, 37, 51, 73];
 
 interface Check {
@@ -24,7 +24,7 @@ interface Check {
   cer: number;
 }
 
-/** Podejrzane: litery wyraźnie złe albo głoski znacznie gorsze niż typowe (sylabowanie „czytaj-” pomijamy: tam oba modele się gubią). */
+/** Suspicious: letters clearly wrong or phonemes much worse than typical (syllable reading "read-" lines are skipped: both models get lost there). */
 export function suspicious(r: Check[]): Check[] {
   const mp = [...r].map((x) => x.per).sort((a, b) => a - b)[Math.floor(r.length / 2)]!;
   return r.filter((x) => !x.name.split('-').slice(1).join('-').startsWith('read') && (x.cer >= 0.34 || x.per >= mp + 0.4));
@@ -32,7 +32,7 @@ export function suspicious(r: Check[]): Check[] {
 
 const score = (x: { per: number; cer: number }, whisperOk = true) => x.per + x.cer + (whisperOk ? 0 : 0.5);
 
-/** Polskie kwestie: tekst i głos z voice/lines*.json (późniejsze pliki nadpisują). */
+/** Polish lines: text and voice from voice/lines*.json (later files override earlier ones). */
 function polish(): Map<string, { text: string; voice: string }> {
   const m = new Map<string, { text: string; voice: string }>();
   const files = readdirSync(join(game, 'voice'))
@@ -60,7 +60,7 @@ $env:PYTHONIOENCODING="utf-8"
       maxBuffer: 1 << 26,
     });
   } catch {
-    // PowerShell zwraca kod ≠ 0 przy ostrzeżeniach; raport i tak powstaje.
+    // PowerShell returns a non-zero code on warnings; the report is written anyway.
   }
   execFileSync('scp', ['-q', `legion:Sites/tts/check/report-${sub}.json`, join(dir, `report-${sub}.json`)]);
   return new Map((JSON.parse(readFileSync(join(dir, `report-${sub}.json`), 'utf8')) as Check[]).map((x) => [x.name, x]));
@@ -75,7 +75,7 @@ for (const l of langs) {
     const s = src.get(b.name)!;
     return SEEDS.map((seed) => ({ name: `${b.name}__${seed}`, text: s.text, voice: s.voice, seed, tries: 1 }));
   });
-  console.log(`${l}: ${bad.length} podejrzanych, ${lines.length} wariantów`);
+  console.log(`${l}: ${bad.length} suspicious, ${lines.length} variants`);
   if (!lines.length) continue;
   const sub = `best-${l}`;
   const raw = join(dir, `${sub}-raw`);
@@ -106,5 +106,5 @@ for (const l of langs) {
     } else left.push(`${b.name} (${b.text}) ${score(b).toFixed(2)}`);
   }
   writeFileSync(join(dir, `left-${l}.txt`), left.join('\n'));
-  console.log(`${l}: podmienione ${replaced}/${bad.length}; nadal słabe: ${left.length}`);
+  console.log(`${l}: replaced ${replaced}/${bad.length}; still weak: ${left.length}`);
 }

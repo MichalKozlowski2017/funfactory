@@ -1,10 +1,10 @@
 /**
- * Różnorodność zabaw: ile różnych treści widzi dziecko i jak szybko rundy się powtarzają.
- * Dla każdej zabawy, poziomu (0–2) i języka symuluje 300 kolejnych rund i liczy:
- *   pula      – ile różnych elementów (obiekt przewodni, litera, słowo, kształt…) w ogóle się pojawia,
- *   powt.     – średni odsetek elementów rundy, które były już w poprzedniej rundzie,
- *   identyczne – odsetek rund z dokładnie tym samym zestawem co poprzednia,
- *   90%       – po ilu rundach dziecko zobaczy 90% puli.
+ * Activity variety: how much different content a child sees and how quickly rounds repeat.
+ * For each activity, level (0–2) and language it simulates 300 consecutive rounds and counts:
+ *   pool   – how many distinct elements (lead object, letter, word, shape…) appear at all,
+ *   rep.   – average share of a round's elements that were already in the previous round,
+ *   same   – share of rounds with exactly the same set as the previous one,
+ *   90%    – after how many rounds the child has seen 90% of the pool.
  *   node games/bystrzakowo/scripts/variety.ts
  */
 import { Rng } from '@funfactory/core';
@@ -76,7 +76,7 @@ function measure(gen: Gen, level: number): { pool: number; rep: number; same: nu
 }
 
 const pct = (x: number) => `${Math.round(x * 100)}%`.padStart(5);
-console.log('zabawa            jęz poz  pula  powt.  ident.  90%');
+console.log('activity          lng lvl  pool  rep.   same    90%');
 for (const [name, g] of Object.entries(GENS)) {
   const langs: Lang[] = g.langs ? [...LANGS] : ['pl'];
   for (const l of langs) {
@@ -88,7 +88,7 @@ for (const [name, g] of Object.entries(GENS)) {
   }
 }
 setLang('pl');
-// Historyjki: z pamięcią widzianych (jak w grze).
+// Stories: with memory of the ones already seen (as in the game).
 {
   const rng = new Rng(7);
   let seen: string[] = [];
@@ -100,5 +100,5 @@ setLang('pl');
     if (i) rep += r.filter((s) => prev.includes(s)).length / r.length;
     prev = [...r];
   }
-  console.log(`historyjki        pl  -  ${String(STORIES.length).padStart(5)} ${pct(rep / (N - 1))}      -  ${String(Math.ceil((STORIES.length * 0.9) / STORY_ROUND)).padStart(4)}`);
+  console.log(`stories           pl  -  ${String(STORIES.length).padStart(5)} ${pct(rep / (N - 1))}      -  ${String(Math.ceil((STORIES.length * 0.9) / STORY_ROUND)).padStart(4)}`);
 }

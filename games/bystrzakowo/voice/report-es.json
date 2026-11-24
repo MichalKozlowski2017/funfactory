@@ -1177,7 +1177,7 @@
   "weak": []
  },
  {
-  "name": "lusia-item-lalka",
+  "name": "lusia-item-doll",
   "text": "¡Muñeca!",
   "ok": true,
   "tries": 1,
@@ -3733,7 +3733,7 @@
   "weak": []
  },
  {
-  "name": "bazyl-item-lalka",
+  "name": "bazyl-item-doll",
   "text": "¡Muñeca!",
   "ok": true,
   "tries": 1,

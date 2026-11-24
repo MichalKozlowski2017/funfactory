@@ -1,6 +1,6 @@
 /**
- * Labirynt (Ścieżka Lusi): prowadzenie palcem bohatera (np. kurczaczka) do celu (mamy).
- * Labirynt doskonały (jedna droga między dowolnymi polami) z algorytmu „cofania się” na siatce.
+ * Maze (Lusia's Path): guide the hero (e.g. a chick) with a finger to the goal (its mother).
+ * A perfect maze (exactly one path between any two cells) from the "recursive backtracker" algorithm on a grid.
  */
 import type { Rng } from '@funfactory/core';
 import { ITEMS } from './catalog.ts';
@@ -8,7 +8,7 @@ import { MAX_LEVEL } from './puzzles.ts';
 
 export const MAZE_ROUND = 3;
 
-/** Rozmiar siatki na poziomie (kolumny × wiersze, poziomo jak ekran). */
+/** Grid size per level (columns x rows, landscape like the screen). */
 export function mazeSize(level: number): { cols: number; rows: number } {
   const l = Math.max(0, Math.min(MAX_LEVEL, Math.round(level)));
   return [
@@ -18,7 +18,7 @@ export function mazeSize(level: number): { cols: number; rows: number } {
   ][l]!;
 }
 
-/** Ściany pola: [góra, prawo, dół, lewo]. */
+/** Cell walls: [top, right, bottom, left]. */
 export type Walls = [boolean, boolean, boolean, boolean];
 
 export interface Maze {
@@ -61,13 +61,13 @@ export function makeMaze(rng: Rng, cols: number, rows: number): Maze {
   return { cols, rows, walls };
 }
 
-/** Czy z pola (c, r) można przejść do sąsiedniego (nc, nr). */
+/** Whether you can step from cell (c, r) to the neighboring one (nc, nr). */
 export function canStep(maze: Maze, c: number, r: number, nc: number, nr: number): boolean {
   const d = DIRS.findIndex(([dx, dy]) => c + dx === nc && r + dy === nr);
   return d >= 0 && !maze.walls[r]![c]![d];
 }
 
-/** Najkrótsza droga (lista pól) z (c, r) do (tc, tr). */
+/** Shortest path (list of cells) from (c, r) to (tc, tr). */
 export function path(maze: Maze, c: number, r: number, tc: number, tr: number): [number, number][] {
   const prev = new Map<string, string | null>([[`${c},${r}`, null]]);
   const queue: [number, number][] = [[c, r]];
@@ -93,7 +93,7 @@ export function path(maze: Maze, c: number, r: number, tc: number, tr: number): 
   return out;
 }
 
-/** Kto idzie do kogo (bohater, cel, nagranie polecenia „labirynt-<bohater>”). */
+/** Who goes to whom (hero, goal, prompt recording "maze-<hero>"). */
 export const MAZE_PAIRS: readonly [hero: string, goal: string][] = [
   ['chick', 'hen'],
   ['kitten', 'cat'],
@@ -119,10 +119,10 @@ export const MAZE_PAIRS: readonly [hero: string, goal: string][] = [
   ['baby-turtle', 'turtle'],
 ];
 
-/** Bohaterowie poprzedniej rundy: następna runda zaczyna się od innych (o ile starczy par). */
+/** Heroes of the previous round: the next round starts with different ones (if there are enough pairs). */
 let lastHeroes = new Set<string>();
 
-/** Pary do rundy (bez powtórzeń bohatera, bez bohaterów z poprzedniej rundy), tylko z obrazkami z katalogu. */
+/** Pairs for a round (no repeated hero, no heroes from the previous round), only with pictures from the catalog. */
 export function makeMazeRound(rng: Rng): [string, string][] {
   const have = new Set(ITEMS.map((i) => i.id));
   const ok = MAZE_PAIRS.filter(([a, b]) => have.has(a) && have.has(b));

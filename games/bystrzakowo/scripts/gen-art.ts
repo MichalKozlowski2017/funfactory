@@ -1,8 +1,8 @@
 /**
- * Generuje brakujące grafiki na Legionie (Flux 2, styl plastelina) do assets-raw/bystrzakowo/items/<id>-<seed>.png.
- * Pomija obiekty, które mają już plik w public/art/items. Rejestruje paczkę w podglądzie `pnpm legion`.
- *   node games/bystrzakowo/scripts/gen-art.ts [--extra] [--warsztat] [--only id,id --seed N]
- *   (--extra: domki, ikona, muzyka; --warsztat: tła, stanowiska i skrzynki Warsztatu Bazyla, po 2 warianty)
+ * Generates missing art on Legion (Flux 2, plasticine style) into assets-raw/bystrzakowo/items/<id>-<seed>.png.
+ * Skips items that already have a file in public/art/items. Registers the batch in the `pnpm legion` preview.
+ *   node games/bystrzakowo/scripts/gen-art.ts [--extra] [--workshop] [--only id,id --seed N]
+ *   (--extra: houses, icon, music; --workshop: backgrounds, stations and crates of Bazyl's Workshop, 2 variants each)
  */
 import { execFileSync } from 'node:child_process';
 import { existsSync, mkdirSync } from 'node:fs';
@@ -18,7 +18,7 @@ export const STYLE = 'soft 3D clay toy render, rounded chubby shapes, matte plas
 const seedArg = process.argv.indexOf('--seed');
 const SEED = seedArg > 0 ? Number(process.argv[seedArg + 1]) : 21;
 const onlyArg = process.argv.indexOf('--only');
-/** --only a,b,c: wygeneruj ponownie tylko te obiekty (np. z nowym promptem i innym --seed). */
+/** --only a,b,c: regenerate only these items (e.g. with a new prompt and a different --seed). */
 const only = onlyArg > 0 ? new Set(process.argv[onlyArg + 1]!.split(',')) : null;
 
 interface Task {
@@ -50,14 +50,14 @@ if (extra) {
 }
 
 if (process.argv.includes('--signs')) {
-  // Znaki skrzynek segregowania (nie są obiektami katalogu).
+  // Signs for the sorting crates (not catalog items).
   const sign = (what: string) => `${what}, single object, centered, ${STYLE}, no face on objects, plain light gray background`;
   for (const [id, what] of [
     ['road', 'a short curvy piece of road with a dashed white line and a tiny traffic light'],
     ['snowman', 'a cute snowman with a carrot nose, a scarf and a little hat'],
     ['palm', 'a single palm tree on a small sandy island with savanna grass'],
     ['ice-floe', 'a small white ice floe with snow and a tiny icicle, floating on a bit of blue water'],
-    // Morze zamiast stawu: w „wodzie” są wieloryb, delfin, meduza (test agentem: zwierzęta morskie w stawie mylą).
+    // Sea instead of a pond: whale, dolphin and jellyfish go "in water" (agent test: sea animals in a pond were confusing).
     ['sea', 'a small round patch of blue sea with big waves and white foam, a starfish and a seashell on a bit of sand in front'],
   ])
     tasks.push({ out: 'workshop', prefix: id!, args: ['--workflow', 'flux2-sprite', '--prompt', sign(what!)] });
@@ -88,7 +88,7 @@ if (process.argv.includes('--studio')) {
     { out: 'studio', prefix: 'station-patterns', args: ['--workflow', 'flux2-sprite', '--count', '2', '--prompt', sprite('a small wooden children abacus with rows of colorful beads in repeating color patterns, front view')] },
     { out: 'studio', prefix: 'station-letters', args: ['--workflow', 'flux2-sprite', '--count', '2', '--prompt', sprite('a small wooden board standing on a little stand with a big letter A made of colorful dots, front view')] },
   );
-  // Kolorowanki: same kontury, grube linie, białe tło (zamalowywanie dotykiem).
+  // Coloring pages: outlines only, thick lines, white background (filled by touch).
   const page = (what: string) => `children coloring book page of ${what}, very thick clean black outlines, closed shapes, large simple areas, pure white background, no shading, no gray, no color, no texture, cute and friendly, centered, whole object visible`;
   for (const [id, what] of [
     ['cat', 'a cute sitting cat'],
@@ -119,7 +119,7 @@ if (process.argv.includes('--extras')) {
     { out: 'studio', prefix: 'house-emotions', args: ['--workflow', 'flux2-sprite', '--prompt', `a tiny cozy cottage with a round wooden door, a yellow roof and a round window shaped like a smiling face, front view, single object, centered, ${STYLE}, plain light gray background`] },
     { out: 'studio', prefix: 'station-melody', args: ['--workflow', 'flux2-sprite', '--count', '2', '--prompt', sprite('a colorful children wooden xylophone with rainbow bars and two mallets, front view')] },
   );
-  // Emocje: ta sama postać (ten sam seed), różne miny. Wyraźne, przesadzone, jak w książeczkach dla maluchów.
+  // Emotions: the same character (same seed), different faces. Clear and exaggerated, like in toddler books.
   const face = (what: string) => `a cute round little child head with short brown hair and big eyes, ${what}, very clear exaggerated expression for toddlers, front view, single object, centered, ${STYLE}, plain light gray background`;
   for (const [id, what] of [
     ['happy', 'very happy, big open smile, cheerful'],
@@ -133,7 +133,7 @@ if (process.argv.includes('--extras')) {
 }
 
 if (process.argv.includes('--emotions2')) {
-  // Emocje: kolejne postaci z tym samym zestawem min (art/emocje/<emocja>-<postać>.webp).
+  // Emotions: more characters with the same set of faces (art/emotions/<emotion>-<character>.webp).
   const chars: [string, string][] = [
     ['girl', 'a cute round little girl head with two blond pigtails and big eyes'],
     ['kitten', 'a cute round orange kitten head with big eyes'],
@@ -153,7 +153,7 @@ if (process.argv.includes('--emotions2')) {
 }
 
 if (process.argv.includes('--stories')) {
-  // Historyjki obrazkowe: po trzy kadry (kolejność zdarzeń), ten sam styl co obiekty.
+  // Picture stories: three frames each (order of events), same style as the items.
   const frame = (what: string) => `${what}, single scene object, centered, ${STYLE}, no text, plain light gray background`;
   const stories: [string, string[]][] = [
     ['flower', ['a small brown seed in a little pile of soil', 'a tiny green sprout with two leaves growing from a little pile of soil', 'a pink flower in bloom growing from a little pile of soil']],
@@ -167,7 +167,7 @@ if (process.argv.includes('--stories')) {
 }
 
 if (process.argv.includes('--snowman')) {
-  // Bałwan krok po kroku: same kule śniegu bez twarzy (wcześniej Flux dorysowywał buzie i wyglądały jak głowy).
+  // Snowman step by step: plain snowballs without faces (Flux used to draw faces on them and they looked like heads).
   const frame = (what: string) => `${what}, plain snow, no face, no eyes, no mouth, no nose, no carrot, no decorations, single scene object, centered, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, no text, plain light gray background`;
   tasks.push(
     { out: 'stories', prefix: 'snowman-1', args: ['--workflow', 'flux2-sprite', '--count', '2', '--prompt', frame('one big round plain white snowball lying on a small patch of snowy ground')] },
@@ -176,12 +176,12 @@ if (process.argv.includes('--snowman')) {
 }
 
 if (process.argv.includes('--stories2')) {
-  // Nowe historyjki i poprawione kadry. Przedmioty bez buzi (Flux z „cute” dorysowywał twarze jajkom i jabłkom).
+  // New stories and fixed frames. Objects without faces (with "cute" Flux drew faces on eggs and apples).
   const base = 'single scene object, centered, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, bright cheerful pastel colors, no text, plain light gray background';
   const thing = (what: string) => `${what}, no face, no eyes, no mouth, ${base}`;
   const animal = (what: string) => `${what}, cute and friendly, ${base}`;
   const frames: [string, string][] = [
-    // Poprawki (bez twarzy).
+    // Fixes (no faces).
     ['flower-1', thing('a small brown seed in a little pile of brown soil')],
     ['flower-2', thing('a tiny green sprout with two leaves growing from a little pile of brown soil')],
     ['flower-3', thing('a pink flower in bloom growing from a little pile of brown soil')],
@@ -191,7 +191,7 @@ if (process.argv.includes('--stories2')) {
     ['apple-3', thing('an apple core with a stem')],
     ['ice-cream-1', thing('a full ice cream cone with two scoops, pink and vanilla')],
     ['ice-cream-2', thing('an ice cream cone with one small half melted pink scoop')],
-    // Nowe historyjki.
+    // New stories.
     ['froglet-1', thing('a small clump of round transparent frog eggs with black dots floating in a bit of blue pond water')],
     ['froglet-2', animal('a small dark green tadpole with a long tail swimming in a bit of blue pond water')],
     ['froglet-3', animal('a green frog sitting on a lily pad on a bit of blue pond water')],
@@ -215,7 +215,7 @@ if (process.argv.includes('--stories2')) {
 }
 
 if (process.argv.includes('--stories4')) {
-  // Poprawki kadrów z --historyjki2: żabki na skrzeku, klocek z kółkami, napis na mące, dziwna babka z piasku.
+  // Fixes of frames from --stories2: froglets on frogspawn, block with wheels, writing on the flour, odd sand cake.
   const base = 'single scene object, centered, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, bright cheerful pastel colors, no text, plain light gray background';
   const thing = (what: string) => `${what}, no face, no eyes, no mouth, ${base}`;
   const frames: [string, string][] = [
@@ -229,7 +229,7 @@ if (process.argv.includes('--stories4')) {
 }
 
 if (process.argv.includes('--stories5')) {
-  // Poprawki z --historyjki3: biała kartka ginęła na tle, ciasto z kolorową posypką.
+  // Fixes from --stories3: the white sheet got lost on the background, cake with colorful sprinkles.
   const base = 'single scene object, centered, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, bright cheerful pastel colors, no text, plain light gray background';
   const thing = (what: string) => `${what}, no face, no eyes, no mouth, ${base}`;
   const frames: [string, string][] = [
@@ -242,7 +242,7 @@ if (process.argv.includes('--stories5')) {
 }
 
 if (process.argv.includes('--stories6')) {
-  // Sześć kolejnych historyjek (razem 24): zmiana widoczna od razu, ten sam przedmiot w każdym kadrze.
+  // Six more stories (24 in total): the change is visible at once, the same object in every frame.
   const base = 'single scene object, centered, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, bright cheerful pastel colors, no text, plain light gray background';
   const thing = (what: string) => `${what}, no face, no eyes, no mouth, ${base}`;
   const frames: [string, string][] = [
@@ -269,7 +269,7 @@ if (process.argv.includes('--stories6')) {
 }
 
 if (process.argv.includes('--stories7')) {
-  // Poprawki z --historyjki6: zamiast skórki wychodził cały banan, a surowe ciasto wyglądało jak babeczka z kremem.
+  // Fixes from --stories6: a whole banana came out instead of the peel, and raw dough looked like a cupcake with cream.
   const base = 'single scene object, centered, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, bright cheerful pastel colors, no text, plain light gray background';
   const thing = (what: string) => `${what}, no face, no eyes, no mouth, ${base}`;
   const frames: [string, string][] = [
@@ -280,7 +280,7 @@ if (process.argv.includes('--stories7')) {
 }
 
 if (process.argv.includes('--stories3')) {
-  // Kolejne historyjki (razem 20).
+  // More stories (20 in total).
   const base = 'single scene object, centered, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, bright cheerful pastel colors, no text, plain light gray background';
   const thing = (what: string) => `${what}, no face, no eyes, no mouth, ${base}`;
   const animal = (what: string) => `${what}, cute and friendly, ${base}`;
@@ -314,7 +314,7 @@ if (process.argv.includes('--stories3')) {
 }
 
 if (process.argv.includes('--landscapes')) {
-  // Tła naklejanki: szeroki krajobraz z dużą pustą przestrzenią na naklejki (dolne dwie trzecie).
+  // Sticker-book backgrounds: a wide landscape with a big empty space for stickers (bottom two thirds).
   const land = (what: string) => `wide landscape scene of ${what}, the bottom two thirds is a big open empty flat area for placing stickers, low horizon detail, no characters, no animals, no people, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft lighting, bright cheerful pastel colors, cute and friendly`;
   const wide = ['--workflow', 'flux2', '--width', '1536', '--height', '864', '--count', '2', '--prompt'];
   for (const [id, what] of [
@@ -329,7 +329,7 @@ if (process.argv.includes('--landscapes')) {
 }
 
 if (process.argv.includes('--coloring-pages2')) {
-  // Prostsze kolorowanki dla maluchów: kilka dużych pól, bez drobnych detali (palec 3-latka).
+  // Simpler coloring pages for toddlers: a few big areas, no small details (a 3-year-old's finger).
   const page = (what: string) => `very simple children coloring book page for toddlers aged 2 to 3 of ${what}, only 6 to 10 big closed areas, extremely thick bold black outlines, no small details, no stripes, no patterns, no scales, no texture lines, no tiny eyes details, big chunky rounded shapes, object fills the whole page, pure white background, no shading, no gray, no color`;
   for (const [id, what] of [
     ['fish', 'a round chubby fish with one big tail fin'],
@@ -344,7 +344,7 @@ if (process.argv.includes('--coloring-pages2')) {
 }
 
 if (process.argv.includes('--meadow')) {
-  // Stanowiska Polany Zagadek: obrazek mówi, na czym polega zabawa (zamiast jednakowych domków).
+  // Puzzle Meadow stations: the picture tells what the activity is about (instead of identical houses).
   const sprite = (what: string, face = false) => `${what}, single object, centered, ${STYLE}${face ? '' : ', no face on objects'}, plain light gray background`;
   const two = ['--workflow', 'flux2-sprite', '--count', '2', '--prompt'];
   tasks.push(
@@ -360,7 +360,7 @@ if (process.argv.includes('--meadow')) {
 }
 
 if (process.argv.includes('--gear')) {
-  // Ikona wejścia do strefy rodzica (zębatka w stylu plasteliny), 4 warianty do wyboru.
+  // Parent zone entry icon (plasticine-style gear), 4 variants to choose from.
   const sprite = (what: string) => `${what}, single object, centered, ${STYLE}, no face on objects, plain light gray background`;
   tasks.push(
     { out: 'extra', prefix: 'gear-a', args: ['--workflow', 'flux2-sprite', '--count', '2', '--prompt', sprite('a chubby rounded cogwheel gear icon with a round hole in the middle, soft lilac purple, front view, flat facing the camera')] },
@@ -385,13 +385,13 @@ if (process.argv.includes('--workshop')) {
 }
 
 if (process.argv.includes('--letters')) {
-  // Obrazki tylko do „Pisze litery” (src/sim/letter-pics.ts): po 2 warianty, wybór w scripts/assets.sh.
+  // Pictures only for letter tracing (src/sim/letter-pics.ts): 2 variants each, chosen in scripts/assets.sh.
   const { LETTER_PICS } = await import('../src/sim/letter-pics.ts');
   for (const p of LETTER_PICS)
     tasks.push({ out: 'letters', prefix: p.id, args: ['--workflow', 'flux2-sprite', '--count', '2', '--prompt', `${p.prompt}, single object, centered, ${STYLE}, plain light gray background`] });
 }
 if (process.argv.includes('--hand')) {
-  // Rączka z samouczka: pokazuje gesty (dotknij, przeciągnij, prowadź palcem). Palec wskazujący do góry, obracana w kodzie.
+  // Tutorial hand: shows gestures (tap, drag, trace with a finger). Index finger pointing up, rotated in code.
   const hand = (what: string) => `${what}, single object, centered, ${STYLE}, plain light gray background`;
   tasks.push(
     { out: 'ui', prefix: 'hand-a', args: ['--workflow', 'flux2-sprite', '--count', '4', '--prompt', hand('a cute chubby cartoon child hand with the index finger pointing straight up and the other fingers curled into the palm, warm peach skin, a short light blue sleeve cuff at the wrist, seen from the back of the hand, exactly five fingers')] },
@@ -399,7 +399,7 @@ if (process.argv.includes('--hand')) {
   );
 }
 if (process.argv.includes('--hand2')) {
-  // Druga wersja (uwaga właściciela): grzbiet dłoni, widok z góry jak ręka stukająca w ekran, nie od strony wnętrza dłoni.
+  // Second version (owner's note): back of the hand, top view like a hand tapping the screen, not the palm side.
   const hand = (what: string) => `${what}, single object, centered, ${STYLE}, plain light gray background`;
   tasks.push(
     { out: 'ui', prefix: 'hand-c', args: ['--workflow', 'flux2-sprite', '--count', '4', '--prompt', hand('a cute chubby cartoon child right hand seen from above showing the back of the hand, knuckles on top, palm facing away from the viewer, the index finger stretched straight up, the other three fingers folded under the hand and hidden, thumb tucked along the side, warm peach skin, a short light blue sleeve cuff at the wrist at the bottom, like a hand tapping a touchscreen')] },
@@ -416,22 +416,22 @@ for (const item of ITEMS) {
   tasks.push({ out: 'items', prefix: item.id, args: ['--workflow', 'flux2-sprite', '--prompt', prompt] });
 }
 
-// Zadania spoza katalogu (tła, stanowiska, znaki): pomijamy te, które mają już plik z tym seedem.
+// Tasks outside the catalog (backgrounds, stations, signs): skip those that already have a file with this seed.
 for (let i = tasks.length - 1; i >= 0; i--) {
   const t = tasks[i]!;
   if (t.out !== 'items' && existsSync(join(raw, t.out, `${t.prefix}-${SEED}.png`))) tasks.splice(i, 1);
 }
-console.log(`Do wygenerowania: ${tasks.length}`);
+console.log(`To generate: ${tasks.length}`);
 for (const dir of ['items', 'extra', 'workshop', 'path', 'studio', 'coloring-pages', 'emotions', 'stories', 'meadow', 'landscapes', 'ui', 'letters']) mkdirSync(join(raw, dir), { recursive: true });
-// Postęp liczony w obrazkach (zadanie z --count N daje N plików .png).
+// Progress counted in images (a task with --count N yields N .png files).
 const images = tasks.reduce((n, t) => n + (t.args.includes('--count') ? Number(t.args[t.args.indexOf('--count') + 1]) : t.args.includes('ace15') ? 0 : 1), 0);
-execFileSync(job, ['bystrzakowo-items', 'Bystrzakowo: grafiki', String(images), '--dir', raw, '--glob', '*'], { stdio: 'inherit' });
+execFileSync(job, ['bystrzakowo-items', 'Bystrzakowo: art', String(images), '--dir', raw, '--glob', '*'], { stdio: 'inherit' });
 for (const [i, t] of tasks.entries()) {
   try {
     const out = execFileSync('node', [comfy, 'gen', ...t.args, '--seed', String(SEED), '--out', join(raw, t.out), '--prefix', t.prefix], { encoding: 'utf8' });
     console.log(`[${i + 1}/${tasks.length}] ${t.prefix} ${out.trim().split('\n').pop()}`);
   } catch (e) {
-    console.log(`[${i + 1}/${tasks.length}] ${t.prefix} BŁĄD ${String(e).slice(0, 200)}`);
+    console.log(`[${i + 1}/${tasks.length}] ${t.prefix} ERROR ${String(e).slice(0, 200)}`);
   }
 }
-console.log('GOTOWE');
+console.log('DONE');

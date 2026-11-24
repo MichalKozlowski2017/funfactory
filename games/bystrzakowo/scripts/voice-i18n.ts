@@ -1,10 +1,10 @@
 /**
- * Kwestie lektora po angielsku i niemiecku → voice/<język>.json (zadanie dla skilla tts).
+ * Narrator lines in English, German and Spanish → voice/<lang>.json (a job for the tts skill).
  *   node games/bystrzakowo/scripts/voice-i18n.ts
- * Lista nagrań pochodzi z gry (src/voice-lines.ts), więc brak tłumaczenia którejś kwestii przerywa skrypt.
- * Głosy: rodzime wzorce dla każdego języka (voices/lusia-en, bazyl-en, lusia-de, bazyl-de), zrobione z opisu
- * w VoxCPM2. Polskie wzorce czytały angielskie i niemieckie słowa z akcentem („Cat” jak „Cut”).
- * Bazyl to po angielsku i niemiecku Basil.
+ * The recording list comes from the game (src/voice-lines.ts), so a missing translation of any line stops the script.
+ * Voices: native reference voices for each language (voices/lusia-en, bazyl-en, lusia-de, bazyl-de), designed from a
+ * description in VoxCPM2. The Polish reference voices read English and German words with an accent ("Cat" like "Cut").
+ * Bazyl is Basil in English and German.
  */
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -18,7 +18,7 @@ import { voiceLines, type Guide } from '../src/voice-lines.ts';
 type L = 'en' | 'de' | 'es';
 type Text = string | Record<Guide, string>;
 
-/** Kwestie wspólne (klucz bez przedrostka głosu). */
+/** Shared lines (key without the voice prefix). */
 const T: Record<L, Record<string, Text>> = {
   en: {
     'bravo-1': 'Well done!',
@@ -291,7 +291,7 @@ const EMOTIONS: Record<L, Record<string, [show: string, face: string]>> = {
   },
 };
 
-/** „Gdzie jest mama …?”: forma młodego w zdaniu. */
+/** "Where is the … mommy?": the baby animal's form in the sentence. */
 const MOTHERS: Record<L, Record<string, string>> = {
   en: { chick: "Where is the chick's mommy?", calf: "Where is the calf's mommy?", kitten: "Where is the kitten's mommy?", lamb: "Where is the lamb's mommy?", piglet: "Where is the piglet's mommy?", foal: "Where is the foal's mommy?", duckling: "Where is the duckling's mommy?", tadpole: "Where is the tadpole's mommy?", 'fox-cub': "Where is the fox cub's mommy?", 'bear-cub': "Where is the bear cub's mommy?", 'penguin-chick': "Where is the penguin chick's mommy?", 'lion-cub': "Where is the lion cub's mommy?", 'kid-goat': "Where is the baby goat's mommy?", 'baby-giraffe': "Where is the baby giraffe's mommy?", 'seal-pup': "Where is the seal pup's mommy?", owlet: "Where is the owlet's mommy?", puppy: "Where is the puppy's mommy?", bunny: "Where is the baby bunny's mommy?", 'elephant-calf': "Where is the baby elephant's mommy?", 'baby-turtle': "Where is the baby turtle's mommy?" },
   es: { chick: '¿Dónde está la mamá del pollito?', calf: '¿Dónde está la mamá del ternero?', kitten: '¿Dónde está la mamá del gatito?', lamb: '¿Dónde está la mamá del corderito?', piglet: '¿Dónde está la mamá del cerdito?', foal: '¿Dónde está la mamá del potrillo?', duckling: '¿Dónde está la mamá del patito?', tadpole: '¿Dónde está la mamá del renacuajo?', 'fox-cub': "¿Dónde está la mamá del zorrito?", 'bear-cub': "¿Dónde está la mamá del osezno?", 'penguin-chick': "¿Dónde está la mamá del pingüinito?", 'lion-cub': "¿Dónde está la mamá del leoncito?", 'kid-goat': "¿Dónde está la mamá del cabrito?", 'baby-giraffe': "¿Dónde está la mamá de la jirafita?", 'seal-pup': "¿Dónde está la mamá de la foquita?", owlet: "¿Dónde está la mamá del búho bebé?", puppy: '¿Dónde está la mamá del cachorrito?', bunny: '¿Dónde está la mamá del conejito?', 'elephant-calf': '¿Dónde está la mamá del elefantito?', 'baby-turtle': '¿Dónde está la mamá de la tortuguita?' },
@@ -460,7 +460,7 @@ const STORIES: Record<L, Record<string, string>> = {
   },
 };
 
-/** Tekst kwestii `line` przewodnika `guide` w języku `l`. */
+/** Text of line `line` for guide `guide` in language `l`. */
 function text(l: L, guide: Guide, line: string): string {
   const common = T[l][line];
   if (common !== undefined) return typeof common === 'string' ? common : common[guide];
@@ -496,7 +496,7 @@ function text(l: L, guide: Guide, line: string): string {
     case 'letter': {
       const x = lettersOf(l).find((y) => y.ch.toLowerCase() === key)!;
       const word = nameOf(itemById(x.item));
-      // Litery, które lektor czyta niewyraźnie, zapisane tak, jak się je wymawia.
+      // Letters the narrator reads indistinctly, spelled the way they are pronounced.
       const spoken = ({ de: { G: 'Ge', J: 'Jott' }, es: { C: 'Ce' } } as Record<string, Record<string, string>>)[l]?.[x.ch] ?? x.ch;
       if (l === 'es') return `¡${spoken} de ${word.toLowerCase()}!`;
       return l === 'en' ? `${spoken} is for ${word.toLowerCase()}!` : `${spoken} wie ${word}!`;
@@ -505,29 +505,29 @@ function text(l: L, guide: Guide, line: string): string {
       if (l === 'es') return `¿Qué empieza con... ${key.toUpperCase()}?`;
       return l === 'en' ? `What starts with... ${key.toUpperCase()}?` : `Was fängt mit... ${key.toUpperCase()} an?`;
   }
-  throw new Error(`Brak tłumaczenia: ${l} ${guide}-${line}`);
+  throw new Error(`Missing translation: ${l} ${guide}-${line}`);
 }
 
-// Angielski: spokojne głosy (wybór właściciela 22.11.2026, poprzednie „krzyczały”).
+// English: calm voices (owner's choice 22.11.2026, the previous ones "shouted").
 const voiceOf = (l: L, g: Guide) => (l === 'en' ? `voices/${g}-en-calm` : `voices/${g}-${l}`);
-/** Spokojniej: wykrzyknik czytany jest jak okrzyk, więc po angielsku kończymy kropką. */
+/** Calmer: an exclamation mark is read as a shout, so in English we end with a period. */
 const calm = (l: L, t: string) => (l === 'en' ? t.replace(/!/g, '.') : t);
 const dir = join(import.meta.dirname, '..', 'voice');
 for (const l of ['en', 'de', 'es'] as const) {
   setLang(l as Lang);
   const names = voiceLines(l);
-  // Sylabowanie Whisper zawsze zapisuje po swojemu („Pumpkin? Pumpkin?”), więc te kwestie dostają mniej prób.
+  // Whisper always transcribes syllable reading its own way ("Pumpkin? Pumpkin?"), so these lines get fewer tries.
   const lines = (['lusia', 'bazyl'] as const).flatMap((g) =>
     names[g].map((line) => ({ name: `${g}-${line}`, text: calm(l, text(l, g, line)), voice: voiceOf(l, g), ...(line.startsWith('read-') ? { tries: 3 } : {}) })),
   );
-  // Kwestie nagrane innym silnikiem (Chatterbox: własny tekst, seed, próbka głosu) zostają bez zmian.
+  // Lines recorded with another engine (Chatterbox: its own text, seed, voice sample) stay unchanged.
   const file = join(dir, `${l}.json`);
   const kept = new Map<string, { name: string; engine?: string }>(
     existsSync(file) ? (JSON.parse(readFileSync(file, 'utf8')).lines as { name: string; engine?: string }[]).filter((x) => x.engine).map((x) => [x.name, x]) : [],
   );
-  // Każda kwestia raz (np. nazwy obiektów są w obu głosach osobno, więc zostają).
+  // Each line once (e.g. item names exist separately in both voices, so they stay).
   const unique = [...new Map(lines.map((x) => [x.name, kept.get(x.name) ?? x])).values()];
   writeFileSync(file, JSON.stringify({ voice: voiceOf(l, 'lusia'), lang: l, tries: 8, lines: unique }, null, 1) + '\n');
-  console.log(`${l}: ${unique.length} kwestii`);
+  console.log(`${l}: ${unique.length} lines`);
 }
 void ITEMS;

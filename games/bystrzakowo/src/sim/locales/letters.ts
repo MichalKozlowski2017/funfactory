@@ -1,12 +1,12 @@
 import type { Lang } from '../lang.ts';
 
 /**
- * Przykłady na każdą literę w każdym języku: [obiekt, słowo lektora] („A jak arbuz”, „A is for apple”).
- * Po 3 tam, gdzie są dobre słowa (najmniej 2). Kolejność liter = alfabet.
- * Pominięte (decyzja właściciela 2026-11-24): litery bez co najmniej dwóch dobrych dziecięcych słów
- * (po polsku Ą, Ć, Ę, Ń, Ó, Y, Ź; po angielsku X; po niemiecku Ä, Ö, Ü, X, ß; po hiszpańsku Q, W, X)
- * oraz Q, V, X po polsku.
- * Obiekty: katalog (sim/catalog.ts) albo obrazki tylko do liter (sim/letter-pics.ts).
+ * Examples for each letter in each language: [object, narrator word] ("A is for apple").
+ * 3 where there are good words (at least 2). Letter order = alphabet.
+ * Skipped (owner's decision 2026-11-24): letters without at least two good child-friendly words
+ * (in Polish A-ogonek, C-acute, E-ogonek, N-acute, O-acute, Y, Z-acute; in English X;
+ * in German Ä, Ö, Ü, X, ß; in Spanish Q, W, X) and Q, V, X in Polish.
+ * Objects: catalog (sim/catalog.ts) or letters-only pictures (sim/letter-pics.ts).
  */
 export const LETTER_EXAMPLES: Record<Lang, Record<string, [item: string, word: string][]>> = {
   pl: {
@@ -21,7 +21,7 @@ export const LETTER_EXAMPLES: Record<Lang, Record<string, [item: string, word: s
     "I": [["turkey", "Indyk"], ["igloo", "Igloo"]],
     "J": [["apple", "Jabłko"], ["hedgehog", "Jeż"], ["egg", "Jajko"]],
     "K": [["cat", "Kot"], ["cow", "Krowa"], ["duck", "Kaczka"]],
-    "L": [["lion", "Lew"], ["lalka", "Lalka"], ["kite", "Latawiec"]],
+    "L": [["lion", "Lew"], ["doll", "Lalka"], ["kite", "Latawiec"]],
     "Ł": [["swan", "Łabędź"], ["boat", "Łódka"], ["spoon", "Łyżka"]],
     "M": [["butterfly", "Motyl"], ["monkey", "Małpka"], ["carrot", "Marchewka"]],
     "N": [["rhino", "Nosorożec"], ["bear", "Niedźwiedź"], ["tent", "Namiot"]],
@@ -123,8 +123,8 @@ const PL_NAMES: Record<string, string> = {
   A: 'A', B: 'Be', C: 'Ce', Ć: 'Cie', D: 'De', E: 'E', F: 'Efff', G: 'Gie', H: 'Ha', I: 'I', J: 'Jot', K: 'Ka', L: 'El', Ł: 'Eł', M: 'Em',
   N: 'En', O: 'O', Ó: 'O z kreską', P: 'Pe', R: 'Er', S: 'Es', Ś: 'Eś', T: 'Te', U: 'U', W: 'Wu', Z: 'Zet', Ź: 'Ziet', Ż: 'Żet',
 };
-// Pełne nazwy liter z pauzą („Zett... wie Zug.”): sama litera przed krótkim zdaniem kończyła się w Chatterboxie
-// dopowiedzianym bełkotem (2026-11-24: 34 z 53 niemieckich zdań odpadło w kontroli).
+// Full letter names with a pause ("Zett... wie Zug."): a bare letter before a short sentence ended in Chatterbox
+// with added gibberish (2026-11-24: 34 of 53 German sentences failed the check).
 const SPOKEN: Partial<Record<Lang, Record<string, string>>> = {
   de: {
     A: 'A', B: 'Be', C: 'Ce', D: 'De', E: 'E', F: 'Eff', G: 'Ge', H: 'Ha', I: 'I', J: 'Jott', K: 'Ka', L: 'El', M: 'Em', N: 'En',
@@ -137,7 +137,7 @@ const SPOKEN: Partial<Record<Lang, Record<string, string>>> = {
 };
 const low = (w: string) => (w === w.toUpperCase() ? w : w.toLowerCase());
 
-/** Tekst zdania (bez wykrzyknika: Chatterbox czyta go jak okrzyk). */
+/** Sentence text (no exclamation mark: Chatterbox reads it as a shout). */
 export function letterText(l: Lang, ch: string, word: string): string {
   if (l === 'pl') return `${PL_NAMES[ch] ?? ch}... jak ${low(word)}.`;
   if (l === 'en') return `${ch} is for ${low(word)}.`;

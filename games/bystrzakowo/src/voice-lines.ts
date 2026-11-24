@@ -1,6 +1,6 @@
 /**
- * Lista nagrań lektora w każdym języku (czysty TS: używa jej gra i skrypt nagrań).
- * Pliki: public/audio/<głos>/<nazwa>.m4a (polski) albo public/audio/<język>/<głos>/<nazwa>.m4a.
+ * List of narrator recordings in every language (pure TS: used by the game and the recording script).
+ * Files: public/audio/<voice>/<name>.m4a (Polish) or public/audio/<lang>/<voice>/<name>.m4a.
  */
 import { ITEMS, type Color } from './sim/catalog.ts';
 import { EMOTIONS } from './sim/emotions.ts';
@@ -18,7 +18,7 @@ export type Guide = 'lusia' | 'bazyl';
 export const COLORS_SPOKEN: readonly Color[] = ['red', 'yellow', 'green', 'blue', 'orange', 'pink', 'purple', 'brown', 'white'];
 
 const COMMON = ['bravo-1', 'bravo-2', 'bravo-3', 'bravo-4', 'bravo-5', 'oops-1', 'oops-2', 'reward', 'hello', 'help', ...ITEMS.map((i) => `item-${i.id}`)];
-/** Nazwy nagrań każdego przewodnika w języku `l` (bez przedrostka głosu). */
+/** Recording names of each guide in language `l` (without the voice prefix). */
 export function voiceLines(l: Lang): Record<Guide, string[]> {
   return {
   lusia: [...COMMON, 'realm-meadow', 'realm-asleep', 'realm-path', 'dots', 'memory', 'realm-studio', 'good-night', 'melody', 'syllables', ...wordsOf(l).map((w) => `read-${w.item}`), 'coloring', 'coloring-done', 'stickers', 'letters', 'digits', 'number-0', ...letterLines(l).map((x) => x.line), ...MAZE_PAIRS.map(([hero]) => `maze-${hero}`), 'shadows', 'counting', 'counting-touch', 'album', ...Array.from({ length: 10 }, (_, i) => `number-${i + 1}`), ...soundsOf(l).map((s) => `phoneme-${soundSlug(s)}`)],

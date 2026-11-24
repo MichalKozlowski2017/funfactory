@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-  // Względne ścieżki: Capacitor serwuje build z lokalnego katalogu w aplikacji.
+  // Relative paths: Capacitor serves the build from a local directory inside the app.
   base: './',
   server: { host: true },
   build: { target: 'es2022', assetsInlineLimit: 0 },

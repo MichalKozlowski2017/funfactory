@@ -58,12 +58,12 @@ wait:800
 shot:s"
     # 7. Raport dla rodzica.
     run 7 "wait:1500
-eval:eval(atob('$(b64 "$C.demoParent('postepy', decodeURIComponent(escape(atob('$(b64 "$kid")'))))")'))
+eval:eval(atob('$(b64 "$C.demoParent('progress', decodeURIComponent(escape(atob('$(b64 "$kid")'))))")'))
 wait:1500
 shot:s"
     # 8. Pocztówka tygodnia.
     run 8 "wait:1500
-eval:eval(atob('$(b64 "$C.demoParent('pocztowka', decodeURIComponent(escape(atob('$(b64 "$kid")'))))")'))
+eval:eval(atob('$(b64 "$C.demoParent('postcard', decodeURIComponent(escape(atob('$(b64 "$kid")'))))")'))
 wait:1800
 shot:s"
     unset parent

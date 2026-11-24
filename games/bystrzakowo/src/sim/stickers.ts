@@ -1,19 +1,19 @@
 /**
- * Naklejanka: obrazki z naklejek na tle krajobrazu. Dziecko ma galerię kilku obrazków, każdy z własnym
- * tłem; zmiany zapisują się same. Czysty TS (bez Pixi), żeby dało się testować.
+ * Sticker book: sticker pictures on a landscape background. The child has a gallery of several pictures, each with its own
+ * background; changes save automatically. Pure TS (no Pixi), so it can be tested.
  */
 import type { Progress } from './progress.ts';
 
-/** Krajobrazy (tła naklejanki); `meadow` to tło Polany Zagadek, reszta z public/art/krajobrazy. */
+/** Landscapes (sticker book backgrounds); `meadow` is the Puzzle Meadow background, the rest come from public/art/landscapes. */
 export const LANDSCAPES = ['meadow', 'beach', 'forest', 'winter', 'farm', 'sea', 'space'] as const;
 export type Landscape = (typeof LANDSCAPES)[number];
 
-/** Najwięcej obrazków w galerii. */
+/** Maximum number of pictures in the gallery. */
 export const MAX_PICTURES = 12;
 
 export interface PlacedSticker {
   id: string;
-  /** Pozycja w ułamkach ekranu (0..1), niezależna od rozmiaru telefonu. */
+  /** Position as screen fractions (0..1), independent of phone size. */
   x: number;
   y: number;
   flip: boolean;
@@ -24,7 +24,7 @@ export interface Picture {
   items: PlacedSticker[];
 }
 
-/** Galeria z postępów; stary zapis (jeden obrazek w `scene`) staje się pierwszym obrazkiem. */
+/** Gallery from progress; an old save (a single picture in `scene`) becomes the first picture. */
 export function gallery(p: Progress): { pictures: Picture[]; current: number } {
   if (!p.pictures) {
     p.pictures = [{ bg: 'meadow', items: p.scene ?? [] }];
@@ -37,8 +37,8 @@ export function gallery(p: Progress): { pictures: Picture[]; current: number } {
 }
 
 /**
- * Nowy obrazek (z tym samym tłem co bieżący). Pusty bieżący obrazek jest używany ponownie zamiast
- * tworzyć kolejny pusty. Przy pełnej galerii zwraca null.
+ * New picture (with the same background as the current one). An empty current picture is reused instead of
+ * creating another empty one. Returns null when the gallery is full.
  */
 export function addPicture(p: Progress, bg: Landscape): number | null {
   const { pictures, current } = gallery(p);
@@ -58,7 +58,7 @@ export function addPicture(p: Progress, bg: Landscape): number | null {
   return p.picture;
 }
 
-/** Usuwa obrazek; galeria nigdy nie zostaje pusta, bieżący wskazuje dalej ten sam albo sąsiedni. */
+/** Removes a picture; the gallery never ends up empty, the current index still points to the same or a neighboring one. */
 export function removePicture(p: Progress, index: number): void {
   const { pictures, current } = gallery(p);
   if (index < 0 || index >= pictures.length) return;
@@ -68,18 +68,18 @@ export function removePicture(p: Progress, index: number): void {
 }
 
 /**
- * Perspektywa: naklejka wyżej (dalej) jest mniejsza, niżej (bliżej) większa. `y` to ułamek wysokości
- * obszaru rysowania (0 góra, 1 dół).
+ * Perspective: a sticker higher up (farther) is smaller, lower (closer) is larger. `y` is a fraction of the
+ * drawing area's height (0 top, 1 bottom).
  */
 export function depthScale(y: number): number {
   const t = Math.max(0, Math.min(1, y));
   return 0.4 + 1.0 * t;
 }
 
-/** Rzeczy z nieba: na górze obrazka są naturalnie, więc nie maleją z perspektywą. */
+/** Sky things: they naturally belong at the top of the picture, so they don't shrink with perspective. */
 export const SKY = new Set(['sun', 'cloud', 'little-star', 'moon', 'rainbow', 'airplane', 'helicopter', 'rocket', 'kite', 'small-balloon', 'bird']);
 
-/** Skala naklejki: stała dla rzeczy z nieba, dla reszty perspektywa. */
+/** Sticker scale: constant for sky things, perspective for the rest. */
 export function stickerScale(id: string, y: number): number {
   return SKY.has(id) ? 1 : depthScale(y);
 }

@@ -19,19 +19,19 @@ import { tr } from '../sim/i18n.ts';
 import { Hand } from '../hand.ts';
 import { markHand, needsHand } from '../sim/onboarding.ts';
 
-/** Obrazek na zakładce krainy (obiekt z katalogu). */
+/** Picture on a realm tab (a catalog item). */
 const TAB_ICON: Record<string, string> = { meadow: 'little-flower', workshop: 'block', path: 'mushroom', studio: 'rainbow' };
-/** Kolor zakładki krainy. */
+/** Realm tab color. */
 const TAB_COLOR: Record<string, number> = { meadow: 0x7ad7a0, workshop: 0xf0a960, path: 0x8fb8ff, studio: 0xff8fc0 };
 
 /**
- * Świat Bystrzakowa: krainy przewijane w bok (gest albo zakładki u góry). Każda kraina to inny rodzaj
- * zabawy, a w niej domki albo stanowiska. Przewodnicy, album i strefa rodzica są wspólne.
+ * Bystrzakowo world: realms scrolled sideways (swipe or tabs at the top). Each realm is a different kind of
+ * activity, with houses or stations in it. The guides, album and parent zone are shared.
  */
 export class WorldScene extends Scene {
   readonly id = 'world';
   private art!: Art;
-  /** Dwa tła do przenikania przy zmianie krainy. */
+  /** Two backgrounds for crossfading on realm change. */
   private bgs: Sprite[] = [];
   private readonly pages = new Container();
   private readonly houses = new Map<Activity, Container>();
@@ -46,11 +46,11 @@ export class WorldScene extends Scene {
   private gate!: ParentGate;
   private parentPanel: ParentPanel | null = null;
   private swipeX: number | null = null;
-  /** Ekran „dobranoc” po limicie czasu (zdejmuje go tylko rodzic zębatką). */
+  /** "Good night" screen after the time limit (only a parent can remove it with the gear). */
   private sleep: Container | null = null;
-  /** Kontenery przewodników (pozycja i skala zależne od ekranu). */
+  /** Guide containers (position and scale depend on the screen). */
   private readonly guideBoxes: Container[] = [];
-  /** Rączka: przy pierwszym uruchomieniu pokazuje domek pierwszej zagadki. */
+  /** Hand: on first launch it points at the first puzzle's house. */
   private hand!: Hand;
 
   override async enter(): Promise<void> {
@@ -66,7 +66,7 @@ export class WorldScene extends Scene {
       const page = new Container();
       const color = TAB_COLOR[realm.id] ?? COLORS.sun;
       for (const kind of realm.rows.flat()) {
-        // Kafelek 300×300 (skalowany w resize): jasna karta, obrazek stanowiska, znaczek zabawy w rogu.
+        // 300x300 tile (scaled in resize): light card, station picture, activity badge in the corner.
         const house = new Container();
         const plate = new Graphics()
           .roundRect(-150, -142, 300, 300, 48)
@@ -79,7 +79,7 @@ export class WorldScene extends Scene {
         const sprite = new Sprite({ texture: this.art.houses[kind], anchor: 0.5 });
         sprite.scale.set(Math.min(190 / sprite.texture.height, 240 / sprite.texture.width));
         sprite.y = -14;
-        // Podpis zabawy na dole kafelka.
+        // Activity label at the bottom of the tile.
         const name = label(tr(ACTIVITY_NAMES[kind]), 40, pr * 2, '#ffffff');
         name.scale.set(Math.min(1, 260 / name.width));
         name.y = 112;
@@ -90,7 +90,7 @@ export class WorldScene extends Scene {
         house.eventMode = 'static';
         house.cursor = 'pointer';
         house.on('pointertap', () => this.open(kind, house));
-        // Domek bez treści (brakuje obrazków w katalogu) się nie pokazuje.
+        // A house without content (missing pictures in the catalog) isn't shown.
         house.visible = !isPuzzle(kind) || playable(kind, this.game.rng);
         this.houses.set(kind, house);
         page.addChild(house);
@@ -99,7 +99,7 @@ export class WorldScene extends Scene {
     });
     this.applyLocks();
 
-    // Zakładki krain i nazwa bieżącej.
+    // Realm tabs and the current realm's name.
     this.title = label(tr(REALMS[this.realm]!.name), 56, pr, '#ffb347');
     REALMS.forEach((realm, i) => {
       const tab = new Container();
@@ -134,7 +134,7 @@ export class WorldScene extends Scene {
         void squash(this.tweens, sprite, 0.12);
         say(this.game, guide, 'hello');
       });
-      // Postać w kontenerze: resize skaluje i przesuwa kontener, a animacje postaci działają na jej własnej skali.
+      // Character in a container: resize scales and moves the container, and the character's animations work on its own scale.
       const box = new Container();
       box.addChild(sprite);
       this.guideBoxes.push(box);
@@ -149,15 +149,15 @@ export class WorldScene extends Scene {
     this.addChild(this.particles.view);
 
     this.gate = new ParentGate(this.art.gear);
-    // Wejście do strefy rodzica: samo przytrzymanie zębatki (decyzja właściciela). Mnożenie zostaje przed zakupem
-    // i wysyłaniem obrazków (askAdult w ParentPanel), bo tego wymaga kategoria Kids.
+    // Entering the parent zone: just holding the gear (owner's decision). The multiplication question stays before a purchase
+    // and sending pictures (askAdult in ParentPanel), because the Kids category requires it.
     this.gate.onOpen = () => (this.sleep ? this.wake() : this.openParent());
     this.gate.onLocked = (n) => this.gateToast(n);
-    // Kropka przy zębatce: od ostatniej wizyty rodzica były co najmniej 3 dni zabawy.
+    // Dot by the gear: at least 3 play days since the parent's last visit.
     this.gate.setBadge(playDaysAfter(journal(), state.progress.parentSeen ?? '') >= 3);
     this.addChild(this.gate);
 
-    // Gest w bok przełącza krainę. Pierwsze dotknięcie: muzyka i powitanie.
+    // A sideways swipe switches the realm. First touch: music and welcome.
     this.eventMode = 'static';
     this.on('pointerdown', (e) => {
       this.swipeX = e.global.x;
@@ -165,7 +165,7 @@ export class WorldScene extends Scene {
       if (state.greeted) return;
       state.greeted = true;
       this.timers.after(0.15, () => {
-        // „Wybierz domek i pobawmy się razem!”: przy pierwszym uruchomieniu rączka od nowa stuka w domek pierwszej zagadki.
+        // "Pick a house and let's play together!": on first launch the hand taps the first puzzle's house again.
         const len = say(this.game, 'lusia', 'hello');
         if (state.progress.rounds === 0) this.pointFirst();
         else this.timers.after(len + 0.4, () => this.introRealms());
@@ -174,7 +174,7 @@ export class WorldScene extends Scene {
     this.hand = new Hand(this.art.hand);
     this.addChild(this.hand);
     if (state.progress.rounds === 0) this.timers.after(0.8, () => this.pointFirst());
-    // Po pierwszej rundzie (dziecko wraca do świata): Bazyl pokazuje zakładki innych krain.
+    // After the first round (the child returns to the world): Bazyl shows the tabs of the other realms.
     else if (state.greeted) this.timers.after(1, () => this.introRealms());
     const endSwipe = (x: number) => {
       if (this.swipeX === null || this.parentPanel) return;
@@ -188,7 +188,7 @@ export class WorldScene extends Scene {
     this.game.markReady();
   }
 
-  /** Koniec czasu zabawy: noc nad krainą, przewodnicy zasypiają, dotyk zablokowany (poza zębatką rodzica). */
+  /** End of play time: night over the realm, the guides fall asleep, touch blocked (except the parent's gear). */
   private goodnight(): void {
     const { width: w, height: h } = this.game.view;
     const o = new Container();
@@ -207,7 +207,7 @@ export class WorldScene extends Scene {
     const text = label(tr('goodNight'), 72, this.game.pixelRatio, '#fff3b0', '#1d1a4a');
     text.position.set(w / 2, h * 0.52);
     o.addChild(text);
-    // Zzz nad przewodnikami.
+    // Zzz over the guides.
     for (const guide of [this.lusia, this.bazyl]) {
       guide.tint = 0x9a94c8;
       const box = guide.parent!;
@@ -226,12 +226,12 @@ export class WorldScene extends Scene {
     stopMusic(this.game);
   }
 
-  /** Playtest: ekran dobranoc (`eval:__ff.game.scenes.current.night()`). */
+  /** Playtest: good night screen (`eval:__ff.game.scenes.current.night()`). */
   night(): void {
     this.goodnight();
   }
 
-  /** Rodzic przedłuża zabawę (zębatka). */
+  /** The parent extends play time (gear). */
   private wake(): void {
     extend();
     this.sleep?.destroy({ children: true });
@@ -271,11 +271,11 @@ export class WorldScene extends Scene {
     return album;
   }
 
-  /** Zmiana krainy: strony przesuwają się, tła przenikają, przewodnik krainy wita. */
+  /** Realm change: pages slide, backgrounds crossfade, the realm's guide says hello. */
   goRealm(i: number): void {
     if (i < 0 || i >= REALMS.length || i === this.realm || this.leaving) return;
     this.realm = i;
-    // Rączka wskazuje domek na Polanie: poza nią znika, po powrocie wraca.
+    // The hand points at a house on the Meadow: it disappears outside it and comes back on return.
     this.hand.stop();
     if (i === 0) this.timers.after(0.6, () => this.pointFirst());
     state.progress.realm = i;
@@ -285,7 +285,7 @@ export class WorldScene extends Scene {
     sfx.pop(this.game.sound, 1 + i * 0.1);
     this.tweens.killOf(this.pages);
     this.tweens.to(this.pages, { x: -i * this.game.view.width }, { duration: 0.45, ease: 'cubicInOut' });
-    // Tło: nowe na wierzchu rozjaśnia się, potem staje się dolnym.
+    // Background: the new one on top fades in, then becomes the bottom one.
     const [back, front] = this.bgs as [Sprite, Sprite];
     front.texture = this.art.realmBg[realm.id];
     cover(front, this.game.view.width, this.game.view.height);
@@ -319,7 +319,7 @@ export class WorldScene extends Scene {
     });
   }
 
-  /** Znak na domku: co tam za zabawa (dziecko nie czyta, więc obrazkiem). */
+  /** Sign on a house: what activity is there (the child can't read, so it's a picture). */
   private emblem(kind: Activity, catShadow: Texture): Container {
     const c = new Container();
     c.addChild(new Graphics().circle(0, 0, 50).fill({ color: COLORS.card }).stroke({ color: COLORS.ink, width: 6 }));
@@ -340,7 +340,7 @@ export class WorldScene extends Scene {
       c.addChild(g);
     } else if (kind === 'mothers') c.addChild(hearts());
     else if (kind === 'sorting') {
-      // Dwie skrzyneczki ze strzałką w dół.
+      // Two little crates with a down arrow.
       const g = new Graphics();
       for (const [x, color] of [
         [-18, 0xe8413c],
@@ -351,7 +351,7 @@ export class WorldScene extends Scene {
       c.addChild(g);
     } else if (kind === 'jigsaw') c.addChild(puzzlePiece());
     else if (kind === 'emotions') {
-      // Uśmiechnięta buźka.
+      // Smiling face.
       const g = new Graphics().circle(0, 0, 30).fill({ color: COLORS.sun }).stroke({ color: COLORS.ink, width: 3 }).circle(-10, -6, 4).fill({ color: COLORS.ink }).circle(10, -6, 4).fill({ color: COLORS.ink }).arc(0, 2, 14, 0.2, Math.PI - 0.2).stroke({ color: COLORS.ink, width: 4, cap: 'round' });
       c.addChild(g);
     } else if (kind === 'letters') c.addChild(label('A', 52, pr, '#9b5de5'));
@@ -367,28 +367,28 @@ export class WorldScene extends Scene {
     } else if (kind === 'digits') c.addChild(label('3', 52, pr, '#5cb3ff'));
     else if (kind === 'syllables') c.addChild(label('MA', 40, pr, '#ff8fb1'));
     else if (kind === 'stories') {
-      // Trzy kadry obok siebie.
+      // Three frames side by side.
       const g = new Graphics();
       [0, 1, 2].forEach((i) => g.roundRect(-30 + i * 21, -13, 18, 26, 4).fill({ color: [0xa8e6a1, 0xffd166, 0xff8fb1][i]! }).stroke({ color: COLORS.ink, width: 3 }));
       c.addChild(g);
     }
     else if (kind === 'coloring') {
-      // Paleta z kleksami farb.
+      // Palette with paint blobs.
       const g = new Graphics().ellipse(0, 4, 32, 24).fill({ color: 0xf3d9a8 }).stroke({ color: COLORS.ink, width: 3 });
       [0xe8413c, 0xffd23f, 0x3d8bff, 0x7ad35a].forEach((color, i) => g.circle(-16 + (i % 2) * 22 + (i > 1 ? 6 : 0), -6 + Math.floor(i / 2) * 16, 7).fill({ color }));
       c.addChild(g);
     } else if (kind === 'melody') {
-      // Trzy sztabki cymbałków.
+      // Three xylophone bars.
       const g = new Graphics();
       [0xe8413c, 0xffd23f, 0x3d8bff].forEach((color, i) => g.roundRect(-26 + i * 18, -22 + i * 6, 14, 44 - i * 12, 5).fill({ color }).stroke({ color: COLORS.ink, width: 3 }));
       c.addChild(g);
     } else if (kind === 'stickers') {
-      // Naklejka-gwiazdka z zagiętym rogiem.
+      // Star sticker with a curled corner.
       const g = new Graphics().star(0, 2, 5, 30, 15).fill({ color: COLORS.sun }).stroke({ color: COLORS.ink, width: 3, join: 'round' }).circle(0, 2, 8).fill({ color: 0xff7a8a });
       c.addChild(g);
     }
     else if (kind === 'patterns') {
-      // Koraliki we wzorze i znak zapytania.
+      // Beads in a pattern and a question mark.
       const g = new Graphics();
       [0xff7a8a, 0x5cb3ff, 0xff7a8a, 0x5cb3ff].forEach((color, i) => g.circle(-27 + i * 15, 0, 7).fill({ color }).stroke({ color: COLORS.ink, width: 2 }));
       c.addChild(g);
@@ -396,7 +396,7 @@ export class WorldScene extends Scene {
       q.x = 33;
       c.addChild(q);
     } else if (kind === 'memory') {
-      // Dwie karty: rewers i odkryta.
+      // Two cards: back and face up.
       const g = new Graphics()
         .roundRect(-30, -22, 30, 40, 6)
         .fill({ color: 0x9b7be0 })
@@ -410,7 +410,7 @@ export class WorldScene extends Scene {
         .fill({ color: 0xff7a8a });
       c.addChild(g);
     } else if (kind === 'dots') {
-      // Trzy kropki połączone linią.
+      // Three dots joined by a line.
       const g = new Graphics().moveTo(-24, 14).lineTo(0, -20).lineTo(24, 14).stroke({ color: 0xff7a8a, width: 5, cap: 'round', join: 'round' });
       for (const [x, y] of [
         [-24, 14],
@@ -420,7 +420,7 @@ export class WorldScene extends Scene {
         g.circle(x, y, 9).fill({ color: 0xffffff }).stroke({ color: COLORS.ink, width: 3 });
       c.addChild(g);
     } else if (kind === 'maze') {
-      // Mały labirynt: zakręcona ścieżka.
+      // Small maze: a winding path.
       const g = new Graphics()
         .roundRect(-28, -28, 56, 56, 8)
         .stroke({ color: 0x4fa65a, width: 6 })
@@ -434,7 +434,7 @@ export class WorldScene extends Scene {
     return c;
   }
 
-  /** Playtest: wejście do zabawy (`eval:__ff.game.scenes.current.play('sorting', 2)`; poziom opcjonalny). */
+  /** Playtest: enter an activity (`eval:__ff.game.scenes.current.play('sorting', 2)`; level optional). */
   play(kind: Activity, level?: number): void {
     if (level !== undefined) state.progress.levels[kind] = level;
     const i = REALMS.findIndex((r) => r.rows.some((row) => row.includes(kind)));
@@ -446,8 +446,8 @@ export class WorldScene extends Scene {
   }
 
   /**
-   * Krainy po próbie bez pełnej wersji „śpią”: przyciemnione kafelki z księżycem i „Zzz”.
-   * Wołane też po zakupie w strefie rodzica (kafelki się budzą).
+   * After the trial, without the full version, realms "sleep": dimmed tiles with a moon and "Zzz".
+   * Also called after a purchase in the parent zone (the tiles wake up).
    */
   applyLocks(): void {
     const NIGHT_TINT = 0x8a86b8;
@@ -457,7 +457,7 @@ export class WorldScene extends Scene {
         const house = this.houses.get(kind);
         if (!house) continue;
         const night = house.getChildByLabel('night');
-        // Przyciemnienie przez tint całego kafelka (z kółkiem w rogu, które wystaje poza płytkę).
+        // Dimming via a tint of the whole tile (with the circle in the corner that sticks out of the plate).
         for (const ch of house.children) if (ch.label !== 'night') ch.tint = open ? 0xffffff : NIGHT_TINT;
         if (open) {
           night?.destroy({ children: true });
@@ -481,7 +481,7 @@ export class WorldScene extends Scene {
     }
   }
 
-  /** Śpiąca kraina: kafelek się kołysze, Lusia mówi, żeby poprosić rodzica (zakup jest za bramką). */
+  /** Sleeping realm: the tile sways, Lusia says to ask a parent (the purchase is behind the gate). */
   private sleepingTap(house: Container): void {
     haptics.tap();
     sfx.pop(this.game.sound, 0.6);
@@ -490,7 +490,7 @@ export class WorldScene extends Scene {
     say(this.game, 'lusia', 'realm-asleep');
   }
 
-  /** Pierwsze uruchomienie: rączka stuka w domek pierwszej zagadki (łatwej, dobranej do wieku). */
+  /** First launch: the hand taps the first puzzle's house (an easy one, matched to the age). */
   private pointFirst(): void {
     if (this.leaving || this.sleep || this.realm !== 0 || !needsHand(state.progress, 'world')) return;
     const pick = (state.progress.age ?? 4) <= 4 ? 'colors' : 'shadows';
@@ -500,7 +500,7 @@ export class WorldScene extends Scene {
     this.addChild(this.hand);
   }
 
-  /** Bazyl pokazuje zakładki krain (podskakują): raz, po pierwszej rundzie. Gracze sprzed powitania to już słyszeli. */
+  /** Bazyl shows the realm tabs (they bounce): once, after the first round. Players from before the welcome have already heard it. */
   private introRealms(): void {
     const p = state.progress;
     if (this.leaving || this.sleep || !p.onboarded || p.rounds === 0 || !needsHand(p, 'realms')) return;
@@ -526,8 +526,8 @@ export class WorldScene extends Scene {
     this.timers.after(0.35, () => void this.game.scenes.go(scene, { fade: 0.3, color: 0xfff6e8 }));
   }
 
-  /** Playtest: przykładowy dziennik z tygodnia i strefa rodzica na zakładce `tab`. */
-  demoParent(tab = 'progress', name = 'Zosia'): void {
+  /** Playtest: a sample week of journal and the parent zone on tab `tab`. */
+  demoParent(tab = 'progress', name = tr('demoChildName')): void {
     const j = journal();
     const t = today();
     const rng = this.game.rng;
@@ -547,8 +547,8 @@ export class WorldScene extends Scene {
   }
 
   /**
-   * Playtest statystyk: 10 tygodni zabawy (rosnąca samodzielność, wyższe poziomy, szybsze odpowiedzi) i strefa
-   * rodzica na liście „Przed szkołą” albo od razu w szczegółach umiejętności (`eval:…demoStats('colors')`).
+   * Stats playtest: 10 weeks of play (growing independence, higher levels, faster answers) and the parent
+   * zone on the "Before school" list or straight in a skill's details (`eval:…demoStats('colors')`).
    */
   demoStats(skill = ''): void {
     const j = journal();
@@ -564,7 +564,7 @@ export class WorldScene extends Scene {
       addTime(j, day, 400 + rng.int(0, 900));
       for (const a of acts) {
         if (rng.next() < 0.35) continue;
-        // Poziom rośnie co ~3 tygodnie; po wejściu wyżej samodzielność na chwilę spada.
+        // Level rises every ~3 weeks; after moving up, independence drops for a while.
         const level = k < 0.33 ? 0 : k < 0.66 ? 1 : 2;
         const p = 0.45 + 0.4 * ((k * 3) % 1) * 0.6 + 0.25 * k;
         for (let i = rng.int(3, 7); i > 0; i--) {
@@ -574,14 +574,14 @@ export class WorldScene extends Scene {
           if (g && ok) addTempo(j, day, g, 1, 3.3 - 1.8 * k + rng.next() * 0.8);
         }
       }
-      // Opanowywanie elementów w czasie (różne daty odkryć).
+      // Mastering elements over time (different discovery dates).
       for (const [g, items] of [['number', ['1', '2', '3', '4', '5', '6', '7']], ['color', ['red', 'green', 'blue', 'yellow', 'orange', 'pink', 'purple']], ['shape', ['circle', 'square', 'triangle', 'star', 'heart']], ['emotion', ['happy', 'sad', 'angry', 'surprised']], ['phoneme', ['a', 'm', 'o', 't', 'p']], ['letter', ['A', 'M', 'O']], ['digit', ['1', '2', '3']]] as const) {
         const n = Math.floor(items.length * Math.min(1, k * 1.2));
         const id = items[rng.int(0, Math.max(0, n - 1))];
         if (n > 0 && id) noteFact(j, day, `${g}:${id}`, rng.next() < 0.85);
       }
     }
-    state.progress.childName = 'Zosia';
+    state.progress.childName = tr('demoChildName');
     this.openParent();
     const panel = this.parentPanel as unknown as { setTab(t: string): void; skill: string | null; scroll: number; render(): void };
     panel.setTab('progress');
@@ -594,11 +594,11 @@ export class WorldScene extends Scene {
 
   private toast: Text | null = null;
 
-  /** Bramka zablokowana po złej odpowiedzi: dorosły widzi, za ile może spróbować znowu. */
+  /** Gate locked after a wrong answer: the adult sees how long until they can try again. */
   private gateToast(seconds: number): void {
     haptics.hit();
     this.toast?.destroy();
-    // Sama liczba sekund (bez zdania): mieści się w każdym języku obok zębatki z odliczającym pierścieniem.
+    // Just the number of seconds (no sentence): fits next to the gear with the countdown ring in any language.
     const t = label(`${seconds} s`, 30, this.game.pixelRatio, '#ffffff');
     t.anchor.set(0, 0.5);
     t.position.set(this.gate.x + 66, this.gate.y);
@@ -615,7 +615,7 @@ export class WorldScene extends Scene {
 
   private adultCheck: AdultCheck | null = null;
 
-  /** Pytanie dla dorosłego przed strefą rodzica (i przed wybudzeniem po limicie czasu). */
+  /** Question for an adult before the parent zone (and before waking up after the time limit). */
   private askAdult(then: () => void): void {
     if (this.adultCheck) return;
     if (performance.now() < ParentGate.lockedUntil) return void haptics.hit();
@@ -666,7 +666,7 @@ export class WorldScene extends Scene {
 
   override resize(view: View): void {
     const { width: w, height: h, safe } = view;
-    // Po obrocie domki są gdzie indziej: rączka wskazuje od nowa.
+    // After a rotation the houses are elsewhere: the hand points again.
     if (this.hand?.active) this.timers.after(0.05, () => this.pointFirst());
     for (const bg of this.bgs) cover(bg, w, h);
     const n = this.tabs.length;
@@ -674,11 +674,11 @@ export class WorldScene extends Scene {
     this.title.position.set(w / 2, safe.top + 145);
     const left = safe.left + 150;
     const right = w - safe.right - 150;
-    // Strony krain obok siebie; domki między przewodnikami.
+    // Realm pages side by side; houses between the guides.
     this.pages.x = -this.realm * w;
-    // Siatka kafelków między przewodnikami, pod nazwą krainy; równe odstępy, nic na siebie nie nachodzi.
-    // Na węższych ekranach (iPad 4:3) kafelki między przewodnikami byłyby za małe: wtedy zajmują całą
-    // szerokość, a Lusia i Bazyl są mniejsi i stoją w dolnych rogach za kafelkami.
+    // Tile grid between the guides, below the realm name; even gaps, nothing overlaps.
+    // On narrower screens (iPad 4:3) tiles between the guides would be too small: then they take the whole
+    // width, and Lusia and Bazyl are smaller and stand in the bottom corners behind the tiles.
     const top = safe.top + 190;
     const bottom = h - safe.bottom - 24;
     const gap = 26;
@@ -690,7 +690,7 @@ export class WorldScene extends Scene {
     for (const box of this.guideBoxes) box.scale.set(narrow ? 0.62 : 1);
     lusiaBox.position.set(narrow ? safe.left + 70 : left, h - 10);
     bazylBox.position.set(narrow ? w - safe.right - 70 : right, h - 10);
-    // Na wąskim ekranie za kafelkami, na szerokim tuż nad nimi (jak dotąd).
+    // On a narrow screen behind the tiles, on a wide one just above them (as before).
     for (const box of this.guideBoxes) {
       this.removeChild(box);
       this.addChildAt(box, this.getChildIndex(this.pages) + (narrow ? 0 : 1));
@@ -714,7 +714,7 @@ export class WorldScene extends Scene {
   }
 }
 
-/** Mamy i dzieci: dwa serduszka, duże i małe. */
+/** Mothers and children: two hearts, big and small. */
 function hearts(): Container {
   const c = new Container();
   const draw = (g: Graphics, s: number) =>
@@ -732,7 +732,7 @@ function hearts(): Container {
   return c;
 }
 
-/** Kawałek puzzla (znak układanki). */
+/** Jigsaw piece (the jigsaw sign). */
 function puzzlePiece(): Graphics {
   const g = new Graphics();
   const s = 22;
@@ -750,7 +750,7 @@ function puzzlePiece(): Graphics {
   return g;
 }
 
-/** Rogalik księżyca: koło o promieniu `r` bez koła (cx, cy, ir). */
+/** Crescent moon: a circle of radius `r` minus the circle (cx, cy, ir). */
 function crescent(r: number, cx: number, cy: number, ir: number): number[] {
   const pts: number[] = [];
   const n = 90;
@@ -760,7 +760,7 @@ function crescent(r: number, cx: number, cy: number, ir: number): number[] {
     const y = Math.sin(a) * r;
     if (Math.hypot(x - cx, y - cy) >= ir) pts.push(x, y);
   }
-  // Brzeg wewnętrzny (łuk wycinający) w odwrotnej kolejności.
+  // Inner edge (the cutting arc) in reverse order.
   const inner: number[] = [];
   for (let i = 0; i <= n; i++) {
     const a = (i / n) * Math.PI * 2;
@@ -768,7 +768,7 @@ function crescent(r: number, cx: number, cy: number, ir: number): number[] {
     const y = cy + Math.sin(a) * ir;
     if (Math.hypot(x, y) <= r) inner.push(x, y);
   }
-  // Punkty zewnętrzne mogą być rozcięte w miejscu kąta 0: obróć tak, żeby zaczynały się za wycięciem.
+  // Outer points may be split at angle 0: rotate them so they start after the cutout.
   const outer: [number, number][] = [];
   for (let i = 0; i < pts.length; i += 2) outer.push([pts[i]!, pts[i + 1]!]);
   let cut = 0;

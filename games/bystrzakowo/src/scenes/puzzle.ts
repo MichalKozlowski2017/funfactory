@@ -9,7 +9,7 @@ import { Card, COLORS, label, sfx } from '../ui.ts';
 import { RoundScene } from './round.ts';
 import type { Gesture } from '../hand.ts';
 
-/** Kto prowadzi który domek. */
+/** Who hosts which house. */
 export const GUIDE: Record<PuzzleKind, Guide> = { shadows: 'lusia', matching: 'bazyl', counting: 'lusia', colors: 'bazyl', phonemes: 'lusia', mothers: 'bazyl' };
 
 export const PAINT: Record<Color, number> = {
@@ -24,15 +24,15 @@ export const PAINT: Record<Color, number> = {
   white: 0xffffff,
 };
 
-/** Runda zagadek jednego domku Polany: 5 pytań z wyborem odpowiedzi. */
+/** A riddle round of one Meadow house: 5 multiple-choice questions. */
 export class PuzzleScene extends RoundScene {
   readonly id = 'puzzle';
   private readonly puzzle: PuzzleKind;
   private questions: Question[] = [];
   private cards: Card[] = [];
-  /** Duża karta u góry: cień, młode zwierzę, plama farby albo litera. */
+  /** Large card at the top: shadow, baby animal, paint blob or letter. */
   private hero: Card | null = null;
-  /** Obiekty do policzenia i ich znaczniki. */
+  /** Objects to count and their badges. */
   private counters: { sprite: Sprite; badge: Container | null }[] = [];
   private counted = 0;
 
@@ -112,14 +112,14 @@ export class PuzzleScene extends RoundScene {
         }
         break;
       case 'matching':
-        // Podpowiedź bez słów, o co chodzi: dwa takie same kółka i jeden inny trójkąt.
+        // A wordless hint of the task: two identical circles and one different triangle.
         this.hero = this.heroCard(Texture.EMPTY);
         this.hero.picture.visible = false;
         this.hero.face.addChild(oddIcon());
         break;
     }
     this.cards = q.kind === 'counting' ? q.options.map((n) => this.numberCard(n)) : q.options.map((item) => this.itemCard(item));
-    // Polecenie lektora. Przy liczeniu za pierwszym razem także podpowiedź „dotykaj i licz”.
+    // Narrator instruction. When counting, the first time also the "touch and count" hint.
     this.timers.after(0.3, () => {
       const len = say(this.game, this.guide, promptLine(q));
       this.markAsked(len);
@@ -127,7 +127,7 @@ export class PuzzleScene extends RoundScene {
     });
   }
 
-  /** Wejście: pyknięcia po kolei (po ułożeniu, żeby animacja kończyła się na właściwej skali). */
+  /** Entrance: pops one after another (after layout, so the animation ends at the correct scale). */
   protected override appear(): void {
     const all: Container[] = [...(this.hero ? [this.hero] : []), ...this.counters.map((c) => c.sprite), ...this.cards];
     all.forEach((c, i) => {
@@ -159,7 +159,7 @@ export class PuzzleScene extends RoundScene {
     return card;
   }
 
-  /** Dotknięcie obiektu przy liczeniu: numerek i lektor liczy na głos. */
+  /** Tapping an object while counting: a number badge and the narrator counts aloud. */
   private countTap(entry: { sprite: Sprite; badge: Container | null }): void {
     if (entry.badge || this.busy) return;
     this.counted++;
@@ -190,7 +190,7 @@ export class PuzzleScene extends RoundScene {
         this.hero.markGood();
         void pulse(this.tweens, this.hero, 0.12, 0.3);
       }
-      // Lektor: nazwa (albo liczba), potem pochwała.
+      // Narrator: the name (or number), then praise.
       const first = typeof value === 'number' ? say(this.game, 'lusia', `number-${value}`) : say(this.game, this.guide, `item-${value.id}`);
       this.solved(first);
     } else {
@@ -202,14 +202,14 @@ export class PuzzleScene extends RoundScene {
     }
   }
 
-  /** Playtest: poprawna odpowiedź na bieżące pytanie (`eval:__ff.game.scenes.current.solve()`). */
+  /** Playtest: correct answer to the current question (`eval:__ff.game.scenes.current.solve()`). */
   solve(): void {
     const answer = answerOf(this.q);
     const i = (this.q.options as (Item | number)[]).indexOf(answer);
     if (this.cards[i]) this.answer(this.cards[i], answer);
   }
 
-  /** W zagadce z cieniami cień zamienia się w kolorowy obrazek. */
+  /** In the shadows riddle the shadow turns into a color picture. */
   private revealShadow(item: Item): void {
     const hero = this.hero;
     if (!hero) return;
@@ -222,7 +222,7 @@ export class PuzzleScene extends RoundScene {
     void pulse(this.tweens, hero, 0.12, 0.3);
   }
 
-  /** Dobra karta delikatnie się kołysze. */
+  /** Answer-time group for the parent stats (colors, counting and phonemes only). */
   protected override tempoGroup(): string | null {
     return ({ colors: 'color', counting: 'number', phonemes: 'phoneme' } as Record<string, string>)[this.puzzle] ?? null;
   }
@@ -232,6 +232,7 @@ export class PuzzleScene extends RoundScene {
     return card ? { kind: 'tap', at: [this.spot(card)] } : null;
   }
 
+  /** The correct card gently wobbles. */
   protected hint(): void {
     const i = (this.q.options as (Item | number)[]).indexOf(answerOf(this.q));
     const card = this.cards[i];
@@ -284,19 +285,19 @@ export class PuzzleScene extends RoundScene {
   }
 }
 
-/** „Co nie pasuje”: dwa niebieskie kółka i pomarańczowy trójkąt. */
+/** "Odd one out": two blue circles and an orange triangle. */
 function oddIcon(): Graphics {
   const g = new Graphics();
   const ink = { color: COLORS.ink, width: 6, join: 'round' as const };
   for (const x of [-80, 0]) g.circle(x, 6, 34).fill({ color: 0x5cb3ff }).stroke(ink);
   g.poly([88, -34, 128, 40, 48, 40]).fill({ color: 0xff9f5a }).stroke(ink);
-  // Karta ma tu 170 jednostek (rysunek jest w skali karty 280).
+  // The card is 170 units here (the drawing is scaled for a 280 card).
   g.scale.set(0.56);
   g.pivot.set(7, 3);
   return g;
 }
 
-/** Plama farby (zagadka z kolorami): gładka, lekko falista kropla z odblaskiem. */
+/** Paint blob (colors riddle): a smooth, slightly wavy drop with a highlight. */
 function paintBlob(color: number): Graphics {
   const g = new Graphics();
   const pts: number[] = [];

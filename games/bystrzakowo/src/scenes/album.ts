@@ -12,7 +12,7 @@ const ROWS = 3;
 const PER_PAGE = COLS * ROWS;
 let albumIntroduced = false;
 
-/** Album naklejek: zdobyte obrazki w kolorze, brakujące jako cienie. Strony przewijane strzałkami albo gestem. */
+/** Sticker album: collected pictures in color, missing ones as shadows. Pages turned with arrows or a swipe. */
 export class AlbumScene extends Scene {
   readonly id = 'album';
   private art!: Art;
@@ -32,7 +32,7 @@ export class AlbumScene extends Scene {
 
   override async enter(): Promise<void> {
     this.art = await loadArt();
-    // Nazwy zebranych naklejek (dotknięcie naklejki): wczytane w tle, zwalniane przy wyjściu.
+    // Names of collected stickers (on sticker tap): loaded in the background, released on exit.
     this.voices = itemVoices(state.progress.stickers);
     void this.game.sound.load(this.voices);
     const pr = this.game.pixelRatio;
@@ -48,7 +48,7 @@ export class AlbumScene extends Scene {
     this.next = new IconButton('next', 46);
     this.next.onTap = () => this.turn(1);
     this.addChild(this.bg, this.paper, this.grid, this.title, this.counter, this.home, this.prev, this.next);
-    // Gest: przeciągnięcie w bok przewraca stronę.
+    // Gesture: a sideways drag turns the page.
     this.eventMode = 'static';
     this.on('pointerdown', (e) => (this.dragX = e.global.x));
     this.on('pointerup', (e) => {

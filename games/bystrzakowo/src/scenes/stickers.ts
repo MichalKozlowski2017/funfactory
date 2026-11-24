@@ -8,7 +8,7 @@ import { loadLandscapes, pictureView, STICKER, TRAY_H } from '../picture.ts';
 import { saveState, state } from '../state.ts';
 import { COLORS, cover, IconButton, sfx } from '../ui.ts';
 
-/** Naklejki zawsze dostępne na start (zanim dziecko coś zbierze). */
+/** Stickers always available from the start (before the child collects any). */
 const STARTERS = ['sun', 'cloud', 'tree', 'little-flower', 'cat', 'dog'];
 const PER_PAGE = 7;
 
@@ -21,10 +21,10 @@ interface Placed {
 let introduced = false;
 
 /**
- * Naklejanka (Pracownia Malucha): swobodna zabawa bez zadań. Na dole pasek z zebranymi naklejkami;
- * przeciągnięcie naklejki na obrazek zostawia ją tam, dotknięcie odwraca, upuszczenie do kosza albo
- * na pasek usuwa. Naklejki wyżej są mniejsze (dalej), niżej większe i z przodu.
- * Na górze: wybór krajobrazu, galeria obrazków i nowy obrazek. Wszystko zapisuje się samo.
+ * Sticker scene (Toddler's Studio): free play without tasks. At the bottom a tray with collected stickers;
+ * dragging a sticker onto the picture leaves it there, a tap flips it, dropping it into the trash or
+ * onto the tray removes it. Stickers higher up are smaller (farther), lower ones are bigger and in front.
+ * At the top: landscape picker, picture gallery and new picture. Everything saves automatically.
  */
 export class StickerScene extends Scene {
   readonly id = 'stickers';
@@ -82,7 +82,7 @@ export class StickerScene extends Scene {
     this.on('globalpointermove', (e) => this.move(e));
     this.on('pointerup', (e) => this.up(e));
     this.on('pointerupoutside', (e) => this.up(e));
-    // iOS anuluje dotyk (drugi palec, gest systemowy, dłoń na ekranie) bez „puszczenia”: kończymy przeciąganie.
+    // iOS cancels a touch (second finger, system gesture, palm on the screen) without a "release": end the drag.
     this.on('pointercancel', () => this.endDrag());
     const cancel = () => this.endDrag();
     window.addEventListener('pointercancel', cancel);
@@ -104,14 +104,14 @@ export class StickerScene extends Scene {
     }
   }
 
-  // ——— Obrazki ———
+  // ——— Pictures ———
 
   private get picture(): Picture {
     const g = gallery(state.progress);
     return g.pictures[g.current]!;
   }
 
-  /** Wczytuje obrazek z galerii (tło i naklejki). */
+  /** Loads a picture from the gallery (background and stickers). */
   private load(index: number, animate = true): void {
     state.progress.picture = index;
     for (const p of this.placed) p.view.destroy();
@@ -129,7 +129,7 @@ export class StickerScene extends Scene {
     const old = this.landscapes.get(this.bg) ?? this.art.realmBg.meadow;
     this.bg = l;
     const [under, over] = this.bgs as [Sprite, Sprite];
-    // Przenikanie: stare tło pod spodem, nowe na wierzchu rozjaśnia się.
+    // Crossfade: the old background underneath, the new one on top fades in.
     under.texture = animate ? old : this.landscapes.get(l)!;
     over.texture = this.landscapes.get(l)!;
     this.tweens.killOf(over);
@@ -142,7 +142,7 @@ export class StickerScene extends Scene {
     this.save();
     const i = addPicture(state.progress, this.bg);
     if (i === null) {
-      // Pełna galeria: pokazujemy ją, żeby coś usunąć.
+      // Full gallery: show it so something can be removed.
       sfx.pop(this.game.sound, 0.7);
       this.openGallery();
       return;
@@ -162,7 +162,7 @@ export class StickerScene extends Scene {
     void saveState();
   }
 
-  // ——— Naklejki ———
+  // ——— Stickers ———
 
   private buildTray(): void {
     this.trayItems.removeChildren().forEach((c) => c.destroy());
@@ -174,7 +174,7 @@ export class StickerScene extends Scene {
       s.eventMode = 'static';
       s.cursor = 'grab';
       s.label = id;
-      // Złapanie naklejki z paska: na obrazku pojawia się jej kopia i idzie za palcem.
+      // Grabbing a sticker from the tray: a copy appears on the picture and follows the finger.
       s.on('pointerdown', (e) => this.grabFromTray(id, e));
       this.trayItems.addChild(s);
       void popIn(this.tweens, s, 0.25, i * 0.03);
@@ -190,12 +190,12 @@ export class StickerScene extends Scene {
     this.buildTray();
   }
 
-  /** Skala naklejki zależna od wysokości (perspektywa) i kierunku. */
+  /** Sticker scale depending on height (perspective) and direction. */
   private fit(p: Placed): void {
     const v = p.view;
     const area = this.game.view.height - TRAY_H;
     const k = (STICKER * stickerScale(p.id, v.y / area)) / Math.max(v.texture.width, v.texture.height);
-    // Skala spoczynkowa dla animacji (squash/popIn wracają do niej, a nie do pierwszego rozmiaru).
+    // Rest scale for animations (squash/popIn return to it, not to the initial size).
     this.tweens.killOf(v.scale);
     setRestScale(v, p.flip ? -k : k, k);
     v.zIndex = v.y;
@@ -215,7 +215,7 @@ export class StickerScene extends Scene {
   }
 
   private grabFromTray(id: string, e: FederatedPointerEvent): void {
-    // Poprzednie przeciąganie bez „puszczenia” (zgubione zdarzenie) nie może zablokować sceny.
+    // A previous drag without a "release" (lost event) must not block the scene.
     if (this.drag) this.endDrag();
     const at = this.toLocal(e.global);
     const p = this.place(id, at.x, at.y);
@@ -229,7 +229,7 @@ export class StickerScene extends Scene {
   private grab(p: Placed, e: FederatedPointerEvent): void {
     if (this.drag) this.endDrag();
     const at = this.toLocal(e.global);
-    p.view.zIndex = 1e6; // na wierzch w trakcie przeciągania
+    p.view.zIndex = 1e6; // on top while dragging
     this.drag = { p, dx: p.view.x - at.x, dy: p.view.y - at.y, id: e.pointerId, moved: false, x0: at.x, y0: at.y };
     haptics.tap();
   }
@@ -246,7 +246,7 @@ export class StickerScene extends Scene {
     v.position.set(at.x + d.dx, at.y + d.dy);
     this.fit(d.p);
     v.zIndex = 1e6;
-    // Mały zasięg kosza: naklejka położona przy prawej krawędzi obrazka nie może przypadkiem trafić do kosza.
+    // Small trash radius: a sticker placed near the right edge of the picture must not land in the trash by accident.
     const over = this.trash.visible && Math.hypot(v.x - this.trash.x, v.y - this.trash.y) < 70;
     if (over !== this.overTrash) {
       this.overTrash = over;
@@ -260,7 +260,7 @@ export class StickerScene extends Scene {
     if (this.drag && e.pointerId === this.drag.id) this.endDrag();
   }
 
-  /** Koniec przeciągania (puszczenie palca albo anulowanie dotyku). */
+  /** End of drag (finger released or touch cancelled). */
   private endDrag(): void {
     const d = this.drag;
     if (!d) return;
@@ -268,13 +268,13 @@ export class StickerScene extends Scene {
     const p = d.p;
     const v = p.view;
     if (!d.moved) {
-      // Dotknięcie: naklejka odwraca się w drugą stronę.
+      // Tap: the sticker flips to face the other way.
       p.flip = !p.flip;
       this.fit(p);
       void squash(this.tweens, v, 0.15);
       sfx.pop(this.game.sound, 1.3);
     } else if (this.overTrash || v.y > this.tray.y - 20) {
-      // Do kosza albo z powrotem na pasek: znika z pufnięciem.
+      // Into the trash or back onto the tray: disappears with a puff.
       this.placed = this.placed.filter((x) => x !== p);
       sfx.pop(this.game.sound, 0.6);
       haptics.hit();
@@ -308,9 +308,9 @@ export class StickerScene extends Scene {
       });
   }
 
-  // ——— Nakładki: krajobrazy i galeria ———
+  // ——— Overlays: landscapes and gallery ———
 
-  /** Przyciemnienie z panelem; dotknięcie obok panelu zamyka. */
+  /** Dimmed backdrop with a panel; tapping outside the panel closes it. */
   private openOverlay(build: (panel: Container, w: number, h: number) => void): void {
     this.closeOverlay();
     const { width: w, height: h } = this.game.view;
@@ -368,7 +368,7 @@ export class StickerScene extends Scene {
       const rows = Math.ceil(n / cols);
       const gap = 24;
       const cw = Math.min(340, (w - 200 - gap * (cols - 1)) / cols);
-      // Karta w proporcjach ekranu: miniatura pokazuje cały obrazek (przy 0.6 naklejki przy brzegach były ucięte).
+      // Card in screen proportions: the thumbnail shows the whole picture (at 0.6 stickers near the edges were cut off).
       const ch = (cw * h) / w;
       panel.scale.set(Math.min(1, (h - 80) / (rows * (ch + gap))));
       panel.position.set(w / 2, h / 2);
@@ -387,8 +387,8 @@ export class StickerScene extends Scene {
           this.load(i);
           void saveState();
         });
-        // Kosz: pierwsze dotknięcie uzbraja (kosz czerwienieje i przeskakuje w przeciwny róg karty, karta się trzęsie),
-        // usuwa dopiero stuknięcie w kosz w nowym miejscu. Seria szybkich stuknięć w jedno miejsce nie kasuje pracy.
+        // Trash: the first tap arms it (the trash turns red and jumps to the opposite corner of the card, the card shakes);
+        // only a tap on the trash in its new spot deletes. A series of quick taps in one spot does not delete the work.
         const del = new IconButton('trash', 30, 0xfffaf2);
         const rest = { x: cw / 2 - 12, y: -ch / 2 + 12 };
         del.position.set(rest.x, rest.y);
@@ -444,7 +444,7 @@ export class StickerScene extends Scene {
     });
   }
 
-  /** Miniatura obrazka: tło przycięte do karty i naklejki w tych samych proporcjach. */
+  /** Picture thumbnail: background cropped to the card and stickers in the same proportions. */
   private thumb(pic: Picture, cw: number, ch: number, current: boolean): Container {
     const card = new Container();
     const { width: w, height: h } = this.game.view;
@@ -468,7 +468,7 @@ export class StickerScene extends Scene {
     return card;
   }
 
-  // ——— Reszta ———
+  // ——— Rest ———
 
   private dispose: (() => void) | null = null;
 
@@ -494,7 +494,7 @@ export class StickerScene extends Scene {
     this.next.position.set(w - safe.right - 50, TRAY_H / 2);
   }
 
-  /** Playtest: naklejki w kilku miejscach obrazka. */
+  /** Playtest: stickers at a few spots of the picture. */
   demo(): void {
     const { width: w, height: h } = this.game.view;
     this.owned.slice(0, 6).forEach((id, i) => this.place(id, w * (0.2 + i * 0.12), h * (0.3 + (i % 3) * 0.18)));

@@ -1,11 +1,11 @@
 /**
- * Zapis do dziennika postępów (strefa rodzica) z poziomu scen. Logika dziennika: sim/journal.ts.
+ * Writing to the progress journal (parent zone) from scenes. Journal logic: sim/journal.ts.
  */
 import { addTask, addTempo, addTime, dayKey, newJournal, noteFact, prune, type Journal } from './sim/journal.ts';
 import type { Activity } from './sim/realms.ts';
 import { saveState, state } from './state.ts';
 
-/** Przesunięcie daty dziennika w dniach (tylko autopilot w trybie historii: rozgrywa minione dni). */
+/** Journal date shift in days (only the autopilot in history mode: it plays past days). */
 let dayShift = 0;
 export function setDayShift(days: number): void {
   dayShift = days;
@@ -23,17 +23,17 @@ export function journal(): Journal {
 
 export function logTask(kind: Activity, misses: number): void {
   addTask(journal(), today(), kind, misses, state.progress.levels[kind]);
-  // Pierwsze zadanie dnia zużywa dzień próby pełnej wersji (import leniwy: premium importuje log).
-  // Autopilot rozgrywający minione dni nie zużywa próby.
+  // The first task of the day uses up a full-version trial day (lazy import: premium imports log).
+  // The autopilot playing past days doesn't use up the trial.
   if (!dayShift) void import('./premium.ts').then((m) => m.countPlayDay());
 }
 
-/** Czas dobrej odpowiedzi (tempo myślenia) w grupie umiejętności na bieżącym poziomie zabawy. */
+/** Time of a correct answer (thinking speed) in a skill group at the activity's current level. */
 export function logTempo(group: string, kind: Activity, sec: number): void {
   addTempo(journal(), today(), group, state.progress.levels[kind] ?? 0, sec);
 }
 
-/** `easy`: wybór tylko z dwóch odpowiedzi (łatwo zgadnąć, liczy się za pół). */
+/** `easy`: a choice of only two answers (easy to guess, counts as half). */
 export function logFact(fact: string, ok: boolean, easy = false): void {
   noteFact(journal(), today(), fact, ok, easy);
 }
@@ -41,7 +41,7 @@ export function logFact(fact: string, ok: boolean, easy = false): void {
 let pending = 0;
 let pruned = false;
 
-/** Czas widocznej aplikacji; zapis co 30 s, żeby nie pisać do pamięci w każdej klatce. */
+/** Time the app is visible; saved every 30 s so we don't write to storage every frame. */
 export function logTime(sec: number): void {
   if (sec <= 0 || sec > 1 || (typeof document !== 'undefined' && document.hidden)) return;
   pending += sec;

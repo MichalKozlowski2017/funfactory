@@ -9,7 +9,7 @@ import { COLORS, label, sfx } from '../ui.ts';
 import { RoundScene } from './round.ts';
 import type { Gesture } from '../hand.ts';
 
-/** Rozmiar maski do liczenia konturu (piksele). */
+/** Size of the mask used to compute the outline (pixels). */
 const MASK = 96;
 const LINE = 0xff7a8a;
 
@@ -21,25 +21,25 @@ interface DotView {
 }
 
 /**
- * Łączenie kropek (Ścieżka Lusi): kropki na konturze obrazka, palcem od jedynki po kolei i z powrotem
- * do jedynki. Lusia liczy na głos, a po zamknięciu kształtu pojawia się kolorowy obrazek.
- * Można prowadzić palcem albo dotykać kropek po kolei.
+ * Connect the dots (Lusia's Path): dots on the picture's outline, joined with a finger from 1 in order and back
+ * to 1. Lusia counts aloud, and once the shape is closed the coloured picture appears.
+ * The child can trace with a finger or tap the dots in order.
  */
 export class DotsScene extends RoundScene {
   readonly id = 'dots';
   private items: Item[] = [];
-  /** Kropki każdego obrazka w ułamkach obrazka (0..1). */
+  /** Dots of each picture as fractions of the picture (0..1). */
   private shapes: Point[][] = [];
   private points: DotView[] = [];
-  // Tworzone od nowa w każdym zadaniu (warstwa jest czyszczona i niszczona między zadaniami).
+  // Recreated for every task (the layer is cleared and destroyed between tasks).
   private lines = new Graphics();
   private live = new Graphics();
   private picture: Sprite | null = null;
   private ghost: Sprite | null = null;
-  /** Ile kropek już połączono (0 = jeszcze nie dotknięto jedynki). */
+  /** How many dots are already joined (0 = dot 1 not touched yet). */
   private done = 0;
   private drawing = false;
-  /** Pole obrazka na ekranie. */
+  /** Picture area on screen. */
   private box = { x: 0, y: 0, w: 0, h: 0 };
 
   constructor() {
@@ -70,10 +70,10 @@ export class DotsScene extends RoundScene {
     this.live = new Graphics();
     this.picture = new Sprite({ texture: this.art.items.get(item.id)!, anchor: 0.5 });
     this.picture.visible = false;
-    // Blady cień obrazka: łączenie kropek odkrywa kształt, który dziecko może rozpoznać.
+    // Faint shadow of the picture: joining the dots reveals a shape the child can recognise.
     this.ghost = shadowNow(item.id) ? new Sprite({ texture: shadowNow(item.id)!, anchor: 0.5 }) : null;
     if (this.ghost) this.ghost.alpha = 0.16;
-    // Pole dotyku na całą warstwę: palec może zacząć gdziekolwiek.
+    // Touch area covering the whole layer: the finger can start anywhere.
     const pad = new Graphics();
     pad.label = 'pad';
     pad.eventMode = 'static';
@@ -81,7 +81,7 @@ export class DotsScene extends RoundScene {
     pad.on('globalpointermove', (e) => this.move(e));
     pad.on('pointerup', () => this.up());
     pad.on('pointerupoutside', () => this.up());
-    // Obrazki i kropki nie łapią dotyku: palec przyłożony na kropce ma trafić w pole dotyku.
+    // Pictures and dots don't catch touch: a finger placed on a dot must hit the touch area.
     for (const v of [this.ghost, this.picture, this.lines, this.live]) if (v) v.eventMode = 'none';
     this.layer.addChild(pad, ...(this.ghost ? [this.ghost] : []), this.picture, this.lines, this.live);
     this.points = this.shapes[this.index]!.map((_, i) => {
@@ -105,7 +105,7 @@ export class DotsScene extends RoundScene {
     return this.layer.toLocal(e.global);
   }
 
-  /** Następna kropka do połączenia (po ostatniej: z powrotem jedynka). */
+  /** Next dot to join (after the last one: back to 1). */
   private get target(): number {
     return this.done % this.points.length;
   }
@@ -117,7 +117,7 @@ export class DotsScene extends RoundScene {
     const p = this.local(e);
     const before = this.done;
     this.check(p);
-    // Stuknięcie w inną kropkę niż następna: następna (zielona) pulsuje, żeby było widać, od której zacząć.
+    // Tap on a dot other than the next one: the next (green) one pulses to show where to start.
     if (this.done === before && this.points.some((d, i) => i !== this.target && hitsDot(p, d.at, 46))) void pulse(this.tweens, this.points[this.target]!.view, 0.35, 0.4);
   }
 
@@ -125,7 +125,7 @@ export class DotsScene extends RoundScene {
     if (!this.drawing || this.busy) return;
     const p = this.local(e);
     this.check(p);
-    // Gumka od ostatniej połączonej kropki do palca.
+    // Rubber band from the last joined dot to the finger.
     this.live.clear();
     if (this.done > 0 && !this.busy) {
       const from = this.points[(this.done - 1) % this.points.length]!.at;
@@ -138,7 +138,7 @@ export class DotsScene extends RoundScene {
     this.live.clear();
   }
 
-  /** Palec na następnej kropce: połączenie. */
+  /** Finger on the next dot: join it. */
   private check(p: Point): void {
     const t = this.target;
     const dot = this.points[t]!;
@@ -158,7 +158,7 @@ export class DotsScene extends RoundScene {
     if (closed) this.complete();
   }
 
-  /** Kropki: połączone na kolorowo, następna zielona i większa. */
+  /** Dots: joined ones coloured, the next one green and bigger. */
   private highlight(): void {
     this.points.forEach((d, i) => {
       const next = !this.busy && i === this.target;
@@ -171,7 +171,7 @@ export class DotsScene extends RoundScene {
     });
   }
 
-  /** Kształt zamknięty: kropki znikają, pojawia się obrazek. */
+  /** Shape closed: the dots vanish and the picture appears. */
   private complete(): void {
     this.busy = true;
     this.live.clear();
@@ -189,13 +189,13 @@ export class DotsScene extends RoundScene {
     });
   }
 
-  /** Playtest: wszystkie kropki po kolei. */
+  /** Playtest: all dots in order. */
   solve(): void {
     while (!this.busy) this.check(this.points[this.target]!.at);
   }
 
-  /** Podpowiedź: następna kropka podskakuje kilka razy. */
-  /** Prowadzenie palcem od bieżącej kropki przez dwie następne. */
+  /** Hint: the next dot bounces a few times. */
+  /** Trace with a finger from the current dot through the next two. */
   protected override gesture(): Gesture | null {
     if (!this.points.length) return null;
     const n = this.points.length;
@@ -234,7 +234,7 @@ export class DotsScene extends RoundScene {
     this.points.forEach((d, i) => {
       d.at = { x: this.box.x + shape[i]!.x * bw, y: this.box.y + shape[i]!.y * bh };
       d.view.position.set(d.at.x, d.at.y);
-      // Numer na zewnątrz kształtu (od środka obrazka).
+      // Number outside the shape (away from the picture's centre).
       const cx = this.box.x + bw / 2;
       const cy = this.box.y + bh / 2;
       const a = Math.atan2(d.at.y - cy, d.at.x - cx);
@@ -243,7 +243,7 @@ export class DotsScene extends RoundScene {
   }
 }
 
-/** Kontur obrazka: maska alfa w małej rozdzielczości, potem promienie ze środka masy. */
+/** Picture outline: low-resolution alpha mask, then rays from the centre of mass. */
 function dotsOf(src: CanvasImageSource & { width: number; height: number }, count: number): Point[] {
   const k = MASK / Math.max(src.width, src.height);
   const w = Math.max(1, Math.round(src.width * k));

@@ -7,12 +7,12 @@ import { Card, label, sfx } from '../ui.ts';
 import { RoundScene } from './round.ts';
 import type { Gesture } from '../hand.ts';
 
-/** Minka zastępcza (gdy grafiki jeszcze nie ma): emotikonka z tekstu. */
+/** Fallback face (when the art doesn't exist yet): an emoji from text. */
 const FALLBACK: Record<Emotion, string> = { happy: '😄', sad: '😢', angry: '😠', surprised: '😮', scared: '😨', sleepy: '😴' };
 
 /**
- * Emocje (Polana Zagadek): Bazyl prosi o minkę („Pokaż smutną minkę!”), dziecko wybiera twarz.
- * Po trafieniu lektor nazywa minkę.
+ * Emotions (Puzzle Meadow): Bazyl asks for a face ("Show me the sad face!"), the child picks a face.
+ * After a hit the narrator names the face.
  */
 export class EmotionScene extends RoundScene {
   readonly id = 'emotions';
@@ -24,7 +24,7 @@ export class EmotionScene extends RoundScene {
   }
 
   protected async prepare(): Promise<void> {
-    // Tylko postaci, które mają komplet minek (grafiki mogą jeszcze nie istnieć).
+    // Only characters that have a full set of faces (the art may not exist yet).
     const chars = EMOTION_CHARS.filter((c) => EMOTIONS.every((e) => this.art.emotions.has(`${e}:${c}`)));
     this.questions = makeEmotionRound(this.game.rng, state.progress.levels.emotions ?? 0, chars.length ? chars : ['child']);
     this.length = this.questions.length;

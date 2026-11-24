@@ -8,13 +8,13 @@ import { belongs, binCount, binLine, makeSortRound, makeSortTask, rulesFor, SORT
 const levels = [0, 1, 2];
 
 describe('realms', () => {
-  it('każda zabawa jest w dokładnie jednej krainie', () => {
+  it('every activity is in exactly one realm', () => {
     const all = REALMS.flatMap((r) => r.rows.flat());
     expect(new Set(all).size).toBe(all.length);
     expect([...all].sort()).toEqual([...ACTIVITIES].sort());
   });
 
-  it('pozycja ani kolor kafelka nie zdradzają kolejności (dwie sylaby)', async () => {
+  it('neither tile position nor color reveals the order (two syllables)', async () => {
     const { scramble, tileColors } = await import('./syllables.ts');
     const rng = new Rng(8);
     let firstLeft = 0, pinkFirst = 0;
@@ -29,7 +29,7 @@ describe('realms', () => {
 });
 
 describe('classifying', () => {
-  it('każdy obiekt pasuje do swojej skrzynki i do żadnej innej', () => {
+  it('every item fits its own crate and no other', () => {
     const rng = new Rng(3);
     for (const level of levels)
       for (const rule of rulesFor(level))
@@ -41,8 +41,8 @@ describe('classifying', () => {
           expect(new Set(t.bins.map((b) => b.key)).size).toBe(t.bins.length);
           for (const { item, bin } of t.items) {
             expect(belongs(rule, t.bins[bin]!.key, item)).toBe(true);
-            t.bins.forEach((b, j) => j !== bin && expect(belongs(rule, b.key, item), `${item.id} pasuje też do ${b.key}`).toBe(false));
-            // Obrazek ze znaku skrzynki nie trafia do segregowania.
+            t.bins.forEach((b, j) => j !== bin && expect(belongs(rule, b.key, item), `${item.id} also fits ${b.key}`).toBe(false));
+            // A picture from a crate sign doesn't go into sorting.
             expect(t.bins.some((b) => b.sign === item.id)).toBe(false);
           }
           t.bins.forEach((_, j) => expect(t.items.some((x) => x.bin === j)).toBe(true));
@@ -51,18 +51,18 @@ describe('classifying', () => {
         }
   }, 30000);
 
-  it('wszystkie reguły są dostępne na niższych poziomach, a na najwyższym co najmniej trzy', () => {
+  it('all rules are available on the lower levels, and at least three on the top one', () => {
     expect(rulesFor(0)).toEqual([...SORT_RULES]);
     expect(rulesFor(2).length).toBeGreaterThanOrEqual(3);
   });
 
-  it('runda ma różne reguły', () => {
+  it('a round has different rules', () => {
     const round = makeSortRound(new Rng(5), 0);
     expect(round.length).toBe(SORT_ROUND);
     expect(new Set(round.map((t) => t.rule)).size).toBe(SORT_ROUND);
   });
 
-  it('dużo różnych zestawów skrzynek (gra nie jest powtarzalna)', () => {
+  it('many different crate sets (the game does not repeat itself)', () => {
     const rng = new Rng(11);
     const combos = new Set<string>();
     for (let i = 0; i < 2000; i++) {
@@ -72,7 +72,7 @@ describe('classifying', () => {
     expect(combos.size).toBeGreaterThan(40);
   });
 
-  it('pozycja ani kolor kafelka nie zdradzają kolejności (dwie sylaby)', async () => {
+  it('neither tile position nor color reveals the order (two syllables)', async () => {
     const { scramble, tileColors } = await import('./syllables.ts');
     const rng = new Rng(8);
     let firstLeft = 0, pinkFirst = 0;
@@ -86,20 +86,20 @@ describe('classifying', () => {
   });
 });
 
-describe('układanka', () => {
-  it('siatka rośnie z poziomem, obrazki bez powtórzeń', () => {
+describe('jigsaw', () => {
+  it('grid grows with the level, pictures without repeats', () => {
     expect(levels.map((l) => jigsawGrid(l).cols * jigsawGrid(l).rows)).toEqual([2, 4, 6]);
     const round = makeJigsawRound(new Rng(1));
     expect(round.length).toBe(JIGSAW_ROUND);
     expect(new Set(round).size).toBe(JIGSAW_ROUND);
   });
 
-  it('przyciąganie kawałka z tolerancją', () => {
+  it('piece snapping with tolerance', () => {
     expect(snaps(30, -20, 200, 200)).toBe(true);
     expect(snaps(90, 0, 200, 200)).toBe(false);
   });
 
-  it('pozycja ani kolor kafelka nie zdradzają kolejności (dwie sylaby)', async () => {
+  it('neither tile position nor color reveals the order (two syllables)', async () => {
     const { scramble, tileColors } = await import('./syllables.ts');
     const rng = new Rng(8);
     let firstLeft = 0, pinkFirst = 0;
@@ -113,26 +113,26 @@ describe('układanka', () => {
   });
 });
 
-describe('co dalej (wzory)', () => {
-  it('brakujący obrazek wynika ze wzoru i jest wśród odpowiedzi', async () => {
+describe('what comes next (patterns)', () => {
+  it('the missing picture follows from the pattern and is among the answers', async () => {
     const { makePatternTask } = await import('./patterns.ts');
     const rng = new Rng(13);
     for (const level of [0, 1, 2])
       for (let i = 0; i < 300; i++) {
         const t = makePatternTask(rng, level);
-        expect(t.row.length).toBeGreaterThanOrEqual(5); // dwa pełne powtórzenia przed luką
+        expect(t.row.length).toBeGreaterThanOrEqual(5); // two full repetitions before the gap
         expect(t.options).toContain(t.row[t.gap]);
         expect(new Set(t.options).size).toBe(t.options.length);
         expect(t.options.length).toBeGreaterThanOrEqual(2);
-        // Okres wzoru: najkrótszy p, dla którego row[i] === row[i % p]; brakujący zgodny z nim.
+        // Pattern period: the shortest p for which row[i] === row[i % p]; the missing one matches it.
         const p = [1, 2, 3, 4].find((k) => t.row.every((x, j) => x === t.row[j % k]))!;
         expect(p).toBeGreaterThan(1);
-        // Jednoznaczność: tylko jedna odpowiedź pasuje do wzoru.
+        // Unambiguity: only one answer fits the pattern.
         expect(t.options.filter((o) => o === t.row[t.gap % p]).length).toBe(1);
       }
   });
 
-  it('pozycja ani kolor kafelka nie zdradzają kolejności (dwie sylaby)', async () => {
+  it('neither tile position nor color reveals the order (two syllables)', async () => {
     const { scramble, tileColors } = await import('./syllables.ts');
     const rng = new Rng(8);
     let firstLeft = 0, pinkFirst = 0;
@@ -146,8 +146,8 @@ describe('co dalej (wzory)', () => {
   });
 });
 
-describe('sorter kształtów', () => {
-  it('różne kształty, liczba rośnie z poziomem', async () => {
+describe('shape sorter', () => {
+  it('different shapes, count grows with the level', async () => {
     const { makeShapeBoard, shapeCount } = await import('./shapes.ts');
     const rng = new Rng(21);
     for (const level of [0, 1, 2])
@@ -159,7 +159,7 @@ describe('sorter kształtów', () => {
       }
   });
 
-  it('pozycja ani kolor kafelka nie zdradzają kolejności (dwie sylaby)', async () => {
+  it('neither tile position nor color reveals the order (two syllables)', async () => {
     const { scramble, tileColors } = await import('./syllables.ts');
     const rng = new Rng(8);
     let firstLeft = 0, pinkFirst = 0;
@@ -174,7 +174,7 @@ describe('sorter kształtów', () => {
 });
 
 describe('melody', () => {
-  it('długość rośnie z poziomem, sztabki w zakresie', async () => {
+  it('length grows with the level, bars within range', async () => {
     const { makeMelody, barCount, melodyLength, MELODY_ROUND } = await import('./melody.ts');
     const rng = new Rng(2);
     for (const level of [0, 1, 2])
@@ -187,7 +187,7 @@ describe('melody', () => {
     expect(melodyLength(2, 3)).toBe(5);
   });
 
-  it('pozycja ani kolor kafelka nie zdradzają kolejności (dwie sylaby)', async () => {
+  it('neither tile position nor color reveals the order (two syllables)', async () => {
     const { scramble, tileColors } = await import('./syllables.ts');
     const rng = new Rng(8);
     let firstLeft = 0, pinkFirst = 0;
@@ -202,13 +202,13 @@ describe('melody', () => {
 });
 
 describe('syllables', () => {
-  it('sylaby składają się w nazwę obrazka, kafelki to permutacja', async () => {
+  it('syllables join into the picture name, tiles are a permutation', async () => {
     const { WORDS, makeSyllableRound, scramble, SYLLABLE_ROUND } = await import('./syllables.ts');
     const strip = (s: string) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/ł/g, 'l');
     for (const w of WORDS) {
       const item = ITEMS.find((i) => i.id === w.item)!;
       expect(item, w.item).toBeDefined();
-      // Złożone sylaby to nazwa obiektu albo jej rdzeń (Kotek, Autko -> AUTO? sprawdzamy początek).
+      // The joined syllables give the item's name (or its stem for diminutives; we compare the start).
       expect(strip(w.syl.join('')), w.item).toBe(strip(item.name));
     }
     const rng = new Rng(4);
@@ -222,7 +222,7 @@ describe('syllables', () => {
     }
   });
 
-  it('pozycja ani kolor kafelka nie zdradzają kolejności (dwie sylaby)', async () => {
+  it('neither tile position nor color reveals the order (two syllables)', async () => {
     const { scramble, tileColors } = await import('./syllables.ts');
     const rng = new Rng(8);
     let firstLeft = 0, pinkFirst = 0;
@@ -237,7 +237,7 @@ describe('syllables', () => {
 });
 
 describe('stories', () => {
-  it('trzy historyjki w rundzie, pierwszy kadr na miejscu tylko na poziomie 0', async () => {
+  it('three stories per round, first frame preset only on level 0', async () => {
     const { makeStoryRound, presetFrames, STORY_ROUND } = await import('./stories.ts');
     const r = makeStoryRound(new Rng(1));
     expect(r.length).toBe(STORY_ROUND);
@@ -245,7 +245,7 @@ describe('stories', () => {
     expect([0, 1, 2].map(presetFrames)).toEqual([1, 0, 0]);
   });
 
-  it('pozycja ani kolor kafelka nie zdradzają kolejności (dwie sylaby)', async () => {
+  it('neither tile position nor color reveals the order (two syllables)', async () => {
     const { scramble, tileColors } = await import('./syllables.ts');
     const rng = new Rng(8);
     let firstLeft = 0, pinkFirst = 0;

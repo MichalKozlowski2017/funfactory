@@ -2,8 +2,8 @@ import { Rng } from '@funfactory/core';
 import { describe, expect, it } from 'vitest';
 import { STORIES, STORY_ROUND, makeStoryRound, markStoriesSeen } from './stories.ts';
 
-describe('historyjki z worka', () => {
-  it('pokazuje wszystkie historyjki, zanim którakolwiek się powtórzy', () => {
+describe('stories from a bag', () => {
+  it('shows all stories before any of them repeats', () => {
     const rng = new Rng(5);
     let seen: string[] = [];
     const shown: string[] = [];
@@ -14,11 +14,11 @@ describe('historyjki z worka', () => {
       shown.push(...round);
       seen = markStoriesSeen(seen, round);
     }
-    // Pierwsze STORIES.length pokazanych to wszystkie historyjki bez powtórek.
+    // The first STORIES.length shown are all the stories without repeats.
     expect(new Set(shown.slice(0, STORIES.length)).size).toBe(STORIES.length);
   });
 
-  it('po obejrzeniu wszystkich worek zaczyna się od nowa', () => {
+  it('after all have been seen the bag starts over', () => {
     const all = [...STORIES];
     const round = all.slice(0, STORY_ROUND);
     expect(markStoriesSeen(all.slice(STORY_ROUND), round)).toEqual(round);

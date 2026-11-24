@@ -5,7 +5,7 @@ import { addPicture, depthScale, gallery, MAX_PICTURES, removePicture, stickerSc
 const sticker = { id: 'cat', x: 0.5, y: 0.5, flip: false };
 
 describe('stickers', () => {
-  it('stary zapis staje się pierwszym obrazkiem galerii', () => {
+  it('an old save becomes the first gallery picture', () => {
     const p = newProgress();
     p.scene = [sticker];
     const g = gallery(p);
@@ -13,7 +13,7 @@ describe('stickers', () => {
     expect(p.scene).toBeUndefined();
   });
 
-  it('nowy obrazek nie mnoży pustych', () => {
+  it('a new picture does not pile up empty ones', () => {
     const p = newProgress();
     expect(addPicture(p, 'beach')).toBe(0);
     expect(gallery(p).pictures).toHaveLength(1);
@@ -23,13 +23,13 @@ describe('stickers', () => {
     expect(gallery(p).current).toBe(1);
   });
 
-  it('pełna galeria nie przyjmuje nowego obrazka', () => {
+  it('a full gallery does not accept a new picture', () => {
     const p = newProgress();
     p.pictures = Array.from({ length: MAX_PICTURES }, () => ({ bg: 'forest' as const, items: [sticker] }));
     expect(addPicture(p, 'forest')).toBeNull();
   });
 
-  it('usunięcie obrazka zostawia bieżący na miejscu i nigdy nie opróżnia galerii', () => {
+  it('removing a picture keeps the current one in place and never empties the gallery', () => {
     const p = newProgress();
     p.pictures = [
       { bg: 'forest', items: [sticker] },
@@ -45,7 +45,7 @@ describe('stickers', () => {
     expect(gallery(p).pictures).toEqual([{ bg: 'meadow', items: [] }]);
   });
 
-  it('naklejki dalej (wyżej) są mniejsze, ale słońce na niebie nie maleje', () => {
+  it('farther (higher) stickers are smaller, but the sun in the sky does not shrink', () => {
     expect(depthScale(0.2)).toBeLessThan(depthScale(0.9));
     expect(stickerScale('sun', 0.1)).toBe(stickerScale('sun', 0.9));
     expect(stickerScale('cat', 0.1)).toBeLessThan(stickerScale('cat', 0.9));

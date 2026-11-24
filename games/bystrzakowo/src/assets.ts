@@ -10,29 +10,29 @@ import { EMOTION_CHARS, EMOTIONS } from './sim/emotions.ts';
 import { FRAMES, STORIES } from './sim/stories.ts';
 
 /**
- * Grafiki i nagrania gry. Obrazki obiektów: public/art/items/<id>.webp.
- * Cienie liczone z kanału alfa dopiero, gdy są potrzebne (`shadowOf`), i trzymane w pamięci.
+ * Game art and recordings. Object pictures: public/art/items/<id>.webp.
+ * Shadows are computed from the alpha channel only when needed (`shadowOf`) and kept in memory.
  */
 export interface Art {
   items: Map<string, Texture>;
   lusia: Texture;
   bazyl: Texture;
-  /** Domek albo stanowisko każdej zabawy. */
+  /** House or station of each activity. */
   houses: Record<Activity, Texture>;
-  /** Tło krainy i tło zabaw w tej krainie. */
+  /** Realm background and the background of activities in that realm. */
   realmBg: Record<RealmId, Texture>;
   playBg: Record<RealmId, Texture>;
-  /** Warsztat: skrzynka, białe wiaderko (barwione na kolor) i znaki domów zwierząt (stodoła, morze). */
+  /** Workshop: crate, white pail (tinted to a color) and animal home signs (barn, sea). */
   crate: Texture | null;
   bucket: Texture | null;
-  /** Zębatka strefy rodzica. */
+  /** Parent zone gear. */
   gear: Texture | null;
-  /** Rączka z samouczka (src/hand.ts). */
+  /** Tutorial hand (src/hand.ts). */
   hand: Texture | null;
   signs: Map<string, Texture>;
-  /** Minki (zagadka z emocjami). */
+  /** Faces (emotions riddle). */
   emotions: Map<string, Texture>;
-  /** Kadry historyjek: "<historyjka>-<1..3>". */
+  /** Story frames: "<story>-<1..3>". */
   stories: Map<string, Texture>;
 }
 
@@ -64,7 +64,7 @@ async function silhouette(texture: Texture): Promise<Texture> {
 
 const shadowsReady = new Map<string, Texture>();
 
-/** Cień obiektu (liczony raz). */
+/** Object shadow (computed once). */
 export function shadowOf(id: string): Promise<Texture> {
   let s = shadows.get(id);
   if (!s) {
@@ -76,7 +76,7 @@ export function shadowOf(id: string): Promise<Texture> {
   return s;
 }
 
-/** Cień, jeśli jest już policzony (do synchronicznego rysowania), inaczej null (i zaczyna liczyć). */
+/** Shadow if already computed (for synchronous drawing), otherwise null (and starts computing it). */
 export function shadowNow(id: string): Texture | null {
   const t = shadowsReady.get(id);
   if (!t) void shadowOf(id);
@@ -88,7 +88,7 @@ export async function loadArt(): Promise<Art> {
   const load = (path: string) => Assets.load<Texture>(url(path));
   const opt = (path: string) => load(path).catch(() => null);
   const [items, lusia, bazyl, houses, realmBg, playBg, crate, bucket, signs, emotions, stories, gear, hand] = await Promise.all([
-    // Obiekt bez grafiki (np. jeszcze niewygenerowany) po prostu wypada z gry.
+    // An object without art (e.g. not generated yet) simply drops out of the game.
     Promise.all(ITEMS.map(async (i) => [i.id, await opt(`art/items/${i.id}.webp`)] as const)),
     load('art/lusia.webp'),
     load('art/bazyl.webp'),
@@ -98,7 +98,7 @@ export async function loadArt(): Promise<Art> {
     opt('art/workshop/crate.webp'),
     opt('art/workshop/pail.webp'),
     Promise.all(SIGN_ART.map(async (id) => [id, await opt(`art/workshop/${id}.webp`)] as const)),
-    // Minki: klucz „<emocja>:<postać>”; postać „dziecko” to pierwotne pliki bez przyrostka.
+    // Faces: key "<emotion>:<character>"; the "child" character uses the original files without a suffix.
     Promise.all(
       EMOTIONS.flatMap((id) =>
         EMOTION_CHARS.map(async (c): Promise<readonly [string, Texture | null]> => [`${id}:${c}`, await opt(c === 'child' ? `art/emotions/${id}.webp` : `art/emotions/${id}-${c}.webp`)]),
@@ -128,39 +128,39 @@ export async function loadArt(): Promise<Art> {
   return art;
 }
 
-/** Kadr historyjki (null, gdy grafiki brak). */
+/** Story frame (null when the art is missing). */
 export const storyFrame = (story: string, i: number): Texture | null => art?.stories.get(`${story}-${i + 1}`) ?? null;
 
 export type { Guide } from './voice-lines.ts';
 
 export function registerVoice(game: Game): void {
-  // Bez lektora gra nie ma sensu, więc gra też w trybie cichym (rodzice często mają wyciszony telefon).
+  // The game makes no sense without the narrator, so it also plays in silent mode (parents often have the phone muted).
   game.sound.playThroughSilentMode();
-  // Po uśpieniu iPhone'a dźwięk bywa niemy: pierwsze dotknięcie po powrocie odbudowuje go (gra nie ma własnych węzłów audio).
+  // After the iPhone sleeps, sound can go mute: the first touch after returning rebuilds it (the game has no audio nodes of its own).
   game.sound.recoverAfterBackground = true;
-  // Mowa i cicha muzyka: 24 kHz wystarczy, a zdekodowane nagrania zajmują połowę pamięci.
+  // Speech and quiet music: 24 kHz is enough, and decoded recordings take half the memory.
   game.sound.sampleRate = 24000;
-  // Nagrania w języku gry: polskie w audio/<głos>/, pozostałe w audio/<język>/<głos>/.
+  // Recordings in the game language: Polish in audio/<voice>/, others in audio/<lang>/<voice>/.
   const l = lang();
   const VOICE = voiceLines(l);
   const dir = l === 'pl' ? 'audio' : `audio/${l}`;
   for (const guide of ['lusia', 'bazyl'] as const)
     for (const line of VOICE[guide]) game.sound.add(`${guide}-${line}`, url(`${dir}/${guide}/${line}.m4a`));
   game.sound.add('music', url('audio/music.m4a'));
-  // Na starcie tylko polecenia i reakcje; nazwy obiektów i zdania o literach („A jak arbuz”, kilkaset nagrań)
-  // dekoduje runda, która ich potrzebuje.
+  // At startup only instructions and reactions; object names and letter sentences ("A as in apple", several hundred recordings)
+  // are decoded by the round that needs them.
   void game.sound.load([...VOICE.lusia.map((l) => `lusia-${l}`), ...VOICE.bazyl.map((l) => `bazyl-${l}`), 'music'].filter((n) => !n.includes('-item-') && !n.includes('-letter-')));
 }
 
-/** Nagrania nazw obiektów (oba głosy) do wczytania na rundę i zwolnienia po niej. */
+/** Object name recordings (both voices) to load for a round and release after it. */
 export const itemVoices = (ids: readonly string[]): string[] => [...new Set(ids)].flatMap((id) => [`lusia-item-${id}`, `bazyl-item-${id}`]);
 
-/** Mówi kwestię przewodnika (ucina poprzednią). Zwraca długość w sekundach (0, gdy nagranie niegotowe). */
+/** Plays a guide's line (cuts off the previous one). Returns its length in seconds (0 when the recording is not ready). */
 export function say(game: Game, guide: Guide, line: string): number {
   return game.sound.play(`${guide}-${line}`, { channel: 'voice', volume: 1 });
 }
 
-/** Muzyka w tle: cicha pętla, startuje raz (po pierwszym dotknięciu, gdy dźwięk jest odblokowany). */
+/** Background music: a quiet loop, started once (after the first touch, when audio is unlocked). */
 let musicOn = false;
 export function startMusic(game: Game): void {
   if (musicOn || !state.progress.music) return;

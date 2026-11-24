@@ -7,27 +7,27 @@ export interface ChartOptions {
   width: number;
   height: number;
   points: readonly Point[];
-  /** „%”: wartości 0..1; „s”: sekundy. */
+  /** '%': values 0..1; 's': seconds. */
   unit: '%' | 's';
   color: number;
   resolution: number;
-  /** Podpis osi X dla punktu (np. „7.12”). */
+  /** X-axis label for a point (e.g. "7.12"). */
   label: (p: Point) => string;
-  /** Mały wykres w wierszu listy: bez osi, podpisów i znaczników. */
+  /** Small chart in a list row: no axes, labels or markers. */
   mini?: boolean;
 }
 
 const SOFT = '#9a8b7c';
 
-/** Górna granica osi sekund: zaokrąglona w górę, z zapasem. */
+/** Top of the seconds axis: rounded up, with headroom. */
 const secondsTop = (points: readonly Point[]): number => {
   const max = Math.max(1, ...points.map((p) => p.value ?? 0));
   return Math.ceil(max * 1.25);
 };
 
 /**
- * Wykres liniowy postępów: linia przez punkty z danymi (okresy bez danych są pomijane, linia je przeskakuje),
- * kropki, siatka i podpisy. Trójkąt nad punktem: zabawa weszła na wyższy poziom.
+ * Progress line chart: a line through the points with data (periods without data are skipped, the line jumps over them),
+ * dots, grid and labels. A triangle above a point: the activity moved up a level.
  */
 export function lineChart(o: ChartOptions): Container {
   const c = new Container();
@@ -55,7 +55,7 @@ export function lineChart(o: ChartOptions): Container {
       t.position.set(left - 10, yOf(v));
       c.addChild(t);
     }
-    // Podpisy osi X: co kilka okresów, żeby się nie zlewały.
+    // X-axis labels: every few periods, so they don't run together.
     const every = Math.max(1, Math.ceil(n / 6));
     o.points.forEach((p, i) => {
       if ((n - 1 - i) % every) return;

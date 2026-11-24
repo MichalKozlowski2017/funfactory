@@ -16,8 +16,8 @@ interface Card {
 }
 
 /**
- * Historyjki obrazkowe (Warsztat Bazyla): ponumerowane miejsca 1–2–3 i rozsypane kadry.
- * Kadr upuszczony na swoje miejsce wskakuje; po ułożeniu Bazyl opowiada historyjkę, kadry świecą po kolei.
+ * Picture stories (Bazyl's Workshop): numbered slots 1–2–3 and scattered frames.
+ * A frame dropped on its slot snaps in; once arranged, Bazyl tells the story and the frames light up in turn.
  */
 export class StoryScene extends RoundScene {
   readonly id = 'stories';
@@ -35,7 +35,7 @@ export class StoryScene extends RoundScene {
   protected async prepare(): Promise<void> {
     this.stories = makeStoryRound(this.game.rng, state.progress.storiesSeen);
     this.length = this.stories.length;
-    // Od razu zapisujemy jako obejrzane: przerwana runda też się liczy, inaczej po wyjściu wracałyby te same.
+    // Mark as seen right away: an interrupted round counts too, otherwise the same ones would come back after leaving.
     state.progress.storiesSeen = markStoriesSeen(state.progress.storiesSeen ?? [], this.stories);
     void saveState();
   }
@@ -108,7 +108,7 @@ export class StoryScene extends RoundScene {
     if (this.cards.every((x) => x.placed)) this.tell();
   }
 
-  /** Historyjka: Bazyl opowiada, kadry podskakują po kolei. */
+  /** Story: Bazyl narrates, the frames bounce one after another. */
   private tell(): void {
     this.busy = true;
     const len = say(this.game, this.guide, `history-${this.stories[this.index]}`);
@@ -129,7 +129,7 @@ export class StoryScene extends RoundScene {
     for (const c of this.cards) if (!c.placed) this.lock(c);
   }
 
-  /** Podpowiedź: kadr, który ma być następny, podjeżdża w stronę swojego miejsca. */
+  /** Hint: the frame that should come next slides toward its slot. */
   protected override gesture(): Gesture | null {
     const c = [...this.cards].filter((x) => !x.placed).sort((a, b) => a.frame - b.frame)[0];
     const s = c && this.slots[c.frame];
@@ -140,7 +140,7 @@ export class StoryScene extends RoundScene {
     const c = [...this.cards].filter((x) => !x.placed).sort((a, b) => a.frame - b.frame)[0];
     if (!c) return;
     const s = this.slots[c.frame]!;
-    // Chwycenie elementu przerywa podpowiedź; wtedy nie cofamy go na start (dziecko mogło go już położyć).
+    // Grabbing the element interrupts the hint; then we don't move it back to start (the child may have already placed it).
     const tw = this.tweens
       .to(c.view, { x: c.home.x + (s.x - c.home.x) * 0.4, y: c.home.y + (s.y - c.home.y) * 0.4 }, { duration: 0.45, ease: 'sineInOut', yoyo: true, repeat: 1 });
     void tw.done.then(() => !tw.killed && c.view.position.set(c.home.x, c.home.y));

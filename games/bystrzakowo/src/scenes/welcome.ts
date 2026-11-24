@@ -19,8 +19,8 @@ const AGE_COLOR = '#8fb8ff';
 const AGE_PICKED = '#ff9f5a';
 
 /**
- * Powitanie rodzica przy pierwszym uruchomieniu: czym jest gra, jak wejść do strefy rodzica, próba pełnej
- * wersji i wiek dziecka (ustawia początkową trudność zabaw). Bez lektora: czyta dorosły. Pomiń kończy od razu.
+ * Parent welcome on first launch: what the game is, how to enter the parent zone, the full version trial
+ * and the child's age (sets the initial activity difficulty). No narrator: an adult reads it. Skip ends it right away.
  */
 export class WelcomeScene extends Scene {
   readonly id = 'welcome';
@@ -34,7 +34,7 @@ export class WelcomeScene extends Scene {
   private age: number | null = null;
   private buttons: Button[] = [];
   private skip!: Button;
-  /** Animacja ilustracji bieżącej karty. */
+  /** Animation of the current card's illustration. */
   private anim: ((t: number) => void) | null = null;
   private t = 0;
   private leaving = false;
@@ -57,7 +57,7 @@ export class WelcomeScene extends Scene {
     this.render();
   }
 
-  /** Prostokąt karty (zależny od ekranu). */
+  /** Card rectangle (depends on the screen). */
   private box(): { x: number; y: number; w: number; h: number } {
     const v = this.game.view;
     const w = Math.min(1060, v.width - v.safe.left - v.safe.right - 80);
@@ -101,7 +101,7 @@ export class WelcomeScene extends Scene {
     this.drawDots(b);
   }
 
-  /** Karta z ilustracją po lewej i tekstem po prawej. */
+  /** Card with an illustration on the left and text on the right. */
   private infoPage(page: Exclude<Page, 'age'>, b: { x: number; y: number; w: number; h: number }): void {
     const n = TRIAL_DAYS;
     const [title, body] =
@@ -117,7 +117,7 @@ export class WelcomeScene extends Scene {
     const bodySize = b.w < 900 ? 25 : 28;
     const d = this.text(body, bodySize, { color: SOFT, wrap: tw });
     d.position.set(tx, t.y + t.height + 22);
-    // Długi tekst na małym ekranie: zmniejszamy, żeby nie wszedł na przyciski.
+    // Long text on a small screen: scale it down so it does not overlap the buttons.
     const room = b.y + b.h - 130 - d.y;
     if (d.height > room) d.scale.set(room / d.height);
     this.content.addChild(t, d);
@@ -144,7 +144,7 @@ export class WelcomeScene extends Scene {
     }
   }
 
-  /** Zębatka z rączką i pierścieniem odliczania przytrzymania. */
+  /** Gear with a hand and a hold countdown ring. */
   private gateArt(x: number, y: number): void {
     const gear = new Container();
     gear.position.set(x, y + 10);
@@ -163,7 +163,7 @@ export class WelcomeScene extends Scene {
       gear.addChild(hand);
     }
     this.content.addChild(gear);
-    // Przytrzymanie: pierścień rośnie 2 s (jak przy prawdziwej zębatce), potem zębatka „podskakuje”, pauza i od nowa.
+    // Hold: the ring grows for 2 s (as with the real gear), then the gear "bounces", a pause and again.
     let popped = false;
     this.anim = (t) => {
       const k = (t % 3) / 2;
@@ -178,7 +178,7 @@ export class WelcomeScene extends Scene {
     };
   }
 
-  /** Pięć gwiazdek zapalanych po kolei (dni próby). */
+  /** One star per trial day, lit one after another. */
   private trialArt(x: number, y: number, w: number): void {
     const n = TRIAL_DAYS;
     const gap = Math.min(78, (w * 0.36) / n);
@@ -209,7 +209,7 @@ export class WelcomeScene extends Scene {
     };
   }
 
-  /** Ostatnia karta: wiek dziecka (przyciski 3–6) i opcjonalne imię. */
+  /** Last card: child's age (buttons 3–6) and an optional name. */
   private agePage(b: { x: number; y: number; w: number; h: number }): void {
     const cx = b.x + b.w / 2;
     const t = this.text(tr('howOldChild'), 46, { weight: '800', align: 'center' });
@@ -226,7 +226,7 @@ export class WelcomeScene extends Scene {
       const btn = this.button(a === 6 ? '6+' : String(a), size, a === this.age ? AGE_PICKED : AGE_COLOR, () => this.pickAge(a), size, 54);
       btn.position.set(cx + (i - (AGES.length - 1) / 2) * gap, row);
     });
-    // Dolny rząd: imię (opcjonalne) po lewej, start po prawej.
+    // Bottom row: name (optional) on the left, start on the right.
     const name = state.progress.childName;
     const nw = Math.min(520, b.w - 100 - 270 - 40);
     const nb = this.button(name ? tr('nameLabel', { name }) : tr('addChildsNameOptional'), nw, '#9b7be0', () => this.askName(), 88, nw < 470 ? 22 : 25);
@@ -252,11 +252,11 @@ export class WelcomeScene extends Scene {
     this.render();
   }
 
-  /** Kropki stron na dole karty. */
+  /** Page dots at the bottom of the card. */
   private drawDots(b: { x: number; y: number; w: number; h: number }): void {
     const g = new Graphics();
     const n = this.pages.length;
-    // Na ostatniej karcie dolny rząd zajmują przyciski: kropki idą wyżej, na środek.
+    // On the last card the bottom row is taken by buttons: the dots go higher, centered.
     const last = this.pages[this.page] === 'age';
     const x0 = last ? b.x + b.w / 2 - ((n - 1) * 34) / 2 : b.x + 70;
     const y = last ? b.y + b.h - 150 : b.y + b.h - 70;
@@ -277,7 +277,7 @@ export class WelcomeScene extends Scene {
     this.tweens.to(this.content, { alpha: 1 }, { duration: 0.25 });
   }
 
-  /** Koniec powitania. `withAge`: rodzic wybrał wiek (Pomiń zostawia poziomy bez zmian). */
+  /** End of the welcome. `withAge`: the parent picked an age (Skip leaves levels unchanged). */
   private finish(withAge: boolean): void {
     if (this.leaving) return;
     this.leaving = true;

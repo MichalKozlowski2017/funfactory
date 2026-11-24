@@ -1,6 +1,6 @@
 #!/bin/bash
-# Lektor w innym języku: voice/<język>.json (z scripts/voice-i18n.ts) -> Legion -> public/audio/<język>/<głos>/<kwestia>.m4a
-# Użycie: games/bystrzakowo/scripts/voice-lang.sh en
+# Narrator in another language: voice/<lang>.json (from scripts/voice-i18n.ts) -> Legion -> public/audio/<lang>/<voice>/<line>.m4a
+# Usage: games/bystrzakowo/scripts/voice-lang.sh en
 set -euo pipefail
 cd "$(dirname "$0")/.."
 L="$1"

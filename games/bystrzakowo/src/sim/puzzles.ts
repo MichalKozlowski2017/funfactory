@@ -3,29 +3,29 @@ import { lang, type Lang } from './lang.ts';
 import { ITEMS, lookalike, startOf, type Category, type Color, type Item } from './catalog.ts';
 
 /**
- * Silniki zagadek: z katalogu i poziomu trudności (0..MAX_LEVEL) generują pytania.
- * Czysty TS bez Pixi, żeby dało się testować i stroić.
+ * Puzzle engines: generate questions from the catalog and the difficulty level (0..MAX_LEVEL).
+ * Pure TS without Pixi, so they can be tested and tuned.
  */
 export type PuzzleKind = 'shadows' | 'matching' | 'counting' | 'colors' | 'phonemes' | 'mothers';
 export const PUZZLE_KINDS: readonly PuzzleKind[] = ['shadows', 'matching', 'counting', 'colors', 'phonemes', 'mothers'];
 export const MAX_LEVEL = 2;
 export const ROUND_LENGTH = 5;
 
-/** „Czyj to cień?”: duży cień `target`, do wyboru kolorowe obrazki. */
+/** "Whose shadow is this?": a large shadow of `target`, colored pictures to choose from. */
 export interface ShadowQuestion {
   kind: 'shadows';
   target: Item;
   options: Item[];
 }
 
-/** „Co tu nie pasuje?”: wszystkie oprócz `odd` są z jednej kategorii. */
+/** "What doesn't belong?": all except `odd` are from one category. */
 export interface OddQuestion {
   kind: 'matching';
   odd: Item;
   options: Item[];
 }
 
-/** „Policz, ile ich jest”: `count` sztuk `item`, do wyboru liczby. */
+/** "Count how many there are": `count` copies of `item`, numbers to choose from. */
 export interface CountQuestion {
   kind: 'counting';
   item: Item;
@@ -33,7 +33,7 @@ export interface CountQuestion {
   options: number[];
 }
 
-/** „Pokaż coś czerwonego”: dokładnie jeden obiekt ma kolor `color`. */
+/** "Show me something red": exactly one item has the color `color`. */
 export interface ColorQuestion {
   kind: 'colors';
   color: Color;
@@ -41,7 +41,7 @@ export interface ColorQuestion {
   options: Item[];
 }
 
-/** „Co zaczyna się na literę er?”: dokładnie jeden obiekt zaczyna się na `sound` (pierwsza litera). */
+/** "What starts with the letter R?": exactly one item starts with `sound` (first letter). */
 export interface SoundQuestion {
   kind: 'phonemes';
   sound: string;
@@ -49,7 +49,7 @@ export interface SoundQuestion {
   options: Item[];
 }
 
-/** „Gdzie jest mama kurczaczka?”: `baby` u góry, do wyboru dorosłe zwierzęta. */
+/** "Where is the chick's mom?": `baby` at the top, adult animals to choose from. */
 export interface MotherQuestion {
   kind: 'mothers';
   baby: Item;
@@ -60,38 +60,38 @@ export interface MotherQuestion {
 export type Question = ShadowQuestion | OddQuestion | CountQuestion | ColorQuestion | SoundQuestion | MotherQuestion;
 
 /**
- * Polski: pierwsza litera, o którą pytamy nazwą litery („Co zaczyna się na literę… er?”, nagrania „gloska-<litera>”).
- * Wcześniej pytaliśmy o głoskę, ale model mowy nie umie powiedzieć samej spółgłoski („sss” wychodziło jako „sy”).
- * Tylko litery z co najmniej dwoma obrazkami.
+ * Polish: the first letter, asked about by the letter's name ("What starts with the letter… R?", recordings "phoneme-<letter>").
+ * We used to ask about the sound, but the speech model can't say a bare consonant ("sss" came out as "sy").
+ * Only letters with at least two pictures.
  */
 export const SOUNDS_PL = ['a', 'o', 'b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'ł', 'm', 'n', 'p', 'r', 's', 'ś', 't', 'w', 'z', 'ż'] as const;
-/** Angielski i niemiecki: pierwsza litera słowa (tak uczą przedszkola w tych krajach). */
+/** English and German: the first letter of the word (that's how preschools in those countries teach it). */
 export const LETTERS_EN = ['a', 'b', 'c', 'd', 'f', 'g', 'h', 'l', 'm', 'o', 'p', 'r', 's', 't', 'w'] as const;
 export const LETTERS_DE = ['a', 'b', 'e', 'f', 'g', 'h', 'k', 'l', 'm', 'p', 'r', 's', 't', 'w', 'z'] as const;
 export const LETTERS_ES = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'l', 'm', 'o', 'p', 'r', 's', 't'] as const;
-/** Litery w zabawie „Co zaczyna się na…?” w bieżącym języku. */
+/** Letters in the "What starts with…?" activity in the current language. */
 export const soundsOf = (l: Lang = lang()): readonly string[] => ({ pl: SOUNDS_PL, en: LETTERS_EN, de: LETTERS_DE, es: LETTERS_ES })[l];
-/** Litery polskie (lista nagrań). */
+/** Polish letters (recording list). */
 export const SOUNDS: readonly string[] = SOUNDS_PL;
 
-/** Nazwa pliku nagrania litery (bez polskich znaków w nazwach plików). */
+/** Letter recording file name (no Polish diacritics in file names). */
 export const soundSlug = (sound: string): string => sound.replace('ż', 'zh').replace('ś', 'si').replace('ł', 'lw').replace('ź', 'zi');
 
-/** Litery łatwe do pomylenia (podobny dźwięk na początku słowa): zmyłki nie mogą być z tej samej grupy co odpowiedź. */
+/** Easily confused letters (similar sound at the start of a word): decoys can't be from the same group as the answer. */
 const CONFUSABLE: Record<Lang, string[][]> = {
-  // ł brzmi jak „u” albo „w”; b/p, d/t, g/k, w/f to pary dźwięczna-bezdźwięczna.
+  // The Polish barred L sounds like "u" or "w"; b/p, d/t, g/k, w/f are voiced-voiceless pairs.
   pl: [['s', 'ś', 'z', 'ż', 'c'], ['l', 'r'], ['ł', 'u', 'w', 'o'], ['m', 'n'], ['b', 'p'], ['d', 't'], ['g', 'k'], ['w', 'f']],
-  // Nazwy liter, które się rymują („bee, dee, pee”), i te o tym samym dźwięku (c/k/s).
+  // Letter names that rhyme ("bee, dee, pee"), and those with the same sound (c/k/s).
   en: [['b', 'c', 'd', 'e', 'g', 'p', 't', 'v', 'z'], ['c', 'k', 's'], ['m', 'n']],
   de: [['b', 'c', 'd', 'e', 'g', 'p', 't', 'w'], ['f', 'v'], ['m', 'n'], ['s', 'z']],
-  // „be, ce, de, e, ge, pe, te” się rymują; b i v brzmią tak samo; c, s, z (seseo).
+  // "be, ce, de, e, ge, pe, te" rhyme; b and v sound the same; c, s, z (seseo).
   es: [['b', 'c', 'd', 'e', 'g', 'p', 't'], ['b', 'v'], ['c', 's', 'z'], ['m', 'n']],
 };
 const confusable = (a: string, b: string) => a === b || CONFUSABLE[lang()].some((g) => g.includes(a) && g.includes(b));
 
-/** Liczba odpowiedzi do wyboru na danym poziomie. */
+/** Number of answer options at a given level. */
 export const optionCount = (level: number): number => [2, 3, 4][clampLevel(level)] as number;
-/** Największa liczba do policzenia. */
+/** Largest number to count. */
 export const maxCount = (level: number): number => [3, 5, 8][clampLevel(level)] as number;
 
 const clampLevel = (level: number) => Math.max(0, Math.min(MAX_LEVEL, Math.round(level)));
@@ -100,7 +100,7 @@ function take<T>(rng: Rng, pool: readonly T[], n: number, avoid: readonly T[] = 
   return rng.shuffle(pool.filter((x) => !avoid.includes(x))).slice(0, n);
 }
 
-/** `n` losowych obiektów z puli, żaden nie jest podobny do `target` ani do siebie nawzajem. */
+/** `n` random items from the pool, none similar to `target` or to each other. */
 function distinct(rng: Rng, pool: readonly Item[], n: number, target: Item): Item[] {
   const out: Item[] = [];
   for (const item of rng.shuffle([...pool])) {
@@ -116,13 +116,13 @@ export function shadowQuestion(rng: Rng, level: number, recent: readonly string[
   const fresh = pool.filter((i) => !recent.includes(i.id));
   const target = rng.pick(fresh.length > 0 ? fresh : pool);
   const n = optionCount(level);
-  // Na najwyższym poziomie zmyłki z tej samej kategorii (podobniejsze sylwetki).
+  // At the highest level decoys come from the same category (more similar silhouettes).
   const same = pool.filter((i) => i.category === target.category);
   const decoys = distinct(rng, level >= MAX_LEVEL && same.length > n ? same : pool, n - 1, target);
   return { kind: 'shadows', target, options: rng.shuffle([target, ...decoys]) };
 }
 
-/** Kategorie, których obiekty dziecko może uznać za „pasujące” do siebie. */
+/** Categories whose items a child might consider as "belonging" together. */
 const NEAR: [Category, Category][] = [
   ['nature', 'animals'],
   ['nature', 'fruit'],
@@ -139,8 +139,8 @@ export function oddQuestion(rng: Rng, level: number, recent: readonly string[] =
   const big = [...groups.values()].filter((g) => g.length >= n - 1);
   const group = rng.pick(big);
   const cat = group[0]!.category;
-  // Intruz z kategorii wyraźnie innej: motyl wśród kwiatków albo autko wśród zabawek byłyby sporne.
-  // Owoce i warzywa rozróżniamy dopiero na najwyższym poziomie.
+  // The odd one out comes from a clearly different category: a butterfly among flowers or a toy car among toys would be debatable.
+  // Fruit and vegetables are told apart only at the highest level.
   const near = (c: Category) => c === cat || NEAR.some(([a, b]) => (a === cat && b === c) || (b === cat && a === c)) || (level < MAX_LEVEL && FRUIT_VEG.includes(c) && FRUIT_VEG.includes(cat));
   const others = ITEMS.filter((i) => !near(i.category));
   const freshOdd = others.filter((i) => !recent.includes(i.id));
@@ -149,7 +149,7 @@ export function oddQuestion(rng: Rng, level: number, recent: readonly string[] =
   return { kind: 'matching', odd, options: rng.shuffle([odd, ...members]) };
 }
 
-/** Postaci z tła Polany (różowa świnka przy lisie): nie liczymy ich, bo dziecko policzyłoby też tę z tła. */
+/** Characters from the Meadow background (the pink piglet next to the fox): we don't count them, since the child would count the one in the background too. */
 const IN_BACKGROUND = new Set(['piglet', 'pig']);
 
 export function countQuestion(rng: Rng, level: number, recent: readonly string[] = [], lastCount = 0): CountQuestion {
@@ -157,10 +157,10 @@ export function countQuestion(rng: Rng, level: number, recent: readonly string[]
   const fresh = pool.filter((i) => !recent.includes(i.id));
   const item = rng.pick(fresh.length > 0 ? fresh : pool);
   const max = maxCount(level);
-  // „Jeden” jest za łatwy i wypadał bardzo często: tylko czasem, i nigdy dwa razy z rzędu ta sama liczba.
+  // "One" is too easy and came up very often: only sometimes, and never the same number twice in a row.
   const counts = Array.from({ length: max }, (_, i) => i + 1).filter((c) => c !== lastCount && (c > 1 || rng.chance(0.25)));
   const count = rng.pick(counts.length ? counts : [Math.min(2, max)]);
-  // Zmyłki: liczby obok prawidłowej (najczęstszy błąd dziecka to pomyłka o 1).
+  // Decoys: numbers next to the correct one (a child's most common mistake is being off by 1).
   const near = [count - 1, count + 1, count - 2, count + 2, count + 3].filter((x) => x >= 1 && x <= Math.max(max, 4));
   const n = Math.max(3, optionCount(level));
   const options = [count, ...near.slice(0, n - 1)].sort((a, b) => a - b);
@@ -176,7 +176,7 @@ export function colorQuestion(rng: Rng, level: number, recent: readonly string[]
   const colored = ITEMS.filter((i) => i.color);
   const target = freshPick(rng, colored, recent);
   const n = Math.max(3, optionCount(level));
-  // Zmyłki: różne kolory, inne niż odpowiedź (żeby dokładnie jedna była dobra i obraz był czytelny).
+  // Decoys: different colors, other than the answer (so exactly one is right and the picture is clear).
   const decoys: Item[] = [];
   const used = new Set<string>([target.color!]);
   for (const item of rng.shuffle(colored.filter((i) => i.color !== target.color))) {
@@ -191,8 +191,8 @@ export function colorQuestion(rng: Rng, level: number, recent: readonly string[]
 export function soundQuestion(rng: Rng, level: number, recent: readonly string[] = []): SoundQuestion {
   const known = new Set<string>(soundsOf());
   const pool = ITEMS.filter((i) => known.has(startOf(i)));
-  // Najpierw litera (każda tak samo często, bez tych z ostatnich zagadek), potem obrazek. Losowanie samego
-  // obrazka pytało o „s” (13 obrazków) wielokrotnie częściej niż o „sz” czy „n”.
+  // First the letter (each equally often, excluding those from recent puzzles), then the picture. Picking just the
+  // picture asked about "s" (13 pictures) many times more often than about "sz" or "n".
   const sounds = [...new Set(pool.map(startOf))];
   const recentSounds = new Set(recent.map((id) => ITEMS.find((i) => i.id === id)).filter((i): i is Item => !!i).map(startOf));
   const freshSounds = sounds.filter((s) => !recentSounds.has(s));
@@ -208,15 +208,15 @@ export function soundQuestion(rng: Rng, level: number, recent: readonly string[]
 }
 
 export function motherQuestion(rng: Rng, level: number, recent: readonly string[] = []): MotherQuestion {
-  // Tylko młode, których mama jest w katalogu (katalog może być okrojony do wczytanych grafik).
+  // Only babies whose mother is in the catalog (the catalog may be trimmed to the loaded art).
   const babies = ITEMS.filter((i) => i.mother && ITEMS.some((m) => m.id === i.mother));
   const baby = freshPick(rng, babies, recent);
   const target = ITEMS.find((i) => i.id === baby.mother)!;
   const mothers = new Set(babies.map((b) => b.mother));
-  // Zmyłki: inne dorosłe zwierzęta (najpierw inne mamy z tej gry, potem reszta zwierząt).
+  // Decoys: other adult animals (first other mothers from this game, then the remaining animals).
   const adults = ITEMS.filter((i) => i.category === 'animals' && !i.mother && !lookalike(i, target) && !lookalike(i, baby));
   const n = Math.max(3, optionCount(level));
-  // Zmyłki niepodobne do siebie nawzajem (owca i koza obok siebie myliłyby).
+  // Decoys that don't resemble each other (a sheep next to a goat would be confusing).
   const preferred = distinct(rng, adults.filter((a) => mothers.has(a.id)), n - 1, target);
   const rest = distinct(rng, adults.filter((a) => !preferred.some((p) => lookalike(p, a))), n - 1 - preferred.length, target);
   const decoys = [...preferred, ...rest];
@@ -240,18 +240,18 @@ export function makeQuestion(kind: PuzzleKind, rng: Rng, level: number, recent: 
   }
 }
 
-/** Obiekt, o który chodzi w pytaniu (dobra odpowiedź albo obiekt do liczenia). */
+/** The item the question is about (the correct answer or the item to count). */
 export const questionItem = (q: Question): Item => (q.kind === 'matching' ? q.odd : q.kind === 'counting' ? q.item : q.kind === 'mothers' ? q.baby : q.target);
 
-/** Id obiektu, który pytanie „zużywa” (żeby nie powtarzać go w rundzie). */
+/** Id of the item the question "uses up" (so it isn't repeated in the round). */
 export const questionKey = (q: Question): string => questionItem(q).id;
 
-/** Prawidłowa odpowiedź. */
+/** The correct answer. */
 export const answerOf = (q: Question): Item | number => (q.kind === 'counting' ? q.count : q.kind === 'matching' ? q.odd : q.target);
 
 export const isCorrect = (q: Question, answer: Item | number): boolean => answer === answerOf(q);
 
-/** Nagranie polecenia (bez rozszerzenia), np. "color-red", "phoneme-sz", "mother-chick". */
+/** Prompt recording (without extension), e.g. "color-red", "phoneme-sz", "mother-chick". */
 export function promptLine(q: Question): string {
   if (q.kind === 'colors') return `color-${q.color}`;
   if (q.kind === 'phonemes') return `phoneme-${soundSlug(q.sound)}`;
@@ -259,12 +259,12 @@ export function promptLine(q: Question): string {
   return q.kind;
 }
 
-/** Cała runda: ROUND_LENGTH pytań bez powtórzeń obiektu przewodniego. */
+/** A whole round: ROUND_LENGTH questions without repeating the key item. */
 export function makeRound(kind: PuzzleKind, rng: Rng, level: number): Question[] {
   const out: Question[] = [];
   const recent: string[] = [];
-  // Obrazki, które już były na ekranie w tej rundzie: zmyłki nie powinny wracać co pytanie
-  // (w Kolorach ta sama czerwona truskawka była zmyłką trzy razy z rzędu).
+  // Pictures already shown in this round: decoys shouldn't come back every question
+  // (in Colors the same red strawberry was a decoy three times in a row).
   const shown = new Set<string>();
   const repeats = (q: Question) => (q.kind === 'counting' ? 0 : q.options.filter((o) => shown.has(o.id)).length);
   for (let i = 0; i < ROUND_LENGTH; i++) {
@@ -282,7 +282,7 @@ export function makeRound(kind: PuzzleKind, rng: Rng, level: number): Question[]
   return out;
 }
 
-/** Czy z obecnego katalogu da się złożyć rundę (np. są młode zwierzęta i ich mamy). */
+/** Whether a round can be built from the current catalog (e.g. there are baby animals and their mothers). */
 export function playable(kind: PuzzleKind, rng: Rng): boolean {
   try {
     const round = makeRound(kind, rng, MAX_LEVEL);
@@ -293,8 +293,8 @@ export function playable(kind: PuzzleKind, rng: Rng): boolean {
 }
 
 /**
- * Trudność adaptacyjna po rundzie: bez pomyłek poziom w górę, 3+ pomyłki w dół.
- * `mistakes` to liczba błędnych dotknięć w całej rundzie.
+ * Adaptive difficulty after a round: no mistakes, level up; 3+ mistakes, level down.
+ * `mistakes` is the number of wrong taps in the whole round.
  */
 export function nextLevel(level: number, mistakes: number): number {
   if (mistakes === 0) return clampLevel(level + 1);

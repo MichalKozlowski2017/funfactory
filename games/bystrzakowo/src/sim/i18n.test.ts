@@ -15,7 +15,7 @@ const files = (dir: string): string[] =>
     return statSync(p).isDirectory() ? files(p) : p.endsWith('.ts') && !p.endsWith('.test.ts') ? [p] : [];
   });
 
-/** Polskie teksty przekazywane do tr(): literały z kodu oraz nazwy krain i zabaw. */
+/** Text keys passed to tr(): literals from the code plus realm, activity and skill names. */
 function keys(): string[] {
   const out = new Set<string>([...Object.values(ACTIVITY_NAMES), ...REALMS.map((r) => r.name), ...SKILLS.flatMap((s) => [s.name, s.tip])]);
   for (const f of files(SRC)) {
@@ -27,19 +27,19 @@ function keys(): string[] {
 
 afterEach(() => setLang('pl'));
 
-describe('tłumaczenia', () => {
-  it('każdy tekst na ekranie ma tłumaczenie angielskie i niemieckie', () => {
+describe('translations', () => {
+  it('every on-screen text has a translation in every language', () => {
     for (const [l, dict] of Object.entries(dictionaries)) {
       const missing = keys().filter((k) => !(k in dict));
-      expect(missing, `brak w ${l}`).toEqual([]);
+      expect(missing, `missing in ${l}`).toEqual([]);
     }
   });
 
-  it('w kodzie ekranów nie ma polskich napisów poza tr()', () => {
+  it('screen code has no Polish strings outside tr()', () => {
     const ui = [join(SRC, 'parent.ts'), ...files(join(SRC, 'scenes'))];
     const bad: string[] = [];
     for (const f of ui) {
-      // Bez komentarzy: tylko kod.
+      // Strip comments: code only.
       const code = readFileSync(f, 'utf8').replace(/\/\*[\s\S]*?\*\//g, '').replace(/\/\/[^\n]*/g, '');
       for (const m of code.matchAll(/'([^'\n]*[ąćęłńóśźżĄĆĘŁŃÓŚŹŻ][^'\n]*)'/g))
         if (code.slice(Math.max(0, m.index - 3), m.index) !== 'tr(' && !(m[1]! in dictionaries.pl)) bad.push(`${f.split('/').pop()}: ${m[1]}`);
@@ -47,7 +47,7 @@ describe('tłumaczenia', () => {
     expect(bad).toEqual([]);
   });
 
-  it('raport po angielsku i niemiecku bez polskich słów', () => {
+  it('report in English, German and Spanish has no Polish words', () => {
     const j = newJournal();
     const day = '2026-11-21';
     for (const n of [1, 2, 3, 4]) for (let i = 0; i < 3; i++) noteFact(j, day, `number:${n}`, true);
@@ -62,13 +62,13 @@ describe('tłumaczenia', () => {
       setLang(l);
       const r = makeReport({ journal: j, levels: {}, name: 'Sam', today: day });
       const text = JSON.stringify([r.weekText, r.skills.map((s) => [s.title, s.lines]), r.tips, r.highlights, r.firsts]);
-      // Hiszpański też ma „ó”, więc sprawdzamy litery typowo polskie.
+      // Spanish also has "ó", so we check letters that are typically Polish.
       expect(text, l).not.toMatch(/[ąćęłńśźż]|Dziecko|liczy|kolory|tygodni/);
       expect(r.skills[0]!.lines[0]).toBe(first[l]);
     }
   });
 
-  it('daty tygodnia w każdym języku', () => {
+  it('week dates in every language', () => {
     setLang('en');
     expect(formatRange('2026-11-15', '2026-11-21')).toBe('November 15–21, 2026');
     setLang('de');

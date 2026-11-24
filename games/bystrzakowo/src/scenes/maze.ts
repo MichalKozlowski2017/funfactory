@@ -13,20 +13,20 @@ const HEDGE_DARK = 0x37804a;
 const FLOOR = 0xfff3d6;
 
 /**
- * Labirynt (Ścieżka Lusi): palcem prowadzi się bohatera (np. kurczaczka) korytarzami do celu (mamy).
- * Bohater idzie za palcem pole po polu, tylko przez otwarte przejścia; ściana go odbija.
+ * Maze (Lusia's Path): the child guides the hero (e.g. a chick) with a finger along the corridors to the goal (its mother).
+ * The hero follows the finger cell by cell, only through open passages; a wall bounces it back.
  */
 export class MazeScene extends RoundScene {
   readonly id = 'maze';
   private pairs: [string, string][] = [];
   private maze!: Maze;
-  // Tworzone od nowa w każdym zadaniu (warstwa jest czyszczona i niszczona między zadaniami).
+  // Recreated for every task (the layer is cleared and destroyed between tasks).
   private board = new Graphics();
   private trail = new Graphics();
   private glow = new Graphics();
   private hero!: Sprite;
   private goal!: Sprite;
-  /** Odwiedzone pola (ostatnie = pole bohatera). */
+  /** Visited cells (last = the hero's cell). */
   private steps: [number, number][] = [];
   private dragging = false;
   private bumpAt = -1;
@@ -78,7 +78,7 @@ export class MazeScene extends RoundScene {
     this.board.on('globalpointermove', (e) => this.dragging && this.follow(e));
     this.board.on('pointerup', () => (this.dragging = false));
     this.board.on('pointerupoutside', () => (this.dragging = false));
-    // Obrazki nie łapią dotyku: palec przyłożony na bohaterze ma trafić w planszę.
+    // Pictures don't catch touch: a finger placed on the hero should hit the board.
     for (const v of [this.glow, this.trail, this.goal, this.hero]) v.eventMode = 'none';
     this.layer.addChild(this.board, this.glow, this.trail, this.goal, this.hero);
     this.timers.after(0.4, () => say(this.game, this.guide, this.promptLine()));
@@ -95,9 +95,9 @@ export class MazeScene extends RoundScene {
   }
 
   /**
-   * Bohater idzie za palcem pole po polu (albo wraca po własnych śladach). Gdy palec odjedzie dalej niż o jedno
-   * pole (dziecko ciągnie prosto albo po skosie do celu), bohater go dogania korytarzem: krok w osi o większej
-   * różnicy, a gdy tam ściana, w drugiej osi. Ściana liczy się jako pomyłka tylko tuż obok bohatera.
+   * The hero follows the finger cell by cell (or goes back along its own trail). When the finger gets more than one
+   * cell away (the child pulls straight or diagonally to the goal), the hero catches up along the corridor: a step on the axis
+   * with the larger difference, and if there's a wall, on the other axis. A wall counts as a mistake only right next to the hero.
    */
   private follow(e: FederatedPointerEvent): void {
     if (this.busy) return;
@@ -113,8 +113,8 @@ export class MazeScene extends RoundScene {
       const tries: [number, number][] = Math.abs(dx) >= Math.abs(dy) ? [[sx, 0], [0, sy]] : [[0, sy], [sx, 0]];
       const step = tries.find(([ax, ay]) => (ax || ay) && canStep(this.maze, hc, hr, hc + ax, hr + ay));
       if (!step) {
-        // Ściana: „oj” tylko gdy palec jest na sąsiednim polu, a bohater od chwili stoi (dziecko naprawdę pcha
-        // w ścianę). Przy płynnym ruchu po skosie palec przecina pola za ścianą i to nie jest pomyłka.
+        // Wall: "oops" only when the finger is on a neighboring cell and the hero has been standing for a moment (the child really pushes
+        // into the wall). With a smooth diagonal move the finger crosses cells behind the wall, and that's not a mistake.
         if (Math.abs(dx) + Math.abs(dy) === 1 && this.time - this.movedAt > 0.5) this.bump(dx, dy);
         break;
       }
@@ -143,7 +143,7 @@ export class MazeScene extends RoundScene {
     this.drawTrail();
   }
 
-  /** Ściana: bohater odbija się w stronę ruchu; „oj” najwyżej co 2 s, pomyłka raz na jedno przyłożenie palca. */
+  /** Wall: the hero bounces back in the direction of movement; "oops" at most every 2 s, a mistake once per finger press. */
   private bump(dx: number, dy: number): void {
     if (this.time - this.bumpAt < 2) return;
     this.bumpAt = this.time;
@@ -157,7 +157,7 @@ export class MazeScene extends RoundScene {
     this.missed();
   }
 
-  /** Ślad: kropeczki po środku odwiedzonych pól. */
+  /** Trail: little dots in the middle of the visited cells. */
   private drawTrail(): void {
     const g = this.trail.clear();
     const pts = this.steps.map(([c, r]) => this.center(c, r));
@@ -176,7 +176,7 @@ export class MazeScene extends RoundScene {
       void pulse(this.tweens, this.goal, 0.25, 0.4);
       void pulse(this.tweens, this.hero, 0.25, 0.4);
       this.burst(at.x, at.y, 40);
-      // Podskok radości.
+      // Jump of joy.
       const y = this.hero.y;
       void this.tweens.to(this.hero, { y: y - this.cell * 0.4 }, { duration: 0.18, yoyo: true, repeat: 3, ease: 'quadOut' }).done.then(() => (this.hero.y = y));
       const len = say(this.game, this.guide, `item-${this.pair[1]}`);
@@ -184,7 +184,7 @@ export class MazeScene extends RoundScene {
     });
   }
 
-  /** Playtest: przejście najkrótszą drogą. */
+  /** Playtest: walk the shortest path. */
   solve(): void {
     const route = path(this.maze, 0, 0, this.maze.cols - 1, this.maze.rows - 1);
     this.steps = route;
@@ -192,8 +192,8 @@ export class MazeScene extends RoundScene {
     this.arrive();
   }
 
-  /** Podpowiedź: świecą następne pola najkrótszej drogi. */
-  /** Prowadzenie bohatera kilka pól w stronę wyjścia. */
+  /** Hint: the next cells of the shortest path glow. */
+  /** Guide the hero a few cells towards the exit. */
   protected override gesture(): Gesture | null {
     const [c, r] = this.steps[this.steps.length - 1]!;
     const route = path(this.maze, c, r, this.maze.cols - 1, this.maze.rows - 1).slice(0, 5);
@@ -225,7 +225,7 @@ export class MazeScene extends RoundScene {
     const s = this.cell;
     const o = this.topLeft;
     const g = this.board.clear();
-    // Podłoga z cieniem, potem żywopłot (ciemniejszy spód i jaśniejszy wierzch).
+    // Floor with a shadow, then the hedge (darker bottom and lighter top).
     g.roundRect(o.x - s * 0.12, o.y - s * 0.12 + 8, cols * s + s * 0.24, rows * s + s * 0.24, s * 0.25).fill({ color: 0x000000, alpha: 0.12 });
     g.roundRect(o.x - s * 0.12, o.y - s * 0.12, cols * s + s * 0.24, rows * s + s * 0.24, s * 0.25).fill({ color: FLOOR });
     const segs: [number, number, number, number][] = [];

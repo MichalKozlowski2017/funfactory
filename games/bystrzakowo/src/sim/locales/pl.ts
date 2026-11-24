@@ -1,6 +1,6 @@
 /** Polish on-screen texts (key: English id). */
 export const PL: Record<string, string> = {
-  // Krainy i zabawy
+  // Realms and activities
   puzzleMeadow: 'Polana Zagadek',
   basilsWorkshop: 'Warsztat Bazyla',
   lusiasPath: 'Ścieżka Lusi',
@@ -26,7 +26,7 @@ export const PL: Record<string, string> = {
   melody: 'Melodia',
   goodNight: 'Dobranoc!',
   album: 'Album',
-  // Strefa rodzica
+  // Parent zone
   parents: 'Dla rodzica',
   settings: 'Ustawienia',
   close: 'Zamknij',
@@ -70,7 +70,7 @@ export const PL: Record<string, string> = {
   versionFull: 'Wersja: pełna',
   versionTrialFullAccess: 'Wersja: próbna (pełny dostęp)',
   versionFreePuzzleMeadow: 'Wersja: darmowa (Polana Zagadek)',
-  // Pełna wersja
+  // Full version
   fullTrialAccessMore: 'Pełny dostęp próbny: jeszcze {n} dni zabawy po dzisiejszym',
   fullTrialAccess1: 'Pełny dostęp próbny: jeszcze 1 dzień zabawy po dzisiejszym',
   fullTrialAccessToday: 'Pełny dostęp próbny: dziś ostatni dzień',
@@ -165,4 +165,6 @@ export const PL: Record<string, string> = {
   firstTimePlaying: '{date}: pierwsza zabawa',
   firstDiscoveriesWillAppear: 'Pierwsze odkrycia pojawią się po kilku zabawach.',
   screenFreePlayIdea: 'Pomysł na zabawę bez ekranu',
+  // Demo child name for playtests and store screenshots.
+  demoChildName: 'Zosia',
 };

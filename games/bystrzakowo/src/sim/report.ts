@@ -1,9 +1,9 @@
 /**
- * Raport dla rodzica: co dziecko umie, opisane po ludzku, wskazówki do zabawy poza ekranem
- * i najważniejsze sukcesy tygodnia (pocztówka). Czysty TS, bez Pixi.
+ * Parent report: what the child can do, described in plain words, tips for play away from the screen
+ * and the week's top achievements (postcard). Pure TS, no Pixi.
  *
- * Zdania są w czasie teraźniejszym i bez form zależnych od płci („Zosia liczy”, „Staś liczy”),
- * imię zawsze w mianowniku, więc nie trzeba pytać o płeć ani odmieniać imion.
+ * Sentences are in the present tense and avoid gender-dependent forms (in Polish the verb then reads the same for a girl's or a boy's name),
+ * the name is always in the nominative, so there is no need to ask for gender or decline names.
  */
 import { DIGITS, lettersOf } from './letters.ts';
 import { factsOf, mastered, shiftDay, struggling, summarize, type Journal } from './journal.ts';
@@ -16,9 +16,9 @@ export type { Domain } from './locales/report.ts';
 export interface SkillLine {
   domain: Domain;
   title: string;
-  /** Zdania opisu. */
+  /** Description sentences. */
   lines: string[];
-  /** 0 (jeszcze nie było) .. 3 (świetnie). */
+  /** 0 (not played yet) .. 3 (great). */
   stars: number;
 }
 
@@ -29,7 +29,7 @@ export interface Report {
   skills: SkillLine[];
   tips: string[];
   highlights: string[];
-  /** „Pierwsze razy” z ostatnich 7 dni. */
+  /** "First times" from the last 7 days. */
   firsts: string[];
 }
 
@@ -42,7 +42,7 @@ export interface ReportInput {
 
 const LOGIC: Activity[] = ['shadows', 'matching', 'mothers', 'patterns', 'sorting', 'stories', 'memory', 'jigsaw', 'maze'];
 
-/** Jak idzie, z liczby pomyłek na zadanie: indeks opisu (0 dobrze .. 2 trudno) i gwiazdki. */
+/** How it's going, from mistakes per task: description index (0 good .. 2 hard) and stars. */
 const quality = (misses: number, tasks: number): [number, number] => {
   const r = misses / Math.max(1, tasks);
   return r < 0.15 ? [0, 3] : r < 0.5 ? [1, 2] : [2, 1];
@@ -50,11 +50,11 @@ const quality = (misses: number, tasks: number): [number, number] => {
 
 const capital = (s: string) => s[0]!.toUpperCase() + s.slice(1);
 
-/** Wskazówki w bieżącym języku (polskie: zgodność z testami). */
+/** Tips (the Polish ones, kept for test compatibility). */
 export const TIPS = REPORT_TEXT.pl.tips;
 
 
-/** Ile dni opanowanych / próbowanych w grupie umiejętności. */
+/** How many items are mastered / attempted in a skill group. */
 function split(m: Map<string, string>): { ok: string[]; hard: string[]; tried: string[] } {
   const ok: string[] = [];
   const hard: string[] = [];
@@ -67,7 +67,7 @@ function split(m: Map<string, string>): { ok: string[]; hard: string[]; tried: s
 
 const starsOf = (ok: number, tried: number): number => (tried === 0 ? 0 : ok / tried >= 0.75 ? 3 : ok / tried >= 0.4 ? 2 : 1);
 
-/** Wszystkie dni dziennika: ile razy dziecko rozwiązało zadania danej zabawy. */
+/** All journal days: how many tasks of a given activity the child solved. */
 function totals(j: Journal): Partial<Record<Activity, number>> {
   return summarize(j, '0000-00-00', '9999-99-99').acts;
 }
@@ -82,7 +82,7 @@ export function makeReport(input: ReportInput): Report {
   const all = totals(j);
   const skills: SkillLine[] = [];
 
-  // Liczby: liczenie (1..8), cyferki (rysowanie), kropki.
+  // Numbers: counting (1..8), digits (drawing), dots.
   {
     const counts = split(factsOf(j, 'number'));
     const digits = [...factsOf(j, 'digit').keys()].sort();
@@ -103,7 +103,7 @@ export function makeReport(input: ReportInput): Report {
     skills.push({ domain: 'numbers', title: P.titles.numbers, lines, stars });
   }
 
-  // Litery i głoski.
+  // Letters and phonemes.
   {
     const sounds = split(factsOf(j, 'phoneme'));
     const letters = [...factsOf(j, 'letter').keys()];
@@ -118,7 +118,7 @@ export function makeReport(input: ReportInput): Report {
     skills.push({ domain: 'letters', title: P.titles.letters, lines, stars });
   }
 
-  // Kolory i kształty.
+  // Colours and shapes.
   {
     const colors = split(factsOf(j, 'color'));
     const shapes = split(factsOf(j, 'shape'));
@@ -135,7 +135,7 @@ export function makeReport(input: ReportInput): Report {
     skills.push({ domain: 'colors', title: P.titles.colors, lines, stars: starsOf(colors.ok.length + shapes.ok.length, tried) });
   }
 
-  // Emocje.
+  // Emotions.
   {
     const em = split(factsOf(j, 'emotion'));
     const lines: string[] = [];
@@ -147,9 +147,9 @@ export function makeReport(input: ReportInput): Report {
     skills.push({ domain: 'emotions', title: P.titles.emotions, lines, stars: starsOf(em.ok.length, em.tried.length) });
   }
 
-  // Logika, spostrzegawczość, pamięć.
+  // Logic, perception, memory.
   {
-    // Najczęściej grane zagadki z tygodnia, każda z opisem, liczbą i tym, jak idzie.
+    // The week's most played puzzles, each with a description, a count and how it's going.
     const played = LOGIC.filter((a) => (w.acts[a] ?? 0) > 0).sort((a, b) => (w.acts[b] ?? 0) - (w.acts[a] ?? 0));
     const lines: string[] = [];
     let stars = 0;
@@ -166,7 +166,7 @@ export function makeReport(input: ReportInput): Report {
     skills.push({ domain: 'logic', title: P.titles.logic, lines, stars: avgStars });
   }
 
-  // Twórczość.
+  // Creativity.
   {
     const parts: string[] = [];
     if (all.coloring) parts.push(P.creative.coloring(all.coloring));
@@ -194,7 +194,7 @@ function firstsIn(P: ReportText, j: Journal, from: string, to: string): string[]
   }).map(([, s]) => s);
 }
 
-/** Dwie wskazówki: najpierw z dziedziny, która idzie najsłabiej (albo której jeszcze nie było). */
+/** Two tips: first from the weakest domain (or one not played yet). */
 function pickTips(P: ReportText, skills: SkillLine[], today: string): string[] {
   const [y, m, d] = today.split('-').map(Number) as [number, number, number];
   const week = Math.floor(Date.UTC(y, m - 1, d) / (7 * 86_400_000));
@@ -206,14 +206,14 @@ function pickTips(P: ReportText, skills: SkillLine[], today: string): string[] {
 }
 const TIP_ORDER: Domain[] = ['numbers', 'letters', 'colors', 'emotions', 'logic', 'creativity'];
 
-/** Najważniejsze sukcesy tygodnia (do pocztówki), najwyżej trzy. */
+/** The week's top achievements (for the postcard), at most three. */
 function highlights(P: ReportText, j: Journal, acts: Partial<Record<Activity, number>>, from: string, to: string): string[] {
   const fresh = (group: string) =>
     Object.entries(j.learned)
       .filter(([k, d]) => k.startsWith(group + ':') && d >= from && d <= to)
       .map(([k]) => k.slice(group.length + 1));
   const out: string[] = [];
-  // „Liczenie do N” tylko gdy opanowane są wszystkie liczby od 1 do N.
+  // "Counting to N" only when all numbers from 1 to N are mastered.
   const nums = fresh('number').map(Number);
   if (nums.length) {
     let upTo = 0;
@@ -232,9 +232,9 @@ function highlights(P: ReportText, j: Journal, acts: Partial<Record<Activity, nu
   if (shapes.length) out.push(P.hl.shapes(shapes.map((x) => P.shapes[x] ?? x)));
   const emotions = fresh('emotion');
   if (emotions.length) out.push(P.hl.emotions(emotions.map((e) => P.emotions[e] ?? e)));
-  // Pierwsze razy (w pierwszych dniach to one są największymi sukcesami).
+  // First times (in the first days these are the biggest achievements).
   for (const f of firstsIn(P, j, from, to).slice(0, 3)) out.push(capital(f));
-  // Uzupełnienie liczbami z tygodnia.
+  // Filled up with the week's numbers.
   for (const [a, count] of P.hl.counts) if ((acts[a] ?? 0) > 0) out.push(count(acts[a]!));
   const total = Object.values(acts).reduce((n, x) => n + (x ?? 0), 0);
   if (total) out.push(P.hl.tasks(total));
@@ -242,8 +242,8 @@ function highlights(P: ReportText, j: Journal, acts: Partial<Record<Activity, nu
 }
 
 /**
- * Zakres tygodnia na pocztówce w bieżącym języku:
- * pl „15–21 listopada 2026”, en „November 15–21, 2026”, de „15.–21. November 2026”.
+ * Week range on the postcard in the current language:
+ * pl "15–21 <month in genitive> 2026", en "November 15–21, 2026", de "15.–21. November 2026".
  */
 export function formatRange(from: string, to: string): string {
   const M = REPORT_TEXT[lang()].months;

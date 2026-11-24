@@ -1,6 +1,6 @@
 /**
- * Wspólne dla naklejanki i albumu rodzica: tła-krajobrazy i rysowanie obrazka z naklejek,
- * oraz zapis pokolorowanych kolorowanek (miniatury JPEG, tylko na urządzeniu).
+ * Shared by the sticker scene and the parent album: landscape backgrounds and drawing the sticker picture,
+ * plus storage of colored coloring pages (JPEG thumbnails, on the device only).
  */
 import { Assets, Container, Sprite, type Texture } from 'pixi.js';
 import { SaveStore } from '@funfactory/core';
@@ -10,13 +10,13 @@ import { cover } from './ui.ts';
 import { IDS_VERSION, LEGACY_STORES, legacyId } from './sim/migrate.ts';
 
 export const TRAY_H = 150;
-/** Rozmiar naklejki w połowie wysokości obrazka (wyżej mniejsza, niżej większa). */
+/** Sticker size at half the picture height (smaller higher up, larger lower down). */
 export const STICKER = 120;
 const URL_BASE = import.meta.env.BASE_URL;
 
 let landscapes: Promise<Map<Landscape, Texture>> | null = null;
 
-/** Tła naklejanki (wczytywane raz). */
+/** Sticker scene backgrounds (loaded once). */
 export function loadLandscapes(art: Art): Promise<Map<Landscape, Texture>> {
   return (landscapes ??= (async () => {
     const map = new Map<Landscape, Texture>([['meadow', art.realmBg.meadow]]);
@@ -30,7 +30,7 @@ export function loadLandscapes(art: Art): Promise<Map<Landscape, Texture>> {
   })());
 }
 
-/** Obrazek z naklejek w rozmiarze `w`×`h` (jak na ekranie naklejanki o tym rozmiarze). */
+/** Sticker picture at size `w`×`h` (as on a sticker screen of that size). */
 export function pictureView(pic: Picture, w: number, h: number, art: Art, bgs: Map<Landscape, Texture>): Container {
   const inner = new Container();
   const bg = new Sprite(bgs.get(pic.bg) ?? art.realmBg.meadow);
@@ -48,18 +48,18 @@ export function pictureView(pic: Picture, w: number, h: number, art: Art, bgs: M
   return inner;
 }
 
-// ——— Pokolorowane kolorowanki ———
+// ——— Colored coloring pages ———
 
 export interface Painting {
   id: string;
   page: string;
-  /** Dzień („2026-11-21”). */
+  /** Day ("2026-11-21"). */
   date: string;
-  /** JPEG jako data URL. */
+  /** JPEG as a data URL. */
   img: string;
 }
 
-/** Najwięcej zapamiętanych prac (najstarsze wypadają). */
+/** Maximum number of saved works (the oldest drop out). */
 const MAX_PAINTINGS = 24;
 const STORE_KEY = 'bystrzakowo-works';
 const store = new SaveStore<{ items: Painting[]; ids?: number }>(STORE_KEY, { items: [] });
@@ -91,7 +91,7 @@ export async function removePainting(id: string): Promise<void> {
   await store.save({ items: list, ids: IDS_VERSION });
 }
 
-/** Piksele obrazka → JPEG data URL o boku `side`. */
+/** Image pixels → JPEG data URL with side `side`. */
 export function pixelsToJpeg(img: ImageData, side: number, quality = 0.85): string {
   const src = document.createElement('canvas');
   src.width = img.width;

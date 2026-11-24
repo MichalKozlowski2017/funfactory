@@ -19,8 +19,8 @@ interface Tile {
 }
 
 /**
- * Sylaby (Warsztat Bazyla): obrazek, puste miejsca i rozsypane kafelki z sylabami. Kafelek pasujący
- * do miejsca wskakuje; po ułożeniu Lusia czyta sylabami i całe słowo, a kafelki podświetlają się po kolei.
+ * Syllables (Basil's Workshop): a picture, empty slots and scattered syllable tiles. A tile that fits
+ * a slot pops in; once complete, Lusia reads syllable by syllable and then the whole word, and the tiles light up in turn.
  */
 export class SyllableScene extends RoundScene {
   readonly id = 'syllables';
@@ -114,7 +114,7 @@ export class SyllableScene extends RoundScene {
     if (this.tiles.every((x) => x.placed)) this.read();
   }
 
-  /** Czytanie: kafelki podskakują po kolei (sylaby), potem całe słowo i obrazek. */
+  /** Reading: tiles bounce in turn (syllables), then the whole word and the picture. */
   private read(): void {
     this.busy = true;
     const len = say(this.game, this.guide, `read-${this.word.item}`);
@@ -138,7 +138,7 @@ export class SyllableScene extends RoundScene {
     for (const t of this.tiles) if (!t.placed) this.lock(t);
   }
 
-  /** Podpowiedź: pierwszy brakujący kafelek podjeżdża w stronę swojego miejsca. */
+  /** Hint: the first missing tile slides toward its slot. */
   protected override gesture(): Gesture | null {
     const t = [...this.tiles].filter((x) => !x.placed).sort((a, b) => a.index - b.index)[0];
     const s = t && this.slots[t.index];
@@ -149,7 +149,7 @@ export class SyllableScene extends RoundScene {
     const t = [...this.tiles].filter((x) => !x.placed).sort((a, b) => a.index - b.index)[0];
     if (!t) return;
     const s = this.slots[t.index]!;
-    // Chwycenie elementu przerywa podpowiedź; wtedy nie cofamy go na start (dziecko mogło go już położyć).
+    // Grabbing the item interrupts the hint; then we don't move it back to the start (the child may have placed it already).
     const tw = this.tweens
       .to(t.view, { x: t.home.x + (s.x - t.home.x) * 0.4, y: t.home.y + (s.y - t.home.y) * 0.4 }, { duration: 0.45, ease: 'sineInOut', yoyo: true, repeat: 1 });
     void tw.done.then(() => !tw.killed && t.view.position.set(t.home.x, t.home.y));

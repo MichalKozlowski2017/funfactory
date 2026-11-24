@@ -1,9 +1,9 @@
 /**
- * Pełna wersja: 3 dni zabawy z pełnym dostępem (sim/trial.ts), potem tylko Polana Zagadek, aż rodzic
- * kupi pełną wersję (jednorazowy zakup, bez zewnętrznych serwisów). Pełny raport i pocztówka w strefie
- * rodzica działają tak samo: w próbie i po zakupie.
+ * Full version: 3 play days with full access (sim/trial.ts), then only the Riddle Meadow (meadow) until the parent
+ * buys the full version (one-time purchase, no external services). The full report and the postcard in the parent
+ * zone work the same way: during the trial and after purchase.
  *
- * Playtesty: `?free` (albo build z `VITE_PREVIEW=free`) udaje koniec próby bez zakupu, `?full` udaje kupioną pełną wersję.
+ * Playtests: `?free` (or a build with `VITE_PREVIEW=free`) fakes the end of the trial without a purchase, `?full` fakes a bought full version.
  */
 import { buy, getProduct, owns, restore } from '@funfactory/core/purchases';
 import { today } from './log.ts';
@@ -11,15 +11,15 @@ import { markPlayDay, realmOpen, trialState, TRIAL_DAYS, type TrialSave, type Tr
 import type { RealmId } from './sim/realms.ts';
 import { saveState, state } from './state.ts';
 
-/** Identyfikator produktu w App Store Connect i Google Play Console (jednorazowy, „non-consumable”). */
+/** Product id in App Store Connect and Google Play Console (one-time, "non-consumable"). */
 export const PRODUCT_ID = 'bystrzakowo.full';
 
 const query = typeof location !== 'undefined' ? new URLSearchParams(location.search) : new URLSearchParams();
-// Na telefonie podgląd włącza build z VITE_PREVIEW=free|full (prawdziwy zapis zostaje nietknięty).
+// On the phone the preview is enabled by a build with VITE_PREVIEW=free|full (the real save stays untouched).
 const PREVIEW_FREE = query.has('free') || import.meta.env.VITE_PREVIEW === 'free';
 const PREVIEW_FULL = query.has('full') || import.meta.env.VITE_PREVIEW === 'full';
 
-/** Zapis próby (w podglądzie `?free`: próba wykorzystana). */
+/** Trial save (in the `?free` preview: trial used up). */
 function save(): TrialSave {
   if (PREVIEW_FULL) return { full: true };
   if (PREVIEW_FREE) return { trialDays: Array.from({ length: TRIAL_DAYS }, (_, i) => `2000-01-0${i + 1}`) };
@@ -28,7 +28,7 @@ function save(): TrialSave {
 
 export const trial = (): TrialState => trialState(save(), today());
 
-/** Pełny dostęp dziś (zakup albo trwająca próba). */
+/** Full access today (purchase or an ongoing trial). */
 export const hasFull = (): boolean => {
   const t = trial();
   return t.full || t.active;
@@ -38,7 +38,7 @@ export const isBought = (): boolean => trial().full;
 
 export const realmIsOpen = (realm: RealmId): boolean => realmOpen(save(), today(), realm);
 
-/** Pierwsze zadanie dnia zużywa dzień próby. */
+/** The first task of the day uses up a trial day. */
 export function countPlayDay(): void {
   if (PREVIEW_FREE || PREVIEW_FULL) return;
   const before = state.progress.trialDays?.length ?? 0;
@@ -46,7 +46,7 @@ export function countPlayDay(): void {
   if ((state.progress.trialDays?.length ?? 0) !== before) void saveState();
 }
 
-/** Przy starcie: zakup zrobiony na innym urządzeniu albo przywrócony (po cichu, bez okienek). */
+/** At startup: a purchase made on another device or restored (silently, no dialogs). */
 export async function syncPurchase(): Promise<void> {
   if (state.progress.full) return;
   if (await owns(PRODUCT_ID)) {
@@ -56,7 +56,7 @@ export async function syncPurchase(): Promise<void> {
 }
 
 let priceCache: Promise<string | null> | null = null;
-/** Cena ze sklepu („24,99 zł”) albo null (brak sklepu, np. w przeglądarce). */
+/** Localized price from the store (e.g. "$4.99") or null (no store, e.g. in the browser). */
 export const price = (): Promise<string | null> => (priceCache ??= getProduct(PRODUCT_ID).then((p) => p?.price ?? null));
 
 async function unlock(ok: boolean): Promise<boolean> {

@@ -1,6 +1,6 @@
 /**
- * Nazwy obiektów z katalogu po angielsku, niemiecku i hiszpańsku (polskie są w catalog.ts). Słowa jak do malucha:
- * „kitten”, „Kätzchen”; bez rodzajników, bo lektor czyta samą nazwę.
+ * Catalog object names in Polish, English, German and Spanish (catalog.ts takes the Polish one as `name`). Words as you
+ * would say them to a toddler: "kitten", "Kätzchen"; no articles, because the narrator reads just the name.
  */
 export const ITEM_NAMES: Record<string, { pl: string; en: string; de: string; es: string }> = {
   cat: { pl: 'Kot', en: 'Cat', de: 'Katze', es: 'Gato' },
@@ -108,7 +108,7 @@ export const ITEM_NAMES: Record<string, { pl: string; en: string; de: string; es
   ball: { pl: 'Piłka', en: 'Ball', de: 'Ball', es: 'Pelota' },
   teddy: { pl: 'Miś', en: 'Teddy bear', de: 'Teddybär', es: 'Osito de peluche' },
   block: { pl: 'Klocek', en: 'Block', de: 'Bauklotz', es: 'Bloque' },
-  lalka: { pl: 'Lalka', en: 'Doll', de: 'Puppe', es: 'Muñeca' },
+  doll: { pl: 'Lalka', en: 'Doll', de: 'Puppe', es: 'Muñeca' },
   kite: { pl: 'Latawiec', en: 'Kite', de: 'Drachen', es: 'Cometa' },
   drum: { pl: 'Bębenek', en: 'Drum', de: 'Trommel', es: 'Tambor' },
   pony: { pl: 'Konik na biegunach', en: 'Rocking horse', de: 'Schaukelpferd', es: 'Caballito de madera' },
@@ -169,7 +169,7 @@ export const ITEM_NAMES: Record<string, { pl: string; en: string; de: string; es
   snowflake: { pl: 'Śnieżynka', en: 'Snowflake', de: 'Schneeflocke', es: 'Copo de nieve' },
 };
 
-/** Polish genitive of young animals ("Gdzie jest mama ...?"). */
+/** Polish genitive of young animals (for the "Where is the mother of ...?" prompt). */
 export const PL_GENITIVE: Record<string, string> = {
   chick: 'kurczaczka',
   calf: 'cielaczka',

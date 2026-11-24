@@ -1,10 +1,10 @@
 /**
- * Nagrania „X jak słowo” dla wszystkich przykładów liter (src/sim/letters.ts, LETTER_EXAMPLES):
- *   node games/bystrzakowo/scripts/letters-voice.ts [stary-letters.ts]
- * 1. Teksty zdań w każdym języku (po polsku z nazwą litery: „Eś... jak ślimak.”).
- * 2. Stare nagrania jednej litery (litera-a.m4a = „A jak autko”) dostają nową nazwę (litera-a-auto.m4a),
- *    gdy przykład się zgadza (podaj starą wersję letters.ts z obiektami liter).
- * 3. Brakujące → voice/litery-<język>.json (zadanie: Chatterbox z próbką Lusi dla pl/de/es, VoxCPM dla en).
+ * "X as in word" recordings for all letter examples (src/sim/letters.ts, LETTER_EXAMPLES):
+ *   node games/bystrzakowo/scripts/letters-voice.ts [old-letters.ts]
+ * 1. Sentence texts in every language (Polish uses the letter's name, e.g. "Es... as in snail.").
+ * 2. Old single-letter recordings (letter-a.m4a = "A as in car") get the new name (letter-a-car.m4a)
+ *    when the example matches (pass the old version of letters.ts with one item per letter).
+ * 3. Missing ones → voice/letters-<lang>.json (job: Chatterbox with Lusia's sample for pl/de/es, VoxCPM for en).
  */
 import { existsSync, readFileSync, renameSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -16,7 +16,7 @@ import type { Lang } from '../src/sim/lang.ts';
 
 const game = join(import.meta.dirname, '..');
 
-/** Stare przypisania litera → obiekt (sprzed przykładów), z podanego pliku letters.ts. */
+/** Old letter → item assignments (from before examples), read from the given letters.ts file. */
 function oldItems(file: string): Record<Lang, Record<string, string>> {
   const s = readFileSync(file, 'utf8');
   const pl = Object.fromEntries([...s.matchAll(/\{ ch: '(.)', item: '([^']*)'/g)].filter((m) => m[2]).map((m) => [m[1]!, m[2]!]));
@@ -27,7 +27,7 @@ function oldItems(file: string): Record<Lang, Record<string, string>> {
   return { pl, en: other('en'), de: other('de'), es: other('es') };
 }
 
-// Uruchomione wprost (nie przy imporcie letterText).
+// Run directly (not when letterText is imported).
 if (process.argv[1] === import.meta.filename) {
   const old = process.argv[2] ? oldItems(process.argv[2]) : null;
   for (const l of ['pl', 'en', 'de', 'es'] as const) {
@@ -46,6 +46,6 @@ if (process.argv[1] === import.meta.filename) {
     }
     const job = l === 'en' ? { voice: 'voices/lusia-en-calm', lang: 'en', tries: 8, lines: missing } : { voice: 'voices\\alt.wav', exag: 0.3, cfg: 0.3, stretch: 0.12, lines: missing };
     writeFileSync(join(game, `voice/letters-${l}.json`), JSON.stringify(job, null, 1) + '\n');
-    console.log(`${l}: przemianowane ${renamed}, do nagrania ${missing.length}`);
+    console.log(`${l}: renamed ${renamed}, to record ${missing.length}`);
   }
 }

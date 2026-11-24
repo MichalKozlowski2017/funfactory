@@ -1,9 +1,9 @@
 /**
- * Statystyki „Przed szkołą”: umiejętności przedszkolaka, ich opanowanie, krzywa nauki (% zadań bez pomyłki)
- * i tempo myślenia (czas dobrej odpowiedzi). Czysty TS: liczy z dziennika (sim/journal.ts), bez grafiki.
+ * "Ready for school" stats: preschool skills, their mastery, the learning curve (% of tasks without a mistake)
+ * and thinking speed (time to a correct answer). Pure TS: computed from the journal (sim/journal.ts), no graphics.
  *
- * Zasady: bez porównań z innymi dziećmi, tylko postęp tego dziecka. Punkt wykresu tylko przy dość wielu
- * zadaniach (inaczej jeden dzień z dwoma zadaniami skacze od 0 do 100%).
+ * Rules: no comparisons with other children, only this child's progress. A chart point only with enough
+ * tasks (otherwise a day with two tasks jumps from 0 to 100%).
  */
 import { EMOTIONS } from './emotions.ts';
 import { mastered, shiftDay, struggling, type DayLog, type Journal } from './journal.ts';
@@ -20,15 +20,15 @@ export type SkillId =
 
 export interface SkillDef {
   id: SkillId;
-  /** Nazwa na ekranie (polski tekst, tłumaczony przez tr()). */
+  /** On-screen name (text key, translated by tr()). */
   name: string;
-  /** Zabawy, z których liczymy zadania. */
+  /** Activities whose tasks we count. */
   acts: Activity[];
-  /** Umiejętność z listą elementów (liczby, kolory…): grupa w dzienniku. */
+  /** Skill with a list of items (numbers, colors…): group in the journal. */
   group?: string;
-  /** Mierzymy tempo (grupa tempa w dzienniku). */
+  /** We measure speed (speed group in the journal). */
   tempo?: string;
-  /** Pomysł na zabawę bez ekranu (polski tekst, tłumaczony przez tr()). */
+  /** Screen-free play idea (text key, translated by tr()). */
   tip: string;
 }
 
@@ -48,7 +48,7 @@ export const SKILLS: readonly SkillDef[] = [
   { id: 'line', name: 'drawsLinesByHand', acts: ['dots', 'maze'], tip: 'traceLinesJoinDots' },
 ];
 
-/** Wszystkie elementy umiejętności w bieżącym języku (np. liczby 1–8, kolory, litery). */
+/** All items of a skill in the current language (e.g. numbers 1–8, colors, letters). */
 export function itemsOf(group: string): string[] {
   switch (group) {
     case 'number':
@@ -70,7 +70,7 @@ export function itemsOf(group: string): string[] {
   }
 }
 
-/** Nazwa elementu na ekranie (kolor, kształt, emocja w bieżącym języku; liczby i litery bez zmian). */
+/** On-screen item name (color, shape, emotion in the current language; numbers and letters unchanged). */
 export function itemName(group: string, id: string): string {
   const P = REPORT_TEXT[lang()];
   if (group === 'color') return P.colors[id] ?? id;
@@ -83,23 +83,23 @@ export function itemName(group: string, id: string): string {
 export type ItemState = 'mastered' | 'practicing' | 'trouble' | 'no';
 
 export interface Mastery {
-  /** 0..1: wypełnienie paska. */
+  /** 0..1: bar fill. */
   value: number;
-  /** Umiejętność z elementami: ile opanowanych z ilu. */
+  /** Skill with items: how many mastered out of how many. */
   ok?: number;
   of?: number;
-  /** Umiejętność bez elementów: etap 0 (jeszcze nie było) .. 3 (pewnie). */
+  /** Skill without items: stage 0 (not yet played) .. 3 (confident). */
   stage?: number;
-  /** Ile zadań w ogóle (0: jeszcze nie było). */
+  /** Total number of tasks (0: not yet played). */
   tasks: number;
 }
 
 const tasksIn = (d: DayLog, acts: readonly Activity[]) => acts.reduce((s, a) => s + (d.acts[a] ?? 0), 0);
-/** Zadania bez pomyłki; dni sprzed zapisu `clean`: w przybliżeniu zadania minus pomyłki. */
+/** Tasks without a mistake; days before `clean` was recorded: approximately tasks minus mistakes. */
 const cleanIn = (d: DayLog, acts: readonly Activity[]) =>
   acts.reduce((s, a) => s + (d.clean ? (d.clean[a] ?? 0) : Math.max(0, (d.acts[a] ?? 0) - (d.misses?.[a] ?? 0))), 0);
 
-/** Stan elementu: opanowany (kiedykolwiek), kłopot (ostatnio), ćwiczy, jeszcze nie było. */
+/** Item state: mastered (ever), struggling (recently), practicing, not yet seen. */
 export function itemState(j: Journal, group: string, id: string): ItemState {
   const key = `${group}:${id}`;
   const h = j.facts[key];
@@ -108,7 +108,7 @@ export function itemState(j: Journal, group: string, id: string): ItemState {
   return struggling(h) ? 'trouble' : 'practicing';
 }
 
-/** Ostatnie 14 dni zabawy: % bez pomyłki (do etapu umiejętności bez elementów). */
+/** Last 14 play days: % without a mistake (for the stage of skills without items). */
 function recent(j: Journal, acts: readonly Activity[], today: string): { tasks: number; clean: number } {
   let tasks = 0;
   let clean = 0;
@@ -129,7 +129,7 @@ export function mastery(def: SkillDef, j: Journal, levels: Partial<Record<Activi
     return { value: all.length ? ok / all.length : 0, ok, of: all.length, tasks };
   }
   if (!tasks) return { value: 0, stage: 0, tasks };
-  // Etap: poziom zabawy (najwyższy z jej zabaw) i jak idzie ostatnio.
+  // Stage: activity level (the highest of its activities) and how it's going recently.
   const level = Math.max(...def.acts.map((a) => levels[a] ?? 0));
   const r = recent(j, def.acts, today);
   const good = r.tasks >= 5 && r.clean / r.tasks >= 0.7;
@@ -140,18 +140,18 @@ export function mastery(def: SkillDef, j: Journal, levels: Partial<Record<Activi
 export type Range = 'days' | 'weeks';
 
 export interface Point {
-  /** Pierwszy dzień okresu (klucz dnia). */
+  /** First day of the period (day key). */
   from: string;
   to: string;
-  /** Wartość (0..1 dla %, sekundy dla tempa); null: za mało zadań. */
+  /** Value (0..1 for %, seconds for speed); null: too few tasks. */
   value: number | null;
-  /** Ile zadań (albo pomiarów) w okresie. */
+  /** Number of tasks (or measurements) in the period. */
   n: number;
-  /** W tym okresie zabawa weszła na wyższy poziom. */
+  /** In this period the activity moved up a level. */
   levelUp?: boolean;
 }
 
-/** Okresy wykresu: 14 ostatnich dni albo 12 ostatnich tygodni (kończących się dziś). */
+/** Chart periods: the last 14 days or the last 12 weeks (ending today). */
 export function periods(range: Range, today: string): { from: string; to: string }[] {
   const n = range === 'days' ? 14 : 12;
   const len = range === 'days' ? 1 : 7;
@@ -166,13 +166,13 @@ const daysOf = (j: Journal, from: string, to: string): [string, DayLog][] =>
     .filter(([k]) => k >= from && k <= to)
     .sort(([a], [b]) => (a < b ? -1 : 1));
 
-/** Najmniej zadań, żeby okres dostał punkt na wykresie. */
+/** Minimum tasks for a period to get a point on the chart. */
 export const MIN_TASKS: Record<Range, number> = { days: 3, weeks: 5 };
 
-/** Krzywa nauki: % zadań bez pomyłki w każdym okresie i znaczniki wejścia na wyższy poziom. */
+/** Learning curve: % of tasks without a mistake in each period and level-up markers. */
 export function accuracy(def: SkillDef, j: Journal, range: Range, today: string): Point[] {
   const ps = periods(range, today);
-  // Poziom przed oknem wykresu: najwyższy zapisany wcześniej (żeby pierwszy punkt nie był „wyższym poziomem”).
+  // Level before the chart window: the highest recorded earlier (so the first point isn't a "level up").
   let best = -1;
   for (const [k, d] of Object.entries(j.days)) if (k < ps[0]!.from) for (const a of def.acts) best = Math.max(best, d.lvl?.[a] ?? -1);
   return ps.map(({ from, to }) => {
@@ -200,14 +200,14 @@ const median = (xs: number[]): number => {
 };
 
 export interface Tempo {
-  /** Poziom, na którym porównujemy (najwięcej pomiarów w oknie). */
+  /** The level we compare at (most measurements in the window). */
   level: number;
   points: Point[];
-  /** Ile razy szybciej teraz niż na początku (>1: szybciej); null: za mało danych. */
+  /** How many times faster now than at the start (>1: faster); null: not enough data. */
   speedup: number | null;
 }
 
-/** Tempo myślenia: mediana czasu dobrej odpowiedzi (sekundy) na tym samym poziomie trudności. */
+/** Thinking speed: median time to a correct answer (seconds) at the same difficulty level. */
 export function tempo(def: SkillDef, j: Journal, range: Range, today: string): Tempo | null {
   if (!def.tempo) return null;
   const ps = periods(range, today);
@@ -227,10 +227,10 @@ export function tempo(def: SkillDef, j: Journal, range: Range, today: string): T
   return { level, points, speedup };
 }
 
-/** Wykres ma sens (co najmniej dwa punkty). Inaczej pokazujemy przykład. */
+/** The chart makes sense (at least two points). Otherwise we show an example. */
 export const enoughPoints = (ps: readonly Point[]): boolean => ps.filter((p) => p.value !== null).length >= 2;
 
-/** Przykładowa krzywa (dziecko z przykładu), gdy prawdziwych danych jest jeszcze za mało. */
+/** Example curve (a sample child) when there isn't enough real data yet. */
 export function sampleAccuracy(range: Range, today: string): Point[] {
   const shape = [0.42, 0.5, 0.55, 0.63, 0.7, 0.52, 0.6, 0.68, 0.74, 0.8, 0.83, 0.86, 0.84, 0.9];
   return periods(range, today).map((p, i, all) => {
@@ -247,12 +247,12 @@ export function sampleTempo(range: Range, today: string): Tempo {
 
 export interface Milestone {
   day: string;
-  /** Element (np. „7”, „zielony”) albo null dla pierwszego razu / wyższego poziomu. */
+  /** Item (e.g. "7", "green") or null for a first time / level up. */
   item: string | null;
   kind: 'mastered' | 'first' | 'level';
 }
 
-/** Odkrycia: opanowane elementy, pierwszy raz w zabawie, wejścia na wyższy poziom (najnowsze pierwsze). */
+/** Milestones: mastered items, first time in an activity, level-ups (newest first). */
 export function milestones(def: SkillDef, j: Journal): Milestone[] {
   const out: Milestone[] = [];
   if (def.group) for (const [k, day] of Object.entries(j.learned)) if (k.startsWith(def.group + ':')) out.push({ day, item: k.slice(def.group.length + 1), kind: 'mastered' });

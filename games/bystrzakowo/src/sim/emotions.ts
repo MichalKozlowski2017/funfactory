@@ -1,6 +1,6 @@
 /**
- * Emocje (Polana Zagadek): „Pokaż wesołą minkę!” – wybór twarzy z kilku.
- * Najpierw minki bardzo różne (wesoła, smutna, zła), potem subtelniejsze.
+ * Emotions (Puzzle Meadow): "Show me the happy face!" – pick one face out of several.
+ * First very different faces (happy, sad, angry), then subtler ones.
  */
 import type { Rng } from '@funfactory/core';
 import { MAX_LEVEL } from './puzzles.ts';
@@ -12,9 +12,9 @@ const EASY: Emotion[] = ['happy', 'sad', 'angry'];
 export const EMOTION_ROUND = 5;
 
 /**
- * Postaci z minkami: w jednym pytaniu wszystkie karty mają tę samą postać (dziecko porównuje same miny),
- * między pytaniami postać się zmienia, żeby dziecko rozpoznawało emocję, a nie zapamiętywało obrazek.
- * 'child' to pierwotne grafiki art/emocje/<emocja>.webp, pozostałe: art/emocje/<emocja>-<postać>.webp.
+ * Characters with faces: within one question all cards show the same character (the child compares only the expressions),
+ * between questions the character changes, so the child recognizes the emotion rather than memorizing the picture.
+ * 'child' is the original art/emotions/<emotion>.webp, the others: art/emotions/<emotion>-<char>.webp.
  */
 export const EMOTION_CHARS = ['child', 'girl', 'kitten', 'teddy'] as const;
 export type EmotionChar = (typeof EMOTION_CHARS)[number];
@@ -23,11 +23,11 @@ const clamp = (level: number) => Math.max(0, Math.min(MAX_LEVEL, Math.round(leve
 export interface EmotionQuestion {
   target: Emotion;
   options: Emotion[];
-  /** Postać na wszystkich kartach pytania. */
+  /** Character on all cards of the question. */
   char: EmotionChar;
 }
 
-/** Pytanie: na poziomie 0 dwie minki z łatwych, potem trzy, na końcu cztery z wszystkich. */
+/** Question: at level 0 two faces from the easy ones, then three, finally four from all. */
 export function makeEmotionQuestion(
   rng: Rng,
   level: number,
@@ -46,7 +46,7 @@ export function makeEmotionQuestion(
   return { target, options, char };
 }
 
-/** `chars`: postaci, których grafiki są wczytane (domyślnie wszystkie). */
+/** `chars`: characters whose art is loaded (all by default). */
 export function makeEmotionRound(rng: Rng, level: number, chars: readonly EmotionChar[] = EMOTION_CHARS): EmotionQuestion[] {
   const out: EmotionQuestion[] = [];
   for (let i = 0; i < EMOTION_ROUND; i++)

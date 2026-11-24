@@ -1,11 +1,11 @@
 /**
- * Obrazki tylko do zabawy „Pisze litery” (przykłady na litery, których brakuje w katalogu: „Q jak queen”,
- * „Ñ de ñandú”). Nie trafiają do innych zagadek ani naklejek, więc nie potrzebują nazw w lektorze:
- * lektor mówi tylko całe zdanie „X jak słowo”. Grafika: public/art/litery/<id>.webp (Flux, plastelina).
+ * Pictures only for the letter-tracing activity (examples for letters missing from the catalog: "Q is for queen",
+ * "Ñ de ñandú"). They don't go into other puzzles or stickers, so they need no names in the narrator's lines:
+ * the narrator only says the whole sentence "X is for word". Art: public/art/letters/<id>.webp (Flux, plasticine).
  */
 export interface LetterPic {
   id: string;
-  /** Opis dla Fluxa (po angielsku, sam obiekt). */
+  /** Description for Flux (in English, the object alone). */
   prompt: string;
 }
 

@@ -6,45 +6,45 @@ import type { Lang } from './lang.ts';
 import type { Picture } from './stickers.ts';
 import { IDS_VERSION } from './migrate.ts';
 
-/** Zapis postępów dziecka. */
+/** The child's saved progress. */
 export interface Progress {
-  /** Poziom trudności każdej zabawy (0..MAX_LEVEL). */
+  /** Difficulty level of each activity (0..MAX_LEVEL). */
   levels: Record<Activity, number>;
-  /** Zebrane naklejki (id obiektów z katalogu), w kolejności zdobycia. */
+  /** Collected stickers (catalog item ids), in the order earned. */
   stickers: string[];
   rounds: number;
-  /** Ostatnio oglądana kraina (powrót z zabawy do tej samej krainy). */
+  /** Last viewed realm (returning from an activity goes back to the same realm). */
   realm: number;
-  /** Historyjki, które dziecko już widziało w bieżącym „worku” (sim/stories.ts). */
+  /** Stories the child has already seen in the current "bag" (sim/stories.ts). */
   storiesSeen?: string[];
-  /** Pokolorowane strony kolorowanki (najpierw nowe). */
+  /** Colored coloring-book pages (newest first). */
   colored?: string[];
-  /** Stary zapis: jeden obrazek z naklejek (przenoszony do `pictures`). */
+  /** Old save: a single sticker picture (migrated to `pictures`). */
   scene?: { id: string; x: number; y: number; flip: boolean }[];
-  /** Galeria obrazków z naklejek (sim/stickers.ts) i numer bieżącego. */
+  /** Gallery of sticker pictures (sim/stickers.ts) and the index of the current one. */
   pictures?: Picture[];
   picture?: number;
-  /** Dziennik postępów dla rodzica (sim/journal.ts). */
+  /** Progress journal for the parent (sim/journal.ts). */
   journal?: Journal;
-  /** Wiek dziecka podany na powitaniu (sim/onboarding.ts), ustawia poziom startowy zabaw. */
+  /** Child's age given during onboarding (sim/onboarding.ts); sets the starting level of activities. */
   age?: number;
-  /** Rodzic przeszedł powitanie (albo je pominął). */
+  /** The parent completed onboarding (or skipped it). */
   onboarded?: boolean;
-  /** Zabawy, w których rączka pokazała już gest. */
+  /** Activities where the hand has already demonstrated the gesture. */
   hands?: string[];
-  /** Imię dziecka (opcjonalne, tylko na urządzeniu). */
+  /** Child's name (optional, stored only on the device). */
   childName?: string;
-  /** Ostatnia wizyta rodzica w strefie rodzica (dzień), do kropki „coś nowego”. */
+  /** Parent's last visit to the parent zone (day), for the "something new" dot. */
   parentSeen?: string;
-  /** Język wybrany przez rodzica (brak: język telefonu). */
+  /** Language chosen by the parent (missing: phone language). */
   lang?: Lang;
-  /** Kupiona pełna wersja. */
+  /** Full version purchased. */
   full?: boolean;
-  /** Dni zabawy w czasie próby pełnej wersji (sim/trial.ts). */
+  /** Play days during the full-version trial (sim/trial.ts). */
   trialDays?: string[];
-  /** Ustawienia ze strefy rodzica. */
+  /** Settings from the parent zone. */
   music: boolean;
-  /** Limit czasu zabawy w minutach (0 = bez limitu). */
+  /** Play time limit in minutes (0 = no limit). */
   limit?: number;
   /** Id format version (sim/migrate.ts); missing = old Polish ids. */
   ids?: number;
@@ -58,7 +58,7 @@ export const newProgress = (): Progress => ({
   music: true,
 });
 
-/** Naklejka za rundę: najpierw te, których dziecko jeszcze nie ma. */
+/** Sticker for a round: first the ones the child doesn't have yet. */
 export function pickSticker(rng: Rng, owned: readonly string[]): string {
   const missing = ITEMS.filter((i) => !owned.includes(i.id));
   return rng.pick(missing.length > 0 ? missing : ITEMS).id;

@@ -1,30 +1,30 @@
 /**
- * Próba pełnej wersji: przez 3 dni zabawy (nie kalendarzowych) otwarte są wszystkie krainy, potem
- * zostaje tylko Polana Zagadek, aż rodzic kupi pełną wersję. Dzień liczy się, gdy dziecko rozwiąże
- * pierwsze zadanie; aplikacja leżąca odłogiem nie zużywa próby, a przestawienie zegara nic nie daje
- * (liczą się różne dni, w które była zabawa).
+ * Full version trial: for 3 play days (not calendar days) all realms are open, then only the
+ * Riddle Meadow (meadow) remains until the parent buys the full version. A day counts when the child solves
+ * the first task; an app left unused does not consume the trial, and changing the clock achieves nothing
+ * (what counts is the number of distinct days with play).
  */
 import type { RealmId } from './realms.ts';
 
 export const TRIAL_DAYS = 3;
-/** Kraina zawsze darmowa. */
+/** Realm that is always free. */
 export const FREE_REALM: RealmId = 'meadow';
 
 export interface TrialSave {
-  /** Dni zabawy w czasie próby (różne, najwyżej TRIAL_DAYS). */
+  /** Play days during the trial (distinct, at most TRIAL_DAYS). */
   trialDays?: string[];
-  /** Kupiona pełna wersja. */
+  /** Full version bought. */
   full?: boolean;
 }
 
 export interface TrialState {
-  /** Pełna wersja kupiona. */
+  /** Full version bought. */
   full: boolean;
-  /** Próba trwa (dziś wszystko otwarte). */
+  /** Trial is running (everything open today). */
   active: boolean;
-  /** Ile dni zabawy z pełnym dostępem zostało po dzisiejszym (0 = dziś ostatni). */
+  /** How many play days with full access remain after today (0 = today is the last). */
   left: number;
-  /** Ile dni próby już wykorzystano (z dzisiejszym, jeśli dziś była zabawa). */
+  /** How many trial days have been used (including today, if there was play today). */
   used: number;
 }
 
@@ -32,13 +32,13 @@ export function trialState(save: TrialSave, today: string): TrialState {
   const days = save.trialDays ?? [];
   const playedToday = days.includes(today);
   const used = days.length;
-  // Dziś otwarte: dzisiejszy dzień jest już w próbie albo jest jeszcze miejsce na nowy.
+  // Open today: today is already in the trial or there is still room for a new day.
   const active = playedToday || used < TRIAL_DAYS;
   const left = Math.max(0, TRIAL_DAYS - used - (playedToday ? 0 : 1));
   return { full: !!save.full, active, left, used };
 }
 
-/** Pierwsze zadanie dnia: dzień zabawy liczy się do próby (jeśli próba jeszcze trwa). */
+/** First task of the day: the play day counts toward the trial (if the trial is still running). */
 export function markPlayDay(save: TrialSave, today: string): void {
   if (save.full) return;
   const days = (save.trialDays ??= []);
@@ -46,7 +46,7 @@ export function markPlayDay(save: TrialSave, today: string): void {
   days.push(today);
 }
 
-/** Czy kraina jest dziś otwarta. */
+/** Whether the realm is open today. */
 export function realmOpen(save: TrialSave, today: string, realm: RealmId): boolean {
   if (realm === FREE_REALM || save.full) return true;
   return trialState(save, today).active;

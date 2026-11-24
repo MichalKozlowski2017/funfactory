@@ -5,8 +5,8 @@ import { ITEMS } from './catalog.ts';
 import { dotCount, evenDots, hitsDot, makeDotsRound, radialContour, traceContour, DOTS_ROUND } from './dots.ts';
 import { canStep, makeMaze, makeMazeRound, MAZE_PAIRS, MAZE_ROUND, mazeSize, path } from './maze.ts';
 
-describe('łączenie kropek', () => {
-  /** Koło o promieniu 20 na masce 64×64. */
+describe('connect the dots', () => {
+  /** Disc of radius 20 on a 64×64 mask. */
   const disc = () => {
     const w = 64;
     const m = new Uint8Array(w * w);
@@ -14,14 +14,14 @@ describe('łączenie kropek', () => {
     return { m, w };
   };
 
-  it('kontur koła leży na jego brzegu', () => {
+  it('the disc contour lies on its edge', () => {
     const { m, w } = disc();
     const c = radialContour(m, w, w, 72);
     expect(c.length).toBe(72);
     for (const p of c) expect(Math.hypot(p.x * w - 32, p.y * w - 32)).toBeCloseTo(20, -0.5);
   });
 
-  it('kropki równo po obwodzie, pierwsza na górze', () => {
+  it('dots evenly spaced along the perimeter, first one at the top', () => {
     const { m, w } = disc();
     const dots = evenDots(radialContour(m, w, w), 8);
     expect(dots.length).toBe(8);
@@ -30,7 +30,7 @@ describe('łączenie kropek', () => {
     for (const g of gaps) expect(g).toBeCloseTo(gaps[0]!, 2);
   });
 
-  it('liczba kropek rośnie z poziomem do dziesięciu, runda bez powtórzeń', () => {
+  it('dot count grows with level up to ten, round without repeats', () => {
     expect([0, 1, 2].map(dotCount)).toEqual([5, 8, 10]);
     const round = makeDotsRound(new Rng(2));
     expect(round.length).toBe(DOTS_ROUND);
@@ -40,7 +40,7 @@ describe('łączenie kropek', () => {
 });
 
 describe('maze', () => {
-  it('z każdego pola da się dojść do każdego (labirynt doskonały)', () => {
+  it('every cell is reachable from every other (perfect maze)', () => {
     const rng = new Rng(4);
     for (const level of [0, 1, 2])
       for (let i = 0; i < 30; i++) {
@@ -50,14 +50,14 @@ describe('maze', () => {
         expect(route[0]).toEqual([0, 0]);
         expect(route[route.length - 1]).toEqual([cols - 1, rows - 1]);
         for (let k = 1; k < route.length; k++) expect(canStep(maze, ...route[k - 1]!, ...route[k]!)).toBe(true);
-        // Doskonały: liczba przejść = liczba pól - 1.
+        // Perfect: number of passages = number of cells - 1.
         let open = 0;
         for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) open += maze.walls[r]![c]!.filter((w) => !w).length;
         expect(open / 2).toBe(cols * rows - 1);
       }
   });
 
-  it('pary bohater–cel istnieją w katalogu', () => {
+  it('hero–goal pairs exist in the catalog', () => {
     for (const [a, b] of MAZE_PAIRS) {
       expect(ITEMS.some((i) => i.id === a)).toBe(true);
       expect(ITEMS.some((i) => i.id === b)).toBe(true);
@@ -67,7 +67,7 @@ describe('maze', () => {
 });
 
 describe('memory', () => {
-  it('każdy obrazek dokładnie dwa razy, bez podobnych, cienie na najwyższym poziomie', async () => {
+  it('each picture exactly twice, no lookalikes, shadows at the top level', async () => {
     const { makeMemoryBoard, pairCount, memoryGrid, memoryMistakes } = await import('./memory.ts');
     const { lookalike } = await import('./catalog.ts');
     const rng = new Rng(8);
@@ -88,16 +88,16 @@ describe('memory', () => {
   });
 });
 
-describe('kontur kropek po krawędzi', () => {
-  it('kontur litery L idzie w głąb wklęsłości, a nie na skróty', () => {
-    // Maska w kształcie L: kreska pionowa i pozioma.
+describe('dot contour along the edge', () => {
+  it('the contour of an L follows the concavity instead of cutting across', () => {
+    // L-shaped mask: a vertical and a horizontal bar.
     const w = 60;
     const m = new Uint8Array(w * w);
     for (let y = 5; y < 55; y++) for (let x = 5; x < 15; x++) m[y * w + x] = 1;
     for (let y = 45; y < 55; y++) for (let x = 5; x < 55; x++) m[y * w + x] = 1;
     const c = traceContour(m, w, w);
     expect(c.length).toBeGreaterThan(20);
-    // Każdy punkt konturu leży przy masce (żaden nie wisi w pustym rogu L).
+    // Every contour point lies next to the mask (none hangs in the empty corner of the L).
     for (const p of c) {
       const x = Math.round(p.x * w);
       const y = Math.round(p.y * w);
@@ -106,26 +106,26 @@ describe('kontur kropek po krawędzi', () => {
   });
 });
 
-describe('litery po śladzie', () => {
-  it('litery mają obrazki w katalogu, kreski w polu 0..1, runda bez powtórzeń', async () => {
+describe('letter tracing', () => {
+  it('letters have pictures in the catalog, strokes within 0..1, round without repeats', async () => {
     const { LETTERS, makeLetterRound, LETTER_ROUND, resample, advance, lettersOf, LETTER_EXAMPLES, letterLines } = await import('./letters.ts');
     const { LETTER_PIC_IDS } = await import('./letter-pics.ts');
-    // Alfabety bez liter, do których nie ma co najmniej dwóch dobrych dziecięcych słów (decyzja właściciela).
+    // Alphabets skip letters that lack at least two good child-friendly words (owner's decision).
     expect(Object.fromEntries((['pl', 'en', 'de', 'es'] as const).map((l) => [l, lettersOf(l).length]))).toEqual({ pl: 25, en: 25, de: 25, es: 24 });
     const first = (w: string) => w.normalize('NFD')[0]!.toUpperCase();
     for (const lang of ['pl', 'en', 'de', 'es'] as const) {
       for (const [ch, xs] of Object.entries(LETTER_EXAMPLES[lang])) {
-        expect(LETTERS.some((g) => g.ch === ch), `${lang} kształt ${ch}`).toBe(true);
-        expect(xs.length, `${lang} ${ch}: przykłady`).toBeGreaterThanOrEqual(2);
+        expect(LETTERS.some((g) => g.ch === ch), `${lang} shape ${ch}`).toBe(true);
+        expect(xs.length, `${lang} ${ch}: examples`).toBeGreaterThanOrEqual(2);
         expect(xs.length).toBeLessThanOrEqual(3);
         for (const [item, word] of xs) {
-          // Obrazek: z katalogu albo tylko do liter; słowo zaczyna się na tę literę (z akcentem: „Ósemka” na Ó).
+          // Picture: from the catalog or letters-only; the word starts with this letter (an accented letter needs a word starting with that exact accented letter).
           expect(ITEMS.some((i) => i.id === item) || LETTER_PIC_IDS.has(item), `${lang} ${ch} ${item}`).toBe(true);
           expect(first(word), `${lang} ${ch} ${word}`).toBe(first(ch));
           if (ch !== first(ch)) expect(word.toUpperCase().startsWith(ch), `${lang} ${ch} ${word}`).toBe(true);
         }
       }
-      // Nazwy nagrań bez powtórzeń i tylko ASCII (pliki na każdym systemie).
+      // Recording names are unique and ASCII-only (files work on every system).
       const lines = letterLines(lang).map((x) => x.line);
       expect(new Set(lines).size).toBe(lines.length);
       for (const n of lines) expect(n, n).toMatch(/^letter-[a-z0-9]+-[a-z0-9-]+$/);
@@ -144,12 +144,12 @@ describe('litery po śladzie', () => {
       expect(new Set(round).size).toBe(LETTER_ROUND);
       expect(round.every((x) => x.level <= level)).toBe(true);
     }
-    // Kolejne rundy z tą samą literą pokazują inny przykład (dziecko widzi różne słowa).
+    // Consecutive rounds with the same letter show a different example (the child sees different words).
     const seen = new Map<string, Set<string>>();
     const rng = new Rng(7);
     for (let i = 0; i < 40; i++) for (const x of makeLetterRound(rng, 2)) seen.set(x.ch, (seen.get(x.ch) ?? new Set()).add(x.item));
     expect([...seen.values()].some((items) => items.size >= 2)).toBe(true);
-    // Postęp: palec wzdłuż kreski idzie do końca, palec daleko nie przesuwa.
+    // Progress: a finger along the stroke reaches the end, a finger far away does not advance.
     const pts = resample([[0, 0], [0, 1]], 0.05);
     let at = 0;
     for (let y = 0; y <= 1.0001; y += 0.04) at = advance(pts, at, [0.02, y], 0.1);
@@ -158,8 +158,8 @@ describe('litery po śladzie', () => {
   });
 });
 
-describe('cyfry po śladzie', () => {
-  it('10 cyfr, runda bez powtórzeń z poziomu dziecka', async () => {
+describe('digit tracing', () => {
+  it('10 digits, round without repeats from the child\'s level', async () => {
     const { DIGITS, makeDigitRound, LETTER_ROUND } = await import('./letters.ts');
     expect(DIGITS.map((d) => d.ch).sort().join('')).toBe('0123456789');
     for (const level of [0, 1, 2]) {
@@ -172,7 +172,7 @@ describe('cyfry po śladzie', () => {
 });
 
 describe('emotions', () => {
-  it('dobra minka wśród odpowiedzi, bez powtórzeń z rzędu', async () => {
+  it('the correct face is among the answers, no repeats in a row', async () => {
     const { makeEmotionRound, EMOTION_ROUND } = await import('./emotions.ts');
     for (const level of [0, 1, 2]) {
       const r = makeEmotionRound(new Rng(level + 9), level);

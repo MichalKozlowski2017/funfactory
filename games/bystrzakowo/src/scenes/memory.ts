@@ -18,8 +18,8 @@ interface CardView {
 }
 
 /**
- * Memory (Polana Zagadek): karty odwrócone, odkrywa się po dwie. Para zostaje odkryta i lektor mówi nazwę,
- * inne odwracają się z powrotem.
+ * Memory (Puzzle Meadow): cards face down, turned over two at a time. A pair stays face up and the narrator says its name,
+ * others flip back.
  */
 export class MemoryScene extends RoundScene {
   readonly id = 'memory';
@@ -76,11 +76,11 @@ export class MemoryScene extends RoundScene {
     });
   }
 
-  /** Zakrycie niepasującej pary (po czasie albo od razu, gdy dziecko stuka już kolejną kartę). */
+  /** Covers a non-matching pair (after a delay, or immediately when the child already taps another card). */
   private closePending: (() => void) | null = null;
 
   private tap(c: CardView): void {
-    // Dwie niepasujące karty są odkryte, a dziecko stuka trzecią: zakrywamy je od razu, zamiast ignorować stuknięcie.
+    // Two non-matching cards are face up and the child taps a third: cover them right away instead of ignoring the tap.
     if (this.picked.length >= 2 && this.closePending && !c.matched && !this.picked.includes(c)) this.closePending();
     if (this.busy || c.open || c.matched || this.picked.length >= 2) return;
     this.idle = 0;
@@ -121,7 +121,7 @@ export class MemoryScene extends RoundScene {
     }
   }
 
-  /** Odwrócenie karty: zwężenie do zera, zamiana stron, rozszerzenie. */
+  /** Card flip: shrink to zero width, swap sides, widen again. */
   private flip(c: CardView, open: boolean): void {
     c.open = open;
     this.tweens.killOf(c.view.scale);
@@ -143,7 +143,7 @@ export class MemoryScene extends RoundScene {
       .stroke({ color: good ? COLORS.good : COLORS.ink, width: good ? 8 : 5 });
   }
 
-  /** Playtest: odkrywa wszystkie pary. */
+  /** Playtest: reveals all pairs. */
   solve(): void {
     const left = this.cards.filter((c) => !c.matched);
     for (const c of left) {
@@ -155,7 +155,7 @@ export class MemoryScene extends RoundScene {
     }
   }
 
-  /** Podpowiedź: para pierwszej nieodkrytej karty mrugnie. */
+  /** Hint: the pair of the first unrevealed card wiggles. */
   protected override gesture(): Gesture | null {
     const c = this.cards.find((x) => !x.matched && !x.open);
     const twin = c && this.cards.find((x) => x !== c && x.card.item === c.card.item);
@@ -186,7 +186,7 @@ export class MemoryScene extends RoundScene {
       const col = i % cols;
       const row = Math.floor(i / cols);
       c.view.position.set(cx + (col - (cols - 1) / 2) * (s + gap), cy + (row - (rows - 1) / 2) * (s + gap));
-      // Rewers: fioletowa karta z gwiazdką.
+      // Card back: purple card with a star.
       (c.back.children[0] as Graphics)
         .clear()
         .roundRect(-s / 2, -s / 2 + 6, s, s, s * 0.16)

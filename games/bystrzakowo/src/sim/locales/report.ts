@@ -1,6 +1,6 @@
 /**
- * Zdania raportu dla rodzica w każdym języku (logika: report.ts). Bez form zależnych od płci:
- * czas teraźniejszy i imię w mianowniku („Zosia liczy”, „Sam counts”, „Lena zählt”).
+ * Parent report sentences in every language (logic: report.ts). No gender-dependent forms:
+ * present tense and the name in the nominative ("Sam counts", "Lena zählt").
  */
 import type { Lang } from '../lang.ts';
 import type { Activity } from '../realms.ts';
@@ -12,7 +12,7 @@ type S = (xs: string[]) => string;
 
 export interface ReportText {
   child: string;
-  /** Jak zapisać głoskę/literę w zdaniu („„sz”” albo „M”). */
+  /** How to write a phoneme/letter in a sentence (a quoted "sz" or a bare M). */
   sound: (s: string) => string;
   colors: Record<string, string>;
   shapes: Record<string, string>;
@@ -41,7 +41,7 @@ export interface ReportText {
   emoHard: S;
   emoPractice: (who: string) => string;
   emoNone: string;
-  /** Zagadki logiczne: opis i liczba („Układa historyjki w dobrej kolejności: 6 historyjek”). */
+  /** Logic puzzles: description and count (e.g. "Puts stories in the right order: 6 stories"). */
   logic: Partial<Record<Activity, [what: string, count: N]>>;
   quality: [good: string, ok: string, hard: string];
   logicMore: S;
@@ -68,7 +68,7 @@ export interface ReportText {
 }
 
 const list = (xs: string[]) => xs.join(', ');
-/** Polskie liczebniki: 1 zadanie, 2 zadania, 5 zadań. */
+/** Polish plural forms for numbers (1, 2–4, 5+: one / few / many). */
 const pl3 = (n: number, one: string, few: string, many: string) => {
   const t = n % 100;
   const u = n % 10;

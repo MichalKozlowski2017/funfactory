@@ -1,6 +1,6 @@
 /**
- * Scena zabawy po jej id (świat otwiera zabawę, ekran nagrody uruchamia ją jeszcze raz).
- * Importowane dynamicznie z round.ts, żeby nie tworzyć cyklu przy ładowaniu klas scen.
+ * Activity scene by its id (the world opens an activity, the reward screen starts it again).
+ * Imported dynamically from round.ts to avoid a cycle when loading scene classes.
  */
 import type { Scene } from '@funfactory/kit2d';
 import { isPuzzle, type Activity } from '../sim/realms.ts';

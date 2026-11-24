@@ -1,7 +1,7 @@
 /**
- * Litery po śladzie (Ścieżka Lusi): wielka litera z kresek w kolejności pisania. Palec prowadzi się
- * po każdej kresce od zielonej kropki; postęp idzie naprzód, gdy palec jest blisko śladu przed nim.
- * Współrzędne w polu litery 0..1 (szerokość × wysokość).
+ * Letter tracing (Lusia's Path): an uppercase letter made of strokes in writing order. The finger is guided
+ * along each stroke from the green dot; progress moves forward when the finger is close to the trace ahead.
+ * Coordinates in the letter box 0..1 (width × height).
  */
 import type { Rng } from '@funfactory/core';
 import { lang, type Lang } from './lang.ts';
@@ -16,22 +16,22 @@ export const LETTER_ROUND = 3;
 
 type P = [number, number];
 
-/** Kształt litery (cyfry): kreski w kolejności pisania i poziom, od którego się pojawia. */
+/** Letter (digit) shape: strokes in writing order and the level from which it appears. */
 export interface Glyph {
   ch: string;
-  /** Kreski w kolejności pisania. */
+  /** Strokes in writing order. */
   strokes: P[][];
-  /** Poziom, od którego litera się pojawia (proste najpierw). */
+  /** Level from which the letter appears (simple ones first). */
   level: number;
 }
 
-/** Litera w rundzie: kształt i przykład („A jak arbuz”): obiekt (obrazek po narysowaniu) i słowo lektora. */
+/** Letter in a round: shape and example ("A as in apple"): object (picture after drawing) and the narrator's word. */
 export interface Letter extends Glyph {
   item: string;
   word: string;
 }
 
-/** Łuk elipsy (środek, półosie, kąty w stopniach; 0° = prawo, 90° = dół). */
+/** Ellipse arc (center, semi-axes, angles in degrees; 0° = right, 90° = down). */
 function arc(cx: number, cy: number, rx: number, ry: number, from: number, to: number, n = 16): P[] {
   return Array.from({ length: n + 1 }, (_, i) => {
     const a = ((from + ((to - from) * i) / n) * Math.PI) / 180;
@@ -43,7 +43,7 @@ const BASE: Glyph[] = [
   { ch: 'I', level: 0, strokes: [[[0.5, 0], [0.5, 1]]] },
   { ch: 'L', level: 0, strokes: [[[0.28, 0], [0.28, 1], [0.78, 1]]] },
   { ch: 'T', level: 0, strokes: [[[0.12, 0], [0.88, 0]], [[0.5, 0], [0.5, 1]]] },
-  { ch: 'O', level: 0, strokes: [arc(0.5, 0.5, 0.38, 0.5, -90, -450, 28)] }, // od góry w lewo, jak w przedszkolu (i jak C, G)
+  { ch: 'O', level: 0, strokes: [arc(0.5, 0.5, 0.38, 0.5, -90, -450, 28)] }, // from the top to the left, as taught in preschool (and like C, G)
   { ch: 'A', level: 1, strokes: [[[0.5, 0], [0.12, 1]], [[0.5, 0], [0.88, 1]], [[0.28, 0.62], [0.72, 0.62]]] },
   { ch: 'M', level: 1, strokes: [[[0.12, 1], [0.12, 0], [0.5, 0.6], [0.88, 0], [0.88, 1]]] },
   { ch: 'W', level: 1, strokes: [[[0.04, 0], [0.27, 1], [0.5, 0.35], [0.73, 1], [0.96, 0]]] },
@@ -62,24 +62,24 @@ const BASE: Glyph[] = [
   { ch: 'R', level: 2, strokes: [[[0.25, 1], [0.25, 0]], [[0.25, 0], ...arc(0.5, 0.25, 0.3, 0.25, -90, 90, 14), [0.25, 0.5]], [[0.45, 0.5], [0.82, 1]]] },
   { ch: 'G', level: 2, strokes: [[...arc(0.55, 0.5, 0.4, 0.5, -40, -360, 26), [0.6, 0.5]]] },
   { ch: 'J', level: 2, strokes: [[[0.7, 0], [0.7, 0.68], ...arc(0.45, 0.68, 0.25, 0.32, 0, 180, 14)]] },
-  // Litery z alfabetów pozostałych języków (i polskie Ł).
+  // Letters from the other languages' alphabets (and the Polish L with stroke).
   { ch: 'Ł', level: 1, strokes: [[[0.34, 0], [0.34, 1], [0.84, 1]], [[0.12, 0.62], [0.58, 0.36]]] },
   { ch: 'V', level: 0, strokes: [[[0.1, 0], [0.5, 1], [0.9, 0]]] },
   { ch: 'Y', level: 1, strokes: [[[0.12, 0], [0.5, 0.5]], [[0.88, 0], [0.5, 0.5], [0.5, 1]]] },
   { ch: 'Q', level: 2, strokes: [arc(0.5, 0.5, 0.38, 0.5, -90, -450, 28), [[0.58, 0.7], [0.92, 1]]] },
 ];
 
-/** Litera ze znakiem nad sobą: podstawa ściśnięta w dół pola, u góry miejsce na kreskę albo kropki. */
+/** Letter with a mark above it: the base is squeezed into the lower part of the box, leaving room at the top for an accent or dots. */
 const TOP = 0.26;
 function accented(base: string): P[][] {
   const g = BASE.find((x) => x.ch === base)!;
   return g.strokes.map((st) => st.map(([x, y]) => [x, TOP + y * (1 - TOP)] as P));
 }
-/** Kreska nad literą (ś): z góry z prawej w dół w lewo, jak w zeszycie. */
+/** Acute accent over a letter (Polish s-acute): from top right down to the left, as in a school notebook. */
 const ACUTE: P[] = [[0.66, 0], [0.46, 0.16]];
-/** Kropka (ż): krótka kreska, wystarczy ją dotknąć. */
+/** Dot (Polish z-dot): a short stroke, touching it is enough. */
 const dot = (x: number): P[] => [[x - 0.02, 0.08], [x + 0.02, 0.08]];
-/** Falka nad Ñ. */
+/** Tilde over Ñ. */
 const TILDE: P[] = Array.from({ length: 13 }, (_, i) => [0.2 + (0.6 * i) / 12, 0.1 - Math.sin((i / 12) * Math.PI * 2) * 0.06] as P);
 
 const ACCENTED: Glyph[] = [
@@ -88,11 +88,11 @@ const ACCENTED: Glyph[] = [
   { ch: 'Ñ', level: 2, strokes: [...accented('N'), TILDE] },
 ];
 
-/** Wszystkie kształty liter (alfabety czterech języków). */
+/** All letter shapes (alphabets of the four languages). */
 export const LETTERS: readonly Glyph[] = [...BASE, ...ACCENTED];
 
 
-/** Kreska jako gęsty ciąg punktów co `step` (w jednostkach pola litery). */
+/** A stroke as a dense sequence of points every `step` (in letter box units). */
 export function resample(stroke: P[], step: number): P[] {
   const out: P[] = [stroke[0]!];
   for (let i = 1; i < stroke.length; i++) {
@@ -106,8 +106,8 @@ export function resample(stroke: P[], step: number): P[] {
 }
 
 /**
- * Postęp po kresce: z indeksu `at` przesuwa się do najdalszego punktu w oknie `look` punktów naprzód,
- * który leży bliżej palca niż `tol`. Palec daleko od śladu: postęp stoi.
+ * Progress along a stroke: from index `at` it moves to the farthest point within a window of `look` points ahead
+ * that lies closer to the finger than `tol`. Finger far from the trace: progress stays put.
  */
 export function advance(points: readonly P[], at: number, finger: P, tol: number, look = 8): number {
   let best = at;
@@ -119,18 +119,18 @@ export function advance(points: readonly P[], at: number, finger: P, tol: number
 }
 
 
-/** Nazwa pliku nagrania „X jak słowo” (bez znaków spoza ASCII). */
+/** File name of the "X as in word" recording (ASCII only). */
 export function letterLine(ch: string, item: string): string {
   const slug = ch.toLowerCase().replace('ć', 'ci').replace('ł', 'lw').replace('ó', 'oo').replace('ś', 'si').replace('ź', 'zi').replace('ż', 'zh').replace('ä', 'ae').replace('ö', 'oe').replace('ñ', 'ny');
   return `letter-${slug}-${item}`;
 }
 
-/** Wszystkie nagrania liter w języku `l` (z literą i słowem, do listy lektora). */
+/** All letter recordings in language `l` (with letter and word, for the narrator list). */
 export function letterLines(l: Lang = lang()): { line: string; ch: string; word: string }[] {
   return Object.entries(LETTER_EXAMPLES[l]).flatMap(([ch, xs]) => xs.map(([item, word]) => ({ line: letterLine(ch, item), ch, word })));
 }
 
-/** Litery alfabetu w języku `l` (z pierwszym przykładem). */
+/** Alphabet letters in language `l` (with the first example). */
 export function lettersOf(l: Lang = lang()): Letter[] {
   return Object.entries(LETTER_EXAMPLES[l]).flatMap(([ch, xs]) => {
     const g = LETTERS.find((x) => x.ch === ch);
@@ -138,7 +138,7 @@ export function lettersOf(l: Lang = lang()): Letter[] {
   });
 }
 
-/** Który przykład litery był ostatnio (kolejna runda z tą literą pokazuje następny). */
+/** Which example of a letter was shown last (the next round with this letter shows the following one). */
 const shownExample = new Map<string, number>();
 
 export function makeLetterRound(rng: Rng, level: number, have: ReadonlySet<string> = new Set([...ITEMS.map((i) => i.id), ...LETTER_PIC_IDS])): Letter[] {
@@ -154,16 +154,16 @@ export function makeLetterRound(rng: Rng, level: number, have: ReadonlySet<strin
   });
 }
 
-/** Ostatnia runda każdej zabawy (w tej sesji), żeby dwie kolejne nie były takie same. */
+/** Last round of each activity (in this session), so two consecutive ones are not the same. */
 const lastRound = new Map<string, string>();
 
 /**
- * Runda z puli: dwie z bieżącego poziomu (nowe), reszta z niższych (powtórka), a gdy niższych brak,
- * wszystkie z bieżącego. Nigdy dokładnie ten sam zestaw co poprzednio.
+ * Round from a pool: two from the current level (new), the rest from lower ones (review), and when there are no lower ones,
+ * all from the current level. Never exactly the same set as the previous time.
  */
 export function mixRound<T extends { level: number }>(rng: Rng, pool: readonly T[], level: number, key: string, n = LETTER_ROUND, id: (x: T) => string = (x) => (x as unknown as Letter).ch): T[] {
   let out: T[] = [];
-  // Elementy z poprzedniej rundy na koniec kolejki: kolejna runda (np. „graj dalej”) bierze najpierw inne.
+  // Elements from the previous round go to the end of the queue: the next round (e.g. "play on") takes others first.
   const prev = new Set((lastRound.get(key) ?? '').split(','));
   const newFirst = (xs: T[]) => [...xs.filter((x) => !prev.has(id(x))), ...xs.filter((x) => prev.has(id(x)))];
   for (let k = 0; k < 8; k++) {
@@ -173,22 +173,22 @@ export function mixRound<T extends { level: number }>(rng: Rng, pool: readonly T
     out = rng.shuffle([...fresh.slice(0, nFresh), ...old.slice(0, n - Math.min(nFresh, fresh.length))]).slice(0, n);
     if (out.map(id).sort().join() !== lastRound.get(key)) break;
   }
-  // Pierwszy element rundy nie z poprzedniej rundy (dziecko od razu widzi coś nowego).
+  // The first element of the round is not from the previous round (the child sees something new right away).
   const i = out.findIndex((x) => !prev.has(id(x)));
   if (i > 0) [out[0], out[i]] = [out[i]!, out[0]!];
   lastRound.set(key, out.map(id).sort().join());
   return out;
 }
 
-/** Tolerancja śladu (ułamek wysokości litery): młodsze dzieci rysują mniej dokładnie. */
+/** Trace tolerance (fraction of letter height): younger children draw less precisely. */
 export const traceTolerance = (level: number): number => [0.16, 0.13, 0.11][Math.max(0, Math.min(MAX_LEVEL, Math.round(level)))] as number;
 
-/** Cyfry po śladzie: po narysowaniu tyle obrazków, ile mówi cyfra (Lusia liczy). */
+/** Digit tracing: after drawing, as many pictures as the digit says (Lusia counts). */
 export const DIGITS: readonly Letter[] = ([
   { ch: '1', level: 0, strokes: [[[0.28, 0.22], [0.6, 0], [0.6, 1]]] },
   { ch: '7', level: 0, strokes: [[[0.15, 0], [0.85, 0], [0.4, 1]]] },
   { ch: '4', level: 0, strokes: [[[0.6, 0], [0.12, 0.68], [0.9, 0.68]], [[0.65, 0.35], [0.65, 1]]] },
-  { ch: '0', level: 0, strokes: [arc(0.5, 0.5, 0.34, 0.5, -90, -450, 28)] }, // od góry w lewo
+  { ch: '0', level: 0, strokes: [arc(0.5, 0.5, 0.34, 0.5, -90, -450, 28)] }, // from the top to the left
   { ch: '2', level: 1, strokes: [[...arc(0.5, 0.28, 0.32, 0.28, -170, 25, 14), [0.15, 1], [0.85, 1]]] },
   { ch: '3', level: 1, strokes: [[...arc(0.5, 0.25, 0.3, 0.25, -160, 90, 14), ...arc(0.5, 0.75, 0.32, 0.25, -90, 160, 14).slice(1)]] },
   { ch: '5', level: 1, strokes: [[[0.8, 0], [0.27, 0], [0.22, 0.45], ...arc(0.48, 0.68, 0.32, 0.32, -125, 150, 16)]] },
@@ -197,7 +197,7 @@ export const DIGITS: readonly Letter[] = ([
   { ch: '9', level: 2, strokes: [[...arc(0.5, 0.3, 0.32, 0.3, 0, -360, 24), [0.8, 1]]] },
 ] as Glyph[]).map((g) => ({ ...g, item: '', word: '' }));
 
-/** Cyfry do rundy: nowe z poziomu dziecka wymieszane z powtórką niższych. */
+/** Digits for a round: new ones from the child's level mixed with review of lower ones. */
 export function makeDigitRound(rng: Rng, level: number): Letter[] {
   const l = Math.max(0, Math.min(MAX_LEVEL, Math.round(level)));
   return mixRound(rng, DIGITS.filter((x) => x.level <= l), l, 'digits');

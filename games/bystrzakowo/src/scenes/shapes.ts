@@ -22,7 +22,7 @@ const COLOR: Record<Shape, number> = {
   drop: 0x4fd2f0,
 };
 
-/** Sierp księżyca: koło o promieniu 1 bez koła (0.45, 0) o promieniu 0.8, przesunięty do środka pola. */
+/** Crescent moon: a circle of radius 1 minus the circle at (0.45, 0) of radius 0.8, shifted to the center of the box. */
 const MOON: number[] = (() => {
   const d = 0.45, r = 0.8;
   const ix = (1 - r * r + d * d) / (2 * d), iy = Math.sqrt(1 - ix * ix);
@@ -40,7 +40,7 @@ const MOON: number[] = (() => {
   return pts.map((v, i) => (i % 2 === 0 ? v + 0.19 : v));
 })();
 
-/** Rysuje kształt o rozmiarze `s` (środek w 0,0). */
+/** Draws a shape of size `s` (centered at 0,0). */
 export function drawShape(g: Graphics, shape: Shape, s: number): Graphics {
   const h = s / 2;
   switch (shape) {
@@ -82,13 +82,13 @@ interface Piece {
   hole: Container;
   home: { x: number; y: number };
   done: boolean;
-  /** Klocek był już wkładany w złą dziurkę (do dziennika rodzica). */
+  /** The block has already been put into a wrong hole (for the parent journal). */
   missed?: boolean;
 }
 
 /**
- * Sorter kształtów (Warsztat Bazyla): drewniana deska z dziurkami, pod nią kolorowe klocki.
- * Klocek upuszczony nad swoją dziurką wskakuje i Bazyl mówi nazwę kształtu; nad cudzą wraca.
+ * Shape sorter (Basil's Workshop): a wooden board with holes, colorful blocks below it.
+ * A block dropped over its own hole pops in and Basil says the shape's name; over another hole it goes back.
  */
 export class ShapeScene extends RoundScene {
   readonly id = 'shapes';
@@ -125,7 +125,7 @@ export class ShapeScene extends RoundScene {
       this.layer.addChild(hole);
       return hole;
     });
-    // Klocki w innej kolejności niż dziurki.
+    // Blocks in a different order than the holes.
     const order = derange(this.game.rng, shapes.length);
     this.pieces = order.map((i) => {
       const shape = shapes[i]!;
@@ -164,7 +164,7 @@ export class ShapeScene extends RoundScene {
     if (near(p.hole)) return this.fit(p);
     const wrong = this.pieces.find((o) => o !== p && !o.done && near(o.hole));
     if (wrong) {
-      // Nie pasuje: klocek podskakuje nad dziurką i wraca.
+      // Doesn't fit: the block bounces over the hole and goes back.
       void squash(this.tweens, p.view, 0.2);
       p.missed = true;
       this.missed();
@@ -173,7 +173,7 @@ export class ShapeScene extends RoundScene {
     this.tweens.to(p.view.scale, { x: 1, y: 1 }, { duration: 0.2 });
   }
 
-  /** Klocek wskakuje do dziurki: przysiad, „klik”, nazwa kształtu. */
+  /** The block pops into the hole: squash, "click", shape name. */
   private fit(p: Piece): void {
     p.done = true;
     logFact(`shape:${p.shape}`, !p.missed);
@@ -190,12 +190,12 @@ export class ShapeScene extends RoundScene {
     }
   }
 
-  /** Playtest: wszystkie klocki na miejsca. */
+  /** Playtest: all blocks into place. */
   solve(): void {
     for (const p of this.pieces) if (!p.done) this.fit(p);
   }
 
-  /** Podpowiedź: klocek podjeżdża w stronę swojej dziurki. */
+  /** Hint: a block slides toward its hole. */
   protected override gesture(): Gesture | null {
     const p = this.pieces.find((x) => !x.done);
     return p ? { kind: 'drag', from: this.spot(p.view), to: this.spot(p.hole) } : null;
@@ -204,7 +204,7 @@ export class ShapeScene extends RoundScene {
   protected hint(): void {
     const p = this.pieces.find((x) => !x.done);
     if (!p) return;
-    // Chwycenie elementu przerywa podpowiedź; wtedy nie cofamy go na start (dziecko mogło go już położyć).
+    // Grabbing the item interrupts the hint; then we don't move it back to the start (the child may have placed it already).
     const tw = this.tweens
       .to(p.view, { x: p.home.x + (p.hole.x - p.home.x) * 0.4, y: p.home.y + (p.hole.y - p.home.y) * 0.4 }, { duration: 0.45, ease: 'sineInOut', yoyo: true, repeat: 1 });
     void tw.done.then(() => !tw.killed && p.view.position.set(p.home.x, p.home.y));
@@ -219,7 +219,7 @@ export class ShapeScene extends RoundScene {
     this.size = Math.min(140, (right - left) / (n + 0.6));
     const s = this.size;
     const cx = (left + right) / 2;
-    // Deska z dziurkami u góry.
+    // Board with holes at the top.
     const deckW = n * s * 1.35 + 40;
     const deckY = safe.top + 120 + s * 0.75;
     const deck = this.layer.children.find((c) => c.label === 'deck') as Graphics;
@@ -238,14 +238,14 @@ export class ShapeScene extends RoundScene {
         .fill({ color: 0x6b4423 })
         .stroke({ color: 0x4a2e17, width: 5 });
     });
-    // Klocki na dole.
+    // Blocks at the bottom.
     this.pieces.forEach((p, i) => {
       p.home = { x: cx + (i - (n - 1) / 2) * s * 1.35, y: h - s * 0.75 - 20 };
       if (!p.done) p.view.position.set(p.home.x, p.home.y);
       else p.view.position.set(p.hole.x, p.hole.y);
       const g = (p.view.children[0] as Graphics).clear();
       drawShape(g, p.shape, s * 0.94).fill({ color: COLOR[p.shape] }).stroke({ color: COLORS.ink, width: 5, join: 'round' });
-      // Odblask (plastelina), przycięty maską do kształtu klocka (bez maski wystawał poza romb, gwiazdę, trójkąt).
+      // Highlight (plasticine look), clipped by a mask to the block's shape (without the mask it stuck out of the rhombus, star, triangle).
       let shine = p.view.getChildByLabel('shine') as Graphics | null;
       let mask = p.view.getChildByLabel('shine-mask') as Graphics | null;
       if (!shine || !mask) {

@@ -1,10 +1,10 @@
 /**
- * Kolorowanka: podział obrazka konturowego na obszary (spójne składowe pikseli, które nie są linią).
- * Liczone raz po wczytaniu; zamalowanie to podmiana koloru wszystkich pikseli jednego obszaru,
- * więc nic nie „przecieka” przez wygładzone krawędzie linii. Czysty TS (tablice), bez canvasa.
+ * Colouring page: splits an outline drawing into regions (connected components of non-line pixels).
+ * Computed once after loading; filling swaps the colour of every pixel of one region,
+ * so nothing "leaks" through the anti-aliased line edges. Pure TS (arrays), no canvas.
  */
 
-/** Etykiety obszarów: 0 = linia, 1.. = obszary. `dark` mówi, czy piksel jest linią. */
+/** Region labels: 0 = line, 1.. = regions. `dark` tells whether a pixel is a line. */
 export function labelRegions(w: number, h: number, dark: (i: number) => boolean): { labels: Int32Array; count: number; sizes: number[] } {
   const labels = new Int32Array(w * h);
   const sizes = [0];
@@ -31,7 +31,7 @@ export function labelRegions(w: number, h: number, dark: (i: number) => boolean)
   return { labels, count: next - 1, sizes };
 }
 
-/** Obszar pod punktem; dla linii albo maleńkich szczelin najbliższy duży obszar w promieniu `r` pikseli. */
+/** Region under a point; for a line or tiny gaps, the nearest large region within `r` pixels. */
 export function regionAt(labels: Int32Array, sizes: number[], w: number, h: number, x: number, y: number, minSize = 60, r = 10): number {
   let best = 0;
   let bestD = Infinity;
@@ -49,14 +49,14 @@ export function regionAt(labels: Int32Array, sizes: number[], w: number, h: numb
 }
 
 /**
- * Grubość obszarów: dla każdego obszaru promień największego koła, które się w nim mieści (w pikselach,
- * metryka szachownicowa). Wąskie paski i oczka mają mały promień, nawet gdy mają dużo pikseli.
+ * Region thickness: for each region, the radius of the largest circle that fits inside it (in pixels,
+ * chessboard metric). Narrow strips and small loops have a small radius even when they have many pixels.
  */
 export function regionThickness(labels: Int32Array, w: number, h: number, count: number): number[] {
   const dist = new Int32Array(w * h);
   const BIG = 1 << 20;
   for (let i = 0; i < w * h; i++) dist[i] = labels[i] === 0 ? 0 : BIG;
-  // Dwa przejścia (transformata odległości, sąsiedztwo 8): piksel innego obszaru też jest granicą.
+  // Two passes (distance transform, 8-neighbourhood): a pixel of another region is also a boundary.
   const edge = (i: number, j: number) => labels[j] !== labels[i];
   for (let y = 0; y < h; y++)
     for (let x = 0; x < w; x++) {
@@ -93,15 +93,15 @@ export function regionThickness(labels: Int32Array, w: number, h: number, count:
 }
 
 /**
- * Obszary za wąskie dla palca dziecka (promień < `minRadius`) dołącza do sąsiedniego grubego obszaru
- * (tego, z którym graniczą najdłużej przez linię o grubości do `reach` pikseli; nigdy do tła). Zamalowanie grubego
- * obszaru zamaluje też dołączone. Obszar bez grubego sąsiada zostaje sam (i nie da się go zamalować).
+ * Merges regions too narrow for a child's finger (radius < `minRadius`) into a neighbouring thick region
+ * (the one they share the longest border with across a line up to `reach` pixels thick; never the background). Filling the thick
+ * region also fills the merged ones. A region with no thick neighbour stays alone (and cannot be filled).
  */
 export function mergeThin(labels: Int32Array, sizes: number[], w: number, h: number, minRadius: number, reach = 8): { labels: Int32Array; sizes: number[] } {
   const count = sizes.length - 1;
   const thick = regionThickness(labels, w, h, count);
   const thin = (l: number) => l > 0 && thick[l]! < minRadius;
-  // Tło (obszar dotykający brzegu obrazka) nie wchłania detali rysunku: płetwa nie maluje się razem z tłem.
+  // The background (the region touching the image edge) does not absorb drawing details: a fin isn't filled together with the background.
   const outside = new Set<number>();
   for (let x = 0; x < w; x++) outside.add(labels[x]!).add(labels[(h - 1) * w + x]!);
   for (let y = 0; y < h; y++) outside.add(labels[y * w]!).add(labels[y * w + w - 1]!);
@@ -110,7 +110,7 @@ export function mergeThin(labels: Int32Array, sizes: number[], w: number, h: num
     for (let x = 0; x < w; x++) {
       const l = labels[y * w + x]!;
       if (!thin(l)) continue;
-      // Tylko piksele przy krawędzi obszaru: patrzymy w czterech kierunkach przez linię.
+      // Only pixels at the region edge: look across the line in four directions.
       for (const [dx, dy] of [
         [1, 0],
         [-1, 0],
@@ -143,7 +143,7 @@ export function mergeThin(labels: Int32Array, sizes: number[], w: number, h: num
     out[i] = t;
     if (t) outSizes[t]!++;
   }
-  // Obszar, który został wąski i bez sąsiada, nie jest celem dotyku.
+  // A region left narrow with no neighbour is not a touch target.
   for (let l = 1; l <= count; l++) if (thin(l) && target[l] === l) outSizes[l] = 0;
   return { labels: out, sizes: outSizes };
 }

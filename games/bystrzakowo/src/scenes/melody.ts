@@ -12,10 +12,10 @@ import { needsHand } from '../sim/onboarding.ts';
 const BAR_COLORS = [0xe8413c, 0xff8a2b, 0xffd23f, 0x7ad35a, 0x3d8bff, 0x9b5de5];
 
 /**
- * Melodia (Pracownia Malucha): Lusia gra kilka dźwięków na cymbałkach (sztabki świecą), dziecko powtarza.
- * Pomyłka: sztabka kręci głową i melodia gra jeszcze raz (bez przegrywania).
+ * Melody (Little Studio): Lusia plays a few notes on a xylophone (the bars light up), the child repeats them.
+ * Mistake: the bar shakes its head and the melody plays again (no losing).
  */
-/** Kolor przygaszonych sztabek w czasie pokazu melodii. */
+/** Colour of the dimmed bars while the melody is being shown. */
 const DIM = 0x9a9a9a;
 
 export class MelodyScene extends RoundScene {
@@ -23,7 +23,7 @@ export class MelodyScene extends RoundScene {
   private bars: Container[] = [];
   private melody: number[] = [];
   private pos = 0;
-  /** Lusia gra: dotyk zablokowany. */
+  /** Lusia is playing: touch is blocked. */
   private playing = false;
 
   constructor() {
@@ -55,8 +55,8 @@ export class MelodyScene extends RoundScene {
       this.layer.addChild(bar);
       return bar;
     });
-    // Polecenie (pierwsze zadanie), potem melodia. Do końca pokazu sztabki nie grają (stuknięcia przed pokazem
-    // i tak by przepadły, bo pokaz zeruje postęp).
+    // Instruction (first task), then the melody. The bars don't play until the demo ends (taps before the demo
+    // would be lost anyway, since the demo resets progress).
     this.listen(true);
     const first = this.index === 0;
     this.timers.after(0.4, () => {
@@ -69,7 +69,7 @@ export class MelodyScene extends RoundScene {
     this.bars.forEach((b, i) => void popIn(this.tweens, b, 0.3, i * 0.05));
   }
 
-  /** Dźwięk sztabki (cymbałki: czysty ton z jasnym alikwotem). */
+  /** Bar sound (xylophone: pure tone with a bright overtone). */
   private ring(i: number): void {
     const f = BARS[i]!;
     this.game.sound.synth([
@@ -79,7 +79,7 @@ export class MelodyScene extends RoundScene {
     const bar = this.bars[i]!;
     void squash(this.tweens, bar, 0.12);
     this.glow(bar, BAR_COLORS[i]!);
-    // W czasie pokazu grająca sztabka na chwilę rozbłyska z przygaszenia.
+    // During the demo the playing bar briefly lights up from its dimmed state.
     if (this.playing) {
       bar.tint = 0xffffff;
       this.timers.after(0.6, () => this.playing && (bar.tint = DIM));
@@ -97,7 +97,7 @@ export class MelodyScene extends RoundScene {
     void this.tweens.to(g, { alpha: 0 }, { duration: 0.45 }).done.then(() => g.destroy());
   }
 
-  /** Lusia gra melodię; potem kolej dziecka. */
+  /** Lusia plays the melody; then it is the child's turn. */
   private play(): void {
     this.listen(true);
     this.pos = 0;
@@ -107,17 +107,17 @@ export class MelodyScene extends RoundScene {
   }
 
   /**
-   * Faza słuchania (sztabki przygaszone, nie grają) albo kolej dziecka (pełny kolor i podskok wszystkich sztabek).
-   * Bez tego dziecko nie wiedziało, czemu stuknięcia w czasie pokazu nic nie dają.
+   * Listening phase (bars dimmed, silent) or the child's turn (full colour and all bars bounce).
+   * Without this the child didn't know why taps during the demo did nothing.
    */
   private listen(on: boolean): void {
     this.playing = on;
     for (const [i, b] of this.bars.entries()) {
-      // Przyciemnienie kolorem, nie przezroczystością (przez półprzezroczyste sztabki prześwitywała rama).
+      // Dim with tint, not alpha (the frame showed through semi-transparent bars).
       b.tint = on ? DIM : 0xffffff;
       if (!on) this.timers.after(i * 0.04, () => void squash(this.tweens, b, 0.1));
     }
-    // Pierwszy raz w melodii: po pokazie Lusi rączka stuka w sztabki po kolei.
+    // First time in melody: after Lusia's demo the hand taps the bars in order.
     if (!on && this.index === 0 && needsHand(state.progress, this.kind)) this.timers.after(0.3, () => this.demo());
   }
 
@@ -131,7 +131,7 @@ export class MelodyScene extends RoundScene {
       if (this.pos >= this.melody.length) this.done();
       return;
     }
-    // Pomyłka: sztabka „kręci głową”, melodia jeszcze raz.
+    // Mistake: the bar "shakes its head", melody again.
     const bar = this.bars[i]!;
     const x = bar.x;
     void this.tweens.to(bar, { x: x + 10 }, { duration: 0.05, yoyo: true, repeat: 5 }).done.then(() => (bar.x = x));
@@ -150,14 +150,14 @@ export class MelodyScene extends RoundScene {
     });
   }
 
-  /** Playtest: zagranie melodii. */
+  /** Playtest: play the melody. */
   solve(): void {
     this.playing = false;
     for (const b of this.melody) this.hit(b);
   }
 
-  /** Podpowiedź: melodia jeszcze raz. */
-  /** Pierwsze sztabki melodii po kolei (dopiero gdy Lusia skończy grać). */
+  /** Hint: the melody again. */
+  /** The first bars of the melody in order (only once Lusia has finished playing). */
   protected override gesture(): Gesture | null {
     if (this.playing || this.busy || !this.melody.length) return null;
     return { kind: 'tap', at: this.melody.slice(this.pos, this.pos + 3).map((b) => this.middle(this.bars[b]!)) };
@@ -176,7 +176,7 @@ export class MelodyScene extends RoundScene {
     const bw = Math.min(110, (right - left) / n - 16);
     const cx = (left + right) / 2;
     const base = h - 110;
-    // Rama cymbałków.
+    // Xylophone frame.
     const fw = n * (bw + 16) + 40;
     const frame = this.layer.children.find((c) => c.label === 'frame') as Graphics;
     frame
@@ -185,7 +185,7 @@ export class MelodyScene extends RoundScene {
       .fill({ color: 0x9a6236 })
       .stroke({ color: COLORS.ink, width: 6 });
     this.bars.forEach((bar, i) => {
-      // Sztabki coraz krótsze (wyższy dźwięk), jak w prawdziwych cymbałkach.
+      // Bars get shorter (higher pitch), like on a real xylophone.
       const bh = 330 - i * 30;
       bar.position.set(cx + (i - (n - 1) / 2) * (bw + 16), base);
       (bar.children[0] as Graphics)

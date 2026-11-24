@@ -1,7 +1,7 @@
 /**
- * Autopilot do testów strefy rodzica: sam wchodzi do zabaw, rozwiązuje zadania (z pomyłkami)
- * i wraca do świata. Tylko w buildzie z `VITE_AUTOPLAY=1` albo z `?autoplay` w przeglądarce.
- * Każda zabawa ma swoją „trudność” dla bota, żeby raport miał mocne i słabsze strony.
+ * Autopilot for testing the parent zone: enters activities on its own, solves tasks (with mistakes)
+ * and returns to the world. Only in a build with `VITE_AUTOPLAY=1` or with `?autoplay` in the browser.
+ * Each activity has its own "difficulty" for the bot, so the report has strengths and weaker spots.
  */
 import { SaveStore } from '@funfactory/core';
 import type { Game, Scene } from '@funfactory/kit2d';
@@ -15,15 +15,15 @@ type Any = Record<string, any>; // eslint-disable-line @typescript-eslint/no-exp
 
 interface Diag {
   started: string;
-  /** Ostatni puls: czas, scena, klatki od startu, zadania bota. */
+  /** Last heartbeat: time, scene, frames since start, bot tasks. */
   beat: string;
   errors: string[];
   scenes: string[];
 }
 
 /**
- * Dziennik diagnostyczny (pobierany z telefonu przez devicectl): błędy JS, utrata WebGL, puls co 5 s.
- * Puls zapisuje się z setInterval, więc gdy gra zamrze, widać ostatnią klatkę i scenę.
+ * Diagnostic log (pulled from the phone via devicectl): JS errors, WebGL loss, a heartbeat every 5 s.
+ * The heartbeat is saved from setInterval, so when the game freezes the last frame and scene are visible.
  */
 function startDiag(game: Game): Diag {
   const store = new SaveStore<Diag>('bystrzakowo-diag', { started: '', beat: '', errors: [], scenes: [] });
@@ -46,7 +46,7 @@ function startDiag(game: Game): Diag {
       d.scenes.splice(0, Math.max(0, d.scenes.length - 40));
       last = id;
     }
-    d.beat = `${new Date().toISOString().slice(11, 19)} scena=${id} klatki=${frames} pamiec=${Math.round(((performance as unknown as Any).memory?.usedJSHeapSize ?? 0) / 1e6)}MB`;
+    d.beat = `${new Date().toISOString().slice(11, 19)} scene=${id} frames=${frames} memory=${Math.round(((performance as unknown as Any).memory?.usedJSHeapSize ?? 0) / 1e6)}MB`;
     void store.save(d);
   }, 5000);
   return d;
@@ -66,7 +66,7 @@ export function startAutoplay(game: Game, minutes = Number(new URLSearchParams(l
     try {
       step();
     } catch (e) {
-      // Błąd w zabawie nie zatrzymuje bota: wracamy do świata i gramy dalej.
+      // An error in an activity does not stop the bot: go back to the world and keep playing.
       console.warn('autoplay', e);
       (game.scenes.current as unknown as Any).leave?.();
     }
@@ -87,7 +87,7 @@ export function startAutoplay(game: Game, minutes = Number(new URLSearchParams(l
         s.leave();
       }
     } else if (s.overlay) {
-      // Nagroda po rundzie: wracamy do świata.
+      // Reward after the round: go back to the world.
       if (since > 2 && !s.leaving) s.leave();
     } else if (!s.busy && s.layer?.children?.length && since > 1) {
       if (s.id === 'coloring') colorSome(s, rng.int(4, 9), () => rng.next());
@@ -95,7 +95,7 @@ export function startAutoplay(game: Game, minutes = Number(new URLSearchParams(l
       s.solve();
       since = 0;
     } else if (since > 40 && !s.leaving) {
-      // Coś się zacięło: wyjście do świata.
+      // Something got stuck: exit to the world.
       s.leave?.();
       since = 0;
     }
@@ -103,7 +103,7 @@ export function startAutoplay(game: Game, minutes = Number(new URLSearchParams(l
   setTimeout(tick, 2000);
 }
 
-/** Kolorowanka: kilka kolorów w losowych miejscach obrazka. */
+/** Coloring page: a few colors at random spots of the picture. */
 function colorSome(s: Any, n: number, rand: () => number): void {
   const pic = s.picture;
   const labels: string[] = s.palette.children.map((c: Any) => c.label);
@@ -115,25 +115,25 @@ function colorSome(s: Any, n: number, rand: () => number): void {
   }
 }
 
-/** Zabawy z pomiarem tempa (codziennie) i pozostałe (po kolei, po kilka dziennie). */
+/** Activities with pace measurement (daily) and the others (in turn, a few per day). */
 const DAILY: Activity[] = ['colors', 'counting', 'phonemes', 'emotions'];
 const ROUNDS_PER_DAY = 8;
-/** Szansa, że dziecko bawi się danego dnia (ok. 4 dni w tygodniu, z przerwami jak w życiu). */
+/** Chance that the child plays on a given day (about 4 days a week, with gaps like in real life). */
 const PLAY_CHANCE = 0.58;
 
 type HistoryStatus = { day: number; days: number; done: boolean; at: string };
 
 /**
- * Tryb historii (statystyki do podejrzenia na telefonie): bot rozgrywa okres `span` minionych dni
- * (data dziennika cofnięta, próba pełnej wersji nietknięta), grając w ok. 4 dni w tygodniu. Z czasem robi
- * mniej pomyłek i odpowiada szybciej, więc wykresy pokazują krzywą nauki z prawdziwych rozgrywek.
- * Na start zeruje postępy (zostają imię, wiek, język i próba). Gra jest przyspieszona i wyciszona;
- * na końcu data wraca do dziś, a kolejne uruchomienie nic już nie robi.
+ * History mode (stats to preview on the phone): the bot plays through a period of `span` past days
+ * (log date shifted back, full version trial untouched), playing about 4 days a week. Over time it makes
+ * fewer mistakes and answers faster, so the charts show a learning curve from real play sessions.
+ * At the start it resets progress (name, age, language and trial stay). The game is sped up and muted;
+ * at the end the date returns to today, and the next launch does nothing.
  */
 function playHistory(game: Game, span: number): void {
   const status = new SaveStore<HistoryStatus>(`bystrzakowo-history-${span}`, { day: 0, days: 0, done: false, at: '' });
   void status.load().then((st) => {
-    if (st.done) return console.log('HISTORIA już rozegrana');
+    if (st.done) return console.log('HISTORY already played');
     const p = state.progress;
     const keep = { music: p.music, childName: p.childName, lang: p.lang, age: p.age, trialDays: p.trialDays, full: p.full };
     state.progress = { ...newProgress(), ...keep, onboarded: true };
@@ -145,7 +145,7 @@ function playHistory(game: Game, span: number): void {
 
 function runHistory(game: Game, span: number, status: SaveStore<HistoryStatus>): void {
   const rng = game.rng;
-  // Dni zabawy w okresie (ostatni dzień, czyli dziś, zawsze).
+  // Play days in the period (the last day, i.e. today, always).
   const days = Array.from({ length: span }, (_, i) => i).filter((i) => i === span - 1 || rng.next() < PLAY_CHANCE);
   const others = ACTIVITIES.filter((a) => !DAILY.includes(a) && a !== 'stickers' && a !== 'coloring');
   const base = new Map<Activity, number>(ACTIVITIES.map((a) => [a, rng.range(0.25, 0.55)]));
@@ -161,7 +161,7 @@ function runHistory(game: Game, span: number, status: SaveStore<HistoryStatus>):
   const startDay = () => {
     setDayShift(-(span - 1 - days[day]!));
     rounds = 0;
-    console.log(`HISTORIA dzień ${day + 1}/${days.length}`);
+    console.log(`HISTORY day ${day + 1}/${days.length}`);
     void status.save({ day: day + 1, days: days.length, done: false, at: new Date().toISOString() });
   };
   startDay();
@@ -169,7 +169,7 @@ function runHistory(game: Game, span: number, status: SaveStore<HistoryStatus>):
   let last: unknown = null;
   const tick = () => {
     const s = game.scenes.current as unknown as Any;
-    // Nowy ekran: liczymy od zera (zmiana sceny w trakcie poprzedniego przejścia przepada).
+    // New screen: count from zero (a scene change during the previous transition is lost).
     if (s !== last) {
       last = s;
       since = 0;
@@ -178,7 +178,7 @@ function runHistory(game: Game, span: number, status: SaveStore<HistoryStatus>):
     try {
       if (s.id === 'world') {
         if (s.leaving) {
-          // Przejście do zabawy się nie odbyło: świat od nowa.
+          // The transition to the activity did not happen: restart the world.
           if (since > 25) void game.scenes.go(new (s.constructor as new () => Scene)(), { fade: 0 });
           return void setTimeout(tick, 400);
         }
@@ -189,7 +189,7 @@ function runHistory(game: Game, span: number, status: SaveStore<HistoryStatus>):
             setDayShift(0);
             game.loop.timeScale = 1;
             game.sound.muted = false;
-            console.log('HISTORIA koniec');
+            console.log('HISTORY done');
             void status.save({ day: days.length, days: days.length, done: true, at: new Date().toISOString() });
             return;
           }
@@ -205,7 +205,7 @@ function runHistory(game: Game, span: number, status: SaveStore<HistoryStatus>):
           s.leave();
         }
       } else if (!s.busy && s.layer?.children?.length && since > wait) {
-        // Pomyłki maleją z czasem (od bazy do ok. 1/4 bazy), czas do odpowiedzi też.
+        // Mistakes decrease over time (from the base to about 1/4 of it), and so does answer time.
         const miss = (base.get(kind!) ?? 0.3) * (1 - 0.75 * progress());
         if (rng.next() < miss) s.missed();
         s.solve();

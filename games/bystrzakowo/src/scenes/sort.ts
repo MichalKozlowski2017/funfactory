@@ -11,14 +11,14 @@ import { RoundScene } from './round.ts';
 import type { Gesture } from '../hand.ts';
 
 /**
- * Kształt otworu pojemnika w ułamkach grafiki (zmierzone na plikach z Fluxa): `mouth` to wysokość linii
- * brzegu od góry, `rx`/`ry` półosie elipsy otworu (0 = prosta krawędź, jak przednia deska skrzynki),
- * `sink`: jak głęboko obiekt siedzi (ułamek jego rozmiaru poniżej brzegu; skrzynka jest płytsza).
+ * Shape of the container opening as fractions of the image (measured on the Flux files): `mouth` is the height of the rim
+ * line from the top, `rx`/`ry` the semi-axes of the opening ellipse (0 = straight edge, like the front board of a crate),
+ * `sink`: how deep an item sits (fraction of its size below the rim; the crate is shallower).
  */
 const BUCKET = { mouth: 0.41, rx: 0.39, ry: 0.05, sink: 0.25 };
 const CRATE = { mouth: 0.4, rx: 0, ry: 0, sink: 0.05 };
 
-/** Obiekt do posegregowania: kafelek z obrazkiem, który przeciąga się do skrzynki. */
+/** Item to sort: a picture tile dragged into a bin. */
 interface Piece {
   view: Container;
   item: Item;
@@ -29,27 +29,27 @@ interface Piece {
 
 interface BinView {
   view: Container;
-  /** Obiekty już włożone (za przednią ścianką skrzynki). */
+  /** Items already put in (behind the bin's front wall). */
   pile: Container;
   box: Container;
-  /** Nagranie nazwy skrzynki (np. "house-forest"). */
+  /** Recording of the bin's name (e.g. "house-forest"). */
   line: string;
-  /** Grafika pojemnika (tył) i przednia ścianka nad obiektami; skalowane razem. */
+  /** Container image (back) and the front wall above the items; scaled together. */
   back: Container;
   front: Container;
   width: number;
   height: number;
-  /** Kolory kropelek przy wpadaniu (kolor wiaderka albo konfetti). */
+  /** Droplet colours when an item drops in (the bucket's colour or confetti). */
   splash: number[];
-  /** Wysokość brzegu jako ułamek wysokości grafiki (wiaderko ma nad brzegiem pałąk). */
+  /** Rim height as a fraction of the image height (the bucket has a handle above the rim). */
   rim: number;
-  /** Głębokość osadzenia obiektu (ułamek jego rozmiaru poniżej brzegu). */
+  /** How deep an item sits (fraction of its size below the rim). */
   sink: number;
 }
 
 /**
- * Segregowanie (Warsztat Bazyla): obiekty u góry, 2–3 skrzynki albo wiaderka na dole.
- * Dobra skrzynka: obiekt wpada do środka i lektor mówi nazwę. Zła: skrzynka kręci głową, obiekt wraca.
+ * Sorting (Basil's Workshop): items at the top, 2–3 crates or buckets at the bottom.
+ * Right bin: the item drops inside and the narrator says its name. Wrong: the bin shakes its head, the item returns.
  */
 export class SortScene extends RoundScene {
   readonly id = 'sort';
@@ -90,7 +90,7 @@ export class SortScene extends RoundScene {
     this.timers.after(0.4, () => this.announce());
   }
 
-  /** Pytanie reguły, potem nazwa każdej skrzynki (skrzynka podskakuje, gdy Bazyl ją nazywa). */
+  /** The rule question, then the name of each bin (a bin bounces when Basil names it). */
   private announce(): void {
     const len = say(this.game, this.guide, this.promptLine());
     let at = len + 0.25;
@@ -108,10 +108,10 @@ export class SortScene extends RoundScene {
       });
   }
 
-  /** Nazwa skrzynki (też po jej dotknięciu): lektor i podskok. */
+  /** Bin name (also when it is touched): narrator and a bounce. */
   private nameBin(bin: BinView): void {
     say(this.game, this.guide, bin.line);
-    // Podskok samego pojemnika (warstwa `box`), żeby nie gryzł się z kołysaniem po wrzuceniu.
+    // Bounce only the container (the `box` layer), so it doesn't clash with the wobble after a drop.
     this.tweens.killOf(bin.box);
     bin.box.y = 0;
     void this.tweens.to(bin.box, { y: -26 }, { duration: 0.14, ease: 'quadOut', yoyo: true, repeat: 1 }).done.then(() => (bin.box.y = 0));
@@ -127,8 +127,8 @@ export class SortScene extends RoundScene {
 
   private binView(color: Color | null, sign: string | undefined, line: string): BinView {
     const view = new Container();
-    // Pojemnik w trzech warstwach: tył, obiekty w środku, przednia ścianka (ta sama grafika przycięta
-    // do linii brzegu). Dzięki temu obiekty wystają z wnętrza, a nie leżą za pojemnikiem.
+    // Container in three layers: back, items inside, front wall (the same image clipped
+    // to the rim line). This way items stick out of the inside instead of lying behind the container.
     const box = new Container();
     const pile = new Container();
     const back = new Container();
@@ -146,7 +146,7 @@ export class SortScene extends RoundScene {
       const h = texture.height;
       const mask = new Graphics();
       if (shape.ry > 0) {
-        // Dolna połowa elipsy otworu i wszystko poniżej.
+        // Lower half of the opening ellipse and everything below.
         const cy = -h * (1 - shape.mouth);
         const pts: number[] = [];
         for (let i = 0; i <= 24; i++) {
@@ -160,7 +160,7 @@ export class SortScene extends RoundScene {
       front.addChild(frontSprite, mask);
       frontSprite.mask = mask;
     } else {
-      // Zapas, gdy grafiki jeszcze nie ma: prosta skrzynka z kodu.
+      // Fallback while the image isn't loaded yet: a simple crate drawn in code.
       back.addChild(new Graphics().roundRect(-140, -150, 280, 150, 24).fill({ color: color ? PAINT[color] : 0xc98a4b }).stroke({ color: COLORS.ink, width: 6 }));
     }
     box.addChild(back, pile, front);
@@ -180,7 +180,7 @@ export class SortScene extends RoundScene {
     this.layer.addChild(view);
     const splash = color ? [PAINT[color], PAINT[color], 0xffffff] : COLORS.confetti;
     const bin: BinView = { view, pile, box, back, front, line, width: 0, height: 0, splash, rim: texture ? 1 - shape.mouth : 0.9, sink: shape.sink };
-    // Dotknięcie skrzynki: jej nazwa.
+    // Touching a bin: its name.
     view.eventMode = 'static';
     view.cursor = 'pointer';
     view.on('pointertap', () => {
@@ -214,7 +214,7 @@ export class SortScene extends RoundScene {
     return piece;
   }
 
-  /** Do której skrzynki trafił obiekt (punkt w obrębie skrzynki albo tuż nad nią). */
+  /** Which bin the item landed in (a point inside the bin or just above it). */
   private binAt(at: Point): number {
     return this.bins.findIndex((b) => Math.abs(at.x - b.view.x) < b.width / 2 + 20 && at.y > b.view.y - b.height - 140 && at.y < b.view.y + 30);
   }
@@ -224,7 +224,7 @@ export class SortScene extends RoundScene {
     const target = this.binAt(at);
     if (target < 0) return this.goHome(piece);
     if (target === piece.bin) return this.put(piece);
-    // Zła skrzynka: kręci się „nie”, obiekt wraca.
+    // Wrong bin: it shakes "no", the item returns.
     const box = this.bins[target]!.view;
     const x = box.x;
     void this.tweens.to(box, { x: x + 12 }, { duration: 0.05, yoyo: true, repeat: 5 }).done.then(() => (box.x = x));
@@ -237,12 +237,12 @@ export class SortScene extends RoundScene {
     this.tweens.to(piece.view.scale, { x: 1, y: 1 }, { duration: 0.2 });
   }
 
-  /** Rozmiar obrazka w pojemniku (mieści się w otworze, po trzy obok siebie). */
+  /** Picture size inside the container (fits the opening, three side by side). */
   private itemSize(bin: BinView): number {
     return bin.width * 0.3;
   }
 
-  /** Miejsce n-tego obiektu w pojemniku: w obrębie otworu, wystaje tylko górna część. */
+  /** Position of the n-th item in the container: within the opening, only the top part sticks out. */
   private pileSlot(bin: BinView, n: number): { x: number; y: number } {
     const size = this.itemSize(bin);
     const col = [0, -0.21, 0.21][n % 3]!;
@@ -251,9 +251,9 @@ export class SortScene extends RoundScene {
   }
 
   /**
-   * Obiekt wpada do pojemnika. Najpierw leci łukiem z fikołkiem nad otwór (przed pojemnikiem),
-   * potem przechodzi za przednią ściankę i spada pionowo przez otwór: plum, pojemnik przysiada
-   * i się kołysze, tryskają kropelki, a obiekt podskakuje i zostaje w środku, wystając tylko trochę.
+   * The item drops into the container. First it flies in an arc with a somersault above the opening (in front of the container),
+   * then it moves behind the front wall and falls straight down through the opening: plop, the container squats
+   * and wobbles, droplets splash, and the item bounces and stays inside, sticking out only a little.
    */
   private put(piece: Piece): void {
     piece.done = true;
@@ -263,14 +263,14 @@ export class SortScene extends RoundScene {
     this.tweens.killOf(v);
     this.tweens.killOf(v.scale);
     v.eventMode = 'none';
-    // Lot: bez kafelka, sam obrazek.
+    // Flight: no tile, just the picture.
     const plate = v.children[0]!;
     this.tweens.to(plate, { alpha: 0 }, { duration: 0.15 });
     const size = this.itemSize(bin);
     const pic = v.children[1] as Sprite;
     const s1 = size / (Math.max(pic.texture.width, pic.texture.height) * pic.scale.x);
     const start = { x: v.x, y: v.y };
-    // Punkt nad otworem: cały obrazek jeszcze nad brzegiem.
+    // Point above the opening: the whole picture still above the rim.
     const above = { x: bin.view.x + slot.x, y: bin.view.y - bin.height * bin.rim - size * 0.75 };
     const apex = { x: (start.x + above.x) / 2, y: Math.min(start.y, above.y) - 130 };
     const s0 = v.scale.x;
@@ -304,20 +304,20 @@ export class SortScene extends RoundScene {
     return (bin as BinView & { inFlight?: number }).inFlight ?? 0;
   }
 
-  /** Spadek przez otwór: obiekt jest już za przednią ścianką (w stosiku), więc znika w środku. */
+  /** Fall through the opening: the item is already behind the front wall (in the pile), so it disappears inside. */
   private sink(piece: Piece, bin: BinView, slot: { x: number; y: number }, scale: number): void {
     const v = piece.view;
     v.rotation = 0;
     v.scale.set(scale);
     v.position.set(v.x - bin.view.x, v.y - bin.view.y);
     bin.pile.addChild(v);
-    // W głąb, ale nie niżej niż dno (skrzynka jest niska: obiekt nie może wyjrzeć spod spodu).
+    // Down inside, but not below the bottom (the crate is low: the item must not peek out underneath).
     const size = this.itemSize(bin);
     const deep = Math.min(slot.y + size * 0.9, -size * 0.5 - 10);
     void this.tweens.to(v, { y: deep }, { duration: 0.16, ease: 'quadIn' }).done.then(() => this.land(piece, bin, slot));
   }
 
-  /** Plum: pojemnik przysiada i się kołysze, kropelki, gwiazdka, obiekt podskakuje na swoje miejsce. */
+  /** Plop: the container squats and wobbles, droplets, a star, the item bounces into its place. */
   private land(piece: Piece, bin: BinView, slot: { x: number; y: number }): void {
     const v = piece.view;
     (bin as BinView & { inFlight?: number }).inFlight = Math.max(0, this.flying(bin) - 1);
@@ -336,7 +336,7 @@ export class SortScene extends RoundScene {
     void this.tweens.to(v, { y: slot.y }, { duration: 0.38, delay: 0.05, ease: 'backOut' });
   }
 
-  /** Gwiazdka unosząca się nad skrzynką. */
+  /** A star floating up above the bin. */
   private floatStar(x: number, y: number): void {
     const star = new Graphics().star(0, 0, 5, 26, 12).fill({ color: COLORS.sun }).stroke({ color: COLORS.ink, width: 4, join: 'round' });
     star.position.set(x, y);
@@ -347,12 +347,12 @@ export class SortScene extends RoundScene {
     void this.tweens.to(star, { y: y - 90, alpha: 0 }, { duration: 0.8, delay: 0.15, ease: 'quadOut' }).done.then(() => star.destroy());
   }
 
-  /** Playtest: wszystko do dobrych skrzynek (`eval:__ff.game.scenes.current.solve()`). */
+  /** Playtest: everything into the right bins (`eval:__ff.game.scenes.current.solve()`). */
   solve(): void {
     for (const p of this.pieces) if (!p.done) this.put(p);
   }
 
-  /** Podpowiedź: pierwszy obiekt sam „wskazuje” swoją skrzynkę. */
+  /** Hint: the first item "points" to its bin by itself. */
   protected override gesture(): Gesture | null {
     const p = this.pieces.find((x) => !x.done);
     const bin = p && this.bins[p.bin];
@@ -365,7 +365,7 @@ export class SortScene extends RoundScene {
     const bin = this.bins[p.bin]!.view;
     const tx = p.home.x + (bin.x - p.home.x) * 0.35;
     const ty = p.home.y + (bin.y - 200 - p.home.y) * 0.35;
-    // Chwycenie elementu przerywa podpowiedź; wtedy nie cofamy go na start (dziecko mogło go już położyć).
+    // Grabbing an item interrupts the hint; then we don't move it back to the start (the child may have already placed it).
     const tw = this.tweens.to(p.view, { x: tx, y: ty }, { duration: 0.45, ease: 'sineInOut', yoyo: true, repeat: 1 });
     void tw.done.then(() => !tw.killed && p.view.position.set(p.home.x, p.home.y));
   }
@@ -377,7 +377,7 @@ export class SortScene extends RoundScene {
     const right = w - safe.right - 40;
     const cw = right - left;
     const cx = (left + right) / 2;
-    // Skrzynki na dole.
+    // Bins at the bottom.
     const nb = this.bins.length;
     const bw = Math.min(290, (cw - 40 * (nb - 1)) / nb);
     this.bins.forEach((b, i) => {
@@ -390,13 +390,13 @@ export class SortScene extends RoundScene {
       b.view.position.set(cx + (i - (nb - 1) / 2) * (bw + 40), h - 30);
       const sign = b.view.children.find((c) => c.label === 'sign');
       sign?.position.set(0, -b.height - 62);
-      // Stosik: obiekty już w skrzynce przeskalowane do nowej szerokości.
+      // Pile: items already in the bin, rescaled to the new width.
       b.pile.children.forEach((c, n) => {
         const slot = this.pileSlot(b, n);
         c.position.set(slot.x, slot.y);
       });
     });
-    // Obiekty u góry: jeden rząd.
+    // Items at the top: one row.
     const n = this.pieces.length;
     const size = Math.min(170, (cw - 24 * (n - 1)) / n);
     this.pieces.forEach((p, i) => {

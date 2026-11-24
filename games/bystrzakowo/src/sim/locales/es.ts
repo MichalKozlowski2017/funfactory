@@ -1,6 +1,6 @@
 /** Spanish on-screen texts (key: English id). */
 export const ES: Record<string, string> = {
-  // Krainy i zabawy
+  // Realms and activities
   puzzleMeadow: 'Pradera de Acertijos',
   basilsWorkshop: 'Taller de Basil',
   lusiasPath: 'Sendero de Lusia',
@@ -26,7 +26,7 @@ export const ES: Record<string, string> = {
   melody: 'Melodía',
   goodNight: '¡Buenas noches!',
   album: 'Álbum',
-  // Strefa rodzica
+  // Parent zone
   parents: 'Para padres',
   settings: 'Ajustes',
   close: 'Cerrar',
@@ -70,7 +70,7 @@ export const ES: Record<string, string> = {
   versionFull: 'Versión: completa',
   versionTrialFullAccess: 'Versión: prueba (acceso completo)',
   versionFreePuzzleMeadow: 'Versión: gratis (Pradera de Acertijos)',
-  // Pełna wersja
+  // Full version
   fullTrialAccessMore: 'Prueba con acceso completo: {n} días de juego más después de hoy',
   fullTrialAccess1: 'Prueba con acceso completo: 1 día de juego más después de hoy',
   fullTrialAccessToday: 'Prueba con acceso completo: hoy es el último día',
@@ -165,4 +165,6 @@ export const ES: Record<string, string> = {
   firstTimePlaying: '{date}: primera vez',
   firstDiscoveriesWillAppear: 'Los primeros descubrimientos aparecerán tras unas partidas.',
   screenFreePlayIdea: 'Idea de juego sin pantalla',
+  // Demo child name for playtests and store screenshots.
+  demoChildName: 'Sofía',
 };

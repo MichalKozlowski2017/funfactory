@@ -12,19 +12,19 @@ import type { Gesture } from '../hand.ts';
 
 export { PAGES } from '../sim/coloring.ts';
 import { PAGES } from '../sim/coloring.ts';
-/** Rozmiar roboczy obrazka (piksele). */
+/** Working size of the picture (pixels). */
 const SIZE = 640;
-/** Farby: nasycone, ale miękkie (jak plastelina). */
+/** Paints: saturated but soft (like plasticine). */
 const PAINTS = [0xe8413c, 0xff8a2b, 0xffd23f, 0x7ad35a, 0x2f9e5b, 0x5cb3ff, 0x3d6bff, 0x9b5de5, 0xff8fc0, 0x9a6236, 0xffffff, 0x4a4a4a];
 const URL_BASE = import.meta.env.BASE_URL;
-/** Najwęższe pole, które da się trafić palcem (promień w pikselach obrazka 640); węższe dołączają do sąsiada. */
+/** Narrowest area you can hit with a finger (radius in pixels of the 640 picture); narrower ones merge into a neighbor. */
 const MIN_RADIUS = 18;
-/** Dotknięcie linii albo maleńkiego pola łapie najbliższe pole w tym promieniu. */
+/** Touching a line or a tiny area picks the nearest area within this radius. */
 const TAP_REACH = 26;
 
 /**
- * Kolorowanka (Pracownia Malucha): wybór farby z palety i dotknięcie pola obrazka zamalowuje cały obszar
- * między konturami. Bez złych odpowiedzi; zielona strzałka kończy obrazek (naklejka).
+ * Coloring (Little Studio): picking a paint from the palette and touching an area of the picture fills the whole region
+ * between the outlines. No wrong answers; the green arrow finishes the picture (sticker).
  */
 export class ColoringScene extends RoundScene {
   readonly id = 'coloring';
@@ -50,9 +50,9 @@ export class ColoringScene extends RoundScene {
   protected async prepare(): Promise<void> {
     this.length = 1;
     const seen = state.progress.colored ?? [];
-    // Najpierw strony jeszcze nie kolorowane; strona, której nie da się wczytać, jest pomijana.
+    // Pages not colored yet come first; a page that fails to load is skipped.
     const order = [...this.game.rng.shuffle(PAGES.filter((p) => !seen.includes(p))), ...this.game.rng.shuffle(PAGES.filter((p) => seen.includes(p)))];
-    // Playtest: ?page=<id> wymusza stronę.
+    // Playtest: ?page=<id> forces a page.
     const forced = new URLSearchParams(location.search).get('page');
     if (forced && PAGES.includes(forced)) order.unshift(forced);
     let tex: Texture | null = null;
@@ -63,7 +63,7 @@ export class ColoringScene extends RoundScene {
         break;
       }
     }
-    if (!tex) throw new Error('Brak stron kolorowanki');
+    if (!tex) throw new Error('No coloring pages');
     const src = tex.source.resource as CanvasImageSource;
     const canvas = document.createElement('canvas');
     canvas.width = SIZE;
@@ -72,7 +72,7 @@ export class ColoringScene extends RoundScene {
     ctx.fillStyle = '#ffffff';
     ctx.fillRect(0, 0, SIZE, SIZE);
     ctx.drawImage(src, 0, 0, SIZE, SIZE);
-    // Przycięcie do konturów: rysunek wypełnia całą ramkę (większe pola pod palcem).
+    // Crop to the outlines: the drawing fills the whole frame (bigger areas under the finger).
     const box = inkBox(ctx.getImageData(0, 0, SIZE, SIZE));
     if (box) {
       const side = Math.min(SIZE, Math.max(box.w, box.h) * 1.06);
@@ -87,7 +87,7 @@ export class ColoringScene extends RoundScene {
     for (let i = 0; i < SIZE * SIZE; i++) {
       const lum = 0.3 * d[i * 4]! + 0.59 * d[i * 4 + 1]! + 0.11 * d[i * 4 + 2]!;
       this.dark[i] = lum < 150 ? 1 : 0;
-      // Czysty obraz startowy: linie czarne, reszta biała (bez szarych odcieni z wygładzania).
+      // Clean starting image: black lines, everything else white (no gray shades from antialiasing).
       const v = this.dark[i] ? 40 : 255;
       d[i * 4] = d[i * 4 + 1] = d[i * 4 + 2] = v;
       d[i * 4 + 3] = 255;
@@ -108,7 +108,7 @@ export class ColoringScene extends RoundScene {
     void pixelsToTexture(this.pixels).then((t) => (this.picture.texture = t));
     this.picture.eventMode = 'static';
     this.picture.cursor = 'pointer';
-    // Stuknięcie wypełnia pole; przesuwanie palcem („smarowanie”, jak robią maluchy) wypełnia kolejne pola pod palcem.
+    // A tap fills an area; moving the finger ("smearing", as toddlers do) fills further areas under the finger.
     this.picture.on('pointerdown', (e) => {
       this.smearing = true;
       this.lastRegion = -1;
@@ -168,7 +168,7 @@ export class ColoringScene extends RoundScene {
     const r = (this.paint >> 16) & 255;
     const g = (this.paint >> 8) & 255;
     const b = this.paint & 255;
-    // Pole już w tym kolorze: nic do roboty (przy smarowaniu palec wraca na te same pola).
+    // Area already in this color: nothing to do (when smearing, the finger returns to the same areas).
     const first = this.labels.indexOf(region);
     if (first >= 0 && d[first * 4] === r && d[first * 4 + 1] === g && d[first * 4 + 2] === b) return;
     for (let i = 0; i < SIZE * SIZE; i++)
@@ -189,7 +189,7 @@ export class ColoringScene extends RoundScene {
     sfx.plop(this.game.sound);
     const local = this.layer.toLocal(e.global);
     this.particles.burst(local.x, local.y, { count: 14, speed: [120, 320], life: [0.3, 0.6], gravity: 500, scale: [0.6, 1.2], colors: [this.paint, this.paint, 0xffffff] });
-    // Przycisk „gotowe” dopiero po kilku polach: naklejka nie za stuknięcie w „dalej” bez kolorowania.
+    // The "done" button only after a few areas: no sticker for tapping "next" without coloring.
     if (this.fills === 3) {
       this.done.visible = true;
       void popIn(this.tweens, this.done, 0.4);
@@ -205,7 +205,7 @@ export class ColoringScene extends RoundScene {
     this.busy = true;
     const seen = state.progress.colored ?? [];
     if (!seen.includes(this.page)) state.progress.colored = [...seen, this.page];
-    // Do albumu rodzica (tylko gdy coś pokolorowano).
+    // To the parent's album (only when something was colored).
     if (this.fills > 0) void addPainting({ id: `k${Date.now()}`, page: this.page, date: today(), img: pixelsToJpeg(this.pixels, 480) });
     void pulse(this.tweens, this.picture, 0.08, 0.4);
     this.burst(this.picture.x, this.picture.y, 50);
@@ -213,7 +213,7 @@ export class ColoringScene extends RoundScene {
     this.solved();
   }
 
-  /** Zrzuty do sklepów: kilka największych obszarów (bez tła) w różnych kolorach. */
+  /** Store screenshots: several of the largest regions (without the background) in different colors. */
   paintDemo(n = 8): void {
     const bg = this.labels[0]!;
     const regions = this.sizes.map((size, r) => ({ size, r })).filter((x) => x.r !== bg && x.r > 0 && x.size > 0).sort((a, b) => b.size - a.size).slice(0, n);
@@ -227,20 +227,20 @@ export class ColoringScene extends RoundScene {
     });
   }
 
-  /** Playtest: zamalowanie kilku obszarów i koniec. */
+  /** Playtest: fill a few regions and finish. */
   solve(): void {
     this.finishPicture();
   }
 
-  /** Podpowiedź: paleta podskakuje. */
-  /** Wybór koloru z palety, potem stuknięcie w największe pole obrazka. */
+  /** Hint: the palette bounces. */
+  /** Pick a color from the palette, then tap the largest area of the picture. */
   protected override gesture(): Gesture | null {
     const blob = this.palette.children.find((c) => c.label !== String(this.paint)) as Container | undefined;
     const spot = this.bigSpot();
     return blob && spot ? { kind: 'tap', at: [this.spot(blob), spot] } : null;
   }
 
-  /** Punkt w środku największego pola obrazka (współrzędne sceny). */
+  /** Point inside the largest area of the picture (scene coordinates). */
   private bigSpot(): { x: number; y: number } | null {
     const bg = this.labels[0]!;
     let best = -1;
@@ -255,7 +255,7 @@ export class ColoringScene extends RoundScene {
         sy += Math.floor(i / SIZE);
         n++;
       }
-    // Najbliższy środka ciężkości piksel tego pola (środek pola w kształcie litery C leży poza nim).
+    // The pixel of this area nearest to the centroid (the center of a C-shaped area lies outside it).
     let pick = 0;
     let dist = Infinity;
     for (let i = 0; i < SIZE * SIZE; i++)
@@ -284,7 +284,7 @@ export class ColoringScene extends RoundScene {
         .circle(0, 0, r)
         .fill({ color })
         .stroke({ color: COLORS.ink, width: on ? 6 : 4 });
-      // Wybrany kolor: powiększony i z białym pierścieniem w ciemnej obwódce (żółta obwódka znikała na żółtej farbie).
+      // Selected color: enlarged, with a white ring in a dark outline (a yellow outline vanished on yellow paint).
       if (on) ((c as Container).children[0] as Graphics).circle(0, 0, r + 9).stroke({ color: 0xffffff, width: 6 }).circle(0, 0, r + 13).stroke({ color: COLORS.ink, width: 3 });
       (c as Container).hitArea = new Rectangle(-44, -44, 88, 88);
     });
@@ -297,7 +297,7 @@ export class ColoringScene extends RoundScene {
     const right = w - safe.right - 30;
     const top = safe.top + 105;
     const bottom = h - 25;
-    // Paleta po prawej w dwóch kolumnach, obrazek w środku.
+    // Palette on the right in two columns, picture in the middle.
     const palW = 170;
     const s = Math.min(bottom - top, right - left - palW - 30);
     this.box = { x: left + (right - left - palW - 30 - s) / 2, y: top + (bottom - top - s) / 2, s };
@@ -321,7 +321,7 @@ export class ColoringScene extends RoundScene {
   }
 }
 
-/** Prostokąt obejmujący kontury (ciemne piksele) albo null dla pustej strony. */
+/** Rectangle enclosing the outlines (dark pixels), or null for an empty page. */
 function inkBox(img: ImageData): { x: number; y: number; w: number; h: number } | null {
   const d = img.data;
   let x0 = img.width;

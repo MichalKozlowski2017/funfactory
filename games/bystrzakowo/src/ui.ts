@@ -1,7 +1,7 @@
 import { Container, Graphics, Point, Sprite, Text, type Texture } from 'pixi.js';
 import { haptics, Spring, type Sound, type Tweens } from '@funfactory/core';
 
-/** Krój nagłówków i cyfr (Baloo 2 ExtraBold, OFL; pełne polskie znaki). Ładowany raz w main.ts. */
+/** Typeface for headings and digits (Baloo 2 ExtraBold, OFL; full Polish character set). Loaded once in main.ts. */
 export let FONT = 'system-ui, -apple-system, sans-serif';
 
 export async function loadFont(): Promise<void> {
@@ -10,7 +10,7 @@ export async function loadFont(): Promise<void> {
     document.fonts.add(await face.load());
     FONT = '"Baloo 2", system-ui, sans-serif';
   } catch {
-    /* krój systemowy */
+    /* system font */
   }
 }
 
@@ -32,7 +32,7 @@ export function label(text: string, size: number, resolution: number, fill = '#f
   });
 }
 
-/** Krótkie efekty dźwiękowe z syntezy (bez plików). */
+/** Short synthesized sound effects (no files). */
 export const sfx = {
   tap: (s: Sound) => s.synth([{ wave: 'sine', freq: 520, freqEnd: 760, duration: 0.09, volume: 0.25 }]),
   good: (s: Sound) =>
@@ -42,9 +42,9 @@ export const sfx = {
       { wave: 'triangle', freq: 1320, duration: 0.32, volume: 0.22, delay: 0.16 },
     ]),
   bad: (s: Sound) => s.synth([{ wave: 'sine', freq: 300, freqEnd: 220, duration: 0.22, volume: 0.25 }]),
-  /** Świst lecącego obiektu. */
+  /** Whoosh of a flying object. */
   whoosh: (s: Sound) => s.synth([{ wave: 'noise', freq: 900, freqEnd: 2600, duration: 0.32, volume: 0.07, filter: 'bandpass', filterFreq: 1400 }]),
-  /** Plum: obiekt wpada do skrzynki. */
+  /** Plop: an object drops into the crate. */
   plop: (s: Sound) =>
     s.synth([
       { wave: 'sine', freq: 520, freqEnd: 150, duration: 0.16, volume: 0.35 },
@@ -62,8 +62,8 @@ export const sfx = {
 };
 
 /**
- * Karta odpowiedzi: zaokrąglony kafelek z obrazkiem. Dotknięcie: sprężynka wciśnięcia i `onTap`.
- * Rozmiar w jednostkach gry, minimum 88 (pole dotyku dla małych palców raczej 160+).
+ * Answer card: a rounded tile with a picture. Touch: a press spring and `onTap`.
+ * Size in game units, minimum 88 (for small fingers the touch area should rather be 160+).
  */
 export class Card extends Container {
   enabled = true;
@@ -113,7 +113,7 @@ export class Card extends Container {
     this.hitArea = { contains: (x: number, y: number) => Math.abs(x) <= size / 2 && Math.abs(y) <= size / 2 };
   }
 
-  /** Zielona obwódka po dobrej odpowiedzi. */
+  /** Green outline after a correct answer. */
   markGood(): void {
     const s = this.size;
     this.plate.roundRect(-s / 2 - 6, -s / 2 - 6, s + 12, s + 12, s * 0.18).stroke({ color: COLORS.good, width: 10 });
@@ -124,10 +124,10 @@ export class Card extends Container {
   }
 }
 
-/** Ikony przycisków (rysowane w Graphics, bez tekstu: dziecko nie czyta). */
+/** Button icons (drawn with Graphics, no text: the child does not read). */
 export type Icon = 'home' | 'next' | 'plus' | 'landscape' | 'gallery' | 'trash';
 
-/** Okrągły przycisk z ikoną rysowaną w Graphics. */
+/** Round button with an icon drawn with Graphics. */
 export class IconButton extends Container {
   private readonly press = new Spring(1, 600, 20);
   private readonly face = new Container();
@@ -152,12 +152,12 @@ export class IconButton extends Container {
       const t = r * 0.32;
       g.poly([-t, -r, t, -r, t, -t, r, -t, r, t, t, t, t, r, -t, r, -t, t, -r, t, -r, -t, -t, -t]).fill({ color: 0xffffff }).stroke({ color: COLORS.ink, width: 4, join: 'round' });
     } else if (icon === 'landscape') {
-      // Obrazek z górką i słońcem.
+      // Picture with a hill and the sun.
       g.roundRect(-r, -r * 0.75, r * 2, r * 1.5, r * 0.25).fill({ color: 0x9fdcff }).stroke({ color: COLORS.ink, width: 4 });
       g.poly([-r, r * 0.75, -r * 0.3, -r * 0.1, r * 0.2, r * 0.45, r * 0.5, r * 0.15, r, r * 0.6, r, r * 0.75]).fill({ color: 0x7ad35a }).stroke({ color: COLORS.ink, width: 3, join: 'round' });
       g.circle(r * 0.45, -r * 0.35, r * 0.2).fill({ color: COLORS.sun });
     } else if (icon === 'gallery') {
-      // Dwa obrazki jeden na drugim.
+      // Two pictures stacked on each other.
       for (const [dx, dy, c] of [
         [r * 0.25, -r * 0.25, 0xffd2e4],
         [-r * 0.15, r * 0.15, 0xfffaf2],
@@ -166,7 +166,7 @@ export class IconButton extends Container {
       g.poly([-r * 0.75, r * 0.65, -r * 0.35, r * 0.1, -r * 0.05, r * 0.45, r * 0.15, r * 0.25, r * 0.5, r * 0.65]).fill({ color: 0x7ad35a });
       g.circle(r * 0.25, -r * 0.1, r * 0.13).fill({ color: COLORS.sun });
     } else {
-      // Kosz.
+      // Trash can.
       g.roundRect(-r * 0.6, -r * 0.45, r * 1.2, r * 1.25, r * 0.15).fill({ color: 0xffffff }).stroke({ color: COLORS.ink, width: 4 });
       g.roundRect(-r * 0.8, -r * 0.75, r * 1.6, r * 0.28, r * 0.1).fill({ color: 0xffffff }).stroke({ color: COLORS.ink, width: 4 });
       g.roundRect(-r * 0.22, -r * 0.95, r * 0.44, r * 0.25, r * 0.08).stroke({ color: COLORS.ink, width: 4 });
@@ -194,7 +194,7 @@ export class IconButton extends Container {
   }
 }
 
-/** Skalowanie tła „cover”: wypełnia ekran, nadmiar przycina po bokach. */
+/** "Cover" background scaling: fills the screen, crops the excess at the sides. */
 export function cover(sprite: Sprite, width: number, height: number): void {
   const t = sprite.texture;
   sprite.anchor.set(0.5);
@@ -203,8 +203,8 @@ export function cover(sprite: Sprite, width: number, height: number): void {
 }
 
 /**
- * Przeciąganie palcem: obiekt idzie za palcem (z zachowanym punktem chwytu), po puszczeniu `drop`
- * dostaje pozycję w układzie rodzica. `canStart` blokuje chwytanie (np. w trakcie animacji).
+ * Finger dragging: the object follows the finger (keeping the grab point); on release `drop`
+ * receives the position in the parent's coordinates. `canStart` blocks grabbing (e.g. during an animation).
  */
 export function draggable(obj: Container, handlers: { canStart: () => boolean; start?: () => void; drop: (at: Point) => void; tap?: () => void; move?: () => void }): void {
   let grab: { dx: number; dy: number; id: number; x: number; y: number; moved: number } | null = null;
@@ -214,7 +214,7 @@ export function draggable(obj: Container, handlers: { canStart: () => boolean; s
     if (grab || !obj.parent || !handlers.canStart()) return;
     const p = obj.parent.toLocal(e.global);
     grab = { dx: obj.x - p.x, dy: obj.y - p.y, id: e.pointerId, x: p.x, y: p.y, moved: 0 };
-    obj.parent.addChild(obj); // na wierzch
+    obj.parent.addChild(obj); // bring to front
     haptics.tap();
     handlers.start?.();
   });
@@ -230,15 +230,15 @@ export function draggable(obj: Container, handlers: { canStart: () => boolean; s
     const tapped = grab.moved < 16;
     grab = null;
     handlers.drop(new Point(obj.x, obj.y));
-    // Stuknięcie zamiast przeciągnięcia: scena może pokazać, dokąd przeciągnąć (dzieci często tylko stukają).
+    // A tap instead of a drag: the scene can show where to drag (children often just tap).
     if (tapped) handlers.tap?.();
   };
   obj.on('pointerup', end);
   obj.on('pointerupoutside', end);
 }
 
-/** „Nie” bez słów: obiekt kołysze się na boki (zły ruch widać także bez dźwięku). */
+/** A wordless "no": the object wobbles side to side (a wrong move is visible even without sound). */
 export function wiggle(tweens: Tweens, obj: Container, angle = 0.14): void {
-  // Bez killOf: obiekt może mieć inne animacje (położenie, skala), kręcimy tylko obrotem.
+  // No killOf: the object may have other animations (position, scale); we only touch rotation.
   void tweens.to(obj, { rotation: angle }, { duration: 0.06, yoyo: true, repeat: 3 }).done.then(() => (obj.rotation = 0));
 }

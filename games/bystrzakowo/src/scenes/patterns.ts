@@ -15,8 +15,8 @@ interface Tile {
 }
 
 /**
- * Co dalej? (Warsztat Bazyla): rząd obrazków we wzorze z jednym pustym miejscem; brakujący obrazek
- * przeciąga się z dołu. Dobry wskakuje na miejsce i cały rząd „gra” po kolei, zły wraca.
+ * What's next? (Basil's Workshop): a row of pictures in a pattern with one empty slot; the missing picture
+ * is dragged up from below. The right one snaps into place and the whole row "plays" in turn, a wrong one returns.
  */
 export class PatternScene extends RoundScene {
   readonly id = 'patterns';
@@ -96,7 +96,7 @@ export class PatternScene extends RoundScene {
     this.tweens.to(opt.view.scale, { x: 1, y: 1 }, { duration: 0.2 });
   }
 
-  /** Dobry obrazek wskakuje na miejsce, a cały rząd podskakuje po kolei jak melodia. */
+  /** The right picture snaps into place and the whole row bounces in turn like a melody. */
   private correct(opt: { view: Container; item: Item }): void {
     this.busy = true;
     const gap = this.tiles[this.task.gap]!;
@@ -119,13 +119,13 @@ export class PatternScene extends RoundScene {
     });
   }
 
-  /** Playtest: dobry obrazek na miejsce. */
+  /** Playtest: the right picture into its slot. */
   solve(): void {
     const opt = this.options.find((o) => o.item === this.task.row[this.task.gap])!;
     this.correct(opt);
   }
 
-  /** Podpowiedź: dobry obrazek się kołysze. */
+  /** Hint: the right picture wobbles. */
   protected override gesture(): Gesture | null {
     const opt = this.options.find((o) => o.item === this.task.row[this.task.gap]);
     const gap = this.tiles[this.task.gap];

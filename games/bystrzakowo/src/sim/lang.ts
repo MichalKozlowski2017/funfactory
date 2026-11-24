@@ -1,6 +1,6 @@
 /**
- * Język gry: polski (podstawowy), angielski, niemiecki, hiszpański (latynoamerykański). Ustawiany raz przy starcie (telefon albo wybór
- * rodzica) i czytany przez logikę zabaw, które od niego zależą (głoski, sylaby, literki, raport).
+ * Game language: Polish (primary), English, German, Spanish (Latin American). Set once at startup (phone or parent's
+ * choice) and read by the activity logic that depends on it (phonemes, syllables, letters, report).
  */
 export const LANGS = ['pl', 'en', 'de', 'es'] as const;
 export type Lang = (typeof LANGS)[number];
@@ -13,7 +13,7 @@ export function setLang(l: Lang): void {
   current = l;
 }
 
-/** Język z ustawień telefonu (np. „de-AT” → de); spoza listy: angielski. */
+/** Language from phone settings (e.g. "de-AT" → de); outside the list: English. */
 export function deviceLang(locales: readonly string[]): Lang {
   for (const l of locales) {
     const code = l.toLowerCase().slice(0, 2);

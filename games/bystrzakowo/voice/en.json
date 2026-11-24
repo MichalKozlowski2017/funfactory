@@ -609,7 +609,7 @@
    "voice": "voices/lusia-en-calm"
   },
   {
-   "name": "lusia-item-lalka",
+   "name": "lusia-item-doll",
    "text": "Doll.",
    "voice": "voices/lusia-en-calm"
   },
@@ -2053,7 +2053,7 @@
    "voice": "voices/bazyl-en-calm"
   },
   {
-   "name": "bazyl-item-lalka",
+   "name": "bazyl-item-doll",
    "text": "Doll.",
    "voice": "voices/bazyl-en-calm"
   },

@@ -6,10 +6,10 @@ export interface P {
   y: number;
 }
 
-/** Gest do pokazania: stuknięcia (po kolei), przeciągnięcie albo prowadzenie palcem po linii. */
+/** Gesture to show: taps (in order), a drag, or tracing a line with a finger. */
 export type Gesture = { kind: 'tap'; at: P[] } | { kind: 'drag'; from: P; to: P } | { kind: 'trace'; path: P[] };
 
-/** Odcinek animacji: ruch z `a` do `b` (albo po `path`), docisk palca i przezroczystość od-do. */
+/** Animation segment: movement from `a` to `b` (or along `path`), finger press and alpha from-to. */
 interface Seg {
   d: number;
   a: P;
@@ -17,18 +17,18 @@ interface Seg {
   path?: P[];
   press: [number, number];
   alpha: [number, number];
-  /** Fala w miejscu dotknięcia na początku odcinka. */
+  /** Ripple at the touch point at the start of the segment. */
   ring?: boolean;
-  /** Ślad palca (prowadzenie po linii, przeciąganie). */
+  /** Finger trail (tracing a line, dragging). */
   trail?: boolean;
 }
 
 const ease = (t: number) => 0.5 - Math.cos(Math.PI * t) / 2;
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
-/** Skąd rączka wjeżdża: z dołu po prawej od pierwszego punktu. */
+/** Where the hand enters from: below and to the right of the first point. */
 const ENTRY: P = { x: 90, y: 120 };
 
-/** Punkt na łamanej w ułamku `t` jej długości. */
+/** Point on the polyline at fraction `t` of its length. */
 export function along(path: readonly P[], t: number): P {
   if (path.length === 1) return path[0]!;
   const lens = path.slice(1).map((p, i) => Math.hypot(p.x - path[i]!.x, p.y - path[i]!.y));
@@ -43,7 +43,7 @@ export function along(path: readonly P[], t: number): P {
   return path[path.length - 1]!;
 }
 
-/** Cała pętla animacji dla gestu (czysta funkcja: łatwo sprawdzić w teście). */
+/** The full animation loop for a gesture (pure function: easy to check in a test). */
 export function timeline(g: Gesture): Seg[] {
   const first = g.kind === 'tap' ? g.at[0]! : g.kind === 'drag' ? g.from : g.path[0]!;
   const enter: P = { x: first.x + ENTRY.x, y: first.y + ENTRY.y };
@@ -81,8 +81,8 @@ export function timeline(g: Gesture): Seg[] {
 }
 
 /**
- * Rączka z samouczka: pokazuje dziecku gest (dotknij, przeciągnij, prowadź palcem) w pętli,
- * aż dziecko samo dotknie ekranu. Czubek palca jest w punkcie (0, 0) kontenera.
+ * Tutorial hand: shows the child a gesture (tap, drag, trace with a finger) in a loop
+ * until the child touches the screen. The fingertip is at the container's (0, 0).
  */
 export class Hand extends Container {
   private readonly finger: Container;
@@ -102,12 +102,12 @@ export class Hand extends Container {
     this.eventMode = 'none';
     this.finger = new Container();
     if (texture) {
-      // Grafika: palec do góry, czubek w HAND_TIP (ułamki wymiarów tekstury).
+      // Image: finger pointing up, tip at HAND_TIP (fractions of the texture size).
       const s = new Sprite({ texture, anchor: { x: HAND_TIP.x, y: HAND_TIP.y } });
       s.scale.set(size / texture.height);
       this.finger.addChild(s);
     } else this.finger.addChild(drawnHand(size));
-    // Lekko pochylona, jak prawa ręka trzymająca tablet.
+    // Slightly tilted, like a right hand holding a tablet.
     this.finger.rotation = -0.35;
     this.addChild(this.trail, this.ring, this.finger);
     this.visible = false;
@@ -125,7 +125,7 @@ export class Hand extends Container {
     this.trailFrom = null;
   }
 
-  /** Wygaszenie (dziecko dotknęło ekranu). */
+  /** Fade out (the child touched the screen). */
   stop(): void {
     if (this.visible) this.fading = true;
   }
@@ -185,10 +185,10 @@ export class Hand extends Container {
   }
 }
 
-/** Czubek palca na grafice rączki (ułamki szerokości i wysokości tekstury). */
+/** Fingertip on the hand image (fractions of the texture width and height). */
 export const HAND_TIP = { x: 0.35, y: 0.03 };
 
-/** Zapasowa rączka z kształtów (gdy grafika się nie wczytała). */
+/** Fallback hand drawn from shapes (when the image failed to load). */
 function drawnHand(size: number): Graphics {
   const k = size / 150;
   const g = new Graphics();

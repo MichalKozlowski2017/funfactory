@@ -1,7 +1,7 @@
 /**
- * Katalog obiektów: jeden obrazek zasila wszystkie zagadki, do których pasuje (zob. docs/bystrzakowo.md).
- * Grafika: public/art/items/<id>.webp (Flux, styl plastelina; `prompt` = opis obiektu do przegenerowania),
- * nazwa w lektorze: public/audio/<głos>/item-<id>.m4a.
+ * Item catalog: one picture feeds every puzzle it fits (see docs/bystrzakowo.md).
+ * Image: public/art/items/<id>.webp (Flux, plasticine style; `prompt` = item description for regenerating it),
+ * narrator name: public/audio/<voice>/item-<id>.m4a.
  */
 import { lang, type Lang } from './lang.ts';
 import { ITEM_NAMES, PL_GENITIVE } from './locales/items.ts';
@@ -12,27 +12,27 @@ export type Color = 'red' | 'yellow' | 'green' | 'blue' | 'orange' | 'pink' | 'p
 
 export interface Item {
   id: string;
-  /** Nazwa w mianowniku (lektor czyta ją po trafieniu). */
+  /** Name in the nominative (the narrator reads it after a correct answer). */
   name: string;
   category: Category;
-  /** Główny kolor (zagadka z kolorami). Brak = obiekt wielobarwny albo kolor niejednoznaczny. */
+  /** Main colour (colours puzzle). Missing = multicoloured item or ambiguous colour. */
   color?: Color;
-  /** Sylwetka jest charakterystyczna: obiekt może być w zagadce z cieniami. */
+  /** Distinctive silhouette: the item can appear in the shadows puzzle. */
   shadow: boolean;
-  /** Mały, „policzalny” obiekt do zagadek z liczeniem. */
+  /** Small, "countable" item for counting puzzles. */
   countable: boolean;
-  /** Opis obiektu dla Fluxa (po angielsku). */
+  /** Item description for Flux (in English). */
   prompt: string;
-  /** Młode zwierzę: id mamy (zagadka „mamy i dzieci”). */
+  /** Baby animal: the mother's id ("mothers and babies" puzzle). */
   mother?: string;
-  /** Dopełniacz nazwy młodego: „Gdzie jest mama kurczaczka?”. */
+  /** Genitive of the baby's name (Polish "Where is the chick's mum?" line). */
   genitive?: string;
 }
 
 
 type Row = [id: string, color: Color | '', flags: string, prompt: string];
 
-/** Flagi: s = sylwetka do cieni, c = do liczenia. */
+/** Flags: s = silhouette for shadows, c = for counting. */
 function rows(category: Category, list: Row[]): Item[] {
   return list.map(([id, color, flags, prompt]) => ({
     id,
@@ -69,8 +69,8 @@ const BABIES: Record<string, string> = {
 };
 
 /**
- * Obiekty o podobnej sylwetce albo łatwe do pomylenia przez dziecko. Nie trafiają razem do jednego pytania
- * (cień kotka obok kota byłby nie do rozróżnienia, konik na biegunach obok koni w „co nie pasuje” myli).
+ * Items with a similar silhouette or easy for a child to confuse. They never appear together in one question
+ * (a kitten's shadow next to a cat's would be indistinguishable, a rocking horse next to horses in "odd one out" is confusing).
  */
 const LOOKALIKES: string[][] = [
   ['cat', 'kitten'],
@@ -131,7 +131,7 @@ export const ITEMS: Item[] = [
     ['baby-giraffe', '', 's', 'a tiny cute newborn baby giraffe with an oversized head, big eyes and a short neck, standing, side view'],
     ['seal-pup', '', 's', 'a tiny cute fluffy white baby seal pup with big black eyes, lying on its belly, side view'],
     ['owlet', '', 's', 'a tiny cute fluffy grey baby owlet with huge round eyes, sitting, front view'],
-    // Mamy: kolejne młode (mamy są już w katalogu), wyraźnie maleńkie, żeby nie mylić z dorosłym.
+    // Mothers: more babies (the mothers are already in the catalog), clearly tiny so they aren't mistaken for adults.
     ['puppy', '', 's', 'a tiny fluffy beige newborn puppy with floppy ears and a round chubby body, sitting, side view'],
     ['bunny', '', 's', 'a tiny round fluffy grey baby bunny with short ears, curled up small, side view'],
     ['elephant-calf', '', 's', 'a tiny round baby elephant calf with a short trunk and big ears, small and chubby, side view'],
@@ -156,30 +156,30 @@ export const ITEMS: Item[] = [
     ['octopus', 'purple', 's', 'a cute purple octopus'],
     ['bird', 'blue', 'c', 'a cute little blue bird, side view'],
     ['dinosaur', 'green', 's', 'a cute green dinosaur with a long tail, side view'],
-    // Las
+    // Forest
     ['fox', 'orange', 's', 'a cute orange fox with a white-tipped fluffy tail, standing, side view'],
     ['hare', '', 's', 'a cute brown wild hare with very long ears, sitting, side view'],
     ['boar', 'brown', 's', 'a cute dark brown wild boar with small tusks, standing, side view'],
     ['deer', 'brown', 's', 'a cute young roe deer with white spots, standing, side view'],
     ['woodpecker', '', 's', 'a cute woodpecker bird with a red cap, black and white wings, clinging to a short piece of brown tree trunk, side view'],
-    // Woda
+    // Water
     ['whale', 'blue', 's', 'a cute big blue whale with a small water spout, side view'],
     ['dolphin', '', 's', 'a cute grey-blue dolphin jumping, side view'],
     ['jellyfish', 'pink', 'sc', 'a cute pink jellyfish with wavy tentacles'],
     ['seahorse', 'orange', 'sc', 'a cute orange seahorse, side view'],
-    // Wieś
+    // Farm
     ['goat', 'white', 's', 'a cute white goat with small horns and a little beard, standing, side view'],
     ['donkey', '', 's', 'a cute grey donkey with long ears, standing, side view'],
     ['turkey', '', 's', 'a cute brown turkey with a big round fanned tail, side view'],
     ['goose', 'white', 's', 'a cute white farm goose with an orange beak, standing, side view'],
-    // Lód i śnieg
+    // Ice and snow
     ['seal', '', 's', 'a cute grey seal lying on its belly, side view'],
     ['walrus', 'brown', 's', 'a cute brown walrus with two white tusks, side view'],
     ['polar-bear', 'white', 's', 'a cute white polar bear standing on four legs, side view'],
-    // Afryka
+    // Africa
     ['hippo', '', 's', 'a cute purple-grey hippopotamus standing, side view'],
     ['rhino', '', 's', 'a cute grey rhinoceros with a horn, standing, side view'],
-    // Pierwsza litera: więcej obrazków na rzadkie litery.
+    // First letter: more pictures for rare letters.
     ['swan', 'white', 's', 'a cute white swan swimming, side view'],
     ['heron', '', 's', 'a cute grey heron standing on one leg, side view'],
   ]),
@@ -230,19 +230,19 @@ export const ITEMS: Item[] = [
     ['ball', '', 'c', 'a colorful beach ball'],
     ['teddy', 'brown', 's', 'a teddy bear sitting'],
     ['block', '', 'c', 'a single toy building block cube'],
-    ['lalka', '', 's', 'a cute toy doll in a pink dress'],
+    ['doll', '', 's', 'a cute toy doll in a pink dress'],
     ['kite', 'blue', 's', 'a blue diamond shaped kite with a tail'],
     ['drum', 'red', 's', 'a small red toy drum with drumsticks'],
     ['pony', '', 's', 'a wooden rocking horse toy, side view'],
     ['spinning-top', '', 'sc', 'a colorful spinning top toy'],
-    ['robot', '', 's', 'a cute boxy toy robot with a square metal head, a small antenna, round button eyes and little claw hands, gray and red, standing, clearly a machine'], // poprzedni wyglądał jak astronauta
+    ['robot', '', 's', 'a cute boxy toy robot with a square metal head, a small antenna, round button eyes and little claw hands, gray and red, standing, clearly a machine'], // the previous one looked like an astronaut
     ['small-balloon', 'red', 'sc', 'a red balloon on a string'],
     ['trumpet', 'yellow', 's', 'a yellow toy trumpet'],
     ['bucket', 'blue', 's', 'a blue sand bucket with a handle'],
     ['sled', '', 's', 'an empty small wooden children sled with red runners and nothing on it, side view'],
     ['skis', 'red', 's', 'a pair of red children skis lying side by side, no poles, no person'],
     ['tent', 'green', 's', 'a small green camping tent, front three-quarter view'],
-    ['ukulele', '', 's', 'a small wooden ukulele'], // dziecko nazwie to gitarą, nie ukulele (test agentem)
+    ['ukulele', '', 's', 'a small wooden ukulele'], // a child would call it a guitar, not a ukulele (agent test)
     ['castle', 'yellow', 's', 'a sandcastle with little towers and a small flag'],
     ['spade', 'red', 's', 'a red plastic toy sand shovel'],
   ]),
@@ -294,8 +294,8 @@ export const ITEMS: Item[] = [
   .map((item) => (BABIES[item.id] ? { ...item, mother: BABIES[item.id]!, genitive: PL_GENITIVE[item.id] } : item));
 
 /**
- * Zostawia w katalogu tylko obiekty o podanych id (np. te, których grafika się wczytała).
- * Zmienia tablicę w miejscu, więc wszystkie moduły widzą ten sam, okrojony katalog.
+ * Keeps only the items with the given ids in the catalog (e.g. those whose image loaded).
+ * Mutates the array in place, so every module sees the same trimmed catalog.
  */
 export function keepOnly(ids: ReadonlySet<string>): void {
   for (let i = ITEMS.length - 1; i >= 0; i--) if (!ids.has(ITEMS[i]!.id)) ITEMS.splice(i, 1);
@@ -303,31 +303,31 @@ export function keepOnly(ids: ReadonlySet<string>): void {
 
 export const itemById = (id: string): Item => {
   const item = ITEMS.find((i) => i.id === id);
-  if (!item) throw new Error(`Brak obiektu ${id}`);
+  if (!item) throw new Error(`Unknown item ${id}`);
   return item;
 };
 
-/** Nazwa obiektu w bieżącym języku gry. */
+/** Item name in the current game language. */
 export const nameOf = (item: Item): string => {
   const l = lang();
   return l === 'pl' ? item.name : (ITEM_NAMES[item.id]?.[l] ?? item.name);
 };
 
 /**
- * Pierwsza litera nazwy (angielski, niemiecki: zabawa „Co zaczyna się na…?” jest tam o literach).
- * Nazwy zaczynające się dwuznakiem (sh, ch, sch, st…) albo z dwóch słów pomijamy: litera nie brzmi
- * tam jak na początku słowa, więc myliłaby dziecko. Zwraca '' dla pominiętych.
+ * First letter of a name (English, German: the "What starts with…?" activity is about letters there).
+ * Names starting with a digraph (sh, ch, sch, st…) or made of two words are skipped: the letter doesn't sound
+ * like the start of the word there, so it would confuse the child. Returns '' for skipped ones.
  */
 export function firstLetter(name: string, l: Lang): string {
-  // Hiszpański: litera z akcentem liczy się jak bez („Árbol” na A).
+  // Spanish: an accented letter counts as the plain one ("Árbol" under A).
   const n = (l === 'es' ? name.normalize('NFD').replace(/[\u0300-\u036f]/g, '') : name).toLowerCase();
   if (n.includes(' ') || n.includes('-')) return '';
-  // Polski: dwuznaki (sz, cz, rz, ch, dz) i zmiękczenia przez „i” (zie-, sie-, nie-, cie-) brzmią inaczej niż sama litera.
+  // Polish: digraphs (sz, cz, rz, ch, dz) and softening by "i" (zi-, si-, ni-, ci- before a vowel) sound different from the letter alone.
   if (l === 'pl') return /^(sz|cz|rz|ch|dz|dź|dż)|^(dzi|ci|si|zi|ni)[aąeęioóuy]/.test(n) ? '' : n[0]!;
   const SKIP = {
     en: ['sh', 'ch', 'th', 'ph', 'wh', 'kn', 'wr', 'gi', 'ge', 'ce', 'ci'],
     de: ['sch', 'ch', 'st', 'sp', 'ph', 'pf', 'qu', 'ei', 'eu', 'au'],
-    // „h” jest nieme, „ce/ci” i „ge/gi” brzmią inaczej niż nazwa litery, dwuznaki ch, ll, qu.
+    // "h" is silent, "ce/ci" and "ge/gi" sound different from the letter name, digraphs ch, ll, qu.
     es: ['h', 'ch', 'll', 'qu', 'gu', 'ce', 'ci', 'ge', 'gi'],
   };
   const skip = SKIP[l];
@@ -335,11 +335,11 @@ export function firstLetter(name: string, l: Lang): string {
   return n[0]!;
 }
 
-/** Pierwsza litera nazwy obiektu w bieżącym języku (zabawa „Co zaczyna się na literę…?”); '' = obiekt pomijamy. */
+/** First letter of the item's name in the current language (the "What starts with the letter…?" activity); '' = item skipped. */
 export function startOf(item: Item): string {
   return firstLetter(nameOf(item), lang());
 }
 
-/** Czy obiekt może mieć buzię na obrazku (zwierzęta, słońce). Przedmioty bez buzi: prompt dostaje „no face”. */
+/** Whether the item may have a face in its picture (animals, sun). Objects without a face: the prompt gets "no face". */
 export const hasFace = (item: Item): boolean => item.category === 'animals' || item.id === 'sun';
 

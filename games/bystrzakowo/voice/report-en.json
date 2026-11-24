@@ -1269,7 +1269,7 @@
   "weak": []
  },
  {
-  "name": "lusia-item-lalka",
+  "name": "lusia-item-doll",
   "text": "Doll.",
   "ok": true,
   "tries": 1,
@@ -4215,7 +4215,7 @@
   ]
  },
  {
-  "name": "bazyl-item-lalka",
+  "name": "bazyl-item-doll",
   "text": "Doll.",
   "ok": false,
   "tries": 8,

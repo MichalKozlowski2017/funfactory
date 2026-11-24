@@ -6,7 +6,7 @@ import { MAX_LEVEL, PUZZLE_KINDS, ROUND_LENGTH, colorQuestion, countQuestion, is
 const levels = [0, 1, 2];
 
 describe('catalog', () => {
-  it('ma unikalne id i każda kategoria do „co nie pasuje” ma co najmniej 3 obiekty', () => {
+  it('has unique ids and every "what doesn\'t belong" category has at least 3 items', () => {
     expect(new Set(ITEMS.map((i) => i.id)).size).toBe(ITEMS.length);
     const counts = new Map<string, number>();
     for (const i of ITEMS) counts.set(i.category, (counts.get(i.category) ?? 0) + 1);
@@ -15,7 +15,7 @@ describe('catalog', () => {
 });
 
 describe('shadows', () => {
-  it('cel jest wśród odpowiedzi, odpowiedzi są różne i mają sylwetkę', () => {
+  it('target is among the options, options are distinct and have a silhouette', () => {
     const rng = new Rng(1);
     for (const level of levels)
       for (let i = 0; i < 200; i++) {
@@ -27,8 +27,8 @@ describe('shadows', () => {
   });
 });
 
-describe('co nie pasuje', () => {
-  it('dokładnie jeden obiekt jest z innej kategorii', () => {
+describe('matching', () => {
+  it('exactly one item is from a different category', () => {
     const rng = new Rng(2);
     for (const level of levels)
       for (let i = 0; i < 200; i++) {
@@ -43,7 +43,7 @@ describe('co nie pasuje', () => {
 });
 
 describe('counting', () => {
-  it('prawidłowa liczba jest wśród odpowiedzi, w zakresie poziomu, bez powtórzeń', () => {
+  it('correct number is among the options, within the level range, without duplicates', () => {
     const rng = new Rng(3);
     for (const level of levels)
       for (let i = 0; i < 300; i++) {
@@ -59,8 +59,8 @@ describe('counting', () => {
   });
 });
 
-describe('runda i trudność', () => {
-  it('runda ma 5 pytań bez powtórzeń obiektu przewodniego', () => {
+describe('round and difficulty', () => {
+  it('a round has 5 questions without repeating the key item', () => {
     for (const kind of PUZZLE_KINDS)
       for (let s = 1; s < 30; s++) {
         const round = makeRound(kind, new Rng(s), 1);
@@ -69,7 +69,7 @@ describe('runda i trudność', () => {
       }
   });
 
-  it('bez błędów poziom rośnie, przy wielu spada, w granicach', () => {
+  it('level goes up with no mistakes, down with many, within bounds', () => {
     expect(nextLevel(0, 0)).toBe(1);
     expect(nextLevel(MAX_LEVEL, 0)).toBe(MAX_LEVEL);
     expect(nextLevel(1, 1)).toBe(1);
@@ -78,8 +78,8 @@ describe('runda i trudność', () => {
   });
 });
 
-describe('kolory, głoski, mamy', () => {
-  it('kolory: dokładnie jeden obiekt ma pytany kolor', () => {
+describe('colors, phonemes, mothers', () => {
+  it('colors: exactly one item has the asked color', () => {
     const rng = new Rng(4);
     for (const level of levels)
       for (let i = 0; i < 300; i++) {
@@ -89,7 +89,7 @@ describe('kolory, głoski, mamy', () => {
       }
   });
 
-  it('pierwsza litera: dokładnie jeden obiekt zaczyna się na pytaną literę', () => {
+  it('first letter: exactly one item starts with the asked letter', () => {
     const rng = new Rng(5);
     for (const level of levels)
       for (let i = 0; i < 300; i++) {
@@ -99,7 +99,7 @@ describe('kolory, głoski, mamy', () => {
       }
   });
 
-  it('pierwsza litera: każda litera pada mniej więcej tak samo często, w rundzie bez powtórek', () => {
+  it('first letter: every letter comes up about equally often, no repeats within a round', () => {
     const rng = new Rng(9);
     const count = new Map<string, number>();
     for (let r = 0; r < 400; r++) {
@@ -112,7 +112,7 @@ describe('kolory, głoski, mamy', () => {
     expect(Math.max(...n) / Math.min(...n)).toBeLessThan(1.5);
   });
 
-  it('pierwsza litera po polsku: dwuznaki i zmiękczenia pomijamy', () => {
+  it('Polish first letter: digraphs and softened consonants are skipped', () => {
     expect(firstLetter('Kot', 'pl')).toBe('k');
     expect(firstLetter('Żaba', 'pl')).toBe('ż');
     expect(firstLetter('Łódka', 'pl')).toBe('ł');
@@ -120,7 +120,7 @@ describe('kolory, głoski, mamy', () => {
     for (const n of ['Szalik', 'Czapka', 'Rzodkiewka', 'Chmurka', 'Dzik', 'Ziemniak', 'Cielaczek', 'Niedźwiedź', 'Zamek z piasku']) expect(firstLetter(n, 'pl')).toBe('');
   });
 
-  it('mamy: odpowiedź to mama, zmyłki to inne dorosłe zwierzęta', () => {
+  it('mothers: the answer is the mother, decoys are other adult animals', () => {
     const rng = new Rng(6);
     for (const level of levels)
       for (let i = 0; i < 200; i++) {
@@ -133,18 +133,18 @@ describe('kolory, głoski, mamy', () => {
       }
   });
 
-  it('każda mama istnieje w katalogu', () => {
+  it('every mother exists in the catalog', () => {
     for (const baby of ITEMS.filter((i) => i.mother)) expect(ITEMS.some((i) => i.id === baby.mother)).toBe(true);
   });
 
-  it('w jednym pytaniu nie ma dwóch podobnych obiektów (kot i kotek, koń i konik)', () => {
+  it('no question has two similar items (cat and kitten, horse and pony)', () => {
     const rng = new Rng(9);
     for (const kind of ['shadows', 'matching', 'mothers'] as const)
       for (const level of levels)
         for (let i = 0; i < 300; i++) {
           const q = makeQuestion(kind, rng, level);
           const opts = q.options as Item[];
-          // W „co nie pasuje” podobne mogą być obiekty z grupy, byle nie intruz do reszty.
+          // In "what doesn't belong" group items may look alike, as long as the odd one doesn't resemble the rest.
           const pairs = q.kind === 'matching' ? opts.filter((o) => o !== q.odd).map((o) => [q.odd, o] as const) : opts.flatMap((x, j) => opts.slice(j + 1).map((y) => [x, y] as const));
           for (const [a, b] of pairs) expect(lookalike(a, b), `${kind}: ${a.id} ~ ${b.id}`).toBe(false);
           expect(opts.length).toBe(kind === 'shadows' ? optionCount(level) : Math.max(3, optionCount(level)));

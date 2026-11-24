@@ -1,7 +1,7 @@
 /**
- * Sylaby (Warsztat Bazyla): obrazek i rozsypane kafelki z sylabami; dziecko układa je po kolei,
- * Lusia czyta sylabami i całe słowo („Ko… za… Koza!”). Przygotowanie do czytania (zerówka).
- * Podział zgodny z tym, jak dzieli się słowa w przedszkolu (sylaby otwarte najpierw).
+ * Syllables (Bazyl's Workshop): a picture and scattered syllable tiles; the child puts them in order,
+ * Lusia reads the word syllable by syllable and then as a whole. Preparation for reading (kindergarten year).
+ * Words are split the way they are split in kindergarten (open syllables first).
  */
 import type { Rng } from '@funfactory/core';
 import { ITEMS } from './catalog.ts';
@@ -15,18 +15,18 @@ export { WORDS_BY_LANG };
 export const SYLLABLE_ROUND = 4;
 
 export interface Word {
-  /** Obiekt z katalogu (obrazek). */
+  /** Catalog item (picture). */
   item: string;
   syl: string[];
   level: number;
 }
 
-/** Słowa w bieżącym języku. */
+/** Words in the current language. */
 export const wordsOf = (l: Lang = lang()): readonly Word[] => WORDS_BY_LANG[l];
-/** Polskie słowa (zgodność wstecz). */
+/** Polish words (backward compatibility). */
 export const WORDS: readonly Word[] = WORDS_BY_LANG.pl;
 
-/** Słowa do rundy: nowe z poziomu dziecka wymieszane z powtórką niższych, z obrazkiem w katalogu. */
+/** Words for a round: new ones from the child's level mixed with a review of lower ones, with a picture in the catalog. */
 export function makeSyllableRound(rng: Rng, level: number): Word[] {
   const l = Math.max(0, Math.min(MAX_LEVEL, Math.round(level)));
   const have = new Set(ITEMS.map((i) => i.id));
@@ -34,15 +34,15 @@ export function makeSyllableRound(rng: Rng, level: number): Word[] {
 }
 
 /**
- * Kafelki w losowej kolejności, czasem także w dobrej. Gdyby nigdy nie były ułożone, przy dwóch sylabach
- * byłyby zawsze odwrócone i dziecko układałoby „prawy pierwszy” bez czytania (wyłapał to test agentem).
- * Dziecko i tak przeciąga każdy kafelek do okienka.
+ * Tiles in random order, sometimes also in the right one. If they were never in order, with two syllables
+ * they would always be reversed and the child would place "right one first" without reading (caught by an agent test).
+ * The child drags every tile to a slot anyway.
  */
 export function scramble(rng: Rng, syl: string[]): number[] {
   return rng.shuffle(syl.map((_, i) => i));
 }
 
-/** Kolory kafelków słowa: losowe przypisanie, żeby kolor nie zdradzał, która sylaba jest pierwsza. */
+/** Word tile colors: random assignment, so the color doesn't reveal which syllable comes first. */
 export function tileColors<T>(rng: Rng, palette: readonly T[], n: number): T[] {
   const p = rng.shuffle([...palette]);
   return Array.from({ length: n }, (_, i) => p[i % p.length]!);

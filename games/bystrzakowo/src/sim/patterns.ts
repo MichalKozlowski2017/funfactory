@@ -1,6 +1,6 @@
 /**
- * Co dalej? (Warsztat Bazyla): rząd obrazków w powtarzającym się wzorze, jedno miejsce puste.
- * Dziecko przeciąga brakujący obrazek z kilku do wyboru.
+ * What comes next? (Bazyl's Workshop): a row of pictures in a repeating pattern, one spot empty.
+ * The child drags the missing picture from a few options.
  */
 import type { Rng } from '@funfactory/core';
 import { ITEMS, lookalike, type Item } from './catalog.ts';
@@ -8,15 +8,15 @@ import { MAX_LEVEL } from './puzzles.ts';
 
 export const PATTERN_ROUND = 4;
 
-/** Wzory na poziomie (litery = różne obrazki). */
+/** Patterns per level (letters = different pictures). */
 const MOTIFS: string[][] = [['AB'], ['AAB', 'ABB', 'AB'], ['ABC', 'AABB', 'ABB', 'AAB']];
 
 export interface PatternTask {
-  /** Cały rząd (z brakującym elementem w środku). */
+  /** The whole row (including the missing element). */
   row: Item[];
-  /** Indeks pustego miejsca. */
+  /** Index of the empty spot. */
   gap: number;
-  /** Obrazki do wyboru (w tym poprawny). */
+  /** Pictures to choose from (including the correct one). */
   options: Item[];
 }
 
@@ -26,7 +26,7 @@ export function makePatternTask(rng: Rng, level: number): PatternTask {
   const l = clamp(level);
   const motif = rng.pick(MOTIFS[l]!);
   const letters = [...new Set(motif)];
-  // Obrazki wzoru: wyraziste i różne od siebie (owoce, zabawki, zwierzęta).
+  // Pattern pictures: distinctive and different from each other (fruit, toys, animals).
   const pool = rng.shuffle(ITEMS.filter((i) => ['fruit', 'toys', 'animals', 'vehicles'].includes(i.category)));
   const pick: Item[] = [];
   for (const item of pool) {
@@ -35,11 +35,11 @@ export function makePatternTask(rng: Rng, level: number): PatternTask {
     pick.push(item);
   }
   const map = new Map(letters.map((ch, i) => [ch, pick[i]!]));
-  // Rząd: wzór powtórzony, dwa pełne powtórzenia i kawałek. 5 albo 6 pól, żeby przy AB odpowiedzią
-  // nie był zawsze drugi obrazek (test agentem-dzieckiem: dało się zgadywać bez patrzenia na wzór).
+  // Row: the pattern repeated, two full repetitions and a bit more. 5 or 6 cells, so that with AB the answer
+  // is not always the second picture (child-agent test: it was possible to guess without looking at the pattern).
   const len = Math.max(rng.int(5, 6), motif.length * 2 + 1);
   const row = Array.from({ length: len }, (_, i) => map.get(motif[i % motif.length]!)!);
-  // Puste miejsce: na końcu (niższe poziomy), na najwyższym czasem w środku (po pełnym powtórzeniu).
+  // Empty spot: at the end (lower levels), at the top level sometimes in the middle (after a full repetition).
   const gap = l >= MAX_LEVEL && rng.next() < 0.4 ? motif.length + rng.int(0, motif.length - 1) : len - 1;
   const decoy = pick[letters.length]!;
   const options = rng.shuffle([...new Set([row[gap]!, ...letters.map((ch) => map.get(ch)!), decoy])]).slice(0, 3);

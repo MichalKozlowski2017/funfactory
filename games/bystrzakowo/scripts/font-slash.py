@@ -1,5 +1,5 @@
-# Baloo 2: kreska w ł/Ł prawie pozioma, więc ł wygląda jak t. Obracamy kreskę o kilkanaście stopni (w gvar też).
-# Użycie: python3 font-slash.py <wejście.ttf> <wyjście.ttf> <stopnie> (wymaga fonttools; zastosowane: 32).
+# Baloo 2: the bar in lslash/Lslash is almost horizontal, so the lowercase one looks like t. Rotate the bar by a dozen-odd degrees (in gvar too).
+# Usage: python3 font-slash.py <input.ttf> <output.ttf> <degrees> (needs fonttools; applied: 32).
 import math, sys
 from fontTools.ttLib import TTFont
 src, dst, deg = sys.argv[1], sys.argv[2], float(sys.argv[3])

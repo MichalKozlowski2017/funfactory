@@ -1,8 +1,8 @@
 /**
- * Test „małpki”: każda zabawa po kolei, losowe stuknięcia i przeciągnięcia jak u malucha (także w puste miejsca
- * i w przycisk domku), zrzuty co jakiś czas. Kod wyjścia ≠ 0 z `pnpm shot` = błąd JS albo brak gotowości sceny.
- *   node games/bystrzakowo/scripts/monkey.ts [zabawa,zabawa…] [--taps 40] [--lang pl]
- * Zrzuty: .shots/monkey/<zabawa>/, podsumowanie w .shots/monkey/report.txt.
+ * Monkey test: every activity in turn, random taps and drags like a toddler's (also on empty spots
+ * and the home button), screenshots now and then. Exit code ≠ 0 from `pnpm shot` = JS error or the scene never got ready.
+ *   node games/bystrzakowo/scripts/monkey.ts [activity,activity…] [--taps 40] [--lang pl]
+ * Screenshots: .shots/monkey/<activity>/, summary in .shots/monkey/report.txt.
  */
 import { spawnSync } from 'node:child_process';
 import { mkdirSync, writeFileSync } from 'node:fs';
@@ -19,7 +19,7 @@ const repo = join(import.meta.dirname, '../../..');
 const out = join(repo, '.shots/monkey');
 mkdirSync(out, { recursive: true });
 
-// Widok poziomy 956×440 → jednostki gry: szerokość 720, wysokość ok. 331 (gra skaluje się do szerokości 720).
+// Landscape view 956×440 → game units: width 720, height approx. 331 (the game scales to a width of 720).
 const W = 720, H = 330;
 const report: string[] = [];
 for (const [i, kind] of only.entries()) {
@@ -39,9 +39,9 @@ for (const [i, kind] of only.entries()) {
   steps.push('wait:1500', 'shot:end');
   const dir = join(out, kind);
   const res = spawnSync('pnpm', ['shot', 'games/bystrzakowo', '--size', '956x440@1', '--query', `full&lang=${lang}`, '--seed', String(i + 3), '--timeout', '30000', '--out', dir, '--steps', steps.join(',')], { cwd: repo, encoding: 'utf8' });
-  const errs = (res.stdout + res.stderr).split('\n').filter((l) => /BŁĘ|Error|error|playtest:/.test(l)).slice(0, 6);
-  const scene = /scena: (\S+)/.exec(res.stdout)?.[1] ?? '?';
-  const line = `${res.status === 0 ? 'OK  ' : 'BŁĄD'} ${kind.padEnd(12)} scena na końcu: ${scene}${errs.length ? '\n    ' + errs.join('\n    ') : ''}`;
+  const errs = (res.stdout + res.stderr).split('\n').filter((l) => /ERROR|BŁĘ|Error|error|playtest:/.test(l)).slice(0, 6);
+  const scene = /(?:scene|scena): (\S+)/.exec(res.stdout)?.[1] ?? '?';
+  const line = `${res.status === 0 ? 'OK  ' : 'FAIL'} ${kind.padEnd(12)} final scene: ${scene}${errs.length ? '\n    ' + errs.join('\n    ') : ''}`;
   console.log(line);
   report.push(line);
 }

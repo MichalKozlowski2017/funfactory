@@ -22,14 +22,14 @@ const HOLD = 2;
 const FONT = 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif';
 
 /**
- * Zębatka strefy rodzica: trzeba ją przytrzymać przez 2 s (bramka przed dziećmi, wymóg kategorii Kids).
- * Pierścień wokół pokazuje postęp przytrzymania.
+ * Parent zone gear: it has to be held for 2 s (a gate against children, a Kids category requirement).
+ * A ring around it shows the hold progress.
  */
 /**
- * Bramka dla dorosłego przed zakupem i wysłaniem obrazka poza aplikację (wymóg kategorii Kids): pytanie,
- * którego przedszkolak nie rozwiąże (mnożenie, cztery odpowiedzi). Do samej strefy rodzica wystarcza
- * przytrzymanie zębatki (decyzja właściciela 2026-11-24). Stuknięcie obok zamyka pytanie, zła odpowiedź
- * blokuje na 15 s (losowe stukanie: 1/4 szansy najwyżej co 15 s).
+ * Adult gate before a purchase and before sending a picture outside the app (a Kids category requirement): a question
+ * a preschooler can't solve (multiplication, four answers). For the parent zone itself, holding the gear
+ * is enough (owner's decision 2026-11-24). Tapping outside closes the question, a wrong answer
+ * locks it for 15 s (random tapping: a 1/4 chance at most every 15 s).
  */
 export class AdultCheck extends Container {
   private readonly buttons: Button[] = [];
@@ -70,16 +70,16 @@ export class AdultCheck extends Container {
 
 export class ParentGate extends Container {
   private readonly ring = new Graphics();
-  /** Kropka „coś nowego dla rodzica” (po kilku dniach zabawy od ostatniej wizyty). */
+  /** "Something new for the parent" dot (after a few play days since the last visit). */
   private readonly badge = new Graphics().circle(0, 0, 13).fill({ color: 0xff7a59 }).stroke({ color: 0xffffff, width: 4 });
   private time = 0;
   private held = 0;
   private holding = false;
   private wasLocked = false;
   onOpen: (() => void) | null = null;
-  /** Próba otwarcia w czasie blokady (po złej odpowiedzi), z liczbą sekund do końca. */
+  /** An attempt to open during the lockout (after a wrong answer), with the number of seconds remaining. */
   onLocked: ((seconds: number) => void) | null = null;
-  /** Po złej odpowiedzi bramka jest zablokowana do tej chwili (performance.now, ms), dla wszystkich scen. */
+  /** After a wrong answer the gate is locked until this moment (performance.now, ms), for all scenes. */
   static lockedUntil = 0;
   static readonly LOCK_MS = 15_000;
   static lock(): void {
@@ -88,7 +88,7 @@ export class ParentGate extends Container {
 
   constructor(gear: Texture | null = null) {
     super();
-    // Kremowe kółko jak zakładki krain, w nim zębatka z plasteliny (bez grafiki: zębatka rysowana).
+    // A cream circle like the realm tabs, with a plasticine gear inside (no image: the gear is drawn).
     const g = new Graphics().circle(0, 5, 40).fill({ color: 0x000000, alpha: 0.15 }).circle(0, 0, 40).fill({ color: 0xfffaf2 }).stroke({ color: COLORS.ink, width: 4 });
     if (gear) {
       const pic = new Sprite({ texture: gear, anchor: 0.5 });
@@ -113,7 +113,7 @@ export class ParentGate extends Container {
       this.ring.clear();
     };
     this.on('pointerdown', () => (this.holding = true));
-    // Palec zjechał z zębatki: przytrzymanie przerwane (dziecko, które wodzi palcem po ekranie, nie przejdzie).
+    // The finger slid off the gear: the hold is interrupted (a child running a finger across the screen won't get through).
     this.on('globalpointermove', (e) => {
       if (!this.holding) return;
       const p = this.toLocal(e.global);
@@ -130,8 +130,8 @@ export class ParentGate extends Container {
   tick(dt: number): void {
     this.time += dt;
     if (this.badge.visible) this.badge.scale.set(1 + 0.12 * Math.sin(this.time * 4));
-    // Blokada widoczna: przygaszona zębatka i szary pierścień, który znika do końca blokady
-    // (bez tego rodzic myślał, że strefa rodzica przestała działać).
+    // Visible lockout: a dimmed gear and a gray ring that shrinks until the lockout ends
+    // (without it the parent thought the parent zone had stopped working).
     const left = ParentGate.lockedUntil - performance.now();
     if (left > 0) {
       this.wasLocked = true;
@@ -172,18 +172,18 @@ const INK = '#5a3c28';
 const SOFT = '#6b5a4a';
 const TOP = 116;
 
-/** Element albumu: pokolorowana kolorowanka albo obrazek z naklejanki. */
+/** Album item: a colored coloring page or a sticker picture. */
 type AlbumItem = { kind: 'painting'; painting: Painting } | { kind: 'picture'; picture: Picture; index: number };
 
 /**
- * Strefa rodzica (za bramką): postępy dziecka opisane po ludzku, album prac, cotygodniowa pocztówka
- * i ustawienia. Pełny raport i pocztówka są w pełnej wersji (premium.ts).
+ * Parent zone (behind the gate): the child's progress described in plain words, an album of creations, a weekly postcard
+ * and settings. The full report and the postcard are in the full version (premium.ts).
  */
 export class ParentPanel extends Container {
   private readonly game: Game;
   private readonly onClose: () => void;
   private readonly onUnlock: () => void;
-  /** Bramka dla dorosłego (mnożenie) przed zakupem i wysłaniem czegoś poza aplikację (wymóg kategorii Kids). */
+  /** Adult gate (multiplication) before a purchase and before sending anything outside the app (a Kids category requirement). */
   private readonly askAdult: (then: () => void) => void;
   private storePrice: string | null = null;
   private shopNote = '';
@@ -196,9 +196,9 @@ export class ParentPanel extends Container {
   private readonly clip = new Graphics();
   private buttons: Button[] = [];
   private tab: Tab = 'progress';
-  /** Szczegóły umiejętności w zakładce Postępy (null: lista „Przed szkołą”). */
+  /** Skill details in the Progress tab (null: the "Ready for school" list). */
   private skill: SkillId | null = null;
-  /** Zakres wykresów: ostatnie dni albo tygodnie (wybór rodzica). */
+  /** Chart range: recent days or weeks (parent's choice). */
   private range: Range = 'weeks';
   private view!: View;
   private box = { x: 0, y: 0, w: 0, h: 0 };
@@ -248,12 +248,12 @@ export class ParentPanel extends Container {
     });
   }
 
-  /** Puszczenie palca kończy przewijanie dopiero po obsłużeniu dotknięcia przycisku. */
+  /** Releasing the finger ends scrolling only after the button tap has been handled. */
   private timers(fn: () => void): void {
     requestAnimationFrame(fn);
   }
 
-  /** Dotknięcie przycisku po przewinięciu nie jest dotknięciem. */
+  /** A button touch after scrolling doesn't count as a tap. */
   private tapped(): boolean {
     return !this.drag || this.drag.moved < 14;
   }
@@ -282,8 +282,8 @@ export class ParentPanel extends Container {
   }
 
   layout(full: View): void {
-    // Tablet (krótszy bok ekranu od 600 pt): panel w mniejszej skali. Dorosły ma tablet blisko, a przy skali
-    // telefonu przyciski i teksty są ogromne i mieści się mało treści.
+    // Tablet (shorter screen side from 600 pt): the panel at a smaller scale. An adult holds a tablet close, and at phone
+    // scale the buttons and texts are huge and little content fits.
     const { width, height } = this.game.app.screen;
     const k = Math.min(width, height) >= 600 ? 0.72 : 1;
     this.scale.set(k);
@@ -316,14 +316,14 @@ export class ParentPanel extends Container {
     this.content.y = this.box.y + TOP + 10 - this.scroll;
   }
 
-  /** Pasek z zakładkami i całą zawartość bieżącej zakładki od nowa. */
+  /** Rebuilds the tab bar and the whole content of the current tab. */
   private render(): void {
     if (!this.view) return;
     this.version++;
     this.buttons = [];
     for (const c of [...this.bar.removeChildren(), ...this.content.removeChildren()]) c.destroy({ children: true });
     const { x, y, w } = this.box;
-    // Pasek: tytuł (gdy się mieści), zakładki, zamknięcie.
+    // Bar: title (when it fits), tabs, close.
     const close = this.button(tr('close'), 170, '#5cc36a', () => this.onClose(), 80, 26);
     close.position.set(x + w - 24 - 85, y + 58);
     const showTitle = w > 1180;
@@ -354,7 +354,7 @@ export class ParentPanel extends Container {
     return makeReport({ journal: journal(), levels: state.progress.levels, name: state.progress.childName, today: today() });
   }
 
-  /** Karta: zaokrąglony prostokąt z treścią; zwraca wysokość. */
+  /** Card: a rounded rectangle with content; returns the height. */
   private card(at: { x: number; y: number }, width: number, build: (inner: Container, width: number) => number, fill = 0xffffff): number {
     const c = new Container();
     const bg = new Graphics();
@@ -375,9 +375,9 @@ export class ParentPanel extends Container {
     return g;
   }
 
-  // ——— Pełna wersja ———
+  // ——— Full version ———
 
-  /** Karta pełnej wersji: stan próby, zakup i przywracanie. Zwraca wysokość (0, gdy kupione). */
+  /** Full version card: trial status, purchase and restore. Returns the height (0 when purchased). */
   private shopCard(y: number, cw: number, x = 0): number {
     if (isBought()) return 0;
     const t = trial();
@@ -435,7 +435,7 @@ export class ParentPanel extends Container {
     this.render();
   }
 
-  // ——— Postępy ———
+  // ——— Progress ———
 
   private renderProgress(cw: number): number {
     const r = this.report();
@@ -491,7 +491,7 @@ export class ParentPanel extends Container {
     return y + note.height + 20;
   }
 
-  // ——— Przed szkołą: lista umiejętności i szczegóły z wykresami ———
+  // ——— Ready for school: skill list and details with charts ———
 
   private stageName(stage: number): string {
     return [tr('notYet'), tr('practising'), tr('doingWell'), tr('confident')][stage] ?? '';
@@ -502,7 +502,7 @@ export class ParentPanel extends Container {
     return new Date(y, m - 1, d).toLocaleDateString(lang(), { day: 'numeric', month: 'numeric' });
   }
 
-  /** Kłódka (wersja darmowa: wykresy są w pełnej wersji). */
+  /** Padlock (free version: charts are in the full version). */
   private lock(size: number): Graphics {
     const k = size / 40;
     return new Graphics()
@@ -512,7 +512,7 @@ export class ParentPanel extends Container {
       .fill({ color: 0x9a8b7c });
   }
 
-  /** Lista „Przed szkołą”: każda umiejętność w wierszu (pasek, wynik, mały wykres, tempo). Dotknięcie: szczegóły. */
+  /** "Ready for school" list: each skill in a row (bar, score, mini chart, speed). Tap: details. */
   private skillList(cw: number, y0: number): number {
     let y = y0;
     const full = hasFull();
@@ -587,7 +587,7 @@ export class ParentPanel extends Container {
     return y + 14;
   }
 
-  /** Wykres w karcie; w wersji darmowej rozmyty, z kłódką i przyciskiem odblokowania. */
+  /** Chart in a card; in the free version blurred, with a padlock and an unlock button. */
   private chartCard(y: number, cw: number, o: { title: string; points: readonly Point[]; unit: '%' | 's'; color: number; sample: boolean; caption: string }): number {
     const full = hasFull();
     return this.card({ x: 0, y }, cw, (c, iw) => {
@@ -623,7 +623,7 @@ export class ParentPanel extends Container {
     });
   }
 
-  /** Szczegóły umiejętności: wynik, krzywa nauki, tempo, elementy, odkrycia i pomysł na zabawę. */
+  /** Skill details: score, learning curve, speed, items, milestones and a play idea. */
   private renderSkill(cw: number): number {
     const def = SKILLS.find((s) => s.id === this.skill) as SkillDef;
     const j = journal();
@@ -644,7 +644,7 @@ export class ParentPanel extends Container {
     const sum = this.text(summary, 25, { color: SOFT, weight: '700' });
     sum.y = y + 10;
     this.content.addChild(sum);
-    // Zakres wykresów: wybór rodzica (dni albo tygodnie).
+    // Chart range: parent's choice (days or weeks).
     (['days', 'weeks'] as const).forEach((r, i) => {
       const b = this.button(r === 'days' ? tr('days') : tr('weeks'), 170, r === this.range ? '#ff9f5a' : '#c9b8a6', () => {
         this.range = r;
@@ -785,7 +785,7 @@ export class ParentPanel extends Container {
     return top + 60;
   }
 
-  /** Obraz elementu albumu dopasowany do `w`×`h` (sprite albo kontener). */
+  /** Album item image fitted to `w`×`h` (sprite or container). */
   private async albumImage(it: AlbumItem, w: number, h: number, coverMode: boolean): Promise<Container> {
     if (it.kind === 'painting') {
       const tex = await dataUrlTexture(it.painting.img);
@@ -800,7 +800,7 @@ export class ParentPanel extends Container {
     const k = coverMode ? Math.max(w / vw, h / vh) : Math.min(w / vw, h / vh);
     pic.scale.set(k);
     pic.position.set((-vw * k) / 2, (-vh * k) / 2);
-    // Tło jest dopasowane „na wypełnienie” i wystaje poza kadr: przycinamy do obrazka.
+    // The background is fitted to "cover" and sticks out of the frame: we clip it to the picture.
     const clip = new Graphics().rect((-vw * k) / 2, (-vh * k) / 2, vw * k, vh * k).fill({ color: 0xffffff });
     const wrap = new Container();
     wrap.addChild(pic, clip);
@@ -883,7 +883,7 @@ export class ParentPanel extends Container {
     await shareImage(url, `bystrzakowo-naklejki-${today()}.jpg`, tr('pictureFromBystrzakowo'));
   }
 
-  // ——— Pocztówka ———
+  // ——— Postcard ———
 
   private renderPostcardTab(cw: number): number {
     if (!hasFull()) {
@@ -926,14 +926,14 @@ export class ParentPanel extends Container {
     await shareImage(url, `postcard-${r.week.to}.png`, tr('postcardFromBystrzakowo'));
   }
 
-  // ——— Ustawienia ———
+  // ——— Settings ———
 
   private renderSettings(cw: number): number {
     let y = 0;
     const info = this.text(tr('bystrzakowoWorksOfflineHas'), 25, { color: SOFT, wrap: cw });
     this.content.addChild(info);
     y += info.height + 30;
-    // Szeroki panel (tablet): ustawienia w dwóch kolumnach, każdy element trafia do niższej z nich.
+    // Wide panel (tablet): settings in two columns, each element goes into the shorter one.
     const twoCol = cw >= 1060;
     const bw = twoCol ? Math.min(520, (cw - 30) / 2) : Math.min(520, cw);
     const used = twoCol ? bw * 2 + 30 : bw;
@@ -947,7 +947,7 @@ export class ParentPanel extends Container {
     };
     const nameLabel = () => (state.progress.childName ? tr('childNameLabel', { name: state.progress.childName }) : tr('childsNameNotSet'));
     add(this.button(nameLabel(), bw, '#9b7be0', () => this.askName()));
-    // Wiek: ustawia poziom startowy zabaw, w które dziecko jeszcze nie grało (postępy w pozostałych zostają).
+    // Age: sets the starting level of activities the child hasn't played yet (progress in the others stays).
     const ageLabel = () => (state.progress.age ? tr('childsAge', { n: state.progress.age >= 6 ? '6+' : state.progress.age }) : tr('childsAgeNotSet'));
     const ageButton: Button = this.button(ageLabel(), bw, '#8fb8ff', () => {
       applyAge(state.progress, nextAge(state.progress.age), playedActivities(journal()));
@@ -956,8 +956,8 @@ export class ParentPanel extends Container {
     });
     add(ageButton);
     const LANG_NAMES: Record<Lang, string> = { pl: 'Polski', en: 'English', de: 'Deutsch', es: 'Español' };
-    // Język: cztery przyciski obok siebie, wybrany podświetlony. Zmiana: zapis i ponowne uruchomienie
-    // (nagrania lektora wczytują się przy starcie).
+    // Language: four buttons side by side, the selected one highlighted. Change: save and restart
+    // (narrator recordings load at startup).
     const lc = col();
     const lx = lc * (bw + 30);
     const langLabel = this.text(tr('language'), 24, { color: SOFT, weight: '800' });
@@ -1001,7 +1001,7 @@ export class ParentPanel extends Container {
         return;
       }
       const { music: m, childName, age, lang: l } = state.progress;
-      // Zerujemy zabawy, ale nie ustawienia rodzica: imię, wiek (poziom startowy), język i to, że powitanie już było.
+      // Reset the activities, but not the parent's settings: name, age (starting level), language and the fact that onboarding is done.
       state.progress = { ...newProgress(), music: m, childName, lang: l, onboarded: true };
       if (age) applyAge(state.progress, age);
       void saveState();
@@ -1014,7 +1014,7 @@ export class ParentPanel extends Container {
     ver.y = y + 10;
     this.content.addChild(ver);
     y += 60;
-    // Pełna wersja: obok przycisków, gdy jest miejsce, inaczej pod nimi.
+    // Full version: next to the buttons when there's room, otherwise below them.
     const side = cw - used - 40;
     if (side >= 520) {
       const shop = this.shopCard(info.height + 30, side, used + 40);
@@ -1034,7 +1034,7 @@ export class ParentPanel extends Container {
   }
 }
 
-// ——— Pocztówka (rysowana w stałym rozmiarze; podgląd skalowany, eksport 1:1) ———
+// ——— Postcard (drawn at a fixed size; preview scaled, export 1:1) ———
 
 export const POSTCARD_W = 1200;
 export const POSTCARD_H = 840;
@@ -1046,13 +1046,13 @@ function postcard(game: Game, art: Art, r: Report, resolution: number): Containe
   const bg = new Graphics().roundRect(0, 0, W, H, 48).fill({ color: 0xfff1d6 }).stroke({ color: COLORS.ink, width: 12 });
   bg.roundRect(26, 26, W - 52, H - 52, 34).stroke({ color: 0xffc94a, width: 6 });
   c.addChild(bg);
-  // Konfetti na brzegach (stały wzór, bez losowania).
+  // Confetti along the edges (fixed pattern, no randomness).
   const dots = new Graphics();
   for (let i = 0; i < 26; i++) {
     const t = i / 26;
     const x = 60 + ((t * 7919) % 1) * (W - 120);
     const y = i % 2 ? 60 + ((i * 37) % 60) : H - 60 - ((i * 53) % 60);
-    // Środek zostaje wolny na tytuł i datę.
+    // The center stays free for the title and date.
     if (Math.abs(x - W / 2) < 330) continue;
     dots.circle(x, y, 7 + (i % 3) * 3).fill({ color: COLORS.confetti[i % COLORS.confetti.length]! });
   }
@@ -1065,7 +1065,7 @@ function postcard(game: Game, art: Art, r: Report, resolution: number): Containe
       style: { fontFamily: GAME_FONT, fontSize: size, fontWeight: weight, fill, align: 'center', ...(stroke ? { stroke: { color: stroke, width: size * 0.14, join: 'round' as const } } : {}), wordWrap: true, wordWrapWidth: 760, lineHeight: size * 1.15 },
     });
   const head = t(tr('postcardFromBystrzakowo'), 52, '#ffc94a', '#5a3c28');
-  // Jedna linia: dłuższe tytuły (np. po niemiecku) są pomniejszane, żeby nie wchodziły na imię.
+  // One line: longer titles (e.g. in German) are scaled down so they don't overlap the name.
   head.style.wordWrap = false;
   head.scale.set(Math.min(1, 760 / head.width));
   head.position.set(W / 2, 70);
@@ -1103,7 +1103,7 @@ function postcard(game: Game, art: Art, r: Report, resolution: number): Containe
   return c;
 }
 
-/** Wczytanie obrazka z data URL przez ImageBitmap (bez wgrywania canvasa, zob. CLAUDE.md). */
+/** Loads an image from a data URL via ImageBitmap (no canvas upload, see CLAUDE.md). */
 async function dataUrlTexture(url: string): Promise<Texture> {
   const img = new Image();
   img.src = url;

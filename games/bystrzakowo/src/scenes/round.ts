@@ -11,14 +11,14 @@ import { COLORS, cover, IconButton, sfx } from '../ui.ts';
 import { Hand, type Gesture, type P } from '../hand.ts';
 import { markHand, needsHand } from '../sim/onboarding.ts';
 
-/** Po ilu sekundach bezczynności przewodnik powtarza polecenie, a po ilu podpowiada. */
+/** After how many idle seconds the guide repeats the prompt, and after how many it gives a hint. */
 const IDLE_REPEAT = 8;
 const IDLE_HINT = 16;
 
 /**
- * Wspólna rama każdej zabawy: tło krainy, przewodnik, gwiazdki postępu, podpowiedzi przy bezczynności,
- * nagroda (naklejka) i powrót do krainy. Bez przegrywania: pomyłki tylko obniżają poziom następnej rundy.
- * Podklasa przygotowuje rundę (`prepare`), pokazuje zadanie (`show`) i woła `solved()` / `missed()`.
+ * Common frame of every activity: realm background, guide, progress stars, hints when idle,
+ * reward (sticker) and return to the realm. No losing: mistakes only lower the next round's level.
+ * The subclass prepares the round (`prepare`), shows a task (`show`) and calls `solved()` / `missed()`.
  */
 export abstract class RoundScene extends Scene {
   protected readonly kind: Activity;
@@ -28,14 +28,14 @@ export abstract class RoundScene extends Scene {
   protected guideSprite!: Sprite;
   protected home!: IconButton;
   protected dots!: Graphics;
-  /** Warstwa zadania (czyszczona między zadaniami). */
+  /** Task layer (cleared between tasks). */
   protected readonly layer = new Container();
   protected particles!: Particles;
-  /** Liczba zadań w rundzie. */
+  /** Number of tasks in a round. */
   protected length = 5;
   protected index = 0;
   protected mistakes = 0;
-  /** Zadanie rozwiązane, czekamy na następne (dotyk ignorowany). */
+  /** Task solved, waiting for the next one (touch ignored). */
   protected busy = false;
   protected overlay: Container | null = null;
   protected leaving = false;
@@ -44,11 +44,11 @@ export abstract class RoundScene extends Scene {
   private clock = 0;
   private hinted = 0;
   private solvedAt = -1;
-  /** Pomyłki w bieżącym zadaniu (do dziennika). */
+  /** Mistakes in the current task (for the journal). */
   private taskMisses = 0;
   private voices: string[] = [];
   private updateNext: ((dt: number) => void) | null = null;
-  /** Rączka pokazująca gest: pierwszy raz w zabawie i przy dłuższej bezczynności. */
+  /** Hand showing the gesture: the first time in an activity and after a longer idle time. */
   protected hand!: Hand;
 
   constructor(kind: Activity, guide: Guide) {
@@ -57,57 +57,57 @@ export abstract class RoundScene extends Scene {
     this.guide = guide;
   }
 
-  /** Przygotowanie rundy (dane, tekstury). Ustawia `length`. */
+  /** Round setup (data, textures). Sets `length`. */
   protected abstract prepare(): Promise<void>;
-  /** Pokazuje zadanie `index` w `layer`. */
+  /** Shows task `index` in `layer`. */
   protected abstract show(): void;
-  /** Nagranie polecenia bieżącego zadania. */
+  /** Prompt recording of the current task. */
   protected abstract promptLine(): string;
-  /** Podpowiedź po dłuższej bezczynności (np. kołysanie właściwej karty). */
+  /** Hint after a longer idle time (e.g. wiggling the right card). */
   protected abstract hint(): void;
-  /** Rozmieszczenie elementów zadania (po zmianie rozmiaru ekranu). */
+  /** Layout of the task elements (after a screen size change). */
   protected abstract place(): void;
-  /** Animacja wejścia (po `place`, więc elementy mają już docelową skalę). */
+  /** Entry animation (after `place`, so the elements already have their final scale). */
   protected appear(): void {}
-  /** Obiekty, których nazwy lektor może powiedzieć w tej rundzie (ich nagrania wczytuje się na start rundy). */
+  /** Items whose names the narrator may say in this round (their recordings are loaded at the start of the round). */
   protected roundItems(): string[] {
     return [];
   }
-  /** Inne nagrania tej rundy do wczytania na start i zwolnienia po niej (np. „A jak arbuz”). */
+  /** Other recordings of this round to load at the start and release after it (e.g. "A is for apple"). */
   protected roundVoices(): string[] {
     return [];
   }
   /**
-   * Umiejętności sprawdzane w bieżącym zadaniu (np. „liczba:5”, „kolor:zielony”) do dziennika rodzica.
-   * Wynik: dobrze, jeśli zadanie poszło bez pomyłki.
+   * Skills tested in the current task (e.g. "number:5", "color:green") for the parent journal.
+   * Result: correct if the task went without mistakes.
    */
   protected taskFacts(): string[] {
     return [];
   }
-  /** Czy w bieżącym zadaniu wybór był tylko z dwóch odpowiedzi (trafienie liczy się za pół). */
+  /** Whether the current task offered a choice of only two answers (a hit counts as half). */
   protected taskEasy(): boolean {
     return false;
   }
-  /** Klatka animacji zadania. */
+  /** Task animation frame. */
   protected step(_dt: number): void {}
-  /** Grupa umiejętności do pomiaru tempa (np. „kolor”); null: zabawa bez pomiaru (przeciąganie, rysowanie). */
+  /** Skill group for measuring tempo (e.g. "color"); null: activity without measurement (dragging, drawing). */
   protected tempoGroup(): string | null {
     return null;
   }
-  /** Moment końca polecenia (zegar sceny): od niego liczymy czas odpowiedzi. */
+  /** Moment the prompt ends (scene clock): the answer time is measured from it. */
   private askedAt = -1;
-  /** Zabawa zgłasza, że polecenie zabrzmi za `delay` s (zwykle długość nagrania). */
+  /** The activity reports that the prompt will finish in `delay` s (usually the recording length). */
   protected markAsked(delay: number): void {
     this.askedAt = this.clock + delay;
   }
-  /** Gest, który pokazuje rączka (współrzędne sceny); null: bez rączki, zostaje zwykła podpowiedź. */
+  /** Gesture shown by the hand (scene coordinates); null: no hand, the regular hint stays. */
   protected gesture(): Gesture | null {
     return null;
   }
   /**
-   * Obszar zabawy: cały ekran, a na wysokim (iPad w pionie, okienko iPadOS 26) pas o proporcjach poziomego
-   * tabletu na środku. Tło i przewodnik zostają na całym ekranie, warstwa zadania przesuwa się o `stageY`.
-   * Zabawy w `place()` układają elementy w tym obszarze (współrzędne warstwy).
+   * Play area: the whole screen, but on a tall one (iPad in portrait, iPadOS 26 window) a band with the proportions
+   * of a landscape tablet in the middle. Background and guide stay on the whole screen, the task layer shifts by `stageY`.
+   * Activities lay out their elements in this area in `place()` (layer coordinates).
    */
   protected get stage(): View {
     const v = this.game.view;
@@ -120,12 +120,12 @@ export abstract class RoundScene extends Scene {
     return (this.game.view.height - this.stage.height) / 2;
   }
 
-  /** Środek obiektu we współrzędnych warstwy zadania (do gestów rączki). */
+  /** Center of an object in task layer coordinates (for hand gestures). */
   protected spot(obj: Container, dx = 0, dy = 0): P {
     const p = this.layer.toLocal(obj.getGlobalPosition());
     return { x: p.x + dx, y: p.y + dy };
   }
-  /** Środek prostokąta obejmującego obiekt (gdy punkt zaczepienia nie jest na środku, np. sztabki cymbałków). */
+  /** Center of the object's bounding rectangle (when the anchor isn't in the center, e.g. xylophone bars). */
   protected middle(obj: Container): P {
     const r = obj.getBounds();
     return this.layer.toLocal({ x: r.x + r.width / 2, y: r.y + r.height / 2 });
@@ -134,7 +134,7 @@ export abstract class RoundScene extends Scene {
   override async enter(): Promise<void> {
     this.art = await loadArt();
     await this.prepare();
-    // Nazwy obiektów z tej rundy: zdekodowane przed startem (najwyżej 3 s czekania), zwalniane przy wyjściu.
+    // Item names of this round: decoded before the start (at most 3 s of waiting), released on exit.
     this.voices = [...itemVoices(this.roundItems()), ...this.roundVoices()];
     await Promise.race([this.game.sound.load(this.voices), new Promise((r) => setTimeout(r, 3000))]);
     this.bg = new Sprite(this.art.playBg[realmOf(this.kind).id]);
@@ -154,7 +154,7 @@ export abstract class RoundScene extends Scene {
     this.on('pointerdown', () => {
       this.idle = 0;
       startMusic(this.game);
-      // Dziecko dotknęło ekranu: rączka znika, a pokaz w tej zabawie uznajemy za obejrzany.
+      // The child touched the screen: the hand disappears, and the demo in this activity counts as seen.
       if (this.hand.active) {
         this.hand.stop();
         markHand(state.progress, this.kind);
@@ -165,7 +165,7 @@ export abstract class RoundScene extends Scene {
     this.timers.after(0.35, () => this.begin());
   }
 
-  /** Nowe zadanie: czyści warstwę i woła `show`. */
+  /** New task: clears the layer and calls `show`. */
   protected begin(): void {
     this.layer.removeChildren().forEach((c) => c.destroy({ children: true }));
     this.layer.alpha = 1;
@@ -178,23 +178,23 @@ export abstract class RoundScene extends Scene {
     this.appear();
     this.drawDots();
     this.hand.stop();
-    // Pierwszy raz w tej zabawie: rączka pokazuje gest (po poleceniu przewodnika, aż dziecko dotknie ekranu).
+    // First time in this activity: the hand shows the gesture (after the guide's prompt, until the child touches the screen).
     if (this.index === 0 && needsHand(state.progress, this.kind)) this.timers.after(1.6, () => this.demo());
   }
 
-  /** Rączka pokazuje gest bieżącego zadania. Fałsz, gdy zabawa go nie ma. */
+  /** The hand shows the current task's gesture. False when the activity has none. */
   protected demo(): boolean {
     if (this.busy || this.overlay || this.leaving) return false;
     const g = this.gesture();
     if (!g) return false;
-    // Gest jest we współrzędnych warstwy zadania (na wysokim ekranie przesuniętej w dół).
+    // The gesture is in task layer coordinates (shifted down on a tall screen).
     this.hand.position.set(this.layer.x, this.layer.y);
     this.hand.show(g);
     this.addChild(this.hand);
     return true;
   }
 
-  /** Polecenie jeszcze raz (dotknięcie przewodnika). */
+  /** Prompt once more (tapping the guide). */
   protected repeatPrompt(): void {
     if (this.busy || this.overlay) return;
     this.idle = 0;
@@ -202,12 +202,12 @@ export abstract class RoundScene extends Scene {
     say(this.game, this.guide, this.promptLine());
   }
 
-  /** Konfetti w punkcie (współrzędne sceny). */
+  /** Confetti at a point (scene coordinates). */
   protected burst(x: number, y: number, count = 30): void {
     this.particles.burst(x, y, { count, speed: [200, 600], life: [0.4, 0.9], gravity: 700, scale: [0.5, 1.1], colors: COLORS.confetti });
   }
 
-  /** Pomyłka: dźwięk, haptyka, „ojej” przewodnika. Animację elementu robi podklasa. */
+  /** Mistake: sound, haptics, the guide's "oops". The subclass animates the element. */
   protected missed(): void {
     this.mistakes++;
     this.taskMisses++;
@@ -218,17 +218,17 @@ export abstract class RoundScene extends Scene {
   }
 
   /**
-   * Zadanie rozwiązane: podskok przewodnika, pochwała i następne zadanie.
-   * `afterLen`: ile sekund trwa to, co już mówi lektor (np. nazwa obiektu), zanim padnie pochwała.
+   * Task solved: the guide jumps, praise and the next task.
+   * `afterLen`: how many seconds the narrator's current line (e.g. the item name) lasts before the praise.
    */
   protected solved(afterLen = 0): void {
-    // Każde zadanie kończy się raz (np. w memory ostatnie pary mogą zgłosić koniec niemal równocześnie).
+    // Each task finishes once (e.g. in memory the last pairs can report the end almost simultaneously).
     if (this.solvedAt === this.index) return;
     this.solvedAt = this.index;
     this.busy = true;
     this.hand.stop();
     logTask(this.kind, this.taskMisses);
-    // Tempo: tylko odpowiedź bez pomyłki, po końcu polecenia, bez długich przerw (dziecko odeszło od tabletu).
+    // Tempo: only an answer without mistakes, after the prompt ended, without long pauses (the child walked away from the tablet).
     const group = this.tempoGroup();
     const took = this.clock - this.askedAt;
     if (group && this.askedAt >= 0 && this.taskMisses === 0 && took > 0.3 && took < 20) logTempo(group, this.kind, took);
@@ -280,7 +280,7 @@ export abstract class RoundScene extends Scene {
     const pic = new Sprite({ texture: this.art.items.get(id)!, anchor: 0.5 });
     pic.scale.set(230 / Math.max(pic.texture.width, pic.texture.height));
     badge.addChild(star, pic);
-    // ▶ = „graj dalej”: nowa runda tej samej zabawy (dzieci tak to rozumieją); domek = powrót do krainy.
+    // ▶ = "keep playing": a new round of the same activity (that's how kids understand it); house = back to the realm.
     const next = new IconButton('next', 62);
     next.position.set(view.width / 2 + 70, view.height - 90);
     next.visible = false;
@@ -313,7 +313,7 @@ export abstract class RoundScene extends Scene {
     });
   }
 
-  /** Kolejna runda tej samej zabawy (z ekranu nagrody). */
+  /** Another round of the same activity (from the reward screen). */
   private again(): void {
     if (this.leaving) return;
     this.leaving = true;
@@ -331,8 +331,8 @@ export abstract class RoundScene extends Scene {
   }
 
   /**
-   * Dziecko stuknęło przeciągany element zamiast go przesunąć: pokazujemy podpowiedź (element podjeżdża
-   * w stronę celu), najwyżej co 3 s.
+   * The child tapped a draggable element instead of moving it: we show a hint (the element slides
+   * towards the target), at most every 3 s.
    */
   protected tapHint(): void {
     if (this.busy || this.clock - this.tapHintAt < 3) return;
@@ -383,7 +383,7 @@ export abstract class RoundScene extends Scene {
     this.home.position.set(view.safe.left + 80, view.safe.top + 75);
     this.dots.position.set(view.width / 2 + 100, Math.max(view.safe.top + 60, top + 60));
     if (this.index < this.length && this.layer.children.length) this.place();
-    // Gest liczony dla starego układu: po obrocie albo zmianie rozmiaru rączka znika.
+    // Gesture computed for the old layout: after a rotation or resize the hand disappears.
     this.hand?.stop();
   }
 }
