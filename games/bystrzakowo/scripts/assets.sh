@@ -125,5 +125,5 @@ background proto/tlo-zagadka-21.png tlo-zagadka
 # Zębatka strefy rodzica.
 sprite extra/zebatka-a-22.png zebatka 256
 # Rączka z samouczka (pokaz gestów); czubek palca: HAND_TIP w src/hand.ts.
-sprite ui/raczka-a-203.png raczka 320
+sprite ui/raczka-d-302.png raczka 320
 du -sh $OUT

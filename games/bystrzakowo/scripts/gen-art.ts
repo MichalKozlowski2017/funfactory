@@ -392,9 +392,17 @@ if (process.argv.includes('--raczka')) {
     { out: 'ui', prefix: 'raczka-b', args: ['--workflow', 'flux2-sprite', '--count', '4', '--prompt', hand('a simple rounded cartoon pointing hand icon like a tutorial cursor, index finger pointing up, thumb tucked to the side, three fingers folded, white glove-like smooth plasticine with a soft orange outline cuff, exactly five fingers')] },
   );
 }
+if (process.argv.includes('--raczka2')) {
+  // Druga wersja (uwaga właściciela): grzbiet dłoni, widok z góry jak ręka stukająca w ekran, nie od strony wnętrza dłoni.
+  const hand = (what: string) => `${what}, single object, centered, ${STYLE}, plain light gray background`;
+  tasks.push(
+    { out: 'ui', prefix: 'raczka-c', args: ['--workflow', 'flux2-sprite', '--count', '4', '--prompt', hand('a cute chubby cartoon child right hand seen from above showing the back of the hand, knuckles on top, palm facing away from the viewer, the index finger stretched straight up, the other three fingers folded under the hand and hidden, thumb tucked along the side, warm peach skin, a short light blue sleeve cuff at the wrist at the bottom, like a hand tapping a touchscreen')] },
+    { out: 'ui', prefix: 'raczka-d', args: ['--workflow', 'flux2-sprite', '--count', '4', '--prompt', hand('a cartoon tutorial pointer hand icon, view of the back of a right hand from above, smooth rounded knuckles visible, no palm and no fingernails of the folded fingers visible, index finger pointing straight up with a small fingernail on its tip, warm peach plasticine skin, light blue sleeve cuff at the bottom')] },
+  );
+}
 
 for (const item of ITEMS) {
-  if ((process.argv.includes('--warsztat') || process.argv.includes('--zebatka') || process.argv.includes('--sciezka') || process.argv.includes('--znaki') || process.argv.includes('--pracownia') || process.argv.includes('--dodatki') || process.argv.includes('--historyjki') || process.argv.includes('--polana') || process.argv.includes('--kolorowanki2') || process.argv.includes('--krajobrazy') || process.argv.includes('--balwan') || process.argv.includes('--historyjki2') || process.argv.includes('--historyjki3') || process.argv.includes('--historyjki4') || process.argv.includes('--historyjki5') || process.argv.includes('--historyjki6') || process.argv.includes('--historyjki7') || process.argv.includes('--emocje2') || process.argv.includes('--raczka')) && !only) break;
+  if ((process.argv.includes('--warsztat') || process.argv.includes('--zebatka') || process.argv.includes('--sciezka') || process.argv.includes('--znaki') || process.argv.includes('--pracownia') || process.argv.includes('--dodatki') || process.argv.includes('--historyjki') || process.argv.includes('--polana') || process.argv.includes('--kolorowanki2') || process.argv.includes('--krajobrazy') || process.argv.includes('--balwan') || process.argv.includes('--historyjki2') || process.argv.includes('--historyjki3') || process.argv.includes('--historyjki4') || process.argv.includes('--historyjki5') || process.argv.includes('--historyjki6') || process.argv.includes('--historyjki7') || process.argv.includes('--emocje2') || process.argv.includes('--raczka') || process.argv.includes('--raczka2')) && !only) break;
   if (only && !only.has(item.id)) continue;
   if (!only && existsSync(join(repo, 'games/bystrzakowo/public/art/items', `${item.id}.webp`))) continue;
   if (existsSync(join(raw, 'items', `${item.id}-${SEED}.png`))) continue;

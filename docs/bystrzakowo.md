@@ -80,7 +80,7 @@ Decyzje właściciela: krótkie powitanie rodzica, wiek ustawia start, rączka i
   - 6+: poziom 2.
 
   Dalej trudność dopasowuje się jak dotąd. Wiek można zmienić w strefie rodzica (Ustawienia). Zmiana nie rusza zabaw, w które dziecko już grało. Zerowanie postępów zostawia wiek, imię, język i to, że powitanie już było.
-- **Rączka** (`src/hand.ts`, grafika z Fluxa `ui/raczka-a-203`):
+- **Rączka** (`src/hand.ts`, grafika z Fluxa `ui/raczka-d-302`, grzbiet dłoni):
   - pokazuje gest przy pierwszym razie w każdej zabawie, w pętli, aż dziecko dotknie ekranu;
   - rodzaje gestów: stuknięcie (w dobrą odpowiedź), przeciągnięcie (pierwszy element na swoje miejsce), prowadzenie palcem (kreska litery, kropki, labirynt);
   - w kolorowance pokazuje wybór koloru i stuknięcie w pole, w melodii stuka w sztabki po pokazie Lusi;

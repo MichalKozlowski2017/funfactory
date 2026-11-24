@@ -1,16 +1,16 @@
 {
   "workflow": "flux2-sprite.json",
-  "PROMPT": "a cute chubby cartoon child hand with the index finger pointing straight up and the other fingers curled into the palm, warm peach skin, a short light blue sleeve cuff at the wrist, seen from the back of the hand, exactly five fingers, single object, centered, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, bright cheerful pastel colors, cute and friendly, plain light gray background",
+  "PROMPT": "a cartoon tutorial pointer hand icon, view of the back of a right hand from above, smooth rounded knuckles visible, no palm and no fingernails of the folded fingers visible, index finger pointing straight up with a small fingernail on its tip, warm peach plasticine skin, light blue sleeve cuff at the bottom, single object, centered, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, bright cheerful pastel colors, cute and friendly, plain light gray background",
   "NEGATIVE": "",
-  "SEED": 203,
+  "SEED": 302,
   "WIDTH": 1024,
   "HEIGHT": 1024,
-  "PREFIX": "raczka-a",
+  "PREFIX": "raczka-d",
   "STEPS": 20,
   "GUIDANCE": 4,
   "BPM": 100,
   "DURATION": 60,
   "KEY": "A minor",
   "LYRICS": "[Instrumental]",
-  "created": "2026-11-24T06:57:18.762Z"
+  "created": "2026-11-24T07:35:53.423Z"
 }

@@ -186,7 +186,7 @@ export class Hand extends Container {
 }
 
 /** Czubek palca na grafice rączki (ułamki szerokości i wysokości tekstury). */
-export const HAND_TIP = { x: 0.24, y: 0.03 };
+export const HAND_TIP = { x: 0.35, y: 0.03 };
 
 /** Zapasowa rączka z kształtów (gdy grafika się nie wczytała). */
 function drawnHand(size: number): Graphics {
