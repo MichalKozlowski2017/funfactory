@@ -106,6 +106,13 @@ describe('Tweens and destroyed targets', () => {
     expect(target.x).toBe(-1);
     expect(tweens.count).toBe(0);
   });
+
+  it('drops tweens created for a missing target (scale of an already destroyed object)', () => {
+    const tweens = new Tweens();
+    tweens.to(null as unknown as { x: number }, { x: 1 }, { duration: 1 });
+    expect(() => tweens.update(0.1)).not.toThrow();
+    expect(tweens.count).toBe(0);
+  });
 });
 
 describe('Loop', () => {

@@ -129,8 +129,10 @@ export class Tweens {
     const keep: Tween<object>[] = [];
     for (const tween of snapshot) {
       // Obiekt zniszczony w trakcie animacji (np. Pixi `destroy()`): tween znika po cichu,
-      // zamiast pisać do zwolnionych pól i wywracać całą klatkę.
-      if ((tween.target as { destroyed?: unknown }).destroyed === true) {
+      // zamiast pisać do zwolnionych pól i wywracać całą klatkę. Brak celu: animacja `scale` obiektu,
+      // który był już zniszczony przy jej tworzeniu (Pixi zeruje wtedy pole `scale`).
+      const target = tween.target as { destroyed?: unknown } | null;
+      if (!target || target.destroyed === true) {
         tween.kill();
         continue;
       }
