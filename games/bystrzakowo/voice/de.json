@@ -225,7 +225,7 @@
    "text": "Pinguinküken.",
    "voice": "voices/alt",
    "engine": "chatterbox",
-   "seed": 9
+   "seed": 16
   },
   {
    "name": "lusia-item-lion-cub",
@@ -253,7 +253,7 @@
    "text": "Robbenbaby.",
    "voice": "voices/alt",
    "engine": "chatterbox",
-   "seed": 6
+   "seed": 16
   },
   {
    "name": "lusia-item-owlet",
@@ -526,7 +526,7 @@
    "text": "Robbe.",
    "voice": "voices/alt",
    "engine": "chatterbox",
-   "seed": 6
+   "seed": 13
   },
   {
    "name": "lusia-item-walrus",
@@ -701,7 +701,7 @@
    "text": "Brokkoli.",
    "voice": "voices/alt",
    "engine": "chatterbox",
-   "seed": 4
+   "seed": 14
   },
   {
    "name": "lusia-item-pumpkin",
@@ -925,7 +925,7 @@
    "text": "Ski.",
    "voice": "voices/alt",
    "engine": "chatterbox",
-   "seed": 6
+   "seed": 15
   },
   {
    "name": "lusia-item-tent",
@@ -1324,7 +1324,7 @@
    "text": "Pup... pe... ... Puppe.",
    "voice": "voices/alt",
    "engine": "chatterbox",
-   "seed": 3
+   "seed": 13
   },
   {
    "name": "lusia-read-cat",
@@ -1457,7 +1457,7 @@
    "text": "Ha... se... ... Hase.",
    "voice": "voices/alt",
    "engine": "chatterbox",
-   "seed": 4
+   "seed": 14
   },
   {
    "name": "lusia-coloring",
@@ -1737,7 +1737,7 @@
    "text": "Acht.",
    "voice": "voices/alt",
    "engine": "chatterbox",
-   "seed": 3
+   "seed": 14
   },
   {
    "name": "lusia-number-9",
@@ -1940,7 +1940,7 @@
    "text": "Hund.",
    "voice": "voices/prezenter",
    "engine": "chatterbox",
-   "seed": 5
+   "seed": 15
   },
   {
    "name": "bazyl-item-cow",
@@ -2108,7 +2108,7 @@
    "text": "Robbenbaby.",
    "voice": "voices/prezenter",
    "engine": "chatterbox",
-   "seed": 2
+   "seed": 11
   },
   {
    "name": "bazyl-item-owlet",
@@ -2780,7 +2780,7 @@
    "text": "Ski.",
    "voice": "voices/prezenter",
    "engine": "chatterbox",
-   "seed": 2
+   "seed": 16
   },
   {
    "name": "bazyl-item-tent",
@@ -3557,7 +3557,7 @@
    "text": "Gelber Eimer.",
    "voice": "voices/prezenter",
    "engine": "chatterbox",
-   "seed": 2
+   "seed": 15
   },
   {
    "name": "bazyl-hue-green",
@@ -3571,14 +3571,14 @@
    "text": "Blauer Eimer.",
    "voice": "voices/prezenter",
    "engine": "chatterbox",
-   "seed": 2
+   "seed": 13
   },
   {
    "name": "bazyl-hue-orange",
    "text": "Oranger Eimer.",
    "voice": "voices/prezenter",
    "engine": "chatterbox",
-   "seed": 3
+   "seed": 16
   },
   {
    "name": "bazyl-hue-pink",
@@ -3592,7 +3592,7 @@
    "text": "Lila Eimer.",
    "voice": "voices/prezenter",
    "engine": "chatterbox",
-   "seed": 4
+   "seed": 12
   },
   {
    "name": "bazyl-hue-brown",
@@ -4278,7 +4278,7 @@
    "text": "Es... wie Seepferdchen.",
    "voice": "voices/alt",
    "engine": "chatterbox",
-   "seed": 4
+   "seed": 14
   },
   {
    "name": "lusia-letter-t-tomato",

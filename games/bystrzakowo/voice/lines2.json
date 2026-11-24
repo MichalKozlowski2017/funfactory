@@ -50,7 +50,8 @@
   {
    "name": "bazyl-item-lamb",
    "text": "Jagniątko!",
-   "voice": "voices/prezenter"
+   "voice": "voices/prezenter",
+   "seed": 1
   },
   {
    "name": "lusia-item-pig",

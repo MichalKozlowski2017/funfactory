@@ -1060,7 +1060,8 @@
    "name": "lusia-read-shell",
    "text": "Sea... shell... Seashell.",
    "voice": "voices/lusia-en-calm",
-   "tries": 3
+   "tries": 3,
+   "seed": 4
   },
   {
    "name": "lusia-coloring",
@@ -1850,7 +1851,8 @@
   {
    "name": "bazyl-item-heron",
    "text": "Heron.",
-   "voice": "voices/bazyl-en-calm"
+   "voice": "voices/bazyl-en-calm",
+   "seed": 7
   },
   {
    "name": "bazyl-item-apple",
@@ -2130,7 +2132,8 @@
   {
    "name": "bazyl-item-mug",
    "text": "Mug.",
-   "voice": "voices/bazyl-en-calm"
+   "voice": "voices/bazyl-en-calm",
+   "seed": 3
   },
   {
    "name": "bazyl-item-plate",

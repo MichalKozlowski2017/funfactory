@@ -540,7 +540,7 @@
    "text": "Oso polar.",
    "voice": "voices/alt",
    "engine": "chatterbox",
-   "seed": 1
+   "seed": 11
   },
   {
    "name": "lusia-item-hippo",
@@ -1303,7 +1303,7 @@
    "text": "Pa... to... ... Pato.",
    "voice": "voices/alt",
    "engine": "chatterbox",
-   "seed": 5
+   "seed": 13
   },
   {
    "name": "lusia-read-frog",
@@ -1331,7 +1331,7 @@
    "text": "Mo... no... ... Mono.",
    "voice": "voices/alt",
    "engine": "chatterbox",
-   "seed": 5
+   "seed": 15
   },
   {
    "name": "lusia-read-dog",
@@ -1345,7 +1345,7 @@
    "text": "Ár... bol... ... Árbol.",
    "voice": "voices/alt",
    "engine": "chatterbox",
-   "seed": 2
+   "seed": 13
   },
   {
    "name": "lusia-read-octopus",
@@ -1373,14 +1373,14 @@
    "text": "Ta... za... ... Taza.",
    "voice": "voices/alt",
    "engine": "chatterbox",
-   "seed": 2
+   "seed": 16
   },
   {
    "name": "lusia-read-horse",
    "text": "Ca... ba... llo... ... Caballo.",
    "voice": "voices/alt",
    "engine": "chatterbox",
-   "seed": 7
+   "seed": 13
   },
   {
    "name": "lusia-read-rabbit",
@@ -1401,14 +1401,14 @@
    "text": "Pe... lo... ta... ... Pelota.",
    "voice": "voices/alt",
    "engine": "chatterbox",
-   "seed": 2
+   "seed": 14
   },
   {
    "name": "lusia-read-giraffe",
    "text": "Ji... ra... fa... ... Jirafa.",
    "voice": "voices/alt",
    "engine": "chatterbox",
-   "seed": 3
+   "seed": 12
   },
   {
    "name": "lusia-read-bird",
@@ -1436,21 +1436,21 @@
    "text": "Nu... be... ... Nube.",
    "voice": "voices/alt",
    "engine": "chatterbox",
-   "seed": 4
+   "seed": 16
   },
   {
    "name": "lusia-read-pear",
    "text": "Pe... ra... ... Pera.",
    "voice": "voices/alt",
    "engine": "chatterbox",
-   "seed": 4
+   "seed": 16
   },
   {
    "name": "lusia-read-potato",
    "text": "Pa... pa... ... Papa.",
    "voice": "voices/alt",
    "engine": "chatterbox",
-   "seed": 21
+   "seed": 12
   },
   {
    "name": "lusia-coloring",
@@ -1744,7 +1744,7 @@
    "text": "Diez.",
    "voice": "voices/alt",
    "engine": "chatterbox",
-   "seed": 1
+   "seed": 11
   },
   {
    "name": "lusia-phoneme-a",
@@ -1863,7 +1863,7 @@
    "text": "Súper, sigue así.",
    "voice": "voices/prezenter",
    "engine": "chatterbox",
-   "seed": 3
+   "seed": 11
   },
   {
    "name": "bazyl-bravo-4",
@@ -1898,7 +1898,7 @@
    "text": "Bravo. Ganas una calcomanía nueva.",
    "voice": "voices/prezenter",
    "engine": "chatterbox",
-   "seed": 1
+   "seed": 14
   },
   {
    "name": "bazyl-hello",
@@ -2458,7 +2458,7 @@
    "text": "Naranja.",
    "voice": "voices/prezenter",
    "engine": "chatterbox",
-   "seed": 1
+   "seed": 11
   },
   {
    "name": "bazyl-item-lemon",
@@ -2682,7 +2682,7 @@
    "text": "Osito de peluche.",
    "voice": "voices/prezenter",
    "engine": "chatterbox",
-   "seed": 1
+   "seed": 16
   },
   {
    "name": "bazyl-item-block",
@@ -2717,7 +2717,7 @@
    "text": "Caballito de madera.",
    "voice": "voices/prezenter",
    "engine": "chatterbox",
-   "seed": 3
+   "seed": 11
   },
   {
    "name": "bazyl-item-spinning-top",
@@ -2864,7 +2864,7 @@
    "text": "Vaso de leche.",
    "voice": "voices/prezenter",
    "engine": "chatterbox",
-   "seed": 1
+   "seed": 12
   },
   {
    "name": "bazyl-item-egg",
@@ -3284,7 +3284,7 @@
    "text": "Una carita enojada.",
    "voice": "voices/prezenter",
    "engine": "chatterbox",
-   "seed": 1
+   "seed": 11
   },
   {
    "name": "bazyl-emotions-surprised",
@@ -3312,7 +3312,7 @@
    "text": "Una carita asustada.",
    "voice": "voices/prezenter",
    "engine": "chatterbox",
-   "seed": 2
+   "seed": 11
   },
   {
    "name": "bazyl-emotions-sleepy",
@@ -3445,7 +3445,7 @@
    "text": "Clasifica. Cada cosa va en su caja.",
    "voice": "voices/prezenter",
    "engine": "chatterbox",
-   "seed": 1
+   "seed": 11
   },
   {
    "name": "bazyl-sort-colors",
@@ -3536,7 +3536,7 @@
    "text": "Cubeta roja.",
    "voice": "voices/prezenter",
    "engine": "chatterbox",
-   "seed": 2
+   "seed": 11
   },
   {
    "name": "bazyl-hue-yellow",
@@ -3620,7 +3620,7 @@
    "text": "En África.",
    "voice": "voices/prezenter",
    "engine": "chatterbox",
-   "seed": 1
+   "seed": 12
   },
   {
    "name": "bazyl-house-ice",
@@ -3669,7 +3669,7 @@
    "text": "Lo que nada.",
    "voice": "voices/prezenter",
    "engine": "chatterbox",
-   "seed": 1
+   "seed": 11
   },
   {
    "name": "bazyl-motion-drives",
@@ -3725,7 +3725,7 @@
    "text": "Muéstrame algo morado.",
    "voice": "voices/prezenter",
    "engine": "chatterbox",
-   "seed": 3
+   "seed": 11
   },
   {
    "name": "bazyl-color-brown",
@@ -3900,14 +3900,14 @@
    "text": "A... de abeja.",
    "voice": "voices/alt",
    "engine": "chatterbox",
-   "seed": 1
+   "seed": 11
   },
   {
    "name": "lusia-letter-a-airplane",
    "text": "A... de avión.",
    "voice": "voices/alt",
    "engine": "chatterbox",
-   "seed": 3
+   "seed": 11
   },
   {
    "name": "lusia-letter-a-squirrel",
@@ -3970,7 +3970,7 @@
    "text": "De... de delfín.",
    "voice": "voices/alt",
    "engine": "chatterbox",
-   "seed": 1
+   "seed": 11
   },
   {
    "name": "lusia-letter-d-dice",
@@ -3991,14 +3991,14 @@
    "text": "E... de erizo.",
    "voice": "voices/alt",
    "engine": "chatterbox",
-   "seed": 3
+   "seed": 14
   },
   {
    "name": "lusia-letter-e-little-star",
    "text": "E... de estrella.",
    "voice": "voices/alt",
    "engine": "chatterbox",
-   "seed": 3
+   "seed": 11
   },
   {
    "name": "lusia-letter-f-strawberry",
@@ -4075,14 +4075,14 @@
    "text": "I... de iguana.",
    "voice": "voices/alt",
    "engine": "chatterbox",
-   "seed": 7
+   "seed": 12
   },
   {
    "name": "lusia-letter-i-magnet",
    "text": "I... de imán.",
    "voice": "voices/alt",
    "engine": "chatterbox",
-   "seed": 5
+   "seed": 14
   },
   {
    "name": "lusia-letter-j-giraffe",
@@ -4166,7 +4166,7 @@
    "text": "Eme... de manzana.",
    "voice": "voices/alt",
    "engine": "chatterbox",
-   "seed": 3
+   "seed": 11
   },
   {
    "name": "lusia-letter-n-orange-fruit",
@@ -4194,7 +4194,7 @@
    "text": "Eñe... de ñandú.",
    "voice": "voices/alt",
    "engine": "chatterbox",
-   "seed": 2
+   "seed": 11
   },
   {
    "name": "lusia-letter-ny-gnu",
@@ -4250,7 +4250,7 @@
    "text": "Erre... de rana.",
    "voice": "voices/alt",
    "engine": "chatterbox",
-   "seed": 1
+   "seed": 15
   },
   {
    "name": "lusia-letter-r-mouse",
@@ -4313,7 +4313,7 @@
    "text": "U... de uvas.",
    "voice": "voices/alt",
    "engine": "chatterbox",
-   "seed": 3
+   "seed": 13
   },
   {
    "name": "lusia-letter-u-unicorn",
@@ -4355,7 +4355,7 @@
    "text": "Ye... de yate.",
    "voice": "voices/alt",
    "engine": "chatterbox",
-   "seed": 3
+   "seed": 11
   },
   {
    "name": "lusia-letter-y-yogurt",
@@ -4369,7 +4369,7 @@
    "text": "Zeta... de zorro.",
    "voice": "voices/alt",
    "engine": "chatterbox",
-   "seed": 1
+   "seed": 11
   },
   {
    "name": "lusia-letter-z-carrot",

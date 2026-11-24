@@ -27,7 +27,8 @@
   {
    "name": "bazyl-item-bear-cub",
    "text": "Niedźwiadek!",
-   "voice": "voices/prezenter"
+   "voice": "voices/prezenter",
+   "seed": 2
   },
   {
    "name": "bazyl-mother-bear-cub",
@@ -208,7 +209,7 @@
    "name": "lusia-letter-r-rocket",
    "text": "Er... jak rakieta.",
    "engine": "chatterbox",
-   "seed": 2
+   "seed": 12
   },
   {
    "name": "lusia-letter-g-pear",
