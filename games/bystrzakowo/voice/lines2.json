@@ -195,8 +195,9 @@
   },
   {
    "name": "lusia-item-butterfly",
-   "text": "Motyl!",
-   "voice": "voices/alt"
+   "text": "Motyl.",
+   "voice": "voices/alt",
+   "seed": 61
   },
   {
    "name": "bazyl-item-butterfly",

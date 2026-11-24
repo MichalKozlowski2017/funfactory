@@ -154,8 +154,9 @@
   },
   {
    "name": "lusia-item-apple",
-   "text": "Jabłko!",
-   "voice": "voices/alt"
+   "text": "Japko.",
+   "voice": "voices/alt",
+   "seed": 61
   },
   {
    "name": "lusia-item-banana",
@@ -304,8 +305,9 @@
   },
   {
    "name": "bazyl-item-apple",
-   "text": "Jabłko!",
-   "voice": "voices/prezenter"
+   "text": "Japko.",
+   "voice": "voices/prezenter",
+   "seed": 42
   },
   {
    "name": "bazyl-item-banana",
@@ -344,8 +346,9 @@
   },
   {
    "name": "bazyl-item-ball",
-   "text": "Piłka!",
-   "voice": "voices/prezenter"
+   "text": "Piłka.",
+   "voice": "voices/prezenter",
+   "seed": 1
   },
   {
    "name": "bazyl-item-teddy",
