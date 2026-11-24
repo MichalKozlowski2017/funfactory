@@ -4,7 +4,7 @@
  * Każda zabawa ma swoją „trudność” dla bota, żeby raport miał mocne i słabsze strony.
  */
 import { SaveStore } from '@funfactory/core';
-import type { Game } from '@funfactory/kit2d';
+import type { Game, Scene } from '@funfactory/kit2d';
 import { ACTIVITIES, type Activity } from './sim/realms.ts';
 import { setDayShift } from './log.ts';
 import { newProgress } from './sim/progress.ts';
@@ -179,7 +179,7 @@ function runHistory(game: Game, span: number, status: SaveStore<HistoryStatus>):
       if (s.id === 'world') {
         if (s.leaving) {
           // Przejście do zabawy się nie odbyło: świat od nowa.
-          if (since > 25) void game.scenes.go(new (s.constructor as new () => Any)(), { fade: 0 });
+          if (since > 25) void game.scenes.go(new (s.constructor as new () => Scene)(), { fade: 0 });
           return void setTimeout(tick, 400);
         }
         if (since < 4) return void setTimeout(tick, 400);
