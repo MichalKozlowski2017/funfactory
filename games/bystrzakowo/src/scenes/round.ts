@@ -8,6 +8,8 @@ import { realmOf, type Activity } from '../sim/realms.ts';
 import { logFact, logTask } from '../log.ts';
 import { saveState, state } from '../state.ts';
 import { COLORS, cover, IconButton, sfx } from '../ui.ts';
+import { Hand, type Gesture, type P } from '../hand.ts';
+import { markHand, needsHand } from '../sim/onboarding.ts';
 
 /** Po ilu sekundach bezczynności przewodnik powtarza polecenie, a po ilu podpowiada. */
 const IDLE_REPEAT = 8;
@@ -46,6 +48,8 @@ export abstract class RoundScene extends Scene {
   private taskMisses = 0;
   private voices: string[] = [];
   private updateNext: ((dt: number) => void) | null = null;
+  /** Rączka pokazująca gest: pierwszy raz w zabawie i przy dłuższej bezczynności. */
+  protected hand!: Hand;
 
   constructor(kind: Activity, guide: Guide) {
     super();
@@ -82,6 +86,20 @@ export abstract class RoundScene extends Scene {
   }
   /** Klatka animacji zadania. */
   protected step(_dt: number): void {}
+  /** Gest, który pokazuje rączka (współrzędne sceny); null: bez rączki, zostaje zwykła podpowiedź. */
+  protected gesture(): Gesture | null {
+    return null;
+  }
+  /** Środek obiektu we współrzędnych sceny (do gestów rączki). */
+  protected spot(obj: Container, dx = 0, dy = 0): P {
+    const p = this.toLocal(obj.getGlobalPosition());
+    return { x: p.x + dx, y: p.y + dy };
+  }
+  /** Środek prostokąta obejmującego obiekt (gdy punkt zaczepienia nie jest na środku, np. sztabki cymbałków). */
+  protected middle(obj: Container): P {
+    const r = obj.getBounds();
+    return this.toLocal({ x: r.x + r.width / 2, y: r.y + r.height / 2 });
+  }
 
   override async enter(): Promise<void> {
     this.art = await loadArt();
@@ -99,12 +117,19 @@ export abstract class RoundScene extends Scene {
     this.home.onTap = () => this.leave();
     this.dots = new Graphics();
     this.particles = new Particles(dotTexture(this.game.app.renderer, 10), this.game.rng);
-    this.addChild(this.bg, this.guideSprite, this.layer, this.dots, this.home, this.particles.view);
+    this.hand = new Hand(this.art.hand);
+    this.addChild(this.bg, this.guideSprite, this.layer, this.dots, this.home, this.particles.view, this.hand);
     idleBreath(this.tweens, this.guideSprite, 0.03, 1.8);
     this.eventMode = 'static';
     this.on('pointerdown', () => {
       this.idle = 0;
       startMusic(this.game);
+      // Dziecko dotknęło ekranu: rączka znika, a pokaz w tej zabawie uznajemy za obejrzany.
+      if (this.hand.active) {
+        this.hand.stop();
+        markHand(state.progress, this.kind);
+        void saveState();
+      }
     });
     this.game.markReady();
     this.timers.after(0.35, () => this.begin());
@@ -122,6 +147,19 @@ export abstract class RoundScene extends Scene {
     this.place();
     this.appear();
     this.drawDots();
+    this.hand.stop();
+    // Pierwszy raz w tej zabawie: rączka pokazuje gest (po poleceniu przewodnika, aż dziecko dotknie ekranu).
+    if (this.index === 0 && needsHand(state.progress, this.kind)) this.timers.after(1.6, () => this.demo());
+  }
+
+  /** Rączka pokazuje gest bieżącego zadania. Fałsz, gdy zabawa go nie ma. */
+  protected demo(): boolean {
+    if (this.busy || this.overlay || this.leaving) return false;
+    const g = this.gesture();
+    if (!g) return false;
+    this.hand.show(g);
+    this.addChild(this.hand);
+    return true;
   }
 
   /** Polecenie jeszcze raz (dotknięcie przewodnika). */
@@ -156,6 +194,7 @@ export abstract class RoundScene extends Scene {
     if (this.solvedAt === this.index) return;
     this.solvedAt = this.index;
     this.busy = true;
+    this.hand.stop();
     logTask(this.kind, this.taskMisses);
     for (const f of this.taskFacts()) logFact(f, this.taskMisses === 0, this.taskEasy());
     sfx.good(this.game.sound);
@@ -274,7 +313,7 @@ export abstract class RoundScene extends Scene {
       void squash(this.tweens, this.guideSprite, 0.1);
     } else if (this.hinted === 1 && this.idle > IDLE_HINT) {
       this.hinted = 2;
-      this.hint();
+      if (!this.demo()) this.hint();
       say(this.game, this.guide, 'pomoc');
     }
   }
@@ -295,6 +334,7 @@ export abstract class RoundScene extends Scene {
     this.particles.update(dt);
     this.step(dt);
     this.idleTick(dt);
+    this.hand.update(dt);
   }
 
   override resize(view: View): void {
@@ -303,5 +343,7 @@ export abstract class RoundScene extends Scene {
     this.home.position.set(view.safe.left + 80, view.safe.top + 75);
     this.dots.position.set(view.width / 2 + 100, view.safe.top + 60);
     if (this.index < this.length && this.layer.children.length) this.place();
+    // Gest liczony dla starego układu: po obrocie albo zmianie rozmiaru rączka znika.
+    this.hand?.stop();
   }
 }

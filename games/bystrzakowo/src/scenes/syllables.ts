@@ -6,6 +6,7 @@ import { makeSyllableRound, scramble, tileColors, type Word } from '../sim/sylla
 import { state } from '../state.ts';
 import { COLORS, draggable, label, sfx } from '../ui.ts';
 import { RoundScene } from './round.ts';
+import type { Gesture } from '../hand.ts';
 
 const TILE_COLORS = [0xff8fb1, 0x8fc8ff, 0xffd166];
 
@@ -138,6 +139,12 @@ export class SyllableScene extends RoundScene {
   }
 
   /** Podpowiedź: pierwszy brakujący kafelek podjeżdża w stronę swojego miejsca. */
+  protected override gesture(): Gesture | null {
+    const t = [...this.tiles].filter((x) => !x.placed).sort((a, b) => a.index - b.index)[0];
+    const s = t && this.slots[t.index];
+    return t && s ? { kind: 'drag', from: this.spot(t.view), to: this.spot(s) } : null;
+  }
+
   protected hint(): void {
     const t = [...this.tiles].filter((x) => !x.placed).sort((a, b) => a.index - b.index)[0];
     if (!t) return;

@@ -6,6 +6,7 @@ import { canStep, makeMaze, makeMazeRound, mazeSize, path, type Maze } from '../
 import { state } from '../state.ts';
 import { COLORS, sfx } from '../ui.ts';
 import { RoundScene } from './round.ts';
+import type { Gesture } from '../hand.ts';
 
 const HEDGE = 0x4fa65a;
 const HEDGE_DARK = 0x37804a;
@@ -192,6 +193,13 @@ export class MazeScene extends RoundScene {
   }
 
   /** Podpowiedź: świecą następne pola najkrótszej drogi. */
+  /** Prowadzenie bohatera kilka pól w stronę wyjścia. */
+  protected override gesture(): Gesture | null {
+    const [c, r] = this.steps[this.steps.length - 1]!;
+    const route = path(this.maze, c, r, this.maze.cols - 1, this.maze.rows - 1).slice(0, 5);
+    return route.length > 1 ? { kind: 'trace', path: route.map(([x, y]) => this.center(x, y)) } : null;
+  }
+
   protected hint(): void {
     const [c, r] = this.steps[this.steps.length - 1]!;
     const route = path(this.maze, c, r, this.maze.cols - 1, this.maze.rows - 1).slice(1, 4);

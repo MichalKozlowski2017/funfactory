@@ -7,6 +7,7 @@ import { ITEMS } from '../sim/catalog.ts';
 import { state } from '../state.ts';
 import { COLORS, sfx } from '../ui.ts';
 import { RoundScene } from './round.ts';
+import type { Gesture } from '../hand.ts';
 
 type P = [number, number];
 const INK = 0x9b5de5;
@@ -231,6 +232,14 @@ export class LetterScene extends RoundScene {
   }
 
   /** Podpowiedź: kropka startowa podskakuje, a strzałka pokazuje kierunek. */
+  /** Prowadzenie palcem po bieżącej kresce litery (od miejsca, w którym dziecko skończyło). */
+  protected override gesture(): Gesture | null {
+    const s = this.strokes[this.stroke];
+    if (!s?.length) return null;
+    const path = s.slice(Math.max(0, this.at - 1)).map((p) => this.toScreen(p)).map(([x, y]) => ({ x, y }));
+    return path.length > 1 ? { kind: 'trace', path } : null;
+  }
+
   protected hint(): void {
     void this.tweens.to(this.start.scale, { x: 1.5, y: 1.5 }, { duration: 0.25, yoyo: true, repeat: 5, ease: 'sineInOut' });
   }

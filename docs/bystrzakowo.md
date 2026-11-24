@@ -63,6 +63,32 @@ Pierwsza wersja ma dawać wrażenie dużej gry. W kolumnie MVP: P oznacza protot
 - **Album z naklejkami** to kolekcja nagród. Dzieci kochają ją zapełniać, a dla rodzica jest to widoczny postęp.
 - **Juice:** każdy dotyk musi coś robić (dźwięk, sprężynka, wibracja). Zwierzątka na polanie reagują na stuknięcia, nawet poza zagadkami.
 
+## Pierwsze uruchomienie (2026-11-24)
+
+Decyzje właściciela: krótkie powitanie rodzica, wiek ustawia start, rączka i prowadzenie do pierwszej zagadki.
+
+- **Powitanie rodzica** (`src/scenes/welcome.ts`, bez lektora). Ma 4 karty, każdą można pominąć:
+  1. czym jest gra;
+  2. strefa rodzica (przytrzymaj zębatkę, potem działanie);
+  3. 5 dni pełnej wersji (karty nie ma, gdy wersja jest kupiona);
+  4. wiek 3/4/5/6+ i opcjonalne imię.
+
+  Pokazuje się tylko przy świeżym zapisie (`needsWelcome`). Gracze, którzy grali przed tą wersją, go nie zobaczą.
+- **Wiek ustawia poziom startowy** wszystkich zabaw (`startLevel`):
+  - 3 i 4 lata: poziom 0;
+  - 5 lat: poziom 1;
+  - 6+: poziom 2.
+
+  Dalej trudność dopasowuje się jak dotąd. Wiek można zmienić w strefie rodzica (Ustawienia). Zmiana nie rusza zabaw, w które dziecko już grało. Zerowanie postępów zostawia wiek, imię, język i to, że powitanie już było.
+- **Rączka** (`src/hand.ts`, grafika z Fluxa `ui/raczka-a-203`):
+  - pokazuje gest przy pierwszym razie w każdej zabawie, w pętli, aż dziecko dotknie ekranu;
+  - rodzaje gestów: stuknięcie (w dobrą odpowiedź), przeciągnięcie (pierwszy element na swoje miejsce), prowadzenie palcem (kreska litery, kropki, labirynt);
+  - w kolorowance pokazuje wybór koloru i stuknięcie w pole, w melodii stuka w sztabki po pokazie Lusi;
+  - przy dłuższej bezczynności (16 s) zastępuje dawną podpowiedź;
+  - zabawa opisuje swój gest w `gesture()` (RoundScene).
+- **Pierwsza zagadka:** na świecie rączka stuka w domek „Kolory” (do 4 lat) albo „Cienie” (5+), w zgodzie z powitaniem Lusi („Wybierz domek i pobawmy się razem!”). Bazyl pokazuje zakładki krain dopiero po pierwszej rundzie, kiedy dziecko wie już, jak się gra.
+- **Playtesty** (Playwright) zaczynają od świata, bez powitania. Powitanie włącza `?welcome`.
+
 ## Dla rodzica
 
 - **Strefa rodzica za bramką:** prosta matematyka albo „przytrzymaj trzema palcami”. Tam są ustawienia (głośność, lektor, wybór domków), postępy dziecka i zakup.

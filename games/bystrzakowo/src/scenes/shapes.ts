@@ -7,6 +7,7 @@ import { derange, makeShapeBoard, SHAPE_ROUND, type Shape } from '../sim/shapes.
 import { state } from '../state.ts';
 import { COLORS, draggable, sfx } from '../ui.ts';
 import { RoundScene } from './round.ts';
+import type { Gesture } from '../hand.ts';
 
 const COLOR: Record<Shape, number> = {
   kolo: 0xe8413c,
@@ -195,6 +196,11 @@ export class ShapeScene extends RoundScene {
   }
 
   /** Podpowiedź: klocek podjeżdża w stronę swojej dziurki. */
+  protected override gesture(): Gesture | null {
+    const p = this.pieces.find((x) => !x.done);
+    return p ? { kind: 'drag', from: this.spot(p.view), to: this.spot(p.hole) } : null;
+  }
+
   protected hint(): void {
     const p = this.pieces.find((x) => !x.done);
     if (!p) return;

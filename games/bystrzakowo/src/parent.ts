@@ -4,6 +4,7 @@ import { shareImage } from '@funfactory/core/share';
 import { Button, type Game, type View } from '@funfactory/kit2d';
 import { loadArt, startMusic, stopMusic, type Art } from './assets.ts';
 import { journal, today } from './log.ts';
+import { applyAge, nextAge, playedActivities } from './sim/onboarding.ts';
 import { loadLandscapes, paintings, pictureView, removePainting, type Painting } from './picture.ts';
 import { hasFull, isBought, price, purchase, restorePurchase, trial } from './premium.ts';
 import { newProgress } from './sim/progress.ts';
@@ -697,6 +698,14 @@ export class ParentPanel extends Container {
     };
     const nameLabel = () => (state.progress.childName ? tr('Imię dziecka: {name}', { name: state.progress.childName }) : tr('Imię dziecka: nie podano'));
     add(this.button(nameLabel(), bw, '#9b7be0', () => this.askName()));
+    // Wiek: ustawia poziom startowy zabaw, w które dziecko jeszcze nie grało (postępy w pozostałych zostają).
+    const ageLabel = () => (state.progress.age ? tr('Wiek dziecka: {n}', { n: state.progress.age >= 6 ? '6+' : state.progress.age }) : tr('Wiek dziecka: nie podano'));
+    const ageButton: Button = this.button(ageLabel(), bw, '#8fb8ff', () => {
+      applyAge(state.progress, nextAge(state.progress.age), playedActivities(journal()));
+      ageButton.setLabel(ageLabel());
+      void saveState();
+    });
+    add(ageButton);
     const LANG_NAMES: Record<Lang, string> = { pl: 'Polski', en: 'English', de: 'Deutsch', es: 'Español' };
     // Język: cztery przyciski obok siebie, wybrany podświetlony. Zmiana: zapis i ponowne uruchomienie
     // (nagrania lektora wczytują się przy starcie).
@@ -740,8 +749,10 @@ export class ParentPanel extends Container {
         reset.setLabel(tr('Na pewno? Dotknij jeszcze raz'));
         return;
       }
-      const { music: m, childName } = state.progress;
-      state.progress = { ...newProgress(), music: m, childName };
+      const { music: m, childName, age, lang: l } = state.progress;
+      // Zerujemy zabawy, ale nie ustawienia rodzica: imię, wiek (poziom startowy), język i to, że powitanie już było.
+      state.progress = { ...newProgress(), music: m, childName, lang: l, onboarded: true };
+      if (age) applyAge(state.progress, age);
       void saveState();
       reset.setLabel(tr('Wyzerowano'));
     });

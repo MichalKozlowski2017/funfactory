@@ -6,6 +6,7 @@ import { makeMemoryBoard, MEMORY_ROUND, memoryGrid, memoryMistakes, type MemoryC
 import { state } from '../state.ts';
 import { COLORS, sfx } from '../ui.ts';
 import { RoundScene } from './round.ts';
+import type { Gesture } from '../hand.ts';
 
 interface CardView {
   card: MemoryCard;
@@ -155,6 +156,12 @@ export class MemoryScene extends RoundScene {
   }
 
   /** Podpowiedź: para pierwszej nieodkrytej karty mrugnie. */
+  protected override gesture(): Gesture | null {
+    const c = this.cards.find((x) => !x.matched && !x.open);
+    const twin = c && this.cards.find((x) => x !== c && x.card.item === c.card.item);
+    return c && twin ? { kind: 'tap', at: [this.spot(c.view), this.spot(twin.view)] } : null;
+  }
+
   protected hint(): void {
     const c = this.cards.find((x) => !x.matched && !x.open);
     if (!c) return;

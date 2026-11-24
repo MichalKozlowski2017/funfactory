@@ -25,6 +25,12 @@ export interface Progress {
   picture?: number;
   /** Dziennik postępów dla rodzica (sim/journal.ts). */
   journal?: Journal;
+  /** Wiek dziecka podany na powitaniu (sim/onboarding.ts), ustawia poziom startowy zabaw. */
+  age?: number;
+  /** Rodzic przeszedł powitanie (albo je pominął). */
+  onboarded?: boolean;
+  /** Zabawy, w których rączka pokazała już gest. */
+  hands?: string[];
   /** Imię dziecka (opcjonalne, tylko na urządzeniu). */
   childName?: string;
   /** Ostatnia wizyta rodzica w strefie rodzica (dzień), do kropki „coś nowego”. */

@@ -8,6 +8,7 @@ import { addPainting, pixelsToJpeg } from '../picture.ts';
 import { state } from '../state.ts';
 import { COLORS, IconButton, sfx } from '../ui.ts';
 import { RoundScene } from './round.ts';
+import type { Gesture } from '../hand.ts';
 
 /** Strony kolorowanki (public/art/kolorowanki/<id>.png, kontury z Fluxa). */
 export const PAGES = ['kot', 'pies', 'slon', 'ryba', 'motyl', 'auto', 'kwiatek', 'dinozaur', 'zolw', 'rakieta', 'sowa', 'domek'];
@@ -232,6 +233,41 @@ export class ColoringScene extends RoundScene {
   }
 
   /** Podpowiedź: paleta podskakuje. */
+  /** Wybór koloru z palety, potem stuknięcie w największe pole obrazka. */
+  protected override gesture(): Gesture | null {
+    const blob = this.palette.children.find((c) => c.label !== String(this.paint)) as Container | undefined;
+    const spot = this.bigSpot();
+    return blob && spot ? { kind: 'tap', at: [this.spot(blob), spot] } : null;
+  }
+
+  /** Punkt w środku największego pola obrazka (współrzędne sceny). */
+  private bigSpot(): { x: number; y: number } | null {
+    const bg = this.labels[0]!;
+    let best = -1;
+    for (let r = 1; r < this.sizes.length; r++) if (r !== bg && (best < 0 || this.sizes[r]! > this.sizes[best]!)) best = r;
+    if (best < 0 || !this.picture.texture.width) return null;
+    let sx = 0;
+    let sy = 0;
+    let n = 0;
+    for (let i = 0; i < SIZE * SIZE; i++)
+      if (this.labels[i] === best) {
+        sx += i % SIZE;
+        sy += Math.floor(i / SIZE);
+        n++;
+      }
+    // Najbliższy środka ciężkości piksel tego pola (środek pola w kształcie litery C leży poza nim).
+    let pick = 0;
+    let dist = Infinity;
+    for (let i = 0; i < SIZE * SIZE; i++)
+      if (this.labels[i] === best) {
+        const d = (i % SIZE - sx / n) ** 2 + (Math.floor(i / SIZE) - sy / n) ** 2;
+        if (d < dist) [dist, pick] = [d, i];
+      }
+    const k = SIZE / this.picture.texture.width;
+    const local = { x: (pick % SIZE) / k - this.picture.texture.width / 2, y: Math.floor(pick / SIZE) / k - this.picture.texture.height / 2 };
+    return this.toLocal(this.picture.toGlobal(local));
+  }
+
   protected hint(): void {
     void pulse(this.tweens, this.palette, 0.08, 0.4);
   }

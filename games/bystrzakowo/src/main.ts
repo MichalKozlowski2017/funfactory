@@ -1,6 +1,8 @@
 import { Game } from '@funfactory/kit2d';
 import { registerVoice } from './assets.ts';
 import { WorldScene } from './scenes/world.ts';
+import { WelcomeScene } from './scenes/welcome.ts';
+import { needsWelcome } from './sim/onboarding.ts';
 import { logTime } from './log.ts';
 import { deviceLang, lang, LANGS, setLang, type Lang } from './sim/lang.ts';
 import { loadState, state } from './state.ts';
@@ -16,7 +18,11 @@ document.documentElement.lang = lang();
 registerVoice(game);
 void import('./premium.ts').then((m) => m.syncPurchase());
 game.app.ticker.add((t) => logTime(t.deltaMS / 1000));
-await game.scenes.go(new WorldScene(), { fade: 0 });
+// Pierwsze uruchomienie: powitanie rodzica. Playtesty (przeglądarka sterowana przez Playwright) zaczynają od świata,
+// chyba że w adresie jest `?welcome`.
+const params = new URLSearchParams(location.search);
+const welcome = params.has('welcome') || (needsWelcome(state.progress) && !navigator.webdriver);
+await game.scenes.go(welcome ? new WelcomeScene() : new WorldScene(), { fade: 0 });
 
 
 // Autopilot do testów strefy rodzica (build z VITE_AUTOPLAY=1 albo ?autoplay).

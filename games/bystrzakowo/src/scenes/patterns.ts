@@ -7,6 +7,7 @@ import { makePatternRound, type PatternTask } from '../sim/patterns.ts';
 import { state } from '../state.ts';
 import { COLORS, draggable, label, sfx, wiggle } from '../ui.ts';
 import { RoundScene } from './round.ts';
+import type { Gesture } from '../hand.ts';
 
 interface Tile {
   view: Container;
@@ -125,6 +126,12 @@ export class PatternScene extends RoundScene {
   }
 
   /** Podpowiedź: dobry obrazek się kołysze. */
+  protected override gesture(): Gesture | null {
+    const opt = this.options.find((o) => o.item === this.task.row[this.task.gap]);
+    const gap = this.tiles[this.task.gap];
+    return opt && gap ? { kind: 'drag', from: this.spot(opt.view), to: this.spot(gap.view) } : null;
+  }
+
   protected hint(): void {
     const opt = this.options.find((o) => o.item === this.task.row[this.task.gap]);
     if (opt) void this.tweens.to(opt.view, { rotation: 0.1 }, { duration: 0.12, yoyo: true, repeat: 5, ease: 'sineInOut' }).done.then(() => (opt.view.rotation = 0));

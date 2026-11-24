@@ -6,6 +6,8 @@ import { barCount, BARS, makeMelody, MELODY_ROUND } from '../sim/melody.ts';
 import { state } from '../state.ts';
 import { COLORS, sfx } from '../ui.ts';
 import { RoundScene } from './round.ts';
+import type { Gesture } from '../hand.ts';
+import { needsHand } from '../sim/onboarding.ts';
 
 const BAR_COLORS = [0xe8413c, 0xff8a2b, 0xffd23f, 0x7ad35a, 0x3d8bff, 0x9b5de5];
 
@@ -115,6 +117,8 @@ export class MelodyScene extends RoundScene {
       b.tint = on ? DIM : 0xffffff;
       if (!on) this.timers.after(i * 0.04, () => void squash(this.tweens, b, 0.1));
     }
+    // Pierwszy raz w melodii: po pokazie Lusi rączka stuka w sztabki po kolei.
+    if (!on && this.index === 0 && needsHand(state.progress, this.kind)) this.timers.after(0.3, () => this.demo());
   }
 
   private hit(i: number): void {
@@ -153,6 +157,12 @@ export class MelodyScene extends RoundScene {
   }
 
   /** Podpowiedź: melodia jeszcze raz. */
+  /** Pierwsze sztabki melodii po kolei (dopiero gdy Lusia skończy grać). */
+  protected override gesture(): Gesture | null {
+    if (this.playing || this.busy || !this.melody.length) return null;
+    return { kind: 'tap', at: this.melody.slice(this.pos, this.pos + 3).map((b) => this.middle(this.bars[b]!)) };
+  }
+
   protected hint(): void {
     if (!this.playing) this.play();
   }

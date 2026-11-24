@@ -6,6 +6,7 @@ import { FRAMES, makeStoryRound, markStoriesSeen, presetFrames, type Story } fro
 import { saveState, state } from '../state.ts';
 import { COLORS, draggable, label, sfx } from '../ui.ts';
 import { RoundScene } from './round.ts';
+import type { Gesture } from '../hand.ts';
 
 interface Card {
   view: Container;
@@ -129,6 +130,12 @@ export class StoryScene extends RoundScene {
   }
 
   /** Podpowiedź: kadr, który ma być następny, podjeżdża w stronę swojego miejsca. */
+  protected override gesture(): Gesture | null {
+    const c = [...this.cards].filter((x) => !x.placed).sort((a, b) => a.frame - b.frame)[0];
+    const s = c && this.slots[c.frame];
+    return c && s ? { kind: 'drag', from: this.spot(c.view), to: this.spot(s) } : null;
+  }
+
   protected hint(): void {
     const c = [...this.cards].filter((x) => !x.placed).sort((a, b) => a.frame - b.frame)[0];
     if (!c) return;

@@ -7,6 +7,7 @@ import { dotCount, dotsOnEdge, hitsDot, makeDotsRound, type Point } from '../sim
 import { state } from '../state.ts';
 import { COLORS, label, sfx } from '../ui.ts';
 import { RoundScene } from './round.ts';
+import type { Gesture } from '../hand.ts';
 
 /** Rozmiar maski do liczenia konturu (piksele). */
 const MASK = 96;
@@ -194,6 +195,14 @@ export class DotsScene extends RoundScene {
   }
 
   /** Podpowiedź: następna kropka podskakuje kilka razy. */
+  /** Prowadzenie palcem od bieżącej kropki przez dwie następne. */
+  protected override gesture(): Gesture | null {
+    if (!this.points.length) return null;
+    const n = this.points.length;
+    const path = [0, 1, 2].map((k) => this.points[(this.target + k) % n]!.at).map((p) => ({ x: p.x, y: p.y }));
+    return { kind: 'trace', path };
+  }
+
   protected hint(): void {
     const d = this.points[this.target];
     if (d) void this.tweens.to(d.view.scale, { x: 1.6, y: 1.6 }, { duration: 0.25, yoyo: true, repeat: 5, ease: 'sineInOut' });

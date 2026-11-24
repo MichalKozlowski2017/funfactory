@@ -7,6 +7,7 @@ import { jigsawGrid, makeJigsawRound, snaps } from '../sim/jigsaw.ts';
 import { state } from '../state.ts';
 import { COLORS, draggable, sfx, wiggle } from '../ui.ts';
 import { RoundScene } from './round.ts';
+import type { Gesture } from '../hand.ts';
 
 /** Rozmiar obrazka układanki w pikselach tekstury. */
 const PIC = 600;
@@ -192,6 +193,11 @@ export class JigsawScene extends RoundScene {
   }
 
   /** Podpowiedź: kawałek podjeżdża w stronę swojego miejsca i wraca. */
+  protected override gesture(): Gesture | null {
+    const p = this.pieces.find((x) => !x.placed);
+    return p ? { kind: 'drag', from: this.spot(p.view), to: this.slot(p) } : null;
+  }
+
   protected hint(): void {
     const p = this.pieces.find((x) => !x.placed);
     if (!p) return;

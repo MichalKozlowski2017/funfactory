@@ -16,6 +16,8 @@ import { AlbumScene } from './album.ts';
 import { drawShape } from './shapes.ts';
 import { sceneFor } from './factory.ts';
 import { tr } from '../sim/i18n.ts';
+import { Hand } from '../hand.ts';
+import { markHand, needsHand } from '../sim/onboarding.ts';
 
 /** Obrazek na zakładce krainy (obiekt z katalogu). */
 const TAB_ICON: Record<string, string> = { polana: 'kwiatek', warsztat: 'klocek', sciezka: 'grzyb', pracownia: 'tecza' };
@@ -48,6 +50,8 @@ export class WorldScene extends Scene {
   private sleep: Container | null = null;
   /** Kontenery przewodników (pozycja i skala zależne od ekranu). */
   private readonly guideBoxes: Container[] = [];
+  /** Rączka: przy pierwszym uruchomieniu pokazuje domek pierwszej zagadki. */
+  private hand!: Hand;
 
   override async enter(): Promise<void> {
     this.art = await loadArt();
@@ -159,15 +163,17 @@ export class WorldScene extends Scene {
       if (state.greeted) return;
       state.greeted = true;
       this.timers.after(0.15, () => {
+        // „Wybierz domek i pobawmy się razem!”: przy pierwszym uruchomieniu rączka od nowa stuka w domek pierwszej zagadki.
         const len = say(this.game, 'lusia', 'witaj');
-        // Pierwsze uruchomienie: Bazyl pokazuje zakładki krain (podskakują).
-        if (state.progress.rounds === 0)
-          this.timers.after(len + 0.4, () => {
-            say(this.game, 'bazyl', 'krainy');
-            this.tabs.forEach((t, i) => this.timers.after(0.6 + i * 0.25, () => void squash(this.tweens, t, 0.35)));
-          });
+        if (state.progress.rounds === 0) this.pointFirst();
+        else this.timers.after(len + 0.4, () => this.introRealms());
       });
     });
+    this.hand = new Hand(this.art.hand);
+    this.addChild(this.hand);
+    if (state.progress.rounds === 0) this.timers.after(0.8, () => this.pointFirst());
+    // Po pierwszej rundzie (dziecko wraca do świata): Bazyl pokazuje zakładki innych krain.
+    else if (state.greeted) this.timers.after(1, () => this.introRealms());
     const endSwipe = (x: number) => {
       if (this.swipeX === null || this.parentPanel) return;
       const dx = (x - this.swipeX) / this.game.root.scale.x;
@@ -267,6 +273,9 @@ export class WorldScene extends Scene {
   goRealm(i: number): void {
     if (i < 0 || i >= REALMS.length || i === this.realm || this.leaving) return;
     this.realm = i;
+    // Rączka wskazuje domek na Polanie: poza nią znika, po powrocie wraca.
+    this.hand.stop();
+    if (i === 0) this.timers.after(0.6, () => this.pointFirst());
     state.progress.realm = i;
     void saveState();
     const realm = REALMS[i]!;
@@ -479,10 +488,32 @@ export class WorldScene extends Scene {
     say(this.game, 'lusia', 'kraina-spi');
   }
 
+  /** Pierwsze uruchomienie: rączka stuka w domek pierwszej zagadki (łatwej, dobranej do wieku). */
+  private pointFirst(): void {
+    if (this.leaving || this.sleep || this.realm !== 0 || !needsHand(state.progress, 'world')) return;
+    const pick = (state.progress.age ?? 4) <= 4 ? 'kolory' : 'cienie';
+    const house = this.houses.get(pick)?.visible ? this.houses.get(pick) : this.houses.get('cienie');
+    if (!house) return;
+    this.hand.show({ kind: 'tap', at: [this.toLocal(house.getGlobalPosition())] });
+    this.addChild(this.hand);
+  }
+
+  /** Bazyl pokazuje zakładki krain (podskakują): raz, po pierwszej rundzie. Gracze sprzed powitania to już słyszeli. */
+  private introRealms(): void {
+    const p = state.progress;
+    if (this.leaving || this.sleep || !p.onboarded || p.rounds === 0 || !needsHand(p, 'krainy')) return;
+    markHand(p, 'krainy');
+    void saveState();
+    say(this.game, 'bazyl', 'krainy');
+    this.tabs.forEach((t, i) => this.timers.after(0.6 + i * 0.25, () => void squash(this.tweens, t, 0.35)));
+  }
+
   private open(kind: Activity, house: Container): void {
     if (this.leaving) return;
     if (!realmIsOpen(realmOf(kind).id)) return this.sleepingTap(house);
     this.leaving = true;
+    this.hand.stop();
+    markHand(state.progress, 'world');
     startMusic(this.game);
     haptics.hit();
     sfx.pop(this.game.sound);
@@ -578,6 +609,7 @@ export class WorldScene extends Scene {
 
   override update(dt: number): void {
     this.particles.update(dt);
+    this.hand?.update(dt);
     this.gate.tick(dt);
     this.adultCheck?.tick(dt);
     this.parentPanel?.tick(dt);
@@ -585,6 +617,8 @@ export class WorldScene extends Scene {
 
   override resize(view: View): void {
     const { width: w, height: h, safe } = view;
+    // Po obrocie domki są gdzie indziej: rączka wskazuje od nowa.
+    if (this.hand?.active) this.timers.after(0.05, () => this.pointFirst());
     for (const bg of this.bgs) cover(bg, w, h);
     const n = this.tabs.length;
     this.tabs.forEach((tab, i) => tab.position.set(w / 2 + (i - (n - 1) / 2) * 110, safe.top + 62));

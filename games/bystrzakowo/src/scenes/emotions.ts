@@ -5,6 +5,7 @@ import { EMOTION_CHARS, EMOTIONS, makeEmotionRound, type Emotion, type EmotionQu
 import { state } from '../state.ts';
 import { Card, label, sfx } from '../ui.ts';
 import { RoundScene } from './round.ts';
+import type { Gesture } from '../hand.ts';
 
 /** Minka zastępcza (gdy grafiki jeszcze nie ma): emotikonka z tekstu. */
 const FALLBACK: Record<Emotion, string> = { wesoly: '😄', smutny: '😢', zly: '😠', zdziwiony: '😮', przestraszony: '😨', spiacy: '😴' };
@@ -90,6 +91,11 @@ export class EmotionScene extends RoundScene {
   solve(): void {
     const i = this.q.options.indexOf(this.q.target);
     this.answer(this.cards[i]!, this.q.target);
+  }
+
+  protected override gesture(): Gesture | null {
+    const card = this.cards[this.q.options.indexOf(this.q.target)];
+    return card ? { kind: 'tap', at: [this.spot(card)] } : null;
   }
 
   protected hint(): void {

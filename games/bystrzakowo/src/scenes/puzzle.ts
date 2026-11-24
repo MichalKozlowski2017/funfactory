@@ -7,6 +7,7 @@ import { answerOf, isCorrect, makeRound, promptLine, ROUND_LENGTH, type PuzzleKi
 import { state } from '../state.ts';
 import { Card, COLORS, label, sfx } from '../ui.ts';
 import { RoundScene } from './round.ts';
+import type { Gesture } from '../hand.ts';
 
 /** Kto prowadzi który domek. */
 export const GUIDE: Record<PuzzleKind, Guide> = { cienie: 'lusia', pasuje: 'bazyl', liczenie: 'lusia', kolory: 'bazyl', gloski: 'lusia', mamy: 'bazyl' };
@@ -221,6 +222,11 @@ export class PuzzleScene extends RoundScene {
   }
 
   /** Dobra karta delikatnie się kołysze. */
+  protected override gesture(): Gesture | null {
+    const card = this.cards[(this.q.options as (Item | number)[]).indexOf(answerOf(this.q))];
+    return card ? { kind: 'tap', at: [this.spot(card)] } : null;
+  }
+
   protected hint(): void {
     const i = (this.q.options as (Item | number)[]).indexOf(answerOf(this.q));
     const card = this.cards[i];

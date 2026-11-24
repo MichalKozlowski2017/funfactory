@@ -8,6 +8,7 @@ import { state } from '../state.ts';
 import { COLORS, draggable, sfx } from '../ui.ts';
 import { PAINT } from './puzzle.ts';
 import { RoundScene } from './round.ts';
+import type { Gesture } from '../hand.ts';
 
 /**
  * Kształt otworu pojemnika w ułamkach grafiki (zmierzone na plikach z Fluxa): `mouth` to wysokość linii
@@ -352,6 +353,12 @@ export class SortScene extends RoundScene {
   }
 
   /** Podpowiedź: pierwszy obiekt sam „wskazuje” swoją skrzynkę. */
+  protected override gesture(): Gesture | null {
+    const p = this.pieces.find((x) => !x.done);
+    const bin = p && this.bins[p.bin];
+    return p && bin ? { kind: 'drag', from: this.spot(p.view), to: this.spot(bin.view, 0, -bin.height * 0.55) } : null;
+  }
+
   protected hint(): void {
     const p = this.pieces.find((x) => !x.done);
     if (!p) return;
