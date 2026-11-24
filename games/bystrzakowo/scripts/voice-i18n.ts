@@ -11,7 +11,7 @@ import { join } from 'node:path';
 import { ITEMS, itemById, nameOf } from '../src/sim/catalog.ts';
 import { setLang, type Lang } from '../src/sim/lang.ts';
 import { lettersOf } from '../src/sim/letters.ts';
-import { ITEM_NAMES } from '../src/sim/names.ts';
+import { ITEM_NAMES } from '../src/sim/locales/items.ts';
 import { wordsOf } from '../src/sim/syllables.ts';
 import { voiceLines, type Guide } from '../src/voice-lines.ts';
 

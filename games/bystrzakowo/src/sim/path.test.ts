@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { Rng } from '@funfactory/core';
-import { ITEM_NAMES } from './names.ts';
+import { ITEM_NAMES } from './locales/items.ts';
 import { ITEMS } from './catalog.ts';
 import { dotCount, evenDots, hitsDot, makeDotsRound, radialContour, traceContour, DOTS_ROUND } from './dots.ts';
 import { canStep, makeMaze, makeMazeRound, MAZE_PAIRS, MAZE_ROUND, mazeSize, path } from './maze.ts';

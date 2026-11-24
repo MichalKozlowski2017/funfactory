@@ -9,34 +9,12 @@
 import { existsSync, readFileSync, renameSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { letterLines } from '../src/sim/letters.ts';
+import { letterText } from '../src/sim/locales/letters.ts';
+
+export { letterText };
 import type { Lang } from '../src/sim/lang.ts';
 
 const game = join(import.meta.dirname, '..');
-const PL_NAMES: Record<string, string> = {
-  A: 'A', B: 'Be', C: 'Ce', Ć: 'Cie', D: 'De', E: 'E', F: 'Efff', G: 'Gie', H: 'Ha', I: 'I', J: 'Jot', K: 'Ka', L: 'El', Ł: 'Eł', M: 'Em',
-  N: 'En', O: 'O', Ó: 'O z kreską', P: 'Pe', R: 'Er', S: 'Es', Ś: 'Eś', T: 'Te', U: 'U', W: 'Wu', Z: 'Zet', Ź: 'Ziet', Ż: 'Żet',
-};
-// Pełne nazwy liter z pauzą („Zett... wie Zug.”): sama litera przed krótkim zdaniem kończyła się w Chatterboxie
-// dopowiedzianym bełkotem (2026-11-24: 34 z 53 niemieckich zdań odpadło w kontroli).
-const SPOKEN: Partial<Record<Lang, Record<string, string>>> = {
-  de: {
-    A: 'A', B: 'Be', C: 'Ce', D: 'De', E: 'E', F: 'Eff', G: 'Ge', H: 'Ha', I: 'I', J: 'Jott', K: 'Ka', L: 'El', M: 'Em', N: 'En',
-    O: 'O', P: 'Pe', Q: 'Ku', R: 'Er', S: 'Es', T: 'Te', U: 'U', V: 'Fau', W: 'We', Y: 'Ypsilon', Z: 'Zett',
-  },
-  es: {
-    A: 'A', B: 'Be', C: 'Ce', D: 'De', E: 'E', F: 'Efe', G: 'Ge', H: 'Hache', I: 'I', J: 'Jota', K: 'Ka', L: 'Ele', M: 'Eme',
-    N: 'Ene', Ñ: 'Eñe', O: 'O', P: 'Pe', R: 'Erre', S: 'Ese', T: 'Te', U: 'U', V: 'Uve', W: 'Uve doble', Y: 'Ye', Z: 'Zeta',
-  },
-};
-const low = (w: string) => (w === w.toUpperCase() ? w : w.toLowerCase());
-
-/** Tekst zdania (bez wykrzyknika: Chatterbox czyta go jak okrzyk). */
-export function letterText(l: Lang, ch: string, word: string): string {
-  if (l === 'pl') return `${PL_NAMES[ch] ?? ch}... jak ${low(word)}.`;
-  if (l === 'en') return `${ch} is for ${low(word)}.`;
-  const spoken = SPOKEN[l]?.[ch] ?? ch;
-  return l === 'de' ? `${spoken}... wie ${word}.` : `${spoken}... de ${low(word)}.`;
-}
 
 /** Stare przypisania litera → obiekt (sprzed przykładów), z podanego pliku letters.ts. */
 function oldItems(file: string): Record<Lang, Record<string, string>> {
