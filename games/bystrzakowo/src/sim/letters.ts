@@ -9,6 +9,7 @@ import { ITEMS } from './catalog.ts';
 import { LETTER_PIC_IDS } from './letter-pics.ts';
 import { MAX_LEVEL } from './puzzles.ts';
 import { LETTER_EXAMPLES } from './locales/letters.ts';
+import { rotate } from './rotation.ts';
 
 export { LETTER_EXAMPLES };
 
@@ -145,7 +146,7 @@ export function makeLetterRound(rng: Rng, level: number, have: ReadonlySet<strin
   const l = Math.max(0, Math.min(MAX_LEVEL, Math.round(level)));
   const lg = lang();
   const pool = lettersOf(lg).filter((x) => x.level <= l && LETTER_EXAMPLES[lg][x.ch]!.some(([item]) => have.has(item)));
-  return mixRound(rng, pool, l, 'letters').map((x) => {
+  return rotate(rng, pool, LETTER_ROUND, `letters:${lg}`, (x) => x.ch, (ch) => `letter:${ch}`).map((x) => {
     const xs = LETTER_EXAMPLES[lg][x.ch]!.filter(([item]) => have.has(item));
     const key = `${lg}:${x.ch}`;
     const i = ((shownExample.get(key) ?? rng.int(0, xs.length - 1)) + 1) % xs.length;
@@ -154,31 +155,6 @@ export function makeLetterRound(rng: Rng, level: number, have: ReadonlySet<strin
   });
 }
 
-/** Last round of each activity (in this session), so two consecutive ones are not the same. */
-const lastRound = new Map<string, string>();
-
-/**
- * Round from a pool: two from the current level (new), the rest from lower ones (review), and when there are no lower ones,
- * all from the current level. Never exactly the same set as the previous time.
- */
-export function mixRound<T extends { level: number }>(rng: Rng, pool: readonly T[], level: number, key: string, n = LETTER_ROUND, id: (x: T) => string = (x) => (x as unknown as Letter).ch): T[] {
-  let out: T[] = [];
-  // Elements from the previous round go to the end of the queue: the next round (e.g. "play on") takes others first.
-  const prev = new Set((lastRound.get(key) ?? '').split(','));
-  const newFirst = (xs: T[]) => [...xs.filter((x) => !prev.has(id(x))), ...xs.filter((x) => prev.has(id(x)))];
-  for (let k = 0; k < 8; k++) {
-    const fresh = newFirst(rng.shuffle(pool.filter((x) => x.level === level)));
-    const old = newFirst(rng.shuffle(pool.filter((x) => x.level < level)));
-    const nFresh = old.length ? Math.min(fresh.length, n - 1) : n;
-    out = rng.shuffle([...fresh.slice(0, nFresh), ...old.slice(0, n - Math.min(nFresh, fresh.length))]).slice(0, n);
-    if (out.map(id).sort().join() !== lastRound.get(key)) break;
-  }
-  // The first element of the round is not from the previous round (the child sees something new right away).
-  const i = out.findIndex((x) => !prev.has(id(x)));
-  if (i > 0) [out[0], out[i]] = [out[i]!, out[0]!];
-  lastRound.set(key, out.map(id).sort().join());
-  return out;
-}
 
 /** Trace tolerance (fraction of letter height): younger children draw less precisely. */
 export const traceTolerance = (level: number): number => [0.16, 0.13, 0.11][Math.max(0, Math.min(MAX_LEVEL, Math.round(level)))] as number;
@@ -200,5 +176,5 @@ export const DIGITS: readonly Letter[] = ([
 /** Digits for a round: new ones from the child's level mixed with review of lower ones. */
 export function makeDigitRound(rng: Rng, level: number): Letter[] {
   const l = Math.max(0, Math.min(MAX_LEVEL, Math.round(level)));
-  return mixRound(rng, DIGITS.filter((x) => x.level <= l), l, 'digits');
+  return rotate(rng, DIGITS.filter((x) => x.level <= l), LETTER_ROUND, 'digits', (x) => x.ch, (ch) => `digit:${ch}`);
 }

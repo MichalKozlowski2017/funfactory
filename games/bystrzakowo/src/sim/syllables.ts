@@ -6,7 +6,7 @@
 import type { Rng } from '@funfactory/core';
 import { ITEMS } from './catalog.ts';
 import { lang, type Lang } from './lang.ts';
-import { mixRound } from './letters.ts';
+import { rotate } from './rotation.ts';
 import { MAX_LEVEL } from './puzzles.ts';
 import { WORDS_BY_LANG } from './locales/syllables.ts';
 
@@ -30,7 +30,7 @@ export const WORDS: readonly Word[] = WORDS_BY_LANG.pl;
 export function makeSyllableRound(rng: Rng, level: number): Word[] {
   const l = Math.max(0, Math.min(MAX_LEVEL, Math.round(level)));
   const have = new Set(ITEMS.map((i) => i.id));
-  return mixRound(rng, wordsOf().filter((w) => w.level <= l && have.has(w.item)), l, 'syllables', SYLLABLE_ROUND, (w) => w.item);
+  return rotate(rng, wordsOf().filter((w) => w.level <= l && have.has(w.item)), SYLLABLE_ROUND, `syllables:${lang()}`, (w) => w.item);
 }
 
 /**

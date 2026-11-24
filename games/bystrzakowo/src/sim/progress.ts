@@ -4,6 +4,7 @@ import { ACTIVITIES, type Activity } from './realms.ts';
 import type { Journal } from './journal.ts';
 import type { Lang } from './lang.ts';
 import type { Picture } from './stickers.ts';
+import type { Rotation } from './rotation.ts';
 import { IDS_VERSION } from './migrate.ts';
 
 /** The child's saved progress. */
@@ -46,6 +47,8 @@ export interface Progress {
   music: boolean;
   /** Play time limit in minutes (0 = no limit). */
   limit?: number;
+  /** Rotation memory of letters, digits and syllable words (sim/rotation.ts). */
+  rotation?: Record<string, Rotation>;
   /** Id format version (sim/migrate.ts); missing = old Polish ids. */
   ids?: number;
 }
