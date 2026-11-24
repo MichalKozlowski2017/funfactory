@@ -73,6 +73,10 @@ export abstract class RoundScene extends Scene {
   protected roundItems(): string[] {
     return [];
   }
+  /** Inne nagrania tej rundy do wczytania na start i zwolnienia po niej (np. „A jak arbuz”). */
+  protected roundVoices(): string[] {
+    return [];
+  }
   /**
    * Umiejętności sprawdzane w bieżącym zadaniu (np. „liczba:5”, „kolor:zielony”) do dziennika rodzica.
    * Wynik: dobrze, jeśli zadanie poszło bez pomyłki.
@@ -131,7 +135,7 @@ export abstract class RoundScene extends Scene {
     this.art = await loadArt();
     await this.prepare();
     // Nazwy obiektów z tej rundy: zdekodowane przed startem (najwyżej 3 s czekania), zwalniane przy wyjściu.
-    this.voices = itemVoices(this.roundItems());
+    this.voices = [...itemVoices(this.roundItems()), ...this.roundVoices()];
     await Promise.race([this.game.sound.load(this.voices), new Promise((r) => setTimeout(r, 3000))]);
     this.bg = new Sprite(this.art.playBg[realmOf(this.kind).id]);
     this.guideSprite = new Sprite({ texture: this.guide === 'lusia' ? this.art.lusia : this.art.bazyl, anchor: { x: 0.5, y: 1 } });

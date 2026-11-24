@@ -1502,146 +1502,6 @@
    "seed": 2
   },
   {
-   "name": "lusia-litera-i",
-   "text": "I wie Igel.",
-   "voice": "voices/alt",
-   "engine": "chatterbox",
-   "seed": 2
-  },
-  {
-   "name": "lusia-litera-l",
-   "text": "L wie Löwe.",
-   "voice": "voices/alt",
-   "engine": "chatterbox",
-   "seed": 6
-  },
-  {
-   "name": "lusia-litera-t",
-   "text": "T wie Traktor.",
-   "voice": "voices/alt",
-   "engine": "chatterbox",
-   "seed": 5
-  },
-  {
-   "name": "lusia-litera-o",
-   "text": "O wie Orange.",
-   "voice": "voices/alt",
-   "engine": "chatterbox",
-   "seed": 2
-  },
-  {
-   "name": "lusia-litera-a",
-   "text": "A wie Affe.",
-   "voice": "voices/alt",
-   "engine": "chatterbox",
-   "seed": 8
-  },
-  {
-   "name": "lusia-litera-m",
-   "text": "M wie Maus.",
-   "voice": "voices/alt",
-   "engine": "chatterbox",
-   "seed": 1
-  },
-  {
-   "name": "lusia-litera-w",
-   "text": "W wie Wal.",
-   "voice": "voices/alt",
-   "engine": "chatterbox",
-   "seed": 3
-  },
-  {
-   "name": "lusia-litera-k",
-   "text": "K wie Katze.",
-   "voice": "voices/alt",
-   "engine": "chatterbox",
-   "seed": 1
-  },
-  {
-   "name": "lusia-litera-p",
-   "text": "P wie Pinguin.",
-   "voice": "voices/alt",
-   "engine": "chatterbox",
-   "seed": 5
-  },
-  {
-   "name": "lusia-litera-d",
-   "text": "D wie Dinosaurier.",
-   "voice": "voices/alt",
-   "engine": "chatterbox",
-   "seed": 2
-  },
-  {
-   "name": "lusia-litera-b",
-   "text": "B wie Ball.",
-   "voice": "voices/alt",
-   "engine": "chatterbox",
-   "seed": 3
-  },
-  {
-   "name": "lusia-litera-s",
-   "text": "S wie Sonne.",
-   "voice": "voices/alt",
-   "engine": "chatterbox",
-   "seed": 8
-  },
-  {
-   "name": "lusia-litera-e",
-   "text": "E wie Elefant.",
-   "voice": "voices/alt",
-   "engine": "chatterbox",
-   "seed": 2
-  },
-  {
-   "name": "lusia-litera-f",
-   "text": "F wie Fisch.",
-   "voice": "voices/alt",
-   "engine": "chatterbox",
-   "seed": 4
-  },
-  {
-   "name": "lusia-litera-h",
-   "text": "H wie Hund.",
-   "voice": "voices/alt",
-   "engine": "chatterbox",
-   "seed": 1
-  },
-  {
-   "name": "lusia-litera-n",
-   "text": "N wie Nashorn.",
-   "voice": "voices/alt",
-   "engine": "chatterbox",
-   "seed": 2
-  },
-  {
-   "name": "lusia-litera-z",
-   "text": "Z wie Zebra.",
-   "voice": "voices/alt",
-   "engine": "chatterbox",
-   "seed": 3
-  },
-  {
-   "name": "lusia-litera-r",
-   "text": "R wie Rakete.",
-   "voice": "voices/alt",
-   "engine": "chatterbox",
-   "seed": 2
-  },
-  {
-   "name": "lusia-litera-g",
-   "text": "Ge wie Gans.",
-   "voice": "voices/alt",
-   "engine": "chatterbox",
-   "seed": 2
-  },
-  {
-   "name": "lusia-litera-j",
-   "text": "Jott wie Jacke.",
-   "voice": "voices/alt",
-   "engine": "chatterbox",
-   "seed": 2
-  },
-  {
    "name": "lusia-labirynt-kurczak",
    "text": "Bring das Küken zu seiner Mama.",
    "voice": "voices/alt",
@@ -4048,6 +3908,503 @@
    "engine": "chatterbox",
    "voice": "voices/prezenter",
    "seed": 1
+  },
+  {
+   "name": "lusia-litera-a-malpa",
+   "text": "A... wie Affe.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
+  },
+  {
+   "name": "lusia-litera-a-jablko",
+   "text": "A... wie Apfel.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-litera-a-auto",
+   "text": "A... wie Auto.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
+  },
+  {
+   "name": "lusia-litera-b-banan",
+   "text": "Be... wie Banane.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 7
+  },
+  {
+   "name": "lusia-litera-b-pszczola",
+   "text": "Be... wie Biene.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 4
+  },
+  {
+   "name": "lusia-litera-b-pilka",
+   "text": "Be... wie Ball.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 4
+  },
+  {
+   "name": "lusia-litera-c-klaun",
+   "text": "Ce... wie Clown.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-litera-c-komputer",
+   "text": "Ce... wie Computer.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 7
+  },
+  {
+   "name": "lusia-litera-c-wiolonczela",
+   "text": "Ce... wie Cello.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 8
+  },
+  {
+   "name": "lusia-litera-d-dinozaur",
+   "text": "De... wie Dinosaurier.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-litera-d-delfin",
+   "text": "De... wie Delfin.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 4
+  },
+  {
+   "name": "lusia-litera-d-latawiec",
+   "text": "De... wie Drachen.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 6
+  },
+  {
+   "name": "lusia-litera-e-slon",
+   "text": "E... wie Elefant.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
+  },
+  {
+   "name": "lusia-litera-e-kaczka",
+   "text": "E... wie Ente.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
+  },
+  {
+   "name": "lusia-litera-e-sowa",
+   "text": "E... wie Eule.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
+  },
+  {
+   "name": "lusia-litera-f-ryba",
+   "text": "Eff... wie Fisch.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-litera-f-zaba",
+   "text": "Eff... wie Frosch.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
+  },
+  {
+   "name": "lusia-litera-f-lis",
+   "text": "Eff... wie Fuchs.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
+  },
+  {
+   "name": "lusia-litera-g-ges",
+   "text": "Ge... wie Gans.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
+  },
+  {
+   "name": "lusia-litera-g-ukulele",
+   "text": "Ge... wie Gitarre.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
+  },
+  {
+   "name": "lusia-litera-h-pies",
+   "text": "Ha... wie Hund.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 4
+  },
+  {
+   "name": "lusia-litera-h-zajac",
+   "text": "Ha... wie Hase.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-litera-h-helikopter",
+   "text": "Ha... wie Hubschrauber.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 5
+  },
+  {
+   "name": "lusia-litera-i-jez",
+   "text": "I... wie Igel.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
+  },
+  {
+   "name": "lusia-litera-i-igloo",
+   "text": "I... wie Iglu.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-litera-i-wyspa",
+   "text": "I... wie Insel.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
+  },
+  {
+   "name": "lusia-litera-j-kurtka",
+   "text": "Jott... wie Jacke.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-litera-j-jogurt",
+   "text": "Jott... wie Joghurt.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 4
+  },
+  {
+   "name": "lusia-litera-j-jojo",
+   "text": "Jott... wie Jojo.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-litera-k-kot",
+   "text": "Ka... wie Katze.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
+  },
+  {
+   "name": "lusia-litera-k-krowa",
+   "text": "Ka... wie Kuh.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
+  },
+  {
+   "name": "lusia-litera-k-osmiornica",
+   "text": "Ka... wie Krake.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 4
+  },
+  {
+   "name": "lusia-litera-l-lew",
+   "text": "El... wie Löwe.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
+  },
+  {
+   "name": "lusia-litera-l-lyzka",
+   "text": "El... wie Löffel.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 7
+  },
+  {
+   "name": "lusia-litera-l-balonik",
+   "text": "El... wie Luftballon.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-litera-m-mysz",
+   "text": "Em... wie Maus.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-litera-m-ksiezyc",
+   "text": "Em... wie Mond.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-litera-m-biedronka",
+   "text": "Em... wie Marienkäfer.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
+  },
+  {
+   "name": "lusia-litera-n-nosorozec",
+   "text": "En... wie Nashorn.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-litera-n-hipopotam",
+   "text": "En... wie Nilpferd.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-litera-n-gniazdo",
+   "text": "En... wie Nest.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
+  },
+  {
+   "name": "lusia-litera-o-pomarancza",
+   "text": "O... wie Orange.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
+  },
+  {
+   "name": "lusia-litera-o-ucho",
+   "text": "O... wie Ohr.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-litera-o-piekarnik",
+   "text": "O... wie Ofen.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 4
+  },
+  {
+   "name": "lusia-litera-p-kon",
+   "text": "Pe... wie Pferd.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 4
+  },
+  {
+   "name": "lusia-litera-p-pingwin",
+   "text": "Pe... wie Pinguin.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-litera-p-grzyb",
+   "text": "Pe... wie Pilz.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-litera-q-meduza",
+   "text": "Ku... wie Qualle.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 7
+  },
+  {
+   "name": "lusia-litera-r-rakieta",
+   "text": "Er... wie Rakete.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-litera-r-robot",
+   "text": "Er... wie Roboter.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 7
+  },
+  {
+   "name": "lusia-litera-s-slonce",
+   "text": "Es... wie Sonne.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
+  },
+  {
+   "name": "lusia-litera-s-skarpetka",
+   "text": "Es... wie Socke.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
+  },
+  {
+   "name": "lusia-litera-s-konikmorski",
+   "text": "Es... wie Seepferdchen.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 4
+  },
+  {
+   "name": "lusia-litera-t-pomidor",
+   "text": "Te... wie Tomate.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 6
+  },
+  {
+   "name": "lusia-litera-t-traktor",
+   "text": "Te... wie Traktor.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 5
+  },
+  {
+   "name": "lusia-litera-t-bebenek",
+   "text": "Te... wie Trommel.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-litera-u-zegar",
+   "text": "U... wie Uhr.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-litera-u-lodz-podwodna",
+   "text": "U... wie U-Boot.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
+  },
+  {
+   "name": "lusia-litera-u-ufo",
+   "text": "U... wie Ufo.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
+  },
+  {
+   "name": "lusia-litera-v-ptak",
+   "text": "Fau... wie Vogel.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
+  },
+  {
+   "name": "lusia-litera-v-wazon",
+   "text": "Fau... wie Vase.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 7
+  },
+  {
+   "name": "lusia-litera-v-wulkan",
+   "text": "Fau... wie Vulkan.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 7
+  },
+  {
+   "name": "lusia-litera-w-wieloryb",
+   "text": "We... wie Wal.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 4
+  },
+  {
+   "name": "lusia-litera-w-chmurka",
+   "text": "We... wie Wolke.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-litera-w-arbuz",
+   "text": "We... wie Wassermelone.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
+  },
+  {
+   "name": "lusia-litera-y-jacht",
+   "text": "Ypsilon... wie Yacht.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 4
+  },
+  {
+   "name": "lusia-litera-y-jak",
+   "text": "Ypsilon... wie Yak.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
+  },
+  {
+   "name": "lusia-litera-z-zebra",
+   "text": "Zett... wie Zebra.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-litera-z-cytryna",
+   "text": "Zett... wie Zitrone.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-litera-z-pociag",
+   "text": "Zett... wie Zug.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
+  },
+  {
+   "name": "lusia-litera-q-kaczuszka",
+   "text": "Ku wie Quietscheente.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
   }
  ]
 }

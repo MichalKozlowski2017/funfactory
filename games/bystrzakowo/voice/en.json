@@ -1093,102 +1093,102 @@
    "voice": "voices/lusia-en-calm"
   },
   {
-   "name": "lusia-litera-l",
+   "name": "lusia-litera-l-lew",
    "text": "L is for lion.",
    "voice": "voices/lusia-en-calm"
   },
   {
-   "name": "lusia-litera-t",
+   "name": "lusia-litera-t-traktor",
    "text": "T is for tractor.",
    "voice": "voices/lusia-en-calm"
   },
   {
-   "name": "lusia-litera-o",
+   "name": "lusia-litera-o-sowa",
    "text": "O is for owl.",
    "voice": "voices/lusia-en-calm"
   },
   {
-   "name": "lusia-litera-a",
+   "name": "lusia-litera-a-jablko",
    "text": "A is for apple.",
    "voice": "voices/lusia-en-calm"
   },
   {
-   "name": "lusia-litera-m",
+   "name": "lusia-litera-m-malpa",
    "text": "M is for monkey.",
    "voice": "voices/lusia-en-calm"
   },
   {
-   "name": "lusia-litera-w",
+   "name": "lusia-litera-w-wieloryb",
    "text": "W is for whale.",
    "voice": "voices/lusia-en-calm"
   },
   {
-   "name": "lusia-litera-k",
+   "name": "lusia-litera-k-latawiec",
    "text": "K is for kite.",
    "voice": "voices/lusia-en-calm"
   },
   {
-   "name": "lusia-litera-p",
+   "name": "lusia-litera-p-swinka",
    "text": "P is for pig.",
    "voice": "voices/lusia-en-calm"
   },
   {
-   "name": "lusia-litera-d",
+   "name": "lusia-litera-d-pies",
    "text": "D is for dog.",
    "voice": "voices/lusia-en-calm"
   },
   {
-   "name": "lusia-litera-b",
+   "name": "lusia-litera-b-pilka",
    "text": "B is for ball.",
    "voice": "voices/lusia-en-calm"
   },
   {
-   "name": "lusia-litera-s",
+   "name": "lusia-litera-s-slonce",
    "text": "S is for sun.",
    "voice": "voices/lusia-en-calm"
   },
   {
-   "name": "lusia-litera-e",
+   "name": "lusia-litera-e-slon",
    "text": "E is for elephant.",
    "voice": "voices/lusia-en-calm"
   },
   {
-   "name": "lusia-litera-f",
+   "name": "lusia-litera-f-ryba",
    "text": "F is for fish.",
    "voice": "voices/lusia-en-calm"
   },
   {
-   "name": "lusia-litera-h",
+   "name": "lusia-litera-h-kon",
    "text": "H is for horse.",
    "voice": "voices/lusia-en-calm"
   },
   {
-   "name": "lusia-litera-z",
+   "name": "lusia-litera-z-zebra",
    "text": "Z is for zebra.",
    "voice": "voices/lusia-en-calm"
   },
   {
-   "name": "lusia-litera-u",
+   "name": "lusia-litera-u-parasol",
    "text": "U is for umbrella.",
    "voice": "voices/lusia-en-calm"
   },
   {
-   "name": "lusia-litera-c",
+   "name": "lusia-litera-c-kot",
    "text": "C is for cat.",
    "voice": "voices/lusia-en-calm"
   },
   {
-   "name": "lusia-litera-r",
+   "name": "lusia-litera-r-rakieta",
    "text": "R is for rocket.",
    "voice": "voices/lusia-en-calm"
   },
   {
-   "name": "lusia-litera-g",
+   "name": "lusia-litera-g-koza",
    "text": "G is for goat.",
    "voice": "voices/lusia-en-calm"
   },
   {
-   "name": "lusia-litera-j",
+   "name": "lusia-litera-j-meduza",
    "text": "J is for jellyfish.",
    "voice": "voices/lusia-en-calm"
   },
@@ -2901,6 +2901,266 @@
    "name": "bazyl-mama-zolwik",
    "text": "Where is the baby turtle's mommy?",
    "voice": "voices/bazyl-en-calm"
+  },
+  {
+   "name": "lusia-litera-a-samolot",
+   "text": "A is for airplane.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-litera-b-niedzwiedz",
+   "text": "B is for bear.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-litera-b-motyl",
+   "text": "B is for butterfly.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-litera-c-krowa",
+   "text": "C is for cow.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-litera-c-marchewka",
+   "text": "C is for carrot.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-litera-d-kaczka",
+   "text": "D is for duck.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-litera-d-delfin",
+   "text": "D is for dolphin.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-litera-e-jajko",
+   "text": "E is for egg.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-litera-e-emu",
+   "text": "E is for emu.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-litera-f-zaba",
+   "text": "F is for frog.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-litera-f-lis",
+   "text": "F is for fox.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-litera-g-zyrafa",
+   "text": "G is for giraffe.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-litera-g-winogrona",
+   "text": "G is for grapes.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-litera-h-jez",
+   "text": "H is for hedgehog.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-litera-h-helikopter",
+   "text": "H is for helicopter.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-litera-i-igloo",
+   "text": "I is for igloo.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-litera-i-lody",
+   "text": "I is for ice cream.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-litera-i-iguana",
+   "text": "I is for iguana.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-litera-j-kurtka",
+   "text": "J is for jacket.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-litera-j-dzem",
+   "text": "J is for jam.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-litera-k-kotek",
+   "text": "K is for kitten.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-litera-k-czajnik",
+   "text": "K is for kettle.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-litera-l-cytryna",
+   "text": "L is for lemon.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-litera-l-biedronka",
+   "text": "L is for ladybug.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-litera-m-mysz",
+   "text": "M is for mouse.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-litera-m-ksiezyc",
+   "text": "M is for moon.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-litera-n-gniazdo",
+   "text": "N is for nest.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-litera-n-orzech",
+   "text": "N is for nut.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-litera-o-osmiornica",
+   "text": "O is for octopus.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-litera-o-pomarancza",
+   "text": "O is for orange.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-litera-p-pingwin",
+   "text": "P is for penguin.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-litera-p-gruszka",
+   "text": "P is for pear.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-litera-q-krolowa",
+   "text": "Q is for queen.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-litera-q-koldra",
+   "text": "Q is for quilt.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-litera-r-nosorozec",
+   "text": "R is for rhino.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-litera-r-tecza",
+   "text": "R is for rainbow.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-litera-s-slimak",
+   "text": "S is for snail.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-litera-s-truskawka",
+   "text": "S is for strawberry.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-litera-t-pociag",
+   "text": "T is for train.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-litera-u-jednorozec",
+   "text": "U is for unicorn.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-litera-u-ufo",
+   "text": "U is for UFO.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-litera-v-skrzypce",
+   "text": "V is for violin.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-litera-v-van",
+   "text": "V is for van.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-litera-v-wazon",
+   "text": "V is for vase.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-litera-w-arbuz",
+   "text": "W is for watermelon.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-litera-w-mors",
+   "text": "W is for walrus.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-litera-y-jacht",
+   "text": "Y is for yacht.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-litera-y-jak",
+   "text": "Y is for yak.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-litera-z-cukinia",
+   "text": "Z is for zucchini.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-litera-t-zolw",
+   "text": "T is for turtle.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-litera-y-jojo",
+   "text": "Y is for yo-yo.",
+   "voice": "voices/lusia-en-calm"
+  },
+  {
+   "name": "lusia-litera-a-mrowka",
+   "text": "A is for ant.",
+   "voice": "voices/lusia-en-calm"
   }
  ]
 }

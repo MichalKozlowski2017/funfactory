@@ -1,0 +1,16 @@
+{
+  "workflow": "flux2-sprite.json",
+  "PROMPT": "a cute green iguana lizard, single object, centered, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, bright cheerful pastel colors, cute and friendly, plain light gray background",
+  "NEGATIVE": "",
+  "SEED": 402,
+  "WIDTH": 1024,
+  "HEIGHT": 1024,
+  "PREFIX": "iguana",
+  "STEPS": 20,
+  "GUIDANCE": 4,
+  "BPM": 100,
+  "DURATION": 60,
+  "KEY": "A minor",
+  "LYRICS": "[Instrumental]",
+  "created": "2026-11-24T12:28:58.724Z"
+}

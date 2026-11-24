@@ -136,6 +136,32 @@ Decyzje właściciela:
 - **Strefa rodzica na tablecie** (krótszy bok ekranu od 600 pt) ma skalę 0,72: mniejsze przyciski i teksty, więcej treści na ekranie. Ustawienia na szerokim panelu są w dwóch kolumnach.
 - **Zrzuty na symulatorze:** build z `VITE_TOUR=1` (`src/tour.ts`) sam przechodzi po ekranach. Zrzuty robi `xcrun simctl io <udid> screenshot`. Pionowe zrzuty w przeglądarce: `pnpm shot … --size 820x1180@1`.
 
+## Pisze litery: pełne alfabety (2026-11-24)
+
+Decyzje właściciela:
+- wszystkie litery alfabetu w każdym języku;
+- 3 przykłady na literę;
+- litery problematyczne pomijamy w każdym języku: takie, od których nie zaczyna się żadne słowo dla przedszkolaka (po polsku Ą, Ę, Ń, Y, po niemiecku Ü, ß), i takie, dla których nie ma dobrych przykładów (po polsku Ć, Ó, Ź; po angielsku X; po niemiecku Ä, Ö, X; po hiszpańsku Q, W, X);
+- bez Q, V, X po polsku.
+
+Alfabety:
+
+| Język | Liter | Mniej niż 3 przykłady |
+|---|---|---|
+| polski | 25 | I |
+| angielski | 25 | N, Q, Z |
+| niemiecki | 25 | Q, Y |
+| hiszpański | 24 (z Ñ) | Ñ, U |
+
+- **Kształty:** `LETTERS` w `sim/letters.ts`. Nowe są Ł, V, Y, Q oraz litery ze znakiem nad sobą: Ś (kreska), Ż (kropka) i Ñ (falka). Podstawa litery jest ściśnięta w dół pola (`accented`), znak rysuje się na końcu.
+- **Przykłady:** `LETTER_EXAMPLES[język][litera] = [obiekt, słowo][]`, w sumie 289, co najmniej 2 na literę. Kolejna runda z tą samą literą pokazuje następny przykład.
+- **Obrazki tylko do liter:** `sim/letter-pics.ts` (42 z Fluxa, `gen-art.ts --litery`, 2 warianty, wybrany w `scripts/assets.sh`, pliki `public/art/litery/`). Nie trafiają do innych zagadek ani naklejek. Odrzucone po wygenerowaniu: igła, zamek błyskawiczny, nos (nieczytelne).
+- **Playtest:** `?litery=ŁŚŻ` (tylko dev) wymusza te litery w rundzie.
+- **Nagrania:** `litera-<litera>-<obiekt>`. Polskie znaki w nazwach są zamienione: ł→lw, ś→si, ż→zh, ñ→ny.
+  - Wczytują się na rundę, a nie przy starcie, bo jest ich około 300.
+  - Teksty i lista braków: `scripts/letters-voice.ts`. Po polsku lektor czyta nazwę litery („Eś... jak ślimak.”), w innych językach „S is for…”, „Ku wie Qualle.”, „Eñe de ñandú.”.
+  - Silniki: Chatterbox z próbką Lusi (pl, de, es), VoxCPM `lusia-en-calm` (en).
+
 ## Dla rodzica
 
 - **Strefa rodzica za bramką:** prosta matematyka albo „przytrzymaj trzema palcami”. Tam są ustawienia (głośność, lektor, wybór domków), postępy dziecka i zakup.

@@ -1,0 +1,273 @@
+{
+ "voice": "voices\\alt.wav",
+ "exag": 0.3,
+ "cfg": 0.3,
+ "stretch": 0.12,
+ "lines": [
+  {
+   "name": "lusia-litera-a-jablko",
+   "text": "A wie Apfel.",
+   "lang": "de"
+  },
+  {
+   "name": "lusia-litera-a-auto",
+   "text": "A wie Auto.",
+   "lang": "de"
+  },
+  {
+   "name": "lusia-litera-b-banan",
+   "text": "B wie Banane.",
+   "lang": "de"
+  },
+  {
+   "name": "lusia-litera-b-pszczola",
+   "text": "B wie Biene.",
+   "lang": "de"
+  },
+  {
+   "name": "lusia-litera-c-klaun",
+   "text": "Ce wie Clown.",
+   "lang": "de"
+  },
+  {
+   "name": "lusia-litera-c-komputer",
+   "text": "Ce wie Computer.",
+   "lang": "de"
+  },
+  {
+   "name": "lusia-litera-c-wiolonczela",
+   "text": "Ce wie Cello.",
+   "lang": "de"
+  },
+  {
+   "name": "lusia-litera-d-delfin",
+   "text": "D wie Delfin.",
+   "lang": "de"
+  },
+  {
+   "name": "lusia-litera-d-latawiec",
+   "text": "D wie Drachen.",
+   "lang": "de"
+  },
+  {
+   "name": "lusia-litera-e-kaczka",
+   "text": "E wie Ente.",
+   "lang": "de"
+  },
+  {
+   "name": "lusia-litera-e-sowa",
+   "text": "E wie Eule.",
+   "lang": "de"
+  },
+  {
+   "name": "lusia-litera-f-zaba",
+   "text": "F wie Frosch.",
+   "lang": "de"
+  },
+  {
+   "name": "lusia-litera-f-lis",
+   "text": "F wie Fuchs.",
+   "lang": "de"
+  },
+  {
+   "name": "lusia-litera-g-zyrafa",
+   "text": "Ge wie Giraffe.",
+   "lang": "de"
+  },
+  {
+   "name": "lusia-litera-g-ukulele",
+   "text": "Ge wie Gitarre.",
+   "lang": "de"
+  },
+  {
+   "name": "lusia-litera-h-zajac",
+   "text": "H wie Hase.",
+   "lang": "de"
+  },
+  {
+   "name": "lusia-litera-h-helikopter",
+   "text": "H wie Hubschrauber.",
+   "lang": "de"
+  },
+  {
+   "name": "lusia-litera-i-igloo",
+   "text": "I wie Iglu.",
+   "lang": "de"
+  },
+  {
+   "name": "lusia-litera-i-wyspa",
+   "text": "I wie Insel.",
+   "lang": "de"
+  },
+  {
+   "name": "lusia-litera-j-jogurt",
+   "text": "Jott wie Joghurt.",
+   "lang": "de"
+  },
+  {
+   "name": "lusia-litera-j-jojo",
+   "text": "Jott wie Jojo.",
+   "lang": "de"
+  },
+  {
+   "name": "lusia-litera-k-krowa",
+   "text": "K wie Kuh.",
+   "lang": "de"
+  },
+  {
+   "name": "lusia-litera-k-osmiornica",
+   "text": "K wie Krake.",
+   "lang": "de"
+  },
+  {
+   "name": "lusia-litera-l-lyzka",
+   "text": "L wie Löffel.",
+   "lang": "de"
+  },
+  {
+   "name": "lusia-litera-l-balonik",
+   "text": "L wie Luftballon.",
+   "lang": "de"
+  },
+  {
+   "name": "lusia-litera-m-ksiezyc",
+   "text": "M wie Mond.",
+   "lang": "de"
+  },
+  {
+   "name": "lusia-litera-m-biedronka",
+   "text": "M wie Marienkäfer.",
+   "lang": "de"
+  },
+  {
+   "name": "lusia-litera-n-hipopotam",
+   "text": "N wie Nilpferd.",
+   "lang": "de"
+  },
+  {
+   "name": "lusia-litera-n-gniazdo",
+   "text": "N wie Nest.",
+   "lang": "de"
+  },
+  {
+   "name": "lusia-litera-o-ucho",
+   "text": "O wie Ohr.",
+   "lang": "de"
+  },
+  {
+   "name": "lusia-litera-o-piekarnik",
+   "text": "O wie Ofen.",
+   "lang": "de"
+  },
+  {
+   "name": "lusia-litera-p-kon",
+   "text": "P wie Pferd.",
+   "lang": "de"
+  },
+  {
+   "name": "lusia-litera-p-grzyb",
+   "text": "P wie Pilz.",
+   "lang": "de"
+  },
+  {
+   "name": "lusia-litera-q-meduza",
+   "text": "Ku wie Qualle.",
+   "lang": "de"
+  },
+  {
+   "name": "lusia-litera-q-kaczuszka",
+   "text": "Ku wie Quietscheente.",
+   "lang": "de"
+  },
+  {
+   "name": "lusia-litera-r-sarna",
+   "text": "R wie Reh.",
+   "lang": "de"
+  },
+  {
+   "name": "lusia-litera-r-robot",
+   "text": "R wie Roboter.",
+   "lang": "de"
+  },
+  {
+   "name": "lusia-litera-s-skarpetka",
+   "text": "S wie Socke.",
+   "lang": "de"
+  },
+  {
+   "name": "lusia-litera-s-konikmorski",
+   "text": "S wie Seepferdchen.",
+   "lang": "de"
+  },
+  {
+   "name": "lusia-litera-t-pomidor",
+   "text": "T wie Tomate.",
+   "lang": "de"
+  },
+  {
+   "name": "lusia-litera-t-bebenek",
+   "text": "T wie Trommel.",
+   "lang": "de"
+  },
+  {
+   "name": "lusia-litera-u-zegar",
+   "text": "U wie Uhr.",
+   "lang": "de"
+  },
+  {
+   "name": "lusia-litera-u-lodz-podwodna",
+   "text": "U wie U-Boot.",
+   "lang": "de"
+  },
+  {
+   "name": "lusia-litera-u-ufo",
+   "text": "U wie Ufo.",
+   "lang": "de"
+  },
+  {
+   "name": "lusia-litera-v-ptak",
+   "text": "Fau wie Vogel.",
+   "lang": "de"
+  },
+  {
+   "name": "lusia-litera-v-wazon",
+   "text": "Fau wie Vase.",
+   "lang": "de"
+  },
+  {
+   "name": "lusia-litera-v-wulkan",
+   "text": "Fau wie Vulkan.",
+   "lang": "de"
+  },
+  {
+   "name": "lusia-litera-w-chmurka",
+   "text": "W wie Wolke.",
+   "lang": "de"
+  },
+  {
+   "name": "lusia-litera-w-arbuz",
+   "text": "W wie Wassermelone.",
+   "lang": "de"
+  },
+  {
+   "name": "lusia-litera-y-jacht",
+   "text": "Ypsilon wie Yacht.",
+   "lang": "de"
+  },
+  {
+   "name": "lusia-litera-y-jak",
+   "text": "Ypsilon wie Yak.",
+   "lang": "de"
+  },
+  {
+   "name": "lusia-litera-z-cytryna",
+   "text": "Z wie Zitrone.",
+   "lang": "de"
+  },
+  {
+   "name": "lusia-litera-z-pociag",
+   "text": "Z wie Zug.",
+   "lang": "de"
+  }
+ ]
+}

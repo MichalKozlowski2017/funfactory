@@ -147,8 +147,9 @@ export function registerVoice(game: Game): void {
   for (const guide of ['lusia', 'bazyl'] as const)
     for (const line of VOICE[guide]) game.sound.add(`${guide}-${line}`, url(`${dir}/${guide}/${line}.m4a`));
   game.sound.add('muzyka', url('audio/muzyka.m4a'));
-  // Na starcie tylko polecenia i reakcje; nazwy obiektów (większość nagrań) dekoduje runda, która ich potrzebuje.
-  void game.sound.load([...VOICE.lusia.map((l) => `lusia-${l}`), ...VOICE.bazyl.map((l) => `bazyl-${l}`), 'muzyka'].filter((n) => !n.includes('-item-')));
+  // Na starcie tylko polecenia i reakcje; nazwy obiektów i zdania o literach („A jak arbuz”, kilkaset nagrań)
+  // dekoduje runda, która ich potrzebuje.
+  void game.sound.load([...VOICE.lusia.map((l) => `lusia-${l}`), ...VOICE.bazyl.map((l) => `bazyl-${l}`), 'muzyka'].filter((n) => !n.includes('-item-') && !n.includes('-litera-')));
 }
 
 /** Nagrania nazw obiektów (oba głosy) do wczytania na rundę i zwolnienia po niej. */

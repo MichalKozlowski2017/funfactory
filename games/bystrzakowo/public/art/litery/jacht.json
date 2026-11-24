@@ -1,0 +1,16 @@
+{
+  "workflow": "flux2-sprite.json",
+  "PROMPT": "a small white sailing yacht with a blue sail, single object, centered, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, bright cheerful pastel colors, cute and friendly, plain light gray background",
+  "NEGATIVE": "",
+  "SEED": 401,
+  "WIDTH": 1024,
+  "HEIGHT": 1024,
+  "PREFIX": "jacht",
+  "STEPS": 20,
+  "GUIDANCE": 4,
+  "BPM": 100,
+  "DURATION": 60,
+  "KEY": "A minor",
+  "LYRICS": "[Instrumental]",
+  "created": "2026-11-24T12:55:46.653Z"
+}

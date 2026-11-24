@@ -6,20 +6,26 @@
 import type { Rng } from '@funfactory/core';
 import { lang, type Lang } from './lang.ts';
 import { ITEMS } from './catalog.ts';
+import { LETTER_PIC_IDS } from './letter-pics.ts';
 import { MAX_LEVEL } from './puzzles.ts';
 
 export const LETTER_ROUND = 3;
 
 type P = [number, number];
 
-export interface Letter {
+/** Kształt litery (cyfry): kreski w kolejności pisania i poziom, od którego się pojawia. */
+export interface Glyph {
   ch: string;
-  /** Obiekt z katalogu na tę literę (pokazywany po narysowaniu). */
-  item: string;
   /** Kreski w kolejności pisania. */
   strokes: P[][];
   /** Poziom, od którego litera się pojawia (proste najpierw). */
   level: number;
+}
+
+/** Litera w rundzie: kształt i przykład („A jak arbuz”): obiekt (obrazek po narysowaniu) i słowo lektora. */
+export interface Letter extends Glyph {
+  item: string;
+  word: string;
 }
 
 /** Łuk elipsy (środek, półosie, kąty w stopniach; 0° = prawo, 90° = dół). */
@@ -30,31 +36,58 @@ function arc(cx: number, cy: number, rx: number, ry: number, from: number, to: n
   });
 }
 
-export const LETTERS: readonly Letter[] = [
-  { ch: 'I', item: 'indyk', level: 0, strokes: [[[0.5, 0], [0.5, 1]]] },
-  { ch: 'L', item: 'lew', level: 0, strokes: [[[0.28, 0], [0.28, 1], [0.78, 1]]] },
-  { ch: 'T', item: 'traktor', level: 0, strokes: [[[0.12, 0], [0.88, 0]], [[0.5, 0], [0.5, 1]]] },
-  { ch: 'O', item: 'owca', level: 0, strokes: [arc(0.5, 0.5, 0.38, 0.5, -90, -450, 28)] }, // od góry w lewo, jak w przedszkolu (i jak C, G)
-  { ch: 'A', item: 'auto', level: 1, strokes: [[[0.5, 0], [0.12, 1]], [[0.5, 0], [0.88, 1]], [[0.28, 0.62], [0.72, 0.62]]] },
-  { ch: 'M', item: 'motyl', level: 1, strokes: [[[0.12, 1], [0.12, 0], [0.5, 0.6], [0.88, 0], [0.88, 1]]] },
-  { ch: 'W', item: 'wieloryb', level: 1, strokes: [[[0.04, 0], [0.27, 1], [0.5, 0.35], [0.73, 1], [0.96, 0]]] },
-  { ch: 'K', item: 'kot', level: 1, strokes: [[[0.25, 0], [0.25, 1]], [[0.82, 0], [0.25, 0.56], [0.82, 1]]] },
-  { ch: 'P', item: 'pies', level: 2, strokes: [[[0.25, 1], [0.25, 0]], [[0.25, 0], ...arc(0.5, 0.25, 0.3, 0.25, -90, 90, 14).slice(0), [0.25, 0.5]]] },
-  { ch: 'D', item: 'dinozaur', level: 2, strokes: [[[0.25, 0], [0.25, 1]], [[0.25, 0], ...arc(0.42, 0.5, 0.4, 0.5, -90, 90, 20), [0.25, 1]]] },
-  { ch: 'B', item: 'banan', level: 2, strokes: [[[0.25, 0], [0.25, 1]], [[0.25, 0], ...arc(0.47, 0.24, 0.26, 0.24, -90, 90, 12), ...arc(0.5, 0.74, 0.32, 0.26, -90, 90, 12), [0.25, 1]]] },
-  { ch: 'S', item: 'slon', level: 2, strokes: [[...arc(0.5, 0.25, 0.3, 0.25, -15, -270, 16), ...arc(0.5, 0.75, 0.3, 0.25, -90, 165, 16).slice(1)]] },
-  // Dalsze litery (item '' = w tym języku brak dobrego obrazka, litera się nie pojawia).
-  { ch: 'E', item: '', level: 0, strokes: [[[0.78, 0], [0.25, 0], [0.25, 1], [0.78, 1]], [[0.25, 0.5], [0.7, 0.5]]] },
-  { ch: 'F', item: 'foka', level: 0, strokes: [[[0.78, 0], [0.25, 0], [0.25, 1]], [[0.25, 0.5], [0.7, 0.5]]] },
-  { ch: 'H', item: 'hipopotam', level: 0, strokes: [[[0.22, 0], [0.22, 1]], [[0.78, 0], [0.78, 1]], [[0.22, 0.5], [0.78, 0.5]]] },
-  { ch: 'N', item: 'nosorozec', level: 1, strokes: [[[0.2, 1], [0.2, 0], [0.8, 1], [0.8, 0]]] },
-  { ch: 'Z', item: 'zebra', level: 1, strokes: [[[0.18, 0], [0.82, 0], [0.18, 1], [0.82, 1]]] },
-  { ch: 'U', item: '', level: 1, strokes: [[[0.2, 0], [0.2, 0.62], ...arc(0.5, 0.62, 0.3, 0.38, 180, 0, 16), [0.8, 0]]] },
-  { ch: 'C', item: 'cytryna', level: 1, strokes: [arc(0.55, 0.5, 0.4, 0.5, -40, -320, 24)] },
-  { ch: 'R', item: 'rakieta', level: 2, strokes: [[[0.25, 1], [0.25, 0]], [[0.25, 0], ...arc(0.5, 0.25, 0.3, 0.25, -90, 90, 14), [0.25, 0.5]], [[0.45, 0.5], [0.82, 1]]] },
-  { ch: 'G', item: 'gruszka', level: 2, strokes: [[...arc(0.55, 0.5, 0.4, 0.5, -40, -360, 26), [0.6, 0.5]]] },
-  { ch: 'J', item: 'jablko', level: 2, strokes: [[[0.7, 0], [0.7, 0.68], ...arc(0.45, 0.68, 0.25, 0.32, 0, 180, 14)]] },
+const BASE: Glyph[] = [
+  { ch: 'I', level: 0, strokes: [[[0.5, 0], [0.5, 1]]] },
+  { ch: 'L', level: 0, strokes: [[[0.28, 0], [0.28, 1], [0.78, 1]]] },
+  { ch: 'T', level: 0, strokes: [[[0.12, 0], [0.88, 0]], [[0.5, 0], [0.5, 1]]] },
+  { ch: 'O', level: 0, strokes: [arc(0.5, 0.5, 0.38, 0.5, -90, -450, 28)] }, // od góry w lewo, jak w przedszkolu (i jak C, G)
+  { ch: 'A', level: 1, strokes: [[[0.5, 0], [0.12, 1]], [[0.5, 0], [0.88, 1]], [[0.28, 0.62], [0.72, 0.62]]] },
+  { ch: 'M', level: 1, strokes: [[[0.12, 1], [0.12, 0], [0.5, 0.6], [0.88, 0], [0.88, 1]]] },
+  { ch: 'W', level: 1, strokes: [[[0.04, 0], [0.27, 1], [0.5, 0.35], [0.73, 1], [0.96, 0]]] },
+  { ch: 'K', level: 1, strokes: [[[0.25, 0], [0.25, 1]], [[0.82, 0], [0.25, 0.56], [0.82, 1]]] },
+  { ch: 'P', level: 2, strokes: [[[0.25, 1], [0.25, 0]], [[0.25, 0], ...arc(0.5, 0.25, 0.3, 0.25, -90, 90, 14).slice(0), [0.25, 0.5]]] },
+  { ch: 'D', level: 2, strokes: [[[0.25, 0], [0.25, 1]], [[0.25, 0], ...arc(0.42, 0.5, 0.4, 0.5, -90, 90, 20), [0.25, 1]]] },
+  { ch: 'B', level: 2, strokes: [[[0.25, 0], [0.25, 1]], [[0.25, 0], ...arc(0.47, 0.24, 0.26, 0.24, -90, 90, 12), ...arc(0.5, 0.74, 0.32, 0.26, -90, 90, 12), [0.25, 1]]] },
+  { ch: 'S', level: 2, strokes: [[...arc(0.5, 0.25, 0.3, 0.25, -15, -270, 16), ...arc(0.5, 0.75, 0.3, 0.25, -90, 165, 16).slice(1)]] },
+  { ch: 'E', level: 0, strokes: [[[0.78, 0], [0.25, 0], [0.25, 1], [0.78, 1]], [[0.25, 0.5], [0.7, 0.5]]] },
+  { ch: 'F', level: 0, strokes: [[[0.78, 0], [0.25, 0], [0.25, 1]], [[0.25, 0.5], [0.7, 0.5]]] },
+  { ch: 'H', level: 0, strokes: [[[0.22, 0], [0.22, 1]], [[0.78, 0], [0.78, 1]], [[0.22, 0.5], [0.78, 0.5]]] },
+  { ch: 'N', level: 1, strokes: [[[0.2, 1], [0.2, 0], [0.8, 1], [0.8, 0]]] },
+  { ch: 'Z', level: 1, strokes: [[[0.18, 0], [0.82, 0], [0.18, 1], [0.82, 1]]] },
+  { ch: 'U', level: 1, strokes: [[[0.2, 0], [0.2, 0.62], ...arc(0.5, 0.62, 0.3, 0.38, 180, 0, 16), [0.8, 0]]] },
+  { ch: 'C', level: 1, strokes: [arc(0.55, 0.5, 0.4, 0.5, -40, -320, 24)] },
+  { ch: 'R', level: 2, strokes: [[[0.25, 1], [0.25, 0]], [[0.25, 0], ...arc(0.5, 0.25, 0.3, 0.25, -90, 90, 14), [0.25, 0.5]], [[0.45, 0.5], [0.82, 1]]] },
+  { ch: 'G', level: 2, strokes: [[...arc(0.55, 0.5, 0.4, 0.5, -40, -360, 26), [0.6, 0.5]]] },
+  { ch: 'J', level: 2, strokes: [[[0.7, 0], [0.7, 0.68], ...arc(0.45, 0.68, 0.25, 0.32, 0, 180, 14)]] },
+  // Litery z alfabetów pozostałych języków (i polskie Ł).
+  { ch: 'Ł', level: 1, strokes: [[[0.34, 0], [0.34, 1], [0.84, 1]], [[0.12, 0.62], [0.58, 0.36]]] },
+  { ch: 'V', level: 0, strokes: [[[0.1, 0], [0.5, 1], [0.9, 0]]] },
+  { ch: 'Y', level: 1, strokes: [[[0.12, 0], [0.5, 0.5]], [[0.88, 0], [0.5, 0.5], [0.5, 1]]] },
+  { ch: 'Q', level: 2, strokes: [arc(0.5, 0.5, 0.38, 0.5, -90, -450, 28), [[0.58, 0.7], [0.92, 1]]] },
 ];
+
+/** Litera ze znakiem nad sobą: podstawa ściśnięta w dół pola, u góry miejsce na kreskę albo kropki. */
+const TOP = 0.26;
+function accented(base: string): P[][] {
+  const g = BASE.find((x) => x.ch === base)!;
+  return g.strokes.map((st) => st.map(([x, y]) => [x, TOP + y * (1 - TOP)] as P));
+}
+/** Kreska nad literą (ś): z góry z prawej w dół w lewo, jak w zeszycie. */
+const ACUTE: P[] = [[0.66, 0], [0.46, 0.16]];
+/** Kropka (ż): krótka kreska, wystarczy ją dotknąć. */
+const dot = (x: number): P[] => [[x - 0.02, 0.08], [x + 0.02, 0.08]];
+/** Falka nad Ñ. */
+const TILDE: P[] = Array.from({ length: 13 }, (_, i) => [0.2 + (0.6 * i) / 12, 0.1 - Math.sin((i / 12) * Math.PI * 2) * 0.06] as P);
+
+const ACCENTED: Glyph[] = [
+  { ch: 'Ś', level: 2, strokes: [...accented('S'), ACUTE] },
+  { ch: 'Ż', level: 2, strokes: [...accented('Z'), dot(0.5)] },
+  { ch: 'Ñ', level: 2, strokes: [...accented('N'), TILDE] },
+];
+
+/** Wszystkie kształty liter (alfabety czterech języków). */
+export const LETTERS: readonly Glyph[] = [...BASE, ...ACCENTED];
+
 
 /** Kreska jako gęsty ciąg punktów co `step` (w jednostkach pola litery). */
 export function resample(stroke: P[], step: number): P[] {
@@ -82,27 +115,157 @@ export function advance(points: readonly P[], at: number, finger: P, tol: number
   return best;
 }
 
-/** Litery do rundy: z poziomu dziecka i niższych, z obrazkiem w katalogu, bez powtórzeń. */
 /**
- * Obiekt do litery w każdym języku („A jak autko”, „A is for apple”, „A wie Affe”). Pusty: litera nie
- * pojawia się w tym języku (po angielsku nie ma w katalogu nic na „I”).
+ * Przykłady na każdą literę w każdym języku: [obiekt, słowo lektora] („A jak arbuz”, „A is for apple”).
+ * Po 3 tam, gdzie są dobre słowa (najmniej 2). Kolejność liter = alfabet.
+ * Pominięte (decyzja właściciela 2026-11-24): litery bez co najmniej dwóch dobrych dziecięcych słów
+ * (po polsku Ą, Ć, Ę, Ń, Ó, Y, Ź; po angielsku X; po niemiecku Ä, Ö, Ü, X, ß; po hiszpańsku Q, W, X)
+ * oraz Q, V, X po polsku.
+ * Obiekty: katalog (sim/catalog.ts) albo obrazki tylko do liter (sim/letter-pics.ts).
  */
-const LETTER_ITEMS: Record<Exclude<Lang, 'pl'>, Record<string, string>> = {
-  en: { A: 'jablko', B: 'pilka', D: 'pies', I: '', K: 'latawiec', L: 'lew', M: 'malpa', O: 'sowa', P: 'swinka', S: 'slonce', T: 'traktor', W: 'wieloryb', E: 'slon', F: 'ryba', H: 'kon', N: '', Z: 'zebra', U: 'parasol', C: 'kot', R: 'rakieta', G: 'koza', J: 'meduza' },
-  es: { A: 'pszczola', B: 'wieloryb', D: 'delfin', I: '', K: '', L: 'lew', M: 'malpa', O: 'niedzwiedz', P: 'pies', S: 'slonce', T: 'zolw', W: '', E: 'slon', F: 'foka', H: '', N: 'chmurka', Z: 'lis', U: 'winogrona', C: 'krolik', R: 'zaba', G: 'kot', J: 'zyrafa' },
-  de: { A: 'malpa', B: 'pilka', D: 'dinozaur', I: 'jez', K: 'kot', L: 'lew', M: 'mysz', O: 'pomarancza', P: 'pingwin', S: 'slonce', T: 'traktor', W: 'wieloryb', E: 'slon', F: 'ryba', H: 'pies', N: 'nosorozec', Z: 'zebra', U: '', C: '', R: 'rakieta', G: 'ges', J: 'kurtka' },
+export const LETTER_EXAMPLES: Record<Lang, Record<string, [item: string, word: string][]>> = {
+  pl: {
+    "A": [["arbuz", "Arbuz"], ["ananas", "Ananas"], ["auto", "Autko"]],
+    "B": [["banan", "Banan"], ["biedronka", "Biedronka"], ["balonik", "Balonik"]],
+    "C": [["cytryna", "Cytryna"], ["cebula", "Cebula"], ["ciezarowka", "Ciężarówka"]],
+    "D": [["dinozaur", "Dinozaur"], ["delfin", "Delfin"], ["dynia", "Dynia"]],
+    "E": [["emu", "Emu"], ["elf", "Elf"], ["ekler", "Ekler"]],
+    "F": [["foka", "Foka"], ["flaming", "Flaming"], ["flaga", "Flaga"]],
+    "G": [["gruszka", "Gruszka"], ["ukulele", "Gitarka"], ["gwiazdka", "Gwiazdka"]],
+    "H": [["hipopotam", "Hipopotam"], ["helikopter", "Helikopter"], ["hulajnoga", "Hulajnoga"]],
+    "I": [["indyk", "Indyk"], ["igloo", "Igloo"]],
+    "J": [["jablko", "Jabłko"], ["jez", "Jeż"], ["jajko", "Jajko"]],
+    "K": [["kot", "Kot"], ["krowa", "Krowa"], ["kaczka", "Kaczka"]],
+    "L": [["lew", "Lew"], ["lalka", "Lalka"], ["latawiec", "Latawiec"]],
+    "Ł": [["labedz", "Łabędź"], ["lodka", "Łódka"], ["lyzka", "Łyżka"]],
+    "M": [["motyl", "Motyl"], ["malpa", "Małpka"], ["marchewka", "Marchewka"]],
+    "N": [["nosorozec", "Nosorożec"], ["niedzwiedz", "Niedźwiedź"], ["namiot", "Namiot"]],
+    "O": [["owca", "Owca"], ["osmiornica", "Ośmiornica"], ["ogorek", "Ogórek"]],
+    "P": [["pies", "Pies"], ["pingwin", "Pingwin"], ["pomidor", "Pomidor"]],
+    "R": [["rakieta", "Rakieta"], ["rower", "Rower"], ["ryba", "Rybka"]],
+    "S": [["slon", "Słoń"], ["sowa", "Sowa"], ["samolot", "Samolot"]],
+    "Ś": [["slimak", "Ślimak"], ["sliwka", "Śliwka"], ["swinka", "Świnka"]],
+    "T": [["traktor", "Traktor"], ["truskawka", "Truskawka"], ["tecza", "Tęcza"]],
+    "U": [["ul", "Ul"], ["ucho", "Ucho"], ["ufo", "UFO"]],
+    "W": [["wieloryb", "Wieloryb"], ["wiewiorka", "Wiewiórka"], ["winogrona", "Winogrona"]],
+    "Z": [["zebra", "Zebra"], ["zajac", "Zajączek"], ["ziemniak", "Ziemniak"]],
+    "Ż": [["zaba", "Żaba"], ["zyrafa", "Żyrafa"], ["zolw", "Żółw"]],
+  },
+  en: {
+    "A": [["jablko", "Apple"], ["samolot", "Airplane"], ["mrowka", "Ant"]],
+    "B": [["niedzwiedz", "Bear"], ["motyl", "Butterfly"], ["pilka", "Ball"]],
+    "C": [["kot", "Cat"], ["krowa", "Cow"], ["marchewka", "Carrot"]],
+    "D": [["pies", "Dog"], ["kaczka", "Duck"], ["delfin", "Dolphin"]],
+    "E": [["slon", "Elephant"], ["jajko", "Egg"], ["emu", "Emu"]],
+    "F": [["ryba", "Fish"], ["zaba", "Frog"], ["lis", "Fox"]],
+    "G": [["zyrafa", "Giraffe"], ["koza", "Goat"], ["winogrona", "Grapes"]],
+    "H": [["kon", "Horse"], ["jez", "Hedgehog"], ["helikopter", "Helicopter"]],
+    "I": [["igloo", "Igloo"], ["lody", "Ice cream"], ["iguana", "Iguana"]],
+    "J": [["meduza", "Jellyfish"], ["kurtka", "Jacket"], ["dzem", "Jam"]],
+    "K": [["kotek", "Kitten"], ["latawiec", "Kite"], ["czajnik", "Kettle"]],
+    "L": [["lew", "Lion"], ["cytryna", "Lemon"], ["biedronka", "Ladybug"]],
+    "M": [["malpa", "Monkey"], ["mysz", "Mouse"], ["ksiezyc", "Moon"]],
+    "N": [["gniazdo", "Nest"], ["orzech", "Nut"]],
+    "O": [["sowa", "Owl"], ["osmiornica", "Octopus"], ["pomarancza", "Orange"]],
+    "P": [["swinka", "Pig"], ["pingwin", "Penguin"], ["gruszka", "Pear"]],
+    "Q": [["krolowa", "Queen"], ["koldra", "Quilt"]],
+    "R": [["rakieta", "Rocket"], ["nosorozec", "Rhino"], ["tecza", "Rainbow"]],
+    "S": [["slimak", "Snail"], ["slonce", "Sun"], ["truskawka", "Strawberry"]],
+    "T": [["zolw", "Turtle"], ["pociag", "Train"], ["traktor", "Tractor"]],
+    "U": [["parasol", "Umbrella"], ["jednorozec", "Unicorn"], ["ufo", "UFO"]],
+    "V": [["skrzypce", "Violin"], ["van", "Van"], ["wazon", "Vase"]],
+    "W": [["wieloryb", "Whale"], ["arbuz", "Watermelon"], ["mors", "Walrus"]],
+    "Y": [["jojo", "Yo-yo"], ["jacht", "Yacht"], ["jak", "Yak"]],
+    "Z": [["zebra", "Zebra"], ["cukinia", "Zucchini"]],
+  },
+  de: {
+    "A": [["malpa", "Affe"], ["jablko", "Apfel"], ["auto", "Auto"]],
+    "B": [["banan", "Banane"], ["pszczola", "Biene"], ["pilka", "Ball"]],
+    "C": [["klaun", "Clown"], ["komputer", "Computer"], ["wiolonczela", "Cello"]],
+    "D": [["dinozaur", "Dinosaurier"], ["delfin", "Delfin"], ["latawiec", "Drachen"]],
+    "E": [["slon", "Elefant"], ["kaczka", "Ente"], ["sowa", "Eule"]],
+    "F": [["ryba", "Fisch"], ["zaba", "Frosch"], ["lis", "Fuchs"]],
+    "G": [["ges", "Gans"], ["ukulele", "Gitarre"]],
+    "H": [["pies", "Hund"], ["zajac", "Hase"], ["helikopter", "Hubschrauber"]],
+    "I": [["jez", "Igel"], ["igloo", "Iglu"], ["wyspa", "Insel"]],
+    "J": [["kurtka", "Jacke"], ["jogurt", "Joghurt"], ["jojo", "Jojo"]],
+    "K": [["kot", "Katze"], ["krowa", "Kuh"], ["osmiornica", "Krake"]],
+    "L": [["lew", "Löwe"], ["lyzka", "Löffel"], ["balonik", "Luftballon"]],
+    "M": [["mysz", "Maus"], ["ksiezyc", "Mond"], ["biedronka", "Marienkäfer"]],
+    "N": [["nosorozec", "Nashorn"], ["hipopotam", "Nilpferd"], ["gniazdo", "Nest"]],
+    "O": [["pomarancza", "Orange"], ["ucho", "Ohr"], ["piekarnik", "Ofen"]],
+    "P": [["kon", "Pferd"], ["pingwin", "Pinguin"], ["grzyb", "Pilz"]],
+    "Q": [["meduza", "Qualle"], ["kaczuszka", "Quietscheente"]],
+    "R": [["rakieta", "Rakete"], ["robot", "Roboter"]],
+    "S": [["slonce", "Sonne"], ["skarpetka", "Socke"], ["konikmorski", "Seepferdchen"]],
+    "T": [["pomidor", "Tomate"], ["traktor", "Traktor"], ["bebenek", "Trommel"]],
+    "U": [["zegar", "Uhr"], ["lodz-podwodna", "U-Boot"], ["ufo", "Ufo"]],
+    "V": [["ptak", "Vogel"], ["wazon", "Vase"], ["wulkan", "Vulkan"]],
+    "W": [["wieloryb", "Wal"], ["chmurka", "Wolke"], ["arbuz", "Wassermelone"]],
+    "Y": [["jacht", "Yacht"], ["jak", "Yak"]],
+    "Z": [["zebra", "Zebra"], ["cytryna", "Zitrone"], ["pociag", "Zug"]],
+  },
+  es: {
+    "A": [["pszczola", "Abeja"], ["samolot", "Avión"], ["wiewiorka", "Ardilla"]],
+    "B": [["wieloryb", "Ballena"], ["lodka", "Barco"], ["rower", "Bicicleta"]],
+    "C": [["kon", "Caballo"], ["slimak", "Caracol"], ["krolik", "Conejo"]],
+    "D": [["dinozaur", "Dinosaurio"], ["delfin", "Delfín"], ["kostka", "Dado"]],
+    "E": [["slon", "Elefante"], ["jez", "Erizo"], ["gwiazdka", "Estrella"]],
+    "F": [["truskawka", "Fresa"], ["foka", "Foca"], ["kwiatek", "Flor"]],
+    "G": [["kot", "Gato"], ["kura", "Gallina"], ["ukulele", "Guitarra"]],
+    "H": [["jajko", "Huevo"], ["lisc", "Hoja"], ["helikopter", "Helicóptero"]],
+    "I": [["igloo", "Iglú"], ["iguana", "Iguana"], ["magnes", "Imán"]],
+    "J": [["zyrafa", "Jirafa"], ["dzik", "Jabalí"], ["mydlo", "Jabón"]],
+    "K": [["koala", "Koala"], ["kiwi", "Kiwi"], ["kajak", "Kayak"]],
+    "L": [["lew", "León"], ["cytryna", "Limón"], ["ksiezyc", "Luna"]],
+    "M": [["malpa", "Mono"], ["motyl", "Mariposa"], ["jablko", "Manzana"]],
+    "N": [["pomarancza", "Naranja"], ["chmurka", "Nube"], ["gniazdo", "Nido"]],
+    "Ñ": [["nandu", "Ñandú"], ["gnu", "Ñu"]],
+    "O": [["owca", "Oveja"], ["niedzwiedz", "Oso"], ["garnek", "Olla"]],
+    "P": [["pies", "Perro"], ["kaczka", "Pato"], ["ryba", "Pez"]],
+    "R": [["zaba", "Rana"], ["mysz", "Ratón"], ["robot", "Robot"]],
+    "S": [["slonce", "Sol"], ["arbuz", "Sandía"], ["kapelusz", "Sombrero"]],
+    "T": [["zolw", "Tortuga"], ["pociag", "Tren"], ["pomidor", "Tomate"]],
+    "U": [["winogrona", "Uvas"], ["jednorozec", "Unicornio"]],
+    "V": [["krowa", "Vaca"], ["sukienka", "Vestido"], ["szklanka", "Vaso de leche"]],
+    "Y": [["jojo", "Yoyó"], ["jacht", "Yate"], ["jogurt", "Yogur"]],
+    "Z": [["lis", "Zorro"], ["marchewka", "Zanahoria"], ["but", "Zapato"]],
+  },
 };
 
-/** Litery w języku `l` z obiektem z tego języka (bez liter, do których nie ma obiektu). */
-export function lettersOf(l: Lang = lang()): Letter[] {
-  if (l === 'pl') return LETTERS.filter((x) => x.item);
-  return LETTERS.map((x) => ({ ...x, item: LETTER_ITEMS[l][x.ch] ?? '' })).filter((x) => x.item);
+/** Nazwa pliku nagrania „X jak słowo” (bez znaków spoza ASCII). */
+export function letterLine(ch: string, item: string): string {
+  const slug = ch.toLowerCase().replace('ć', 'ci').replace('ł', 'lw').replace('ó', 'oo').replace('ś', 'si').replace('ź', 'zi').replace('ż', 'zh').replace('ä', 'ae').replace('ö', 'oe').replace('ñ', 'ny');
+  return `litera-${slug}-${item}`;
 }
 
-export function makeLetterRound(rng: Rng, level: number): Letter[] {
+/** Wszystkie nagrania liter w języku `l` (z literą i słowem, do listy lektora). */
+export function letterLines(l: Lang = lang()): { line: string; ch: string; word: string }[] {
+  return Object.entries(LETTER_EXAMPLES[l]).flatMap(([ch, xs]) => xs.map(([item, word]) => ({ line: letterLine(ch, item), ch, word })));
+}
+
+/** Litery alfabetu w języku `l` (z pierwszym przykładem). */
+export function lettersOf(l: Lang = lang()): Letter[] {
+  return Object.entries(LETTER_EXAMPLES[l]).flatMap(([ch, xs]) => {
+    const g = LETTERS.find((x) => x.ch === ch);
+    return g && xs.length ? [{ ...g, item: xs[0]![0], word: xs[0]![1] }] : [];
+  });
+}
+
+/** Który przykład litery był ostatnio (kolejna runda z tą literą pokazuje następny). */
+const shownExample = new Map<string, number>();
+
+export function makeLetterRound(rng: Rng, level: number, have: ReadonlySet<string> = new Set([...ITEMS.map((i) => i.id), ...LETTER_PIC_IDS])): Letter[] {
   const l = Math.max(0, Math.min(MAX_LEVEL, Math.round(level)));
-  const have = new Set(ITEMS.map((i) => i.id));
-  return mixRound(rng, lettersOf().filter((x) => x.level <= l && have.has(x.item)), l, 'litery');
+  const lg = lang();
+  const pool = lettersOf(lg).filter((x) => x.level <= l && LETTER_EXAMPLES[lg][x.ch]!.some(([item]) => have.has(item)));
+  return mixRound(rng, pool, l, 'litery').map((x) => {
+    const xs = LETTER_EXAMPLES[lg][x.ch]!.filter(([item]) => have.has(item));
+    const key = `${lg}:${x.ch}`;
+    const i = ((shownExample.get(key) ?? rng.int(0, xs.length - 1)) + 1) % xs.length;
+    shownExample.set(key, i);
+    return { ...x, item: xs[i]![0], word: xs[i]![1] };
+  });
 }
 
 /** Ostatnia runda każdej zabawy (w tej sesji), żeby dwie kolejne nie były takie same. */
@@ -135,18 +298,18 @@ export function mixRound<T extends { level: number }>(rng: Rng, pool: readonly T
 export const traceTolerance = (level: number): number => [0.16, 0.13, 0.11][Math.max(0, Math.min(MAX_LEVEL, Math.round(level)))] as number;
 
 /** Cyfry po śladzie: po narysowaniu tyle obrazków, ile mówi cyfra (Lusia liczy). */
-export const DIGITS: readonly Letter[] = [
-  { ch: '1', item: '', level: 0, strokes: [[[0.28, 0.22], [0.6, 0], [0.6, 1]]] },
-  { ch: '7', item: '', level: 0, strokes: [[[0.15, 0], [0.85, 0], [0.4, 1]]] },
-  { ch: '4', item: '', level: 0, strokes: [[[0.6, 0], [0.12, 0.68], [0.9, 0.68]], [[0.65, 0.35], [0.65, 1]]] },
-  { ch: '0', item: '', level: 0, strokes: [arc(0.5, 0.5, 0.34, 0.5, -90, -450, 28)] }, // od góry w lewo
-  { ch: '2', item: '', level: 1, strokes: [[...arc(0.5, 0.28, 0.32, 0.28, -170, 25, 14), [0.15, 1], [0.85, 1]]] },
-  { ch: '3', item: '', level: 1, strokes: [[...arc(0.5, 0.25, 0.3, 0.25, -160, 90, 14), ...arc(0.5, 0.75, 0.32, 0.25, -90, 160, 14).slice(1)]] },
-  { ch: '5', item: '', level: 1, strokes: [[[0.8, 0], [0.27, 0], [0.22, 0.45], ...arc(0.48, 0.68, 0.32, 0.32, -125, 150, 16)]] },
-  { ch: '6', item: '', level: 2, strokes: [[[0.75, 0.04], [0.45, 0.1], [0.27, 0.32], [0.18, 0.65], ...arc(0.5, 0.72, 0.32, 0.28, 180, -180, 24)]] },
-  { ch: '8', item: '', level: 2, strokes: [[...arc(0.5, 0.25, 0.27, 0.25, -90, -270, 14), ...arc(0.5, 0.75, 0.32, 0.25, -90, 270, 24).slice(1), ...arc(0.5, 0.25, 0.27, 0.25, 90, -90, 14).slice(1)]] },
-  { ch: '9', item: '', level: 2, strokes: [[...arc(0.5, 0.3, 0.32, 0.3, 0, -360, 24), [0.8, 1]]] },
-];
+export const DIGITS: readonly Letter[] = ([
+  { ch: '1', level: 0, strokes: [[[0.28, 0.22], [0.6, 0], [0.6, 1]]] },
+  { ch: '7', level: 0, strokes: [[[0.15, 0], [0.85, 0], [0.4, 1]]] },
+  { ch: '4', level: 0, strokes: [[[0.6, 0], [0.12, 0.68], [0.9, 0.68]], [[0.65, 0.35], [0.65, 1]]] },
+  { ch: '0', level: 0, strokes: [arc(0.5, 0.5, 0.34, 0.5, -90, -450, 28)] }, // od góry w lewo
+  { ch: '2', level: 1, strokes: [[...arc(0.5, 0.28, 0.32, 0.28, -170, 25, 14), [0.15, 1], [0.85, 1]]] },
+  { ch: '3', level: 1, strokes: [[...arc(0.5, 0.25, 0.3, 0.25, -160, 90, 14), ...arc(0.5, 0.75, 0.32, 0.25, -90, 160, 14).slice(1)]] },
+  { ch: '5', level: 1, strokes: [[[0.8, 0], [0.27, 0], [0.22, 0.45], ...arc(0.48, 0.68, 0.32, 0.32, -125, 150, 16)]] },
+  { ch: '6', level: 2, strokes: [[[0.75, 0.04], [0.45, 0.1], [0.27, 0.32], [0.18, 0.65], ...arc(0.5, 0.72, 0.32, 0.28, 180, -180, 24)]] },
+  { ch: '8', level: 2, strokes: [[...arc(0.5, 0.25, 0.27, 0.25, -90, -270, 14), ...arc(0.5, 0.75, 0.32, 0.25, -90, 270, 24).slice(1), ...arc(0.5, 0.25, 0.27, 0.25, 90, -90, 14).slice(1)]] },
+  { ch: '9', level: 2, strokes: [[...arc(0.5, 0.3, 0.32, 0.3, 0, -360, 24), [0.8, 1]]] },
+] as Glyph[]).map((g) => ({ ...g, item: '', word: '' }));
 
 /** Cyfry do rundy: nowe z poziomu dziecka wymieszane z powtórką niższych. */
 export function makeDigitRound(rng: Rng, level: number): Letter[] {

@@ -1,9 +1,11 @@
-import { Graphics, Rectangle, Sprite, type FederatedPointerEvent } from 'pixi.js';
+import { Assets, Graphics, Rectangle, Sprite, type FederatedPointerEvent, type Texture } from 'pixi.js';
 import { haptics } from '@funfactory/core';
 import { popIn, pulse } from '@funfactory/kit2d';
 import { say } from '../assets.ts';
-import { advance, makeDigitRound, makeLetterRound, resample, traceTolerance, type Letter } from '../sim/letters.ts';
+import { advance, LETTER_EXAMPLES, letterLine, lettersOf, makeDigitRound, makeLetterRound, resample, traceTolerance, type Letter } from '../sim/letters.ts';
+import { LETTER_PIC_IDS } from '../sim/letter-pics.ts';
 import { ITEMS } from '../sim/catalog.ts';
+import { lang } from '../sim/lang.ts';
 import { state } from '../state.ts';
 import { COLORS, sfx } from '../ui.ts';
 import { RoundScene } from './round.ts';
@@ -38,6 +40,7 @@ export class LetterScene extends RoundScene {
   /** Cyfry: po narysowaniu tyle obrazków, ile mówi cyfra. */
   private readonly digits: boolean;
   private counted: Sprite[] = [];
+  private readonly pics = new Map<string, Texture | null>();
 
   constructor(kind: 'litery' | 'cyfry' = 'litery') {
     super(kind, 'lusia');
@@ -47,8 +50,27 @@ export class LetterScene extends RoundScene {
   protected async prepare(): Promise<void> {
     const level = state.progress.levels[this.kind] ?? 0;
     this.letters = this.digits ? makeDigitRound(this.game.rng, level) : makeLetterRound(this.game.rng, level);
+    // Playtest (tylko dev): `?litery=ŁŚŻ` wymusza te litery w rundzie, z losowym przykładem.
+    const only = import.meta.env.DEV && !this.digits ? new URLSearchParams(location.search).get('litery') : null;
+    if (only) {
+      const all = lettersOf();
+      this.letters = [...only].flatMap((ch) => {
+        const x = all.find((l) => l.ch === ch);
+        const xs = LETTER_EXAMPLES[lang()][ch];
+        if (!x || !xs) return [];
+        const [item, word] = this.game.rng.pick(xs);
+        return [{ ...x, item, word }];
+      });
+    }
     this.length = this.letters.length;
+    // Obrazki tylko do liter (nie ma ich w katalogu): wczytywane na rundę.
+    const own = this.letters.map((x) => x.item).filter((id) => LETTER_PIC_IDS.has(id));
+    await Promise.all(own.map(async (id) => this.pics.set(id, await Assets.load<Texture>(`${import.meta.env.BASE_URL}art/litery/${id}.webp`).catch(() => null))));
     this.tol = traceTolerance(level);
+  }
+
+  protected override roundVoices(): string[] {
+    return this.digits ? [] : this.letters.map((x) => `lusia-${letterLine(x.ch, x.item)}`);
   }
 
   protected override taskFacts(): string[] {
@@ -75,7 +97,7 @@ export class LetterScene extends RoundScene {
     this.pad = new Graphics();
     // Cyfry: obrazek do liczenia losowany z małych obiektów (np. 3 jabłka).
     const item = this.digits ? this.game.rng.pick(ITEMS.filter((i) => i.countable)).id : this.letter.item;
-    this.picture = new Sprite({ texture: this.art.items.get(item)!, anchor: 0.5 });
+    this.picture = new Sprite({ texture: this.art.items.get(item) ?? this.pics.get(item) ?? undefined, anchor: 0.5 });
     this.picture.visible = false;
     this.counted = [];
     for (const v of [this.track, this.ink, this.guideLine, this.start, this.picture]) v.eventMode = 'none';
@@ -186,7 +208,7 @@ export class LetterScene extends RoundScene {
     pic.visible = true;
     void popIn(this.tweens, pic, 0.5);
     this.burst(pic.x, pic.y, 36);
-    const len = say(this.game, this.guide, `litera-${this.letter.ch.toLowerCase()}`);
+    const len = say(this.game, this.guide, letterLine(this.letter.ch, this.letter.item));
     this.solved(len);
   }
 

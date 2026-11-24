@@ -1495,132 +1495,6 @@
    "seed": 2
   },
   {
-   "name": "lusia-litera-l",
-   "text": "L de león.",
-   "voice": "voices/alt",
-   "engine": "chatterbox",
-   "seed": 3
-  },
-  {
-   "name": "lusia-litera-t",
-   "text": "T de tortuga.",
-   "voice": "voices/alt",
-   "engine": "chatterbox",
-   "seed": 1
-  },
-  {
-   "name": "lusia-litera-o",
-   "text": "O de oso.",
-   "voice": "voices/alt",
-   "engine": "chatterbox",
-   "seed": 1
-  },
-  {
-   "name": "lusia-litera-a",
-   "text": "A de abeja.",
-   "voice": "voices/alt",
-   "engine": "chatterbox",
-   "seed": 6
-  },
-  {
-   "name": "lusia-litera-m",
-   "text": "M de mono.",
-   "voice": "voices/alt",
-   "engine": "chatterbox",
-   "seed": 2
-  },
-  {
-   "name": "lusia-litera-p",
-   "text": "P de perro.",
-   "voice": "voices/alt",
-   "engine": "chatterbox",
-   "seed": 1
-  },
-  {
-   "name": "lusia-litera-d",
-   "text": "D de delfín.",
-   "voice": "voices/alt",
-   "engine": "chatterbox",
-   "seed": 4
-  },
-  {
-   "name": "lusia-litera-b",
-   "text": "B de ballena.",
-   "voice": "voices/alt",
-   "engine": "chatterbox",
-   "seed": 1
-  },
-  {
-   "name": "lusia-litera-s",
-   "text": "S de sol.",
-   "voice": "voices/alt",
-   "engine": "chatterbox",
-   "seed": 3
-  },
-  {
-   "name": "lusia-litera-e",
-   "text": "E de elefante.",
-   "voice": "voices/alt",
-   "engine": "chatterbox",
-   "seed": 2
-  },
-  {
-   "name": "lusia-litera-f",
-   "text": "F de foca.",
-   "voice": "voices/alt",
-   "engine": "chatterbox",
-   "seed": 1
-  },
-  {
-   "name": "lusia-litera-n",
-   "text": "N de nube.",
-   "voice": "voices/alt",
-   "engine": "chatterbox",
-   "seed": 2
-  },
-  {
-   "name": "lusia-litera-z",
-   "text": "Z de zorro.",
-   "voice": "voices/alt",
-   "engine": "chatterbox",
-   "seed": 3
-  },
-  {
-   "name": "lusia-litera-u",
-   "text": "U de uvas.",
-   "voice": "voices/alt",
-   "engine": "chatterbox",
-   "seed": 3
-  },
-  {
-   "name": "lusia-litera-c",
-   "text": "Ce de conejo.",
-   "voice": "voices/alt",
-   "engine": "chatterbox",
-   "seed": 1
-  },
-  {
-   "name": "lusia-litera-r",
-   "text": "R de rana.",
-   "voice": "voices/alt",
-   "engine": "chatterbox",
-   "seed": 2
-  },
-  {
-   "name": "lusia-litera-g",
-   "text": "G de gato.",
-   "voice": "voices/alt",
-   "engine": "chatterbox",
-   "seed": 2
-  },
-  {
-   "name": "lusia-litera-j",
-   "text": "J de jirafa.",
-   "voice": "voices/alt",
-   "engine": "chatterbox",
-   "seed": 4
-  },
-  {
    "name": "lusia-labirynt-kurczak",
    "text": "Lleva al pollito con su mamá.",
    "voice": "voices/alt",
@@ -4019,6 +3893,496 @@
    "text": "Primero una hoja de papel, luego la doblamos, y al final un avión de papel.",
    "engine": "chatterbox",
    "voice": "voices/prezenter",
+   "seed": 2
+  },
+  {
+   "name": "lusia-litera-a-pszczola",
+   "text": "A... de abeja.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-litera-a-samolot",
+   "text": "A... de avión.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
+  },
+  {
+   "name": "lusia-litera-a-wiewiorka",
+   "text": "A... de ardilla.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-litera-b-wieloryb",
+   "text": "Be... de ballena.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
+  },
+  {
+   "name": "lusia-litera-b-lodka",
+   "text": "Be... de barco.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
+  },
+  {
+   "name": "lusia-litera-b-rower",
+   "text": "Be... de bicicleta.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-litera-c-kon",
+   "text": "Ce... de caballo.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-litera-c-slimak",
+   "text": "Ce... de caracol.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-litera-c-krolik",
+   "text": "Ce... de conejo.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
+  },
+  {
+   "name": "lusia-litera-d-dinozaur",
+   "text": "De... de dinosaurio.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-litera-d-delfin",
+   "text": "De... de delfín.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-litera-d-kostka",
+   "text": "De... de dado.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
+  },
+  {
+   "name": "lusia-litera-e-slon",
+   "text": "E... de elefante.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
+  },
+  {
+   "name": "lusia-litera-e-jez",
+   "text": "E... de erizo.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
+  },
+  {
+   "name": "lusia-litera-e-gwiazdka",
+   "text": "E... de estrella.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
+  },
+  {
+   "name": "lusia-litera-f-truskawka",
+   "text": "Efe... de fresa.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-litera-f-foka",
+   "text": "Efe... de foca.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
+  },
+  {
+   "name": "lusia-litera-f-kwiatek",
+   "text": "Efe... de flor.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
+  },
+  {
+   "name": "lusia-litera-g-kot",
+   "text": "Ge... de gato.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-litera-g-kura",
+   "text": "Ge... de gallina.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-litera-g-ukulele",
+   "text": "Ge... de guitarra.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-litera-h-jajko",
+   "text": "Hache... de huevo.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-litera-h-lisc",
+   "text": "Hache... de hoja.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
+  },
+  {
+   "name": "lusia-litera-h-helikopter",
+   "text": "Hache... de helicóptero.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
+  },
+  {
+   "name": "lusia-litera-i-igloo",
+   "text": "I... de iglú.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-litera-i-iguana",
+   "text": "I... de iguana.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 7
+  },
+  {
+   "name": "lusia-litera-i-magnes",
+   "text": "I... de imán.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 5
+  },
+  {
+   "name": "lusia-litera-j-zyrafa",
+   "text": "Jota... de jirafa.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-litera-j-dzik",
+   "text": "Jota... de jabalí.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
+  },
+  {
+   "name": "lusia-litera-j-mydlo",
+   "text": "Jota... de jabón.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
+  },
+  {
+   "name": "lusia-litera-k-koala",
+   "text": "Ka... de koala.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 5
+  },
+  {
+   "name": "lusia-litera-k-kiwi",
+   "text": "Ka... de kiwi.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
+  },
+  {
+   "name": "lusia-litera-k-kajak",
+   "text": "Ka... de kayak.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-litera-l-lew",
+   "text": "Ele... de león.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-litera-l-cytryna",
+   "text": "Ele... de limón.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-litera-l-ksiezyc",
+   "text": "Ele... de luna.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-litera-m-malpa",
+   "text": "Eme... de mono.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
+  },
+  {
+   "name": "lusia-litera-m-motyl",
+   "text": "Eme... de mariposa.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
+  },
+  {
+   "name": "lusia-litera-m-jablko",
+   "text": "Eme... de manzana.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
+  },
+  {
+   "name": "lusia-litera-n-pomarancza",
+   "text": "Ene... de naranja.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
+  },
+  {
+   "name": "lusia-litera-n-chmurka",
+   "text": "Ene... de nube.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-litera-n-gniazdo",
+   "text": "Ene... de nido.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-litera-ny-nandu",
+   "text": "Eñe... de ñandú.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
+  },
+  {
+   "name": "lusia-litera-ny-gnu",
+   "text": "Eñe... de ñu.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 4
+  },
+  {
+   "name": "lusia-litera-o-owca",
+   "text": "O... de oveja.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
+  },
+  {
+   "name": "lusia-litera-o-niedzwiedz",
+   "text": "O... de oso.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
+  },
+  {
+   "name": "lusia-litera-o-garnek",
+   "text": "O... de olla.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-litera-p-pies",
+   "text": "Pe... de perro.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
+  },
+  {
+   "name": "lusia-litera-p-kaczka",
+   "text": "Pe... de pato.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-litera-p-ryba",
+   "text": "Pe... de pez.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
+  },
+  {
+   "name": "lusia-litera-r-zaba",
+   "text": "Erre... de rana.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-litera-r-mysz",
+   "text": "Erre... de ratón.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 6
+  },
+  {
+   "name": "lusia-litera-r-robot",
+   "text": "Erre... de robot.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
+  },
+  {
+   "name": "lusia-litera-s-slonce",
+   "text": "Ese... de sol.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
+  },
+  {
+   "name": "lusia-litera-s-arbuz",
+   "text": "Ese... de sandía.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-litera-s-kapelusz",
+   "text": "Ese... de sombrero.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-litera-t-zolw",
+   "text": "Te... de tortuga.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-litera-t-pociag",
+   "text": "Te... de tren.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
+  },
+  {
+   "name": "lusia-litera-t-pomidor",
+   "text": "Te... de tomate.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 4
+  },
+  {
+   "name": "lusia-litera-u-winogrona",
+   "text": "U... de uvas.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
+  },
+  {
+   "name": "lusia-litera-u-jednorozec",
+   "text": "U... de unicornio.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
+  },
+  {
+   "name": "lusia-litera-v-krowa",
+   "text": "Uve... de vaca.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-litera-v-sukienka",
+   "text": "Uve... de vestido.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
+  },
+  {
+   "name": "lusia-litera-v-szklanka",
+   "text": "Uve... de vaso de leche.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-litera-y-jojo",
+   "text": "Ye... de yoyó.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 7
+  },
+  {
+   "name": "lusia-litera-y-jacht",
+   "text": "Ye... de yate.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 3
+  },
+  {
+   "name": "lusia-litera-y-jogurt",
+   "text": "Ye... de yogur.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 8
+  },
+  {
+   "name": "lusia-litera-z-lis",
+   "text": "Zeta... de zorro.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 1
+  },
+  {
+   "name": "lusia-litera-z-marchewka",
+   "text": "Zeta... de zanahoria.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
+   "seed": 2
+  },
+  {
+   "name": "lusia-litera-z-but",
+   "text": "Zeta... de zapato.",
+   "voice": "voices/alt",
+   "engine": "chatterbox",
    "seed": 2
   }
  ]

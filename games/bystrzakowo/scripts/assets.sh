@@ -126,4 +126,13 @@ background proto/tlo-zagadka-21.png tlo-zagadka
 sprite extra/zebatka-a-22.png zebatka 256
 # Rączka z samouczka (pokaz gestów); czubek palca: HAND_TIP w src/hand.ts.
 sprite ui/raczka-d-302.png raczka 320
+# Obrazki do „Pisze litery” (src/sim/letter-pics.ts): wybrany wariant (seed 401 albo 402).
+mkdir -p $OUT/litery
+for x in emu-401 elf-402 ekler-401 flaming-401 flaga-401 igloo-401 ucho-401 ufo-401 mrowka-402 lody-401 \
+  iguana-402 dzem-401 gniazdo-401 orzech-402 krolowa-402 koldra-401 skrzypce-402 van-401 wazon-402 jojo-401 \
+  jacht-401 jak-402 cukinia-401 jednorozec-402 klaun-402 komputer-402 wiolonczela-402 wyspa-401 jogurt-401 \
+  piekarnik-402 kaczuszka-401 zegar-402 lodz-podwodna-401 wulkan-402 kostka-402 magnes-401 koala-401 kiwi-401 \
+  kajak-402 nandu-402 gnu-402 mydlo-402; do
+  sprite litery/$x.png litery/${x%-*} 512
+done
 du -sh $OUT

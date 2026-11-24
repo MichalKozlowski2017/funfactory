@@ -1,0 +1,283 @@
+{
+ "voice": "voices\\alt.wav",
+ "exag": 0.3,
+ "cfg": 0.3,
+ "stretch": 0.12,
+ "lines": [
+  {
+   "name": "lusia-litera-a-arbuz",
+   "text": "A... jak arbuz.",
+   "lang": "pl"
+  },
+  {
+   "name": "lusia-litera-a-ananas",
+   "text": "A... jak ananas.",
+   "lang": "pl"
+  },
+  {
+   "name": "lusia-litera-b-biedronka",
+   "text": "Be... jak biedronka.",
+   "lang": "pl"
+  },
+  {
+   "name": "lusia-litera-b-balonik",
+   "text": "Be... jak balonik.",
+   "lang": "pl"
+  },
+  {
+   "name": "lusia-litera-c-cebula",
+   "text": "Ce... jak cebula.",
+   "lang": "pl"
+  },
+  {
+   "name": "lusia-litera-c-ciezarowka",
+   "text": "Ce... jak ciężarówka.",
+   "lang": "pl"
+  },
+  {
+   "name": "lusia-litera-d-delfin",
+   "text": "De... jak delfin.",
+   "lang": "pl"
+  },
+  {
+   "name": "lusia-litera-d-dynia",
+   "text": "De... jak dynia.",
+   "lang": "pl"
+  },
+  {
+   "name": "lusia-litera-e-emu",
+   "text": "E... jak emu.",
+   "lang": "pl"
+  },
+  {
+   "name": "lusia-litera-e-elf",
+   "text": "E... jak elf.",
+   "lang": "pl"
+  },
+  {
+   "name": "lusia-litera-e-ekler",
+   "text": "E... jak ekler.",
+   "lang": "pl"
+  },
+  {
+   "name": "lusia-litera-f-flaming",
+   "text": "Efff... jak flaming.",
+   "lang": "pl"
+  },
+  {
+   "name": "lusia-litera-f-flaga",
+   "text": "Efff... jak flaga.",
+   "lang": "pl"
+  },
+  {
+   "name": "lusia-litera-g-ukulele",
+   "text": "Gie... jak gitarka.",
+   "lang": "pl"
+  },
+  {
+   "name": "lusia-litera-g-gwiazdka",
+   "text": "Gie... jak gwiazdka.",
+   "lang": "pl"
+  },
+  {
+   "name": "lusia-litera-h-helikopter",
+   "text": "Ha... jak helikopter.",
+   "lang": "pl"
+  },
+  {
+   "name": "lusia-litera-h-hulajnoga",
+   "text": "Ha... jak hulajnoga.",
+   "lang": "pl"
+  },
+  {
+   "name": "lusia-litera-i-igloo",
+   "text": "I... jak igloo.",
+   "lang": "pl"
+  },
+  {
+   "name": "lusia-litera-i-igla",
+   "text": "I... jak igła.",
+   "lang": "pl"
+  },
+  {
+   "name": "lusia-litera-j-jez",
+   "text": "Jot... jak jeż.",
+   "lang": "pl"
+  },
+  {
+   "name": "lusia-litera-j-jajko",
+   "text": "Jot... jak jajko.",
+   "lang": "pl"
+  },
+  {
+   "name": "lusia-litera-k-krowa",
+   "text": "Ka... jak krowa.",
+   "lang": "pl"
+  },
+  {
+   "name": "lusia-litera-k-kaczka",
+   "text": "Ka... jak kaczka.",
+   "lang": "pl"
+  },
+  {
+   "name": "lusia-litera-l-lalka",
+   "text": "El... jak lalka.",
+   "lang": "pl"
+  },
+  {
+   "name": "lusia-litera-l-latawiec",
+   "text": "El... jak latawiec.",
+   "lang": "pl"
+  },
+  {
+   "name": "lusia-litera-lw-labedz",
+   "text": "Eł... jak łabędź.",
+   "lang": "pl"
+  },
+  {
+   "name": "lusia-litera-lw-lodka",
+   "text": "Eł... jak łódka.",
+   "lang": "pl"
+  },
+  {
+   "name": "lusia-litera-lw-lyzka",
+   "text": "Eł... jak łyżka.",
+   "lang": "pl"
+  },
+  {
+   "name": "lusia-litera-m-malpa",
+   "text": "Em... jak małpka.",
+   "lang": "pl"
+  },
+  {
+   "name": "lusia-litera-m-marchewka",
+   "text": "Em... jak marchewka.",
+   "lang": "pl"
+  },
+  {
+   "name": "lusia-litera-n-niedzwiedz",
+   "text": "En... jak niedźwiedź.",
+   "lang": "pl"
+  },
+  {
+   "name": "lusia-litera-n-namiot",
+   "text": "En... jak namiot.",
+   "lang": "pl"
+  },
+  {
+   "name": "lusia-litera-o-osmiornica",
+   "text": "O... jak ośmiornica.",
+   "lang": "pl"
+  },
+  {
+   "name": "lusia-litera-o-ogorek",
+   "text": "O... jak ogórek.",
+   "lang": "pl"
+  },
+  {
+   "name": "lusia-litera-p-pingwin",
+   "text": "Pe... jak pingwin.",
+   "lang": "pl"
+  },
+  {
+   "name": "lusia-litera-p-pomidor",
+   "text": "Pe... jak pomidor.",
+   "lang": "pl"
+  },
+  {
+   "name": "lusia-litera-r-rower",
+   "text": "Er... jak rower.",
+   "lang": "pl"
+  },
+  {
+   "name": "lusia-litera-r-ryba",
+   "text": "Er... jak rybka.",
+   "lang": "pl"
+  },
+  {
+   "name": "lusia-litera-s-sowa",
+   "text": "Es... jak sowa.",
+   "lang": "pl"
+  },
+  {
+   "name": "lusia-litera-s-samolot",
+   "text": "Es... jak samolot.",
+   "lang": "pl"
+  },
+  {
+   "name": "lusia-litera-si-slimak",
+   "text": "Eś... jak ślimak.",
+   "lang": "pl"
+  },
+  {
+   "name": "lusia-litera-si-sliwka",
+   "text": "Eś... jak śliwka.",
+   "lang": "pl"
+  },
+  {
+   "name": "lusia-litera-si-swinka",
+   "text": "Eś... jak świnka.",
+   "lang": "pl"
+  },
+  {
+   "name": "lusia-litera-t-truskawka",
+   "text": "Te... jak truskawka.",
+   "lang": "pl"
+  },
+  {
+   "name": "lusia-litera-t-tecza",
+   "text": "Te... jak tęcza.",
+   "lang": "pl"
+  },
+  {
+   "name": "lusia-litera-u-ul",
+   "text": "U... jak ul.",
+   "lang": "pl"
+  },
+  {
+   "name": "lusia-litera-u-ucho",
+   "text": "U... jak ucho.",
+   "lang": "pl"
+  },
+  {
+   "name": "lusia-litera-u-ufo",
+   "text": "U... jak UFO.",
+   "lang": "pl"
+  },
+  {
+   "name": "lusia-litera-w-wiewiorka",
+   "text": "Wu... jak wiewiórka.",
+   "lang": "pl"
+  },
+  {
+   "name": "lusia-litera-w-winogrona",
+   "text": "Wu... jak winogrona.",
+   "lang": "pl"
+  },
+  {
+   "name": "lusia-litera-z-zajac",
+   "text": "Zet... jak zajączek.",
+   "lang": "pl"
+  },
+  {
+   "name": "lusia-litera-z-ziemniak",
+   "text": "Zet... jak ziemniak.",
+   "lang": "pl"
+  },
+  {
+   "name": "lusia-litera-zh-zaba",
+   "text": "Żet... jak żaba.",
+   "lang": "pl"
+  },
+  {
+   "name": "lusia-litera-zh-zyrafa",
+   "text": "Żet... jak żyrafa.",
+   "lang": "pl"
+  },
+  {
+   "name": "lusia-litera-zh-zolw",
+   "text": "Żet... jak żółw.",
+   "lang": "pl"
+  }
+ ]
+}

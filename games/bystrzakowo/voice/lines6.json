@@ -21,84 +21,84 @@
    "voice": "voices/alt"
   },
   {
-   "name": "lusia-litera-a",
+   "name": "lusia-litera-a-auto",
    "text": "A... jak autko.",
    "voice": "voices/alt",
    "engine": "chatterbox",
    "seed": 1
   },
   {
-   "name": "lusia-litera-i",
+   "name": "lusia-litera-i-indyk",
    "text": "I... jak indyk.",
    "voice": "voices/alt",
    "engine": "chatterbox",
    "seed": 2
   },
   {
-   "name": "lusia-litera-l",
+   "name": "lusia-litera-l-lew",
    "text": "El... jak lew.",
    "voice": "voices/alt",
    "engine": "chatterbox",
    "seed": 6
   },
   {
-   "name": "lusia-litera-t",
+   "name": "lusia-litera-t-traktor",
    "text": "Te... jak traktor.",
    "voice": "voices/alt",
    "engine": "chatterbox",
    "seed": 1
   },
   {
-   "name": "lusia-litera-o",
+   "name": "lusia-litera-o-owca",
    "text": "O... jak owca.",
    "voice": "voices/alt",
    "engine": "chatterbox",
    "seed": 5
   },
   {
-   "name": "lusia-litera-m",
+   "name": "lusia-litera-m-motyl",
    "text": "Em... jak motyl.",
    "voice": "voices/alt",
    "engine": "chatterbox",
    "seed": 5
   },
   {
-   "name": "lusia-litera-w",
+   "name": "lusia-litera-w-wieloryb",
    "text": "Wu... jak wieloryb.",
    "voice": "voices/alt",
    "engine": "chatterbox",
    "seed": 3
   },
   {
-   "name": "lusia-litera-k",
+   "name": "lusia-litera-k-kot",
    "text": "Ka... jak kot.",
    "voice": "voices/alt",
    "engine": "chatterbox",
    "seed": 1
   },
   {
-   "name": "lusia-litera-p",
+   "name": "lusia-litera-p-pies",
    "text": "Pe... jak pies.",
    "voice": "voices/alt",
    "engine": "chatterbox",
    "seed": 5
   },
   {
-   "name": "lusia-litera-d",
+   "name": "lusia-litera-d-dinozaur",
    "text": "De... jak dinozaur.",
    "voice": "voices/alt",
    "engine": "chatterbox",
    "seed": 4
   },
   {
-   "name": "lusia-litera-b",
+   "name": "lusia-litera-b-banan",
    "text": "Be... jak banan.",
    "voice": "voices/alt",
    "engine": "chatterbox",
    "seed": 2
   },
   {
-   "name": "lusia-litera-s",
+   "name": "lusia-litera-s-slon",
    "text": "Es... jak słoń.",
    "voice": "voices/alt",
    "engine": "chatterbox",

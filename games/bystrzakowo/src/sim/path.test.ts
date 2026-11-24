@@ -108,16 +108,28 @@ describe('kontur kropek po krawędzi', () => {
 
 describe('litery po śladzie', () => {
   it('litery mają obrazki w katalogu, kreski w polu 0..1, runda bez powtórzeń', async () => {
-    const { LETTERS, makeLetterRound, LETTER_ROUND, resample, advance, lettersOf } = await import('./letters.ts');
-    // Obrazek każdej litery (w każdym języku) jest w katalogu; litera bez obrazka w danym języku wypada.
-    for (const lang of ['pl', 'en', 'de', 'es'] as const)
-      for (const x of lettersOf(lang)) {
-        const item = ITEMS.find((i) => i.id === x.item);
-        expect(item, `${lang} ${x.ch}`).toBeDefined();
-        // Nazwa obrazka w tym języku zaczyna się na tę literę (bez akcentów: „Árbol” na A).
-        const name = lang === 'pl' ? item!.name : ITEM_NAMES[item!.id]![lang];
-        expect(name.normalize('NFD')[0]!.toUpperCase(), `${lang} ${x.ch} ${name}`).toBe(x.ch);
+    const { LETTERS, makeLetterRound, LETTER_ROUND, resample, advance, lettersOf, LETTER_EXAMPLES, letterLines } = await import('./letters.ts');
+    const { LETTER_PIC_IDS } = await import('./letter-pics.ts');
+    // Alfabety bez liter, do których nie ma co najmniej dwóch dobrych dziecięcych słów (decyzja właściciela).
+    expect(Object.fromEntries((['pl', 'en', 'de', 'es'] as const).map((l) => [l, lettersOf(l).length]))).toEqual({ pl: 25, en: 25, de: 25, es: 24 });
+    const first = (w: string) => w.normalize('NFD')[0]!.toUpperCase();
+    for (const lang of ['pl', 'en', 'de', 'es'] as const) {
+      for (const [ch, xs] of Object.entries(LETTER_EXAMPLES[lang])) {
+        expect(LETTERS.some((g) => g.ch === ch), `${lang} kształt ${ch}`).toBe(true);
+        expect(xs.length, `${lang} ${ch}: przykłady`).toBeGreaterThanOrEqual(2);
+        expect(xs.length).toBeLessThanOrEqual(3);
+        for (const [item, word] of xs) {
+          // Obrazek: z katalogu albo tylko do liter; słowo zaczyna się na tę literę (z akcentem: „Ósemka” na Ó).
+          expect(ITEMS.some((i) => i.id === item) || LETTER_PIC_IDS.has(item), `${lang} ${ch} ${item}`).toBe(true);
+          expect(first(word), `${lang} ${ch} ${word}`).toBe(first(ch));
+          if (ch !== first(ch)) expect(word.toUpperCase().startsWith(ch), `${lang} ${ch} ${word}`).toBe(true);
+        }
       }
+      // Nazwy nagrań bez powtórzeń i tylko ASCII (pliki na każdym systemie).
+      const lines = letterLines(lang).map((x) => x.line);
+      expect(new Set(lines).size).toBe(lines.length);
+      for (const n of lines) expect(n, n).toMatch(/^litera-[a-z0-9]+-[a-z0-9-]+$/);
+    }
     for (const l of LETTERS) {
       for (const s of l.strokes) for (const [x, y] of s) {
         expect(x).toBeGreaterThanOrEqual(-0.01);
@@ -132,6 +144,11 @@ describe('litery po śladzie', () => {
       expect(new Set(round).size).toBe(LETTER_ROUND);
       expect(round.every((x) => x.level <= level)).toBe(true);
     }
+    // Kolejne rundy z tą samą literą pokazują inny przykład (dziecko widzi różne słowa).
+    const seen = new Map<string, Set<string>>();
+    const rng = new Rng(7);
+    for (let i = 0; i < 40; i++) for (const x of makeLetterRound(rng, 2)) seen.set(x.ch, (seen.get(x.ch) ?? new Set()).add(x.item));
+    expect([...seen.values()].some((items) => items.size >= 2)).toBe(true);
     // Postęp: palec wzdłuż kreski idzie do końca, palec daleko nie przesuwa.
     const pts = resample([[0, 0], [0, 1]], 0.05);
     let at = 0;

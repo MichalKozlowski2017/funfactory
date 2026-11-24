@@ -384,6 +384,12 @@ if (process.argv.includes('--warsztat')) {
   );
 }
 
+if (process.argv.includes('--litery')) {
+  // Obrazki tylko do „Pisze litery” (src/sim/letter-pics.ts): po 2 warianty, wybór w scripts/assets.sh.
+  const { LETTER_PICS } = await import('../src/sim/letter-pics.ts');
+  for (const p of LETTER_PICS)
+    tasks.push({ out: 'litery', prefix: p.id, args: ['--workflow', 'flux2-sprite', '--count', '2', '--prompt', `${p.prompt}, single object, centered, ${STYLE}, plain light gray background`] });
+}
 if (process.argv.includes('--raczka')) {
   // Rączka z samouczka: pokazuje gesty (dotknij, przeciągnij, prowadź palcem). Palec wskazujący do góry, obracana w kodzie.
   const hand = (what: string) => `${what}, single object, centered, ${STYLE}, plain light gray background`;
@@ -402,7 +408,7 @@ if (process.argv.includes('--raczka2')) {
 }
 
 for (const item of ITEMS) {
-  if ((process.argv.includes('--warsztat') || process.argv.includes('--zebatka') || process.argv.includes('--sciezka') || process.argv.includes('--znaki') || process.argv.includes('--pracownia') || process.argv.includes('--dodatki') || process.argv.includes('--historyjki') || process.argv.includes('--polana') || process.argv.includes('--kolorowanki2') || process.argv.includes('--krajobrazy') || process.argv.includes('--balwan') || process.argv.includes('--historyjki2') || process.argv.includes('--historyjki3') || process.argv.includes('--historyjki4') || process.argv.includes('--historyjki5') || process.argv.includes('--historyjki6') || process.argv.includes('--historyjki7') || process.argv.includes('--emocje2') || process.argv.includes('--raczka') || process.argv.includes('--raczka2')) && !only) break;
+  if ((process.argv.includes('--warsztat') || process.argv.includes('--zebatka') || process.argv.includes('--sciezka') || process.argv.includes('--znaki') || process.argv.includes('--pracownia') || process.argv.includes('--dodatki') || process.argv.includes('--historyjki') || process.argv.includes('--polana') || process.argv.includes('--kolorowanki2') || process.argv.includes('--krajobrazy') || process.argv.includes('--balwan') || process.argv.includes('--historyjki2') || process.argv.includes('--historyjki3') || process.argv.includes('--historyjki4') || process.argv.includes('--historyjki5') || process.argv.includes('--historyjki6') || process.argv.includes('--historyjki7') || process.argv.includes('--emocje2') || process.argv.includes('--raczka') || process.argv.includes('--raczka2') || process.argv.includes('--litery')) && !only) break;
   if (only && !only.has(item.id)) continue;
   if (!only && existsSync(join(repo, 'games/bystrzakowo/public/art/items', `${item.id}.webp`))) continue;
   if (existsSync(join(raw, 'items', `${item.id}-${SEED}.png`))) continue;
@@ -416,7 +422,7 @@ for (let i = tasks.length - 1; i >= 0; i--) {
   if (t.out !== 'items' && existsSync(join(raw, t.out, `${t.prefix}-${SEED}.png`))) tasks.splice(i, 1);
 }
 console.log(`Do wygenerowania: ${tasks.length}`);
-for (const dir of ['items', 'extra', 'warsztat', 'sciezka', 'pracownia', 'kolorowanki', 'emocje', 'historyjki', 'polana', 'krajobrazy', 'ui']) mkdirSync(join(raw, dir), { recursive: true });
+for (const dir of ['items', 'extra', 'warsztat', 'sciezka', 'pracownia', 'kolorowanki', 'emocje', 'historyjki', 'polana', 'krajobrazy', 'ui', 'litery']) mkdirSync(join(raw, dir), { recursive: true });
 // Postęp liczony w obrazkach (zadanie z --count N daje N plików .png).
 const images = tasks.reduce((n, t) => n + (t.args.includes('--count') ? Number(t.args[t.args.indexOf('--count') + 1]) : t.args.includes('ace15') ? 0 : 1), 0);
 execFileSync(job, ['bystrzakowo-items', 'Bystrzakowo: grafiki', String(images), '--dir', raw, '--glob', '*'], { stdio: 'inherit' });
