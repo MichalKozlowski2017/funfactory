@@ -12,13 +12,13 @@ BG=("" "$ART/meadow.jpg" "$ART/landscapes/forest.jpg" "$ART/realm-workshop.jpg" 
 caption() {
   local lang=$1 n=$2
   case "$lang-$n" in
-    pl-1) echo "22 zabawy w czterech krainach" ;; en-1) echo "22 games in four lands" ;; de-1) echo "22 Spiele in vier Ländern" ;; es-1) echo "22 juegos en cuatro mundos" ;;
+    pl-1) echo "21 zabaw w czterech krainach" ;; en-1) echo "21 games in four lands" ;; de-1) echo "21 Spiele in vier Ländern" ;; es-1) echo "21 juegos en cuatro mundos" ;;
     pl-2) echo "Lektor czyta wszystkie polecenia" ;; en-2) echo "Every instruction read aloud" ;; de-2) echo "Alle Anweisungen vorgelesen" ;; es-2) echo "Todas las instrucciones en voz alta" ;;
-    pl-3) echo "20 historyjek do ułożenia" ;; en-3) echo "20 picture stories to order" ;; de-3) echo "20 Bildergeschichten" ;; es-3) echo "20 cuentos para ordenar" ;;
+    pl-3) echo "24 historyjki do ułożenia" ;; en-3) echo "24 picture stories to order" ;; de-3) echo "24 Bildergeschichten" ;; es-3) echo "24 cuentos para ordenar" ;;
     pl-4) echo "Literki i cyferki palcem" ;; en-4) echo "Trace letters and numbers" ;; de-4) echo "Buchstaben und Zahlen schreiben" ;; es-4) echo "Traza letras y números" ;;
     pl-5) echo "Obrazki z naklejek" ;; en-5) echo "Create sticker pictures" ;; de-5) echo "Stickerbilder gestalten" ;; es-5) echo "Crea imágenes con calcomanías" ;;
     pl-6) echo "Kolorowanki z dużymi polami" ;; en-6) echo "Easy coloring pages" ;; de-6) echo "Einfache Ausmalbilder" ;; es-6) echo "Dibujos fáciles de colorear" ;;
-    pl-7) echo "Raport dla rodzica" ;; en-7) echo "A report for parents" ;; de-7) echo "Ein Bericht für Eltern" ;; es-7) echo "Un informe para padres" ;;
+    pl-7) echo "Postępy dziecka na wykresach" ;; en-7) echo "Progress charts for parents" ;; de-7) echo "Fortschritte im Diagramm" ;; es-7) echo "Progreso en gráficos" ;;
     pl-8) echo "Pocztówka z sukcesami tygodnia" ;; en-8) echo "A weekly postcard of successes" ;; de-8) echo "Wochenpostkarte mit Erfolgen" ;; es-8) echo "Postal semanal de logros" ;;
   esac
 }

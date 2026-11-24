@@ -56,10 +56,10 @@ wait:3500
 eval:$C.paintDemo(9)
 wait:800
 shot:s"
-    # 7. Raport dla rodzica.
+    # 7. Postępy dziecka: wykres umiejętności (próbne 10 tygodni zabawy, imię z języka gry).
     run 7 "wait:1500
-eval:eval(atob('$(b64 "$C.demoParent('progress', decodeURIComponent(escape(atob('$(b64 "$kid")'))))")'))
-wait:1500
+eval:$C.demoStats('colors')
+wait:2500
 shot:s"
     # 8. Pocztówka tygodnia.
     run 8 "wait:1500

@@ -15,18 +15,18 @@ Limity Google Play: nazwa ≤ 30, krótki opis ≤ 80, pełny opis ≤ 4000.
 
 ## Tekst promocyjny (App Store ≤ 170)
 
-- **pl:** 22 zabawy z Lusią i Bazylem: liczenie, literki, kolory, emocje i historyjki. Bez reklam i bez zbierania danych. Raport dla rodzica i pocztówka tygodnia.
-- **en:** 22 games with Lusia and Basil: counting, letters, colors, emotions and stories. No ads, no data collection. A parent report and a weekly postcard.
-- **de:** 22 Spiele mit Lusia und Basil: Zählen, Buchstaben, Farben, Gefühle und Geschichten. Ohne Werbung und ohne Datensammeln. Elternbericht und Wochenpostkarte.
-- **es:** 22 juegos con Lusia y Basil: números, letras, colores, emociones y cuentos. Sin anuncios ni recopilación de datos. Informe para padres y postal semanal.
+- **pl:** 21 zabaw z Lusią i Bazylem: liczenie, literki, kolory, emocje i historyjki. Bez reklam i bez zbierania danych. Raport dla rodzica i pocztówka tygodnia.
+- **en:** 21 games with Lusia and Basil: counting, letters, colors, emotions and stories. No ads, no data collection. A parent report and a weekly postcard.
+- **de:** 21 Spiele mit Lusia und Basil: Zählen, Buchstaben, Farben, Gefühle und Geschichten. Ohne Werbung und ohne Datensammeln. Elternbericht und Wochenpostkarte.
+- **es:** 21 juegos con Lusia y Basil: números, letras, colores, emociones y cuentos. Sin anuncios ni recopilación de datos. Informe para padres y postal semanal.
 
 ## Opis (pl)
 
-Bystrzakowo to kraina mądrych zabaw dla dzieci od 3 do 6 lat. Lusia i Bazyl, dwoje przyjaciół z plasteliny, prowadzą malucha przez 22 zabawy, które uczą liczenia, liter, kolorów, kształtów, emocji i logicznego myślenia. Wszystkie polecenia czyta lektor, więc dziecko nie musi umieć czytać.
+Bystrzakowo to kraina mądrych zabaw dla dzieci od 3 do 6 lat. Lusia i Bazyl, dwoje przyjaciół z plasteliny, prowadzą malucha przez 21 zabaw, które uczą liczenia, liter, kolorów, kształtów, emocji i logicznego myślenia. Wszystkie polecenia czyta lektor, więc dziecko nie musi umieć czytać.
 
 CZTERY KRAINY
 • Polana Zagadek: kolory, pierwsza głoska, mamy zwierzątek, pary, cienie, „co nie pasuje?”, liczenie i minki.
-• Warsztat Bazyla: co dalej?, kształty, sylaby, segregowanie, układanki i 20 historyjek do ułożenia po kolei.
+• Warsztat Bazyla: co dalej?, kształty, sylaby, segregowanie, układanki i 24 historyjki do ułożenia po kolei.
 • Ścieżka Lusi: rysowanie literek i cyferek palcem, łączenie kropek i labirynty.
 • Pracownia Malucha: kolorowanki, obrazki z naklejek w siedmiu krajobrazach i melodie do powtórzenia.
 
@@ -51,11 +51,11 @@ Języki: polski, angielski, niemiecki, hiszpański.
 
 ## Description (en)
 
-Bystrzakowo is a land of smart play for children aged 3 to 6. Lusia and Basil, two clay friends, guide your child through 22 games that teach counting, letters, colors, shapes, emotions and logical thinking. Every instruction is read aloud, so no reading is needed.
+Bystrzakowo is a land of smart play for children aged 3 to 6. Lusia and Basil, two clay friends, guide your child through 21 games that teach counting, letters, colors, shapes, emotions and logical thinking. Every instruction is read aloud, so no reading is needed.
 
 FOUR LANDS
 • Puzzle Meadow: colors, first letters, animal mommies, pairs, shadows, odd one out, counting and faces.
-• Basil's Workshop: what's next?, shapes, syllables, sorting, jigsaw puzzles and 20 picture stories to put in order.
+• Basil's Workshop: what's next?, shapes, syllables, sorting, jigsaw puzzles and 24 picture stories to put in order.
 • Lusia's Path: trace letters and numbers with a finger, dot-to-dot pictures and mazes.
 • Little Studio: coloring pages, sticker pictures in seven landscapes and tunes to repeat.
 
@@ -80,11 +80,11 @@ Languages: English, German, Spanish, Polish.
 
 ## Beschreibung (de)
 
-Bystrzakowo ist ein Land voller kluger Spiele für Kinder von 3 bis 6 Jahren. Lusia und Basil, zwei Freunde aus Knete, begleiten Ihr Kind durch 22 Spiele, die Zählen, Buchstaben, Farben, Formen, Gefühle und logisches Denken fördern. Alle Anweisungen werden vorgelesen, Lesen ist nicht nötig.
+Bystrzakowo ist ein Land voller kluger Spiele für Kinder von 3 bis 6 Jahren. Lusia und Basil, zwei Freunde aus Knete, begleiten Ihr Kind durch 21 Spiele, die Zählen, Buchstaben, Farben, Formen, Gefühle und logisches Denken fördern. Alle Anweisungen werden vorgelesen, Lesen ist nicht nötig.
 
 VIER LÄNDER
 • Rätselwiese: Farben, Anlaute, Tiermamas, Paare, Schatten, „Was passt nicht?“, Zählen und Gesichter.
-• Basils Werkstatt: Was kommt?, Formen, Silben, Sortieren, Puzzles und 20 Bildergeschichten zum Ordnen.
+• Basils Werkstatt: Was kommt?, Formen, Silben, Sortieren, Puzzles und 24 Bildergeschichten zum Ordnen.
 • Lusias Pfad: Buchstaben und Zahlen mit dem Finger schreiben, Punktebilder und Labyrinthe.
 • Kleines Atelier: Ausmalbilder, Stickerbilder in sieben Landschaften und Melodien zum Nachspielen.
 
@@ -109,11 +109,11 @@ Sprachen: Deutsch, Englisch, Spanisch, Polnisch.
 
 ## Descripción (es)
 
-Bystrzakowo es un mundo de juegos inteligentes para niños de 3 a 6 años. Lusia y Basil, dos amigos de plastilina, acompañan a tu hijo o hija en 22 juegos que enseñan números, letras, colores, formas, emociones y pensamiento lógico. Todas las instrucciones se leen en voz alta, así que no hace falta saber leer.
+Bystrzakowo es un mundo de juegos inteligentes para niños de 3 a 6 años. Lusia y Basil, dos amigos de plastilina, acompañan a tu hijo o hija en 21 juegos que enseñan números, letras, colores, formas, emociones y pensamiento lógico. Todas las instrucciones se leen en voz alta, así que no hace falta saber leer.
 
 CUATRO MUNDOS
 • Pradera de Acertijos: colores, primera letra, mamás de animales, parejas, sombras, ¿cuál sobra?, contar y caritas.
-• Taller de Basil: ¿qué sigue?, formas, sílabas, clasificar, rompecabezas y 20 cuentos para ordenar.
+• Taller de Basil: ¿qué sigue?, formas, sílabas, clasificar, rompecabezas y 24 cuentos para ordenar.
 • Sendero de Lusia: trazar letras y números con el dedo, unir puntos y laberintos.
 • Pequeño Estudio: dibujos para colorear, imágenes con calcomanías en siete paisajes y melodías para repetir.
 
@@ -183,7 +183,7 @@ No ads, no analytics, no third-party SDKs, no accounts, no network access, no da
 
 ## Wersja 1.0.0: „Co nowego”
 
-- pl: Pierwsza wersja Bystrzakowa: 22 zabawy w czterech krainach, raport dla rodzica i pocztówka tygodnia.
-- en: The first version of Bystrzakowo: 22 games in four lands, a parent report and a weekly postcard.
-- de: Die erste Version von Bystrzakowo: 22 Spiele in vier Ländern, ein Elternbericht und eine Wochenpostkarte.
-- es: La primera versión de Bystrzakowo: 22 juegos en cuatro mundos, un informe para padres y una postal semanal.
+- pl: Pierwsza wersja Bystrzakowa: 21 zabaw w czterech krainach, raport dla rodzica i pocztówka tygodnia.
+- en: The first version of Bystrzakowo: 21 games in four lands, a parent report and a weekly postcard.
+- de: Die erste Version von Bystrzakowo: 21 Spiele in vier Ländern, ein Elternbericht und eine Wochenpostkarte.
+- es: La primera versión de Bystrzakowo: 21 juegos en cuatro mundos, un informe para padres y una postal semanal.
