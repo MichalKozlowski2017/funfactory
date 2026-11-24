@@ -37,10 +37,12 @@ shot:s"
 eval:$C.play('stories')
 wait:3500
 shot:s"
-    # 4. Rysowanie literki palcem.
+    # 4. Rysowanie literki palcem: gotowa litera z obrazkiem przykładu.
     run 4 "wait:1500
 eval:$C.play('letters')
 wait:3500
+eval:$C.solve()
+wait:1300
 shot:s"
     # 5. Naklejanka: obrazek z naklejek.
     run 5 "wait:1500
