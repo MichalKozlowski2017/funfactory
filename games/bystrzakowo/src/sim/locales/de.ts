@@ -77,11 +77,13 @@ export const DE: Record<string, string> = {
   trialHasEndedPuzzle: 'Die Testphase ist vorbei: Die Rätselwiese bleibt offen',
   onlyDaysWhenChild: 'Es zählen nur Tage, an denen Ihr Kind spielt. Danach bleibt die Rätselwiese offen, und die Vollversion schaltet alle Länder, den ausführlichen Bericht und die Postkarte für immer frei. Einmalig, ohne Abo und ohne Werbung.',
   fullVersionUnlocksBasils: 'Die Vollversion schaltet Basils Werkstatt, Lusias Pfad und das kleine Atelier frei, dazu den ausführlichen Bericht und die Wochenpostkarte. Einmalig, ohne Abo und ohne Werbung, auf allen Geräten der Familie.',
+  fullVersionUnlocksAndroid: 'Die Vollversion schaltet Basils Werkstatt, Lusias Pfad und das kleine Atelier frei, dazu den ausführlichen Bericht und die Wochenpostkarte. Einmalig, ohne Abo und ohne Werbung, auf allen Ihren Geräten.',
   buyFullVersion: 'Vollversion kaufen',
   buyFullVersionPrice: 'Vollversion kaufen – {price}',
   restorePurchase: 'Kauf wiederherstellen',
   oneMoment: 'Einen Moment…',
   noPurchaseFoundAccount: 'Kein Kauf für dieses Konto gefunden. Prüfen Sie, ob das Gerät mit demselben Konto angemeldet ist wie beim Kauf.',
+  purchasePending: 'Der Kauf wartet auf Bestätigung (Zustimmung der Eltern oder Zahlung). Die Vollversion wird automatisch freigeschaltet, sobald der Store ihn bestätigt.',
   purchaseWasNotCompleted: 'Der Kauf wurde nicht abgeschlossen. Sie können es noch einmal versuchen.',
   storeUnavailableNoInternet: 'Der Store ist nicht erreichbar (kein Internet oder Testversion). Bitte später erneut versuchen.',
   shapes: 'Formen',
@@ -167,4 +169,7 @@ export const DE: Record<string, string> = {
   screenFreePlayIdea: 'Spielidee ohne Bildschirm',
   // Demo child name for playtests and store screenshots.
   demoChildName: 'Lena',
+  // Privacy policy (parent zone, settings).
+  privacyPolicy: "Datenschutzerklärung",
+  privacyBody: "Stand: November 2026.\n\nBystrzakowo erhebt, sendet und teilt keine Daten. Es gibt keine Werbung, keine Analyse, kein Tracking und keine Konten, und die App verbindet sich nicht mit unseren Servern.\n\nAuf dem Gerät wird nur gespeichert, was das Spiel braucht: der Fortschritt (Stufen, Sticker, gelöste Aufgaben für den Elternbericht), der Vorname des Kindes, falls ein Elternteil ihn einträgt, die Werke des Kindes (Ausmalbilder und Stickerbilder) und die Einstellungen. Diese Daten verlassen das Gerät nicht. Sie werden beim Deinstallieren der App oder mit „Fortschritt zurücksetzen“ gelöscht.\n\nEin Bild oder eine Postkarte kann nur im Elternbereich hinter der Elternsperre geteilt werden. Sie gehen an die App, die der Elternteil wählt (z. B. Fotos oder Nachrichten); wir erhalten sie nicht.\n\nDer Kauf der Vollversion läuft vollständig über Apple (App Store) oder Google (Google Play). Zahlungsdaten verarbeiten diese Unternehmen; wir erhalten sie nicht.\n\nKontakt: mkdev.appslab@gmail.com\nVollständige Fassung: mkdev.com.pl/apps/bystrzakowo/privacy-policy",
 };

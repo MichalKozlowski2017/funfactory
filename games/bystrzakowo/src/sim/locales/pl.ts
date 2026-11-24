@@ -77,11 +77,13 @@ export const PL: Record<string, string> = {
   trialHasEndedPuzzle: 'Próba się skończyła: otwarta jest Polana Zagadek',
   onlyDaysWhenChild: 'Liczą się tylko dni, w które dziecko się bawi. Potem zostaje Polana Zagadek, a pełna wersja otwiera wszystkie krainy, pełny raport i pocztówkę na zawsze. Jednorazowo, bez subskrypcji i reklam.',
   fullVersionUnlocksBasils: 'Pełna wersja otwiera Warsztat Bazyla, Ścieżkę Lusi i Pracownię Malucha, pełny raport i pocztówkę tygodnia. Jednorazowo, bez subskrypcji i reklam, na wszystkich urządzeniach rodziny.',
+  fullVersionUnlocksAndroid: 'Pełna wersja otwiera Warsztat Bazyla, Ścieżkę Lusi i Pracownię Malucha, pełny raport i pocztówkę tygodnia. Jednorazowo, bez subskrypcji i reklam, na wszystkich Twoich urządzeniach.',
   buyFullVersion: 'Kup pełną wersję',
   buyFullVersionPrice: 'Kup pełną wersję – {price}',
   restorePurchase: 'Przywróć zakup',
   oneMoment: 'Chwileczkę…',
   noPurchaseFoundAccount: 'Nie znaleziono zakupu na tym koncie. Sprawdź, czy telefon jest zalogowany na to samo konto co przy zakupie.',
+  purchasePending: 'Zakup czeka na zatwierdzenie (zgoda rodzica albo płatność). Pełna wersja otworzy się sama, gdy sklep go potwierdzi.',
   purchaseWasNotCompleted: 'Zakup nie został zakończony. Można spróbować jeszcze raz.',
   storeUnavailableNoInternet: 'Sklep jest niedostępny (brak internetu albo wersja testowa). Spróbuj później.',
   shapes: 'Kształty',
@@ -167,4 +169,7 @@ export const PL: Record<string, string> = {
   screenFreePlayIdea: 'Pomysł na zabawę bez ekranu',
   // Demo child name for playtests and store screenshots.
   demoChildName: 'Zosia',
+  // Privacy policy (parent zone, settings).
+  privacyPolicy: "Polityka prywatności",
+  privacyBody: "Ostatnia aktualizacja: listopad 2026.\n\nBystrzakowo nie zbiera, nie wysyła i nie udostępnia żadnych danych. Nie ma reklam, analityki, śledzenia ani kont, a aplikacja nie łączy się z naszymi serwerami.\n\nNa urządzeniu zapisujemy tylko to, co potrzebne do zabawy: postępy (poziomy, naklejki, rozwiązane zadania do raportu dla rodzica), imię dziecka, jeśli rodzic je poda, prace dziecka (kolorowanki i obrazki z naklejek) oraz ustawienia. Te dane nie opuszczają urządzenia. Usuwa je odinstalowanie aplikacji albo „Wyzeruj postępy”.\n\nObrazek lub pocztówkę można udostępnić tylko w strefie rodzica, za bramką. Trafiają do aplikacji wybranej przez rodzica (np. Zdjęcia, wiadomości); my ich nie dostajemy.\n\nZakup pełnej wersji obsługuje w całości Apple (App Store) albo Google (Google Play). Dane płatności przetwarzają te firmy; my ich nie otrzymujemy.\n\nKontakt: mkdev.appslab@gmail.com\nPełna treść: mkdev.com.pl/apps/bystrzakowo/privacy-policy",
 };

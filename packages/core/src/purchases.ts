@@ -23,25 +23,35 @@ export async function getProduct(id: string): Promise<StoreProduct | null> {
   }
 }
 
-/** Czy produkt jest kupiony (także przez Chmurę rodzinną na iOS). */
+/** Czy produkt jest kupiony (także przez Chmurę rodzinną na iOS). Zwrócone i odebrane zakupy się nie liczą. */
 export async function owns(id: string): Promise<boolean> {
   if (!isNative()) return false;
   try {
-    const { purchases } = await NativePurchases.getPurchases({ productType: PURCHASE_TYPE.INAPP });
-    return purchases.some((t) => t.productIdentifier === id && (platformName() === 'ios' || t.purchaseState === '1'));
+    // iOS: tylko bieżące uprawnienia zalogowanego Apple ID (bez zwrotów i zakupów z innego konta na tym urządzeniu).
+    const { purchases } = await NativePurchases.getPurchases({ productType: PURCHASE_TYPE.INAPP, onlyCurrentEntitlements: true });
+    const ios = platformName() === 'ios';
+    const t = purchases.find((x) => x.productIdentifier === id && (ios ? !x.revocationDate : x.purchaseState === '1'));
+    if (!t) return false;
+    // Android: zakup opłacony później (np. gotówką) trzeba potwierdzić w ciągu 3 dni, inaczej Google zwraca pieniądze.
+    if (!ios && t.isAcknowledged === false && t.purchaseToken) await NativePurchases.acknowledgePurchase({ purchaseToken: t.purchaseToken }).catch(() => {});
+    return true;
   } catch {
     return false;
   }
 }
 
-/** Zakup; true, gdy po nim produkt jest kupiony (false: anulowany albo błąd). */
-export async function buy(id: string): Promise<boolean> {
-  if (!isNative()) return false;
+/** Wynik zakupu: kupione, czeka (zgoda rodzica „Poproś o zakup”, płatność gotówką) albo nie doszło do skutku. */
+export type BuyResult = 'bought' | 'pending' | 'failed';
+
+/** Zakup; „pending” rozstrzyga się później (sprawdza to `owns` przy starcie gry). */
+export async function buy(id: string): Promise<BuyResult> {
+  if (!isNative()) return 'failed';
   try {
-    await NativePurchases.purchaseProduct({ productIdentifier: id, productType: PURCHASE_TYPE.INAPP, quantity: 1 });
-    return await owns(id);
-  } catch {
-    return false;
+    const t = await NativePurchases.purchaseProduct({ productIdentifier: id, productType: PURCHASE_TYPE.INAPP, quantity: 1 });
+    if (platformName() !== 'ios' && t?.purchaseState === '0') return 'pending';
+    return (await owns(id)) ? 'bought' : 'failed';
+  } catch (e) {
+    return /pending|deferred/i.test(String((e as { message?: string })?.message ?? e)) ? 'pending' : 'failed';
   }
 }
 

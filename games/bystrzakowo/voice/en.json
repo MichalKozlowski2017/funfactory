@@ -880,8 +880,9 @@
   },
   {
    "name": "lusia-realm-asleep",
-   "text": "This land is still asleep. Ask a grown-up.",
-   "voice": "voices/lusia-en-calm"
+   "text": "This land is still asleep. Let's play in the Puzzle Meadow.",
+   "voice": "voices/lusia-en-calm",
+   "seed": 1
   },
   {
    "name": "lusia-realm-path",

@@ -77,11 +77,13 @@ export const ES: Record<string, string> = {
   trialHasEndedPuzzle: 'La prueba terminó: la Pradera de Acertijos sigue abierta',
   onlyDaysWhenChild: 'Solo cuentan los días en que tu hijo o hija juega. Después queda la Pradera de Acertijos, y la versión completa desbloquea todos los mundos, el informe completo y la postal para siempre. Un solo pago, sin suscripción y sin anuncios.',
   fullVersionUnlocksBasils: 'La versión completa desbloquea el Taller de Basil, el Sendero de Lusia y el Pequeño Estudio, el informe completo y la postal semanal. Un solo pago, sin suscripción y sin anuncios, en todos los dispositivos de la familia.',
+  fullVersionUnlocksAndroid: 'La versión completa desbloquea el Taller de Basil, el Sendero de Lusia y el Pequeño Estudio, el informe completo y la postal semanal. Un solo pago, sin suscripción y sin anuncios, en todos tus dispositivos.',
   buyFullVersion: 'Comprar la versión completa',
   buyFullVersionPrice: 'Comprar la versión completa – {price}',
   restorePurchase: 'Restaurar compra',
   oneMoment: 'Un momento…',
   noPurchaseFoundAccount: 'No se encontró ninguna compra en esta cuenta. Comprueba que el dispositivo use la misma cuenta que al comprar.',
+  purchasePending: 'La compra está pendiente de aprobación (de un adulto o del pago). La versión completa se desbloqueará sola cuando la tienda la confirme.',
   purchaseWasNotCompleted: 'La compra no se completó. Puedes intentarlo de nuevo.',
   storeUnavailableNoInternet: 'La tienda no está disponible (sin internet o versión de prueba). Inténtalo más tarde.',
   shapes: 'Formas',
@@ -167,4 +169,7 @@ export const ES: Record<string, string> = {
   screenFreePlayIdea: 'Idea de juego sin pantalla',
   // Demo child name for playtests and store screenshots.
   demoChildName: 'Sofía',
+  // Privacy policy (parent zone, settings).
+  privacyPolicy: "Política de privacidad",
+  privacyBody: "Última actualización: noviembre de 2026.\n\nBystrzakowo no recopila, envía ni comparte ningún dato. No hay anuncios, analítica, seguimiento ni cuentas, y la aplicación no se conecta a nuestros servidores.\n\nEn el dispositivo solo se guarda lo que el juego necesita: el progreso (niveles, calcomanías, tareas resueltas para el informe para padres), el nombre del niño o la niña si un adulto lo escribe, sus creaciones (dibujos coloreados e imágenes con calcomanías) y los ajustes. Estos datos no salen del dispositivo. Se borran al desinstalar la aplicación o con «Borrar el progreso».\n\nUna imagen o una postal solo se puede compartir en la zona para padres, tras el control parental. Va a la aplicación que elija el adulto (por ejemplo, Fotos o Mensajes); nosotros no la recibimos.\n\nLa compra de la versión completa la gestionan por completo Apple (App Store) o Google (Google Play). Ellos tratan los datos de pago; nosotros no los recibimos.\n\nContacto: mkdev.appslab@gmail.com\nPolítica completa: mkdev.com.pl/apps/bystrzakowo/privacy-policy",
 };

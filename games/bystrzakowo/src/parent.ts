@@ -1,5 +1,5 @@
 import { BlurFilter, Container, Graphics, Rectangle, Sprite, Text, Texture } from 'pixi.js';
-import { haptics } from '@funfactory/core';
+import { haptics, platformName } from '@funfactory/core';
 import { shareImage } from '@funfactory/core/share';
 import { Button, type Game, type View } from '@funfactory/kit2d';
 import { loadArt, startMusic, stopMusic, type Art } from './assets.ts';
@@ -203,6 +203,8 @@ export class ParentPanel extends Container {
   private view!: View;
   private box = { x: 0, y: 0, w: 0, h: 0 };
   private scroll = 0;
+  /** Settings tab shows the privacy policy instead of the buttons. */
+  private privacy = false;
   private contentH = 0;
   private drag: { y: number; scroll: number; moved: number } | null = null;
   private overlay: Container | null = null;
@@ -302,6 +304,7 @@ export class ParentPanel extends Container {
   }
 
   private setTab(tab: Tab): void {
+    this.privacy = false;
     if (tab === this.tab && !this.skill) return;
     this.tab = tab;
     this.skill = null;
@@ -345,7 +348,7 @@ export class ParentPanel extends Container {
 
     this.content.x = x + 30;
     const cw = w - 60;
-    const h = this.tab === 'progress' ? (this.skill ? this.renderSkill(cw) : this.renderProgress(cw)) : this.tab === 'album' ? this.renderAlbum(cw) : this.tab === 'postcard' ? this.renderPostcardTab(cw) : this.renderSettings(cw);
+    const h = this.tab === 'progress' ? (this.skill ? this.renderSkill(cw) : this.renderProgress(cw)) : this.tab === 'album' ? this.renderAlbum(cw) : this.tab === 'postcard' ? this.renderPostcardTab(cw) : this.privacy ? this.renderPrivacy(cw) : this.renderSettings(cw);
     this.contentH = h;
     this.setScroll(this.scroll);
   }
@@ -390,7 +393,7 @@ export class ParentPanel extends Container {
       : tr('trialHasEndedPuzzle');
     const body = t.active
       ? tr('onlyDaysWhenChild')
-      : tr('fullVersionUnlocksBasils');
+      : tr(platformName() === 'android' ? 'fullVersionUnlocksAndroid' : 'fullVersionUnlocksBasils');
     return this.card({ x, y }, cw, (c, iw) => {
       const tt = this.text(title, 29, { weight: '800', wrap: iw });
       const b = this.text(body, 24, { color: SOFT, wrap: iw });
@@ -420,18 +423,21 @@ export class ParentPanel extends Container {
     this.buying = true;
     this.shopNote = '';
     this.render();
-    const ok = restoreOnly ? await restorePurchase() : await purchase();
+    const result = restoreOnly ? ((await restorePurchase()) ? 'bought' : 'failed') : await purchase();
     this.buying = false;
     if (this.destroyed) return;
-    if (ok) {
+    if (result === 'bought') {
       haptics.success();
       this.onUnlock();
     } else
-      this.shopNote = this.storePrice
-        ? restoreOnly
-          ? tr('noPurchaseFoundAccount')
-          : tr('purchaseWasNotCompleted')
-        : tr('storeUnavailableNoInternet');
+      this.shopNote =
+        result === 'pending'
+          ? tr('purchasePending')
+          : this.storePrice
+            ? restoreOnly
+              ? tr('noPurchaseFoundAccount')
+              : tr('purchaseWasNotCompleted')
+            : tr('storeUnavailableNoInternet');
     this.render();
   }
 
@@ -928,6 +934,23 @@ export class ParentPanel extends Container {
 
   // ——— Settings ———
 
+  private renderPrivacy(cw: number): number {
+    const back = this.button(tr('back'), 200, '#c9b8a6', () => {
+      this.privacy = false;
+      this.scroll = 0;
+      this.render();
+    }, 70, 24);
+    back.position.set(100, 35);
+    this.content.addChild(back);
+    const title = this.text(tr('privacyPolicy'), 34, { weight: '800' });
+    title.position.set(0, 90);
+    this.content.addChild(title);
+    const body = this.text(tr('privacyBody'), 23, { wrap: Math.min(cw, 1100) });
+    body.position.set(0, title.y + title.height + 18);
+    this.content.addChild(body);
+    return body.y + body.height + 40;
+  }
+
   private renderSettings(cw: number): number {
     let y = 0;
     const info = this.text(tr('bystrzakowoWorksOfflineHas'), 25, { color: SOFT, wrap: cw });
@@ -1008,6 +1031,12 @@ export class ParentPanel extends Container {
       reset.setLabel(tr('progressReset'));
     });
     add(reset);
+    // Privacy policy (required by both stores, also inside the app): full text here, no outgoing link.
+    add(this.button(tr('privacyPolicy'), bw, '#8a9bb0', () => {
+      this.privacy = true;
+      this.scroll = 0;
+      this.render();
+    }));
     y = Math.max(ys[0]!, twoCol ? ys[1]! : 0);
     const t = trial();
     const ver = this.text(isBought() ? tr('versionFull') : t.active ? tr('versionTrialFullAccess') : tr('versionFreePuzzleMeadow'), 22, { color: '#9a8b7c' });

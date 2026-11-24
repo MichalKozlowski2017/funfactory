@@ -1230,10 +1230,10 @@
   },
   {
    "name": "lusia-realm-asleep",
-   "text": "Dieses Land schläft noch. Frag einen Erwachsenen.",
+   "text": "Dieses Land schläft noch. Spielen wir auf der Rätselwiese.",
    "voice": "voices/alt",
    "engine": "chatterbox",
-   "seed": 1
+   "seed": 2
   },
   {
    "name": "lusia-realm-path",

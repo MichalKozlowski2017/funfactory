@@ -77,11 +77,13 @@ export const EN: Record<string, string> = {
   trialHasEndedPuzzle: 'The trial has ended: Puzzle Meadow stays open',
   onlyDaysWhenChild: 'Only days when your child plays are counted. Afterwards Puzzle Meadow stays open, and the full version unlocks all lands, the full report and the postcard forever. One-time purchase, no subscription, no ads.',
   fullVersionUnlocksBasils: 'The full version unlocks Basil\'s Workshop, Lusia\'s Path and the Little Studio, the full report and the weekly postcard. One-time purchase, no subscription, no ads, on all family devices.',
+  fullVersionUnlocksAndroid: 'The full version unlocks Basil\'s Workshop, Lusia\'s Path and the Little Studio, the full report and the weekly postcard. One-time purchase, no subscription, no ads, on all your devices.',
   buyFullVersion: 'Buy the full version',
   buyFullVersionPrice: 'Buy the full version – {price}',
   restorePurchase: 'Restore purchase',
   oneMoment: 'One moment…',
   noPurchaseFoundAccount: 'No purchase found for this account. Check that the device is signed in with the same account used for the purchase.',
+  purchasePending: 'The purchase is waiting for approval (parent approval or payment). The full version unlocks by itself once the store confirms it.',
   purchaseWasNotCompleted: 'The purchase was not completed. You can try again.',
   storeUnavailableNoInternet: 'The store is unavailable (no internet or a test version). Please try again later.',
   shapes: 'Shapes',
@@ -167,4 +169,7 @@ export const EN: Record<string, string> = {
   screenFreePlayIdea: 'Screen-free play idea',
   // Demo child name for playtests and store screenshots.
   demoChildName: 'Emma',
+  // Privacy policy (parent zone, settings).
+  privacyPolicy: "Privacy policy",
+  privacyBody: "Last updated: November 2026.\n\nBystrzakowo does not collect, send or share any data. There are no ads, analytics, tracking or accounts, and the app does not connect to our servers.\n\nThe device stores only what the game needs: progress (levels, stickers, solved tasks for the parent report), the child's first name if a parent enters it, the child's creations (coloring pages and sticker pictures) and settings. This data never leaves the device. Uninstalling the app or \"Reset progress\" deletes it.\n\nA picture or postcard can be shared only in the parent zone, behind the parental gate. It goes to the app the parent chooses (for example Photos or Messages); we never receive it.\n\nThe full version is purchased entirely through Apple (App Store) or Google (Google Play). Payment data is handled by them; we never receive it.\n\nContact: mkdev.appslab@gmail.com\nFull policy: mkdev.com.pl/apps/bystrzakowo/privacy-policy",
 };

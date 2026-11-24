@@ -5,7 +5,7 @@
  *
  * Playtests: `?free` (or a build with `VITE_PREVIEW=free`) fakes the end of the trial without a purchase, `?full` fakes a bought full version.
  */
-import { buy, getProduct, owns, restore } from '@funfactory/core/purchases';
+import { buy, getProduct, owns, restore, type BuyResult } from '@funfactory/core/purchases';
 import { today } from './log.ts';
 import { markPlayDay, realmOpen, trialState, TRIAL_DAYS, type TrialSave, type TrialState } from './sim/trial.ts';
 import type { RealmId } from './sim/realms.ts';
@@ -67,5 +67,10 @@ async function unlock(ok: boolean): Promise<boolean> {
   return ok;
 }
 
-export const purchase = async (): Promise<boolean> => unlock(await buy(PRODUCT_ID));
+/** Purchase: 'pending' (Ask to Buy, cash payment) unlocks later, at the next start (syncPurchase). */
+export const purchase = async (): Promise<BuyResult> => {
+  const r = await buy(PRODUCT_ID);
+  if (r === 'bought') await unlock(true);
+  return r;
+};
 export const restorePurchase = async (): Promise<boolean> => unlock(await restore(PRODUCT_ID));

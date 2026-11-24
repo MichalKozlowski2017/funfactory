@@ -139,9 +139,9 @@ Idiomas: español, inglés, alemán, polaco.
 ## Słowa kluczowe (App Store ≤ 100 znaków)
 
 - **pl:** przedszkole,dla dzieci,nauka,liczenie,literki,zagadki,logika,kolorowanka,edukacja,maluch
-- **en:** preschool,toddler,kids,learning,counting,abc,letters,puzzle,toddler games,kindergarten
+- **en:** preschool,toddler,kids,learning,counting,abc,letters,puzzle,phonics,kindergarten,shapes
 - **de:** kita,kinder,lernspiele,zählen,buchstaben,rätsel,vorschule,kindergarten,logik,malen
-- **es:** preescolar,niños,aprender,números,letras,abc,acertijos,juegos educativos,colorear,kinder
+- **es:** preescolar,niños,aprender,números,letras,abc,acertijos,juegos educativos,colorear,formas
 
 ## Kategorie
 
@@ -163,13 +163,15 @@ Idiomas: español, inglés, alemán, polaco.
 ## Prywatność: App Store „App Privacy”
 
 - **Data Not Collected** (Dane nie są zbierane).
-- Brak śledzenia (ATT nie jest używane), brak zewnętrznych SDK, brak kont.
+- Brak śledzenia (ATT nie jest używane), brak zewnętrznych SDK zbierających dane, brak kont.
+- Polityka prywatności: w aplikacji (strefa rodzica → Ustawienia → Polityka prywatności) i pod adresem https://mkdev.com.pl/apps/bystrzakowo/privacy-policy (do opublikowania).
 
 ## Zakup w aplikacji
 
 - Produkt: `bystrzakowo.full`, typ: bez możliwości ponownego użycia (Non-Consumable / jednorazowy), cena 24,99 zł (Apple: odpowiedni próg cenowy), Chmura rodzinna: włączona.
 - Nazwa i opis produktu: pl „Pełna wersja: Wszystkie krainy, pełny raport dla rodzica i pocztówka tygodnia. Jednorazowo.”; en „Full version: All lands, the full parent report and the weekly postcard. One-time purchase.”; de „Vollversion: Alle Länder, ausführlicher Elternbericht und Wochenpostkarte. Einmaliger Kauf.”; es „Versión completa: Todos los mundos, el informe completo para padres y la postal semanal. Un solo pago.”
 - Szczegóły ustawienia w sklepach: `docs/bystrzakowo-zakupy.md`.
+- Zrzut do recenzji zakupu (Apple): `store/iap-review.png` (karta „Buy the full version” w Ustawieniach strefy rodzica, po końcu próby).
 
 ## Notatki dla recenzji (App Review / Google)
 
@@ -177,9 +179,9 @@ Bystrzakowo is an educational app for children aged 3–6 (Kids category, Ages 5
 
 Parental gate: the parent zone (gear icon, top left) opens after pressing and holding the gear for 2 seconds. The in-app purchase, "Restore purchase" and every Share button additionally require solving a multiplication question (adult gate). Everything aimed at adults is inside the parent zone: the progress report, the album with the Share button (system share sheet), the weekly postcard, settings, and the in-app purchase.
 
-In-app purchase: one non-consumable product, "bystrzakowo.full" (full version). A fresh install has a free trial of 3 days of play with everything open; after that, only the first land (Puzzle Meadow) stays open and the other lands show a sleeping overlay; tapping them only plays a voice line asking the child to get a parent. The purchase and "Restore purchase" buttons are in the parent zone (Progress and Settings tabs).
+In-app purchase: one non-consumable product, "bystrzakowo.full" (full version). A fresh install has a free trial of 3 days of play with everything open; after that, only the first land (Puzzle Meadow) stays open and the other lands show a sleeping overlay; tapping them only plays a neutral voice line ("This land is still asleep. Let's play in the Puzzle Meadow."). Trial days count only days on which the child plays. The purchase and "Restore purchase" buttons are only in the parent zone (Progress and Settings tabs) and are visible during the trial too. Holding the gear opens the parent zone only; it contains no purchase or link by itself.
 
-No ads, no analytics, no third-party SDKs, no accounts, no network access, no data collection. All progress and the optional child's name are stored only on the device.
+No ads, no analytics, no accounts, no data collection, and no third-party SDKs that collect data (only open-source Capacitor plugins; the purchase is handled by StoreKit / Google Play Billing). No network access except the store purchase. All progress and the optional child's name are stored only on the device. The privacy policy is available inside the app (parent zone > Settings > Privacy policy) and at https://mkdev.com.pl/apps/bystrzakowo/privacy-policy.
 
 ## Wersja 1.0.0: „Co nowego”
 

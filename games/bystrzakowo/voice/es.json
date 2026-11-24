@@ -1230,10 +1230,10 @@
   },
   {
    "name": "lusia-realm-asleep",
-   "text": "Este mundo todavía está dormido. Pídele ayuda a un adulto.",
+   "text": "Este mundo todavía duerme. Juguemos en la Pradera de Acertijos.",
    "voice": "voices/alt",
    "engine": "chatterbox",
-   "seed": 3
+   "seed": 1
   },
   {
    "name": "lusia-realm-path",
