@@ -1,4 +1,4 @@
-import { Container, Graphics, Rectangle, Sprite, Text, Texture } from 'pixi.js';
+import { BlurFilter, Container, Graphics, Rectangle, Sprite, Text, Texture } from 'pixi.js';
 import { haptics } from '@funfactory/core';
 import { shareImage } from '@funfactory/core/share';
 import { Button, type Game, type View } from '@funfactory/kit2d';
@@ -15,6 +15,8 @@ import { LIMITS, reset as resetSession } from './session.ts';
 import { COLORS, FONT as GAME_FONT } from './ui.ts';
 import { tr } from './sim/i18n.ts';
 import { lang, LANGS, type Lang } from './sim/lang.ts';
+import { lineChart } from './chart.ts';
+import { accuracy, enoughPoints, itemName, itemsOf, itemState, mastery, milestones, sampleAccuracy, sampleTempo, SKILLS, tempo, type ItemState, type Point, type Range, type SkillDef, type SkillId } from './sim/skills.ts';
 
 const HOLD = 2;
 const FONT = 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif';
@@ -192,6 +194,10 @@ export class ParentPanel extends Container {
   private readonly clip = new Graphics();
   private buttons: Button[] = [];
   private tab: Tab = 'postepy';
+  /** Szczegóły umiejętności w zakładce Postępy (null: lista „Przed szkołą”). */
+  private skill: SkillId | null = null;
+  /** Zakres wykresów: ostatnie dni albo tygodnie (wybór rodzica). */
+  private range: Range = 'tygodnie';
   private view!: View;
   private box = { x: 0, y: 0, w: 0, h: 0 };
   private scroll = 0;
@@ -286,8 +292,9 @@ export class ParentPanel extends Container {
   }
 
   private setTab(tab: Tab): void {
-    if (tab === this.tab) return;
+    if (tab === this.tab && !this.skill) return;
     this.tab = tab;
+    this.skill = null;
     this.scroll = 0;
     this.confirmReset = false;
     this.render();
@@ -328,7 +335,7 @@ export class ParentPanel extends Container {
 
     this.content.x = x + 30;
     const cw = w - 60;
-    const h = this.tab === 'postepy' ? this.renderProgress(cw) : this.tab === 'album' ? this.renderAlbum(cw) : this.tab === 'pocztowka' ? this.renderPostcardTab(cw) : this.renderSettings(cw);
+    const h = this.tab === 'postepy' ? (this.skill ? this.renderSkill(cw) : this.renderProgress(cw)) : this.tab === 'album' ? this.renderAlbum(cw) : this.tab === 'pocztowka' ? this.renderPostcardTab(cw) : this.renderSettings(cw);
     this.contentH = h;
     this.setScroll(this.scroll);
   }
@@ -443,12 +450,13 @@ export class ParentPanel extends Container {
     y += 16;
     const shop = this.shopCard(y, cw);
     if (shop) y += shop + 24;
+    y = this.skillList(cw, y);
 
     if (!hasFull()) {
       y += this.card({ x: 0, y }, cw, (c, iw) => {
         const t = this.text(tr('Pełny raport w pełnej wersji'), 30, { weight: '800' });
         const b = this.text(
-          tr('• Co dziecko już umie: liczenie, głoski i literki, kolory, kształty, emocje, logika.\n• Co sprawia jeszcze kłopot i nad czym popracować.\n• Pomysły na zabawę bez ekranu, dobrane do postępów.\n• Cotygodniowa pocztówka z sukcesami do wysłania bliskim.'),
+          tr('• Wykresy postępów w każdej umiejętności: dzień po dniu i tydzień po tygodniu.\n• Tempo myślenia: jak szybko i pewnie dziecko odpowiada.\n• Odkrycia z datami i pomysły na zabawę bez ekranu.\n• Cotygodniowa pocztówka z sukcesami do wysłania bliskim.'),
           25,
           { color: SOFT, wrap: iw },
         );
@@ -459,26 +467,6 @@ export class ParentPanel extends Container {
       return y + 20;
     }
 
-    const cols = cw >= 980 ? 2 : 1;
-    const gap = 22;
-    const colW = (cw - gap * (cols - 1)) / cols;
-    for (let i = 0; i < r.skills.length; i += cols) {
-      let rowH = 0;
-      for (let k = 0; k < cols && i + k < r.skills.length; k++) {
-        const s = r.skills[i + k]!;
-        const h = this.card({ x: k * (colW + gap), y }, colW, (c, iw) => {
-          const t = this.text(s.title, 29, { weight: '800' });
-          const st = this.stars(s.stars);
-          st.position.set(iw - 97, 20);
-          const body = this.text(s.lines.join('\n'), 24, { color: SOFT, wrap: iw });
-          body.y = 50;
-          c.addChild(t, st, body);
-          return 50 + body.height;
-        });
-        rowH = Math.max(rowH, h);
-      }
-      y += rowH + gap;
-    }
     y += this.card({ x: 0, y }, cw, (c, iw) => {
       const t = this.text(tr('Pomysły na zabawę bez ekranu'), 29, { weight: '800' });
       const body = this.text(r.tips.map((x) => `• ${x}`).join('\n'), 25, { color: SOFT, wrap: iw });
@@ -487,10 +475,256 @@ export class ParentPanel extends Container {
       return 50 + body.height;
     }, 0xeef8e8);
     y += 20;
-    const note = this.text(tr('Gwiazdki pokazują, jak dziecku idzie w danej dziedzinie. Wszystko liczy się tylko na tym urządzeniu.'), 21, { color: '#9a8b7c', wrap: cw });
+    const note = this.text(tr('Pokazujemy postęp tego dziecka, bez porównań z innymi dziećmi. Wszystko liczy się tylko na tym urządzeniu.'), 21, { color: '#9a8b7c', wrap: cw });
     note.y = y;
     this.content.addChild(note);
     return y + note.height + 20;
+  }
+
+  // ——— Przed szkołą: lista umiejętności i szczegóły z wykresami ———
+
+  private stageName(stage: number): string {
+    return [tr('jeszcze nie było'), tr('ćwiczy'), tr('radzi sobie'), tr('idzie pewnie')][stage] ?? '';
+  }
+
+  private dateLabel(day: string): string {
+    const [y, m, d] = day.split('-').map(Number) as [number, number, number];
+    return new Date(y, m - 1, d).toLocaleDateString(lang(), { day: 'numeric', month: 'numeric' });
+  }
+
+  /** Kłódka (wersja darmowa: wykresy są w pełnej wersji). */
+  private lock(size: number): Graphics {
+    const k = size / 40;
+    return new Graphics()
+      .roundRect(-12 * k, -18 * k, 24 * k, 26 * k, 12 * k)
+      .stroke({ color: 0x9a8b7c, width: 5 * k })
+      .roundRect(-18 * k, -4 * k, 36 * k, 26 * k, 7 * k)
+      .fill({ color: 0x9a8b7c });
+  }
+
+  /** Lista „Przed szkołą”: każda umiejętność w wierszu (pasek, wynik, mały wykres, tempo). Dotknięcie: szczegóły. */
+  private skillList(cw: number, y0: number): number {
+    let y = y0;
+    const full = hasFull();
+    const j = journal();
+    const t = today();
+    const title = this.text(tr('Przed szkołą'), 34, { weight: '800' });
+    title.y = y;
+    const sub = this.text(tr('Dotknij umiejętności, żeby zobaczyć wykres postępów.'), 22, { color: SOFT });
+    sub.position.set(0, y + 46);
+    this.content.addChild(title, sub);
+    y += 86;
+    const rowH = 78;
+    const wide = cw >= 860;
+    const nameW = wide ? cw * 0.33 : cw * 0.46;
+    const barW = wide ? cw * 0.2 : cw * 0.24;
+    for (const def of SKILLS) {
+      const m = mastery(def, j, state.progress.levels, t);
+      const row = new Container();
+      row.y = y;
+      const h = rowH - 10;
+      row.addChild(new Graphics().roundRect(0, 0, cw, h, 18).fill({ color: 0xffffff }).stroke({ color: 0xeadfce, width: 3 }));
+      const name = this.text(tr(def.name), 25, { weight: '800' });
+      name.anchor.set(0, 0.5);
+      name.position.set(18, h / 2);
+      if (name.width > nameW - 24) name.scale.set((nameW - 24) / name.width);
+      const bar = new Graphics().roundRect(0, -10, barW, 20, 10).fill({ color: 0xf1e8da });
+      if (m.value > 0) bar.roundRect(0, -10, Math.max(20, barW * m.value), 20, 10).fill({ color: 0x5cc36a });
+      bar.position.set(nameW, h / 2);
+      const score = this.text(m.of !== undefined ? tr('{ok} z {of}', { ok: m.ok ?? 0, of: m.of }) : this.stageName(m.stage ?? 0), 22, { color: SOFT, weight: '700' });
+      score.anchor.set(0, 0.5);
+      score.position.set(nameW + barW + 14, h / 2);
+      row.addChild(name, bar, score);
+      if (wide) {
+        const sx = cw - 50 - 170;
+        if (!full) {
+          const l = this.lock(30);
+          l.position.set(sx + 85, h / 2);
+          row.addChild(l);
+        } else {
+          const ps = accuracy(def, j, 'tygodnie', t);
+          const daily = enoughPoints(ps) ? ps : accuracy(def, j, 'dni', t);
+          if (enoughPoints(daily)) {
+            const spark = lineChart({ width: 170, height: h - 16, points: daily, unit: '%', color: 0x5cb3ff, resolution: this.game.pixelRatio, label: () => '', mini: true });
+            spark.position.set(sx, 8);
+            row.addChild(spark);
+          }
+          const sp = def.tempo ? tempo(def, j, 'tygodnie', t)?.speedup : null;
+          if (sp && sp >= 1.15) {
+            const fast = this.text(tr('{x}× szybciej', { x: sp.toLocaleString(lang(), { maximumFractionDigits: 1 }) }), 20, { color: '#3f8a4a', weight: '800' });
+            fast.anchor.set(1, 0.5);
+            fast.position.set(sx - 12, h / 2);
+            row.addChild(fast);
+          }
+        }
+      }
+      const more = this.text('›', 40, { color: '#c9b8a6', weight: '800' });
+      more.anchor.set(0.5);
+      more.position.set(cw - 26, h / 2 - 2);
+      row.addChild(more);
+      row.eventMode = 'static';
+      row.cursor = 'pointer';
+      row.on('pointertap', () => {
+        if (!this.tapped()) return;
+        haptics.tap();
+        this.skill = def.id;
+        this.scroll = 0;
+        this.render();
+      });
+      this.content.addChild(row);
+      y += rowH;
+    }
+    return y + 14;
+  }
+
+  /** Wykres w karcie; w wersji darmowej rozmyty, z kłódką i przyciskiem odblokowania. */
+  private chartCard(y: number, cw: number, o: { title: string; points: readonly Point[]; unit: '%' | 's'; color: number; sample: boolean; caption: string }): number {
+    const full = hasFull();
+    return this.card({ x: 0, y }, cw, (c, iw) => {
+      const t = this.text(o.title, 28, { weight: '800' });
+      c.addChild(t);
+      if (o.sample) {
+        const badge = this.text(tr('Przykład'), 22, { color: '#ffffff', weight: '800' });
+        const plate = new Graphics().roundRect(-12, -4, badge.width + 24, badge.height + 8, 14).fill({ color: 0xff9f5a });
+        const b = new Container();
+        b.addChild(plate, badge);
+        b.position.set(t.width + 22, 6);
+        c.addChild(b);
+      }
+      const chart = lineChart({ width: iw, height: 250, points: o.points, unit: o.unit, color: o.color, resolution: this.game.pixelRatio, label: (p) => this.dateLabel(p.from) });
+      chart.y = 52;
+      c.addChild(chart);
+      if (!full) {
+        chart.filters = [new BlurFilter({ strength: 4 })];
+        const veil = new Graphics().roundRect(iw / 2 - 260, 52 + 36, 520, 200, 24).fill({ color: 0xfffaf2, alpha: 0.82 });
+        const l = this.lock(46);
+        l.position.set(iw / 2, 52 + 70);
+        const msg = this.text(tr('Wykresy postępów są w pełnej wersji'), 25, { weight: '800' });
+        msg.anchor.set(0.5, 0);
+        msg.position.set(iw / 2, 52 + 104);
+        const buy = this.button(tr('Odblokuj pełną wersję'), 360, '#4fae5f', () => void this.doBuy(false), 76, 25);
+        buy.position.set(iw / 2, 52 + 190);
+        c.addChild(veil, l, msg, buy);
+      }
+      const cap = this.text(o.caption, 22, { color: SOFT, wrap: iw });
+      cap.y = 52 + 262;
+      c.addChild(cap);
+      return cap.y + cap.height;
+    });
+  }
+
+  /** Szczegóły umiejętności: wynik, krzywa nauki, tempo, elementy, odkrycia i pomysł na zabawę. */
+  private renderSkill(cw: number): number {
+    const def = SKILLS.find((s) => s.id === this.skill) as SkillDef;
+    const j = journal();
+    const t = today();
+    const back = this.button(tr('← Wszystkie'), 220, '#c9b8a6', () => {
+      this.skill = null;
+      this.scroll = 0;
+      this.render();
+    }, 70, 24);
+    back.position.set(110, 36);
+    const title = this.text(tr(def.name), 36, { weight: '800' });
+    title.position.set(244, 12);
+    if (title.width > cw - 244) title.scale.set((cw - 244) / title.width);
+    this.content.addChild(back, title);
+    let y = 90;
+    const m = mastery(def, j, state.progress.levels, t);
+    const summary = [m.of !== undefined ? tr('Opanowane: {ok} z {of}', { ok: m.ok ?? 0, of: m.of }) : tr('Etap: {stage}', { stage: this.stageName(m.stage ?? 0) }), tr('Rozwiązane zadania: {n}', { n: m.tasks })].join('   ·   ');
+    const sum = this.text(summary, 25, { color: SOFT, weight: '700' });
+    sum.y = y + 10;
+    this.content.addChild(sum);
+    // Zakres wykresów: wybór rodzica (dni albo tygodnie).
+    (['dni', 'tygodnie'] as const).forEach((r, i) => {
+      const b = this.button(r === 'dni' ? tr('Dni') : tr('Tygodnie'), 170, r === this.range ? '#ff9f5a' : '#c9b8a6', () => {
+        this.range = r;
+        this.render();
+      }, 64, 23);
+      b.position.set(cw - 85 - (1 - i) * 182, y + 26);
+      this.content.addChild(b);
+    });
+    y += 76;
+    const acc = accuracy(def, j, this.range, t);
+    const real = enoughPoints(acc);
+    y += this.chartCard(y, cw, {
+      title: tr('Zadania bez pomyłki'),
+      points: real ? acc : sampleAccuracy(this.range, t),
+      unit: '%',
+      color: 0x5cb3ff,
+      sample: !real,
+      caption: real
+        ? tr('Trójkąt: wejście na wyższy poziom. Zadania są wtedy trudniejsze, więc wynik może na chwilę spaść.')
+        : tr('Tak wyglądają postępy po kilku tygodniach zabawy. Wykres dziecka pojawi się po kilku dniach zabawy.'),
+    }) + 22;
+    if (def.tempo) {
+      const tp = tempo(def, j, this.range, t)!;
+      const realT = enoughPoints(tp.points);
+      const shown = realT ? tp : sampleTempo(this.range, t);
+      const sp = realT ? tp.speedup : null;
+      y += this.chartCard(y, cw, {
+        title: tr('Czas odpowiedzi'),
+        points: shown.points,
+        unit: 's',
+        color: 0x9b7be0,
+        sample: !realT,
+        caption: sp && sp >= 1.15
+          ? tr('Odpowiada {x}× szybciej niż na początku wykresu. Im niżej linia, tym pewniej.', { x: sp.toLocaleString(lang(), { maximumFractionDigits: 1 }) })
+          : tr('Im niżej linia, tym pewniej. Porównujemy tylko zadania o tej samej trudności.'),
+      }) + 22;
+    }
+    if (def.group) {
+      const group = def.group;
+      const COLOR: Record<ItemState, number> = { opanowane: 0x5cc36a, cwiczy: 0xffc94a, klopot: 0xf08a6a, nie: 0xd9cfc2 };
+      y += this.card({ x: 0, y }, cw, (c, iw) => {
+        const t2 = this.text(tr('Co już umie'), 28, { weight: '800' });
+        c.addChild(t2);
+        let x = 0;
+        let yy = 52;
+        for (const id of itemsOf(group)) {
+          const chip = new Container();
+          const label = this.text(itemName(group, id), 23, { weight: '700' });
+          label.position.set(34, 0);
+          const dot = new Graphics().circle(14, label.height / 2, 11).fill({ color: COLOR[itemState(j, group, id)] });
+          chip.addChild(dot, label);
+          const w = 34 + label.width + 26;
+          if (x + w > iw) {
+            x = 0;
+            yy += 44;
+          }
+          chip.position.set(x, yy);
+          c.addChild(chip);
+          x += w;
+        }
+        yy += 48;
+        const legend = this.text(tr('Zielone: opanowane · żółte: ćwiczy · czerwone: sprawia kłopot · szare: jeszcze nie było'), 20, { color: SOFT, wrap: iw });
+        legend.y = yy;
+        c.addChild(legend);
+        return yy + legend.height;
+      }) + 22;
+    }
+    const ms = milestones(def, j).slice(0, 8);
+    y += this.card({ x: 0, y }, cw, (c, iw) => {
+      const t3 = this.text(tr('Odkrycia'), 28, { weight: '800' });
+      c.addChild(t3);
+      const lines = ms.map((e) => {
+        const date = this.dateLabel(e.day);
+        if (e.kind === 'opanowane') return tr('{date}: opanowane – {item}', { date, item: itemName(def.group ?? '', e.item ?? '') });
+        if (e.kind === 'poziom') return tr('{date}: wyższy poziom trudności', { date });
+        return tr('{date}: pierwsza zabawa', { date });
+      });
+      const body = this.text(lines.length ? lines.map((l) => `• ${l}`).join('\n') : tr('Pierwsze odkrycia pojawią się po kilku zabawach.'), 24, { color: SOFT, wrap: iw });
+      body.y = 50;
+      c.addChild(body);
+      return 50 + body.height;
+    }) + 22;
+    y += this.card({ x: 0, y }, cw, (c, iw) => {
+      const t4 = this.text(tr('Pomysł na zabawę bez ekranu'), 28, { weight: '800' });
+      const body = this.text(tr(def.tip), 24, { color: SOFT, wrap: iw });
+      body.y = 50;
+      c.addChild(t4, body);
+      return 50 + body.height;
+    }, 0xeef8e8);
+    return y + 30;
   }
 
   private askName(): void {

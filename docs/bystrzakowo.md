@@ -89,6 +89,42 @@ Decyzje właściciela: krótkie powitanie rodzica, wiek ustawia start, rączka i
 - **Pierwsza zagadka:** na świecie rączka stuka w domek „Kolory” (do 4 lat) albo „Cienie” (5+), w zgodzie z powitaniem Lusi („Wybierz domek i pobawmy się razem!”). Bazyl pokazuje zakładki krain dopiero po pierwszej rundzie, kiedy dziecko wie już, jak się gra.
 - **Playtesty** (Playwright) zaczynają od świata, bez powitania. Powitanie włącza `?welcome`.
 
+## Statystyki „Przed szkołą” (2026-11-24)
+
+Decyzje właściciela:
+- lista 13 umiejętności;
+- linia pokazuje % zadań bez pomyłki;
+- rodzic wybiera wykres dzienny albo tygodniowy;
+- funkcja ma zachęcać do zakupu pełnej wersji.
+
+**Model:** `src/sim/skills.ts`, czysty TS, z testami.
+- **Umiejętności:** liczy przedmioty (1–8), pisze cyfry, kolory, kształty, pierwsza głoska, pisze litery, sylaby, historyjka po kolei, wzory i rytmy, segregowanie (sortowanie i „co nie pasuje”), emocje, pamięć (pary i melodia), prowadzenie linii (kropki i labirynt).
+- **Opanowanie:**
+  - umiejętności z elementami pokazują „x z y” (element opanowany tak jak w raporcie, `learned` lub `mastered`);
+  - pozostałe mają etap: jeszcze nie było, ćwiczy, radzi sobie, idzie pewnie (z poziomu zabawy i % z 14 dni).
+- **Krzywa nauki:** % zadań bez pomyłki w okresie.
+  - Okresy: 14 dni albo 12 tygodni. Punkt pojawia się od 3 zadań w dniu albo 5 w tygodniu.
+  - Trójkąt oznacza wejście na wyższy poziom (z `DayLog.lvl`), bo przy wyższym poziomie % może chwilowo spaść.
+  - Dni sprzed zapisu `clean` liczą się w przybliżeniu: zadania minus pomyłki.
+- **Tempo:** mediana czasu dobrej odpowiedzi (od końca polecenia lektora, bez pomyłek i przerw ponad 20 s) na tym samym poziomie trudności.
+  - Dotyczy kolorów, liczenia, głosek i minek.
+  - Przyspieszenie to porównanie pierwszej i ostatniej części wykresu.
+- **Dane:**
+  - `DayLog.clean` (zadania bez pomyłki);
+  - `DayLog.lvl` (poziom dnia);
+  - `DayLog.ms` (czasy w dziesiątych sekundy, klucz `grupa@poziom`, do 40 dziennie).
+
+**Ekran** (`parent.ts`, wykres w `src/chart.ts`):
+- W zakładce Postępy jest lista z paskiem, wynikiem, małym wykresem i „×N szybciej”.
+- Dotknięcie wiersza otwiera szczegóły: dwa wykresy, siatkę elementów (opanowane, ćwiczy, kłopot, jeszcze nie), odkrycia z datami i pomysł na zabawę bez ekranu.
+- Bez porównań z innymi dziećmi.
+
+**Sprzedaż:**
+- Dopóki brakuje danych, wykres pokazuje przykładowe dziecko z etykietą „Przykład”. Wykres dzienny ma punkty po 2–3 dniach, czyli jeszcze w czasie próby.
+- Po próbie lista z paskami zostaje widoczna. Wykresy są lekko rozmyte (widać, że linia rośnie), z kłódką i przyciskiem „Odblokuj pełną wersję”.
+
+**Playtest:** `eval:__ff.game.scenes.current.demoStats('kolory')` generuje 10 tygodni zabawy i otwiera szczegóły (pusty argument otwiera listę).
+
 ## Dla rodzica
 
 - **Strefa rodzica za bramką:** prosta matematyka albo „przytrzymaj trzema palcami”. Tam są ustawienia (głośność, lektor, wybór domków), postępy dziecka i zakup.

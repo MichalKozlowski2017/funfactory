@@ -10,7 +10,7 @@ import { AdultCheck, ParentGate, ParentPanel } from '../parent.ts';
 import { realmIsOpen } from '../premium.ts';
 import { lang } from '../sim/lang.ts';
 import { journal, today } from '../log.ts';
-import { addTask, addTime, noteFact, playDaysAfter, shiftDay } from '../sim/journal.ts';
+import { addTask, addTempo, addTime, noteFact, playDaysAfter, shiftDay } from '../sim/journal.ts';
 import { extend, timeIsUp } from '../session.ts';
 import { AlbumScene } from './album.ts';
 import { drawShape } from './shapes.ts';
@@ -542,6 +542,52 @@ export class WorldScene extends Scene {
     state.progress.childName = name || undefined;
     this.openParent();
     (this.parentPanel as unknown as { setTab(t: string): void }).setTab(tab);
+  }
+
+  /**
+   * Playtest statystyk: 10 tygodni zabawy (rosnąca samodzielność, wyższe poziomy, szybsze odpowiedzi) i strefa
+   * rodzica na liście „Przed szkołą” albo od razu w szczegółach umiejętności (`eval:…demoStats('kolory')`).
+   */
+  demoStats(skill = ''): void {
+    const j = journal();
+    const t = today();
+    const rng = this.game.rng;
+    const DAYS = 70;
+    const acts = ['liczenie', 'kolory', 'gloski', 'historyjki', 'wzory', 'emocje', 'sortowanie', 'memory', 'kropki', 'ksztalty', 'sylaby', 'litery', 'cyfry'] as const;
+    const tempoOf: Partial<Record<string, string>> = { liczenie: 'liczba', kolory: 'kolor', gloski: 'gloska', emocje: 'emocja' };
+    for (let d = DAYS; d >= 0; d--) {
+      if (rng.next() < 0.3) continue;
+      const day = shiftDay(t, -d);
+      const k = 1 - d / DAYS;
+      addTime(j, day, 400 + rng.int(0, 900));
+      for (const a of acts) {
+        if (rng.next() < 0.35) continue;
+        // Poziom rośnie co ~3 tygodnie; po wejściu wyżej samodzielność na chwilę spada.
+        const level = k < 0.33 ? 0 : k < 0.66 ? 1 : 2;
+        const p = 0.45 + 0.4 * ((k * 3) % 1) * 0.6 + 0.25 * k;
+        for (let i = rng.int(3, 7); i > 0; i--) {
+          const ok = rng.next() < p;
+          addTask(j, day, a, ok ? 0 : rng.int(1, 2), level);
+          const g = tempoOf[a];
+          if (g && ok) addTempo(j, day, g, 1, 3.3 - 1.8 * k + rng.next() * 0.8);
+        }
+      }
+      // Opanowywanie elementów w czasie (różne daty odkryć).
+      for (const [g, items] of [['liczba', ['1', '2', '3', '4', '5', '6', '7']], ['kolor', ['czerwony', 'zielony', 'niebieski', 'zolty', 'pomaranczowy', 'rozowy', 'fioletowy']], ['ksztalt', ['kolo', 'kwadrat', 'trojkat', 'gwiazda', 'serce']], ['emocja', ['wesoly', 'smutny', 'zly', 'zdziwiony']], ['gloska', ['a', 'm', 'o', 't', 'p']], ['litera', ['A', 'M', 'O']], ['cyfra', ['1', '2', '3']]] as const) {
+        const n = Math.floor(items.length * Math.min(1, k * 1.2));
+        const id = items[rng.int(0, Math.max(0, n - 1))];
+        if (n > 0 && id) noteFact(j, day, `${g}:${id}`, rng.next() < 0.85);
+      }
+    }
+    state.progress.childName = 'Zosia';
+    this.openParent();
+    const panel = this.parentPanel as unknown as { setTab(t: string): void; skill: string | null; scroll: number; render(): void };
+    panel.setTab('postepy');
+    if (skill) {
+      panel.skill = skill;
+      panel.scroll = 0;
+      panel.render();
+    }
   }
 
   private toast: Text | null = null;

@@ -35,6 +35,7 @@ Nie da się przegrać. Trudność dopasowuje się sama: kiedy dziecku idzie dobr
 
 DLA RODZICA
 • Raport po ludzku: co dziecko już umie („liczy bez pomyłek do 5”), co sprawia mu kłopot i pomysły na zabawę bez ekranu.
+• Wykresy postępów „Przed szkołą”: 13 umiejętności przedszkolaka, krzywa nauki dzień po dniu i tydzień po tygodniu oraz tempo odpowiedzi. Bez porównań z innymi dziećmi.
 • Album prac: kolorowanki i obrazki z naklejek do zapisania albo wysłania bliskim.
 • Pocztówka tygodnia z imieniem dziecka i jego sukcesami.
 • Limit czasu zabawy: Lusia i Bazyl spokojnie idą spać.
@@ -63,6 +64,7 @@ There is no way to lose. Difficulty adapts automatically: puzzles get more inter
 
 FOR PARENTS
 • A report in plain words: what your child can already do ("counts up to 5 without mistakes"), what is still tricky, and screen-free play ideas.
+• "Ready for school" progress charts: 13 preschool skills, a learning curve day by day and week by week, and answer speed. No comparisons with other children.
 • An album of creations: coloring pages and sticker pictures to save or share with family.
 • A weekly postcard with your child's name and successes.
 • A play time limit: Lusia and Basil calmly go to sleep.
@@ -91,6 +93,7 @@ Verlieren ist unmöglich. Der Schwierigkeitsgrad passt sich an: Geht es gut, wer
 
 FÜR ELTERN
 • Ein verständlicher Bericht: was Ihr Kind schon kann („zählt fehlerfrei bis 5“), was noch schwerfällt, und Spielideen ohne Bildschirm.
+• Fortschrittskurven „Fit für die Schule“: 13 Vorschul-Fähigkeiten, Lernkurve Tag für Tag und Woche für Woche sowie Antworttempo. Ohne Vergleich mit anderen Kindern.
 • Ein Album mit Werken: Ausmalbilder und Stickerbilder zum Speichern oder Verschicken.
 • Eine Wochenpostkarte mit dem Namen und den Erfolgen Ihres Kindes.
 • Spielzeit-Limit: Lusia und Basil gehen in Ruhe schlafen.
@@ -119,6 +122,7 @@ No se puede perder. La dificultad se ajusta sola: si va bien, los retos se vuelv
 
 PARA PADRES
 • Un informe claro: lo que ya sabe («cuenta hasta 5 sin errores»), lo que todavía le cuesta e ideas de juego sin pantalla.
+• Gráficas de progreso «Listos para el cole»: 13 habilidades de preescolar, curva de aprendizaje día a día y semana a semana, y velocidad de respuesta. Sin comparaciones con otros niños.
 • Un álbum de creaciones: dibujos coloreados e imágenes con calcomanías para guardar o compartir.
 • Una postal semanal con el nombre de tu hijo o hija y sus logros.
 • Límite de tiempo de juego: Lusia y Basil se van a dormir con calma.

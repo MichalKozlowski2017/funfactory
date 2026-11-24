@@ -5,6 +5,7 @@ import { dictionaries } from './i18n.ts';
 import { setLang } from './lang.ts';
 import { addTask, addTime, newJournal, noteFact } from './journal.ts';
 import { ACTIVITY_NAMES, REALMS } from './realms.ts';
+import { SKILLS } from './skills.ts';
 import { formatRange, makeReport } from './report.ts';
 
 const SRC = join(import.meta.dirname, '..');
@@ -16,7 +17,7 @@ const files = (dir: string): string[] =>
 
 /** Polskie teksty przekazywane do tr(): literały z kodu oraz nazwy krain i zabaw. */
 function keys(): string[] {
-  const out = new Set<string>([...Object.values(ACTIVITY_NAMES), ...REALMS.map((r) => r.name)]);
+  const out = new Set<string>([...Object.values(ACTIVITY_NAMES), ...REALMS.map((r) => r.name), ...SKILLS.flatMap((s) => [s.name, s.tip])]);
   for (const f of files(SRC)) {
     const s = readFileSync(f, 'utf8');
     for (const m of s.matchAll(/\btr\('((?:[^'\\]|\\.)*)'/g)) out.add(m[1]!.replace(/\\n/g, '\n').replace(/\\'/g, "'"));
