@@ -21,9 +21,13 @@ game.app.ticker.add((t) => logTime(t.deltaMS / 1000));
 // Pierwsze uruchomienie: powitanie rodzica. Playtesty (przeglądarka sterowana przez Playwright) zaczynają od świata,
 // chyba że w adresie jest `?welcome`.
 const params = new URLSearchParams(location.search);
-const welcome = params.has('welcome') || (needsWelcome(state.progress) && !navigator.webdriver);
+const tour = import.meta.env.VITE_TOUR || params.has('tour');
+const welcome = tour || params.has('welcome') || (needsWelcome(state.progress) && !navigator.webdriver);
 await game.scenes.go(welcome ? new WelcomeScene() : new WorldScene(), { fade: 0 });
 
 
 // Autopilot do testów strefy rodzica (build z VITE_AUTOPLAY=1 albo ?autoplay).
 if (import.meta.env.VITE_AUTOPLAY || new URLSearchParams(location.search).has('autoplay')) void import('./autoplay.ts').then((m) => m.startAutoplay(game));
+
+// Wycieczka po ekranach do zrzutów na symulatorze (build z VITE_TOUR=1 albo ?tour).
+if (tour) void import('./tour.ts').then((m) => m.startTour(game));
