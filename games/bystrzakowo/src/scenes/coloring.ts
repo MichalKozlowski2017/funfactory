@@ -265,7 +265,7 @@ export class ColoringScene extends RoundScene {
       }
     const k = SIZE / this.picture.texture.width;
     const local = { x: (pick % SIZE) / k - this.picture.texture.width / 2, y: Math.floor(pick / SIZE) / k - this.picture.texture.height / 2 };
-    return this.toLocal(this.picture.toGlobal(local));
+    return this.layer.toLocal(this.picture.toGlobal(local));
   }
 
   protected hint(): void {
@@ -292,7 +292,7 @@ export class ColoringScene extends RoundScene {
 
   protected place(): void {
     if (!this.pixels) return;
-    const { width: w, height: h, safe } = this.game.view;
+    const { width: w, height: h, safe } = this.stage;
     const left = safe.left + 300;
     const right = w - safe.right - 30;
     const top = safe.top + 105;

@@ -125,6 +125,17 @@ Decyzje właściciela:
 
 **Playtest:** `eval:__ff.game.scenes.current.demoStats('kolory')` generuje 10 tygodni zabawy i otwiera szczegóły (pusty argument otwiera listę).
 
+## Tablety i orientacja (2026-11-24)
+
+- **Problem:** iPadOS 26 ignoruje `UIRequiresFullScreen` i nie obraca aplikacji tylko poziomej. Przy iPadzie trzymanym pionowo gra była wciśnięta w pionowy ekran z czarnymi pasami. Apple: TN3192; od iPadOS 27 (SDK 27) aplikacja musi działać w oknie dowolnego kształtu.
+- **Rozwiązanie (decyzja właściciela: gra na cały ekran w każdym kształcie okna):**
+  - iPad ma w `Info.plist` wszystkie orientacje; iPhone zostaje poziomy.
+  - `Game` z kit2d dostał opcję `minWidth`. Bystrzakowo ma 960, więc w wysokim oknie szerokość zostaje 960, a rośnie wysokość.
+  - Zabawy (`RoundScene`) układają się w `stage`: pas o proporcjach poziomego tabletu (wysokość do `0.78 × szerokość`) wyśrodkowany w pionie. Tło wypełnia cały ekran, warstwa zadania, konfetti i rączka są przesunięte o `stageY`, a przewodnik stoi na dole pasa.
+  - Świat, naklejki, powitanie i strefa rodzica korzystają z całej wysokości.
+- **Strefa rodzica na tablecie** (krótszy bok ekranu od 600 pt) ma skalę 0,72: mniejsze przyciski i teksty, więcej treści na ekranie. Ustawienia na szerokim panelu są w dwóch kolumnach.
+- **Zrzuty na symulatorze:** build z `VITE_TOUR=1` (`src/tour.ts`) sam przechodzi po ekranach. Zrzuty robi `xcrun simctl io <udid> screenshot`. Pionowe zrzuty w przeglądarce: `pnpm shot … --size 820x1180@1`.
+
 ## Dla rodzica
 
 - **Strefa rodzica za bramką:** prosta matematyka albo „przytrzymaj trzema palcami”. Tam są ustawienia (głośność, lektor, wybór domków), postępy dziecka i zakup.

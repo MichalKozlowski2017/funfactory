@@ -157,7 +157,7 @@ export class SyllableScene extends RoundScene {
 
   protected place(): void {
     if (!this.tiles.length) return;
-    const { width: w, height: h, safe } = this.game.view;
+    const { width: w, height: h, safe } = this.stage;
     const left = safe.left + 270;
     const right = w - safe.right - 40;
     const cx = (left + right) / 2;

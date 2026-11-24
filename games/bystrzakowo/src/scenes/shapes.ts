@@ -212,7 +212,7 @@ export class ShapeScene extends RoundScene {
 
   protected place(): void {
     if (!this.pieces.length) return;
-    const { width: w, height: h, safe } = this.game.view;
+    const { width: w, height: h, safe } = this.stage;
     const left = safe.left + 270;
     const right = w - safe.right - 40;
     const n = this.pieces.length;

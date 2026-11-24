@@ -372,7 +372,7 @@ export class SortScene extends RoundScene {
 
   protected place(): void {
     if (!this.tasks.length) return;
-    const { width: w, height: h, safe } = this.game.view;
+    const { width: w, height: h, safe } = this.stage;
     const left = safe.left + 270;
     const right = w - safe.right - 40;
     const cw = right - left;

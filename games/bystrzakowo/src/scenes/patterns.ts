@@ -148,7 +148,7 @@ export class PatternScene extends RoundScene {
 
   protected place(): void {
     if (!this.tiles.length) return;
-    const { width: w, height: h, safe } = this.game.view;
+    const { width: w, height: h, safe } = this.stage;
     const left = safe.left + 260;
     const right = w - safe.right - 30;
     const n = this.tiles.length;

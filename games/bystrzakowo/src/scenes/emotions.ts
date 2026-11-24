@@ -74,7 +74,7 @@ export class EmotionScene extends RoundScene {
     if (e === this.q.target) {
       card.markGood();
       void pulse(this.tweens, card, 0.18, 0.3);
-      const at = this.toLocal(card.getGlobalPosition());
+      const at = this.layer.toLocal(card.getGlobalPosition());
       this.burst(at.x, at.y);
       for (const other of this.cards) if (other !== card) this.tweens.to(other, { alpha: 0.35 }, { duration: 0.25 });
       this.solved(say(this.game, this.guide, `minka-${e}`));
@@ -109,7 +109,7 @@ export class EmotionScene extends RoundScene {
 
   protected place(): void {
     if (!this.cards.length) return;
-    const { width: w, height: h, safe } = this.game.view;
+    const { width: w, height: h, safe } = this.stage;
     const left = safe.left + 260;
     const right = w - safe.right - 40;
     const n = this.cards.length;

@@ -182,7 +182,7 @@ export class PuzzleScene extends RoundScene {
     if (isCorrect(q, value)) {
       card.markGood();
       void pulse(this.tweens, card, 0.18, 0.3);
-      const local = this.toLocal(card.getGlobalPosition());
+      const local = this.layer.toLocal(card.getGlobalPosition());
       this.burst(local.x, local.y);
       for (const other of this.cards) if (other !== card) this.tweens.to(other, { alpha: 0.35 }, { duration: 0.25 });
       if (q.kind === 'cienie') this.revealShadow(q.target);
@@ -240,7 +240,7 @@ export class PuzzleScene extends RoundScene {
 
   protected place(): void {
     if (!this.questions.length) return;
-    const { width: w, height: h, safe } = this.game.view;
+    const { width: w, height: h, safe } = this.stage;
     const left = safe.left + 250;
     const right = w - safe.right - 40;
     const cw = right - left;

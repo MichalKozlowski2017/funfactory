@@ -214,7 +214,7 @@ export class MazeScene extends RoundScene {
 
   protected place(): void {
     if (!this.maze) return;
-    const { width: w, height: h, safe } = this.game.view;
+    const { width: w, height: h, safe } = this.stage;
     const left = safe.left + 270;
     const right = w - safe.right - 40;
     const top = safe.top + 110;

@@ -210,7 +210,7 @@ export class JigsawScene extends RoundScene {
 
   /** Przeciągany kawałek (już w pełnym rozmiarze) nie wychodzi za krawędź ekranu. */
   private keepOnScreen(view: Container): void {
-    const { width: w, height: h } = this.game.view;
+    const { width: w, height: h } = this.stage;
     const hw = (this.size / this.grid.cols) / 2;
     const hh = (this.size / this.grid.rows) / 2;
     view.x = Math.min(Math.max(view.x, hw), w - hw);
@@ -219,7 +219,7 @@ export class JigsawScene extends RoundScene {
 
   protected place(): void {
     if (!this.pieces.length) return;
-    const { width: w, height: h, safe } = this.game.view;
+    const { width: w, height: h, safe } = this.stage;
     const left = safe.left + 270;
     const right = w - safe.right - 30;
     // Plansza po lewej, zasobnik po prawej.

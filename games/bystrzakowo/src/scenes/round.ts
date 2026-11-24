@@ -100,15 +100,31 @@ export abstract class RoundScene extends Scene {
   protected gesture(): Gesture | null {
     return null;
   }
-  /** Środek obiektu we współrzędnych sceny (do gestów rączki). */
+  /**
+   * Obszar zabawy: cały ekran, a na wysokim (iPad w pionie, okienko iPadOS 26) pas o proporcjach poziomego
+   * tabletu na środku. Tło i przewodnik zostają na całym ekranie, warstwa zadania przesuwa się o `stageY`.
+   * Zabawy w `place()` układają elementy w tym obszarze (współrzędne warstwy).
+   */
+  protected get stage(): View {
+    const v = this.game.view;
+    const h = Math.min(v.height, Math.max(720, v.width * 0.78));
+    const off = (v.height - h) / 2;
+    return { width: v.width, height: h, safe: { ...v.safe, top: Math.max(0, v.safe.top - off), bottom: Math.max(0, v.safe.bottom - off) } };
+  }
+
+  protected get stageY(): number {
+    return (this.game.view.height - this.stage.height) / 2;
+  }
+
+  /** Środek obiektu we współrzędnych warstwy zadania (do gestów rączki). */
   protected spot(obj: Container, dx = 0, dy = 0): P {
-    const p = this.toLocal(obj.getGlobalPosition());
+    const p = this.layer.toLocal(obj.getGlobalPosition());
     return { x: p.x + dx, y: p.y + dy };
   }
   /** Środek prostokąta obejmującego obiekt (gdy punkt zaczepienia nie jest na środku, np. sztabki cymbałków). */
   protected middle(obj: Container): P {
     const r = obj.getBounds();
-    return this.toLocal({ x: r.x + r.width / 2, y: r.y + r.height / 2 });
+    return this.layer.toLocal({ x: r.x + r.width / 2, y: r.y + r.height / 2 });
   }
 
   override async enter(): Promise<void> {
@@ -167,6 +183,8 @@ export abstract class RoundScene extends Scene {
     if (this.busy || this.overlay || this.leaving) return false;
     const g = this.gesture();
     if (!g) return false;
+    // Gest jest we współrzędnych warstwy zadania (na wysokim ekranie przesuniętej w dół).
+    this.hand.position.set(this.layer.x, this.layer.y);
     this.hand.show(g);
     this.addChild(this.hand);
     return true;
@@ -354,9 +372,12 @@ export abstract class RoundScene extends Scene {
 
   override resize(view: View): void {
     cover(this.bg, view.width, view.height);
-    this.guideSprite.position.set(view.safe.left + 130, view.height - 10);
+    const top = this.stageY;
+    this.layer.y = top;
+    this.particles.view.y = top;
+    this.guideSprite.position.set(view.safe.left + 130, top + this.stage.height - 10);
     this.home.position.set(view.safe.left + 80, view.safe.top + 75);
-    this.dots.position.set(view.width / 2 + 100, view.safe.top + 60);
+    this.dots.position.set(view.width / 2 + 100, Math.max(view.safe.top + 60, top + 60));
     if (this.index < this.length && this.layer.children.length) this.place();
     // Gest liczony dla starego układu: po obrocie albo zmianie rozmiaru rączka znika.
     this.hand?.stop();

@@ -9,7 +9,8 @@ import { loadState, state } from './state.ts';
 import { loadFont } from './ui.ts';
 
 // Gra pozioma (tablety): stała wysokość 720 jednostek, szerokość zależy od ekranu.
-const game = await new Game({ background: '#fff6e8', designHeight: 720 }).start();
+// iPad w pionie i okienka iPadOS 26: szerokość co najmniej 960 (jak tablet 4:3), wyżej rośnie wysokość, bez czarnych pasów.
+const game = await new Game({ background: '#fff6e8', designHeight: 720, minWidth: 960 }).start();
 await Promise.all([loadFont(), loadState()]);
 // Język: wybór rodzica albo telefonu (?lang=en|de|pl w playtestach); przed nagraniami, bo od niego zależą.
 const forced = new URLSearchParams(location.search).get('lang');

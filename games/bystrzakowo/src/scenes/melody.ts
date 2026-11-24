@@ -169,7 +169,7 @@ export class MelodyScene extends RoundScene {
 
   protected place(): void {
     if (!this.bars.length) return;
-    const { width: w, height: h, safe } = this.game.view;
+    const { width: w, height: h, safe } = this.stage;
     const left = safe.left + 270;
     const right = w - safe.right - 40;
     const n = this.bars.length;

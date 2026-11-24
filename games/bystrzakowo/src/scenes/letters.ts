@@ -193,7 +193,7 @@ export class LetterScene extends RoundScene {
   /** Po cyfrze: obrazki pojawiają się po kolei, Lusia liczy; zero to pusty talerz i „zero”. */
   private countOut(n: number): void {
     const pic = this.picture!;
-    const right = this.game.view.width - this.game.view.safe.right - 30;
+    const right = this.stage.width - this.stage.safe.right - 30;
     const x0 = this.box.x + this.box.w + 30;
     const cols = n > 6 ? 3 : n > 2 ? 2 : 1;
     const rows = Math.max(1, Math.ceil(n / cols));
@@ -317,7 +317,7 @@ export class LetterScene extends RoundScene {
 
   protected place(): void {
     if (!this.strokes.length) return;
-    const { width: w, height: h, safe } = this.game.view;
+    const { width: w, height: h, safe } = this.stage;
     const left = safe.left + 270;
     const right = w - safe.right - 30;
     const top = safe.top + 165;

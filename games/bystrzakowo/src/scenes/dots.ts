@@ -210,7 +210,7 @@ export class DotsScene extends RoundScene {
 
   protected place(): void {
     if (!this.points.length) return;
-    const { width: w, height: h, safe } = this.game.view;
+    const { width: w, height: h, safe } = this.stage;
     const left = safe.left + 280;
     const right = w - safe.right - 60;
     const top = safe.top + 160;

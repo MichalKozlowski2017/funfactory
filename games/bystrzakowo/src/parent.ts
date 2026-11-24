@@ -278,7 +278,14 @@ export class ParentPanel extends Container {
     return b;
   }
 
-  layout(view: View): void {
+  layout(full: View): void {
+    // Tablet (krótszy bok ekranu od 600 pt): panel w mniejszej skali. Dorosły ma tablet blisko, a przy skali
+    // telefonu przyciski i teksty są ogromne i mieści się mało treści.
+    const { width, height } = this.game.app.screen;
+    const k = Math.min(width, height) >= 600 ? 0.72 : 1;
+    this.scale.set(k);
+    const s = full.safe;
+    const view: View = { width: full.width / k, height: full.height / k, safe: { top: s.top / k, right: s.right / k, bottom: s.bottom / k, left: s.left / k } };
     this.view = view;
     this.dim.clear().rect(0, 0, view.width, view.height).fill({ color: 0x2a1a40, alpha: 0.6 });
     const x = view.safe.left + 20;
@@ -923,12 +930,17 @@ export class ParentPanel extends Container {
     const info = this.text(tr('Bystrzakowo działa bez internetu, bez reklam i nie zbiera żadnych danych. Postępy, imię i prace dziecka zapisują się tylko na tym urządzeniu.'), 25, { color: SOFT, wrap: cw });
     this.content.addChild(info);
     y += info.height + 30;
-    const bw = Math.min(520, cw);
-    const cx = bw / 2;
+    // Szeroki panel (tablet): ustawienia w dwóch kolumnach, każdy element trafia do niższej z nich.
+    const twoCol = cw >= 1060;
+    const bw = twoCol ? Math.min(520, (cw - 30) / 2) : Math.min(520, cw);
+    const used = twoCol ? bw * 2 + 30 : bw;
+    const ys = [y, twoCol ? y : Infinity];
+    const col = () => (ys[0]! <= ys[1]! ? 0 : 1);
     const add = (b: Button) => {
-      b.position.set(cx, y + 40);
+      const c = col();
+      b.position.set(c * (bw + 30) + bw / 2, ys[c]! + 40);
       this.content.addChild(b);
-      y += 100;
+      ys[c]! += 100;
     };
     const nameLabel = () => (state.progress.childName ? tr('Imię dziecka: {name}', { name: state.progress.childName }) : tr('Imię dziecka: nie podano'));
     add(this.button(nameLabel(), bw, '#9b7be0', () => this.askName()));
@@ -943,10 +955,12 @@ export class ParentPanel extends Container {
     const LANG_NAMES: Record<Lang, string> = { pl: 'Polski', en: 'English', de: 'Deutsch', es: 'Español' };
     // Język: cztery przyciski obok siebie, wybrany podświetlony. Zmiana: zapis i ponowne uruchomienie
     // (nagrania lektora wczytują się przy starcie).
+    const lc = col();
+    const lx = lc * (bw + 30);
     const langLabel = this.text(tr('Język'), 24, { color: SOFT, weight: '800' });
-    langLabel.position.set(0, y);
+    langLabel.position.set(lx, ys[lc]!);
     this.content.addChild(langLabel);
-    y += langLabel.height + 8;
+    ys[lc]! += langLabel.height + 8;
     const gap = 10;
     const lw = (bw - gap * (LANGS.length - 1)) / LANGS.length;
     LANGS.forEach((l, i) => {
@@ -955,10 +969,10 @@ export class ParentPanel extends Container {
         state.progress.lang = l;
         void saveState().then(() => location.reload());
       }, 80, 24);
-      b.position.set(lw / 2 + i * (lw + gap), y + 40);
+      b.position.set(lx + lw / 2 + i * (lw + gap), ys[lc]! + 40);
       this.content.addChild(b);
     });
-    y += 100;
+    ys[lc]! += 100;
     const musicLabel = () => (state.progress.music ? tr('Muzyka: włączona') : tr('Muzyka: wyłączona'));
     const music: Button = this.button(musicLabel(), bw, '#5cb3ff', () => {
       state.progress.music = !state.progress.music;
@@ -991,15 +1005,16 @@ export class ParentPanel extends Container {
       reset.setLabel(tr('Wyzerowano'));
     });
     add(reset);
+    y = Math.max(ys[0]!, twoCol ? ys[1]! : 0);
     const t = trial();
     const ver = this.text(isBought() ? tr('Wersja: pełna') : t.active ? tr('Wersja: próbna (pełny dostęp)') : tr('Wersja: darmowa (Polana Zagadek)'), 22, { color: '#9a8b7c' });
     ver.y = y + 10;
     this.content.addChild(ver);
     y += 60;
     // Pełna wersja: obok przycisków, gdy jest miejsce, inaczej pod nimi.
-    const side = cw - bw - 40;
+    const side = cw - used - 40;
     if (side >= 520) {
-      const shop = this.shopCard(info.height + 30, side, bw + 40);
+      const shop = this.shopCard(info.height + 30, side, used + 40);
       return Math.max(y, info.height + 30 + shop) + 30;
     }
     const shop = this.shopCard(y, cw);

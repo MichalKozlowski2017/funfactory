@@ -17,6 +17,11 @@ export interface GameOptions {
    * (tablet 4:3 ~960, telefon 19.5:9 ~1560). Gdy ustawione, `designWidth` nie ma znaczenia.
    */
   designHeight?: number;
+  /**
+   * Gry poziome: najmniejsza szerokość w jednostkach gry. Okno węższe niż ta proporcja (iPad w pionie,
+   * okienko w iPadOS 26) nie ściska układu: szerokość zostaje `minWidth`, a rośnie wysokość (`view.height`).
+   */
+  minWidth?: number;
   /** Seed RNG. Domyślnie z `?seed=` w URL albo z czasu. */
   seed?: number;
   /**
@@ -208,7 +213,9 @@ export class Game {
   /** Ile pikseli CSS przypada na jednostkę gry. */
   private unitScale(): number {
     const { width, height } = this.app.screen;
-    return this.opts.designHeight ? height / this.opts.designHeight : width / this.designWidth;
+    if (!this.opts.designHeight) return width / this.designWidth;
+    const byHeight = height / this.opts.designHeight;
+    return this.opts.minWidth ? Math.min(byHeight, width / this.opts.minWidth) : byHeight;
   }
 
   private layout(): void {
