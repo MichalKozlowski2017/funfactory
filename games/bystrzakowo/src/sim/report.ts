@@ -9,9 +9,9 @@ import { DIGITS, lettersOf } from './letters.ts';
 import { factsOf, mastered, shiftDay, struggling, summarize, type Journal } from './journal.ts';
 import { lang } from './lang.ts';
 import type { Activity } from './realms.ts';
-import { REPORT_TEXT, type Domain, type ReportText } from './report-text.ts';
+import { REPORT_TEXT, type Domain, type ReportText } from './locales/report.ts';
 
-export type { Domain } from './report-text.ts';
+export type { Domain } from './locales/report.ts';
 
 export interface SkillLine {
   domain: Domain;

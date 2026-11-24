@@ -11,7 +11,7 @@ import { DIGITS, lettersOf } from './letters.ts';
 import { lang } from './lang.ts';
 import { MAX_LEVEL, soundsOf } from './puzzles.ts';
 import type { Activity } from './realms.ts';
-import { REPORT_TEXT } from './report-text.ts';
+import { REPORT_TEXT } from './locales/report.ts';
 import { SHAPES } from './shapes.ts';
 
 export type SkillId =
@@ -33,19 +33,19 @@ export interface SkillDef {
 }
 
 export const SKILLS: readonly SkillDef[] = [
-  { id: 'counting', name: 'Liczy przedmioty', acts: ['counting'], group: 'number', tempo: 'number', tip: 'Liczcie razem schody, guziki albo łyżki przy nakrywaniu do stołu.' },
-  { id: 'digits', name: 'Pisze cyfry', acts: ['digits'], group: 'digit', tip: 'Szukajcie cyfr na spacerze: numery domów, autobusów, ceny w sklepie.' },
-  { id: 'colors', name: 'Rozpoznaje kolory', acts: ['colors'], group: 'color', tempo: 'color', tip: 'Zabawa „Widzę coś czerwonego”: dziecko zgaduje, o czym myślisz.' },
-  { id: 'shapes', name: 'Rozpoznaje kształty', acts: ['shapes'], group: 'shape', tip: 'Szukajcie kształtów w domu: okrągły talerz, kwadratowe okno, trójkątna kanapka.' },
-  { id: 'phonemes', name: 'Pierwsza głoska w słowie', acts: ['phonemes'], group: 'phoneme', tempo: 'phoneme', tip: 'Zabawa w słowa na jedną głoskę: kto wymyśli coś na M?' },
-  { id: 'letters', name: 'Pisze litery', acts: ['letters'], group: 'letter', tip: 'Piszcie litery palcem na plecach albo patykiem na piasku i zgadujcie.' },
-  { id: 'syllables', name: 'Dzieli słowa na sylaby', acts: ['syllables'], tip: 'Wyklaskujcie imiona domowników: ma-ma, ta-ta, bab-cia.' },
-  { id: 'stories', name: 'Układa historyjkę po kolei', acts: ['stories'], tip: 'Po spacerze zapytaj: co było najpierw, a co potem?' },
-  { id: 'patterns', name: 'Kontynuuje wzory i rytmy', acts: ['patterns'], tip: 'Układajcie wzory z klocków albo makaronu: czerwony, niebieski, czerwony…' },
-  { id: 'classifying', name: 'Segreguje i porównuje', acts: ['sorting', 'matching'], tip: 'Przy sprzątaniu segregujcie: klocki do pudełka, misie na półkę, auta do garażu.' },
-  { id: 'emotions', name: 'Rozpoznaje emocje', acts: ['emotions'], group: 'emotion', tempo: 'emotion', tip: 'Przy czytaniu bajki pytaj: jak się teraz czuje bohater? Skąd to wiesz?' },
-  { id: 'memory', name: 'Pamięć', acts: ['memory', 'melody'], tip: 'Gra „Co zniknęło?”: kilka zabawek na stole, jedną chowasz, dziecko zgaduje.' },
-  { id: 'line', name: 'Prowadzi linię ręką', acts: ['dots', 'maze'], tip: 'Rysujcie po śladzie, łączcie kropki, prowadźcie autko palcem po narysowanej drodze.' },
+  { id: 'counting', name: 'countsObjects', acts: ['counting'], group: 'number', tempo: 'number', tip: 'countStairsButtonsSpoons' },
+  { id: 'digits', name: 'writesNumbers', acts: ['digits'], group: 'digit', tip: 'lookNumbersWalkHouse' },
+  { id: 'colors', name: 'recognisesColours', acts: ['colors'], group: 'color', tempo: 'color', tip: 'playISpySomething' },
+  { id: 'shapes', name: 'recognisesShapes', acts: ['shapes'], group: 'shape', tip: 'huntShapesAtHome' },
+  { id: 'phonemes', name: 'firstLetterWord', acts: ['phonemes'], group: 'phoneme', tempo: 'phoneme', tip: 'playWordGameWho' },
+  { id: 'letters', name: 'writesLetters', acts: ['letters'], group: 'letter', tip: 'drawLettersFingerEach' },
+  { id: 'syllables', name: 'splitsWordsIntoSyllables', acts: ['syllables'], tip: 'clapOutFamilyNames' },
+  { id: 'stories', name: 'putsStoryOrder', acts: ['stories'], tip: 'afterWalkAskWhat' },
+  { id: 'patterns', name: 'continuesPatterns', acts: ['patterns'], tip: 'makePatternsBlocksPasta' },
+  { id: 'classifying', name: 'sortsCompares', acts: ['sorting', 'matching'], tip: 'sortWhileTidyingUp' },
+  { id: 'emotions', name: 'recognisesFeelings', acts: ['emotions'], group: 'emotion', tempo: 'emotion', tip: 'whenReadingStoryAsk' },
+  { id: 'memory', name: 'memorySkill', acts: ['memory', 'melody'], tip: 'playWhatsMissingPut' },
+  { id: 'line', name: 'drawsLinesByHand', acts: ['dots', 'maze'], tip: 'traceLinesJoinDots' },
 ];
 
 /** Wszystkie elementy umiejętności w bieżącym języku (np. liczby 1–8, kolory, litery). */

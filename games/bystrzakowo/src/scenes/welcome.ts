@@ -43,7 +43,7 @@ export class WelcomeScene extends Scene {
     this.art = await loadArt();
     this.pages = ['hello', 'gate', ...(trial().full ? [] : (['trial'] as Page[])), 'age'];
     this.bg = new Sprite(this.art.realmBg.meadow);
-    this.skip = new Button({ label: tr('Pomiń'), width: 170, height: 76, fontSize: 26, color: '#c9b8a6', radius: 22, resolution: this.game.pixelRatio, onTap: () => this.finish(false) });
+    this.skip = new Button({ label: tr('skip'), width: 170, height: 76, fontSize: 26, color: '#c9b8a6', radius: 22, resolution: this.game.pixelRatio, onTap: () => this.finish(false) });
     this.addChild(this.bg, this.dim, this.card, this.content, this.skip);
     this.resize(this.game.view);
     this.game.markReady();
@@ -106,10 +106,10 @@ export class WelcomeScene extends Scene {
     const n = TRIAL_DAYS;
     const [title, body] =
       page === 'hello'
-        ? [tr('Witaj w Bystrzakowie!'), tr('Zagadki, liczenie, literki, kształty i historyjki dla dzieci od 3 do 6 lat. Lusia i Bazyl czytają każde polecenie na głos, więc dziecko nie musi umieć czytać. Bez reklam i bez internetu.')]
+        ? [tr('welcomeBystrzakowo'), tr('puzzlesCountingLettersShapes')]
         : page === 'gate'
-          ? [tr('Strefa rodzica'), tr('Przytrzymaj zębatkę w rogu ekranu przez 2 sekundy. Znajdziesz tam postępy dziecka, album prac, limit czasu zabawy, język i dźwięk. Zakup i wysyłanie obrazków chroni dodatkowo krótkie działanie.')]
-          : [tr('{n} dni pełnej wersji', { n }), tr('Przez pierwsze {n} dni zabawy otwarte są wszystkie krainy (liczą się tylko dni, w które dziecko gra). Potem Polana Zagadek zostaje za darmo, a resztę można odblokować jednorazowo w strefie rodzica.', { n })];
+          ? [tr('parentArea'), tr('pressHoldGearCorner')]
+          : [tr('daysFullVersion', { n }), tr('firstDaysPlayAll', { n })];
     const tx = b.x + b.w * 0.41;
     const tw = b.x + b.w - 50 - tx;
     const t = this.text(title, b.w < 900 ? 40 : 46, { weight: '800', wrap: tw });
@@ -126,7 +126,7 @@ export class WelcomeScene extends Scene {
     if (page === 'hello') this.helloArt(ix, iy, b.h);
     else if (page === 'gate') this.gateArt(ix, iy);
     else this.trialArt(ix, iy, b.w);
-    const next = this.button(tr('Dalej'), 250, '#ff7a59', () => this.go(this.page + 1));
+    const next = this.button(tr('next'), 250, '#ff7a59', () => this.go(this.page + 1));
     next.position.set(b.x + b.w - 50 - 125, b.y + b.h - 70);
   }
 
@@ -195,7 +195,7 @@ export class WelcomeScene extends Scene {
         else g.fill({ color: 0xffffff }).stroke({ color: 0xc9b8a6, width: 5, join: 'round' });
       });
     draw(0);
-    const days = this.text(tr('{n} dni zabawy', { n }), 30, { weight: '800', color: '#3f8a4a' });
+    const days = this.text(tr('daysPlay', { n }), 30, { weight: '800', color: '#3f8a4a' });
     days.anchor.set(0.5);
     days.position.set(x, y + 90);
     this.content.addChild(days);
@@ -212,10 +212,10 @@ export class WelcomeScene extends Scene {
   /** Ostatnia karta: wiek dziecka (przyciski 3–6) i opcjonalne imię. */
   private agePage(b: { x: number; y: number; w: number; h: number }): void {
     const cx = b.x + b.w / 2;
-    const t = this.text(tr('Ile lat ma dziecko?'), 46, { weight: '800', align: 'center' });
+    const t = this.text(tr('howOldChild'), 46, { weight: '800', align: 'center' });
     t.anchor.set(0.5, 0);
     t.position.set(cx, b.y + 44);
-    const d = this.text(tr('Od tego zależą pierwsze zadania. Potem trudność dopasowuje się sama.'), 27, { color: SOFT, align: 'center', wrap: b.w - 120 });
+    const d = this.text(tr('setsFirstTasksAfter'), 27, { color: SOFT, align: 'center', wrap: b.w - 120 });
     d.anchor.set(0.5, 0);
     d.position.set(cx, t.y + t.height + 12);
     this.content.addChild(t, d);
@@ -229,9 +229,9 @@ export class WelcomeScene extends Scene {
     // Dolny rząd: imię (opcjonalne) po lewej, start po prawej.
     const name = state.progress.childName;
     const nw = Math.min(520, b.w - 100 - 270 - 40);
-    const nb = this.button(name ? tr('Imię: {name}', { name }) : tr('Dodaj imię dziecka (opcjonalnie)'), nw, '#9b7be0', () => this.askName(), 88, nw < 470 ? 22 : 25);
+    const nb = this.button(name ? tr('nameLabel', { name }) : tr('addChildsNameOptional'), nw, '#9b7be0', () => this.askName(), 88, nw < 470 ? 22 : 25);
     nb.position.set(b.x + 50 + nw / 2, b.y + b.h - 70);
-    const start = this.button(tr('Zaczynamy'), 270, '#4fae5f', () => this.finish(true));
+    const start = this.button(tr('letsStart'), 270, '#4fae5f', () => this.finish(true));
     start.position.set(b.x + b.w - 50 - 135, b.y + b.h - 70);
     start.setEnabled(this.age !== null);
   }
@@ -244,7 +244,7 @@ export class WelcomeScene extends Scene {
   }
 
   private askName(): void {
-    const v = window.prompt(tr('Jak ma na imię dziecko? (zostaje tylko na tym urządzeniu)'), state.progress.childName ?? '');
+    const v = window.prompt(tr('whatChildsNameStays'), state.progress.childName ?? '');
     if (v === null) return;
     const name = v.trim().slice(0, 20);
     state.progress.childName = name ? name[0]!.toUpperCase() + name.slice(1) : undefined;

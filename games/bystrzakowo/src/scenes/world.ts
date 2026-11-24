@@ -204,7 +204,7 @@ export class WorldScene extends Scene {
       this.tweens.to(star, { alpha: 0.2 }, { duration: this.game.rng.range(0.8, 1.8), yoyo: true, repeat: -1, ease: 'sineInOut' });
       o.addChild(star);
     }
-    const text = label(tr('Dobranoc!'), 72, this.game.pixelRatio, '#fff3b0', '#1d1a4a');
+    const text = label(tr('goodNight'), 72, this.game.pixelRatio, '#fff3b0', '#1d1a4a');
     text.position.set(w / 2, h * 0.52);
     o.addChild(text);
     // Zzz nad przewodnikami.

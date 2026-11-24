@@ -2,8 +2,8 @@
  * Zdania raportu dla rodzica w każdym języku (logika: report.ts). Bez form zależnych od płci:
  * czas teraźniejszy i imię w mianowniku („Zosia liczy”, „Sam counts”, „Lena zählt”).
  */
-import type { Lang } from './lang.ts';
-import type { Activity } from './realms.ts';
+import type { Lang } from '../lang.ts';
+import type { Activity } from '../realms.ts';
 
 export type Domain = 'numbers' | 'letters' | 'colors' | 'emotions' | 'logic' | 'creativity';
 

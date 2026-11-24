@@ -42,7 +42,7 @@ describe('tłumaczenia', () => {
       // Bez komentarzy: tylko kod.
       const code = readFileSync(f, 'utf8').replace(/\/\*[\s\S]*?\*\//g, '').replace(/\/\/[^\n]*/g, '');
       for (const m of code.matchAll(/'([^'\n]*[ąćęłńóśźżĄĆĘŁŃÓŚŹŻ][^'\n]*)'/g))
-        if (code.slice(Math.max(0, m.index - 3), m.index) !== 'tr(' && !(m[1]! in dictionaries.en)) bad.push(`${f.split('/').pop()}: ${m[1]}`);
+        if (code.slice(Math.max(0, m.index - 3), m.index) !== 'tr(' && !(m[1]! in dictionaries.pl)) bad.push(`${f.split('/').pop()}: ${m[1]}`);
     }
     expect(bad).toEqual([]);
   });

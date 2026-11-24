@@ -36,10 +36,10 @@ export interface Realm {
 }
 
 export const REALMS: readonly Realm[] = [
-  { id: 'meadow', name: 'Polana Zagadek', guide: 'lusia', rows: [['colors', 'phonemes', 'mothers', 'memory'], ['shadows', 'matching', 'counting', 'emotions']] },
-  { id: 'workshop', name: 'Warsztat Bazyla', guide: 'bazyl', rows: [['patterns', 'shapes', 'syllables'], ['sorting', 'jigsaw', 'stories']] },
-  { id: 'path', name: 'Ścieżka Lusi', guide: 'lusia', rows: [['letters', 'digits'], ['dots', 'maze']] },
-  { id: 'studio', name: 'Pracownia Malucha', guide: 'lusia', rows: [['coloring', 'stickers', 'melody']] },
+  { id: 'meadow', name: 'puzzleMeadow', guide: 'lusia', rows: [['colors', 'phonemes', 'mothers', 'memory'], ['shadows', 'matching', 'counting', 'emotions']] },
+  { id: 'workshop', name: 'basilsWorkshop', guide: 'bazyl', rows: [['patterns', 'shapes', 'syllables'], ['sorting', 'jigsaw', 'stories']] },
+  { id: 'path', name: 'lusiasPath', guide: 'lusia', rows: [['letters', 'digits'], ['dots', 'maze']] },
+  { id: 'studio', name: 'littleStudio', guide: 'lusia', rows: [['coloring', 'stickers', 'melody']] },
 ];
 
 export const isPuzzle = (a: Activity): a is PuzzleKind => (PUZZLE_KINDS as readonly string[]).includes(a);
@@ -49,25 +49,25 @@ export const realmOf = (a: Activity): Realm => REALMS.find((r) => r.rows.some((r
 
 /** Podpisy zabaw na kafelkach krain (krótkie, żeby mieściły się w jednej linii). */
 export const ACTIVITY_NAMES: Record<Activity, string> = {
-  colors: 'Kolory',
-  phonemes: 'Pierwsza litera',
-  mothers: 'Mamy',
-  memory: 'Pary',
-  shadows: 'Cienie',
-  matching: 'Co nie pasuje?',
-  counting: 'Liczenie',
-  emotions: 'Minki',
-  patterns: 'Co dalej?',
-  shapes: 'Kształty',
-  syllables: 'Sylaby',
-  sorting: 'Segregowanie',
-  jigsaw: 'Układanka',
-  stories: 'Historyjki',
-  letters: 'Literki',
-  digits: 'Cyferki',
-  dots: 'Kropki',
-  maze: 'Labirynt',
-  coloring: 'Kolorowanka',
-  stickers: 'Naklejki',
-  melody: 'Melodia',
+  colors: 'colors',
+  phonemes: 'firstLetter',
+  mothers: 'mommies',
+  memory: 'pairs',
+  shadows: 'shadows',
+  matching: 'oddOneOut',
+  counting: 'counting',
+  emotions: 'faces',
+  patterns: 'whatsNext',
+  shapes: 'shapes',
+  syllables: 'syllables',
+  sorting: 'sorting',
+  jigsaw: 'puzzle',
+  stories: 'stories',
+  letters: 'letters',
+  digits: 'numbers',
+  dots: 'dots',
+  maze: 'maze',
+  coloring: 'coloring',
+  stickers: 'stickers',
+  melody: 'melody',
 };
