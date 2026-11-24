@@ -5,7 +5,17 @@ import { addTask, addTempo, addTime, dayKey, newJournal, noteFact, prune, type J
 import type { Activity } from './sim/realms.ts';
 import { saveState, state } from './state.ts';
 
-export const today = (): string => dayKey(new Date());
+/** Przesunięcie daty dziennika w dniach (tylko autopilot w trybie historii: rozgrywa minione dni). */
+let dayShift = 0;
+export function setDayShift(days: number): void {
+  dayShift = days;
+}
+
+export const today = (): string => {
+  const d = new Date();
+  d.setDate(d.getDate() + dayShift);
+  return dayKey(d);
+};
 
 export function journal(): Journal {
   return (state.progress.journal ??= newJournal());
@@ -14,7 +24,8 @@ export function journal(): Journal {
 export function logTask(kind: Activity, misses: number): void {
   addTask(journal(), today(), kind, misses, state.progress.levels[kind]);
   // Pierwsze zadanie dnia zużywa dzień próby pełnej wersji (import leniwy: premium importuje log).
-  void import('./premium.ts').then((m) => m.countPlayDay());
+  // Autopilot rozgrywający minione dni nie zużywa próby.
+  if (!dayShift) void import('./premium.ts').then((m) => m.countPlayDay());
 }
 
 /** Czas dobrej odpowiedzi (tempo myślenia) w grupie umiejętności na bieżącym poziomie zabawy. */

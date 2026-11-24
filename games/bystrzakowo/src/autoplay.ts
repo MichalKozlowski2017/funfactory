@@ -6,6 +6,7 @@
 import { SaveStore } from '@funfactory/core';
 import type { Game } from '@funfactory/kit2d';
 import { ACTIVITIES, type Activity } from './sim/realms.ts';
+import { setDayShift } from './log.ts';
 
 type Any = Record<string, any>; // eslint-disable-line @typescript-eslint/no-explicit-any
 
@@ -50,6 +51,8 @@ function startDiag(game: Game): Diag {
 
 export function startAutoplay(game: Game, minutes = Number(new URLSearchParams(location.search).get('autoplay')) || 15): void {
   startDiag(game);
+  const days = Number(import.meta.env.VITE_AUTOPLAY_DAYS ?? new URLSearchParams(location.search).get('days') ?? 0);
+  if (days > 0) return playHistory(game, days);
   const rng = game.rng;
   const missRate = new Map<Activity, number>(ACTIVITIES.map((a) => [a, rng.range(0.03, 0.45)]));
   const end = performance.now() + minutes * 60_000;
@@ -107,4 +110,91 @@ function colorSome(s: Any, n: number, rand: () => number): void {
     const h = pic.texture.height * 0.8;
     s.tap({ global: pic.toGlobal({ x: (rand() - 0.5) * w, y: (rand() - 0.5) * h }) });
   }
+}
+
+/** Zabawy z pomiarem tempa (codziennie) i pozostałe (po kolei, po kilka dziennie). */
+const DAILY: Activity[] = ['kolory', 'liczenie', 'gloski', 'emocje'];
+const ROUNDS_PER_DAY = 7;
+
+/**
+ * Tryb historii (statystyki do podejrzenia na telefonie): bot rozgrywa `days` minionych dni po kolei
+ * (data dziennika cofnięta, próba pełnej wersji nietknięta). Z dnia na dzień robi mniej pomyłek
+ * i odpowiada szybciej, więc wykresy pokazują prawdziwą krzywą nauki z prawdziwych rozgrywek.
+ * Gra jest przyspieszona i wyciszona; na końcu data wraca do dziś.
+ */
+function playHistory(game: Game, days: number): void {
+  // Stan rozgrywki (do odczytu z telefonu przez devicectl); po zakończeniu kolejne uruchomienie nic nie robi.
+  const status = new SaveStore<{ day: number; days: number; done: boolean; at: string }>('bystrzakowo-historia', { day: 0, days, done: false, at: '' });
+  void status.load().then((st) => {
+    if (st.done) console.log('HISTORIA już rozegrana');
+    else runHistory(game, days, status);
+  });
+}
+
+function runHistory(game: Game, days: number, status: SaveStore<{ day: number; days: number; done: boolean; at: string }>): void {
+  const rng = game.rng;
+  const others = ACTIVITIES.filter((a) => !DAILY.includes(a) && a !== 'naklejanka' && a !== 'kolorowanka');
+  const base = new Map<Activity, number>(ACTIVITIES.map((a) => [a, rng.range(0.25, 0.55)]));
+  game.sound.muted = true;
+  game.loop.timeScale = 2;
+  let day = 0;
+  let rounds = 0;
+  let kind: Activity | null = null;
+  let since = 0;
+  let wait = 0;
+  let next = 0;
+  const progress = () => day / Math.max(1, days - 1);
+  const startDay = () => {
+    setDayShift(-(days - 1 - day));
+    rounds = 0;
+    console.log(`HISTORIA dzień ${day + 1}/${days}`);
+    void status.save({ day: day + 1, days, done: false, at: new Date().toISOString() });
+  };
+  startDay();
+  const pick = (): Activity => (rounds < DAILY.length ? DAILY[rounds]! : others[next++ % others.length]!);
+  const tick = () => {
+    const s = game.scenes.current as unknown as Any;
+    since++;
+    try {
+      if (s.id === 'world') {
+        if (s.leaving) return void setTimeout(tick, 500);
+        if (rounds >= ROUNDS_PER_DAY) {
+          day++;
+          if (day >= days) {
+            setDayShift(0);
+            game.loop.timeScale = 1;
+            game.sound.muted = false;
+            console.log('HISTORIA koniec');
+            void status.save({ day: days, days, done: true, at: new Date().toISOString() });
+            return;
+          }
+          startDay();
+        }
+        kind = pick();
+        s.play(kind);
+        since = 0;
+        wait = 1 + Math.round((1 - progress()) * 3 + rng.next());
+      } else if (s.overlay) {
+        if (since > 2 && !s.leaving) {
+          rounds++;
+          s.leave();
+        }
+      } else if (!s.busy && s.layer?.children?.length && since > wait) {
+        // Pomyłki maleją z dnia na dzień (od ~bazy do ~1/4 bazy), czas do odpowiedzi też.
+        const miss = (base.get(kind!) ?? 0.3) * (1 - 0.75 * progress());
+        if (rng.next() < miss) s.missed();
+        s.solve();
+        since = 0;
+        wait = 1 + Math.round((1 - progress()) * 3 + rng.next());
+      } else if (since > 60 && !s.leaving) {
+        s.leave?.();
+        since = 0;
+      }
+    } catch (e) {
+      console.warn('historia', e);
+      s.leave?.();
+    }
+    setTimeout(tick, 500);
+  };
+  setTimeout(tick, 2500);
 }
