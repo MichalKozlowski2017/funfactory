@@ -29,6 +29,8 @@ export function setRestScale(target: Container, x: number, y = x): void {
 
 /** Spłaszczenie i powrót (lądowanie, uderzenie, dotknięcie). `amount` 0.1–0.4. */
 export async function squash(tweens: Tweens, target: Container, amount = 0.25, seconds = 0.22): Promise<void> {
+  // Obiekt usunięty, zanim animacja ruszyła (np. opóźniony efekt po wyjściu z ekranu): nic do zrobienia.
+  if (target.destroyed) return;
   const base = restScale(target);
   tweens.killOf(target.scale);
   const hit = tweens.to(target.scale, { x: base.x * (1 + amount), y: base.y * (1 - amount) }, { duration: seconds * 0.3, ease: 'quadOut' });
@@ -44,6 +46,8 @@ export async function stretch(tweens: Tweens, target: Container, amount = 0.2, s
 
 /** Pojawienie się z „pyknięciem” od zera. */
 export async function popIn(tweens: Tweens, target: Container, seconds = 0.4, delay = 0): Promise<void> {
+  // Obiekt usunięty, zanim animacja ruszyła (np. opóźniony efekt po wyjściu z ekranu): nic do zrobienia.
+  if (target.destroyed) return;
   const end = restScale(target);
   target.scale.set(0);
   await tweens.to(target.scale, end, { duration: seconds, ease: 'backOut', delay }).done;
@@ -51,6 +55,8 @@ export async function popIn(tweens: Tweens, target: Container, seconds = 0.4, de
 
 /** Zniknięcie: skurczenie + przezroczystość. */
 export async function popOut(tweens: Tweens, target: Container, seconds = 0.2): Promise<void> {
+  // Obiekt usunięty, zanim animacja ruszyła (np. opóźniony efekt po wyjściu z ekranu): nic do zrobienia.
+  if (target.destroyed) return;
   tweens.killOf(target.scale);
   tweens.to(target, { alpha: 0 }, { duration: seconds, ease: 'quadIn' });
   await tweens.to(target.scale, { x: 0, y: 0 }, { duration: seconds, ease: 'backIn' }).done;
@@ -58,6 +64,8 @@ export async function popOut(tweens: Tweens, target: Container, seconds = 0.2): 
 
 /** Krótkie pulsowanie (np. licznik punktów po zmianie). */
 export async function pulse(tweens: Tweens, target: Container, amount = 0.15, seconds = 0.18): Promise<void> {
+  // Obiekt usunięty, zanim animacja ruszyła (np. opóźniony efekt po wyjściu z ekranu): nic do zrobienia.
+  if (target.destroyed) return;
   const base = restScale(target);
   tweens.killOf(target.scale);
   target.scale.set(base.x, base.y);
@@ -71,6 +79,8 @@ export async function pulse(tweens: Tweens, target: Container, amount = 0.15, se
 
 /** Miganie (nietykalność, trafienie). */
 export async function blink(tweens: Tweens, target: Container, times = 3, seconds = 0.4): Promise<void> {
+  // Obiekt usunięty, zanim animacja ruszyła (np. opóźniony efekt po wyjściu z ekranu): nic do zrobienia.
+  if (target.destroyed) return;
   await tweens.to(target, { alpha: 0.25 }, { duration: seconds / (times * 2), repeat: times * 2 - 1, yoyo: true, ease: 'linear' })
     .done;
   target.alpha = 1;

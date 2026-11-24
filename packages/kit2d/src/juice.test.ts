@@ -41,3 +41,13 @@ describe('juice', () => {
     expect(restScale(body).x).toBeCloseTo(1.2);
   });
 });
+
+describe('obiekt usunięty przed animacją', () => {
+  it('pulse, squash i popIn kończą się bez błędu i nie dotykają skali', async () => {
+    const gone = { scale: null, alpha: 1, destroyed: true } as unknown as Container;
+    const tw = new Tweens();
+    await expect(pulse(tw, gone)).resolves.toBeUndefined();
+    await expect(squash(tw, gone)).resolves.toBeUndefined();
+    await expect(popIn(tw, gone)).resolves.toBeUndefined();
+  });
+});
