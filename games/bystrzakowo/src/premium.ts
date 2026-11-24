@@ -1,5 +1,5 @@
 /**
- * Pełna wersja: 5 dni zabawy z pełnym dostępem (sim/trial.ts), potem tylko Polana Zagadek, aż rodzic
+ * Pełna wersja: 3 dni zabawy z pełnym dostępem (sim/trial.ts), potem tylko Polana Zagadek, aż rodzic
  * kupi pełną wersję (jednorazowy zakup, bez zewnętrznych serwisów). Pełny raport i pocztówka w strefie
  * rodzica działają tak samo: w próbie i po zakupie.
  *

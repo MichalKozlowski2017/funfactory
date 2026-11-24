@@ -1,6 +1,6 @@
 # Bystrzakowo: pełna wersja (zakup w aplikacji)
 
-Model (decyzja właściciela, 21.11.2026): 5 dni zabawy z pełnym dostępem, potem tylko Polana Zagadek.
+Model (decyzja właściciela, 21.11.2026, skrócone do 3 dni 24.11.2026): 3 dni zabawy z pełnym dostępem, potem tylko Polana Zagadek.
 Pełna wersja: jednorazowo **24,99 zł**, bez subskrypcji i reklam, bez zewnętrznych serwisów
 (wtyczka `@capgo/native-purchases`: StoreKit 2 i Google Play Billing). Kod: `games/bystrzakowo/src/premium.ts`,
 logika próby z testami: `src/sim/trial.ts`.

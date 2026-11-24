@@ -70,7 +70,7 @@ Decyzje właściciela: krótkie powitanie rodzica, wiek ustawia start, rączka i
 - **Powitanie rodzica** (`src/scenes/welcome.ts`, bez lektora). Ma 4 karty, każdą można pominąć:
   1. czym jest gra;
   2. strefa rodzica (przytrzymaj zębatkę, potem działanie);
-  3. 5 dni pełnej wersji (karty nie ma, gdy wersja jest kupiona);
+  3. 3 dni pełnej wersji (karty nie ma, gdy wersja jest kupiona);
   4. wiek 3/4/5/6+ i opcjonalne imię.
 
   Pokazuje się tylko przy świeżym zapisie (`needsWelcome`). Gracze, którzy grali przed tą wersją, go nie zobaczą.

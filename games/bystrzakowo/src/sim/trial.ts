@@ -1,12 +1,12 @@
 /**
- * Próba pełnej wersji: przez 5 dni zabawy (nie kalendarzowych) otwarte są wszystkie krainy, potem
+ * Próba pełnej wersji: przez 3 dni zabawy (nie kalendarzowych) otwarte są wszystkie krainy, potem
  * zostaje tylko Polana Zagadek, aż rodzic kupi pełną wersję. Dzień liczy się, gdy dziecko rozwiąże
  * pierwsze zadanie; aplikacja leżąca odłogiem nie zużywa próby, a przestawienie zegara nic nie daje
  * (liczą się różne dni, w które była zabawa).
  */
 import type { RealmId } from './realms.ts';
 
-export const TRIAL_DAYS = 5;
+export const TRIAL_DAYS = 3;
 /** Kraina zawsze darmowa. */
 export const FREE_REALM: RealmId = 'polana';
 

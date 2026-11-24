@@ -44,7 +44,7 @@ BEZPIECZNIE
 Bez reklam, bez internetu, bez kont i bez zbierania danych. Postępy, imię i prace dziecka zostają tylko na urządzeniu.
 
 WYPRÓBUJ ZA DARMO
-Przez pierwsze 5 dni zabawy wszystkie krainy są otwarte. Potem Polana Zagadek zostaje za darmo na zawsze, a pełną wersję odblokowuje jednorazowy zakup, bez subskrypcji. Liczą się tylko dni, w które dziecko się bawi.
+Przez pierwsze 3 dni zabawy wszystkie krainy są otwarte. Potem Polana Zagadek zostaje za darmo na zawsze, a pełną wersję odblokowuje jednorazowy zakup, bez subskrypcji. Liczą się tylko dni, w które dziecko się bawi.
 
 Języki: polski, angielski, niemiecki, hiszpański.
 
@@ -72,7 +72,7 @@ SAFE
 No ads, no internet, no accounts and no data collection. Progress, your child's name and creations stay on the device.
 
 TRY IT FREE
-For the first 5 days of play, all lands are open. After that, Puzzle Meadow stays free forever, and a one-time purchase unlocks the full version. No subscription. Only days when your child plays are counted.
+For the first 3 days of play, all lands are open. After that, Puzzle Meadow stays free forever, and a one-time purchase unlocks the full version. No subscription. Only days when your child plays are counted.
 
 Languages: English, German, Spanish, Polish.
 
@@ -100,7 +100,7 @@ SICHER
 Ohne Werbung, ohne Internet, ohne Konto und ohne Datensammeln. Fortschritt, Name und Werke bleiben auf dem Gerät.
 
 KOSTENLOS AUSPROBIEREN
-In den ersten 5 Spieltagen sind alle Länder offen. Danach bleibt die Rätselwiese für immer kostenlos, und ein einmaliger Kauf schaltet die Vollversion frei. Kein Abo. Es zählen nur Tage, an denen Ihr Kind spielt.
+In den ersten 3 Spieltagen sind alle Länder offen. Danach bleibt die Rätselwiese für immer kostenlos, und ein einmaliger Kauf schaltet die Vollversion frei. Kein Abo. Es zählen nur Tage, an denen Ihr Kind spielt.
 
 Sprachen: Deutsch, Englisch, Spanisch, Polnisch.
 
@@ -128,7 +128,7 @@ SEGURO
 Sin anuncios, sin internet, sin cuentas y sin recopilación de datos. El progreso, el nombre y las creaciones se quedan en el dispositivo.
 
 PRUÉBALO GRATIS
-Durante los primeros 5 días de juego todos los mundos están abiertos. Después, la Pradera de Acertijos sigue gratis para siempre, y un solo pago desbloquea la versión completa. Sin suscripción. Solo cuentan los días en que juega.
+Durante los primeros 3 días de juego todos los mundos están abiertos. Después, la Pradera de Acertijos sigue gratis para siempre, y un solo pago desbloquea la versión completa. Sin suscripción. Solo cuentan los días en que juega.
 
 Idiomas: español, inglés, alemán, polaco.
 
@@ -173,7 +173,7 @@ Bystrzakowo is an educational app for children aged 3–6 (Kids category, Ages 5
 
 Parental gate: the parent zone (gear icon, top left) opens only after pressing and holding the gear for 2 seconds. Everything aimed at adults is inside the parent zone: the progress report, the album with the Share button (system share sheet), the weekly postcard, settings, and the in-app purchase.
 
-In-app purchase: one non-consumable product, "bystrzakowo.full" (full version). A fresh install has a free trial of 5 days of play with everything open; after that, only the first land (Puzzle Meadow) stays open and the other lands show a sleeping overlay; tapping them only plays a voice line asking the child to get a parent. The purchase and "Restore purchase" buttons are in the parent zone (Progress and Settings tabs).
+In-app purchase: one non-consumable product, "bystrzakowo.full" (full version). A fresh install has a free trial of 3 days of play with everything open; after that, only the first land (Puzzle Meadow) stays open and the other lands show a sleeping overlay; tapping them only plays a voice line asking the child to get a parent. The purchase and "Restore purchase" buttons are in the parent zone (Progress and Settings tabs).
 
 No ads, no analytics, no third-party SDKs, no accounts, no network access, no data collection. All progress and the optional child's name are stored only on the device.
 
