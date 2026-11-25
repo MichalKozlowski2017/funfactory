@@ -44,7 +44,7 @@ text() {
     en-4) echo "See what your child is learning|Progress charts, day by day" ;;
     de-4) echo "Sehen, was Ihr Kind lernt|Fortschritte im Diagramm, Tag für Tag" ;;
     es-4) echo "Mira lo que aprende tu hijo|Progreso en gráficos, día a día" ;;
-    pl-5) echo "Rośnie razem z dzieckiem|Zadania trudnieją wraz z postępami" ;;
+    pl-5) echo "Rośnie razem z dzieckiem|Zadania dopasowują się do umiejętności dziecka" ;;
     en-5) echo "Grows with your child|Tasks get harder as your child improves" ;;
     de-5) echo "Wächst mit Ihrem Kind|Die Aufgaben wachsen mit dem Können" ;;
     es-5) echo "Crece con tu hijo|Las tareas se adaptan a su progreso" ;;
