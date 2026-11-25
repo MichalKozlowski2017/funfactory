@@ -70,10 +70,11 @@ shot:s"
 eval:eval(atob('$(b64 "$C.demoParent('postcard', decodeURIComponent(escape(atob('$(b64 "$kid")'))))")'))
 wait:1800
 shot:s"
-    # 9. Strefa rodzica, Ustawienia (karta „Bezpieczna dla dziecka”): bez reklam, bez danych, polityka prywatności.
-    run 9 "wait:1500
-eval:$C.demoParent('settings')
-wait:1800
+    # 9. Bramka dla dorosłych nad mapą (karta „Bezpieczna dla dziecka”), bez Lusi i Bazyla z gry.
+    run 9 "wait:2500
+eval:$C.guideBoxes.forEach(b=>b.visible=false)
+eval:$C.askAdult(()=>{})
+wait:800
 shot:s"
     unset parent
   done

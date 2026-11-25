@@ -122,7 +122,8 @@ framed() { # wejście maxW maxH wyjście kąt
 pose() { # nazwa strona h wyjście
   magick "$POSES/$1.png" -trim +repage -resize x$3 $([ "$2" = right ] && echo -flop) "$4"
 }
-fit() { # obraz maxW: zmniejsz, gdy szerszy
+fit() { # obraz maxW: zmniejsz, gdy szerszy (brak pliku: nic nie rób)
+  [ -f "$1" ] || return 0
   local w; w=$(magick identify -format %w "$1")
   if [ "$w" -gt "$2" ]; then magick "$1" -resize "${2}x" "$1"; fi
 }
@@ -137,6 +138,7 @@ over() { # character screen_x screen_w [rel]
 
 card() { # n lang W H raw out
   local n=$1 lang=$2 W=$3 H=$4 raw=$5 out=$6 wide=1
+  rm -f "$T/h2.png" # karta 8 nie ma podpisu: bez resztek po poprzedniej karcie
   [ $((W * 10 / H)) -lt 16 ] && wide=0
   IFS='|' read -r h1 h2 x1 x2 x3 <<<"$(text "$lang" "$n")"
   local u=$H; [ $wide = 0 ] && u=$((W * 1320 / 2868)) # jednostka: wysokość karty iPhone'a o tej szerokości
@@ -166,7 +168,7 @@ card() { # n lang W H raw out
   if [ "$n" = 1 ]; then
     pose lusia-point left $((u * ch / 100)) "$T/lusia.png"; pose bazyl-point right $((u * (ch - 4) / 100)) "$T/bazyl.png"
   elif [ "$n" = 8 ]; then
-    pose bazyl-thumbs left $((u * ch / 100)) "$T/lusia.png"; pose lusia-wow right $((u * (ch - 4) / 100)) "$T/bazyl.png"
+    pose bazyl-thumbs left $((u * ch / 100)) "$T/lusia.png"; pose lusia-teacher right $((u * (ch - 4) / 100)) "$T/bazyl.png"
   fi
   local m=$((u * 9 / 100))
   if [ $wide = 1 ]; then
@@ -193,11 +195,11 @@ card() { # n lang W H raw out
         fit "$T/h1.png" $((W * 45 / 100))
         # Long badges (Spanish, German) push the screen and Bazyl to the right.
         local bw sw8 bx; bw=$(magick identify -format "%w\n" "$T/b1.png" "$T/b2.png" "$T/b3.png" | sort -n | tail -1)
-        sw8=$((W - m - bw - W * 7 / 100)); [ $sw8 -gt $((W * 48 / 100)) ] && sw8=$((W * 48 / 100))
+        sw8=$((W - m - bw - W * 6 / 100)); [ $sw8 -gt $((W * 58 / 100)) ] && sw8=$((W * 58 / 100))
         # Bazyl's head is level with the two lower badges, so only they push him.
         bx=$(magick identify -format "%w\n" "$T/b2.png" "$T/b3.png" | sort -n | tail -1); bx=$((m + bx + W / 100))
         [ $bx -lt $((W * 25 / 100)) ] && bx=$((W * 25 / 100))
-        framed "$shot" $sw8 $((H * 66 / 100)) "$T/f.png" "${TILT[$n]}"
+        framed "$shot" $sw8 $((H * 74 / 100)) "$T/f.png" "${TILT[$n]}"
         magick "$T/bg.png" "$T/f.png" -gravity east -geometry +$((W * 3 / 100))+$((u * 4 / 100)) -composite \
           "$T/h1.png" -gravity northwest -geometry +$m+$((u * 7 / 100)) -composite \
           "$T/b1.png" -gravity northwest -geometry +$m+$((u * 30 / 100)) -composite \
@@ -238,15 +240,11 @@ card() { # n lang W H raw out
         # Ekran gry wypełnia miejsce pod znaczkami (pełny zrzut, bez przycinania).
         local room=$((H - y3 - $(hgt "$T/badges.png") - H * 8 / 100 - W * 6 / 100)) # minus zapas na przechylenie i cień
         framed "$shot" $((W * 86 / 100)) $room "$T/f.png" "${TILT[$n]}"
-        local lx=0 bx=0 fw fh fx
-        if [ "$n" = 1 ]; then
-          # The world map shot has no in-game guides (bystrzakowo-shots.sh hides them), so Lusia and Bazyl
-          # stand at the card edges and only slightly overlap the screen.
-          magick "$T/lusia.png" -resize x$((H * 47 / 100)) "$T/lusia.png"; magick "$T/bazyl.png" -resize x$((H * 43 / 100)) "$T/bazyl.png"
-          lx=$((-W * 4 / 100)); bx=$((-W * 3 / 100))
-        else
-          magick "$T/lusia.png" -resize 120% "$T/lusia.png"; magick "$T/bazyl.png" -resize 120% "$T/bazyl.png"
-        fi
+        # Card 1 (world map) and card 8 (adult gate over the map): the shots have no in-game guides
+        # (bystrzakowo-shots.sh hides them), so the two characters stand at the card edges and only slightly overlap the screen.
+        magick "$T/lusia.png" -resize x$((H * 47 / 100)) "$T/lusia.png"; magick "$T/bazyl.png" -resize x$((H * 43 / 100)) "$T/bazyl.png"
+        local lx=$((-W * 4 / 100)) bx=$((-W * 3 / 100))
+        [ "$n" = 8 ] && lx=$((W / 100)) bx=$((W / 100)) # Bazyl's thumb and Lusia's tail stay on the card
         magick "$T/bg.png" "$T/h1.png" -gravity north -geometry +0+$top -composite \
           "$T/h2.png" -gravity north -geometry +0+$y2 -composite \
           "$T/f.png" -gravity south -geometry +0+$((H * 3 / 100)) -composite \
