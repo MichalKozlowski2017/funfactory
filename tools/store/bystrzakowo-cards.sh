@@ -7,6 +7,7 @@
 # Zawężanie: LANGS="pl en", SIZES="ios-6.9", CARDS="1 8".
 set -euo pipefail
 cd "$(dirname "$0")/../.."
+export MAGICK_THREAD_LIMIT=1
 IN=assets-raw/bystrzakowo-store/shots
 OUT=games/bystrzakowo/store/screens
 ART=games/bystrzakowo/public/art
@@ -63,8 +64,7 @@ text() {
   esac
 }
 
-T=$(mktemp -d)
-trap 'rm -rf "$T"' EXIT
+T="" # katalog roboczy: osobny dla każdego zestawu (zestawy liczą się równolegle)
 # Napis w stylu gry: białe wypełnienie, kolorowy kontur, ciemny brzeg.
 title() { # tekst wielkość wyjście [wypełnienie] [kontur]
   local fill=${4:-white} st=${5:-'#ff9f40'}
@@ -332,10 +332,16 @@ for dir in "$IN"/*; do
   case " ${SIZES:-ios-6.9 ipad-13 android} " in *" $size "*) ;; *) continue ;; esac
   case $size in ios-6.9) W=2868 H=1320 ;; ipad-13) W=2752 H=2064 ;; android) W=1920 H=1080 ;; *) continue ;; esac
   mkdir -p "$OUT/$set_name"
-  for n in ${CARDS:-1 2 3 4 5 6 7 8}; do
-    raw="$dir/${SCENE[$n]}.png"
-    [ -f "$raw" ] || { echo "brak zrzutu: $raw"; continue; }
-    card "$n" "$lang" $W $H "$raw" "$OUT/$set_name/$n.jpg"
-  done
-  echo "$set_name: $(ls "$OUT/$set_name" | wc -l | tr -d ' ') kart"
+  # Każdy zestaw (rozmiar × język) w osobnym procesie, z własnym katalogiem roboczym; ImageMagick po 1 wątku na proces.
+  (
+    T=$(mktemp -d)
+    for n in ${CARDS:-1 2 3 4 5 6 7 8}; do
+      raw="$dir/${SCENE[$n]}.png"
+      [ -f "$raw" ] || { echo "brak zrzutu: $raw"; continue; }
+      card "$n" "$lang" $W $H "$raw" "$OUT/$set_name/$n.jpg"
+    done
+    rm -rf "$T"
+    echo "$set_name: $(ls "$OUT/$set_name" | wc -l | tr -d ' ') kart"
+  ) &
 done
+wait
