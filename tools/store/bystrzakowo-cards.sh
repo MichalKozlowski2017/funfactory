@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Karty Bystrzakowa do sklepów, pisane dla rodzica: hasło z korzyścią, podpis, zrzut gry w ramce.
 # Karta 1 (okładka): tło z Fluxa (store/keyart), znaczki zaufania, Lusia i Bazyl.
+# Karta 2: cztery krainy w siatce 2×2 (zrzuty 1, 10, 11, 12).
 # Karta 8: „Dziecko gra samo”: Bazyl wychodzi z zagadki i czyta polecenie (dymek), znaczki zaufania.
 # Wejście: assets-raw/bystrzakowo-store/shots/<rozmiar>-<lang>/<scena>.png (bystrzakowo-shots.sh, z ?nohand)
 # Wyjście: games/bystrzakowo/store/screens/<rozmiar>-<lang>/<n>.jpg
@@ -15,16 +16,17 @@ KEY=games/bystrzakowo/store/keyart # tła z Fluxa (JPG + JSON z promptem i seede
 FONT=tools/store/baloo2-800.ttf # Baloo 2 ExtraBold (czcionka gry, OFL)
 
 # Karta → scena zrzutu, tło i przechylenie zrzutu.
-SCENE=("" 1 4 2 7 3 6 8 9)
-BG=("" "$KEY/keyart-blocks-11.jpg" "$KEY/keyart-book-21.jpg" "$ART/landscapes/forest.jpg" "$KEY/keyart-village-31.jpg" "$ART/realm-workshop.jpg" "$ART/realm-studio.jpg" "$KEY/keyart-blocks-12.jpg" "$ART/meadow.jpg")
-TILT=("" -3 2 -2 2 -2 2 -2 2)
+# Karta 2 (4 krainy) składa się ze scen 1, 10, 11 i 12 (mapa każdej krainy).
+SCENE=("" 1 1 4 2 7 3 6 9)
+BG=("" "$KEY/keyart-blocks-11.jpg" "$KEY/keyart-village-31.jpg" "$KEY/keyart-book-21.jpg" "$ART/landscapes/forest.jpg" "$KEY/keyart-blocks-12.jpg" "$ART/realm-workshop.jpg" "$ART/realm-studio.jpg" "$ART/meadow.jpg")
+TILT=("" -3 0 2 -2 2 -2 2 2)
 # Postać obok ekranu (store/poses: wskazuje w prawo; po prawej stronie karty odbita, żeby wskazywała ekran) i jej strona.
 POSES=games/bystrzakowo/store/poses
-CHAR=("" "" lusia-teacher lusia-wow bazyl-curious bazyl-laugh lusia-brush bazyl-wink bazyl-thumbs)
-SIDE=("" "" left left right left left right left)
+CHAR=("" "" "" lusia-teacher lusia-point bazyl-curious bazyl-laugh lusia-brush "")
+SIDE=("" "" "" left left right left left "")
 # Cards with a game scene: the game shows the same character in the bottom left corner of the screen.
 # The big character stands over that corner and covers it, as if it stepped out of the screen.
-COVER=("" "" 1 1 "" 1 1 "" "")
+COVER=("" "" "" 1 1 "" 1 1 "")
 
 # Hasło | podpis (karty 2–7); hasło | podtytuł | 3 znaczki (karta 1); hasło | podpis | dymek lektora | 3 znaczki (karta 8).
 text() {
@@ -33,30 +35,30 @@ text() {
     en-1) echo "Smart play|for kids aged 3–6|No ads|Works offline|Every instruction read aloud" ;;
     de-1) echo "Kluges Spielen|für Kinder von 3–6|Ohne Werbung|Funktioniert offline|Alles wird vorgelesen" ;;
     es-1) echo "Juego inteligente|para niños de 3 a 6 años|Sin anuncios|Funciona sin internet|Todo se lee en voz alta" ;;
-    pl-2) echo "Pierwsze literki i cyferki|Dziecko pisze palcem, Lusia podpowiada" ;;
-    en-2) echo "First letters and numbers|Trace with a finger, Lusia helps" ;;
-    de-2) echo "Erste Buchstaben und Zahlen|Mit dem Finger nachspuren, Lusia hilft" ;;
-    es-2) echo "Primeras letras y números|Traza con el dedo, Lusia ayuda" ;;
-    pl-3) echo "Uczy przez zabawę|Kolory, kształty, liczenie i 18 innych zabaw" ;;
-    en-3) echo "Learning through play|Colors, shapes, counting and 18 more games" ;;
-    de-3) echo "Lernen durch Spielen|Farben, Formen, Zählen und 18 weitere Spiele" ;;
-    es-3) echo "Aprender jugando|Colores, formas, números y 18 juegos más" ;;
-    pl-4) echo "Widzisz, czego dziecko się uczy|Postępy na wykresach, dzień po dniu" ;;
-    en-4) echo "See what your child is learning|Progress charts, day by day" ;;
-    de-4) echo "Sehen, was Ihr Kind lernt|Fortschritte im Diagramm, Tag für Tag" ;;
-    es-4) echo "Mira lo que aprende tu hijo|Progreso en gráficos, día a día" ;;
-    pl-5) echo "Rośnie razem z dzieckiem|Zadania dopasowują się do umiejętności dziecka" ;;
-    en-5) echo "Grows with your child|Tasks get harder as your child improves" ;;
-    de-5) echo "Wächst mit Ihrem Kind|Die Aufgaben wachsen mit dem Können" ;;
-    es-5) echo "Crece con tu hijo|Las tareas se adaptan a su progreso" ;;
-    pl-6) echo "Twórcza zabawa|Kolorowanki i obrazki z naklejek" ;;
-    en-6) echo "Creative play|Coloring pages and sticker pictures" ;;
-    de-6) echo "Kreatives Spielen|Ausmalbilder und Stickerbilder" ;;
-    es-6) echo "Juego creativo|Dibujos para colorear y calcomanías" ;;
-    pl-7) echo "Pocztówka z sukcesami|Co tydzień: czego nauczyło się dziecko" ;;
-    en-7) echo "A weekly postcard|What your child learned this week" ;;
-    de-7) echo "Die Wochenpostkarte|Was Ihr Kind diese Woche gelernt hat" ;;
-    es-7) echo "Una postal semanal|Lo que tu hijo aprendió esta semana" ;;
+    pl-2) echo "4 krainy, 21 zabaw|Zagadki, układanki, rysowanie i kolorowanki" ;;
+    en-2) echo "4 lands, 21 games|Puzzles, sorting, tracing and coloring" ;;
+    de-2) echo "4 Länder, 21 Spiele|Rätsel, Sortieren, Nachspuren und Ausmalen" ;;
+    es-2) echo "4 mundos, 21 juegos|Acertijos, clasificar, trazar y colorear" ;;
+    pl-3) echo "Pierwsze literki i cyferki|Dziecko pisze palcem, Lusia podpowiada" ;;
+    en-3) echo "First letters and numbers|Trace with a finger, Lusia helps" ;;
+    de-3) echo "Erste Buchstaben und Zahlen|Mit dem Finger nachspuren, Lusia hilft" ;;
+    es-3) echo "Primeras letras y números|Traza con el dedo, Lusia ayuda" ;;
+    pl-4) echo "Uczy przez zabawę|Kolory, kształty, liczenie i 18 innych zabaw" ;;
+    en-4) echo "Learning through play|Colors, shapes, counting and 18 more games" ;;
+    de-4) echo "Lernen durch Spielen|Farben, Formen, Zählen und 18 weitere Spiele" ;;
+    es-4) echo "Aprender jugando|Colores, formas, números y 18 juegos más" ;;
+    pl-5) echo "Widzisz, czego dziecko się uczy|Postępy na wykresach, dzień po dniu" ;;
+    en-5) echo "See what your child is learning|Progress charts, day by day" ;;
+    de-5) echo "Sehen, was Ihr Kind lernt|Fortschritte im Diagramm, Tag für Tag" ;;
+    es-5) echo "Mira lo que aprende tu hijo|Progreso en gráficos, día a día" ;;
+    pl-6) echo "Rośnie razem z dzieckiem|Zadania dopasowują się do umiejętności dziecka" ;;
+    en-6) echo "Grows with your child|Tasks get harder as your child improves" ;;
+    de-6) echo "Wächst mit Ihrem Kind|Die Aufgaben wachsen mit dem Können" ;;
+    es-6) echo "Crece con tu hijo|Las tareas se adaptan a su progreso" ;;
+    pl-7) echo "Twórcza zabawa|Kolorowanki i obrazki z naklejek" ;;
+    en-7) echo "Creative play|Coloring pages and sticker pictures" ;;
+    de-7) echo "Kreatives Spielen|Ausmalbilder und Stickerbilder" ;;
+    es-7) echo "Juego creativo|Dibujos para colorear y calcomanías" ;;
     pl-8) echo "Dziecko gra samo, Ty masz spokój|Lektor czyta każde polecenie, nie trzeba umieć czytać|Gdzie jest mama cielaczka?|Bez reklam|Bez zbierania danych|Działa offline" ;;
     en-8) echo "They play on their own, you get a break|Every instruction is read aloud, no reading needed|Where is the calf's mommy?|No ads|No data collected|Works offline" ;;
     de-8) echo "Ihr Kind spielt allein, Sie haben Ruhe|Alle Anweisungen werden vorgelesen, Lesen nicht nötig|Wo ist die Mama vom Kälbchen?|Ohne Werbung|Keine Datensammlung|Funktioniert offline" ;;
@@ -149,6 +151,38 @@ over() { # character screen_x screen_w [rel]
   echo $(($2 + $3 / 2 + sw * (${4:-10} - 50) / 100 - fx - fwid / 2))
 }
 
+# Karta 2 „4 krainy”: mapy czterech krain w siatce 2×2, lekko przechylone jak zdjęcia na stole; Lusia i Bazyl po bokach.
+card2() { # lang W H wide u katalog_zrzutów wyjście
+  local lang=$1 W=$2 H=$3 wide=$4 u=$5 dir=$6 out=$7
+  IFS='|' read -r h1 h2 <<<"$(text "$lang" 2)"
+  local top=$((u * 3 / 100)) y2 sb gap=$((u * 3 / 100)) cw rh hc i=0 gw gh
+  title "$h1" $((u * 11 / 100)) "$T/h1.png"; sub "$h2" $((u * 58 / 1000)) "$T/h2.png"
+  fit "$T/h1.png" $((W * 92 / 100)); fit "$T/h2.png" $((W * 92 / 100))
+  y2=$((top + $(hgt "$T/h1.png") + u / 100)); sb=$((y2 + $(hgt "$T/h2.png")))
+  if [ $wide = 1 ]; then cw=$((W * 33 / 100)); hc=$((H * 60 / 100)); else cw=$((W * 43 / 100)); hc=$((H * 31 / 100)); fi
+  rh=$(((H - sb - gap * 3) / 2))
+  local tilts=(-3 2 2 -2) xs=() ys=()
+  for sc in 1 10 11 12; do
+    framed "$dir/$sc.png" $cw $((rh - gap)) "$T/g$i.png" "${tilts[$i]}"
+    read -r gw gh < <(magick identify -format "%w %h\n" "$T/g$i.png")
+    # Cell centres: two columns around the middle, two rows under the subtitle.
+    local ccx=$((W / 2 + (i % 2 == 0 ? -1 : 1) * (cw / 2 + gap))) ccy=$((sb + gap + rh / 2 + (i / 2) * (rh + gap / 2)))
+    xs+=($((ccx - gw / 2))); ys+=($((ccy - gh / 2)))
+    i=$((i + 1))
+  done
+  pose lusia-wow left $hc "$T/l.png"; pose bazyl-thumbs left $((hc * 92 / 100)) "$T/b.png"
+  magick "$T/bg.png" \
+    "$T/g0.png" -gravity northwest -geometry +${xs[0]}+${ys[0]} -composite \
+    "$T/g1.png" -geometry +${xs[1]}+${ys[1]} -composite \
+    "$T/g2.png" -geometry +${xs[2]}+${ys[2]} -composite \
+    "$T/g3.png" -geometry +${xs[3]}+${ys[3]} -composite \
+    "$T/l.png" -gravity southwest -geometry +$((W / 100))-$((u * 2 / 100)) -composite \
+    "$T/b.png" -gravity southeast -geometry +$((W / 100))-$((u * 2 / 100)) -composite \
+    "$T/h1.png" -gravity north -geometry +0+$top -composite \
+    "$T/h2.png" -gravity north -geometry +0+$y2 -composite "$T/c.png"
+  magick "$T/c.png" -alpha off -strip -quality 90 "$out"
+}
+
 # Karta 8 „Dziecko gra samo”: zagadka, z której wychodzi Bazyl i czyta polecenie (dymek), znaczki zaufania.
 card8() { # lang W H wide u shot out
   local lang=$1 W=$2 H=$3 wide=$4 u=$5 shot=$6 out=$7 q b1 b2 b3
@@ -211,6 +245,7 @@ card() { # n lang W H raw out
   IFS='|' read -r h1 h2 x1 x2 x3 <<<"$(text "$lang" "$n")"
   local u=$H; [ $wide = 0 ] && u=$((W * 1320 / 2868)) # jednostka: wysokość karty iPhone'a o tej szerokości
   magick "${BG[$n]}" -resize "${W}x${H}^" -gravity center -extent "${W}x${H}" "$T/bg.png"
+  if [ "$n" = 2 ]; then card2 "$lang" $W $H $wide $u "$(dirname "$raw")" "$out"; return; fi
   if [ "$n" = 8 ]; then card8 "$lang" $W $H $wide $u "$raw" "$out"; return; fi
   local shot=$raw
   if [ "$n" = 1 ]; then
