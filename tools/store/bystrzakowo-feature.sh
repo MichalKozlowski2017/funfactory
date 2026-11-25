@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Grafika Google Play 1024×500: tło z Fluxa (klocki ABC 123, tęcza), Lusia i Bazyl, logo „Bystrzakowo” i podtytuł w języku.
+# Grafika Google Play 1024×500: tło z Fluxa (klocki ABC 123, tęcza), Lusia i Bazyl, logo z nazwą w języku (Bystrzakowo, Smartyville, Schlaudorf, Listolandia) i podtytuł.
 #   bystrzakowo-feature.sh → games/bystrzakowo/store/feature-graphic-<lang>.png
 set -euo pipefail
 cd "$(dirname "$0")/../.."
@@ -17,14 +17,14 @@ txt() { # tekst, wielkość, kolor wypełnienia, kontur, wyjście
   magick "$T/s.png" -alpha extract -morphology Dilate "Disk:$(( $2 / 22 ))" -background '#5a3c28' -alpha shape "$T/k.png"
   magick "$T/k.png" "$T/s.png" -gravity center -composite "$T/t.png" -gravity center -composite "$5"
 }
-txt "Bystrzakowo" 112 '#ffb347' '#ffffff' "$T/logo.png"
 for lang in pl en de es; do
   case $lang in
-    pl) sub="Mądra zabawa dla dzieci 3–6 lat" ;;
-    en) sub="Smart play for kids aged 3–6" ;;
-    de) sub="Kluges Spielen für Kinder von 3–6" ;;
-    es) sub="Juego inteligente de 3 a 6 años" ;;
+    pl) name="Bystrzakowo" sub="Mądra zabawa dla dzieci 3–6 lat" ;;
+    en) name="Smartyville" sub="Smart play for kids aged 3–6" ;;
+    de) name="Schlaudorf" sub="Kluges Spielen für Kinder von 3–6" ;;
+    es) name="Listolandia" sub="Juego inteligente de 3 a 6 años" ;;
   esac
+  txt "$name" 112 '#ffb347' '#ffffff' "$T/logo.png"
   txt "$sub" 44 '#ffffff' '#ff9f40' "$T/sub.png"
   # Logo i podtytuł po lewej stronie (prawą zajmują klocki z tęczą i Bazyl), Lusia na dole po lewej.
   magick "$T/logo.png" -resize '560x>' "$T/logo.png"

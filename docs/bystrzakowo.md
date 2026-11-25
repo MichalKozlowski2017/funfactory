@@ -253,6 +253,8 @@ Research oczekiwań rodziców: `docs/bystrzakowo-rodzice.md`.
 
 ## Języki (2026-11-21)
 
+**Nazwa w językach (decyzja 2026-11-25):** „Bystrzakowo” zostaje tylko po polsku. Po angielsku **Smartyville**, po niemiecku **Schlaudorf**, po hiszpańsku **Listolandia** (wszystkie oznaczają „krainę bystrzaków”; w dniu decyzji wolne w App Store i Google Play, „Brainyville” było zajęte). Nazwa zmienia się w tekstach gry (`locales/*.ts`), pod ikoną (iOS `ios/App/App/<język>.lproj/InfoPlist.strings`, Android `res/values-<język>/strings.xml`; domyślnie Smartyville), w kartach sklepów (`store/listing.md`) i na grafice Google Play. Adres polityki prywatności (`/apps/bystrzakowo/…`) i identyfikator aplikacji `com.mkdev.bystrzakowo` zostają.
+
 Polski (podstawowy), angielski, niemiecki i hiszpański (latynoamerykański, słownictwo meksykańskie) w jednej aplikacji. Język: z telefonu (spoza listy: angielski),
 rodzic zmienia go w Ustawieniach strefy rodzica; w playtestach `?lang=en|de|pl`.
 

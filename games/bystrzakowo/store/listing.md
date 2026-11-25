@@ -6,12 +6,14 @@ Limity Google Play: nazwa ≤ 30, krótki opis ≤ 80, pełny opis ≤ 4000.
 
 ## Nazwa i podtytuł
 
+Nazwa aplikacji zależy od języka: **Bystrzakowo** (pl), **Smartyville** (en), **Schlaudorf** (de), **Listolandia** (es). Tak samo pod ikoną na telefonie (iOS: `*.lproj/InfoPlist.strings`, Android: `res/values*/strings.xml`; domyślnie, dla pozostałych języków, Smartyville) i w tekstach gry. Postaci we wszystkich językach poza polskim: Lusia i Basil.
+
 | Język | Nazwa (≤ 30) | Podtytuł App Store (≤ 30) | Krótki opis Google (≤ 80) |
 |---|---|---|---|
 | pl | Bystrzakowo: zagadki malucha | Liczenie, literki, logika 3–6 | Zagadki, liczenie, literki i historyjki dla dzieci 3–6 lat. Bez reklam. |
-| en | Bystrzakowo: Preschool Games | Learn & play, ages 3–6 | Puzzles, counting, letters and stories for kids aged 3–6. No ads. |
-| de | Bystrzakowo: Lernspiele Kita | Lernen & spielen, 3–6 Jahre | Rätsel, Zählen, Buchstaben und Geschichten für Kinder von 3–6. Ohne Werbung. |
-| es | Bystrzakowo: Juegos Infantiles | Aprende y juega, 3 a 6 años | Acertijos, números, letras y cuentos para niños de 3 a 6 años. Sin anuncios. |
+| en | Smartyville: Preschool Games | Learn & play, ages 3–6 | Puzzles, counting, letters and stories for kids aged 3–6. No ads. |
+| de | Schlaudorf: Lernspiele Kita | Lernen & spielen, 3–6 Jahre | Rätsel, Zählen, Buchstaben und Geschichten für Kinder von 3–6. Ohne Werbung. |
+| es | Listolandia: Juegos Infantiles | Aprende y juega, 3 a 6 años | Acertijos, números, letras y cuentos para niños de 3 a 6 años. Sin anuncios. |
 
 ## Tekst promocyjny (App Store ≤ 170)
 
@@ -51,7 +53,7 @@ Języki: polski, angielski, niemiecki, hiszpański.
 
 ## Description (en)
 
-Bystrzakowo is a land of smart play for children aged 3 to 6. Lusia and Basil, two clay friends, guide your child through 21 games that teach counting, letters, colors, shapes, emotions and logical thinking. Every instruction is read aloud, so no reading is needed.
+Smartyville is a land of smart play for children aged 3 to 6. Lusia and Basil, two clay friends, guide your child through 21 games that teach counting, letters, colors, shapes, emotions and logical thinking. Every instruction is read aloud, so no reading is needed.
 
 FOUR LANDS
 • Puzzle Meadow: colors, first letters, animal mommies, pairs, shadows, odd one out, counting and faces.
@@ -80,7 +82,7 @@ Languages: English, German, Spanish, Polish.
 
 ## Beschreibung (de)
 
-Bystrzakowo ist ein Land voller kluger Spiele für Kinder von 3 bis 6 Jahren. Lusia und Basil, zwei Freunde aus Knete, begleiten Ihr Kind durch 21 Spiele, die Zählen, Buchstaben, Farben, Formen, Gefühle und logisches Denken fördern. Alle Anweisungen werden vorgelesen, Lesen ist nicht nötig.
+Schlaudorf ist ein Land voller kluger Spiele für Kinder von 3 bis 6 Jahren. Lusia und Basil, zwei Freunde aus Knete, begleiten Ihr Kind durch 21 Spiele, die Zählen, Buchstaben, Farben, Formen, Gefühle und logisches Denken fördern. Alle Anweisungen werden vorgelesen, Lesen ist nicht nötig.
 
 VIER LÄNDER
 • Rätselwiese: Farben, Anlaute, Tiermamas, Paare, Schatten, „Was passt nicht?“, Zählen und Gesichter.
@@ -109,7 +111,7 @@ Sprachen: Deutsch, Englisch, Spanisch, Polnisch.
 
 ## Descripción (es)
 
-Bystrzakowo es un mundo de juegos inteligentes para niños de 3 a 6 años. Lusia y Basil, dos amigos de plastilina, acompañan a tu hijo o hija en 21 juegos que enseñan números, letras, colores, formas, emociones y pensamiento lógico. Todas las instrucciones se leen en voz alta, así que no hace falta saber leer.
+Listolandia es un mundo de juegos inteligentes para niños de 3 a 6 años. Lusia y Basil, dos amigos de plastilina, acompañan a tu hijo o hija en 21 juegos que enseñan números, letras, colores, formas, emociones y pensamiento lógico. Todas las instrucciones se leen en voz alta, así que no hace falta saber leer.
 
 CUATRO MUNDOS
 • Pradera de Acertijos: colores, primera letra, mamás de animales, parejas, sombras, ¿cuál sobra?, contar y caritas.
@@ -175,7 +177,7 @@ Idiomas: español, inglés, alemán, polaco.
 
 ## Notatki dla recenzji (App Review / Google)
 
-Bystrzakowo is an educational app for children aged 3–6 (Kids category, Ages 5 and Under). All instructions are voiced, so children do not need to read. UI languages: Polish, English, German, Spanish (follows the device language; can be changed in the parent zone).
+Bystrzakowo (called Smartyville in English, Schlaudorf in German and Listolandia in Spanish) is an educational app for children aged 3–6 (Kids category, Ages 5 and Under). All instructions are voiced, so children do not need to read. UI languages: Polish, English, German, Spanish (follows the device language; can be changed in the parent zone).
 
 Parental gate: the parent zone (gear icon, top left) opens after pressing and holding the gear for 2 seconds. The in-app purchase, "Restore purchase" and every Share button additionally require solving a multiplication question (adult gate). Everything aimed at adults is inside the parent zone: the progress report, the album with the Share button (system share sheet), the weekly postcard, settings, and the in-app purchase.
 
@@ -186,6 +188,6 @@ No ads, no analytics, no accounts, no data collection, and no third-party SDKs t
 ## Wersja 1.0.0: „Co nowego”
 
 - pl: Pierwsza wersja Bystrzakowa: 21 zabaw w czterech krainach, raport dla rodzica i pocztówka tygodnia.
-- en: The first version of Bystrzakowo: 21 games in four lands, a parent report and a weekly postcard.
-- de: Die erste Version von Bystrzakowo: 21 Spiele in vier Ländern, ein Elternbericht und eine Wochenpostkarte.
-- es: La primera versión de Bystrzakowo: 21 juegos en cuatro mundos, un informe para padres y una postal semanal.
+- en: The first version of Smartyville: 21 games in four lands, a parent report and a weekly postcard.
+- de: Die erste Version von Schlaudorf: 21 Spiele in vier Ländern, ein Elternbericht und eine Wochenpostkarte.
+- es: La primera versión de Listolandia: 21 juegos en cuatro mundos, un informe para padres y una postal semanal.
