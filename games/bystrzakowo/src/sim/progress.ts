@@ -41,6 +41,8 @@ export interface Progress {
   lang?: Lang;
   /** Full version purchased. */
   full?: boolean;
+  /** The parent started the full-version trial (sim/trial.ts). */
+  trialStarted?: boolean;
   /** Play days during the full-version trial (sim/trial.ts). */
   trialDays?: string[];
   /** Settings from the parent zone. */

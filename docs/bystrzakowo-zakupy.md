@@ -1,11 +1,13 @@
 # Bystrzakowo: pełna wersja (zakup w aplikacji)
 
-Model (decyzja właściciela, 21.11.2026, skrócone do 3 dni 24.11.2026): 3 dni zabawy z pełnym dostępem, potem tylko Polana Zagadek.
+Model (decyzja właściciela, 21.11.2026, skrócone do 3 dni 24.11.2026, próba włączana przez rodzica od 25.11.2026):
+Polana Zagadek za darmo na zawsze. Rodzic może włączyć próbę (za pytaniem dla rodzica): 3 dni zabawy z pełnym dostępem, potem znów tylko Polana Zagadek.
+Na iOS próba to darmowy produkt „3-day Trial” (wytyczna App Store 3.1.1), na Androidzie włącza się w aplikacji (Google Play nie ma darmowych produktów w aplikacji).
 Pełna wersja: jednorazowo **24,99 zł**, bez subskrypcji i reklam, bez zewnętrznych serwisów
 (wtyczka `@capgo/native-purchases`: StoreKit 2 i Google Play Billing). Kod: `games/bystrzakowo/src/premium.ts`,
 logika próby z testami: `src/sim/trial.ts`.
 
-Identyfikator produktu w obu sklepach: **`bystrzakowo.full`**.
+Identyfikator produktu w obu sklepach: **`bystrzakowo.full`**. Tylko na iOS drugi produkt: **`bystrzakowo.trial`** (cena 0).
 
 ## Kroki [właściciel]
 
@@ -18,6 +20,10 @@ Identyfikator produktu w obu sklepach: **`bystrzakowo.full`**.
 5. **Chmura rodzinna**: włącz (jeden zakup dla całej rodziny).
 6. Zrzut do recenzji: ekran zakupu ze strefy rodzica (zrobię go).
 7. Do testów: Użytkownicy i dostęp → Sandbox → konto testowe; na iPhonie Ustawienia → App Store → Konto sandbox.
+8. **Drugi produkt: próba.** „+” → Bez możliwości ponownego użycia (Non-Consumable). Nazwa referencyjna i nazwa wyświetlana: **„3-day Trial”**
+   (Apple wymaga takiego wzoru nazwy; po polsku „3 dni próby”, niemiecku „3 Tage Test”, hiszpańsku „Prueba de 3 días”).
+   Identyfikator: `bystrzakowo.trial`. Cena: **bezpłatna (0)**. Opis PL: „Pełna wersja za darmo przez 3 dni zabawy. Potem zostaje Polana Zagadek.”
+   Zrzut do recenzji: karta próby z powitania. Dołącz go do wersji 1.0.0 razem z `bystrzakowo.full`.
 
 ### Google (Play Console)
 1. Bystrzakowo → Zarabianie → Produkty → Produkty w aplikacji → Utwórz produkt.

@@ -1,18 +1,22 @@
 /**
- * Full version: 3 play days with full access (sim/trial.ts), then only the Riddle Meadow (meadow) until the parent
- * buys the full version (one-time purchase, no external services). The full report and the postcard in the parent
+ * Full version: the Riddle Meadow (meadow) is free. The parent can start a trial (3 play days with full access, sim/trial.ts):
+ * on iOS as a free non-consumable product "3-day Trial" (App Store 3.1.1), on Android locally (Google Play has no free
+ * in-app products). After that only the Riddle Meadow until the parent buys the full version (one-time purchase, no external services). The full report and the postcard in the parent
  * zone work the same way: during the trial and after purchase.
  *
  * Playtests: `?free` (or a build with `VITE_PREVIEW=free`) fakes the end of the trial without a purchase, `?full` fakes a bought full version.
  */
+import { platformName } from '@funfactory/core';
 import { buy, getProduct, owns, restore, type BuyResult } from '@funfactory/core/purchases';
 import { today } from './log.ts';
-import { markPlayDay, realmOpen, trialState, TRIAL_DAYS, type TrialSave, type TrialState } from './sim/trial.ts';
+import { markPlayDay, realmOpen, startTrial as startTrialSave, trialState, TRIAL_DAYS, type TrialSave, type TrialState } from './sim/trial.ts';
 import type { RealmId } from './sim/realms.ts';
 import { saveState, state } from './state.ts';
 
 /** Product id in App Store Connect and Google Play Console (one-time, "non-consumable"). */
 export const PRODUCT_ID = 'bystrzakowo.full';
+/** Free trial product (iOS only, price 0, non-consumable, display name "3-day Trial"). */
+export const TRIAL_ID = 'bystrzakowo.trial';
 
 const query = typeof location !== 'undefined' ? new URLSearchParams(location.search) : new URLSearchParams();
 // On the phone the preview is enabled by a build with VITE_PREVIEW=free|full (the real save stays untouched).
@@ -22,7 +26,7 @@ const PREVIEW_FULL = query.has('full') || import.meta.env.VITE_PREVIEW === 'full
 /** Trial save (in the `?free` preview: trial used up). */
 function save(): TrialSave {
   if (PREVIEW_FULL) return { full: true };
-  if (PREVIEW_FREE) return { trialDays: Array.from({ length: TRIAL_DAYS }, (_, i) => `2000-01-0${i + 1}`) };
+  if (PREVIEW_FREE) return { trialStarted: true, trialDays: Array.from({ length: TRIAL_DAYS }, (_, i) => `2000-01-0${i + 1}`) };
   return state.progress;
 }
 
@@ -52,7 +56,22 @@ export async function syncPurchase(): Promise<void> {
   if (await owns(PRODUCT_ID)) {
     state.progress.full = true;
     await saveState();
+  } else if (!trial().started && platformName() === 'ios' && (await owns(TRIAL_ID))) {
+    // The trial product was claimed earlier (e.g. before reinstalling the app).
+    startTrialSave(state.progress);
+    await saveState();
   }
+}
+
+/** The parent starts the trial (call after the adult gate). iOS: through the free "3-day Trial" product. */
+export async function startTrial(): Promise<BuyResult> {
+  if (trial().started) return 'bought';
+  const r = platformName() === 'ios' ? await buy(TRIAL_ID) : 'bought';
+  if (r === 'bought') {
+    startTrialSave(state.progress);
+    await saveState();
+  }
+  return r;
 }
 
 let priceCache: Promise<string | null> | null = null;

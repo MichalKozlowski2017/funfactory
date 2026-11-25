@@ -47,7 +47,7 @@ BEZPIECZNIE
 Bez reklam, bez internetu, bez kont i bez zbierania danych. Postępy, imię i prace dziecka zostają tylko na urządzeniu.
 
 WYPRÓBUJ ZA DARMO
-Przez pierwsze 3 dni zabawy wszystkie krainy są otwarte. Potem Polana Zagadek (8 zabaw) zostaje za darmo na zawsze. Jednorazowy zakup pełnej wersji, bez subskrypcji, otwiera Warsztat Bazyla, Ścieżkę Lusi i Pracownię Malucha, pełny raport z wykresami i pocztówkę tygodnia. Liczą się tylko dni, w które dziecko się bawi.
+Polana Zagadek (8 zabaw) jest za darmo na zawsze. Pełną wersję możesz wypróbować za darmo przez 3 dni zabawy (włączasz próbę w aplikacji; liczą się tylko dni, w które dziecko się bawi). Jednorazowy zakup pełnej wersji, bez subskrypcji, otwiera Warsztat Bazyla, Ścieżkę Lusi i Pracownię Malucha, pełny raport z wykresami i pocztówkę tygodnia.
 
 Języki: polski, angielski, niemiecki, hiszpański.
 
@@ -76,7 +76,7 @@ SAFE
 No ads, no internet, no accounts and no data collection. Progress, your child's name and creations stay on the device.
 
 TRY IT FREE
-For the first 3 days of play, all lands are open. After that, Puzzle Meadow (8 games) stays free forever. A one-time purchase of the full version, with no subscription, opens Basil's Workshop, Lusia's Path and the Little Studio, the full report with charts and the weekly postcard. Only days when your child plays are counted.
+Puzzle Meadow (8 games) is free forever. You can try the full version free for 3 days of play (you start the trial in the app; only days when your child plays are counted). A one-time purchase of the full version, with no subscription, opens Basil's Workshop, Lusia's Path and the Little Studio, the full report with charts and the weekly postcard.
 
 Languages: English, German, Spanish, Polish.
 
@@ -105,7 +105,7 @@ SICHER
 Ohne Werbung, ohne Internet, ohne Konto und ohne Datensammeln. Fortschritt, Name und Werke bleiben auf dem Gerät.
 
 KOSTENLOS AUSPROBIEREN
-In den ersten 3 Spieltagen sind alle Länder offen. Danach bleibt die Rätselwiese (8 Spiele) für immer kostenlos. Ein einmaliger Kauf der Vollversion, ohne Abo, öffnet Basils Werkstatt, Lusias Pfad und das Kleine Atelier, den ausführlichen Bericht mit Diagrammen und die Wochenpostkarte. Es zählen nur Tage, an denen Ihr Kind spielt.
+Die Rätselwiese (8 Spiele) ist für immer kostenlos. Die Vollversion können Sie 3 Spieltage lang gratis testen (Sie starten den Test in der App; es zählen nur Tage, an denen Ihr Kind spielt). Ein einmaliger Kauf der Vollversion, ohne Abo, öffnet Basils Werkstatt, Lusias Pfad und das Kleine Atelier, den ausführlichen Bericht mit Diagrammen und die Wochenpostkarte.
 
 Sprachen: Deutsch, Englisch, Spanisch, Polnisch.
 
@@ -134,7 +134,7 @@ SEGURO
 Sin anuncios, sin internet, sin cuentas y sin recopilación de datos. El progreso, el nombre y las creaciones se quedan en el dispositivo.
 
 PRUÉBALO GRATIS
-Durante los primeros 3 días de juego todos los mundos están abiertos. Después, la Pradera de Acertijos (8 juegos) sigue gratis para siempre. Un solo pago de la versión completa, sin suscripción, abre el Taller de Basil, el Sendero de Lusia y el Pequeño Estudio, el informe completo con gráficos y la postal semanal. Solo cuentan los días en que juega.
+La Pradera de Acertijos (8 juegos) es gratis para siempre. Puedes probar gratis la versión completa durante 3 días de juego (la prueba se activa en la app; solo cuentan los días en que juega). Un solo pago de la versión completa, sin suscripción, abre el Taller de Basil, el Sendero de Lusia y el Pequeño Estudio, el informe completo con gráficos y la postal semanal.
 
 Idiomas: español, inglés, alemán, polaco.
 
@@ -181,7 +181,7 @@ Bystrzakowo (called Smartyville in English, Schlaudorf in German and Listolandia
 
 Parental gate: the parent zone (gear icon, top left) opens after pressing and holding the gear for 2 seconds. The in-app purchase, "Restore purchase", every Share button and extending play time after the parent's time limit additionally require solving a multiplication question (adult gate); wrong answers lock the gate for 15 s, then 1 min, then 5 min. Everything aimed at adults is inside the parent zone: the progress report, the album with the Share button (system share sheet), the weekly postcard, settings, and the in-app purchase.
 
-In-app purchase: one non-consumable product, "bystrzakowo.full" (full version). A fresh install has a free trial of 3 days of play with everything open; after that, only the first land (Puzzle Meadow) stays open and the other lands show a sleeping overlay; tapping them only plays a neutral voice line ("This land is still asleep. Let's play in the Puzzle Meadow."). Trial days count only days on which the child plays. Before play starts, the welcome screens (which cannot skip past it) show a card with the trial length, what stays free forever (Puzzle Meadow, 8 games), what is part of the paid full version (three lands, the full report with charts, the weekly postcard) and the store price of the one-time purchase. To see the state after the trial, please use the attached screen recording / screenshot (store/iap-review.png). The purchase and "Restore purchase" buttons are only in the parent zone (Progress and Settings tabs) and are visible during the trial too. Holding the gear opens the parent zone only; it contains no purchase or link by itself.
+In-app purchases: "bystrzakowo.full" (full version, non-consumable) and, on iOS only, "bystrzakowo.trial" (free non-consumable "3-day Trial", price 0, per guideline 3.1.1). A fresh install opens only the first land (Puzzle Meadow, 8 games, free forever); the other lands show a sleeping overlay and tapping them only plays a neutral voice line ("This land is still asleep. Let's play in the Puzzle Meadow."). Before play starts, the welcome screens (Skip cannot jump past this card) show the trial offer: its length (3 days of play; only days on which the child plays count), what stays free forever, what the paid full version contains (three lands, the full report with charts, the weekly postcard) and the store price of the one-time purchase. The parent starts the trial with "Try 3 days free" (welcome card or parent zone > Settings/Progress), which first asks the adult question and then, on iOS, claims the free "3-day Trial" product. After the trial only Puzzle Meadow stays open. The purchase, the trial and "Restore purchase" are only behind the adult question. Holding the gear opens the parent zone only; it contains no purchase or link by itself.
 
 No ads, no analytics, no accounts, no data collection, and no third-party SDKs that collect data (only open-source Capacitor plugins; the purchase is handled by StoreKit / Google Play Billing). No network access except the store purchase. All progress and the optional child's name are stored only on the device. The privacy policy is available inside the app (parent zone > Settings > Privacy policy) and at https://mkdev.com.pl/apps/bystrzakowo/privacy-policy.
 

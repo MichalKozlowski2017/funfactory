@@ -3,7 +3,8 @@ import { haptics } from '@funfactory/core';
 import { Button, idleBreath, popIn, Scene, squash, type View } from '@funfactory/kit2d';
 import { loadArt, type Art } from '../assets.ts';
 import { HAND_TIP } from '../hand.ts';
-import { price, trial } from '../premium.ts';
+import { AdultCheck, ParentGate } from '../parent.ts';
+import { price, startTrial, trial } from '../premium.ts';
 import { tr } from '../sim/i18n.ts';
 import { AGES, applyAge } from '../sim/onboarding.ts';
 import { TRIAL_DAYS } from '../sim/trial.ts';
@@ -43,7 +44,7 @@ export class WelcomeScene extends Scene {
 
   override async enter(): Promise<void> {
     this.art = await loadArt();
-    this.pages = ['hello', 'gate', ...(trial().full ? [] : (['trial'] as Page[])), 'age'];
+    this.pages = ['hello', 'gate', ...(trial().full || trial().started ? [] : (['trial'] as Page[])), 'age'];
     this.bg = new Sprite(this.art.realmBg.meadow);
     // "Skip" jumps to the trial card first: what the trial is, what stays paid and the price must be seen before play (App Store 3.1.1).
     const skip = () => {
@@ -121,7 +122,7 @@ export class WelcomeScene extends Scene {
         ? [tr('welcomeBystrzakowo'), tr('puzzlesCountingLettersShapes')]
         : page === 'gate'
           ? [tr('parentArea'), tr('pressHoldGearCorner')]
-          : [tr('daysFullVersion', { n }), tr('firstDaysPlayAll', { n, price: this.price ? tr('trialPrice', { price: this.price }) : '' })];
+          : [tr('tryFullFree'), tr('firstDaysPlayAll', { n, price: this.price ? tr('trialPrice', { price: this.price }) : '' })];
     const tx = b.x + b.w * 0.41;
     const tw = b.x + b.w - 50 - tx;
     const t = this.text(title, b.w < 900 ? 40 : 46, { weight: '800', wrap: tw });
@@ -140,6 +141,35 @@ export class WelcomeScene extends Scene {
     else this.trialArt(ix, iy, b.w);
     const next = this.button(tr('next'), 250, '#ff7a59', () => this.go(this.page + 1));
     next.position.set(b.x + b.w - 50 - 125, b.y + b.h - 70);
+    if (page === 'trial' && !trial().started) {
+      // The parent can start the free trial right away (behind the adult question; on iOS the free "3-day Trial" product).
+      const w = Math.min(400, next.x - 125 - 30 - (b.x + b.w * 0.41));
+      const start = this.button(tr('startTrialButton', { n }), w, '#4fae5f', () => this.askAdult(() => void this.beginTrial()), 88, w < 360 ? 24 : 28);
+      start.position.set(next.x - 125 - 24 - w / 2, next.y);
+    }
+  }
+
+  private check: AdultCheck | null = null;
+
+  /** Question for an adult (the same as before a purchase in the parent zone). */
+  private askAdult(then: () => void): void {
+    if (this.check || performance.now() < ParentGate.lockedUntil) return void haptics.hit();
+    const close = () => {
+      this.check?.destroy({ children: true });
+      this.check = null;
+    };
+    this.check = new AdultCheck(this.game, () => (ParentGate.passed(), close(), then()), close, () => (ParentGate.lock(), close()));
+    this.addChild(this.check);
+  }
+
+  private async beginTrial(): Promise<void> {
+    const r = await startTrial();
+    if (this.leaving) return;
+    if (r === 'bought') {
+      haptics.success();
+      sfx.pop(this.game.sound, 1.3);
+      this.go(this.page + 1);
+    }
   }
 
   private helloArt(x: number, y: number, h: number): void {
@@ -305,6 +335,7 @@ export class WelcomeScene extends Scene {
     this.t += dt;
     this.skip.tick(dt);
     for (const b of this.buttons) b.tick(dt);
+    this.check?.tick(dt);
     this.anim?.(this.t);
   }
 }

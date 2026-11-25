@@ -6,7 +6,8 @@ import { loadArt, startMusic, stopMusic, type Art } from './assets.ts';
 import { journal, today } from './log.ts';
 import { applyAge, nextAge, playedActivities } from './sim/onboarding.ts';
 import { loadLandscapes, paintings, pictureView, removePainting, type Painting } from './picture.ts';
-import { hasFull, isBought, price, purchase, restorePurchase, trial } from './premium.ts';
+import { hasFull, isBought, price, purchase, restorePurchase, startTrial, trial } from './premium.ts';
+import { TRIAL_DAYS } from './sim/trial.ts';
 import { newProgress } from './sim/progress.ts';
 import { formatRange, makeReport, type Report } from './sim/report.ts';
 import { gallery, type Landscape, type Picture } from './sim/stickers.ts';
@@ -397,14 +398,18 @@ export class ParentPanel extends Container {
   private shopCard(y: number, cw: number, x = 0): number {
     if (isBought()) return 0;
     const t = trial();
-    const title = t.active
+    const title = !t.started
+      ? tr('tryFullFree')
+      : t.active
       ? t.left > 0
         ? t.left === 1
           ? tr('fullTrialAccess1')
           : tr('fullTrialAccessMore', { n: t.left })
         : tr('fullTrialAccessToday')
       : tr('trialHasEndedPuzzle');
-    const body = t.active
+    const body = !t.started
+      ? tr('trialOfferBody', { n: TRIAL_DAYS })
+      : t.active
       ? tr('onlyDaysWhenChild')
       : tr(platformName() === 'android' ? 'fullVersionUnlocksAndroid' : 'fullVersionUnlocksBasils');
     return this.card({ x, y }, cw, (c, iw) => {
@@ -413,6 +418,13 @@ export class ParentPanel extends Container {
       b.y = tt.height + 10;
       c.addChild(tt, b);
       let h = b.y + b.height + 20;
+      if (!t.started) {
+        const sw = Math.min(440, iw);
+        const st = this.button(tr('startTrialButton', { n: TRIAL_DAYS }), sw, PT.good, () => this.askAdult(() => void this.doStartTrial()), 80, 27);
+        st.position.set(sw / 2, h + 40);
+        c.addChild(st);
+        h += 100;
+      }
       const bw = Math.min(440, iw);
       const buy = this.button(this.buying ? tr('oneMoment') : this.storePrice ? tr('buyFullVersionPrice', { price: this.storePrice }) : tr('buyFullVersion'), bw, PT.primary, () => this.askAdult(() => void this.doBuy(false)), 80, 27);
       buy.position.set(bw / 2, h + 40);
@@ -429,6 +441,22 @@ export class ParentPanel extends Container {
       }
       return h;
     }, t.active ? num(PT.goodBg) : num(PT.warmBg));
+  }
+
+  /** The parent starts the free trial (iOS: the free "3-day Trial" product). */
+  private async doStartTrial(): Promise<void> {
+    if (this.buying) return;
+    this.buying = true;
+    this.shopNote = '';
+    this.render();
+    const result = await startTrial();
+    this.buying = false;
+    if (this.destroyed) return;
+    if (result === 'bought') {
+      haptics.success();
+      this.onUnlock();
+    } else this.shopNote = result === 'pending' ? tr('purchasePending') : this.storePrice ? tr('purchaseWasNotCompleted') : tr('storeUnavailableNoInternet');
+    this.render();
   }
 
   private async doBuy(restoreOnly: boolean): Promise<void> {
@@ -1036,9 +1064,10 @@ export class ParentPanel extends Container {
         reset.setLabel(tr('sureTouchAgain'));
         return;
       }
-      const { music: m, childName, age, lang: l } = state.progress;
-      // Reset the activities, but not the parent's settings: name, age (starting level), language and the fact that onboarding is done.
-      state.progress = { ...newProgress(), music: m, childName, lang: l, onboarded: true };
+      const { music: m, childName, age, lang: l, limit, full, trialStarted, trialDays } = state.progress;
+      // Reset the activities, but not the parent's settings (name, age = starting level, language, music, play time limit),
+      // the purchase, the trial state (a reset must not restart the trial) and the fact that onboarding is done.
+      state.progress = { ...newProgress(), music: m, childName, lang: l, limit, full, trialStarted, trialDays, onboarded: true };
       if (age) applyAge(state.progress, age);
       void saveState();
       reset.setLabel(tr('progressReset'));
