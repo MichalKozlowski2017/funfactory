@@ -18,7 +18,7 @@ for size in ${SIZES:-"ios-6.9:956x440@3" "ipad-13:1376x1032@2" "android:640x360@
       # ONLY="6 7": tylko wybrane sceny.
       case " ${ONLY:-$1} " in *" $1 "*) ;; *) return ;; esac
       rm -rf .shots/store-tmp
-      if node tools/playtest/shot.ts games/bystrzakowo --gpu --size $dim --query "lang=$lang&seed=${SEED:-5}&full&nohand" --out .shots/store-tmp --steps "$2" >/dev/null 2>&1; then
+      if node tools/playtest/shot.ts games/bystrzakowo --gpu --size $dim --query "lang=$lang&seed=${SEED:-5}&full&nohand${3:-}" --out .shots/store-tmp --steps "$2" >/dev/null 2>&1; then
         cp .shots/store-tmp/*.png $dir/$1.png 2>/dev/null
       else
         echo "FAIL $name $lang $1"
@@ -37,13 +37,13 @@ shot:s"
 eval:$C.play('stories')
 wait:3500
 shot:s"
-    # 4. Rysowanie literki palcem: gotowa litera z obrazkiem przykładu.
+    # 4. Rysowanie literki palcem: gotowa litera A (trzy kreski) z obrazkiem przykładu.
     run 4 "wait:1500
 eval:$C.play('letters')
 wait:3500
 eval:$C.solve()
 wait:1300
-shot:s"
+shot:s" "&letters=ABC"
     # 5. Naklejanka: obrazek z naklejek.
     run 5 "wait:1500
 eval:$C.play('stickers')
