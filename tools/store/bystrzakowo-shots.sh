@@ -8,7 +8,7 @@ C="__ff.game.scenes.current"
 # Imię dziecka w pocztówce i raporcie (base64 z UTF-8, bo kroki playtestu nie lubią przecinków i znaków spoza ASCII).
 name_for() { case $1 in pl) echo Zosia ;; en) echo Emma ;; de) echo Lena ;; es) echo Sofía ;; esac; }
 b64() { printf "%s" "$1" | base64; }
-for size in ${SIZES:-"ios-6.9:956x440@3" "ipad-13:1376x1032@2" "android:640x360@3"}; do
+for size in ${SIZES:-"ios-6.9:956x440@3" "ipad-13:1376x1032@2" "android:640x360@3" "android-tablet:1280x800@2"}; do
   name=${size%%:*}; dim=${size#*:}
   for lang in ${LANGS:-pl en de es}; do
     dir=$OUT/$name-$lang; [ -z "${ONLY:-}" ] && rm -rf $dir; mkdir -p $dir

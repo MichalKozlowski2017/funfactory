@@ -252,7 +252,8 @@ card() { # n lang W H raw out
     # Okładka: środek ekranu świata (kafelki), bo Lusia i Bazyl stoją obok.
     read -r rw rh < <(magick identify -format "%w %h\n" "$raw")
     # Ile szerokości zostawić: ekran świata na węższym telefonie ma kafelki bliżej krawędzi.
-    local keep=$((100 - (W * 100 / H - 100) * 27 / 100)); [ $wide = 0 ] && keep=100 # iPad: kafelki na całą szerokość, postaci ledwo wystają
+    local keep=$((100 - (W * 100 / H - 100) * 27 / 100))
+    [ $((rw * 100 / rh)) -lt 190 ] && keep=100 # iPad i tablet z Androidem: kafelki na całą szerokość ekranu
     magick "$raw" -crop $((rw * keep / 100))x$rh+$((rw * (100 - keep) / 200))+0 +repage "$T/crop.png"
     shot=$T/crop.png
   fi
@@ -364,8 +365,9 @@ for dir in "$IN"/*; do
   [ -d "$dir" ] || continue
   set_name=$(basename "$dir"); lang=${set_name##*-}; size=${set_name%-*}
   case " ${LANGS:-pl en de es} " in *" $lang "*) ;; *) continue ;; esac
-  case " ${SIZES:-ios-6.9 ipad-13 android} " in *" $size "*) ;; *) continue ;; esac
-  case $size in ios-6.9) W=2868 H=1320 ;; ipad-13) W=2752 H=2064 ;; android) W=1920 H=1080 ;; *) continue ;; esac
+  case " ${SIZES:-ios-6.9 ipad-13 android android-tablet} " in *" $size "*) ;; *) continue ;; esac
+  # android-tablet: zrzuty gry 16:10 (tablet z Androidem), karta 16:9 do pól „tablet 7″” i „tablet 10″” w Google Play.
+  case $size in ios-6.9) W=2868 H=1320 ;; ipad-13) W=2752 H=2064 ;; android) W=1920 H=1080 ;; android-tablet) W=2560 H=1440 ;; *) continue ;; esac
   mkdir -p "$OUT/$set_name"
   # Każdy zestaw (rozmiar × język) w osobnym procesie, z własnym katalogiem roboczym; ImageMagick po 1 wątku na proces.
   (

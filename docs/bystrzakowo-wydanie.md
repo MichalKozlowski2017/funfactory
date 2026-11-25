@@ -11,7 +11,7 @@ Wzór: wydanie Gluta (`docs/release.md`).
 | Android: klucz uploadu | `~/.funfactory-keys/bystrzakowo-upload.jks` + `.properties` **(zrób kopię zapasową, tak jak dla Gluta!)** |
 | iOS: archiwum 1.0.0 (build 1) | `release/bystrzakowo/Bystrzakowo.xcarchive` |
 | Ikona 1024 i 512 | `games/bystrzakowo/store/icon-*.png` |
-| Zrzuty do sklepów: iPhone 6,9", iPad 13", Android, w 4 językach | `games/bystrzakowo/store/screens/<rozmiar>-<język>/1..8.jpg` |
+| Zrzuty do sklepów: iPhone 6,9", iPad 13", telefon i tablet z Androidem, w 4 językach (8 kart: okładka, 4 krainy, litery, zagadki, wykres, rozwój, twórcza zabawa, „dziecko gra samo”) | `games/bystrzakowo/store/screens/<rozmiar>-<język>/1..8.jpg` (`tools/store/bystrzakowo-shots.sh`, potem `bystrzakowo-cards.sh`) |
 | Grafika Google Play 1024×500 | `games/bystrzakowo/store/feature-graphic-<język>.png` |
 | Teksty kart (pl, en, de, es), kategorie, ocena wiekowa, prywatność, notatki dla recenzji | `games/bystrzakowo/store/listing.md` |
 | Zakup w aplikacji | `docs/bystrzakowo-zakupy.md` (produkt `bystrzakowo.full`, 24,99 zł) |
@@ -39,6 +39,7 @@ Play Console → Utwórz aplikację: nazwa `Bystrzakowo: zagadki malucha`, aplik
 - Konto jest firmowe (DUNS), więc **nie obowiązuje** wymóg 12 testerów przez 14 dni.
 - Zawartość aplikacji: grupa docelowa **0–5 i 6–8 lat** (program „Rodzina”), reklamy: nie, bezpieczeństwo danych: brak zbierania danych, polityka prywatności: adres z kroku 1, ocena IARC (Everyone / PEGI 3).
 - Kategoria: Edukacja. Karta sklepu w 4 językach z `listing.md`, grafiki z `store/`.
+- Zrzuty: telefon (`android-*`, 1920×1080), tablet 7″ i 10″ (`android-tablet-*`, 2560×1440, ten sam zestaw do obu pól).
 - Produkty w aplikacji → `bystrzakowo.full` (`docs/bystrzakowo-zakupy.md`).
 - Wydanie: najpierw test wewnętrzny z AAB (sprawdzisz zakup na koncie testowym), potem produkcja.
 
