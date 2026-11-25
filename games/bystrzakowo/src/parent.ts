@@ -80,11 +80,23 @@ export class ParentGate extends Container {
   onOpen: (() => void) | null = null;
   /** An attempt to open during the lockout (after a wrong answer), with the number of seconds remaining. */
   onLocked: ((seconds: number) => void) | null = null;
-  /** After a wrong answer the gate is locked until this moment (performance.now, ms), for all scenes. */
+  /**
+   * After a wrong answer the gate is locked until this moment (performance.now, ms), for all scenes.
+   * The lockout grows with every wrong answer in a row (15 s, 1 min, 5 min), so random tapping by a child doesn't get through.
+   */
   static lockedUntil = 0;
-  static readonly LOCK_MS = 15_000;
+  /** Length of the current lockout (for the shrinking ring). */
+  static lockLen = 15_000;
+  static readonly LOCK_MS = [15_000, 60_000, 300_000] as const;
+  static fails = 0;
   static lock(): void {
-    ParentGate.lockedUntil = performance.now() + ParentGate.LOCK_MS;
+    ParentGate.lockLen = ParentGate.LOCK_MS[Math.min(ParentGate.fails, ParentGate.LOCK_MS.length - 1)]!;
+    ParentGate.lockedUntil = performance.now() + ParentGate.lockLen;
+    ParentGate.fails++;
+  }
+  /** A correct answer resets the growing lockout. */
+  static passed(): void {
+    ParentGate.fails = 0;
   }
 
   constructor(gear: Texture | null = null) {
@@ -137,7 +149,7 @@ export class ParentGate extends Container {
     if (left > 0) {
       this.wasLocked = true;
       this.alpha = 0.5;
-      this.ring.clear().arc(0, 0, 50, -Math.PI / 2, -Math.PI / 2 + (left / ParentGate.LOCK_MS) * Math.PI * 2).stroke({ color: 0x9a8f86, width: 8, cap: 'round' });
+      this.ring.clear().arc(0, 0, 50, -Math.PI / 2, -Math.PI / 2 + (left / ParentGate.lockLen) * Math.PI * 2).stroke({ color: 0x9a8f86, width: 8, cap: 'round' });
       if (this.holding && this.held === 0) this.onLocked?.(Math.ceil(left / 1000));
       this.held = this.holding ? this.held + dt : 0;
       return;

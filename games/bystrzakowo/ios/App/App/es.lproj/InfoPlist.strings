@@ -1,2 +1,3 @@
 "CFBundleDisplayName" = "Listolandia";
 "CFBundleName" = "Listolandia";
+"NSPhotoLibraryAddUsageDescription" = "Guarda los dibujos de tu hijo y la postal semanal en Fotos cuando un adulto elige «Guardar imagen».";

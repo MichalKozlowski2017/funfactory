@@ -1,2 +1,3 @@
 "CFBundleDisplayName" = "Smartyville";
 "CFBundleName" = "Smartyville";
+"NSPhotoLibraryAddUsageDescription" = "Saves your child's pictures and the weekly postcard to Photos when a parent chooses Save Image.";

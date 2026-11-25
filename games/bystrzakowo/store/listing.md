@@ -17,10 +17,10 @@ Nazwa aplikacji zależy od języka: **Bystrzakowo** (pl), **Smartyville** (en), 
 
 ## Tekst promocyjny (App Store ≤ 170)
 
-- **pl:** 21 zabaw z Lusią i Bazylem: liczenie, literki, kolory, emocje i historyjki. Bez reklam i bez zbierania danych. Raport dla rodzica i pocztówka tygodnia.
-- **en:** 21 games with Lusia and Basil: counting, letters, colors, emotions and stories. No ads, no data collection. A parent report and a weekly postcard.
-- **de:** 21 Spiele mit Lusia und Basil: Zählen, Buchstaben, Farben, Gefühle und Geschichten. Ohne Werbung und ohne Datensammeln. Elternbericht und Wochenpostkarte.
-- **es:** 21 juegos con Lusia y Basil: números, letras, colores, emociones y cuentos. Sin anuncios ni recopilación de datos. Informe para padres y postal semanal.
+- **pl:** 21 zabaw z Lusią i Bazylem: liczenie, literki, kolory, emocje i historyjki. Bez reklam i bez zbierania danych. Pełna wersja: raport i pocztówka.
+- **en:** 21 games with Lusia and Basil: counting, letters, colors, emotions and stories. No ads, no data collection. Full version: report and postcard.
+- **de:** 21 Spiele mit Lusia und Basil: Zählen, Buchstaben, Farben, Gefühle und Geschichten. Ohne Werbung und ohne Datensammeln. Vollversion: Bericht und Postkarte.
+- **es:** 21 juegos con Lusia y Basil: números, letras, colores, emociones y cuentos. Sin anuncios ni recopilación de datos. Versión completa: informe y postal.
 
 ## Opis (pl)
 
@@ -47,7 +47,7 @@ BEZPIECZNIE
 Bez reklam, bez internetu, bez kont i bez zbierania danych. Postępy, imię i prace dziecka zostają tylko na urządzeniu.
 
 WYPRÓBUJ ZA DARMO
-Przez pierwsze 3 dni zabawy wszystkie krainy są otwarte. Potem Polana Zagadek zostaje za darmo na zawsze, a pełną wersję odblokowuje jednorazowy zakup, bez subskrypcji. Liczą się tylko dni, w które dziecko się bawi.
+Przez pierwsze 3 dni zabawy wszystkie krainy są otwarte. Potem Polana Zagadek (8 zabaw) zostaje za darmo na zawsze. Jednorazowy zakup pełnej wersji, bez subskrypcji, otwiera Warsztat Bazyla, Ścieżkę Lusi i Pracownię Malucha, pełny raport z wykresami i pocztówkę tygodnia. Liczą się tylko dni, w które dziecko się bawi.
 
 Języki: polski, angielski, niemiecki, hiszpański.
 
@@ -76,7 +76,7 @@ SAFE
 No ads, no internet, no accounts and no data collection. Progress, your child's name and creations stay on the device.
 
 TRY IT FREE
-For the first 3 days of play, all lands are open. After that, Puzzle Meadow stays free forever, and a one-time purchase unlocks the full version. No subscription. Only days when your child plays are counted.
+For the first 3 days of play, all lands are open. After that, Puzzle Meadow (8 games) stays free forever. A one-time purchase of the full version, with no subscription, opens Basil's Workshop, Lusia's Path and the Little Studio, the full report with charts and the weekly postcard. Only days when your child plays are counted.
 
 Languages: English, German, Spanish, Polish.
 
@@ -105,7 +105,7 @@ SICHER
 Ohne Werbung, ohne Internet, ohne Konto und ohne Datensammeln. Fortschritt, Name und Werke bleiben auf dem Gerät.
 
 KOSTENLOS AUSPROBIEREN
-In den ersten 3 Spieltagen sind alle Länder offen. Danach bleibt die Rätselwiese für immer kostenlos, und ein einmaliger Kauf schaltet die Vollversion frei. Kein Abo. Es zählen nur Tage, an denen Ihr Kind spielt.
+In den ersten 3 Spieltagen sind alle Länder offen. Danach bleibt die Rätselwiese (8 Spiele) für immer kostenlos. Ein einmaliger Kauf der Vollversion, ohne Abo, öffnet Basils Werkstatt, Lusias Pfad und das Kleine Atelier, den ausführlichen Bericht mit Diagrammen und die Wochenpostkarte. Es zählen nur Tage, an denen Ihr Kind spielt.
 
 Sprachen: Deutsch, Englisch, Spanisch, Polnisch.
 
@@ -134,13 +134,13 @@ SEGURO
 Sin anuncios, sin internet, sin cuentas y sin recopilación de datos. El progreso, el nombre y las creaciones se quedan en el dispositivo.
 
 PRUÉBALO GRATIS
-Durante los primeros 3 días de juego todos los mundos están abiertos. Después, la Pradera de Acertijos sigue gratis para siempre, y un solo pago desbloquea la versión completa. Sin suscripción. Solo cuentan los días en que juega.
+Durante los primeros 3 días de juego todos los mundos están abiertos. Después, la Pradera de Acertijos (8 juegos) sigue gratis para siempre. Un solo pago de la versión completa, sin suscripción, abre el Taller de Basil, el Sendero de Lusia y el Pequeño Estudio, el informe completo con gráficos y la postal semanal. Solo cuentan los días en que juega.
 
 Idiomas: español, inglés, alemán, polaco.
 
 ## Słowa kluczowe (App Store ≤ 100 znaków)
 
-- **pl:** przedszkole,dla dzieci,nauka,liczenie,literki,zagadki,logika,kolorowanka,edukacja,maluch
+- **pl:** przedszkole,dla dzieci,nauka,liczenie,literki,logika,kolorowanka,edukacja,maluch,cyferki,szlaczki
 - **en:** preschool,toddler,kids,learning,counting,abc,letters,puzzle,phonics,kindergarten,shapes
 - **de:** kita,kinder,lernspiele,zählen,buchstaben,rätsel,vorschule,kindergarten,logik,malen
 - **es:** preescolar,niños,aprender,números,letras,abc,acertijos,juegos educativos,colorear,formas
@@ -166,7 +166,7 @@ Idiomas: español, inglés, alemán, polaco.
 
 - **Data Not Collected** (Dane nie są zbierane).
 - Brak śledzenia (ATT nie jest używane), brak zewnętrznych SDK zbierających dane, brak kont.
-- Polityka prywatności: w aplikacji (strefa rodzica → Ustawienia → Polityka prywatności) i pod adresem https://mkdev.com.pl/apps/bystrzakowo/privacy-policy (do opublikowania).
+- Polityka prywatności: w aplikacji (strefa rodzica → Ustawienia → Polityka prywatności) i pod adresem https://mkdev.com.pl/apps/bystrzakowo/privacy-policy.
 
 ## Zakup w aplikacji
 
@@ -179,9 +179,9 @@ Idiomas: español, inglés, alemán, polaco.
 
 Bystrzakowo (called Smartyville in English, Schlaudorf in German and Listolandia in Spanish) is an educational app for children aged 3–6 (Kids category, Ages 5 and Under). All instructions are voiced, so children do not need to read. UI languages: Polish, English, German, Spanish (follows the device language; can be changed in the parent zone).
 
-Parental gate: the parent zone (gear icon, top left) opens after pressing and holding the gear for 2 seconds. The in-app purchase, "Restore purchase" and every Share button additionally require solving a multiplication question (adult gate). Everything aimed at adults is inside the parent zone: the progress report, the album with the Share button (system share sheet), the weekly postcard, settings, and the in-app purchase.
+Parental gate: the parent zone (gear icon, top left) opens after pressing and holding the gear for 2 seconds. The in-app purchase, "Restore purchase", every Share button and extending play time after the parent's time limit additionally require solving a multiplication question (adult gate); wrong answers lock the gate for 15 s, then 1 min, then 5 min. Everything aimed at adults is inside the parent zone: the progress report, the album with the Share button (system share sheet), the weekly postcard, settings, and the in-app purchase.
 
-In-app purchase: one non-consumable product, "bystrzakowo.full" (full version). A fresh install has a free trial of 3 days of play with everything open; after that, only the first land (Puzzle Meadow) stays open and the other lands show a sleeping overlay; tapping them only plays a neutral voice line ("This land is still asleep. Let's play in the Puzzle Meadow."). Trial days count only days on which the child plays. The purchase and "Restore purchase" buttons are only in the parent zone (Progress and Settings tabs) and are visible during the trial too. Holding the gear opens the parent zone only; it contains no purchase or link by itself.
+In-app purchase: one non-consumable product, "bystrzakowo.full" (full version). A fresh install has a free trial of 3 days of play with everything open; after that, only the first land (Puzzle Meadow) stays open and the other lands show a sleeping overlay; tapping them only plays a neutral voice line ("This land is still asleep. Let's play in the Puzzle Meadow."). Trial days count only days on which the child plays. Before play starts, the welcome screens (which cannot skip past it) show a card with the trial length, what stays free forever (Puzzle Meadow, 8 games), what is part of the paid full version (three lands, the full report with charts, the weekly postcard) and the store price of the one-time purchase. To see the state after the trial, please use the attached screen recording / screenshot (store/iap-review.png). The purchase and "Restore purchase" buttons are only in the parent zone (Progress and Settings tabs) and are visible during the trial too. Holding the gear opens the parent zone only; it contains no purchase or link by itself.
 
 No ads, no analytics, no accounts, no data collection, and no third-party SDKs that collect data (only open-source Capacitor plugins; the purchase is handled by StoreKit / Google Play Billing). No network access except the store purchase. All progress and the optional child's name are stored only on the device. The privacy policy is available inside the app (parent zone > Settings > Privacy policy) and at https://mkdev.com.pl/apps/bystrzakowo/privacy-policy.
 

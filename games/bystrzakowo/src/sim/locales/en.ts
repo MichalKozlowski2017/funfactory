@@ -100,7 +100,8 @@ export const EN: Record<string, string> = {
   parentArea: 'Parent area',
   pressHoldGearCorner: 'Press and hold the gear in the corner of the screen for 2 seconds. There you’ll find your child’s progress, an album of creations, a play time limit, language and sound. Purchases and sharing pictures are also protected by a quick sum.',
   daysFullVersion: '{n} days of the full version',
-  firstDaysPlayAll: 'For the first {n} days of play, all lands are open (only days your child actually plays count). After that, the Puzzle Meadow stays free and the rest can be unlocked with a one-time purchase in the parent area.',
+  firstDaysPlayAll: "For the first {n} days of play, all lands are open (only days your child actually plays count). After that, the Puzzle Meadow stays free forever. Basil's Workshop, Lusia's Path, the Little Studio, the full report with charts and the weekly postcard stay in the full version: a one-time purchase{price} in the parent area, no subscription.",
+  trialPrice: ' of {price}',
   daysPlay: '{n} days of play',
   howOldChild: 'How old is your child?',
   setsFirstTasksAfter: 'This sets the first tasks. After that, the difficulty adjusts by itself.',
@@ -171,5 +172,5 @@ export const EN: Record<string, string> = {
   demoChildName: 'Emma',
   // Privacy policy (parent zone, settings).
   privacyPolicy: "Privacy policy",
-  privacyBody: "Last updated: November 2026.\n\nSmartyville does not collect, send or share any data. There are no ads, analytics, tracking or accounts, and the app does not connect to our servers.\n\nThe device stores only what the game needs: progress (levels, stickers, solved tasks for the parent report), the child's first name if a parent enters it, the child's creations (coloring pages and sticker pictures) and settings. This data never leaves the device. Uninstalling the app or \"Reset progress\" deletes it.\n\nA picture or postcard can be shared only in the parent zone, behind the parental gate. It goes to the app the parent chooses (for example Photos or Messages); we never receive it.\n\nThe full version is purchased entirely through Apple (App Store) or Google (Google Play). Payment data is handled by them; we never receive it.\n\nContact: mkdev.appslab@gmail.com\nFull policy: mkdev.com.pl/apps/bystrzakowo/privacy-policy",
+  privacyBody: "Last updated: November 2026.\n\nSmartyville does not collect, send or share any data. There are no ads, analytics, tracking or accounts, and the app does not connect to our servers.\n\nThe device stores only what the game needs: progress (levels, stickers, solved tasks for the parent report), the child's first name if a parent enters it, the child's creations (coloring pages and sticker pictures) and settings. This data never leaves the device. Uninstalling the app deletes all of it. \"Reset progress\" deletes the progress, the name can be changed in Settings, and single creations can be deleted in the album.\n\nA picture or postcard can be shared only in the parent zone, behind the parental gate. It goes to the app the parent chooses (for example Photos or Messages); we never receive it.\n\nThe full version is purchased entirely through Apple (App Store) or Google (Google Play). Payment data is handled by them; we never receive it.\n\nContact: mkdev.appslab@gmail.com\nFull policy: mkdev.com.pl/apps/bystrzakowo/privacy-policy",
 };

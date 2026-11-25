@@ -3,7 +3,7 @@ import { haptics } from '@funfactory/core';
 import { Button, idleBreath, popIn, Scene, squash, type View } from '@funfactory/kit2d';
 import { loadArt, type Art } from '../assets.ts';
 import { HAND_TIP } from '../hand.ts';
-import { trial } from '../premium.ts';
+import { price, trial } from '../premium.ts';
 import { tr } from '../sim/i18n.ts';
 import { AGES, applyAge } from '../sim/onboarding.ts';
 import { TRIAL_DAYS } from '../sim/trial.ts';
@@ -34,6 +34,8 @@ export class WelcomeScene extends Scene {
   private age: number | null = null;
   private buttons: Button[] = [];
   private skip!: Button;
+  /** Price of the full version from the store (null in the browser or before the store answers). */
+  private price: string | null = null;
   /** Animation of the current card's illustration. */
   private anim: ((t: number) => void) | null = null;
   private t = 0;
@@ -43,7 +45,17 @@ export class WelcomeScene extends Scene {
     this.art = await loadArt();
     this.pages = ['hello', 'gate', ...(trial().full ? [] : (['trial'] as Page[])), 'age'];
     this.bg = new Sprite(this.art.realmBg.meadow);
-    this.skip = new Button({ label: tr('skip'), width: 170, height: 76, fontSize: 26, color: '#c9b8a6', radius: 22, resolution: this.game.pixelRatio, onTap: () => this.finish(false) });
+    // "Skip" jumps to the trial card first: what the trial is, what stays paid and the price must be seen before play (App Store 3.1.1).
+    const skip = () => {
+      const t = this.pages.indexOf('trial');
+      if (t > this.page) this.go(t);
+      else this.finish(false);
+    };
+    this.skip = new Button({ label: tr('skip'), width: 170, height: 76, fontSize: 26, color: '#c9b8a6', radius: 22, resolution: this.game.pixelRatio, onTap: skip });
+    void price().then((p) => {
+      this.price = p;
+      if (p && !this.leaving && this.pages[this.page] === 'trial') this.render();
+    });
     this.addChild(this.bg, this.dim, this.card, this.content, this.skip);
     this.resize(this.game.view);
     this.game.markReady();
@@ -109,7 +121,7 @@ export class WelcomeScene extends Scene {
         ? [tr('welcomeBystrzakowo'), tr('puzzlesCountingLettersShapes')]
         : page === 'gate'
           ? [tr('parentArea'), tr('pressHoldGearCorner')]
-          : [tr('daysFullVersion', { n }), tr('firstDaysPlayAll', { n })];
+          : [tr('daysFullVersion', { n }), tr('firstDaysPlayAll', { n, price: this.price ? tr('trialPrice', { price: this.price }) : '' })];
     const tx = b.x + b.w * 0.41;
     const tw = b.x + b.w - 50 - tx;
     const t = this.text(title, b.w < 900 ? 40 : 46, { weight: '800', wrap: tw });

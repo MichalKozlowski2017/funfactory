@@ -60,6 +60,21 @@ describe('Tweens', () => {
   });
 });
 
+describe('Tweens: killAll on scene exit', () => {
+  it('killAll() settles done, killAll(false) leaves it pending', async () => {
+    const tweens = new Tweens();
+    let a = false, b = false;
+    void tweens.to({ x: 0 }, { x: 1 }, { duration: 1 }).done.then(() => (a = true));
+    tweens.killAll();
+    void tweens.to({ x: 0 }, { x: 1 }, { duration: 1 }).done.then(() => (b = true));
+    tweens.killAll(false);
+    await new Promise((r) => setTimeout(r, 0));
+    expect(a).toBe(true);
+    expect(b).toBe(false);
+    expect(tweens.count).toBe(0);
+  });
+});
+
 describe('Spring', () => {
   it('settles on target', () => {
     const spring = new Spring(0);

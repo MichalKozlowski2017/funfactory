@@ -100,7 +100,8 @@ export const PL: Record<string, string> = {
   parentArea: 'Strefa rodzica',
   pressHoldGearCorner: 'Przytrzymaj zębatkę w rogu ekranu przez 2 sekundy. Znajdziesz tam postępy dziecka, album prac, limit czasu zabawy, język i dźwięk. Zakup i wysyłanie obrazków chroni dodatkowo krótkie działanie.',
   daysFullVersion: '{n} dni pełnej wersji',
-  firstDaysPlayAll: 'Przez pierwsze {n} dni zabawy otwarte są wszystkie krainy (liczą się tylko dni, w które dziecko gra). Potem Polana Zagadek zostaje za darmo, a resztę można odblokować jednorazowo w strefie rodzica.',
+  firstDaysPlayAll: 'Przez pierwsze {n} dni zabawy otwarte są wszystkie krainy (liczą się tylko dni, w które dziecko gra). Potem Polana Zagadek zostaje za darmo na zawsze. Warsztat Bazyla, Ścieżka Lusi, Pracownia Malucha, pełny raport z wykresami i pocztówka tygodnia zostają w pełnej wersji: jednorazowy zakup{price} w strefie rodzica, bez subskrypcji.',
+  trialPrice: ' za {price}',
   daysPlay: '{n} dni zabawy',
   howOldChild: 'Ile lat ma dziecko?',
   setsFirstTasksAfter: 'Od tego zależą pierwsze zadania. Potem trudność dopasowuje się sama.',
@@ -171,5 +172,5 @@ export const PL: Record<string, string> = {
   demoChildName: 'Zosia',
   // Privacy policy (parent zone, settings).
   privacyPolicy: "Polityka prywatności",
-  privacyBody: "Ostatnia aktualizacja: listopad 2026.\n\nBystrzakowo nie zbiera, nie wysyła i nie udostępnia żadnych danych. Nie ma reklam, analityki, śledzenia ani kont, a aplikacja nie łączy się z naszymi serwerami.\n\nNa urządzeniu zapisujemy tylko to, co potrzebne do zabawy: postępy (poziomy, naklejki, rozwiązane zadania do raportu dla rodzica), imię dziecka, jeśli rodzic je poda, prace dziecka (kolorowanki i obrazki z naklejek) oraz ustawienia. Te dane nie opuszczają urządzenia. Usuwa je odinstalowanie aplikacji albo „Wyzeruj postępy”.\n\nObrazek lub pocztówkę można udostępnić tylko w strefie rodzica, za bramką. Trafiają do aplikacji wybranej przez rodzica (np. Zdjęcia, wiadomości); my ich nie dostajemy.\n\nZakup pełnej wersji obsługuje w całości Apple (App Store) albo Google (Google Play). Dane płatności przetwarzają te firmy; my ich nie otrzymujemy.\n\nKontakt: mkdev.appslab@gmail.com\nPełna treść: mkdev.com.pl/apps/bystrzakowo/privacy-policy",
+  privacyBody: "Ostatnia aktualizacja: listopad 2026.\n\nBystrzakowo nie zbiera, nie wysyła i nie udostępnia żadnych danych. Nie ma reklam, analityki, śledzenia ani kont, a aplikacja nie łączy się z naszymi serwerami.\n\nNa urządzeniu zapisujemy tylko to, co potrzebne do zabawy: postępy (poziomy, naklejki, rozwiązane zadania do raportu dla rodzica), imię dziecka, jeśli rodzic je poda, prace dziecka (kolorowanki i obrazki z naklejek) oraz ustawienia. Te dane nie opuszczają urządzenia. Wszystkie usuwa odinstalowanie aplikacji. „Wyzeruj postępy” usuwa postępy, imię zmienisz w Ustawieniach, a pojedyncze prace usuniesz w albumie.\n\nObrazek lub pocztówkę można udostępnić tylko w strefie rodzica, za bramką. Trafiają do aplikacji wybranej przez rodzica (np. Zdjęcia, wiadomości); my ich nie dostajemy.\n\nZakup pełnej wersji obsługuje w całości Apple (App Store) albo Google (Google Play). Dane płatności przetwarzają te firmy; my ich nie otrzymujemy.\n\nKontakt: mkdev.appslab@gmail.com\nPełna treść: mkdev.com.pl/apps/bystrzakowo/privacy-policy",
 };

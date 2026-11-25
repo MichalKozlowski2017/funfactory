@@ -1,2 +1,3 @@
 "CFBundleDisplayName" = "Bystrzakowo";
 "CFBundleName" = "Bystrzakowo";
+"NSPhotoLibraryAddUsageDescription" = "Zapisuje obrazki dziecka i pocztówkę tygodnia w Zdjęciach, gdy rodzic wybierze „Zapisz obrazek”.";

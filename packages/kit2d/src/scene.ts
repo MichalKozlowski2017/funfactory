@@ -65,7 +65,7 @@ export class SceneManager {
     this.live = false;
     if (this.current) {
       this.current.exit();
-      this.current.tweens.killAll();
+      this.current.tweens.killAll(false); // the scene is gone: code awaiting its tweens must not run on destroyed objects
       this.current.timers.clear();
       root.removeChild(this.current);
       this.current.destroy({ children: true });

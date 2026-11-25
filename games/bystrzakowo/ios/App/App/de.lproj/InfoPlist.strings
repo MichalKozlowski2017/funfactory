@@ -1,2 +1,3 @@
 "CFBundleDisplayName" = "Schlaudorf";
 "CFBundleName" = "Schlaudorf";
+"NSPhotoLibraryAddUsageDescription" = "Speichert die Bilder Ihres Kindes und die Wochenpostkarte in Fotos, wenn ein Elternteil „Bild sichern“ wählt.";

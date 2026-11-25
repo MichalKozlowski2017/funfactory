@@ -67,12 +67,15 @@ export class Tween<T extends object = object> {
     return true;
   }
 
-  /** Przerywa tween. `complete` ustawia wartości końcowe. */
-  kill(complete = false): void {
+  /**
+   * Przerywa tween. `complete` ustawia wartości końcowe.
+   * `settle = false`: `done` się nie rozwiązuje (zamknięcie sceny: kod czekający na tween nie rusza już usuniętych obiektów).
+   */
+  kill(complete = false, settle = true): void {
     if (this.finished || this.killed) return;
     if (complete && this.started) this.apply(this.forward ? 1 : 0);
     this.killed = true;
-    this.resolve();
+    if (settle) this.resolve();
   }
 
   private apply(t: number): void {
@@ -112,8 +115,9 @@ export class Tweens {
     for (const tween of this.active) if (tween.target === target) tween.kill(complete);
   }
 
-  killAll(): void {
-    for (const tween of this.active) tween.kill();
+  /** Przerywa wszystkie tweeny. `settle = false` przy zamykaniu sceny: oczekujące `done` się nie rozwiązują. */
+  killAll(settle = true): void {
+    for (const tween of this.active) tween.kill(false, settle);
     this.active = [];
   }
 

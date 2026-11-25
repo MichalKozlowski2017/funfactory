@@ -149,9 +149,9 @@ export class WorldScene extends Scene {
     this.addChild(this.particles.view);
 
     this.gate = new ParentGate(this.art.gear);
-    // Entering the parent zone: just holding the gear (owner's decision). The multiplication question stays before a purchase
-    // and sending pictures (askAdult in ParentPanel), because the Kids category requires it.
-    this.gate.onOpen = () => (this.sleep ? this.wake() : this.openParent());
+    // Entering the parent zone: just holding the gear (owner's decision). The multiplication question stays before a purchase,
+    // sending pictures (askAdult in ParentPanel) and extending play time after the limit (a child could otherwise lift it).
+    this.gate.onOpen = () => (this.sleep ? this.askAdult(() => this.wake()) : this.openParent());
     this.gate.onLocked = (n) => this.gateToast(n);
     // Dot by the gear: at least 3 play days since the parent's last visit.
     this.gate.setBadge(playDaysAfter(journal(), state.progress.parentSeen ?? '') >= 3);
@@ -481,7 +481,7 @@ export class WorldScene extends Scene {
     }
   }
 
-  /** Sleeping realm: the tile sways, Lusia says to ask a parent (the purchase is behind the gate). */
+  /** Sleeping realm: the tile sways and Lusia says it's still asleep and invites to the Riddle Meadow (neutral, no call to buy). */
   private sleepingTap(house: Container): void {
     haptics.tap();
     sfx.pop(this.game.sound, 0.6);
@@ -626,6 +626,7 @@ export class WorldScene extends Scene {
     this.adultCheck = new AdultCheck(
       this.game,
       () => {
+        ParentGate.passed();
         close();
         then();
       },
