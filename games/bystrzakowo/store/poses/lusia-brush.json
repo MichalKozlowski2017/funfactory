@@ -1,0 +1,17 @@
+{
+  "workflow": "flux2-ref-sprite.json",
+  "IMAGE": "ref-lusia.png",
+  "PROMPT": "the same cute clay fox character as in the reference image (orange fur, cream belly and muzzle, white tail tip, green knitted scarf), full body, standing turned slightly to the right, holding a big paintbrush with bright orange paint on the tip in one paw and pointing to the right with the other paw, beaming happy smile, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, centered, plain light gray background",
+  "NEGATIVE": "",
+  "SEED": 221,
+  "WIDTH": 1024,
+  "HEIGHT": 1024,
+  "PREFIX": "lusia-brush",
+  "STEPS": 20,
+  "GUIDANCE": 4,
+  "BPM": 100,
+  "DURATION": 60,
+  "KEY": "A minor",
+  "LYRICS": "[Instrumental]",
+  "created": "2026-11-25T12:14:58.132Z"
+}

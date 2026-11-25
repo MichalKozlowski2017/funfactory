@@ -1,0 +1,17 @@
+{
+  "workflow": "flux2-ref-sprite.json",
+  "IMAGE": "ref-bazyl.png",
+  "PROMPT": "the same cute clay badger character as in the reference image (black and white striped head, round ears, white belly, light blue vest with buttons), full body, standing turned slightly to the right, pointing to the right with one paw, big happy open smile, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, centered, plain light gray background",
+  "NEGATIVE": "",
+  "SEED": 341,
+  "WIDTH": 1024,
+  "HEIGHT": 1024,
+  "PREFIX": "bazyl-point",
+  "STEPS": 20,
+  "GUIDANCE": 4,
+  "BPM": 100,
+  "DURATION": 60,
+  "KEY": "A minor",
+  "LYRICS": "[Instrumental]",
+  "created": "2026-11-25T12:41:20.325Z"
+}

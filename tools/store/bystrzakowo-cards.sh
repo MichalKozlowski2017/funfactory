@@ -17,6 +17,13 @@ FONT=tools/store/baloo2-800.ttf # Baloo 2 ExtraBold (czcionka gry, OFL)
 SCENE=("" 1 4 2 7 3 6 8 9)
 BG=("" "$KEY/keyart-blocks-11.jpg" "$KEY/keyart-book-21.jpg" "$ART/landscapes/forest.jpg" "$KEY/keyart-village-31.jpg" "$ART/realm-workshop.jpg" "$ART/realm-studio.jpg" "$KEY/keyart-blocks-12.jpg" "$ART/meadow.jpg")
 TILT=("" -3 2 -2 2 -2 2 -2 2)
+# Postać obok ekranu (store/poses: wskazuje w prawo; po prawej stronie karty odbita, żeby wskazywała ekran) i jej strona.
+POSES=games/bystrzakowo/store/poses
+CHAR=("" "" lusia-teacher lusia-wow bazyl-curious bazyl-laugh lusia-brush bazyl-wink bazyl-thumbs)
+SIDE=("" "" left left right left left right left)
+# Cards with a game scene: the game shows the same character in the bottom left corner of the screen.
+# The big character stands over that corner and covers it, as if it stepped out of the screen.
+COVER=("" "" 1 1 "" 1 1 "" "")
 
 # Hasło | podpis (karty 2–7); hasło | podtytuł | 3 znaczki (karta 1); hasło | 3 znaczki (karta 8).
 text() {
@@ -84,21 +91,49 @@ badge() { # tekst wielkość kolor wyjście
     -stroke "$3" -strokewidth $((fs / 6)) -fill none -draw "polyline $((c - fs / 4)),$((ph / 2)) $((c - fs / 20)),$((ph / 2 + fs / 5)) $((c + fs / 4)),$((ph / 2 - fs / 5))" \
     \( "$T/bt.png" \) -gravity west -geometry +$((fs * 18 / 10))-$((fs / 15)) -composite "$4"
 }
-# Zrzut w białej ramce z cieniem, lekko przechylony.
+# Zrzut w ramce z cieniem, lekko przechylony. FRAME: device (grafitowa obudowa), none (same zaokrąglone rogi),
+# clay (ciemnobrązowa ramka w kolorze konturów gry), white (dawna biała).
 framed() { # wejście maxW maxH wyjście kąt
+  local style=${FRAME:-device}
   magick "$1" -resize "${2}x${3}" "$T/sh.png"
   read -r sw sh < <(magick identify -format "%w %h\n" "$T/sh.png")
-  local r=$((sh / 14)) b=$((sh / 40 + 2))
+  local r=$((sh / 14)) b col
+  case $style in
+    device) b=$((sh / 26 + 2)); col='#1f2128' ;;
+    clay) b=$((sh / 30 + 2)); col='#5a3c28' ;;
+    white) b=$((sh / 40 + 2)); col='#ffffff' ;;
+    *) b=0; col='none' ;;
+  esac
   magick "$T/sh.png" \( +clone -alpha extract -fill black -colorize 100 -fill white -draw "roundrectangle 0,0 $((sw - 1)),$((sh - 1)) $r,$r" \) -alpha off -compose CopyOpacity -composite "$T/rd.png"
-  magick -size $((sw + 2 * b))x$((sh + 2 * b)) xc:none -fill white -draw "roundrectangle 0,0 $((sw + 2 * b - 1)),$((sh + 2 * b - 1)) $((r + b)),$((r + b))" "$T/rd.png" -geometry +$b+$b -composite \
-    -background none -rotate "$5" +repage "$T/fr.png"
+  if [ "$b" -gt 0 ]; then
+    local W2=$((sw + 2 * b)) H2=$((sh + 2 * b))
+    magick -size ${W2}x$H2 xc:none -fill "$col" -draw "roundrectangle 0,0 $((W2 - 1)),$((H2 - 1)) $((r + b)),$((r + b))" "$T/bz.png"
+    if [ "$style" = device ]; then # cienka jaśniejsza krawędź obudowy
+      local q=$((b / 4))
+      magick "$T/bz.png" -fill none -stroke '#4a4d57' -strokewidth $((b / 6 + 1)) -draw "roundrectangle $q,$q $((W2 - 1 - q)),$((H2 - 1 - q)) $((r + b - q)),$((r + b - q))" "$T/bz.png"
+    fi
+    magick "$T/bz.png" "$T/rd.png" -geometry +$b+$b -composite -background none -rotate "$5" +repage "$T/fr.png"
+  else
+    magick "$T/rd.png" -background none -rotate "$5" +repage "$T/fr.png"
+  fi
   magick "$T/fr.png" \( +clone -background black -shadow 55x$((sh / 40))+0+$((sh / 50)) \) +swap -background none -layers merge +repage "$4"
+}
+# Postać z pliku pozy, wysokość h; strona right = odbicie (wskazuje w lewo, w stronę ekranu).
+pose() { # nazwa strona h wyjście
+  magick "$POSES/$1.png" -trim +repage -resize x$3 $([ "$2" = right ] && echo -flop) "$4"
 }
 fit() { # obraz maxW: zmniejsz, gdy szerszy
   local w; w=$(magick identify -format %w "$1")
   if [ "$w" -gt "$2" ]; then magick "$1" -resize "${2}x" "$1"; fi
 }
 hgt() { magick identify -format %h "$1"; }
+# x of the character's left edge so that its feet stand over the in-game character
+# (rel % of the screenshot width: 10 = bottom left corner, 90 = bottom right corner on the world map).
+over() { # character screen_x screen_w [rel]
+  local sw fx fwid; sw=$(magick identify -format %w "$T/sh.png")
+  read -r fwid fx < <(magick "$1" -gravity south -crop 100%x5%+0+0 +repage -alpha extract -format "%@" info: | sed -E 's/^([0-9]+)x[0-9]+\+([0-9]+)\+.*/\1 \2/')
+  echo $(($2 + $3 / 2 + sw * (${4:-10} - 50) / 100 - fx - fwid / 2))
+}
 
 card() { # n lang W H raw out
   local n=$1 lang=$2 W=$3 H=$4 raw=$5 out=$6 wide=1
@@ -111,7 +146,7 @@ card() { # n lang W H raw out
     # Okładka: środek ekranu świata (kafelki) bez postaci z gry, bo Lusia i Bazyl stoją obok.
     read -r rw rh < <(magick identify -format "%w %h\n" "$raw")
     # Ile szerokości zostawić: ekran świata na węższym telefonie ma kafelki bliżej krawędzi.
-    local keep=$((100 - (W * 100 / H - 100) * 27 / 100)); [ $wide = 0 ] && keep=86
+    local keep=$((100 - (W * 100 / H - 100) * 27 / 100)); [ $wide = 0 ] && keep=100 # iPad: kafelki na całą szerokość, postaci ledwo wystają
     magick "$raw" -crop $((rw * keep / 100))x$rh+$((rw * (100 - keep) / 200))+0 +repage "$T/crop.png"
     shot=$T/crop.png
   fi
@@ -127,32 +162,67 @@ card() { # n lang W H raw out
   local ch=50; [ $wide = 1 ] && [ $((W * 10 / H)) -lt 20 ] && ch=42 # węższy ekran (Android 16:9): mniejsze postaci
   magick "$ART/lusia.webp" -trim +repage -resize x$((u * ch / 100)) "$T/lusia.png"
   magick "$ART/bazyl.webp" -trim +repage -resize x$((u * (ch - 4) / 100)) "$T/bazyl.png"
+  # Okładka: Lusia i Bazyl wskazują ekran z obu stron; karta 8: Bazyl z kciukiem w górę (iPad: obok Lusia).
+  if [ "$n" = 1 ]; then
+    pose lusia-point left $((u * ch / 100)) "$T/lusia.png"; pose bazyl-point right $((u * (ch - 4) / 100)) "$T/bazyl.png"
+  elif [ "$n" = 8 ]; then
+    pose bazyl-thumbs left $((u * ch / 100)) "$T/lusia.png"; pose lusia-wow right $((u * (ch - 4) / 100)) "$T/bazyl.png"
+  fi
   local m=$((u * 9 / 100))
   if [ $wide = 1 ]; then
     case $n in
       1)
-        fit "$T/h1.png" $((W * 60 / 100))
-        magick "$T/b1.png" "$T/b2.png" "$T/b3.png" -background none +smush $((u * 3 / 100)) "$T/badges.png"; fit "$T/badges.png" $((W * 92 / 100))
-        framed "$shot" $((W * 34 / 100)) $((H * 46 / 100)) "$T/f.png" "${TILT[$n]}"
-        magick "$T/bg.png" "$T/h1.png" -gravity northwest -geometry +$m+$((u * 5 / 100)) -composite \
+        # Duży ekran gry po prawej; hasło i znaczki w kolumnie po lewej; Lusia i Bazyl wyglądają zza ekranu.
+        fit "$T/h1.png" $((W * 40 / 100)); fit "$T/h2.png" $((W * 40 / 100))
+        framed "$shot" $((W * 56 / 100)) $((H * 72 / 100)) "$T/f.png" "${TILT[$n]}"
+        local fw; fw=$(magick identify -format %w "$T/f.png")
+        local fx=$((W - W * 3 / 100 - fw)) # lewa krawędź ekranu
+        magick "$T/lusia.png" -resize 112% "$T/lusia.png"
+        local lw bw lx; lw=$(magick identify -format %w "$T/lusia.png")
+        bw=$(magick identify -format "%w\n" "$T/b1.png" "$T/b2.png" "$T/b3.png" | sort -n | tail -1)
+        lx=$((fx - lw * 50 / 100)); [ $lx -lt $((m + bw)) ] && lx=$((m + bw)) # never over the badges
+        magick "$T/bg.png" "$T/f.png" -gravity northwest -geometry +$fx+$((H - $(hgt "$T/f.png") - u * 4 / 100)) -composite \
+          "$T/h1.png" -gravity northwest -geometry +$m+$((u * 5 / 100)) -composite \
           "$T/h2.png" -gravity northwest -geometry +$((m + u / 100))+$((u * 23 / 100)) -composite \
-          "$T/f.png" -gravity south -geometry -$((W * 3 / 100))-$((u * 3 / 100)) -composite \
-          "$T/badges.png" -gravity northwest -geometry +$m+$((u * 37 / 100)) -composite \
-          "$T/lusia.png" -gravity southwest -geometry +$((W * 2 / 100))-$((u * 2 / 100)) -composite \
-          "$T/bazyl.png" -gravity southeast -geometry +$((W * 1 / 100))-$((u * 2 / 100)) -composite "$T/c.png" ;;
+          "$T/b1.png" -gravity northwest -geometry +$m+$((u * 40 / 100)) -composite \
+          "$T/b2.png" -gravity northwest -geometry +$m+$((u * 51 / 100)) -composite \
+          "$T/b3.png" -gravity northwest -geometry +$m+$((u * 62 / 100)) -composite \
+          "$T/lusia.png" -gravity southwest -geometry +$lx-$((u * 2 / 100)) -composite \
+          \( "$T/bazyl.png" -resize 108% \) -gravity southeast -geometry +$((W * 1 / 100))-$((u * 2 / 100)) -composite "$T/c.png" ;;
       8)
         fit "$T/h1.png" $((W * 45 / 100))
-        framed "$shot" $((W * 52 / 100)) $((H * 70 / 100)) "$T/f.png" "${TILT[$n]}"
+        # Long badges (Spanish, German) push the screen and Bazyl to the right.
+        local bw sw8 bx; bw=$(magick identify -format "%w\n" "$T/b1.png" "$T/b2.png" "$T/b3.png" | sort -n | tail -1)
+        sw8=$((W - m - bw - W * 7 / 100)); [ $sw8 -gt $((W * 48 / 100)) ] && sw8=$((W * 48 / 100))
+        # Bazyl's head is level with the two lower badges, so only they push him.
+        bx=$(magick identify -format "%w\n" "$T/b2.png" "$T/b3.png" | sort -n | tail -1); bx=$((m + bx + W / 100))
+        [ $bx -lt $((W * 25 / 100)) ] && bx=$((W * 25 / 100))
+        framed "$shot" $sw8 $((H * 66 / 100)) "$T/f.png" "${TILT[$n]}"
         magick "$T/bg.png" "$T/f.png" -gravity east -geometry +$((W * 3 / 100))+$((u * 4 / 100)) -composite \
           "$T/h1.png" -gravity northwest -geometry +$m+$((u * 7 / 100)) -composite \
           "$T/b1.png" -gravity northwest -geometry +$m+$((u * 30 / 100)) -composite \
           "$T/b2.png" -gravity northwest -geometry +$m+$((u * 42 / 100)) -composite \
           "$T/b3.png" -gravity northwest -geometry +$m+$((u * 54 / 100)) -composite \
-          \( "$T/lusia.png" -resize 70% \) -gravity southwest -geometry +$((m + u * 2 / 100))-$((u * 2 / 100)) -composite "$T/c.png" ;;
+          \( "$T/lusia.png" -resize 112% \) -gravity southwest -geometry +$bx-$((u * 2 / 100)) -composite "$T/c.png" ;;
       *)
+        # Ekran przy jednej krawędzi, po drugiej stronie postać, która na niego wskazuje (lekko na niego nachodzi).
         fit "$T/h1.png" $((W * 92 / 100)); fit "$T/h2.png" $((W * 92 / 100))
-        framed "$shot" $((W * 86 / 100)) $((H * 65 / 100)) "$T/f.png" "${TILT[$n]}"
-        magick "$T/bg.png" "$T/f.png" -gravity south -geometry +0+$((u * 1 / 100)) -composite \
+        if [ -n "${COVER[$n]}" ]; then
+          framed "$shot" $((W * 70 / 100)) $((H * 68 / 100)) "$T/f.png" "${TILT[$n]}"
+          pose "${CHAR[$n]}" left $((H * 80 / 100)) "$T/ch.png"
+          local fw fh fx fy cx; read -r fw fh < <(magick identify -format "%w %h\n" "$T/f.png")
+          fx=$((W - W * 2 / 100 - fw)); fy=$(((H - fh) / 2 + u * 9 / 100)); cx=$(over "$T/ch.png" $fx $fw)
+          magick "$T/bg.png" "$T/f.png" -gravity northwest -geometry +$fx+$fy -composite \
+            "$T/ch.png" -geometry "$(printf '%+d%+d' $cx $((H - $(hgt "$T/ch.png") + u * 2 / 100)))" -composite \
+            "$T/h1.png" -gravity north -geometry +0+$((u * 3 / 100)) -composite \
+            "$T/h2.png" -gravity north -geometry +0+$((u * 155 / 1000)) -composite "$T/c.png"
+          magick "$T/c.png" -alpha off -strip -quality 90 "$out"; return
+        fi
+        framed "$shot" $((W * 65 / 100)) $((H * 66 / 100)) "$T/f.png" "${TILT[$n]}"
+        pose "${CHAR[$n]}" "${SIDE[$n]}" $((H * 74 / 100)) "$T/ch.png"
+        local fg=east cg=southwest; [ "${SIDE[$n]}" = right ] && fg=west cg=southeast
+        magick "$T/bg.png" "$T/f.png" -gravity $fg -geometry +$((W * 2 / 100))+$((u * 9 / 100)) -composite \
+          "$T/ch.png" -gravity $cg -geometry +$((W * 1 / 100))-$((u * 2 / 100)) -composite \
           "$T/h1.png" -gravity north -geometry +0+$((u * 3 / 100)) -composite \
           "$T/h2.png" -gravity north -geometry +0+$((u * 155 / 1000)) -composite "$T/c.png" ;;
     esac
@@ -165,16 +235,40 @@ card() { # n lang W H raw out
         magick "$T/b1.png" "$T/b2.png" "$T/b3.png" -background none +smush $((u * 3 / 100)) "$T/badges.png"; fit "$T/badges.png" $((W * 92 / 100))
         local y2=$((top + $(hgt "$T/h1.png") + u * 2 / 100)) y3
         if [ "$n" = 1 ]; then y3=$((y2 + $(hgt "$T/h2.png") + u * 3 / 100)); else y3=$y2; magick -size 1x1 xc:none "$T/h2.png"; fi
-        framed "$shot" $((W * 70 / 100)) $((H * 48 / 100)) "$T/f.png" "${TILT[$n]}"
+        # Ekran gry wypełnia miejsce pod znaczkami (pełny zrzut, bez przycinania).
+        local room=$((H - y3 - $(hgt "$T/badges.png") - H * 8 / 100 - W * 6 / 100)) # minus zapas na przechylenie i cień
+        framed "$shot" $((W * 86 / 100)) $room "$T/f.png" "${TILT[$n]}"
+        local lx=0 bx=0 fw fh fx
+        if [ "$n" = 1 ]; then
+          # Full world map: Lusia and Bazyl stand over their in-game selves in the bottom corners of the screen.
+          magick "$T/lusia.png" -resize x$((H * 50 / 100)) "$T/lusia.png"; magick "$T/bazyl.png" -resize x$((H * 46 / 100)) "$T/bazyl.png"
+          read -r fw fh < <(magick identify -format "%w %h\n" "$T/f.png"); fx=$(((W - fw) / 2))
+          lx=$(over "$T/lusia.png" $fx $fw 9); bx=$((W - $(over "$T/bazyl.png" $fx $fw 91) - $(magick identify -format %w "$T/bazyl.png")))
+        else
+          magick "$T/lusia.png" -resize 120% "$T/lusia.png"; magick "$T/bazyl.png" -resize 120% "$T/bazyl.png"
+        fi
         magick "$T/bg.png" "$T/h1.png" -gravity north -geometry +0+$top -composite \
           "$T/h2.png" -gravity north -geometry +0+$y2 -composite \
+          "$T/f.png" -gravity south -geometry +0+$((H * 3 / 100)) -composite \
           "$T/badges.png" -gravity north -geometry +0+$y3 -composite \
-          "$T/f.png" -gravity south -geometry +0+$((H * 5 / 100)) -composite \
-          "$T/lusia.png" -gravity southwest -geometry +$((W * 1 / 100))-$((u * 2 / 100)) -composite \
-          "$T/bazyl.png" -gravity southeast -geometry +$((W * 1 / 100))-$((u * 2 / 100)) -composite "$T/c.png" ;;
+          "$T/lusia.png" -gravity southwest -geometry "$(printf '%+d' $lx)-$((u * 2 / 100))" -composite \
+          "$T/bazyl.png" -gravity southeast -geometry "$(printf '%+d' $bx)-$((u * 2 / 100))" -composite "$T/c.png" ;;
       *)
         framed "$shot" $((W * 88 / 100)) $((H * 66 / 100)) "$T/f.png" "${TILT[$n]}"
+        if [ -n "${COVER[$n]}" ]; then
+          pose "${CHAR[$n]}" left $((H * 56 / 100)) "$T/ch.png"
+          local fw fh fx fy cx; read -r fw fh < <(magick identify -format "%w %h\n" "$T/f.png")
+          fx=$(((W - fw) / 2)); fy=$((H - H * 4 / 100 - fh)); cx=$(over "$T/ch.png" $fx $fw)
+          magick "$T/bg.png" "$T/f.png" -gravity northwest -geometry +$fx+$fy -composite \
+            "$T/ch.png" -geometry "$(printf '%+d%+d' $cx $((H - $(hgt "$T/ch.png") + u * 2 / 100)))" -composite \
+            "$T/h1.png" -gravity north -geometry +0+$top -composite \
+            "$T/h2.png" -gravity north -geometry +0+$((top + $(hgt "$T/h1.png") + u / 100)) -composite "$T/c.png"
+          magick "$T/c.png" -alpha off -strip -quality 90 "$out"; return
+        fi
+        pose "${CHAR[$n]}" "${SIDE[$n]}" $((H * 46 / 100)) "$T/ch.png"
+        local cg=southwest; [ "${SIDE[$n]}" = right ] && cg=southeast
         magick "$T/bg.png" "$T/f.png" -gravity south -geometry +0+$((H * 4 / 100)) -composite \
+          "$T/ch.png" -gravity $cg -geometry +$((W * 1 / 100))-$((u * 2 / 100)) -composite \
           "$T/h1.png" -gravity north -geometry +0+$top -composite \
           "$T/h2.png" -gravity north -geometry +0+$((top + $(hgt "$T/h1.png") + u / 100)) -composite "$T/c.png" ;;
     esac
