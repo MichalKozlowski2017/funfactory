@@ -3,7 +3,7 @@ import { haptics } from '@funfactory/core';
 import { popIn, pulse, squash } from '@funfactory/kit2d';
 import { say, shadowNow, shadowOf, type Guide } from '../assets.ts';
 import type { Color, Item } from '../sim/catalog.ts';
-import { answerOf, isCorrect, makeRound, promptLine, ROUND_LENGTH, type PuzzleKind, type Question } from '../sim/puzzles.ts';
+import { answerOf, isCorrect, makeRound, promptLine, questionItem, ROUND_LENGTH, type PuzzleKind, type Question } from '../sim/puzzles.ts';
 import { state } from '../state.ts';
 import { Card, COLORS, label, sfx } from '../ui.ts';
 import { RoundScene } from './round.ts';
@@ -42,7 +42,11 @@ export class PuzzleScene extends RoundScene {
   }
 
   protected async prepare(): Promise<void> {
-    this.questions = makeRound(this.puzzle, this.game.rng, state.progress.levels[this.puzzle] ?? 0);
+    const level = state.progress.levels[this.puzzle] ?? 0;
+    this.questions = makeRound(this.puzzle, this.game.rng, level);
+    // Store screenshots (dev only): `?first=calf` rebuilds the round until its first question is about that item.
+    const first = import.meta.env.DEV ? new URLSearchParams(location.search).get('first') : null;
+    for (let t = 0; first && t < 300 && questionItem(this.questions[0]!).id !== first; t++) this.questions = makeRound(this.puzzle, this.game.rng, level);
     this.length = ROUND_LENGTH;
     if (this.puzzle === 'shadows') await Promise.all(this.questions.map((q) => shadowOf((answerOf(q) as Item).id)));
   }

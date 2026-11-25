@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Karty Bystrzakowa do sklepów, pisane dla rodzica: hasło z korzyścią, podpis, zrzut gry w ramce.
 # Karta 1 (okładka): tło z Fluxa (store/keyart), znaczki zaufania, Lusia i Bazyl.
-# Karta 8: „bezpieczna dla dziecka” ze znaczkami.
+# Karta 8: „Dziecko gra samo”: Bazyl wychodzi z zagadki i czyta polecenie (dymek), znaczki zaufania.
 # Wejście: assets-raw/bystrzakowo-store/shots/<rozmiar>-<lang>/<scena>.png (bystrzakowo-shots.sh, z ?nohand)
 # Wyjście: games/bystrzakowo/store/screens/<rozmiar>-<lang>/<n>.jpg
 # Zawężanie: LANGS="pl en", SIZES="ios-6.9", CARDS="1 8".
@@ -25,7 +25,7 @@ SIDE=("" "" left left right left left right left)
 # The big character stands over that corner and covers it, as if it stepped out of the screen.
 COVER=("" "" 1 1 "" 1 1 "" "")
 
-# Hasło | podpis (karty 2–7); hasło | podtytuł | 3 znaczki (karta 1); hasło | 3 znaczki (karta 8).
+# Hasło | podpis (karty 2–7); hasło | podtytuł | 3 znaczki (karta 1); hasło | podpis | dymek lektora | 3 znaczki (karta 8).
 text() {
   case "$1-$2" in
     pl-1) echo "Mądra zabawa|dla dzieci 3–6 lat|Bez reklam|Działa bez internetu|Lektor czyta polecenia" ;;
@@ -56,10 +56,10 @@ text() {
     en-7) echo "A weekly postcard|What your child learned this week" ;;
     de-7) echo "Die Wochenpostkarte|Was Ihr Kind diese Woche gelernt hat" ;;
     es-7) echo "Una postal semanal|Lo que tu hijo aprendió esta semana" ;;
-    pl-8) echo "Bezpieczna dla dziecka|Bez reklam i bez zbierania danych|Strefa rodzica za bramką|Działa offline" ;;
-    en-8) echo "Safe for your child|No ads, no data collected|Parent zone behind a gate|Works offline" ;;
-    de-8) echo "Sicher für Ihr Kind|Ohne Werbung, ohne Datensammeln|Elternbereich gesichert|Funktioniert offline" ;;
-    es-8) echo "Seguro para tu hijo|Sin anuncios ni recopilación de datos|Zona de padres protegida|Funciona sin internet" ;;
+    pl-8) echo "Dziecko gra samo, Ty masz spokój|Lektor czyta każde polecenie, nie trzeba umieć czytać|Gdzie jest mama cielaczka?|Bez reklam|Bez zbierania danych|Działa offline" ;;
+    en-8) echo "They play on their own, you get a break|Every instruction is read aloud, no reading needed|Where is the calf's mommy?|No ads|No data collected|Works offline" ;;
+    de-8) echo "Ihr Kind spielt allein, Sie haben Ruhe|Alle Anweisungen werden vorgelesen, Lesen nicht nötig|Wo ist die Mama vom Kälbchen?|Ohne Werbung|Keine Datensammlung|Funktioniert offline" ;;
+    es-8) echo "Tu hijo juega solo y tú descansas|Todas las instrucciones se leen en voz alta|¿Dónde está la mamá del ternero?|Sin anuncios|Sin recopilar datos|Funciona sin internet" ;;
   esac
 }
 
@@ -90,6 +90,19 @@ badge() { # tekst wielkość kolor wyjście
     -fill white -draw "circle $c,$((ph / 2)) $c,$((ph / 2 - fs * 45 / 100))" \
     -stroke "$3" -strokewidth $((fs / 6)) -fill none -draw "polyline $((c - fs / 4)),$((ph / 2)) $((c - fs / 20)),$((ph / 2 + fs / 5)) $((c + fs / 4)),$((ph / 2 - fs / 5))" \
     \( "$T/bt.png" \) -gravity west -geometry +$((fs * 18 / 10))-$((fs / 15)) -composite "$4"
+}
+# Dymek z poleceniem lektora: biały, brązowy brzeg jak w grze, ogonek w prawo (do ust postaci) albo w dół.
+bubble() { # tekst wielkość maxW ogonek(right|down) wyjście
+  local fs=$2
+  magick -background none -fill '#5a3c28' -font "$FONT" -pointsize "$fs" -interline-spacing $((-fs * 35 / 100)) -gravity center -size "$(($3 - fs * 2))x" caption:"$1" -trim +repage "$T/bq.png"
+  read -r qw qh < <(magick identify -format "%w %h\n" "$T/bq.png")
+  local pw=$((qw + fs * 2)) ph=$((qh + fs * 3 / 2)) t=$((fs * 3 / 2)) o=$((fs / 7 + 3)) cw ch poly
+  if [ "$4" = right ]; then cw=$((pw + t)); ch=$ph; poly="$((pw - fs)),$((ph * 40 / 100)) $((pw + t)),$((ph * 58 / 100)) $((pw - fs)),$((ph * 78 / 100))"
+  else cw=$pw; ch=$((ph + t)); poly="$((pw * 22 / 100)),$((ph - fs)) $((pw * 14 / 100)),$((ph + t)) $((pw * 44 / 100)),$((ph - fs))"; fi
+  # Shape mask (rounded body + tail), then a brown outline around it and the text on top.
+  magick -size $((cw + 2 * o))x$((ch + 2 * o)) xc:none -fill white -draw "translate $o,$o roundrectangle 0,0 $((pw - 1)),$((ph - 1)) $fs,$fs" -draw "translate $o,$o polygon $poly" "$T/bm.png"
+  magick "$T/bm.png" -alpha extract -morphology Dilate "Disk:$o" -background '#5a3c28' -alpha shape "$T/bo.png"
+  magick "$T/bo.png" "$T/bm.png" -composite "$T/bq.png" -gravity northwest -geometry +$((o + fs))+$((o + fs * 3 / 4)) -composite "$5"
 }
 # Zrzut w ramce z cieniem, lekko przechylony. FRAME: device (grafitowa obudowa), none (same zaokrąglone rogi),
 # clay (ciemnobrązowa ramka w kolorze konturów gry), white (dawna biała).
@@ -136,13 +149,69 @@ over() { # character screen_x screen_w [rel]
   echo $(($2 + $3 / 2 + sw * (${4:-10} - 50) / 100 - fx - fwid / 2))
 }
 
+# Karta 8 „Dziecko gra samo”: zagadka, z której wychodzi Bazyl i czyta polecenie (dymek), znaczki zaufania.
+card8() { # lang W H wide u shot out
+  local lang=$1 W=$2 H=$3 wide=$4 u=$5 shot=$6 out=$7 q b1 b2 b3
+  IFS='|' read -r h1 h2 q b1 b2 b3 <<<"$(text "$lang" 8)"
+  local m=$((u * 7 / 100)) bs=$((u * 40 / 1000)) top=$((u * 3 / 100)) y2 sb fw fh fx fy cx cy cw ch qw qh qx qy fs
+  title "$h1" $((u * 11 / 100)) "$T/h1.png"; sub "$h2" $((u * 58 / 1000)) "$T/h2.png"
+  fit "$T/h1.png" $((W * 92 / 100)); fit "$T/h2.png" $((W * 92 / 100))
+  badge "$b1" $bs '#ff8f3f' "$T/b1.png"; badge "$b2" $bs '#4fa9e8' "$T/b2.png"; badge "$b3" $bs '#9b7be0' "$T/b3.png"
+  y2=$((top + $(hgt "$T/h1.png") + u / 100)); sb=$((y2 + $(hgt "$T/h2.png")))
+  fs=$((u * 52 / 1000))
+  if [ $wide = 1 ]; then
+    # Ekran po prawej, Bazyl wychodzi z jego lewego dolnego rogu, dymek obok jego głowy, znaczki w kolumnie po lewej.
+    framed "$shot" $((W * 62 / 100)) $((H - sb - u * 5 / 100)) "$T/f.png" 2
+    read -r fw fh < <(magick identify -format "%w %h\n" "$T/f.png")
+    fx=$((W - W * 2 / 100 - fw)); fy=$((sb + u * 3 / 100))
+    pose bazyl-point left $((H * 72 / 100)) "$T/ch.png"
+  else
+    # iPad: znaczki w rzędzie pod podpisem, ekran pod nimi, Bazyl w lewym dolnym rogu, dymek nad jego głową.
+    magick "$T/b1.png" "$T/b2.png" "$T/b3.png" -background none +smush $((u * 3 / 100)) "$T/badges.png"; fit "$T/badges.png" $((W * 92 / 100))
+    local yb=$((sb + u * 2 / 100)); local ft=$((yb + $(hgt "$T/badges.png") + u * 3 / 100))
+    framed "$shot" $((W * 88 / 100)) $((H - ft - H * 5 / 100 - W * 6 / 100)) "$T/f.png" 2 # minus zapas na ramkę, przechylenie i cień
+    read -r fw fh < <(magick identify -format "%w %h\n" "$T/f.png")
+    fx=$(((W - fw) / 2)); fy=$((H - H * 4 / 100 - fh))
+    pose bazyl-point left $((H * 48 / 100)) "$T/ch.png"
+  fi
+  read -r cw ch < <(magick identify -format "%w %h\n" "$T/ch.png")
+  cx=$(over "$T/ch.png" $fx $fw); cy=$((H - ch + u * 2 / 100))
+  if [ $wide = 1 ]; then
+    local mx=$((cx + cw * 14 / 100)) my=$((cy + ch * 24 / 100)) maxw # just left of Bazyl's face
+    maxw=$((mx - m)); [ $maxw -gt $((W * 26 / 100)) ] && maxw=$((W * 26 / 100))
+    bubble "$q" $fs $maxw right "$T/bub.png"
+    read -r qw qh < <(magick identify -format "%w %h\n" "$T/bub.png")
+    qx=$((mx - qw)); qy=$((my - qh * 58 / 100))
+    local by=$((H - u * 8 / 100 - $(hgt "$T/b3.png")))
+    magick "$T/bg.png" "$T/f.png" -gravity northwest -geometry +$fx+$fy -composite \
+      "$T/ch.png" -geometry "$(printf '%+d%+d' $cx $cy)" -composite \
+      "$T/bub.png" -geometry "$(printf '%+d%+d' $qx $qy)" -composite \
+      "$T/b1.png" -geometry +$m+$((by - u * 20 / 100)) -composite \
+      "$T/b2.png" -geometry +$m+$((by - u * 10 / 100)) -composite \
+      "$T/b3.png" -geometry +$m+$by -composite \
+      "$T/h1.png" -gravity north -geometry +0+$top -composite \
+      "$T/h2.png" -gravity north -geometry +0+$y2 -composite "$T/c.png"
+  else
+    bubble "$q" $fs $((W * 36 / 100)) down "$T/bub.png"
+    read -r qw qh < <(magick identify -format "%w %h\n" "$T/bub.png")
+    qx=$((cx + cw * 36 / 100 - qw * 14 / 100)); qy=$((cy - qh + ch * 2 / 100))
+    magick "$T/bg.png" "$T/f.png" -gravity northwest -geometry +$fx+$fy -composite \
+      "$T/ch.png" -geometry "$(printf '%+d%+d' $cx $cy)" -composite \
+      "$T/bub.png" -geometry "$(printf '%+d%+d' $qx $qy)" -composite \
+      "$T/h1.png" -gravity north -geometry +0+$top -composite \
+      "$T/h2.png" -gravity north -geometry +0+$y2 -composite \
+      "$T/badges.png" -gravity north -geometry +0+$yb -composite "$T/c.png"
+  fi
+  magick "$T/c.png" -alpha off -strip -quality 90 "$out"
+}
+
 card() { # n lang W H raw out
   local n=$1 lang=$2 W=$3 H=$4 raw=$5 out=$6 wide=1
-  rm -f "$T/h2.png" # karta 8 nie ma podpisu: bez resztek po poprzedniej karcie
   [ $((W * 10 / H)) -lt 16 ] && wide=0
   IFS='|' read -r h1 h2 x1 x2 x3 <<<"$(text "$lang" "$n")"
   local u=$H; [ $wide = 0 ] && u=$((W * 1320 / 2868)) # jednostka: wysokość karty iPhone'a o tej szerokości
   magick "${BG[$n]}" -resize "${W}x${H}^" -gravity center -extent "${W}x${H}" "$T/bg.png"
+  if [ "$n" = 8 ]; then card8 "$lang" $W $H $wide $u "$raw" "$out"; return; fi
   local shot=$raw
   if [ "$n" = 1 ]; then
     # Okładka: środek ekranu świata (kafelki), bo Lusia i Bazyl stoją obok.
@@ -152,10 +221,10 @@ card() { # n lang W H raw out
     magick "$raw" -crop $((rw * keep / 100))x$rh+$((rw * (100 - keep) / 200))+0 +repage "$T/crop.png"
     shot=$T/crop.png
   fi
-  if [ "$n" = 1 ] || [ "$n" = 8 ]; then
+  if [ "$n" = 1 ]; then
     title "$h1" $((u * 15 / 100)) "$T/h1.png"
-    local bs=$((u * 44 / 1000)) b1=$h2 b2=$x1 b3=$x2
-    if [ "$n" = 1 ]; then title "$h2" $((u * 10 / 100)) "$T/h2.png" white '#7ac943'; b1=$x1 b2=$x2 b3=$x3; fi
+    local bs=$((u * 44 / 1000)) b1=$x1 b2=$x2 b3=$x3
+    title "$h2" $((u * 10 / 100)) "$T/h2.png" white '#7ac943'
     badge "$b1" $bs '#ff8f3f' "$T/b1.png"; badge "$b2" $bs '#4fa9e8' "$T/b2.png"; badge "$b3" $bs '#9b7be0' "$T/b3.png"
   else
     title "$h1" $((u * 11 / 100)) "$T/h1.png"
@@ -164,11 +233,9 @@ card() { # n lang W H raw out
   local ch=50; [ $wide = 1 ] && [ $((W * 10 / H)) -lt 20 ] && ch=42 # węższy ekran (Android 16:9): mniejsze postaci
   magick "$ART/lusia.webp" -trim +repage -resize x$((u * ch / 100)) "$T/lusia.png"
   magick "$ART/bazyl.webp" -trim +repage -resize x$((u * (ch - 4) / 100)) "$T/bazyl.png"
-  # Okładka: Lusia i Bazyl wskazują ekran z obu stron; karta 8: Bazyl z kciukiem w górę (iPad: obok Lusia).
+  # Okładka: Lusia i Bazyl wskazują ekran z obu stron.
   if [ "$n" = 1 ]; then
     pose lusia-point left $((u * ch / 100)) "$T/lusia.png"; pose bazyl-point right $((u * (ch - 4) / 100)) "$T/bazyl.png"
-  elif [ "$n" = 8 ]; then
-    pose bazyl-thumbs left $((u * ch / 100)) "$T/lusia.png"; pose lusia-teacher right $((u * (ch - 4) / 100)) "$T/bazyl.png"
   fi
   local m=$((u * 9 / 100))
   if [ $wide = 1 ]; then
@@ -191,21 +258,6 @@ card() { # n lang W H raw out
           "$T/b3.png" -gravity northwest -geometry +$m+$((u * 62 / 100)) -composite \
           "$T/lusia.png" -gravity southwest -geometry +$lx-$((u * 2 / 100)) -composite \
           \( "$T/bazyl.png" -resize 108% \) -gravity southeast -geometry -$((W * 2 / 100))-$((u * 2 / 100)) -composite "$T/c.png" ;;
-      8)
-        fit "$T/h1.png" $((W * 45 / 100))
-        # Long badges (Spanish, German) push the screen and Bazyl to the right.
-        local bw sw8 bx; bw=$(magick identify -format "%w\n" "$T/b1.png" "$T/b2.png" "$T/b3.png" | sort -n | tail -1)
-        sw8=$((W - m - bw - W * 6 / 100)); [ $sw8 -gt $((W * 58 / 100)) ] && sw8=$((W * 58 / 100))
-        # Bazyl's head is level with the two lower badges, so only they push him.
-        bx=$(magick identify -format "%w\n" "$T/b2.png" "$T/b3.png" | sort -n | tail -1); bx=$((m + bx + W / 100))
-        [ $bx -lt $((W * 25 / 100)) ] && bx=$((W * 25 / 100))
-        framed "$shot" $sw8 $((H * 74 / 100)) "$T/f.png" "${TILT[$n]}"
-        magick "$T/bg.png" "$T/f.png" -gravity east -geometry +$((W * 3 / 100))+$((u * 4 / 100)) -composite \
-          "$T/h1.png" -gravity northwest -geometry +$m+$((u * 7 / 100)) -composite \
-          "$T/b1.png" -gravity northwest -geometry +$m+$((u * 30 / 100)) -composite \
-          "$T/b2.png" -gravity northwest -geometry +$m+$((u * 42 / 100)) -composite \
-          "$T/b3.png" -gravity northwest -geometry +$m+$((u * 54 / 100)) -composite \
-          \( "$T/lusia.png" -resize 112% \) -gravity southwest -geometry +$bx-$((u * 2 / 100)) -composite "$T/c.png" ;;
       *)
         # Ekran przy jednej krawędzi, po drugiej stronie postać, która na niego wskazuje (lekko na niego nachodzi).
         fit "$T/h1.png" $((W * 92 / 100)); fit "$T/h2.png" $((W * 92 / 100))
@@ -233,18 +285,17 @@ card() { # n lang W H raw out
     fit "$T/h1.png" $((W * 90 / 100)); fit "$T/h2.png" $((W * 90 / 100))
     local top=$((H * 3 / 100))
     case $n in
-      1 | 8)
+      1)
         magick "$T/b1.png" "$T/b2.png" "$T/b3.png" -background none +smush $((u * 3 / 100)) "$T/badges.png"; fit "$T/badges.png" $((W * 92 / 100))
         local y2=$((top + $(hgt "$T/h1.png") + u * 2 / 100)) y3
-        if [ "$n" = 1 ]; then y3=$((y2 + $(hgt "$T/h2.png") + u * 3 / 100)); else y3=$y2; magick -size 1x1 xc:none "$T/h2.png"; fi
+        y3=$((y2 + $(hgt "$T/h2.png") + u * 3 / 100))
         # Ekran gry wypełnia miejsce pod znaczkami (pełny zrzut, bez przycinania).
         local room=$((H - y3 - $(hgt "$T/badges.png") - H * 8 / 100 - W * 6 / 100)) # minus zapas na przechylenie i cień
         framed "$shot" $((W * 86 / 100)) $room "$T/f.png" "${TILT[$n]}"
-        # Card 1 (world map) and card 8 (adult gate over the map): the shots have no in-game guides
-        # (bystrzakowo-shots.sh hides them), so the two characters stand at the card edges and only slightly overlap the screen.
+        # The world map shot has no in-game guides (bystrzakowo-shots.sh hides them),
+        # so the two characters stand at the card edges and only slightly overlap the screen.
         magick "$T/lusia.png" -resize x$((H * 47 / 100)) "$T/lusia.png"; magick "$T/bazyl.png" -resize x$((H * 43 / 100)) "$T/bazyl.png"
         local lx=$((-W * 4 / 100)) bx=$((-W * 3 / 100))
-        [ "$n" = 8 ] && lx=$((W / 100)) bx=$((W / 100)) # Bazyl's thumb and Lusia's tail stay on the card
         magick "$T/bg.png" "$T/h1.png" -gravity north -geometry +0+$top -composite \
           "$T/h2.png" -gravity north -geometry +0+$y2 -composite \
           "$T/f.png" -gravity south -geometry +0+$((H * 3 / 100)) -composite \

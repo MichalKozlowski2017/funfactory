@@ -70,12 +70,11 @@ shot:s"
 eval:eval(atob('$(b64 "$C.demoParent('postcard', decodeURIComponent(escape(atob('$(b64 "$kid")'))))")'))
 wait:1800
 shot:s"
-    # 9. Bramka dla dorosłych nad mapą (karta „Bezpieczna dla dziecka”), bez Lusi i Bazyla z gry.
-    run 9 "wait:2500
-eval:$C.guideBoxes.forEach(b=>b.visible=false)
-eval:$C.askAdult(()=>{})
-wait:800
-shot:s"
+    # 9. Mamy i dzieci, pierwsze pytanie o cielaczka (karta „Dziecko gra samo”: Bazyl czyta polecenie z dymka).
+    run 9 "wait:1500
+eval:$C.play('mothers')
+wait:3500
+shot:s" "&first=calf"
     unset parent
   done
 done
