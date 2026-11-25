@@ -13,6 +13,8 @@ export interface ButtonOptions {
   fontSize?: number;
   /** Rozdzielczość tekstu, zwykle `game.pixelRatio`. */
   resolution?: number;
+  /** Płaski przycisk (np. strefa rodzica): bez połysku, z cienkim cieniem i delikatnym wciśnięciem. */
+  flat?: boolean;
   onTap?: () => void;
 }
 
@@ -27,7 +29,7 @@ export class Button extends Container {
   private readonly shadow = new Graphics();
   private readonly plate = new Graphics();
   private readonly text: Text;
-  private readonly opts: Required<Omit<ButtonOptions, 'onTap' | 'resolution'>> & ButtonOptions;
+  private readonly opts: Required<Omit<ButtonOptions, 'onTap' | 'resolution' | 'flat'>> & ButtonOptions;
   private down = false;
 
   constructor(options: ButtonOptions) {
@@ -102,12 +104,18 @@ export class Button extends Container {
   private setDown(on: boolean): void {
     if (!this.enabled) return;
     this.down = on;
-    this.press.target = on ? 0.92 : 1;
-    if (!on) this.press.kick(1.2);
+    this.press.target = on ? (this.opts.flat ? 0.97 : 0.92) : 1;
+    if (!on && !this.opts.flat) this.press.kick(1.2);
   }
 
   private draw(): void {
     const { width: w, height: h, radius: r, color } = this.opts;
+    if (this.opts.flat) {
+      this.shadow.clear().roundRect(-w / 2, -h / 2 + 4, w, h, r).fill({ color: hexToNumber(darken(color, 0.18)) });
+      this.plate.clear().roundRect(-w / 2, -h / 2, w, h, r).fill({ color: hexToNumber(color) });
+      this.hitArea = { contains: (x: number, y: number) => Math.abs(x) <= w / 2 + 8 && y >= -h / 2 - 8 && y <= h / 2 + 12 };
+      return;
+    }
     this.shadow.clear().roundRect(-w / 2, -h / 2 + 10, w, h, r).fill({ color: hexToNumber(darken(color, 0.22)) });
     this.plate
       .clear()

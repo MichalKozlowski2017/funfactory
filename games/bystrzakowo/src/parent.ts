@@ -13,6 +13,7 @@ import { gallery, type Landscape, type Picture } from './sim/stickers.ts';
 import { saveState, state } from './state.ts';
 import { LIMITS, reset as resetSession } from './session.ts';
 import { COLORS, FONT as GAME_FONT } from './ui.ts';
+import { num, PT } from './parent-theme.ts';
 import { tr } from './sim/i18n.ts';
 import { lang, LANGS, type Lang } from './sim/lang.ts';
 import { lineChart } from './chart.ts';
@@ -38,24 +39,24 @@ export class AdultCheck extends Container {
     super();
     const { width: w, height: h } = game.view;
     const pr = game.pixelRatio;
-    const dim = new Graphics().rect(0, 0, w, h).fill({ color: 0x2a1a40, alpha: 0.6 });
+    const dim = new Graphics().rect(0, 0, w, h).fill({ color: num(PT.dim), alpha: 0.6 });
     dim.eventMode = 'static';
     dim.on('pointertap', onClose);
     const cw = Math.min(560, w - 40), ch = 300;
-    const card = new Graphics().roundRect(-cw / 2, -ch / 2, cw, ch, 36).fill({ color: 0xfffaf2 }).stroke({ color: COLORS.ink, width: 5 });
+    const card = new Graphics().roundRect(-cw / 2, -ch / 2, cw, ch, 36).fill({ color: num(PT.sheet) }).stroke({ color: num(PT.sheetStroke), width: 5 });
     card.position.set(w / 2, h / 2);
     card.eventMode = 'static';
     const a = game.rng.int(6, 9), b = game.rng.int(6, 9), ok = a * b;
     const wrong = game.rng.shuffle([...new Set([ok + a, ok - b, ok + 10, ok - 10, ok + b, ok - a])].filter((x) => x !== ok && x > 0)).slice(0, 3);
-    const t1 = new Text({ text: tr('grownUps'), style: { fontFamily: GAME_FONT, fontSize: 30, fill: '#8a7a6a', fontWeight: '800' }, resolution: pr, anchor: 0.5 });
+    const t1 = new Text({ text: tr('grownUps'), style: { fontFamily: GAME_FONT, fontSize: 30, fill: PT.soft, fontWeight: '800' }, resolution: pr, anchor: 0.5 });
     t1.position.set(0, -ch / 2 + 44);
-    const t2 = new Text({ text: `${a} × ${b} = ?`, style: { fontFamily: GAME_FONT, fontSize: 64, fill: '#3b2a20', fontWeight: '900' }, resolution: pr, anchor: 0.5 });
+    const t2 = new Text({ text: `${a} × ${b} = ?`, style: { fontFamily: GAME_FONT, fontSize: 64, fill: PT.ink, fontWeight: '900' }, resolution: pr, anchor: 0.5 });
     t2.position.set(0, -20);
     card.addChild(t1, t2);
     const opts = game.rng.shuffle([ok, ...wrong]);
     const bw = (cw - 80) / 4;
     opts.forEach((v, i) => {
-      const btn = new Button({ label: String(v), width: bw - 12, height: 92, color: '#5cb3ff', fontFamily: GAME_FONT, fontSize: 40, resolution: pr, onTap: () => (v === ok ? onPass() : onFail()) });
+      const btn = new Button({ label: String(v), width: bw - 12, height: 92, color: PT.accent2, fontFamily: GAME_FONT, fontSize: 40, flat: true, resolution: pr, onTap: () => (v === ok ? onPass() : onFail()) });
       btn.position.set(-cw / 2 + 40 + bw * (i + 0.5), ch / 2 - 70);
       card.addChild(btn);
       this.buttons.push(btn);
@@ -168,8 +169,8 @@ const TABS: [Tab, string][] = [
   ['postcard', 'postcard'],
   ['settings', 'settings'],
 ];
-const INK = '#5a3c28';
-const SOFT = '#6b5a4a';
+const INK = PT.ink;
+const SOFT = PT.soft;
 const TOP = 116;
 
 /** Album item: a colored coloring page or a sticker picture. */
@@ -278,7 +279,7 @@ export class ParentPanel extends Container {
   }
 
   private button(label: string, width: number, color: string, onTap: () => void, height = 80, fontSize = 28): Button {
-    const b = new Button({ label, width, height, fontSize, color, radius: 22, resolution: this.game.pixelRatio, onTap: () => this.tapped() && onTap() });
+    const b = new Button({ label, width, height, fontSize, color, radius: 18, flat: true, resolution: this.game.pixelRatio, onTap: () => this.tapped() && onTap() });
     this.buttons.push(b);
     return b;
   }
@@ -292,14 +293,14 @@ export class ParentPanel extends Container {
     const s = full.safe;
     const view: View = { width: full.width / k, height: full.height / k, safe: { top: s.top / k, right: s.right / k, bottom: s.bottom / k, left: s.left / k } };
     this.view = view;
-    this.dim.clear().rect(0, 0, view.width, view.height).fill({ color: 0x2a1a40, alpha: 0.6 });
+    this.dim.clear().rect(0, 0, view.width, view.height).fill({ color: num(PT.dim), alpha: 0.6 });
     const x = view.safe.left + 20;
     const y = view.safe.top + 14;
     const w = view.width - view.safe.right - 20 - x;
     const h = view.height - Math.max(14, view.safe.bottom) - y;
     this.box = { x, y, w, h };
-    this.sheet.clear().roundRect(x, y, w, h, 34).fill({ color: 0xfffaf2 }).stroke({ color: COLORS.ink, width: 6 });
-    this.clip.clear().rect(x, y + TOP, w, h - TOP - 6).fill({ color: 0xffffff });
+    this.sheet.clear().roundRect(x, y, w, h, 34).fill({ color: num(PT.sheet) }).stroke({ color: num(PT.sheetStroke), width: 6 });
+    this.clip.clear().rect(x, y + TOP, w, h - TOP - 6).fill({ color: num(PT.surface) });
     this.render();
   }
 
@@ -327,7 +328,7 @@ export class ParentPanel extends Container {
     for (const c of [...this.bar.removeChildren(), ...this.content.removeChildren()]) c.destroy({ children: true });
     const { x, y, w } = this.box;
     // Bar: title (when it fits), tabs, close.
-    const close = this.button(tr('close'), 170, '#5cc36a', () => this.onClose(), 80, 26);
+    const close = this.button(tr('close'), 170, PT.good, () => this.onClose(), 80, 26);
     close.position.set(x + w - 24 - 85, y + 58);
     const showTitle = w > 1180;
     const left = x + 24 + (showTitle ? 250 : 0);
@@ -339,12 +340,12 @@ export class ParentPanel extends Container {
       this.bar.addChild(title);
     }
     TABS.forEach(([id, name], i) => {
-      const b = this.button(tr(name), tw, id === this.tab ? '#ff9f5a' : '#c9b8a6', () => this.setTab(id), 80, tw < 180 ? 24 : 27);
+      const b = this.button(tr(name), tw, id === this.tab ? PT.primary : PT.neutral, () => this.setTab(id), 80, tw < 180 ? 24 : 27);
       b.position.set(left + tw / 2 + i * (tw + 12), y + 58);
       this.bar.addChild(b);
     });
     this.bar.addChild(close);
-    this.bar.addChild(new Graphics().moveTo(x + 6, y + TOP - 4).lineTo(x + w - 6, y + TOP - 4).stroke({ color: 0xeadfce, width: 4 }));
+    this.bar.addChild(new Graphics().moveTo(x + 6, y + TOP - 4).lineTo(x + w - 6, y + TOP - 4).stroke({ color: num(PT.line), width: 4 }));
 
     this.content.x = x + 30;
     const cw = w - 60;
@@ -358,7 +359,7 @@ export class ParentPanel extends Container {
   }
 
   /** Card: a rounded rectangle with content; returns the height. */
-  private card(at: { x: number; y: number }, width: number, build: (inner: Container, width: number) => number, fill = 0xffffff): number {
+  private card(at: { x: number; y: number }, width: number, build: (inner: Container, width: number) => number, fill = num(PT.surface)): number {
     const c = new Container();
     const bg = new Graphics();
     c.addChild(bg);
@@ -366,7 +367,7 @@ export class ParentPanel extends Container {
     inner.position.set(26, 22);
     c.addChild(inner);
     const h = build(inner, width - 52) + 44;
-    bg.roundRect(0, 4, width, h, 24).fill({ color: 0x000000, alpha: 0.06 }).roundRect(0, 0, width, h, 24).fill({ color: fill }).stroke({ color: 0xeadfce, width: 4 });
+    bg.roundRect(0, 4, width, h, 24).fill({ color: 0x000000, alpha: 0.06 }).roundRect(0, 0, width, h, 24).fill({ color: fill }).stroke({ color: num(PT.line), width: 4 });
     c.position.set(at.x, at.y);
     this.content.addChild(c);
     return h;
@@ -374,7 +375,7 @@ export class ParentPanel extends Container {
 
   private stars(n: number): Graphics {
     const g = new Graphics();
-    for (let i = 0; i < 3; i++) g.star(i * 40, 0, 5, 17, 8).fill({ color: i < n ? COLORS.sun : 0xe6ddd0 }).stroke({ color: i < n ? COLORS.ink : 0xd6cabb, width: 3, join: 'round' });
+    for (let i = 0; i < 3; i++) g.star(i * 40, 0, 5, 17, 8).fill({ color: i < n ? COLORS.sun : num(PT.track) }).stroke({ color: i < n ? num(PT.ink) : num(PT.line), width: 3, join: 'round' });
     return g;
   }
 
@@ -401,21 +402,21 @@ export class ParentPanel extends Container {
       c.addChild(tt, b);
       let h = b.y + b.height + 20;
       const bw = Math.min(440, iw);
-      const buy = this.button(this.buying ? tr('oneMoment') : this.storePrice ? tr('buyFullVersionPrice', { price: this.storePrice }) : tr('buyFullVersion'), bw, '#ff9f5a', () => this.askAdult(() => void this.doBuy(false)), 80, 27);
+      const buy = this.button(this.buying ? tr('oneMoment') : this.storePrice ? tr('buyFullVersionPrice', { price: this.storePrice }) : tr('buyFullVersion'), bw, PT.primary, () => this.askAdult(() => void this.doBuy(false)), 80, 27);
       buy.position.set(bw / 2, h + 40);
-      const rest = this.button(tr('restorePurchase'), 260, '#c9b8a6', () => this.askAdult(() => void this.doBuy(true)), 80, 25);
+      const rest = this.button(tr('restorePurchase'), 260, PT.neutral, () => this.askAdult(() => void this.doBuy(true)), 80, 25);
       const stack = iw < bw + 24 + 260;
       rest.position.set(stack ? 130 : bw + 24 + 130, stack ? h + 140 : h + 40);
       c.addChild(buy, rest);
       h += stack ? 180 : 80;
       if (this.shopNote) {
-        const n = this.text(this.shopNote, 22, { color: '#b5563a', wrap: iw });
+        const n = this.text(this.shopNote, 22, { color: PT.warnText, wrap: iw });
         n.y = h + 14;
         c.addChild(n);
         h = n.y + n.height;
       }
       return h;
-    }, t.active ? 0xeef8e8 : 0xfff3dd);
+    }, t.active ? num(PT.goodBg) : num(PT.warmBg));
   }
 
   private async doBuy(restoreOnly: boolean): Promise<void> {
@@ -448,7 +449,7 @@ export class ParentPanel extends Container {
     let y = 0;
     const name = this.text(state.progress.childName ? r.who : tr('yourChild'), 40, { weight: '800' });
     this.content.addChild(name);
-    const edit = this.button(state.progress.childName ? tr('changeName') : tr('askChildName'), state.progress.childName ? 200 : 300, '#9b7be0', () => this.askName(), 70, 24);
+    const edit = this.button(state.progress.childName ? tr('changeName') : tr('askChildName'), state.progress.childName ? 200 : 300, PT.accent1, () => this.askName(), 70, 24);
     edit.position.set(name.width + 30 + edit.width / 2, 28);
     this.content.addChild(edit);
     y += 70;
@@ -458,7 +459,7 @@ export class ParentPanel extends Container {
     y += week.height + 8;
     if (r.firsts.length) {
       const more = r.firsts.length > 5 ? tr('andMore', { n: r.firsts.length - 5 }) : '';
-      const firsts = this.text(tr('newThisWeek', { list: r.firsts.slice(0, 5).join(', ') + more }), 26, { color: '#3f8a4a', weight: '700', wrap: cw });
+      const firsts = this.text(tr('newThisWeek', { list: r.firsts.slice(0, 5).join(', ') + more }), 26, { color: PT.goodText, weight: '700', wrap: cw });
       firsts.y = y;
       this.content.addChild(firsts);
       y += firsts.height + 8;
@@ -479,7 +480,7 @@ export class ParentPanel extends Container {
         b.y = 54;
         c.addChild(t, b);
         return 54 + b.height;
-      }, 0xfff3dd);
+      }, num(PT.warmBg));
       return y + 20;
     }
 
@@ -489,9 +490,9 @@ export class ParentPanel extends Container {
       body.y = 50;
       c.addChild(t, body);
       return 50 + body.height;
-    }, 0xeef8e8);
+    }, num(PT.goodBg));
     y += 20;
-    const note = this.text(tr('weShowChildsOwn'), 21, { color: '#9a8b7c', wrap: cw });
+    const note = this.text(tr('weShowChildsOwn'), 21, { color: PT.faint, wrap: cw });
     note.y = y;
     this.content.addChild(note);
     return y + note.height + 20;
@@ -513,9 +514,9 @@ export class ParentPanel extends Container {
     const k = size / 40;
     return new Graphics()
       .roundRect(-12 * k, -18 * k, 24 * k, 26 * k, 12 * k)
-      .stroke({ color: 0x9a8b7c, width: 5 * k })
+      .stroke({ color: num(PT.faint), width: 5 * k })
       .roundRect(-18 * k, -4 * k, 36 * k, 26 * k, 7 * k)
-      .fill({ color: 0x9a8b7c });
+      .fill({ color: num(PT.faint) });
   }
 
   /** "Ready for school" list: each skill in a row (bar, score, mini chart, speed). Tap: details. */
@@ -539,13 +540,13 @@ export class ParentPanel extends Container {
       const row = new Container();
       row.y = y;
       const h = rowH - 10;
-      row.addChild(new Graphics().roundRect(0, 0, cw, h, 18).fill({ color: 0xffffff }).stroke({ color: 0xeadfce, width: 3 }));
+      row.addChild(new Graphics().roundRect(0, 0, cw, h, 18).fill({ color: num(PT.surface) }).stroke({ color: num(PT.line), width: 3 }));
       const name = this.text(tr(def.name), 25, { weight: '800' });
       name.anchor.set(0, 0.5);
       name.position.set(18, h / 2);
       if (name.width > nameW - 24) name.scale.set((nameW - 24) / name.width);
-      const bar = new Graphics().roundRect(0, -10, barW, 20, 10).fill({ color: 0xf1e8da });
-      if (m.value > 0) bar.roundRect(0, -10, Math.max(20, barW * m.value), 20, 10).fill({ color: 0x5cc36a });
+      const bar = new Graphics().roundRect(0, -10, barW, 20, 10).fill({ color: num(PT.track) });
+      if (m.value > 0) bar.roundRect(0, -10, Math.max(20, barW * m.value), 20, 10).fill({ color: num(PT.good) });
       bar.position.set(nameW, h / 2);
       const score = this.text(m.of !== undefined ? tr('okOfTotal', { ok: m.ok ?? 0, of: m.of }) : this.stageName(m.stage ?? 0), 22, { color: SOFT, weight: '700' });
       score.anchor.set(0, 0.5);
@@ -561,20 +562,20 @@ export class ParentPanel extends Container {
           const ps = accuracy(def, j, 'weeks', t);
           const daily = enoughPoints(ps) ? ps : accuracy(def, j, 'days', t);
           if (enoughPoints(daily)) {
-            const spark = lineChart({ width: 170, height: h - 16, points: daily, unit: '%', color: 0x5cb3ff, resolution: this.game.pixelRatio, label: () => '', mini: true });
+            const spark = lineChart({ width: 170, height: h - 16, points: daily, unit: '%', color: num(PT.chart1), resolution: this.game.pixelRatio, label: () => '', mini: true });
             spark.position.set(sx, 8);
             row.addChild(spark);
           }
           const sp = def.tempo ? tempo(def, j, 'weeks', t)?.speedup : null;
           if (sp && sp >= 1.15) {
-            const fast = this.text(tr('faster', { x: sp.toLocaleString(lang(), { maximumFractionDigits: 1 }) }), 20, { color: '#3f8a4a', weight: '800' });
+            const fast = this.text(tr('faster', { x: sp.toLocaleString(lang(), { maximumFractionDigits: 1 }) }), 20, { color: PT.goodText, weight: '800' });
             fast.anchor.set(1, 0.5);
             fast.position.set(sx - 12, h / 2);
             row.addChild(fast);
           }
         }
       }
-      const more = this.text('›', 40, { color: '#c9b8a6', weight: '800' });
+      const more = this.text('›', 40, { color: PT.neutral, weight: '800' });
       more.anchor.set(0.5);
       more.position.set(cw - 26, h / 2 - 2);
       row.addChild(more);
@@ -601,7 +602,7 @@ export class ParentPanel extends Container {
       c.addChild(t);
       if (o.sample) {
         const badge = this.text(tr('example'), 22, { color: '#ffffff', weight: '800' });
-        const plate = new Graphics().roundRect(-12, -4, badge.width + 24, badge.height + 8, 14).fill({ color: 0xff9f5a });
+        const plate = new Graphics().roundRect(-12, -4, badge.width + 24, badge.height + 8, 14).fill({ color: num(PT.primary) });
         const b = new Container();
         b.addChild(plate, badge);
         b.position.set(t.width + 22, 6);
@@ -612,13 +613,13 @@ export class ParentPanel extends Container {
       c.addChild(chart);
       if (!full) {
         chart.filters = [new BlurFilter({ strength: 4 })];
-        const veil = new Graphics().roundRect(iw / 2 - 260, 52 + 36, 520, 200, 24).fill({ color: 0xfffaf2, alpha: 0.82 });
+        const veil = new Graphics().roundRect(iw / 2 - 260, 52 + 36, 520, 200, 24).fill({ color: num(PT.sheet), alpha: 0.82 });
         const l = this.lock(46);
         l.position.set(iw / 2, 52 + 70);
         const msg = this.text(tr('progressChartsFullVersion'), 25, { weight: '800' });
         msg.anchor.set(0.5, 0);
         msg.position.set(iw / 2, 52 + 104);
-        const buy = this.button(tr('unlockFullVersion'), 360, '#4fae5f', () => this.askAdult(() => void this.doBuy(false)), 76, 25);
+        const buy = this.button(tr('unlockFullVersion'), 360, PT.good, () => this.askAdult(() => void this.doBuy(false)), 76, 25);
         buy.position.set(iw / 2, 52 + 190);
         c.addChild(veil, l, msg, buy);
       }
@@ -634,7 +635,7 @@ export class ParentPanel extends Container {
     const def = SKILLS.find((s) => s.id === this.skill) as SkillDef;
     const j = journal();
     const t = today();
-    const back = this.button(tr('allSkills'), 220, '#c9b8a6', () => {
+    const back = this.button(tr('allSkills'), 220, PT.neutral, () => {
       this.skill = null;
       this.scroll = 0;
       this.render();
@@ -652,7 +653,7 @@ export class ParentPanel extends Container {
     this.content.addChild(sum);
     // Chart range: parent's choice (days or weeks).
     (['days', 'weeks'] as const).forEach((r, i) => {
-      const b = this.button(r === 'days' ? tr('days') : tr('weeks'), 170, r === this.range ? '#ff9f5a' : '#c9b8a6', () => {
+      const b = this.button(r === 'days' ? tr('days') : tr('weeks'), 170, r === this.range ? PT.primary : PT.neutral, () => {
         this.range = r;
         this.render();
       }, 64, 23);
@@ -666,7 +667,7 @@ export class ParentPanel extends Container {
       title: tr('tasksWithoutMistake'),
       points: real ? acc : sampleAccuracy(this.range, t),
       unit: '%',
-      color: 0x5cb3ff,
+      color: num(PT.chart1),
       sample: !real,
       caption: real
         ? tr('triangleMovedUpLevel')
@@ -681,7 +682,7 @@ export class ParentPanel extends Container {
         title: tr('answerTime'),
         points: shown.points,
         unit: 's',
-        color: 0x9b7be0,
+        color: num(PT.chart2),
         sample: !realT,
         caption: sp && sp >= 1.15
           ? tr('answersFasterThanAt', { x: sp.toLocaleString(lang(), { maximumFractionDigits: 1 }) })
@@ -690,7 +691,7 @@ export class ParentPanel extends Container {
     }
     if (def.group) {
       const group = def.group;
-      const COLOR: Record<ItemState, number> = { mastered: 0x5cc36a, practicing: 0xffc94a, trouble: 0xf08a6a, no: 0xd9cfc2 };
+      const COLOR: Record<ItemState, number> = { mastered: num(PT.good), practicing: num(PT.practicing), trouble: num(PT.trouble), no: num(PT.track) };
       y += this.card({ x: 0, y }, cw, (c, iw) => {
         const t2 = this.text(tr('whatsMastered'), 28, { weight: '800' });
         c.addChild(t2);
@@ -739,7 +740,7 @@ export class ParentPanel extends Container {
       body.y = 50;
       c.addChild(t4, body);
       return 50 + body.height;
-    }, 0xeef8e8);
+    }, num(PT.goodBg));
     return y + 30;
   }
 
@@ -818,7 +819,7 @@ export class ParentPanel extends Container {
     const card = new Container();
     const frame = new Graphics().roundRect(-w / 2, -h / 2 + 5, w, h, 20).fill({ color: 0x000000, alpha: 0.12 }).roundRect(-w / 2, -h / 2, w, h, 20).fill({ color: 0xffffff });
     const mask = new Graphics().roundRect(-w / 2, -h / 2, w, h, 20).fill({ color: 0xffffff });
-    const outline = new Graphics().roundRect(-w / 2, -h / 2, w, h, 20).stroke({ color: 0xeadfce, width: 5 });
+    const outline = new Graphics().roundRect(-w / 2, -h / 2, w, h, 20).stroke({ color: num(PT.line), width: 5 });
     card.addChild(frame, mask, outline);
     void this.albumImage(it, w, h, it.kind === 'picture').then((img) => {
       if (card.destroyed) return img.destroy({ children: true });
@@ -836,7 +837,7 @@ export class ParentPanel extends Container {
     if (this.overlay) return;
     const { width: vw, height: vh } = this.view;
     const o = new Container();
-    const bg = new Graphics().rect(0, 0, vw, vh).fill({ color: 0x1e1230, alpha: 0.85 });
+    const bg = new Graphics().rect(0, 0, vw, vh).fill({ color: num(PT.dim), alpha: 0.85 });
     bg.eventMode = 'static';
     o.addChild(bg);
     const pw = vw - this.view.safe.left - this.view.safe.right - 120;
@@ -851,14 +852,14 @@ export class ParentPanel extends Container {
       o.destroy({ children: true });
     };
     const y = vh - 70;
-    const share = this.button(tr('saveSend'), 280, '#5cb3ff', () => this.askAdult(() => void this.share(it)), 84, 28);
+    const share = this.button(tr('saveSend'), 280, PT.accent2, () => this.askAdult(() => void this.share(it)), 84, 28);
     share.position.set(vw / 2 - 160, y);
-    const back = this.button(tr('back'), 200, '#5cc36a', close, 84, 28);
+    const back = this.button(tr('back'), 200, PT.good, close, 84, 28);
     back.position.set(vw / 2 + 120, y);
     o.addChild(share, back);
     if (it.kind === 'painting') {
       let armed = false;
-      const del: Button = this.button(tr('delete'), 160, '#e8835a', () => {
+      const del: Button = this.button(tr('delete'), 160, PT.danger, () => {
         if (!armed) {
           armed = true;
           del.setLabel(tr('areYouSure'));
@@ -899,7 +900,7 @@ export class ParentPanel extends Container {
         b.y = 54;
         c.addChild(t, b);
         return 54 + b.height;
-      }, 0xfff3dd);
+      }, num(PT.warmBg));
     }
     if (!this.art) {
       this.content.addChild(this.text(tr('loading'), 26, { color: SOFT }));
@@ -913,11 +914,11 @@ export class ParentPanel extends Container {
     card.x = (cw - POSTCARD_W * k) / 2;
     this.content.addChild(card);
     const y = POSTCARD_H * k + 20;
-    const share = this.button(tr('saveSendPostcard'), 400, '#5cb3ff', () => this.askAdult(() => void this.sharePostcard(r)), 84, 28);
+    const share = this.button(tr('saveSendPostcard'), 400, PT.accent2, () => this.askAdult(() => void this.sharePostcard(r)), 84, 28);
     share.position.set(cw / 2, y + 42);
     this.content.addChild(share);
     if (!state.progress.childName) {
-      const hint = this.button(tr('addChildName'), 300, '#9b7be0', () => this.askName(), 70, 24);
+      const hint = this.button(tr('addChildName'), 300, PT.accent1, () => this.askName(), 70, 24);
       hint.position.set(cw / 2 + 380, y + 42);
       this.content.addChild(hint);
     }
@@ -935,7 +936,7 @@ export class ParentPanel extends Container {
   // ——— Settings ———
 
   private renderPrivacy(cw: number): number {
-    const back = this.button(tr('back'), 200, '#c9b8a6', () => {
+    const back = this.button(tr('back'), 200, PT.neutral, () => {
       this.privacy = false;
       this.scroll = 0;
       this.render();
@@ -969,10 +970,10 @@ export class ParentPanel extends Container {
       ys[c]! += 100;
     };
     const nameLabel = () => (state.progress.childName ? tr('childNameLabel', { name: state.progress.childName }) : tr('childsNameNotSet'));
-    add(this.button(nameLabel(), bw, '#9b7be0', () => this.askName()));
+    add(this.button(nameLabel(), bw, PT.accent1, () => this.askName()));
     // Age: sets the starting level of activities the child hasn't played yet (progress in the others stays).
     const ageLabel = () => (state.progress.age ? tr('childsAge', { n: state.progress.age >= 6 ? '6+' : state.progress.age }) : tr('childsAgeNotSet'));
-    const ageButton: Button = this.button(ageLabel(), bw, '#8fb8ff', () => {
+    const ageButton: Button = this.button(ageLabel(), bw, PT.accent3, () => {
       applyAge(state.progress, nextAge(state.progress.age), playedActivities(journal()));
       ageButton.setLabel(ageLabel());
       void saveState();
@@ -990,7 +991,7 @@ export class ParentPanel extends Container {
     const gap = 10;
     const lw = (bw - gap * (LANGS.length - 1)) / LANGS.length;
     LANGS.forEach((l, i) => {
-      const b = this.button(LANG_NAMES[l], lw, l === lang() ? '#ff9f5a' : '#c9b8a6', () => {
+      const b = this.button(LANG_NAMES[l], lw, l === lang() ? PT.primary : PT.neutral, () => {
         if (l === lang()) return;
         state.progress.lang = l;
         void saveState().then(() => location.reload());
@@ -1000,7 +1001,7 @@ export class ParentPanel extends Container {
     });
     ys[lc]! += 100;
     const musicLabel = () => (state.progress.music ? tr('musicOn') : tr('musicOff'));
-    const music: Button = this.button(musicLabel(), bw, '#5cb3ff', () => {
+    const music: Button = this.button(musicLabel(), bw, PT.accent2, () => {
       state.progress.music = !state.progress.music;
       if (state.progress.music) startMusic(this.game);
       else stopMusic(this.game);
@@ -1009,7 +1010,7 @@ export class ParentPanel extends Container {
     });
     add(music);
     const limitLabel = () => (state.progress.limit ? tr('playTimeMin', { n: state.progress.limit }) : tr('playTimeNoLimit'));
-    const limit: Button = this.button(limitLabel(), bw, '#9b7be0', () => {
+    const limit: Button = this.button(limitLabel(), bw, PT.accent1, () => {
       const i = LIMITS.indexOf((state.progress.limit ?? 0) as (typeof LIMITS)[number]);
       state.progress.limit = LIMITS[(i + 1) % LIMITS.length];
       resetSession();
@@ -1017,7 +1018,7 @@ export class ParentPanel extends Container {
       void saveState();
     });
     add(limit);
-    const reset: Button = this.button(tr('resetProgress'), bw, '#e8835a', () => {
+    const reset: Button = this.button(tr('resetProgress'), bw, PT.danger, () => {
       if (!this.confirmReset) {
         this.confirmReset = true;
         reset.setLabel(tr('sureTouchAgain'));
@@ -1032,14 +1033,14 @@ export class ParentPanel extends Container {
     });
     add(reset);
     // Privacy policy (required by both stores, also inside the app): full text here, no outgoing link.
-    add(this.button(tr('privacyPolicy'), bw, '#8a9bb0', () => {
+    add(this.button(tr('privacyPolicy'), bw, PT.quiet, () => {
       this.privacy = true;
       this.scroll = 0;
       this.render();
     }));
     y = Math.max(ys[0]!, twoCol ? ys[1]! : 0);
     const t = trial();
-    const ver = this.text(isBought() ? tr('versionFull') : t.active ? tr('versionTrialFullAccess') : tr('versionFreePuzzleMeadow'), 22, { color: '#9a8b7c' });
+    const ver = this.text(isBought() ? tr('versionFull') : t.active ? tr('versionTrialFullAccess') : tr('versionFreePuzzleMeadow'), 22, { color: PT.faint });
     ver.y = y + 10;
     this.content.addChild(ver);
     y += 60;
