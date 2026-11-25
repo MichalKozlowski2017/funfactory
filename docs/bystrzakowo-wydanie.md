@@ -15,7 +15,7 @@ Wzór: wydanie Gluta (`docs/release.md`).
 | Grafika Google Play 1024×500 | `games/bystrzakowo/store/feature-graphic-<język>.png` |
 | Teksty kart (pl, en, de, es), kategorie, ocena wiekowa, prywatność, notatki dla recenzji | `games/bystrzakowo/store/listing.md` |
 | Zakup w aplikacji | `docs/bystrzakowo-zakupy.md` (produkt `bystrzakowo.full`, 24,99 zł) |
-| Polityka prywatności i strona aplikacji | repo `~/Sites/mkdev`, gałąź `bystrzakowo` (**nieopublikowane**, czeka na Twoją zgodę) |
+| Polityka prywatności i strona aplikacji | opublikowane: https://mkdev.com.pl/apps/bystrzakowo i https://mkdev.com.pl/apps/bystrzakowo/privacy-policy (z nazwami Smartyville, Schlaudorf, Listolandia) |
 
 ## Twoje kroki [Ty], po kolei
 
