@@ -65,7 +65,7 @@ export const EN: Record<string, string> = {
   resetProgress: 'Reset progress',
   sureTouchAgain: 'Are you sure? Touch again',
   progressReset: 'Progress reset',
-  grownUps: 'For grown-ups',
+  grownUps: 'A question for parents',
   language: 'Language',
   versionFull: 'Version: full',
   versionTrialFullAccess: 'Version: trial (full access)',

@@ -65,7 +65,7 @@ export const ES: Record<string, string> = {
   resetProgress: 'Borrar el progreso',
   sureTouchAgain: '¿Seguro? Toca otra vez',
   progressReset: 'Progreso borrado',
-  grownUps: 'Para adultos',
+  grownUps: 'Pregunta para padres',
   language: 'Idioma',
   versionFull: 'Versión: completa',
   versionTrialFullAccess: 'Versión: prueba (acceso completo)',

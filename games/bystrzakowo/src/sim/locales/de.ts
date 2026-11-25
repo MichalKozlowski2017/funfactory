@@ -65,7 +65,7 @@ export const DE: Record<string, string> = {
   resetProgress: 'Fortschritt zurücksetzen',
   sureTouchAgain: 'Sicher? Noch einmal tippen',
   progressReset: 'Zurückgesetzt',
-  grownUps: 'Für Erwachsene',
+  grownUps: 'Eine Frage für Eltern',
   language: 'Sprache',
   versionFull: 'Version: Vollversion',
   versionTrialFullAccess: 'Version: Testphase (voller Zugang)',
