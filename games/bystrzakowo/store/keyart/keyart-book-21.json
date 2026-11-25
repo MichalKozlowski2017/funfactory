@@ -1,0 +1,16 @@
+{
+  "workflow": "flux2.json",
+  "PROMPT": "wide panorama of a sunny meadow for a children's learning app: on the right side a giant open picture book lying in the grass with colorful shapes, a star, a heart, a circle and numbers popping out of its pages, crayons and colored pencils around it, butterflies, round trees and flowers; the left half is open calm green grass and blue sky with empty space for a title, no characters, no people, no text, soft 3D clay toy render, rounded chubby shapes, matte plasticine texture, soft studio lighting, bright cheerful pastel colors, cute and friendly",
+  "NEGATIVE": "",
+  "SEED": 21,
+  "WIDTH": 1792,
+  "HEIGHT": 832,
+  "PREFIX": "keyart-book",
+  "STEPS": 20,
+  "GUIDANCE": 4,
+  "BPM": 100,
+  "DURATION": 60,
+  "KEY": "A minor",
+  "LYRICS": "[Instrumental]",
+  "created": "2026-11-25T08:35:49.100Z"
+}

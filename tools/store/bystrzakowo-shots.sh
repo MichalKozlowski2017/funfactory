@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Zrzuty Bystrzakowa do sklepów: 8 scen × rozmiary × języki → assets-raw/bystrzakowo-store/shots/<rozmiar>-<lang>/<n>.png
+# Zrzuty Bystrzakowa do sklepów: 9 scen × rozmiary × języki → assets-raw/bystrzakowo-store/shots/<rozmiar>-<lang>/<n>.png
 # Gra jest pozioma. Potem tools/store/bystrzakowo-cards.sh składa karty z podpisami. SIZES/LANGS zawężają zestaw.
 set -u
 cd "$(dirname "$0")/../.."
@@ -18,7 +18,7 @@ for size in ${SIZES:-"ios-6.9:956x440@3" "ipad-13:1376x1032@2" "android:640x360@
       # ONLY="6 7": tylko wybrane sceny.
       case " ${ONLY:-$1} " in *" $1 "*) ;; *) return ;; esac
       rm -rf .shots/store-tmp
-      if node tools/playtest/shot.ts games/bystrzakowo --gpu --size $dim --query "lang=$lang&seed=${SEED:-5}&full" --out .shots/store-tmp --steps "$2" >/dev/null 2>&1; then
+      if node tools/playtest/shot.ts games/bystrzakowo --gpu --size $dim --query "lang=$lang&seed=${SEED:-5}&full&nohand" --out .shots/store-tmp --steps "$2" >/dev/null 2>&1; then
         cp .shots/store-tmp/*.png $dir/$1.png 2>/dev/null
       else
         echo "FAIL $name $lang $1"
@@ -66,6 +66,11 @@ shot:s"
     # 8. Pocztówka tygodnia.
     run 8 "wait:1500
 eval:eval(atob('$(b64 "$C.demoParent('postcard', decodeURIComponent(escape(atob('$(b64 "$kid")'))))")'))
+wait:1800
+shot:s"
+    # 9. Strefa rodzica, Ustawienia (karta „Bezpieczna dla dziecka”): bez reklam, bez danych, polityka prywatności.
+    run 9 "wait:1500
+eval:$C.demoParent('settings')
 wait:1800
 shot:s"
     unset parent

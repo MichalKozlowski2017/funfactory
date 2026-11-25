@@ -3,6 +3,7 @@ import { registerVoice } from './assets.ts';
 import { WorldScene } from './scenes/world.ts';
 import { WelcomeScene } from './scenes/welcome.ts';
 import { needsWelcome } from './sim/onboarding.ts';
+import { ACTIVITIES } from './sim/realms.ts';
 import { logTime } from './log.ts';
 import { deviceLang, lang, LANGS, setLang, type Lang } from './sim/lang.ts';
 import { loadState, state } from './state.ts';
@@ -22,6 +23,8 @@ game.app.ticker.add((t) => logTime(t.deltaMS / 1000));
 // First launch: parent welcome. Playtests (browser driven by Playwright) start from the world,
 // unless the URL has `?welcome`.
 const params = new URLSearchParams(location.search);
+// Store screenshots and playtests: `?nohand` skips every hand demo (marked as already shown, in memory).
+if (params.has('nohand')) state.progress.hands = [...ACTIVITIES, 'world', 'realms'];
 const tour = import.meta.env.VITE_TOUR || params.has('tour');
 const welcome = tour || params.has('welcome') || (needsWelcome(state.progress) && !navigator.webdriver);
 await game.scenes.go(welcome ? new WelcomeScene() : new WorldScene(), { fade: 0 });
