@@ -143,7 +143,7 @@ card() { # n lang W H raw out
   magick "${BG[$n]}" -resize "${W}x${H}^" -gravity center -extent "${W}x${H}" "$T/bg.png"
   local shot=$raw
   if [ "$n" = 1 ]; then
-    # Okładka: środek ekranu świata (kafelki) bez postaci z gry, bo Lusia i Bazyl stoją obok.
+    # Okładka: środek ekranu świata (kafelki), bo Lusia i Bazyl stoją obok.
     read -r rw rh < <(magick identify -format "%w %h\n" "$raw")
     # Ile szerokości zostawić: ekran świata na węższym telefonie ma kafelki bliżej krawędzi.
     local keep=$((100 - (W * 100 / H - 100) * 27 / 100)); [ $wide = 0 ] && keep=100 # iPad: kafelki na całą szerokość, postaci ledwo wystają
@@ -180,7 +180,7 @@ card() { # n lang W H raw out
         magick "$T/lusia.png" -resize 112% "$T/lusia.png"
         local lw bw lx; lw=$(magick identify -format %w "$T/lusia.png")
         bw=$(magick identify -format "%w\n" "$T/b1.png" "$T/b2.png" "$T/b3.png" | sort -n | tail -1)
-        lx=$((fx - lw * 50 / 100)); [ $lx -lt $((m + bw)) ] && lx=$((m + bw)) # never over the badges
+        lx=$((fx - lw * 62 / 100)); [ $lx -lt $((m + bw)) ] && lx=$((m + bw)) # never over the badges
         magick "$T/bg.png" "$T/f.png" -gravity northwest -geometry +$fx+$((H - $(hgt "$T/f.png") - u * 4 / 100)) -composite \
           "$T/h1.png" -gravity northwest -geometry +$m+$((u * 5 / 100)) -composite \
           "$T/h2.png" -gravity northwest -geometry +$((m + u / 100))+$((u * 23 / 100)) -composite \
@@ -188,7 +188,7 @@ card() { # n lang W H raw out
           "$T/b2.png" -gravity northwest -geometry +$m+$((u * 51 / 100)) -composite \
           "$T/b3.png" -gravity northwest -geometry +$m+$((u * 62 / 100)) -composite \
           "$T/lusia.png" -gravity southwest -geometry +$lx-$((u * 2 / 100)) -composite \
-          \( "$T/bazyl.png" -resize 108% \) -gravity southeast -geometry +$((W * 1 / 100))-$((u * 2 / 100)) -composite "$T/c.png" ;;
+          \( "$T/bazyl.png" -resize 108% \) -gravity southeast -geometry -$((W * 2 / 100))-$((u * 2 / 100)) -composite "$T/c.png" ;;
       8)
         fit "$T/h1.png" $((W * 45 / 100))
         # Long badges (Spanish, German) push the screen and Bazyl to the right.
@@ -240,10 +240,10 @@ card() { # n lang W H raw out
         framed "$shot" $((W * 86 / 100)) $room "$T/f.png" "${TILT[$n]}"
         local lx=0 bx=0 fw fh fx
         if [ "$n" = 1 ]; then
-          # Full world map: Lusia and Bazyl stand over their in-game selves in the bottom corners of the screen.
-          magick "$T/lusia.png" -resize x$((H * 50 / 100)) "$T/lusia.png"; magick "$T/bazyl.png" -resize x$((H * 46 / 100)) "$T/bazyl.png"
-          read -r fw fh < <(magick identify -format "%w %h\n" "$T/f.png"); fx=$(((W - fw) / 2))
-          lx=$(over "$T/lusia.png" $fx $fw 9); bx=$((W - $(over "$T/bazyl.png" $fx $fw 91) - $(magick identify -format %w "$T/bazyl.png")))
+          # The world map shot has no in-game guides (bystrzakowo-shots.sh hides them), so Lusia and Bazyl
+          # stand at the card edges and only slightly overlap the screen.
+          magick "$T/lusia.png" -resize x$((H * 47 / 100)) "$T/lusia.png"; magick "$T/bazyl.png" -resize x$((H * 43 / 100)) "$T/bazyl.png"
+          lx=$((-W * 4 / 100)); bx=$((-W * 3 / 100))
         else
           magick "$T/lusia.png" -resize 120% "$T/lusia.png"; magick "$T/bazyl.png" -resize 120% "$T/bazyl.png"
         fi

@@ -24,8 +24,10 @@ for size in ${SIZES:-"ios-6.9:956x440@3" "ipad-13:1376x1032@2" "android:640x360@
         echo "FAIL $name $lang $1"
       fi
     }
-    # 1. Polana Zagadek: krainy i kafelki zabaw.
+    # 1. Polana Zagadek: krainy i kafelki zabaw. Bez Lusi i Bazyla z gry: na okładce stoją obok ekranu w dużej wersji.
     run 1 "wait:2500
+eval:$C.guideBoxes.forEach(b=>b.visible=false)
+wait:300
 shot:s"
     # 2. Zagadka: czyj to cień?
     run 2 "wait:1500
