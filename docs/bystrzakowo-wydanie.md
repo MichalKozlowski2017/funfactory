@@ -9,7 +9,7 @@ Wzór: wydanie Gluta (`docs/release.md`).
 |---|---|
 | Android: podpisany AAB 1.0.0 (versionCode 1) | `release/bystrzakowo/bystrzakowo-1.0.0-1.aab` (budowanie: `pnpm --filter @funfactory-game/bystrzakowo aab`) |
 | Android: klucz uploadu | `~/.funfactory-keys/bystrzakowo-upload.jks` + `.properties` **(zrób kopię zapasową, tak jak dla Gluta!)** |
-| iOS: archiwum 1.0.0 (build 1) | `release/bystrzakowo/Bystrzakowo.xcarchive` |
+| iOS: archiwum 1.0.0 (build 4, wysłany do TestFlight 25.11) | `release/bystrzakowo/Bystrzakowo.xcarchive` |
 | Ikona 1024 i 512 | `games/bystrzakowo/store/icon-*.png` |
 | Zrzuty do sklepów: iPhone 6,9", iPad 13", telefon i tablet z Androidem, w 4 językach (8 kart: okładka, 4 krainy, litery, zagadki, wykres, rozwój, twórcza zabawa, „dziecko gra samo”) | `games/bystrzakowo/store/screens/<rozmiar>-<język>/1..8.jpg` (`tools/store/bystrzakowo-shots.sh`, potem `bystrzakowo-cards.sh`) |
 | Grafika Google Play 1024×500 | `games/bystrzakowo/store/feature-graphic-<język>.png` |

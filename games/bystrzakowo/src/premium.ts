@@ -66,7 +66,10 @@ export async function syncPurchase(): Promise<void> {
 /** The parent starts the trial (call after the adult gate). iOS: through the free "3-day Trial" product. */
 export async function startTrial(): Promise<BuyResult> {
   if (trial().started) return 'bought';
-  const r = platformName() === 'ios' ? await buy(TRIAL_ID) : 'bought';
+  // iOS: through the free product; when the store doesn't know it (not set up yet, e.g. a TestFlight build before
+  // the product exists) the trial starts locally, as on Android.
+  const viaStore = platformName() === 'ios' && (await getProduct(TRIAL_ID)) !== null;
+  const r = viaStore ? await buy(TRIAL_ID) : 'bought';
   if (r === 'bought') {
     startTrialSave(state.progress);
     await saveState();
