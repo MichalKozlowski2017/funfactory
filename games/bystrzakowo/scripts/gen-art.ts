@@ -343,6 +343,24 @@ if (process.argv.includes('--coloring-pages2')) {
     tasks.push({ out: 'coloring-pages', prefix: id!, args: ['--workflow', 'flux2', '--count', '2', '--prompt', page(what!)] });
 }
 
+if (process.argv.includes('--coloring-scenes')) {
+  // Whole scenes to color (more parts than a single animal), still big closed areas for a child's finger.
+  const scene = (what: string) => `children coloring book page of a whole cheerful scene: ${what}, about 15 to 25 big closed areas, very thick clean bold black outlines, every shape fully closed, big simple rounded shapes, no tiny details, no hatching, no texture lines, no grass strokes, no patterns, pure white background, no shading, no gray, no color, cute and friendly, the scene fills the whole square page`;
+  for (const [id, what] of [
+    ['scene-farm', 'a red barn, a cow and a hen in front of a wooden fence, a big sun and two clouds'],
+    ['scene-sea', 'under the sea, two round fish, a crab, a starfish, seaweed and big bubbles'],
+    ['scene-forest', 'a forest clearing with a hedgehog, a big mushroom, two round trees and a butterfly'],
+    ['scene-beach', 'a beach with a sandcastle, a bucket and spade, a beach umbrella and a sailboat on the sea'],
+    ['scene-space', 'a rocket flying past two planets and big stars, a smiling moon'],
+    ['scene-garden', 'a garden with three big flowers, a snail, a bee and a watering can'],
+    ['scene-winter', 'a snowman next to a little house with a chimney, two pine trees and big snowflakes'],
+    ['scene-playground', 'a playground with a slide, a swing, a ball, a tree and the sun'],
+    ['scene-train', 'a toy train with an engine and two wagons on tracks, round hills and the sun'],
+    ['scene-pond', 'a pond with a mother duck and two ducklings, water lilies, reeds and a frog on a leaf'],
+  ])
+    tasks.push({ out: 'coloring-pages', prefix: id!, args: ['--workflow', 'flux2', '--count', '3', '--prompt', scene(what!)] });
+}
+
 if (process.argv.includes('--meadow')) {
   // Puzzle Meadow stations: the picture tells what the activity is about (instead of identical houses).
   const sprite = (what: string, face = false) => `${what}, single object, centered, ${STYLE}${face ? '' : ', no face on objects'}, plain light gray background`;
@@ -408,7 +426,7 @@ if (process.argv.includes('--hand2')) {
 }
 
 for (const item of ITEMS) {
-  if ((process.argv.includes('--workshop') || process.argv.includes('--gear') || process.argv.includes('--path') || process.argv.includes('--signs') || process.argv.includes('--studio') || process.argv.includes('--extras') || process.argv.includes('--stories') || process.argv.includes('--meadow') || process.argv.includes('--coloring-pages2') || process.argv.includes('--landscapes') || process.argv.includes('--snowman') || process.argv.includes('--stories2') || process.argv.includes('--stories3') || process.argv.includes('--stories4') || process.argv.includes('--stories5') || process.argv.includes('--stories6') || process.argv.includes('--stories7') || process.argv.includes('--emotions2') || process.argv.includes('--hand') || process.argv.includes('--hand2') || process.argv.includes('--letters')) && !only) break;
+  if ((process.argv.includes('--workshop') || process.argv.includes('--gear') || process.argv.includes('--path') || process.argv.includes('--signs') || process.argv.includes('--studio') || process.argv.includes('--extras') || process.argv.includes('--stories') || process.argv.includes('--meadow') || process.argv.includes('--coloring-pages2') || process.argv.includes('--coloring-scenes') || process.argv.includes('--landscapes') || process.argv.includes('--snowman') || process.argv.includes('--stories2') || process.argv.includes('--stories3') || process.argv.includes('--stories4') || process.argv.includes('--stories5') || process.argv.includes('--stories6') || process.argv.includes('--stories7') || process.argv.includes('--emotions2') || process.argv.includes('--hand') || process.argv.includes('--hand2') || process.argv.includes('--letters')) && !only) break;
   if (only && !only.has(item.id)) continue;
   if (!only && existsSync(join(repo, 'games/bystrzakowo/public/art/items', `${item.id}.webp`))) continue;
   if (existsSync(join(raw, 'items', `${item.id}-${SEED}.png`))) continue;

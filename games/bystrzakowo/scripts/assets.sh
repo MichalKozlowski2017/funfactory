@@ -117,6 +117,12 @@ for x in little-house-32 little-flower-31 butterfly-31 fish-31 elephant-31 owl-3
   magick "$f" -colorspace gray -resize 640x640 -threshold 55% -morphology Erode Disk:1.5 -strip "$OUT/coloring-pages/${x%-*}.png"
   cp "${f%.png}.json" "$OUT/coloring-pages/${x%-*}.json"
 done
+# Whole scenes to color (--coloring-scenes), picked by region counts and a simulated coloring.
+for x in scene-beach-202 scene-forest-201 scene-garden-202 scene-playground-201 scene-pond-201 scene-sea-203 scene-space-201 scene-train-201 scene-winter-203; do
+  f=$RAW/coloring-pages/$x.png
+  magick "$f" -colorspace gray -resize 640x640 -threshold 55% -morphology Erode Disk:1.5 -strip "$OUT/coloring-pages/${x%-*}.png"
+  cp "${f%.png}.json" "$OUT/coloring-pages/${x%-*}.json"
+done
 # Sticker-book landscapes.
 mkdir -p $OUT/landscapes
 for id in farm space forest sea beach winter; do background landscapes/$id-21.png landscapes/$id; done

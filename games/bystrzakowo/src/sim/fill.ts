@@ -292,3 +292,13 @@ export function detailShade(color: number): number {
   const mix = (c: number) => (lum > 0.78 ? Math.round(c * 0.82) : Math.round(c + (255 - c) * 0.45));
   return (mix(r) << 16) | (mix(g) << 8) | mix(b);
 }
+
+/** Three shades of a paint for the shade row under the palette: light, the paint itself, dark (white and gray get grays). */
+export function shadesOf(color: number): [number, number, number] {
+  const mix = (c: number, t: number, k: number) => {
+    const ch = (s: number) => Math.round(((c >> s) & 255) + ((((t >> s) & 255) - ((c >> s) & 255)) * k));
+    return (ch(16) << 16) | (ch(8) << 8) | ch(0);
+  };
+  if (color === 0xffffff) return [0xffffff, 0xd6d6d6, 0x9e9e9e];
+  return [mix(color, 0xffffff, 0.45), color, mix(color, 0x000000, 0.35)];
+}

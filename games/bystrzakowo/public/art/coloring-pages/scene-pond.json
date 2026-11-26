@@ -1,0 +1,17 @@
+{
+  "workflow": "flux2.json",
+  "IMAGE": "",
+  "PROMPT": "children coloring book page of a whole cheerful scene: a pond with a mother duck and two ducklings, water lilies, reeds and a frog on a leaf, about 15 to 25 big closed areas, very thick clean bold black outlines, every shape fully closed, big simple rounded shapes, no tiny details, no hatching, no texture lines, no grass strokes, no patterns, pure white background, no shading, no gray, no color, cute and friendly, the scene fills the whole square page",
+  "NEGATIVE": "",
+  "SEED": 201,
+  "WIDTH": 1024,
+  "HEIGHT": 1024,
+  "PREFIX": "scene-pond",
+  "STEPS": 20,
+  "GUIDANCE": 4,
+  "BPM": 100,
+  "DURATION": 60,
+  "KEY": "A minor",
+  "LYRICS": "[Instrumental]",
+  "created": "2026-11-26T10:56:21.245Z"
+}

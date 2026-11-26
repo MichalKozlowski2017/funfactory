@@ -2,7 +2,7 @@ import { Assets, Container, Graphics, Rectangle, Sprite, type FederatedPointerEv
 import { haptics } from '@funfactory/core';
 import { pixelsToTexture, popIn, pulse, squash } from '@funfactory/kit2d';
 import { say } from '../assets.ts';
-import { buildRegions, detailShade, pickRegion, type PageRegions } from '../sim/fill.ts';
+import { buildRegions, detailShade, pickRegion, shadesOf, type PageRegions } from '../sim/fill.ts';
 import { today } from '../log.ts';
 import { addPainting, pixelsToJpeg } from '../picture.ts';
 import { state } from '../state.ts';
@@ -14,7 +14,7 @@ export { PAGES } from '../sim/coloring.ts';
 import { PAGES } from '../sim/coloring.ts';
 /** Working size of the picture (pixels). */
 const SIZE = 640;
-/** Paints: saturated but soft (like plasticine). */
+/** Paints: saturated but soft (like plasticine). Each has three shades (sim/fill.ts shadesOf), shown under the palette. */
 const PAINTS = [0xe8413c, 0xff8a2b, 0xffd23f, 0x7ad35a, 0x2f9e5b, 0x5cb3ff, 0x3d6bff, 0x9b5de5, 0xff8fc0, 0x9a6236, 0xffffff, 0x4a4a4a];
 const URL_BASE = import.meta.env.BASE_URL;
 /** Fingertip radius (game units): every pixel under it votes for the area the child means (sim/fill.ts pickRegion). */
@@ -42,6 +42,10 @@ export class ColoringScene extends RoundScene {
   private dark!: Uint8Array;
   private picture!: Sprite;
   private readonly palette = new Container();
+  /** Three shades of the chosen paint (light, base, dark), under the palette. */
+  private readonly shades = new Container();
+  /** Chosen palette colour and the shade actually painted. */
+  private hue = PAINTS[0]!;
   private paint = PAINTS[0]!;
   private done!: IconButton;
   private fills = 0;
@@ -138,7 +142,16 @@ export class ColoringScene extends RoundScene {
     const frame = new Graphics();
     frame.label = 'frame';
     frame.eventMode = 'none';
-    this.layer.addChild(frame, this.picture, this.palette);
+    this.layer.addChild(frame, this.picture, this.palette, this.shades);
+    this.shades.removeChildren();
+    for (let i = 0; i < 3; i++) {
+      const blob = new Container();
+      blob.addChild(new Graphics());
+      blob.eventMode = 'static';
+      blob.cursor = 'pointer';
+      blob.on('pointertap', () => this.chooseShade(i));
+      this.shades.addChild(blob);
+    }
     this.palette.removeChildren();
     PAINTS.forEach((color) => {
       const blob = new Container();
@@ -163,14 +176,29 @@ export class ColoringScene extends RoundScene {
   }
 
   private choose(color: number): void {
-    this.paint = color;
+    if (this.busy) return;
     this.idle = 0;
+    this.hue = color;
+    this.paint = color;
     haptics.tap();
     sfx.pop(this.game.sound, 1.1);
     const blob = this.palette.children.find((c) => c.label === String(color)) as Container;
     void squash(this.tweens, blob, 0.2);
+    void popIn(this.tweens, this.shades, 0.25);
     this.drawPalette();
   }
+
+  /** Light, base or dark shade of the chosen paint. */
+  private chooseShade(i: number): void {
+    if (this.busy) return;
+    this.idle = 0;
+    this.paint = shadesOf(this.hue)[i]!;
+    haptics.tap();
+    sfx.pop(this.game.sound, 0.9 + i * 0.2);
+    void squash(this.tweens, this.shades.children[i]!, 0.2);
+    this.drawPalette();
+  }
+
 
   private tap(e: FederatedPointerEvent, smear = false): void {
     if (this.busy) return;
@@ -318,7 +346,7 @@ export class ColoringScene extends RoundScene {
   private drawPalette(): void {
     this.palette.children.forEach((c) => {
       const color = Number(c.label);
-      const on = color === this.paint;
+      const on = color === this.hue;
       const r = on ? 34 : 27;
       ((c as Container).children[0] as Graphics)
         .clear()
@@ -330,6 +358,14 @@ export class ColoringScene extends RoundScene {
       // Selected color: enlarged, with a white ring in a dark outline (a yellow outline vanished on yellow paint).
       if (on) ((c as Container).children[0] as Graphics).circle(0, 0, r + 9).stroke({ color: 0xffffff, width: 6 }).circle(0, 0, r + 13).stroke({ color: COLORS.ink, width: 3 });
       (c as Container).hitArea = new Rectangle(-44, -44, 88, 88);
+    });
+    shadesOf(this.hue).forEach((color, i) => {
+      const c = this.shades.children[i] as Container;
+      const on = color === this.paint;
+      const g = c.children[0] as Graphics;
+      g.clear().roundRect(-24, -20 + 4, 48, 40, 14).fill({ color: 0x000000, alpha: 0.15 }).roundRect(-24, -20, 48, 40, 14).fill({ color }).stroke({ color: COLORS.ink, width: on ? 6 : 3 });
+      if (on) g.roundRect(-31, -27, 62, 54, 18).stroke({ color: 0xffffff, width: 5 }).roundRect(-34, -30, 68, 60, 20).stroke({ color: COLORS.ink, width: 3 });
+      c.hitArea = new Rectangle(-28, -40, 56, 80);
     });
   }
 
@@ -360,7 +396,10 @@ export class ColoringScene extends RoundScene {
       const row = Math.floor(i / 2);
       c.position.set(px + (col - 0.5) * 78, top + 30 + row * 76);
     });
-    this.done.position.set(px, bottom - 50);
+    // Shades in a row under the palette; the finish button moves to the top right corner to make room.
+    this.shades.position.set(px, top + 30 + 6 * 76 + 8);
+    this.shades.children.forEach((c, i) => c.position.set((i - 1) * 58, 0));
+    this.done.position.set(px, Math.max(safe.top + 55, top - 50));
   }
 }
 

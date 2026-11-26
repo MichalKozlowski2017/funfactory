@@ -177,6 +177,8 @@ Uwaga od testerów: małych pól nie da się trafić, a dotknięcie koloruje te�
 - **mądry dotyk**: każdy piksel pod opuszkiem palca (promień 30 jednostek) głosuje na swoje pole, bliższe środka mocniej; dotknięcie linii wybiera część, której jest więcej pod palcem, a celne dotknięcie małego pola nadal je koloruje;
 - **magiczne detale**: pola za małe dla palca (wąskie i małe, leżące na innej części) same dostają jaśniejszy odcień części, na której leżą (ciemniejszy dla jasnych kolorów), z iskierkami; najmniejsze (np. błyski w oczach) zostają białe; detal pokolorowany ręcznie zachowuje swój kolor;
 - przesuwanie palca koloruje dalsze części dopiero po wyraźnym ruchu (28 jednostek) i tylko tam, gdzie palec jest wyraźnie w jednej części.
+- **odcienie**: pod paletą 12 kolorów rząd trzech odcieni wybranego koloru (jasny, zwykły, ciemny; `shadesOf`), razem 36; przycisk „gotowe” w prawym górnym rogu;
+- **sceny** (2026-11-26): 9 całych scen do kolorowania obok 12 pojedynczych obrazków (plaża, las, ogród, plac zabaw, staw, podwodny świat, kosmos, pociąg, zima), `gen-art.ts --coloring-scenes`; z 30 wariantów wybrane po liczbie pól do dotknięcia i drobiazgów oraz symulacji pokolorowania (farma odpadła: stodoła zamalowana na czarno).
 
 ## Lektor z ElevenLabs (2026-11-26)
 
