@@ -19,6 +19,7 @@ const lang = positionals[0]!;
 const VOICES: Record<string, Record<string, { id: string; name: string }>> = {
   de: { lusia: { id: 'qAVuy3NdMTW0CZ8uA7M9', name: 'Julia - Cheerful and Fun' }, bazyl: { id: 'tqsaTjde7edL1GHtFchL', name: 'Ben Smile - Friendly Storyteller' } },
   es: { lusia: { id: 'yqTu7PvIL2rV3ubtjNlx', name: 'Gaby - Warm, Tender and Inviting' }, bazyl: { id: 'YKUjKbMlejgvkOZlnnvt', name: 'Alejandro Ballesteros - Warm and Joyful' } },
+  en: { lusia: { id: 'cVd39cx0VtXNC13y5Y7z', name: 'Hope - Vibrant, Warm and Innocent' }, bazyl: { id: 'nzFihrBIvB34imQBuxub', name: 'Josh - Teacher for Kids' } },
 };
 const MODEL = 'eleven_v4';
 const game = join(import.meta.dirname, '..');

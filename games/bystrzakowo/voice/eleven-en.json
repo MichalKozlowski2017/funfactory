@@ -1,0 +1,5032 @@
+{
+ "lang": "en",
+ "model": "eleven_v4",
+ "voices": {
+  "lusia": {
+   "id": "cVd39cx0VtXNC13y5Y7z",
+   "name": "Hope - Vibrant, Warm and Innocent"
+  },
+  "bazyl": {
+   "id": "nzFihrBIvB34imQBuxub",
+   "name": "Josh - Teacher for Kids"
+  }
+ },
+ "lines": {
+  "lusia-bravo-1": {
+   "text": "Well done.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-bravo-2": {
+   "text": "Great job.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-bravo-3": {
+   "text": "Super, keep it up.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.091,
+   "cer": 0.077
+  },
+  "lusia-bravo-4": {
+   "text": "Wonderful.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.125,
+   "cer": 0
+  },
+  "lusia-bravo-5": {
+   "text": "You're so clever.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.182,
+   "cer": 0
+  },
+  "lusia-oops-1": {
+   "text": "Oops, try again.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-oops-2": {
+   "text": "Hmm, that's not it. Try once more.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.261,
+   "cer": 0.12
+  },
+  "lusia-reward": {
+   "text": "Well done. You get a new sticker.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.15,
+   "cer": 0
+  },
+  "lusia-hello": {
+   "text": "Hi. I'm Lusia, and this is my friend Basil. Pick a little house and let's play together.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.175,
+   "cer": 0.044
+  },
+  "lusia-help": {
+   "text": "Look carefully. You can do it.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.053,
+   "cer": 0
+  },
+  "lusia-item-cat": {
+   "text": "Cat.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.333,
+   "cer": 0
+  },
+  "lusia-item-dog": {
+   "text": "Dog.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-cow": {
+   "text": "Cow.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.667,
+   "cer": 0
+  },
+  "lusia-item-elephant": {
+   "text": "Elephant.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.143,
+   "cer": 0
+  },
+  "lusia-item-chick": {
+   "text": "Chick.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-fish": {
+   "text": "Fish.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-frog": {
+   "text": "Frog.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-duck": {
+   "text": "Duck.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-hen": {
+   "text": "Hen.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-calf": {
+   "text": "Calf.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.333,
+   "cer": 0
+  },
+  "lusia-item-kitten": {
+   "text": "Kitten.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.5,
+   "cer": 0
+  },
+  "lusia-item-sheep": {
+   "text": "Sheep.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-lamb": {
+   "text": "Lamb.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.25
+  },
+  "lusia-item-pig": {
+   "text": "Pig.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 3,
+   "per": 0.333,
+   "cer": 0
+  },
+  "lusia-item-piglet": {
+   "text": "Piglet.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-horse": {
+   "text": "Horse.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.5,
+   "cer": 0
+  },
+  "lusia-item-foal": {
+   "text": "Foal.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.5,
+   "cer": 0.5
+  },
+  "lusia-item-duckling": {
+   "text": "Duckling.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-tadpole": {
+   "text": "Tadpole.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.143,
+   "cer": 0
+  },
+  "lusia-item-fox-cub": {
+   "text": "Fox cub.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-bear-cub": {
+   "text": "Bear cub.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-penguin-chick": {
+   "text": "Penguin chick.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-lion-cub": {
+   "text": "Lion cub.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-kid-goat": {
+   "text": "Baby goat.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-baby-giraffe": {
+   "text": "Baby giraffe.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.182,
+   "cer": 0.182
+  },
+  "lusia-item-seal-pup": {
+   "text": "Seal pup.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.143
+  },
+  "lusia-item-owlet": {
+   "text": "Owlet.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 3,
+   "per": 0.2,
+   "cer": 0.2
+  },
+  "lusia-item-puppy": {
+   "text": "Puppy.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "lusia-item-bunny": {
+   "text": "Baby bunny.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-elephant-calf": {
+   "text": "Baby elephant.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.083,
+   "cer": 0
+  },
+  "lusia-item-baby-turtle": {
+   "text": "Baby turtle.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.1,
+   "cer": 0
+  },
+  "lusia-item-lion": {
+   "text": "Lion.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0.25
+  },
+  "lusia-item-giraffe": {
+   "text": "Giraffe.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 3,
+   "per": 0.167,
+   "cer": 0.429
+  },
+  "lusia-item-monkey": {
+   "text": "Monkey.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-zebra": {
+   "text": "Zebra.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0
+  },
+  "lusia-item-bear": {
+   "text": "Bear.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.333,
+   "cer": 0
+  },
+  "lusia-item-hedgehog": {
+   "text": "Hedgehog.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-squirrel": {
+   "text": "Squirrel.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0
+  },
+  "lusia-item-owl": {
+   "text": "Owl.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.667,
+   "cer": 0
+  },
+  "lusia-item-butterfly": {
+   "text": "Butterfly.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-ladybug": {
+   "text": "Ladybug.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.125,
+   "cer": 0
+  },
+  "lusia-item-bee": {
+   "text": "Bee.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.667
+  },
+  "lusia-item-snail": {
+   "text": "Snail.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-rabbit": {
+   "text": "Bunny.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-mouse": {
+   "text": "Mouse.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-penguin": {
+   "text": "Penguin.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-turtle": {
+   "text": "Turtle.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 5,
+   "per": 0.4,
+   "cer": 0
+  },
+  "lusia-item-crab": {
+   "text": "Crab.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-octopus": {
+   "text": "Octopus.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.143,
+   "cer": 0
+  },
+  "lusia-item-bird": {
+   "text": "Bird.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.333,
+   "cer": 0
+  },
+  "lusia-item-dinosaur": {
+   "text": "Dinosaur.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "lusia-item-fox": {
+   "text": "Fox.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-hare": {
+   "text": "Hare.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.333,
+   "cer": 0
+  },
+  "lusia-item-boar": {
+   "text": "Wild boar.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0.125
+  },
+  "lusia-item-deer": {
+   "text": "Deer.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.667,
+   "cer": 0.25
+  },
+  "lusia-item-woodpecker": {
+   "text": "Woodpecker.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-whale": {
+   "text": "Whale.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.2
+  },
+  "lusia-item-dolphin": {
+   "text": "Dolphin.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.167,
+   "cer": 0
+  },
+  "lusia-item-jellyfish": {
+   "text": "Jellyfish.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.125,
+   "cer": 0
+  },
+  "lusia-item-seahorse": {
+   "text": "Seahorse.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.333,
+   "cer": 0
+  },
+  "lusia-item-goat": {
+   "text": "Goat.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-donkey": {
+   "text": "Donkey.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0
+  },
+  "lusia-item-turkey": {
+   "text": "Turkey.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "lusia-item-goose": {
+   "text": "Goose.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-seal": {
+   "text": "Seal.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-walrus": {
+   "text": "Walrus.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.333,
+   "cer": 0.333
+  },
+  "lusia-item-polar-bear": {
+   "text": "Polar bear.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.25,
+   "cer": 0
+  },
+  "lusia-item-hippo": {
+   "text": "Hippo.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.4,
+   "cer": 0
+  },
+  "lusia-item-rhino": {
+   "text": "Rhino.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-swan": {
+   "text": "Swan.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "lusia-item-heron": {
+   "text": "Heron.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.4
+  },
+  "lusia-item-apple": {
+   "text": "Apple.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "lusia-item-banana": {
+   "text": "Banana.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.5,
+   "cer": 0
+  },
+  "lusia-item-pear": {
+   "text": "Pear.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.333,
+   "cer": 0.5
+  },
+  "lusia-item-strawberry": {
+   "text": "Strawberry.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.125,
+   "cer": 0
+  },
+  "lusia-item-plum": {
+   "text": "Plum.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "lusia-item-cherry": {
+   "text": "Cherries.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-orange-fruit": {
+   "text": "Orange.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.167,
+   "cer": 0
+  },
+  "lusia-item-lemon": {
+   "text": "Lemon.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-grapes": {
+   "text": "Grapes.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-watermelon": {
+   "text": "Watermelon.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.111,
+   "cer": 0
+  },
+  "lusia-item-pineapple": {
+   "text": "Pineapple.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "lusia-item-raspberry": {
+   "text": "Raspberry.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.143,
+   "cer": 0.111
+  },
+  "lusia-item-carrot": {
+   "text": "Carrot.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.4,
+   "cer": 0
+  },
+  "lusia-item-tomato": {
+   "text": "Tomato.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-cucumber": {
+   "text": "Cucumber.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-potato": {
+   "text": "Potato.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "lusia-item-corn": {
+   "text": "Corn.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.5,
+   "cer": 0
+  },
+  "lusia-item-pepper": {
+   "text": "Pepper.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-broccoli": {
+   "text": "Broccoli.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0.25
+  },
+  "lusia-item-pumpkin": {
+   "text": "Pumpkin.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.286,
+   "cer": 0
+  },
+  "lusia-item-peas": {
+   "text": "Peas.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-radish": {
+   "text": "Radish.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.167
+  },
+  "lusia-item-mushroom": {
+   "text": "Mushroom.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-onion": {
+   "text": "Onion.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.4,
+   "cer": 0
+  },
+  "lusia-item-car": {
+   "text": "Car.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.333,
+   "cer": 0
+  },
+  "lusia-item-bike": {
+   "text": "Bike.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-airplane": {
+   "text": "Airplane.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-boat": {
+   "text": "Boat.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-bus": {
+   "text": "Bus.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-train": {
+   "text": "Train.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-tractor": {
+   "text": "Tractor.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-helicopter": {
+   "text": "Helicopter.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.111,
+   "cer": 0
+  },
+  "lusia-item-rocket": {
+   "text": "Rocket.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.167
+  },
+  "lusia-item-scooter": {
+   "text": "Kick scooter.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.125,
+   "cer": 0
+  },
+  "lusia-item-moped": {
+   "text": "Motor scooter.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-fire-station": {
+   "text": "Fire truck.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-truck": {
+   "text": "Truck.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-ball": {
+   "text": "Ball.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.333,
+   "cer": 0
+  },
+  "lusia-item-teddy": {
+   "text": "Teddy bear.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.143,
+   "cer": 0
+  },
+  "lusia-item-block": {
+   "text": "Block.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-doll": {
+   "text": "Doll.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-kite": {
+   "text": "Kite.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-drum": {
+   "text": "Drum.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-pony": {
+   "text": "Rocking horse.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.222,
+   "cer": 0
+  },
+  "lusia-item-spinning-top": {
+   "text": "Spinning top.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-robot": {
+   "text": "Robot.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-small-balloon": {
+   "text": "Balloon.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0
+  },
+  "lusia-item-trumpet": {
+   "text": "Trumpet.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-bucket": {
+   "text": "Bucket.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.167
+  },
+  "lusia-item-sled": {
+   "text": "Sled.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-skis": {
+   "text": "Skis.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.25
+  },
+  "lusia-item-tent": {
+   "text": "Tent.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-ukulele": {
+   "text": "Guitar.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0
+  },
+  "lusia-item-castle": {
+   "text": "Sandcastle.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.111,
+   "cer": 0
+  },
+  "lusia-item-spade": {
+   "text": "Shovel.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0
+  },
+  "lusia-item-mug": {
+   "text": "Mug.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-plate": {
+   "text": "Plate.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-spoon": {
+   "text": "Spoon.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-fork": {
+   "text": "Fork.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.5,
+   "cer": 0
+  },
+  "lusia-item-pot": {
+   "text": "Pot.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-kettle": {
+   "text": "Kettle.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-bowl": {
+   "text": "Bowl.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.5,
+   "cer": 0.25
+  },
+  "lusia-item-pan": {
+   "text": "Frying pan.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-bottle": {
+   "text": "Bottle.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.2,
+   "cer": 0
+  },
+  "lusia-item-glass": {
+   "text": "Glass of milk.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-egg": {
+   "text": "Egg.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-hat": {
+   "text": "Hat.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.333,
+   "cer": 0
+  },
+  "lusia-item-scarf": {
+   "text": "Scarf.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0
+  },
+  "lusia-item-shoe": {
+   "text": "Shoe.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-sock": {
+   "text": "Sock.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.333,
+   "cer": 0
+  },
+  "lusia-item-t-shirt": {
+   "text": "T-shirt.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.2,
+   "cer": 0
+  },
+  "lusia-item-trousers": {
+   "text": "Trousers.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.143,
+   "cer": 0
+  },
+  "lusia-item-dress": {
+   "text": "Dress.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-mittens": {
+   "text": "Mittens.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.4,
+   "cer": 0.143
+  },
+  "lusia-item-rain-boots": {
+   "text": "Rain boots.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-umbrella": {
+   "text": "Umbrella.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.143,
+   "cer": 0
+  },
+  "lusia-item-glasses": {
+   "text": "Sunglasses.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.222,
+   "cer": 0
+  },
+  "lusia-item-sun-hat": {
+   "text": "Sun hat.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.167,
+   "cer": 0
+  },
+  "lusia-item-sandals": {
+   "text": "Sandals.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.286,
+   "cer": 0
+  },
+  "lusia-item-outfit": {
+   "text": "Swimsuit.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-jacket": {
+   "text": "Jacket.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-sun": {
+   "text": "Sun.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 1,
+   "cer": 1
+  },
+  "lusia-item-cloud": {
+   "text": "Cloud.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.4,
+   "cer": 0
+  },
+  "lusia-item-little-star": {
+   "text": "Star.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "lusia-item-moon": {
+   "text": "Moon.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-little-flower": {
+   "text": "Flower.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.4,
+   "cer": 0
+  },
+  "lusia-item-tree": {
+   "text": "Tree.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-leaf": {
+   "text": "Leaf.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-rainbow": {
+   "text": "Rainbow.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-shell": {
+   "text": "Seashell.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-pine-cone": {
+   "text": "Pine cone.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.125,
+   "cer": 0
+  },
+  "lusia-item-beehive": {
+   "text": "Beehive.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.143
+  },
+  "lusia-item-snowflake": {
+   "text": "Snowflake.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-realm-meadow": {
+   "text": "This is Puzzle Meadow. Pick a little house.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.172,
+   "cer": 0.029
+  },
+  "lusia-realm-asleep": {
+   "text": "This land is still asleep. Let's play in the Puzzle Meadow.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.05,
+   "cer": 0
+  },
+  "lusia-realm-path": {
+   "text": "This is my Path. Here we draw with a finger.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.172,
+   "cer": 0
+  },
+  "lusia-dots": {
+   "text": "Connect the dots in order. Start with number one.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.088,
+   "cer": 0
+  },
+  "lusia-memory": {
+   "text": "Find pairs of matching pictures.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.042,
+   "cer": 0
+  },
+  "lusia-realm-studio": {
+   "text": "This is the Little Studio. Here you can paint and create.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.146,
+   "cer": 0
+  },
+  "lusia-good-night": {
+   "text": "That's enough playing for today. Lusia and Basil are going to sleep. See you tomorrow.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.237,
+   "cer": 0.029
+  },
+  "lusia-melody": {
+   "text": "Listen to my tune and play it the same way.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.065,
+   "cer": 0
+  },
+  "lusia-syllables": {
+   "text": "Put the syllables in order, and then we'll read together.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.135,
+   "cer": 0
+  },
+  "lusia-read-zebra": {
+   "text": "Ze... bra... Zebra.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.3,
+   "cer": 0.1
+  },
+  "lusia-read-robot": {
+   "text": "Ro... bot... Robot.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-read-monkey": {
+   "text": "Mon... key... Monkey.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0.083
+  },
+  "lusia-read-rabbit": {
+   "text": "Bun... ny... Bunny.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.417,
+   "cer": 0.3
+  },
+  "lusia-read-apple": {
+   "text": "Ap... ple... Apple.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.222,
+   "cer": 0
+  },
+  "lusia-read-lemon": {
+   "text": "Le... mon... Lemon.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.1,
+   "cer": 0.1
+  },
+  "lusia-read-penguin": {
+   "text": "Pen... guin... Penguin.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.143
+  },
+  "lusia-read-turtle": {
+   "text": "Tur... tle... Turtle.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.583,
+   "cer": 0
+  },
+  "lusia-read-rocket": {
+   "text": "Rock... et... Rocket.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.1,
+   "cer": 0.167
+  },
+  "lusia-read-pumpkin": {
+   "text": "Pump... kin... Pumpkin.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.214,
+   "cer": 0
+  },
+  "lusia-read-rainbow": {
+   "text": "Rain... bow... Rainbow.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.071
+  },
+  "lusia-read-dolphin": {
+   "text": "Dol... phin... Dolphin.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.167,
+   "cer": 0.143
+  },
+  "lusia-read-kitten": {
+   "text": "Kit... ten... Kitten.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0
+  },
+  "lusia-read-banana": {
+   "text": "Ba... na... na... Banana.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.5,
+   "cer": 0.083
+  },
+  "lusia-read-tomato": {
+   "text": "To... ma... to... Tomato.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.071,
+   "cer": 0.167
+  },
+  "lusia-read-potato": {
+   "text": "Po... ta... to... Potato.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.267,
+   "cer": 0.167
+  },
+  "lusia-read-butterfly": {
+   "text": "But... ter... fly... Butterfly.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.118,
+   "cer": 0
+  },
+  "lusia-read-octopus": {
+   "text": "Oc... to... pus... Octopus.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.143,
+   "cer": 0
+  },
+  "lusia-read-umbrella": {
+   "text": "Um... brel... la... Umbrella.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.267,
+   "cer": 0.062
+  },
+  "lusia-read-dinosaur": {
+   "text": "Di... no... saur... Dinosaur.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.353,
+   "cer": 0.125
+  },
+  "lusia-read-carrot": {
+   "text": "Car... rot... Carrot.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.273,
+   "cer": 0
+  },
+  "lusia-read-small-balloon": {
+   "text": "Bal... loon... Balloon.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.091,
+   "cer": 0.071
+  },
+  "lusia-read-tractor": {
+   "text": "Trac... tor... Tractor.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.154,
+   "cer": 0.071
+  },
+  "lusia-read-shell": {
+   "text": "Sea... shell... Seashell.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.25
+  },
+  "lusia-coloring": {
+   "text": "Pick a color and touch the picture. Paint it any way you like.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.047,
+   "cer": 0
+  },
+  "lusia-coloring-done": {
+   "text": "Beautiful. When you are done, touch the green arrow.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.156,
+   "cer": 0
+  },
+  "lusia-stickers": {
+   "text": "Make your own sticker picture. Drag a sticker onto the meadow.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.14,
+   "cer": 0
+  },
+  "lusia-letters": {
+   "text": "Draw the letter with your finger. Start at the green dot.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.139,
+   "cer": 0
+  },
+  "lusia-digits": {
+   "text": "Draw the number with your finger. Start at the green dot.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.135,
+   "cer": 0
+  },
+  "lusia-number-0": {
+   "text": "Zero. There is nothing.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.125,
+   "cer": 0
+  },
+  "lusia-letter-l-lion": {
+   "text": "L is for lion.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 3,
+   "per": 0.167,
+   "cer": 0
+  },
+  "lusia-letter-t-tractor": {
+   "text": "T is for tractor.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.154,
+   "cer": 0
+  },
+  "lusia-letter-o-owl": {
+   "text": "O is for owl.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.2,
+   "cer": 0.111
+  },
+  "lusia-letter-a-apple": {
+   "text": "A is for apple.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.182,
+   "cer": 0
+  },
+  "lusia-letter-m-monkey": {
+   "text": "M is for monkey.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.167,
+   "cer": 0
+  },
+  "lusia-letter-w-whale": {
+   "text": "W is for whale.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.188,
+   "cer": 0.091
+  },
+  "lusia-letter-k-kite": {
+   "text": "K is for kite.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.167,
+   "cer": 0
+  },
+  "lusia-letter-p-pig": {
+   "text": "P is for pig.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0.222
+  },
+  "lusia-letter-d-dog": {
+   "text": "D is for dog.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0.222
+  },
+  "lusia-letter-b-ball": {
+   "text": "B is for ball.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.3,
+   "cer": 0
+  },
+  "lusia-letter-s-sun": {
+   "text": "S is for sun.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0.111
+  },
+  "lusia-letter-e-elephant": {
+   "text": "E is for elephant.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.231,
+   "cer": 0
+  },
+  "lusia-letter-f-fish": {
+   "text": "F is for fish.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0
+  },
+  "lusia-letter-h-horse": {
+   "text": "H is for horse.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.308,
+   "cer": 0
+  },
+  "lusia-letter-z-zebra": {
+   "text": "Z is for zebra.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "lusia-letter-u-umbrella": {
+   "text": "U is for umbrella.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.214,
+   "cer": 0
+  },
+  "lusia-letter-c-cat": {
+   "text": "C is for cat.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0
+  },
+  "lusia-letter-r-rocket": {
+   "text": "R is for rocket.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "lusia-letter-g-goat": {
+   "text": "G is for goat.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.167,
+   "cer": 0
+  },
+  "lusia-letter-j-jellyfish": {
+   "text": "J is for jellyfish.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.176,
+   "cer": 0
+  },
+  "lusia-maze-chick": {
+   "text": "Lead the chick to its mommy.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.045
+  },
+  "lusia-maze-kitten": {
+   "text": "Lead the kitten to its mommy.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.111,
+   "cer": 0.043
+  },
+  "lusia-maze-piglet": {
+   "text": "Lead the piglet to its mommy.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.1,
+   "cer": 0
+  },
+  "lusia-maze-calf": {
+   "text": "Lead the calf to its mommy.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0.048
+  },
+  "lusia-maze-duckling": {
+   "text": "Lead the duckling to its mommy.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0.04
+  },
+  "lusia-maze-bee": {
+   "text": "Lead the bee to the flower.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.062,
+   "cer": 0
+  },
+  "lusia-maze-butterfly": {
+   "text": "Lead the butterfly to the flower.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.045,
+   "cer": 0
+  },
+  "lusia-maze-rabbit": {
+   "text": "Lead the bunny to the carrot.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.167,
+   "cer": 0.043
+  },
+  "lusia-maze-monkey": {
+   "text": "Lead the monkey to the banana.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.15,
+   "cer": 0
+  },
+  "lusia-maze-squirrel": {
+   "text": "Lead the squirrel to the tree.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.118,
+   "cer": 0
+  },
+  "lusia-maze-fox-cub": {
+   "text": "Lead the fox cub to its mommy.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0.043
+  },
+  "lusia-maze-bear-cub": {
+   "text": "Lead the bear cub to its mommy.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.05,
+   "cer": 0.042
+  },
+  "lusia-maze-penguin-chick": {
+   "text": "Lead the penguin chick to its mommy.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.04,
+   "cer": 0
+  },
+  "lusia-maze-lion-cub": {
+   "text": "Lead the lion cub to its mommy.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.042
+  },
+  "lusia-maze-kid-goat": {
+   "text": "Lead the baby goat to its mommy.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.087,
+   "cer": 0.16
+  },
+  "lusia-maze-baby-giraffe": {
+   "text": "Lead the baby giraffe to its mommy.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.04,
+   "cer": 0.143
+  },
+  "lusia-maze-seal-pup": {
+   "text": "Lead the seal pup to its mommy.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.05,
+   "cer": 0.083
+  },
+  "lusia-maze-owlet": {
+   "text": "Lead the owlet to its mommy.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.105,
+   "cer": 0.091
+  },
+  "lusia-maze-puppy": {
+   "text": "Lead the puppy to its mommy.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0.045
+  },
+  "lusia-maze-bunny": {
+   "text": "Lead the baby bunny to its mommy.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.043,
+   "cer": 0.077
+  },
+  "lusia-maze-elephant-calf": {
+   "text": "Lead the baby elephant to its mommy.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.038,
+   "cer": 0.069
+  },
+  "lusia-maze-baby-turtle": {
+   "text": "Lead the baby turtle to its mommy.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.125,
+   "cer": 0.074
+  },
+  "lusia-shadows": {
+   "text": "Whose shadow is this? Touch the right picture.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-counting": {
+   "text": "Count how many there are.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.059,
+   "cer": 0
+  },
+  "lusia-counting-touch": {
+   "text": "Touch them one by one and count with me.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.103,
+   "cer": 0
+  },
+  "lusia-album": {
+   "text": "This is your sticker album. Collect them all.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.138,
+   "cer": 0
+  },
+  "lusia-number-1": {
+   "text": "One.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-number-2": {
+   "text": "Two.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-number-3": {
+   "text": "Three.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-number-4": {
+   "text": "Four.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.667,
+   "cer": 0
+  },
+  "lusia-number-5": {
+   "text": "Five.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "lusia-number-6": {
+   "text": "Six.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-number-7": {
+   "text": "Seven.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-number-8": {
+   "text": "Eight.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-number-9": {
+   "text": "Nine.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-number-10": {
+   "text": "Ten.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-phoneme-a": {
+   "text": "What starts with... A?",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.071,
+   "cer": 0.2
+  },
+  "lusia-phoneme-b": {
+   "text": "What starts with... B?",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.143,
+   "cer": 0
+  },
+  "lusia-phoneme-c": {
+   "text": "What starts with... C?",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.214,
+   "cer": 0.2
+  },
+  "lusia-phoneme-d": {
+   "text": "What starts with... D?",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.143,
+   "cer": 0.067
+  },
+  "lusia-phoneme-f": {
+   "text": "What starts with... F?",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.143,
+   "cer": 0
+  },
+  "lusia-phoneme-g": {
+   "text": "What starts with... G?",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.133,
+   "cer": 0
+  },
+  "lusia-phoneme-h": {
+   "text": "What starts with... H?",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.062,
+   "cer": 0.067
+  },
+  "lusia-phoneme-l": {
+   "text": "What starts with... L?",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.143,
+   "cer": 0.067
+  },
+  "lusia-phoneme-m": {
+   "text": "What starts with... M?",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.143,
+   "cer": 0
+  },
+  "lusia-phoneme-o": {
+   "text": "What starts with... O?",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.214,
+   "cer": 0.067
+  },
+  "lusia-phoneme-p": {
+   "text": "What starts with... P?",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.143,
+   "cer": 0
+  },
+  "lusia-phoneme-r": {
+   "text": "What starts with... R?",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.214,
+   "cer": 0.067
+  },
+  "lusia-phoneme-s": {
+   "text": "What starts with... S?",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.143,
+   "cer": 0
+  },
+  "lusia-phoneme-t": {
+   "text": "What starts with... T?",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.214,
+   "cer": 0.067
+  },
+  "lusia-phoneme-w": {
+   "text": "What starts with... W?",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.211,
+   "cer": 0
+  },
+  "bazyl-bravo-1": {
+   "text": "Well done.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-bravo-2": {
+   "text": "Great job.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-bravo-3": {
+   "text": "Super, keep it up.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.091,
+   "cer": 0.077
+  },
+  "bazyl-bravo-4": {
+   "text": "Wonderful.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.125,
+   "cer": 0
+  },
+  "bazyl-bravo-5": {
+   "text": "You're so clever.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.182,
+   "cer": 0
+  },
+  "bazyl-oops-1": {
+   "text": "Oops, try again.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-oops-2": {
+   "text": "Hmm, that's not it. Try once more.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.217,
+   "cer": 0.12
+  },
+  "bazyl-reward": {
+   "text": "Well done. You get a new sticker.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.15,
+   "cer": 0
+  },
+  "bazyl-hello": {
+   "text": "Hey. I'm Basil. Come on, it's going to be fun.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.125,
+   "cer": 0
+  },
+  "bazyl-help": {
+   "text": "Go on, touch a picture.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.176,
+   "cer": 0
+  },
+  "bazyl-item-cat": {
+   "text": "Cat.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-dog": {
+   "text": "Dog.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-cow": {
+   "text": "Cow.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.667,
+   "cer": 0
+  },
+  "bazyl-item-elephant": {
+   "text": "Elephant.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.143,
+   "cer": 0
+  },
+  "bazyl-item-chick": {
+   "text": "Chick.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-fish": {
+   "text": "Fish.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-frog": {
+   "text": "Frog.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-duck": {
+   "text": "Duck.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.333,
+   "cer": 0
+  },
+  "bazyl-item-hen": {
+   "text": "Hen.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-calf": {
+   "text": "Calf.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-kitten": {
+   "text": "Kitten.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.5,
+   "cer": 0
+  },
+  "bazyl-item-sheep": {
+   "text": "Sheep.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-lamb": {
+   "text": "Lamb.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-pig": {
+   "text": "Pig.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-piglet": {
+   "text": "Piglet.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-horse": {
+   "text": "Horse.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.5,
+   "cer": 0
+  },
+  "bazyl-item-foal": {
+   "text": "Foal.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0.5
+  },
+  "bazyl-item-duckling": {
+   "text": "Duckling.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-tadpole": {
+   "text": "Tadpole.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.143,
+   "cer": 0
+  },
+  "bazyl-item-fox-cub": {
+   "text": "Fox cub.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-bear-cub": {
+   "text": "Bear cub.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-penguin-chick": {
+   "text": "Penguin chick.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-lion-cub": {
+   "text": "Lion cub.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-kid-goat": {
+   "text": "Baby goat.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-baby-giraffe": {
+   "text": "Baby giraffe.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.091,
+   "cer": 0.182
+  },
+  "bazyl-item-seal-pup": {
+   "text": "Seal pup.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.143
+  },
+  "bazyl-item-owlet": {
+   "text": "Owlet.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0.2
+  },
+  "bazyl-item-puppy": {
+   "text": "Puppy.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0.2
+  },
+  "bazyl-item-bunny": {
+   "text": "Baby bunny.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-elephant-calf": {
+   "text": "Baby elephant.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.083,
+   "cer": 0
+  },
+  "bazyl-item-baby-turtle": {
+   "text": "Baby turtle.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.3,
+   "cer": 0
+  },
+  "bazyl-item-lion": {
+   "text": "Lion.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-giraffe": {
+   "text": "Giraffe.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.167,
+   "cer": 0.143
+  },
+  "bazyl-item-monkey": {
+   "text": "Monkey.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-zebra": {
+   "text": "Zebra.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0
+  },
+  "bazyl-item-bear": {
+   "text": "Bear.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.333,
+   "cer": 0
+  },
+  "bazyl-item-hedgehog": {
+   "text": "Hedgehog.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-squirrel": {
+   "text": "Squirrel.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.4,
+   "cer": 0
+  },
+  "bazyl-item-owl": {
+   "text": "Owl.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.667,
+   "cer": 0
+  },
+  "bazyl-item-butterfly": {
+   "text": "Butterfly.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-ladybug": {
+   "text": "Ladybug.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.125,
+   "cer": 0
+  },
+  "bazyl-item-bee": {
+   "text": "Bee.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.667
+  },
+  "bazyl-item-snail": {
+   "text": "Snail.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-rabbit": {
+   "text": "Bunny.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-mouse": {
+   "text": "Mouse.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-penguin": {
+   "text": "Penguin.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-turtle": {
+   "text": "Turtle.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.4,
+   "cer": 0
+  },
+  "bazyl-item-crab": {
+   "text": "Crab.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-octopus": {
+   "text": "Octopus.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-bird": {
+   "text": "Bird.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.333,
+   "cer": 0
+  },
+  "bazyl-item-dinosaur": {
+   "text": "Dinosaur.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "bazyl-item-fox": {
+   "text": "Fox.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-hare": {
+   "text": "Hare.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.333,
+   "cer": 0
+  },
+  "bazyl-item-boar": {
+   "text": "Wild boar.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0.25
+  },
+  "bazyl-item-deer": {
+   "text": "Deer.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.667,
+   "cer": 0.25
+  },
+  "bazyl-item-woodpecker": {
+   "text": "Woodpecker.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-whale": {
+   "text": "Whale.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-dolphin": {
+   "text": "Dolphin.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.167,
+   "cer": 0
+  },
+  "bazyl-item-jellyfish": {
+   "text": "Jellyfish.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.125,
+   "cer": 0
+  },
+  "bazyl-item-seahorse": {
+   "text": "Seahorse.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.333,
+   "cer": 0
+  },
+  "bazyl-item-goat": {
+   "text": "Goat.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-donkey": {
+   "text": "Donkey.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0
+  },
+  "bazyl-item-turkey": {
+   "text": "Turkey.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "bazyl-item-goose": {
+   "text": "Goose.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-seal": {
+   "text": "Seal.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-walrus": {
+   "text": "Walrus.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.333,
+   "cer": 0.167
+  },
+  "bazyl-item-polar-bear": {
+   "text": "Polar bear.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "bazyl-item-hippo": {
+   "text": "Hippo.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.4,
+   "cer": 0
+  },
+  "bazyl-item-rhino": {
+   "text": "Rhino.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-swan": {
+   "text": "Swan.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-heron": {
+   "text": "Heron.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.2
+  },
+  "bazyl-item-apple": {
+   "text": "Apple.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.75,
+   "cer": 0
+  },
+  "bazyl-item-banana": {
+   "text": "Banana.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.5,
+   "cer": 0
+  },
+  "bazyl-item-pear": {
+   "text": "Pear.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.333,
+   "cer": 0.5
+  },
+  "bazyl-item-strawberry": {
+   "text": "Strawberry.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.125,
+   "cer": 0
+  },
+  "bazyl-item-plum": {
+   "text": "Plum.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0.25
+  },
+  "bazyl-item-cherry": {
+   "text": "Cherries.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-orange-fruit": {
+   "text": "Orange.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-lemon": {
+   "text": "Lemon.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-grapes": {
+   "text": "Grapes.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-watermelon": {
+   "text": "Watermelon.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.111,
+   "cer": 0
+  },
+  "bazyl-item-pineapple": {
+   "text": "Pineapple.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.125,
+   "cer": 0
+  },
+  "bazyl-item-raspberry": {
+   "text": "Raspberry.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.143,
+   "cer": 0.111
+  },
+  "bazyl-item-carrot": {
+   "text": "Carrot.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.4,
+   "cer": 0.333
+  },
+  "bazyl-item-tomato": {
+   "text": "Tomato.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-cucumber": {
+   "text": "Cucumber.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-potato": {
+   "text": "Potato.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "bazyl-item-corn": {
+   "text": "Corn.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.5,
+   "cer": 0
+  },
+  "bazyl-item-pepper": {
+   "text": "Pepper.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-broccoli": {
+   "text": "Broccoli.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.143,
+   "cer": 0.125
+  },
+  "bazyl-item-pumpkin": {
+   "text": "Pumpkin.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 3,
+   "per": 0.286,
+   "cer": 0
+  },
+  "bazyl-item-peas": {
+   "text": "Peas.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-radish": {
+   "text": "Radish.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0.167
+  },
+  "bazyl-item-mushroom": {
+   "text": "Mushroom.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-onion": {
+   "text": "Onion.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.4,
+   "cer": 0
+  },
+  "bazyl-item-car": {
+   "text": "Car.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.333,
+   "cer": 0
+  },
+  "bazyl-item-bike": {
+   "text": "Bike.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-airplane": {
+   "text": "Airplane.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-boat": {
+   "text": "Boat.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-bus": {
+   "text": "Bus.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-train": {
+   "text": "Train.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-tractor": {
+   "text": "Tractor.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-helicopter": {
+   "text": "Helicopter.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.111,
+   "cer": 0
+  },
+  "bazyl-item-rocket": {
+   "text": "Rocket.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.167
+  },
+  "bazyl-item-scooter": {
+   "text": "Kick scooter.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-moped": {
+   "text": "Motor scooter.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-fire-station": {
+   "text": "Fire truck.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-truck": {
+   "text": "Truck.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-ball": {
+   "text": "Ball.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.333,
+   "cer": 0
+  },
+  "bazyl-item-teddy": {
+   "text": "Teddy bear.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.143,
+   "cer": 0
+  },
+  "bazyl-item-block": {
+   "text": "Block.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-doll": {
+   "text": "Doll.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-kite": {
+   "text": "Kite.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-drum": {
+   "text": "Drum.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-pony": {
+   "text": "Rocking horse.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.222,
+   "cer": 0
+  },
+  "bazyl-item-spinning-top": {
+   "text": "Spinning top.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-robot": {
+   "text": "Robot.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.167,
+   "cer": 0
+  },
+  "bazyl-item-small-balloon": {
+   "text": "Balloon.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-trumpet": {
+   "text": "Trumpet.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-bucket": {
+   "text": "Bucket.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.167
+  },
+  "bazyl-item-sled": {
+   "text": "Sled.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-skis": {
+   "text": "Skis.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.25
+  },
+  "bazyl-item-tent": {
+   "text": "Tent.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-ukulele": {
+   "text": "Guitar.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0
+  },
+  "bazyl-item-castle": {
+   "text": "Sandcastle.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.111,
+   "cer": 0
+  },
+  "bazyl-item-spade": {
+   "text": "Shovel.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0
+  },
+  "bazyl-item-mug": {
+   "text": "Mug.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-plate": {
+   "text": "Plate.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-spoon": {
+   "text": "Spoon.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-fork": {
+   "text": "Fork.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.5,
+   "cer": 0
+  },
+  "bazyl-item-pot": {
+   "text": "Pot.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-kettle": {
+   "text": "Kettle.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0
+  },
+  "bazyl-item-bowl": {
+   "text": "Bowl.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "bazyl-item-pan": {
+   "text": "Frying pan.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-bottle": {
+   "text": "Bottle.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.2,
+   "cer": 0
+  },
+  "bazyl-item-glass": {
+   "text": "Glass of milk.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-egg": {
+   "text": "Egg.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-hat": {
+   "text": "Hat.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.333,
+   "cer": 0
+  },
+  "bazyl-item-scarf": {
+   "text": "Scarf.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0
+  },
+  "bazyl-item-shoe": {
+   "text": "Shoe.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-sock": {
+   "text": "Sock.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-t-shirt": {
+   "text": "T-shirt.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.2,
+   "cer": 0
+  },
+  "bazyl-item-trousers": {
+   "text": "Trousers.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.429,
+   "cer": 0
+  },
+  "bazyl-item-dress": {
+   "text": "Dress.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-mittens": {
+   "text": "Mittens.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.4,
+   "cer": 0
+  },
+  "bazyl-item-rain-boots": {
+   "text": "Rain boots.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-umbrella": {
+   "text": "Umbrella.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.143,
+   "cer": 0
+  },
+  "bazyl-item-glasses": {
+   "text": "Sunglasses.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.222,
+   "cer": 0
+  },
+  "bazyl-item-sun-hat": {
+   "text": "Sun hat.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-sandals": {
+   "text": "Sandals.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-outfit": {
+   "text": "Swimsuit.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-jacket": {
+   "text": "Jacket.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-sun": {
+   "text": "Sun.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 1,
+   "cer": 1
+  },
+  "bazyl-item-cloud": {
+   "text": "Cloud.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.4,
+   "cer": 0
+  },
+  "bazyl-item-little-star": {
+   "text": "Star.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "bazyl-item-moon": {
+   "text": "Moon.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-little-flower": {
+   "text": "Flower.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.4,
+   "cer": 0
+  },
+  "bazyl-item-tree": {
+   "text": "Tree.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-leaf": {
+   "text": "Leaf.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-rainbow": {
+   "text": "Rainbow.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-shell": {
+   "text": "Seashell.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-pine-cone": {
+   "text": "Pine cone.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.125,
+   "cer": 0
+  },
+  "bazyl-item-beehive": {
+   "text": "Beehive.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.143
+  },
+  "bazyl-item-snowflake": {
+   "text": "Snowflake.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-realms": {
+   "text": "Touch the colorful circles at the top to visit other lands.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.122,
+   "cer": 0
+  },
+  "bazyl-stories": {
+   "text": "What happened first? Put the pictures in order.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.129,
+   "cer": 0
+  },
+  "bazyl-history-flower": {
+   "text": "First a seed, then a sprout, and at the end a flower.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.216,
+   "cer": 0
+  },
+  "bazyl-history-chick": {
+   "text": "First an egg, then the shell cracks, and at the end there's a little chick.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.196,
+   "cer": 0
+  },
+  "bazyl-history-butterfly": {
+   "text": "First a caterpillar, then a cocoon, and at the end a butterfly.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.205,
+   "cer": 0.02
+  },
+  "bazyl-history-snowman": {
+   "text": "First one snowball, then another, and at the end a snowman.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.22,
+   "cer": 0
+  },
+  "bazyl-history-apple": {
+   "text": "First a whole apple, then a bite, and at the end an apple core.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.262,
+   "cer": 0
+  },
+  "bazyl-history-ice-cream": {
+   "text": "First a full ice cream, then less and less, and at the end an empty cone.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.163,
+   "cer": 0
+  },
+  "bazyl-history-froglet": {
+   "text": "First little eggs, then a tadpole, and at the end a frog.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "bazyl-history-sandwich": {
+   "text": "First the bread, then the butter, and at the end a yummy sandwich.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.116,
+   "cer": 0
+  },
+  "bazyl-history-tower": {
+   "text": "First one block, then two, and at the end a tall tower.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.229,
+   "cer": 0
+  },
+  "bazyl-history-balloon": {
+   "text": "First an empty balloon, then a little air, and at the end a big balloon.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.208,
+   "cer": 0.018
+  },
+  "bazyl-history-cake": {
+   "text": "First we mix the batter, then we bake, and at the end there is a cake.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.109,
+   "cer": 0
+  },
+  "bazyl-history-castle": {
+   "text": "First a bucket of sand, then a sand tower, and at the end a sandcastle.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.216,
+   "cer": 0
+  },
+  "bazyl-history-egg": {
+   "text": "First an egg, then we crack it into the pan, and at the end a fried egg.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.17,
+   "cer": 0
+  },
+  "bazyl-history-pizza": {
+   "text": "First a ball of dough, then the sauce, and at the end a yummy pizza.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.233,
+   "cer": 0.059
+  },
+  "bazyl-history-cocoa": {
+   "text": "First an empty mug, then milk, and at the end warm cocoa.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.146,
+   "cer": 0.023
+  },
+  "bazyl-history-nest": {
+   "text": "First some twigs, then a nest, and at the end a bird in the nest.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.227,
+   "cer": 0
+  },
+  "bazyl-history-small-tree": {
+   "text": "First a tiny sapling, then a little tree, and at the end an apple tree with apples.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.211,
+   "cer": 0
+  },
+  "bazyl-history-day": {
+   "text": "First the sun rises in the morning, then it is daytime, and at the end it is night.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.123,
+   "cer": 0
+  },
+  "bazyl-history-banana": {
+   "text": "First a whole banana, then we peel it, and at the end only the peel is left.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.192,
+   "cer": 0.018
+  },
+  "bazyl-history-watermelon": {
+   "text": "First a whole watermelon, then we cut it in half, and at the end yummy slices.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.182,
+   "cer": 0
+  },
+  "bazyl-history-aquarium": {
+   "text": "First an empty fish bowl, then water, and at the end a little fish.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.2,
+   "cer": 0
+  },
+  "bazyl-history-gift": {
+   "text": "First a wrapped present, then we open it, and inside there is a teddy bear.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.135,
+   "cer": 0.034
+  },
+  "bazyl-history-car-wash": {
+   "text": "First a muddy car, then soap foam, and at the end it is shiny and clean.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0.056
+  },
+  "bazyl-history-cupcake": {
+   "text": "First batter in a paper cup, then we bake it, and at the end cream and a cherry.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.145,
+   "cer": 0
+  },
+  "bazyl-emotions-happy": {
+   "text": "Show me a happy face.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.133,
+   "cer": 0
+  },
+  "bazyl-face-happy": {
+   "text": "A happy face.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.3,
+   "cer": 0
+  },
+  "bazyl-emotions-sad": {
+   "text": "Show me a sad face.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.143,
+   "cer": 0
+  },
+  "bazyl-face-sad": {
+   "text": "A sad face.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.222,
+   "cer": 0
+  },
+  "bazyl-emotions-angry": {
+   "text": "Show me an angry face.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.062,
+   "cer": 0
+  },
+  "bazyl-face-angry": {
+   "text": "An angry face.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.091,
+   "cer": 0
+  },
+  "bazyl-emotions-surprised": {
+   "text": "Show me a surprised face.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.105,
+   "cer": 0
+  },
+  "bazyl-face-surprised": {
+   "text": "A surprised face.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.214,
+   "cer": 0
+  },
+  "bazyl-emotions-scared": {
+   "text": "Show me a scared face.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "bazyl-face-scared": {
+   "text": "A scared face.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.273,
+   "cer": 0
+  },
+  "bazyl-emotions-sleepy": {
+   "text": "Show me a sleepy face.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.125,
+   "cer": 0
+  },
+  "bazyl-face-sleepy": {
+   "text": "A sleepy face.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.182,
+   "cer": 0
+  },
+  "bazyl-realm-workshop": {
+   "text": "Welcome to my workshop. Here we drag and arrange.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.167,
+   "cer": 0
+  },
+  "bazyl-patterns": {
+   "text": "What comes next? Drag the missing picture.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-shapes": {
+   "text": "Put each block into its hole.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.095,
+   "cer": 0
+  },
+  "bazyl-shape-circle": {
+   "text": "Circle.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.4,
+   "cer": 0
+  },
+  "bazyl-shape-square": {
+   "text": "Square.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0
+  },
+  "bazyl-shape-triangle": {
+   "text": "Triangle.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-shape-rectangle": {
+   "text": "A rectangle.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.182,
+   "cer": 0
+  },
+  "bazyl-shape-star": {
+   "text": "Star.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "bazyl-shape-heart": {
+   "text": "Heart.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "bazyl-shape-oval": {
+   "text": "Oval.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.2,
+   "cer": 0
+  },
+  "bazyl-shape-rhombus": {
+   "text": "Diamond.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.125,
+   "cer": 0
+  },
+  "bazyl-shape-moon": {
+   "text": "Moon.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-shape-drop": {
+   "text": "Drop.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-matching": {
+   "text": "What doesn't belong? Touch that picture.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.074,
+   "cer": 0
+  },
+  "bazyl-jigsaw": {
+   "text": "Finish the picture. Drag the pieces into their places.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.105,
+   "cer": 0
+  },
+  "bazyl-drag": {
+   "text": "Hold a picture with your finger and drag it to the box.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.146,
+   "cer": 0
+  },
+  "bazyl-sort-categories": {
+   "text": "Sort them. Each thing goes into its box.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.107,
+   "cer": 0
+  },
+  "bazyl-sort-colors": {
+   "text": "Put each thing into the bucket of the same color.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.031,
+   "cer": 0
+  },
+  "bazyl-sort-houses": {
+   "text": "Where do these animals live? Take each one to its home.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.105,
+   "cer": 0
+  },
+  "bazyl-sort-seasons": {
+   "text": "What do we wear in summer, and what in winter?",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-sort-size": {
+   "text": "Which animals are big, and which are small?",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.241,
+   "cer": 0
+  },
+  "bazyl-sort-motion": {
+   "text": "How do these things move? Sort them.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.136,
+   "cer": 0
+  },
+  "bazyl-category-fruit": {
+   "text": "Fruit goes here.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.182,
+   "cer": 0
+  },
+  "bazyl-category-vegetables": {
+   "text": "Vegetables go here.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.235,
+   "cer": 0
+  },
+  "bazyl-category-animals": {
+   "text": "Animals go here.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.231,
+   "cer": 0
+  },
+  "bazyl-category-vehicles": {
+   "text": "Vehicles go here.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.231,
+   "cer": 0
+  },
+  "bazyl-category-clothes": {
+   "text": "Clothes go here.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.167,
+   "cer": 0
+  },
+  "bazyl-category-kitchen": {
+   "text": "Kitchen things go here.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.125,
+   "cer": 0
+  },
+  "bazyl-category-toys": {
+   "text": "Toys go here.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.4,
+   "cer": 0
+  },
+  "bazyl-hue-red": {
+   "text": "Red bucket.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-hue-yellow": {
+   "text": "Yellow bucket.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-hue-green": {
+   "text": "Green bucket.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-hue-blue": {
+   "text": "Blue bucket.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-hue-orange": {
+   "text": "Orange bucket.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.091,
+   "cer": 0
+  },
+  "bazyl-hue-pink": {
+   "text": "Pink bucket.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-hue-purple": {
+   "text": "Purple bucket.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.1,
+   "cer": 0
+  },
+  "bazyl-hue-brown": {
+   "text": "Brown bucket.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-hue-white": {
+   "text": "White bucket.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-house-village": {
+   "text": "On the farm.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "bazyl-house-forest": {
+   "text": "In the forest.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.1,
+   "cer": 0
+  },
+  "bazyl-house-water": {
+   "text": "In the water.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.125,
+   "cer": 0
+  },
+  "bazyl-house-africa": {
+   "text": "In Africa.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.125,
+   "cer": 0
+  },
+  "bazyl-house-ice": {
+   "text": "Where there is ice and snow.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.111,
+   "cer": 0
+  },
+  "bazyl-season-summer": {
+   "text": "For summer.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.286,
+   "cer": 0
+  },
+  "bazyl-season-winter": {
+   "text": "For winter.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "bazyl-size-big": {
+   "text": "Big animals.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0
+  },
+  "bazyl-size-small": {
+   "text": "Little animals.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.167,
+   "cer": 0
+  },
+  "bazyl-motion-flies": {
+   "text": "Things that fly.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-motion-swims": {
+   "text": "Things that swim.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-motion-drives": {
+   "text": "Things that drive.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.083,
+   "cer": 0
+  },
+  "bazyl-color-red": {
+   "text": "Show me something red.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-color-yellow": {
+   "text": "Show me something yellow.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-color-green": {
+   "text": "Show me something green.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-color-blue": {
+   "text": "Show me something blue.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-color-orange": {
+   "text": "Show me something orange.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.059,
+   "cer": 0
+  },
+  "bazyl-color-pink": {
+   "text": "Show me something pink.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-color-purple": {
+   "text": "Show me something purple.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.062,
+   "cer": 0
+  },
+  "bazyl-color-brown": {
+   "text": "Show me something brown.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-color-white": {
+   "text": "Show me something white.",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-mother-chick": {
+   "text": "Where is the chick's mommy?",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.045
+  },
+  "bazyl-mother-calf": {
+   "text": "Where is the calf's mommy?",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.048
+  },
+  "bazyl-mother-kitten": {
+   "text": "Where is the kitten's mommy?",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.125,
+   "cer": 0
+  },
+  "bazyl-mother-lamb": {
+   "text": "Where is the lamb's mommy?",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.048
+  },
+  "bazyl-mother-piglet": {
+   "text": "Where is the piglet's mommy?",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-mother-foal": {
+   "text": "Where is the foal's mommy?",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.062,
+   "cer": 0.095
+  },
+  "bazyl-mother-duckling": {
+   "text": "Where is the duckling's mommy?",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-mother-tadpole": {
+   "text": "Where is the tadpole's mommy?",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.053,
+   "cer": 0
+  },
+  "bazyl-mother-fox-cub": {
+   "text": "Where is the fox cub's mommy?",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-mother-bear-cub": {
+   "text": "Where is the bear cub's mommy?",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-mother-penguin-chick": {
+   "text": "Where is the penguin chick's mommy?",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.034
+  },
+  "bazyl-mother-lion-cub": {
+   "text": "Where is the lion cub's mommy?",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-mother-kid-goat": {
+   "text": "Where is the baby goat's mommy?",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-mother-baby-giraffe": {
+   "text": "Where is the baby giraffe's mommy?",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.043,
+   "cer": 0.071
+  },
+  "bazyl-mother-seal-pup": {
+   "text": "Where is the seal pup's mommy?",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-mother-owlet": {
+   "text": "Where is the owlet's mommy?",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.059,
+   "cer": 0.045
+  },
+  "bazyl-mother-puppy": {
+   "text": "Where is the puppy's mommy?",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-mother-bunny": {
+   "text": "Where is the baby bunny's mommy?",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.038
+  },
+  "bazyl-mother-elephant-calf": {
+   "text": "Where is the baby elephant's mommy?",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.083,
+   "cer": 0
+  },
+  "bazyl-mother-baby-turtle": {
+   "text": "Where is the baby turtle's mommy?",
+   "voice": "Josh - Teacher for Kids",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.045,
+   "cer": 0
+  },
+  "lusia-letter-a-airplane": {
+   "text": "A is for airplane.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 3,
+   "per": 0.143,
+   "cer": 0
+  },
+  "lusia-letter-b-bear": {
+   "text": "B is for bear.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.3,
+   "cer": 0
+  },
+  "lusia-letter-b-butterfly": {
+   "text": "B is for butterfly.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.133,
+   "cer": 0
+  },
+  "lusia-letter-c-cow": {
+   "text": "C is for cow.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 3,
+   "per": 0.2,
+   "cer": 0.111
+  },
+  "lusia-letter-c-carrot": {
+   "text": "C is for carrot.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.333,
+   "cer": 0.083
+  },
+  "lusia-letter-d-duck": {
+   "text": "D is for duck.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.2,
+   "cer": 0.1
+  },
+  "lusia-letter-d-dolphin": {
+   "text": "D is for dolphin.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.154,
+   "cer": 0
+  },
+  "lusia-letter-e-egg": {
+   "text": "E is for egg.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "lusia-letter-e-emu": {
+   "text": "E is for emu.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.3,
+   "cer": 0
+  },
+  "lusia-letter-f-frog": {
+   "text": "F is for frog.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.182,
+   "cer": 0
+  },
+  "lusia-letter-f-fox": {
+   "text": "F is for fox.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.182,
+   "cer": 0
+  },
+  "lusia-letter-g-giraffe": {
+   "text": "G is for giraffe.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 4,
+   "per": 0.214,
+   "cer": 0.077
+  },
+  "lusia-letter-g-grapes": {
+   "text": "G is for grapes.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.143,
+   "cer": 0
+  },
+  "lusia-letter-h-hedgehog": {
+   "text": "H is for hedgehog.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.125,
+   "cer": 0
+  },
+  "lusia-letter-h-helicopter": {
+   "text": "H is for helicopter.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.167,
+   "cer": 0
+  },
+  "lusia-letter-i-igloo": {
+   "text": "I is for igloo.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.182,
+   "cer": 0.182
+  },
+  "lusia-letter-i-ice-cream": {
+   "text": "I is for ice cream.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.143,
+   "cer": 0
+  },
+  "lusia-letter-i-iguana": {
+   "text": "I is for iguana.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 3,
+   "per": 0.429,
+   "cer": 0
+  },
+  "lusia-letter-j-jacket": {
+   "text": "J is for jacket.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.133,
+   "cer": 0
+  },
+  "lusia-letter-j-jam": {
+   "text": "J is for jam.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.154,
+   "cer": 0
+  },
+  "lusia-letter-k-kitten": {
+   "text": "K is for kitten.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.333,
+   "cer": 0
+  },
+  "lusia-letter-k-kettle": {
+   "text": "K is for kettle.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.154,
+   "cer": 0
+  },
+  "lusia-letter-l-lemon": {
+   "text": "L is for lemon.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 3,
+   "per": 0.167,
+   "cer": 0
+  },
+  "lusia-letter-l-ladybug": {
+   "text": "L is for ladybug.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0.077
+  },
+  "lusia-letter-m-mouse": {
+   "text": "M is for mouse.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.182,
+   "cer": 0
+  },
+  "lusia-letter-m-moon": {
+   "text": "M is for moon.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0
+  },
+  "lusia-letter-n-nest": {
+   "text": "N is for nest.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.182,
+   "cer": 0
+  },
+  "lusia-letter-n-walnut": {
+   "text": "N is for nut.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0
+  },
+  "lusia-letter-o-octopus": {
+   "text": "O is for octopus.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.214,
+   "cer": 0
+  },
+  "lusia-letter-o-orange-fruit": {
+   "text": "O is for orange.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.231,
+   "cer": 0
+  },
+  "lusia-letter-p-penguin": {
+   "text": "P is for penguin.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.143,
+   "cer": 0.154
+  },
+  "lusia-letter-p-pear": {
+   "text": "P is for pear.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.3,
+   "cer": 0.2
+  },
+  "lusia-letter-q-queen": {
+   "text": "Q is for queen.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.167,
+   "cer": 0.182
+  },
+  "lusia-letter-q-quilt": {
+   "text": "Q is for quilt.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.154,
+   "cer": 0.091
+  },
+  "lusia-letter-r-rhino": {
+   "text": "R is for rhino.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.231,
+   "cer": 0
+  },
+  "lusia-letter-r-rainbow": {
+   "text": "R is for rainbow.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.214,
+   "cer": 0
+  },
+  "lusia-letter-s-snail": {
+   "text": "S is for snail.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "lusia-letter-s-strawberry": {
+   "text": "S is for strawberry.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0
+  },
+  "lusia-letter-t-train": {
+   "text": "T is for train.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.167,
+   "cer": 0.091
+  },
+  "lusia-letter-u-unicorn": {
+   "text": "U is for unicorn.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.267,
+   "cer": 0
+  },
+  "lusia-letter-u-ufo": {
+   "text": "U is for UFO.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.154,
+   "cer": 0
+  },
+  "lusia-letter-v-violin": {
+   "text": "V is for violin.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.143,
+   "cer": 0
+  },
+  "lusia-letter-v-van": {
+   "text": "V is for van.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0
+  },
+  "lusia-letter-v-vase": {
+   "text": "V is for vase.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.182,
+   "cer": 0.1
+  },
+  "lusia-letter-w-watermelon": {
+   "text": "W is for watermelon.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.19,
+   "cer": 0
+  },
+  "lusia-letter-w-walrus": {
+   "text": "W is for walrus.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.278,
+   "cer": 0.083
+  },
+  "lusia-letter-y-yacht": {
+   "text": "Y is for yacht.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.182,
+   "cer": 0.364
+  },
+  "lusia-letter-y-yak": {
+   "text": "Y is for yak.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 4,
+   "per": 0.182,
+   "cer": 0.222
+  },
+  "lusia-letter-z-zucchini": {
+   "text": "Z is for zucchini.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.231,
+   "cer": 0.357
+  },
+  "lusia-letter-t-turtle": {
+   "text": "T is for turtle.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.417,
+   "cer": 0.167
+  },
+  "lusia-letter-y-yo-yo": {
+   "text": "Y is for yo-yo.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.143,
+   "cer": 0.2
+  },
+  "lusia-letter-a-ant": {
+   "text": "A is for ant.",
+   "voice": "Hope - Vibrant, Warm and Innocent",
+   "model": "eleven_v4",
+   "seed": 3,
+   "per": 0.2,
+   "cer": 0
+  }
+ }
+}
