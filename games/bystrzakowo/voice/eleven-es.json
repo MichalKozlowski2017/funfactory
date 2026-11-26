@@ -4536,9 +4536,9 @@
    "text": "De... de dinosaurio.",
    "voice": "Gaby - Warm, Tender and Inviting",
    "model": "eleven_v4",
-   "seed": 2,
+   "seed": 3,
    "per": 0.071,
-   "cer": 0.071
+   "cer": 0
   },
   "lusia-letter-d-dolphin": {
    "text": "De... de delfín.",
@@ -4552,8 +4552,8 @@
    "text": "De... de dado.",
    "voice": "Gaby - Warm, Tender and Inviting",
    "model": "eleven_v4",
-   "seed": 1,
-   "per": 0.25,
+   "seed": 3,
+   "per": 0.125,
    "cer": 0
   },
   "lusia-letter-e-elephant": {
@@ -4656,17 +4656,17 @@
    "text": "I... de iglú.",
    "voice": "Gaby - Warm, Tender and Inviting",
    "model": "eleven_v4",
-   "seed": 1,
-   "per": 0.286,
+   "seed": 3,
+   "per": 0.143,
    "cer": 0.286
   },
   "lusia-letter-i-iguana": {
    "text": "I... de iguana.",
    "voice": "Gaby - Warm, Tender and Inviting",
    "model": "eleven_v4",
-   "seed": 1,
-   "per": 0.333,
-   "cer": 0.222
+   "seed": 3,
+   "per": 0.222,
+   "cer": 0.111
   },
   "lusia-letter-i-magnet": {
    "text": "I... de imán.",
@@ -4784,9 +4784,9 @@
    "text": "Ene... de nube.",
    "voice": "Gaby - Warm, Tender and Inviting",
    "model": "eleven_v4",
-   "seed": 5,
+   "seed": 4,
    "per": 0.222,
-   "cer": 0.111
+   "cer": 0.222
   },
   "lusia-letter-n-nest": {
    "text": "Ene... de nido.",
@@ -4800,17 +4800,17 @@
    "text": "Eñe... de ñandú.",
    "voice": "Gaby - Warm, Tender and Inviting",
    "model": "eleven_v4",
-   "seed": 1,
+   "seed": 3,
    "per": 0,
-   "cer": 0.1
+   "cer": 0
   },
   "lusia-letter-ny-gnu": {
    "text": "Eñe... de ñu.",
    "voice": "Gaby - Warm, Tender and Inviting",
    "model": "eleven_v4",
-   "seed": 1,
-   "per": 0.143,
-   "cer": 0.571
+   "seed": 3,
+   "per": 0,
+   "cer": 0.429
   },
   "lusia-letter-o-sheep": {
    "text": "O... de oveja.",
@@ -4864,9 +4864,9 @@
    "text": "Erre... de rana.",
    "voice": "Gaby - Warm, Tender and Inviting",
    "model": "eleven_v4",
-   "seed": 2,
+   "seed": 3,
    "per": 0.222,
-   "cer": 0.3
+   "cer": 0.2
   },
   "lusia-letter-r-mouse": {
    "text": "Erre... de ratón.",
@@ -4904,8 +4904,8 @@
    "text": "Ese... de sombrero.",
    "voice": "Gaby - Warm, Tender and Inviting",
    "model": "eleven_v4",
-   "seed": 1,
-   "per": 0.077,
+   "seed": 3,
+   "per": 0,
    "cer": 0
   },
   "lusia-letter-t-turtle": {
@@ -4928,9 +4928,9 @@
    "text": "Te... de tomate.",
    "voice": "Gaby - Warm, Tender and Inviting",
    "model": "eleven_v4",
-   "seed": 2,
-   "per": 0,
-   "cer": 0.1
+   "seed": 4,
+   "per": 0.1,
+   "cer": 0
   },
   "lusia-letter-u-grapes": {
    "text": "U... de uvas.",
@@ -4944,9 +4944,9 @@
    "text": "U... de unicornio.",
    "voice": "Gaby - Warm, Tender and Inviting",
    "model": "eleven_v4",
-   "seed": 1,
+   "seed": 4,
    "per": 0.167,
-   "cer": 0.083
+   "cer": 0
   },
   "lusia-letter-v-cow": {
    "text": "Uve... de vaca.",
@@ -4968,24 +4968,24 @@
    "text": "Uve... de vaso de leche.",
    "voice": "Gaby - Warm, Tender and Inviting",
    "model": "eleven_v4",
-   "seed": 1,
-   "per": 0.188,
-   "cer": 0.125
+   "seed": 3,
+   "per": 0.25,
+   "cer": 0.062
   },
   "lusia-letter-y-yo-yo": {
    "text": "Ye... de yoyó.",
    "voice": "Gaby - Warm, Tender and Inviting",
    "model": "eleven_v4",
-   "seed": 1,
-   "per": 0.625,
+   "seed": 4,
+   "per": 0.5,
    "cer": 0.125
   },
   "lusia-letter-y-yacht": {
    "text": "Ye... de yate.",
    "voice": "Gaby - Warm, Tender and Inviting",
    "model": "eleven_v4",
-   "seed": 2,
-   "per": 0.625,
+   "seed": 4,
+   "per": 0.5,
    "cer": 0
   },
   "lusia-letter-y-yogurt": {
@@ -5008,8 +5008,8 @@
    "text": "Zeta... de zanahoria.",
    "voice": "Gaby - Warm, Tender and Inviting",
    "model": "eleven_v4",
-   "seed": 1,
-   "per": 0.071,
+   "seed": 4,
+   "per": 0,
    "cer": 0.133
   },
   "lusia-letter-z-shoe": {

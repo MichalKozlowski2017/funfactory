@@ -1560,9 +1560,9 @@
    "text": "Kat... ze... ... Katze.",
    "voice": "Julia - Cheerful and Fun",
    "model": "eleven_v4",
-   "seed": 1,
-   "per": 0.273,
-   "cer": 0.2
+   "seed": 4,
+   "per": 0.182,
+   "cer": 0.1
   },
   "lusia-read-mug": {
    "text": "Tas... se... ... Tasse.",
@@ -4496,9 +4496,9 @@
    "text": "A... wie Apfel.",
    "voice": "Julia - Cheerful and Fun",
    "model": "eleven_v4",
-   "seed": 1,
-   "per": 0.125,
-   "cer": 0.111
+   "seed": 4,
+   "per": 0.25,
+   "cer": 0
   },
   "lusia-letter-a-car": {
    "text": "A... wie Auto.",
@@ -4512,9 +4512,9 @@
    "text": "Be... wie Banane.",
    "voice": "Julia - Cheerful and Fun",
    "model": "eleven_v4",
-   "seed": 1,
+   "seed": 3,
    "per": 0.1,
-   "cer": 0.182
+   "cer": 0.091
   },
   "lusia-letter-b-bee": {
    "text": "Be... wie Biene.",
@@ -4536,9 +4536,9 @@
    "text": "Ce... wie Clown.",
    "voice": "Julia - Cheerful and Fun",
    "model": "eleven_v4",
-   "seed": 1,
-   "per": 0.444,
-   "cer": 0.1
+   "seed": 3,
+   "per": 0.333,
+   "cer": 0.2
   },
   "lusia-letter-c-computer": {
    "text": "Ce... wie Computer.",
@@ -4560,16 +4560,16 @@
    "text": "De... wie Dinosaurier.",
    "voice": "Julia - Cheerful and Fun",
    "model": "eleven_v4",
-   "seed": 1,
-   "per": 0.143,
+   "seed": 3,
+   "per": 0.071,
    "cer": 0.062
   },
   "lusia-letter-d-dolphin": {
    "text": "De... wie Delfin.",
    "voice": "Julia - Cheerful and Fun",
    "model": "eleven_v4",
-   "seed": 1,
-   "per": 0.2,
+   "seed": 3,
+   "per": 0.1,
    "cer": 0.091
   },
   "lusia-letter-d-kite": {
@@ -4680,9 +4680,9 @@
    "text": "I... wie Iglu.",
    "voice": "Julia - Cheerful and Fun",
    "model": "eleven_v4",
-   "seed": 1,
+   "seed": 3,
    "per": 0.143,
-   "cer": 0.125
+   "cer": 0
   },
   "lusia-letter-i-island": {
    "text": "I... wie Insel.",
@@ -4840,9 +4840,9 @@
    "text": "Pe... wie Pferd.",
    "voice": "Julia - Cheerful and Fun",
    "model": "eleven_v4",
-   "seed": 1,
-   "per": 0.111,
-   "cer": 0.1
+   "seed": 4,
+   "per": 0,
+   "cer": 0.2
   },
   "lusia-letter-p-penguin": {
    "text": "Pe... wie Pinguin.",
@@ -4896,17 +4896,17 @@
    "text": "Es... wie Seepferdchen.",
    "voice": "Julia - Cheerful and Fun",
    "model": "eleven_v4",
-   "seed": 1,
+   "seed": 3,
    "per": 0.231,
-   "cer": 0.059
+   "cer": 0
   },
   "lusia-letter-t-tomato": {
    "text": "Te... wie Tomate.",
    "voice": "Julia - Cheerful and Fun",
    "model": "eleven_v4",
-   "seed": 1,
+   "seed": 3,
    "per": 0.1,
-   "cer": 0.273
+   "cer": 0.182
   },
   "lusia-letter-t-tractor": {
    "text": "Te... wie Traktor.",
@@ -5024,9 +5024,9 @@
    "text": "Zett... wie Zitrone.",
    "voice": "Julia - Cheerful and Fun",
    "model": "eleven_v4",
-   "seed": 1,
+   "seed": 3,
    "per": 0.143,
-   "cer": 0.143
+   "cer": 0.071
   },
   "lusia-letter-z-train": {
    "text": "Zett... wie Zug.",
