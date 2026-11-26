@@ -125,7 +125,7 @@ export class Card extends Container {
 }
 
 /** Button icons (drawn with Graphics, no text: the child does not read). */
-export type Icon = 'home' | 'next' | 'plus' | 'landscape' | 'gallery' | 'trash';
+export type Icon = 'home' | 'next' | 'plus' | 'landscape' | 'gallery' | 'trash' | 'zoom-out';
 
 /** Round button with an icon drawn with Graphics. */
 export class IconButton extends Container {
@@ -165,6 +165,11 @@ export class IconButton extends Container {
         g.roundRect(dx - r * 0.7, dy - r * 0.55, r * 1.4, r * 1.1, r * 0.18).fill({ color: c }).stroke({ color: COLORS.ink, width: 4 });
       g.poly([-r * 0.75, r * 0.65, -r * 0.35, r * 0.1, -r * 0.05, r * 0.45, r * 0.15, r * 0.25, r * 0.5, r * 0.65]).fill({ color: 0x7ad35a });
       g.circle(r * 0.25, -r * 0.1, r * 0.13).fill({ color: COLORS.sun });
+    } else if (icon === 'zoom-out') {
+      // Magnifying glass with a minus.
+      g.moveTo(r * 0.25, r * 0.25).lineTo(r * 0.85, r * 0.85).stroke({ color: COLORS.ink, width: r * 0.36, cap: 'round' });
+      g.circle(-r * 0.15, -r * 0.15, r * 0.62).fill({ color: 0xffffff }).stroke({ color: COLORS.ink, width: 5 });
+      g.roundRect(-r * 0.47, -r * 0.24, r * 0.64, r * 0.18, r * 0.08).fill({ color: COLORS.ink });
     } else {
       // Trash can.
       g.roundRect(-r * 0.6, -r * 0.45, r * 1.2, r * 1.25, r * 0.15).fill({ color: 0xffffff }).stroke({ color: COLORS.ink, width: 4 });

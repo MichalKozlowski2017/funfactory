@@ -157,7 +157,8 @@ export function mergeThin(labels: Int32Array, sizes: number[], w: number, h: num
  *   the longest border with, preferably not the background) is painted;
  * - `keepWhite`: tiny details (under `highlight` pixels, e.g. glints in the eyes) stay white;
  * - `pixels[l]`: pixel indices of region l (filling without scanning the whole picture);
- * - `center[l]`: a pixel of the region nearest to its centroid (sparkles).
+ * - `center[l]`: a pixel of the region nearest to its centroid (sparkles);
+ * - `radius[l]`: inscribed radius in pixels (how wide the part is for a finger).
  */
 export interface PageRegions {
   labels: Int32Array;
@@ -168,6 +169,7 @@ export interface PageRegions {
   parent: Int32Array;
   pixels: Int32Array[];
   center: [number, number][];
+  radius: number[];
 }
 
 export function buildRegions(w: number, h: number, dark: (i: number) => boolean, o: { speck?: number; detailRadius?: number; detailArea?: number; highlight?: number; reach?: number } = {}): PageRegions {
@@ -249,7 +251,7 @@ export function buildRegions(w: number, h: number, dark: (i: number) => boolean,
     }
     return [best % w, (best - (best % w)) / w];
   });
-  return { labels, sizes, background, detail, keepWhite, parent, pixels, center };
+  return { labels, sizes, background, detail, keepWhite, parent, pixels, center, radius: thick };
 }
 
 /**
@@ -259,6 +261,14 @@ export function buildRegions(w: number, h: number, dark: (i: number) => boolean,
  * `share` = the winner's part of all votes (a smeared finger only paints when it is clearly inside one region).
  */
 export function pickRegion(labels: Int32Array, w: number, h: number, x: number, y: number, r: number): { region: number; share: number } {
+  let region = 0;
+  let share = 0;
+  for (const [l, v] of fingerVotes(labels, w, h, x, y, r)) if (v > share) (share = v), (region = l);
+  return { region, share };
+}
+
+/** Share of the fingertip's votes for each region under it (Gaussian weights, sigma r/2; shares add up to 1). */
+export function fingerVotes(labels: Int32Array, w: number, h: number, x: number, y: number, r: number): Map<number, number> {
   const votes = new Map<number, number>();
   const s2 = 2 * (r / 2) ** 2;
   let total = 0;
@@ -277,10 +287,30 @@ export function pickRegion(labels: Int32Array, w: number, h: number, x: number, 
       votes.set(l, (votes.get(l) ?? 0) + wgt);
       total += wgt;
     }
-  let region = 0;
-  let best = 0;
-  for (const [l, v] of votes) if (v > best) (best = v), (region = l);
-  return { region, share: total ? best / total : 0 };
+  for (const [l, v] of votes) votes.set(l, v / total);
+  return votes;
+}
+
+/**
+ * A touch in a crowd of small parts: the finger covers a clear share (`minShare`) of a part narrower than `minRadius`
+ * pixels (an inscribed radius), so it cannot tell which part the child means. Returns the radius of the narrowest such part
+ * (to pick the zoom that makes it finger-sized), or 0 when the touch is clear. `skip`: parts that never count (glints).
+ */
+export function tinyUnderFinger(votes: Map<number, number>, radius: number[], minRadius: number, skip: (l: number) => boolean = () => false, minShare = 0.2): number {
+  let tiny = 0;
+  for (const [l, v] of votes) {
+    const r = radius[l] ?? 0;
+    if (v < minShare || skip(l) || r >= minRadius) continue;
+    if (!tiny || r < tiny) tiny = Math.max(1, r);
+  }
+  return tiny;
+}
+
+/** Zoom-view focus (point of the picture at the centre of the frame, picture coordinates from its centre) kept so the
+ * zoomed picture always covers the frame: |focus| <= half * (1 - 1/zoom). */
+export function clampFocus(focus: number, half: number, zoom: number): number {
+  const m = half * (1 - 1 / Math.max(1, zoom));
+  return Math.max(-m, Math.min(m, focus));
 }
 
 /** Colour for a magic detail: a lighter shade of the parent's colour (a darker one for very light colours). */
@@ -301,4 +331,77 @@ export function shadesOf(color: number): [number, number, number] {
   };
   if (color === 0xffffff) return [0xffffff, 0xd6d6d6, 0x9e9e9e];
   return [mix(color, 0xffffff, 0.45), color, mix(color, 0x000000, 0.35)];
+}
+
+/**
+ * Smooth outlines for display at twice the working size (zoomed in, 1 working pixel would be a visible step):
+ * the line mask is blurred a little (1-2-1), upsampled bilinearly and turned into a soft edge around 0.5, so the stairs
+ * of the 1-bit drawing become curves. `alpha`: ink coverage of each display pixel (0..255); `src`: the working pixel
+ * whose colour fills it (the nearest non-line one of its bilinear neighbours; -1 = pure line).
+ */
+export function smoothLines(w: number, h: number, dark: (i: number) => boolean): { alpha: Uint8Array; src: Int32Array } {
+  const m = new Float32Array(w * h);
+  for (let i = 0; i < w * h; i++) m[i] = dark(i) ? 1 : 0;
+  // Separable 1-2-1 blur.
+  const t = new Float32Array(w * h);
+  for (let y = 0; y < h; y++)
+    for (let x = 0; x < w; x++) {
+      const i = y * w + x;
+      t[i] = (m[x > 0 ? i - 1 : i]! + 2 * m[i]! + m[x < w - 1 ? i + 1 : i]!) / 4;
+    }
+  for (let y = 0; y < h; y++)
+    for (let x = 0; x < w; x++) {
+      const i = y * w + x;
+      m[i] = (t[y > 0 ? i - w : i]! + 2 * t[i]! + t[y < h - 1 ? i + w : i]!) / 4;
+    }
+  const W = w * 2;
+  const H = h * 2;
+  const alpha = new Uint8Array(W * H);
+  const src = new Int32Array(W * H);
+  for (let Y = 0; Y < H; Y++) {
+    const fy = Math.max(0, Math.min(h - 1, (Y + 0.5) / 2 - 0.5));
+    const y0 = Math.floor(fy);
+    const y1 = Math.min(h - 1, y0 + 1);
+    const ty = fy - y0;
+    for (let X = 0; X < W; X++) {
+      const fx = Math.max(0, Math.min(w - 1, (X + 0.5) / 2 - 0.5));
+      const x0 = Math.floor(fx);
+      const x1 = Math.min(w - 1, x0 + 1);
+      const tx = fx - x0;
+      const n = [y0 * w + x0, y0 * w + x1, y1 * w + x0, y1 * w + x1] as const;
+      const k = [(1 - tx) * (1 - ty), tx * (1 - ty), (1 - tx) * ty, tx * ty] as const;
+      const v = m[n[0]]! * k[0] + m[n[1]]! * k[1] + m[n[2]]! * k[2] + m[n[3]]! * k[3];
+      let best = -1;
+      let bw = -1;
+      for (let j = 0; j < 4; j++) if (!dark(n[j]!) && k[j]! > bw) (bw = k[j]!), (best = n[j]!);
+      // The soft edge sits a bit outside the 0.5 contour, so 1-2 px lines keep full ink after the blur.
+      const e = Math.max(0, Math.min(1, (v - 0.15) / 0.3));
+      const o = Y * W + X;
+      src[o] = best;
+      alpha[o] = best < 0 ? 255 : Math.round(e * e * (3 - 2 * e) * 255);
+    }
+  }
+  return { alpha, src };
+}
+
+/** Display image (2× size, see smoothLines): each pixel is its working pixel's colour under the ink. */
+export function composeSmooth(pixels: Uint8ClampedArray, alpha: Uint8Array, src: Int32Array, out: Uint8ClampedArray, ink: number): void {
+  const ir = (ink >> 16) & 255;
+  const ig = (ink >> 8) & 255;
+  const ib = ink & 255;
+  for (let o = 0; o < alpha.length; o++) {
+    const s = src[o]!;
+    const a = alpha[o]! / 255;
+    const q = o * 4;
+    if (s < 0) {
+      out[q] = ir;
+      out[q + 1] = ig;
+      out[q + 2] = ib;
+    } else {
+      out[q] = pixels[s * 4]! + (ir - pixels[s * 4]!) * a;
+      out[q + 1] = pixels[s * 4 + 1]! + (ig - pixels[s * 4 + 1]!) * a;
+      out[q + 2] = pixels[s * 4 + 2]! + (ib - pixels[s * 4 + 2]!) * a;
+    }
+    out[q + 3] = 255;
+  }
 }

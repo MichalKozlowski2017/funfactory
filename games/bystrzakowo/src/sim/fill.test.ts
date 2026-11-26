@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { buildRegions, detailShade, labelRegions, mergeThin, pickRegion, regionAt } from './fill.ts';
+import { buildRegions, clampFocus, detailShade, fingerVotes, labelRegions, mergeThin, pickRegion, regionAt, smoothLines, tinyUnderFinger } from './fill.ts';
 
 /** Picture from text: '#' is a line, the rest is background. */
 function grid(rows: string[]) {
@@ -72,6 +72,31 @@ describe('coloring regions (magic details)', () => {
     expect(pickRegion(p.labels, W, W, 4, 15, 4).region).toBe(at(5, 5));
     // Precisely inside the detail: the detail.
     expect(pickRegion(p.labels, W, W, 12, 12, 3).region).toBe(at(12, 12));
+  });
+
+  it('a finger over a small part asks for a zoom, a touch in the middle of a big part does not', () => {
+    const big = fingerVotes(p.labels, W, W, 5, 5, 3);
+    expect(tinyUnderFinger(big, p.radius, 5)).toBe(0);
+    const crowd = fingerVotes(p.labels, W, W, 12, 12, 6);
+    expect(tinyUnderFinger(crowd, p.radius, 5)).toBeGreaterThan(0);
+    // Skipped parts (glints) never count.
+    expect(tinyUnderFinger(crowd, p.radius, 5, () => true)).toBe(0);
+    const sum = [...crowd.values()].reduce((a, b) => a + b, 0);
+    expect(sum).toBeCloseTo(1, 6);
+  });
+
+  it('smooth display lines: ink inside the line, paint of the part outside', () => {
+    const s = smoothLines(W, W, dark);
+    const at2 = (x: number, y: number) => 2 * y * 2 * W + 2 * x;
+    expect(s.alpha[at2(3, 15)]).toBeGreaterThan(200);
+    expect(s.alpha[at2(6, 6)]).toBe(0);
+    expect(p.labels[s.src[at2(6, 6)]!]).toBe(at(6, 6));
+  });
+
+  it('the zoomed picture always covers the frame', () => {
+    expect(clampFocus(500, 320, 1)).toBe(0);
+    expect(clampFocus(500, 320, 2)).toBe(160);
+    expect(clampFocus(-50, 320, 2)).toBe(-50);
   });
 
   it('detail shade is lighter for dark colours and darker for light ones', () => {

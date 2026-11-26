@@ -179,6 +179,8 @@ Uwaga od testerów: małych pól nie da się trafić, a dotknięcie koloruje te�
 - przesuwanie palca koloruje dalsze części dopiero po wyraźnym ruchu (28 jednostek) i tylko tam, gdzie palec jest wyraźnie w jednej części.
 - **odcienie**: pod paletą 12 kolorów rząd trzech odcieni wybranego koloru (jasny, zwykły, ciemny; `shadesOf`), razem 36; przycisk „gotowe” w prawym górnym rogu;
 - **sceny** (2026-11-26): 9 całych scen do kolorowania obok 12 pojedynczych obrazków (plaża, las, ogród, plac zabaw, staw, podwodny świat, kosmos, pociąg, zima), `gen-art.ts --coloring-scenes`; z 30 wariantów wybrane po liczbie pól do dotknięcia i drobiazgów oraz symulacji pokolorowania (farma odpadła: stodoła zamalowana na czarno).
+- **sama lupa** (2026-11-26, uwaga właściciela: drobnych części scen nie da się kliknąć; na iPhonie okienko ma 15–20 pt, palec ok. 45 pt): dotknięcie, pod którym jest wyraźnie (≥ 20% głosów palca) część węższa niż 24 pt na ekranie, nie maluje, tylko płynnie powiększa obrazek wokół palca (2–3,5×, tak żeby ta część miała ok. 40 pt). Po powiększeniu dotknięcie maluje; przycisk lupy z minusem w rogu ramki oddala. Szczypanie i przesuwanie dwoma palcami działa zawsze (1–4×), a farba z pierwszego palca szczypnięcia jest cofana. Próg 12 pt (promień) wybrany symulacją: powiększenie przy 0–36% dotknięć na pojedynczych obrazkach i 17–65% na scenach (`fingerVotes`, `tinyUnderFinger`, `clampFocus`);
+- **gładkie linie**: obrazek pracuje w 640 px, ale wyświetla się w 1280 px z wygładzonymi konturami (`smoothLines`, `composeSmooth`), więc po powiększeniu linie nie są schodkowe.
 
 ## Lektor z ElevenLabs (2026-11-26)
 
@@ -263,7 +265,7 @@ Kod: `src/sim/realms.ts` (krainy i zabawy), `src/scenes/world.ts` (świat), `src
 | Polana Zagadek | cienie, co nie pasuje, liczenie, kolory, głoski, mamy i dzieci, memory (pary; na końcu obrazek i cień), emocje (minki) |
 | Warsztat Bazyla | segregowanie (6 reguł), układanka, co dalej (wzory), sorter kształtów, sylaby (21 słów), historyjki obrazkowe (6 × 3 kadry) |
 | Ścieżka Lusi | łączenie kropek, labirynt, litery po śladzie (12), cyfry po śladzie (0–9, potem liczenie) |
-| Pracownia Malucha | kolorowanka (12 stron), naklejanka (scena z zebranych naklejek), melodia (cymbałki, powtórz) |
+| Pracownia Malucha | kolorowanka (12 obrazków i 9 scen, lupa), naklejanka (scena z zebranych naklejek), melodia (cymbałki, powtórz) |
 
 Strefa rodzica: muzyka, limit czasu zabawy (15/30/45 min, potem „Dobranoc”, odblokowanie zębatką), zerowanie postępów. Przy pierwszym uruchomieniu Bazyl pokazuje zakładki krain.
 
