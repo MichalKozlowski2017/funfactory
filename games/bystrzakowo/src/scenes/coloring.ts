@@ -2,7 +2,7 @@ import { Assets, Container, Graphics, Rectangle, Sprite, type FederatedPointerEv
 import { haptics } from '@funfactory/core';
 import { pixelsToTexture, popIn, pulse, squash } from '@funfactory/kit2d';
 import { say } from '../assets.ts';
-import { labelRegions, mergeThin, regionAt } from '../sim/fill.ts';
+import { buildRegions, detailShade, pickRegion, type PageRegions } from '../sim/fill.ts';
 import { today } from '../log.ts';
 import { addPainting, pixelsToJpeg } from '../picture.ts';
 import { state } from '../state.ts';
@@ -17,14 +17,16 @@ const SIZE = 640;
 /** Paints: saturated but soft (like plasticine). */
 const PAINTS = [0xe8413c, 0xff8a2b, 0xffd23f, 0x7ad35a, 0x2f9e5b, 0x5cb3ff, 0x3d6bff, 0x9b5de5, 0xff8fc0, 0x9a6236, 0xffffff, 0x4a4a4a];
 const URL_BASE = import.meta.env.BASE_URL;
-/** Narrowest area you can hit with a finger (radius in pixels of the 640 picture); narrower ones merge into a neighbor. */
-const MIN_RADIUS = 18;
-/** Touching a line or a tiny area picks the nearest area within this radius. */
-const TAP_REACH = 26;
+/** Fingertip radius (game units): every pixel under it votes for the area the child means (sim/fill.ts pickRegion). */
+const FINGER = 30;
+/** Moving the finger farther than this (game units) starts "smearing": further areas under the finger get painted. */
+const SMEAR_START = 28;
 
 /**
  * Coloring (Little Studio): picking a paint from the palette and touching an area of the picture fills the whole region
  * between the outlines. No wrong answers; the green arrow finishes the picture (sticker).
+ * Small details (too small for a finger: the inside of an ear, spots, buttons) are "magic": they colour themselves with a
+ * lighter shade when the part they lie on is painted (sparkles). A precise touch can still paint a detail on its own.
  */
 export class ColoringScene extends RoundScene {
   readonly id = 'coloring';
@@ -32,6 +34,11 @@ export class ColoringScene extends RoundScene {
   private pixels!: ImageData;
   private labels!: Int32Array;
   private sizes: number[] = [];
+  private regions!: PageRegions;
+  /** Colour of each painted region; details painted by the child keep their own colour. */
+  private readonly colorOf = new Map<number, number>();
+  private readonly manual = new Set<number>();
+  private downAt: { x: number; y: number } | null = null;
   private dark!: Uint8Array;
   private picture!: Sprite;
   private readonly palette = new Container();
@@ -92,10 +99,11 @@ export class ColoringScene extends RoundScene {
       d[i * 4] = d[i * 4 + 1] = d[i * 4 + 2] = v;
       d[i * 4 + 3] = 255;
     }
-    const r = labelRegions(SIZE, SIZE, (i) => this.dark[i] === 1);
-    const m = mergeThin(r.labels, r.sizes, SIZE, SIZE, MIN_RADIUS, 22);
-    this.labels = m.labels;
-    this.sizes = m.sizes;
+    this.regions = buildRegions(SIZE, SIZE, (i) => this.dark[i] === 1);
+    this.labels = this.regions.labels;
+    this.sizes = this.regions.sizes;
+    this.colorOf.clear();
+    this.manual.clear();
   }
 
   protected promptLine(): string {
@@ -109,14 +117,24 @@ export class ColoringScene extends RoundScene {
     this.picture.eventMode = 'static';
     this.picture.cursor = 'pointer';
     // A tap fills an area; moving the finger ("smearing", as toddlers do) fills further areas under the finger.
+    // A small wobble of the finger during a tap must not paint the neighbouring part: smearing starts after a clear move.
     this.picture.on('pointerdown', (e) => {
-      this.smearing = true;
+      this.smearing = false;
+      this.downAt = { x: e.global.x, y: e.global.y };
       this.lastRegion = -1;
-      this.tap(e);
+      this.tap(e, false);
     });
-    this.picture.on('globalpointermove', (e) => this.smearing && this.tap(e));
-    this.picture.on('pointerup', () => (this.smearing = false));
-    this.picture.on('pointerupoutside', () => (this.smearing = false));
+    this.picture.on('globalpointermove', (e) => {
+      if (!this.downAt) return;
+      if (!this.smearing) {
+        const k = this.game.view.width / this.game.app.screen.width;
+        this.smearing = Math.hypot(e.global.x - this.downAt.x, e.global.y - this.downAt.y) * k > SMEAR_START;
+      }
+      if (this.smearing) this.tap(e, true);
+    });
+    const up = () => ((this.smearing = false), (this.downAt = null));
+    this.picture.on('pointerup', up);
+    this.picture.on('pointerupoutside', up);
     const frame = new Graphics();
     frame.label = 'frame';
     frame.eventMode = 'none';
@@ -154,29 +172,33 @@ export class ColoringScene extends RoundScene {
     this.drawPalette();
   }
 
-  private tap(e: FederatedPointerEvent): void {
+  private tap(e: FederatedPointerEvent, smear = false): void {
     if (this.busy) return;
     this.idle = 0;
     const p = this.picture.toLocal(e.global);
     const k = SIZE / this.picture.texture.width;
     const x = (p.x + this.picture.texture.width / 2) * k;
     const y = (p.y + this.picture.texture.height / 2) * k;
-    const region = regionAt(this.labels, this.sizes, SIZE, SIZE, x, y, 60, TAP_REACH);
-    if (!region || region === this.lastRegion) return;
+    // Fingertip in picture pixels (the picture is scaled to the screen).
+    const reach = Math.max(6, Math.round(FINGER / Math.max(0.1, this.picture.scale.x)));
+    const pick = pickRegion(this.labels, SIZE, SIZE, x, y, smear ? Math.round(reach * 0.6) : reach);
+    // Smearing paints only where the finger is clearly inside one part (not along a line between two).
+    if (!pick.region || (smear && pick.share < 0.75)) return;
+    const region = pick.region;
+    if (region === this.lastRegion) return;
     this.lastRegion = region;
-    const d = this.pixels.data;
-    const r = (this.paint >> 16) & 255;
-    const g = (this.paint >> 8) & 255;
-    const b = this.paint & 255;
     // Area already in this color: nothing to do (when smearing, the finger returns to the same areas).
-    const first = this.labels.indexOf(region);
-    if (first >= 0 && d[first * 4] === r && d[first * 4 + 1] === g && d[first * 4 + 2] === b) return;
-    for (let i = 0; i < SIZE * SIZE; i++)
-      if (this.labels[i] === region) {
-        d[i * 4] = r;
-        d[i * 4 + 1] = g;
-        d[i * 4 + 2] = b;
-      }
+    if (this.colorOf.get(region) === this.paint) return;
+    if (this.regions.detail[region]) this.manual.add(region);
+    this.paintRegion(region, this.paint);
+    // Magic details: parts too small for a finger take a shade of the part they lie on (unless painted by hand).
+    const magic: number[] = [];
+    if (!this.regions.detail[region])
+      for (let d = 1; d < this.sizes.length; d++)
+        if (this.regions.parent[d] === region && !this.manual.has(d) && !this.regions.keepWhite[d]) {
+          this.paintRegion(d, detailShade(this.paint));
+          magic.push(d);
+        }
     const v = ++this.version;
     void pixelsToTexture(this.pixels).then((t) => {
       if (v !== this.version || this.picture.destroyed) return t.destroy(true);
@@ -184,6 +206,14 @@ export class ColoringScene extends RoundScene {
       this.picture.texture = t;
       if (old !== t) old.destroy(true);
     });
+    magic.forEach((d, i) =>
+      this.timers.after(0.08 + i * 0.06, () => {
+        const [cx, cy] = this.regions.center[d]!;
+        const at = this.layer.toLocal(this.picture.toGlobal({ x: cx / k - this.picture.texture.width / 2, y: cy / k - this.picture.texture.height / 2 }));
+        this.particles.burst(at.x, at.y, { count: 6, speed: [40, 120], life: [0.25, 0.5], gravity: 0, scale: [0.4, 0.8], colors: [0xffffff, 0xfff3b0] });
+      }),
+    );
+    if (magic.length) this.timers.after(0.1, () => sfx.pop(this.game.sound, 1.6));
     this.fills++;
     haptics.tap();
     sfx.plop(this.game.sound);
@@ -213,17 +243,30 @@ export class ColoringScene extends RoundScene {
     this.solved();
   }
 
+  /** Fill one region with a colour (pixels only; the texture is refreshed by the caller). */
+  private paintRegion(region: number, color: number): void {
+    const d = this.pixels.data;
+    const r = (color >> 16) & 255;
+    const g = (color >> 8) & 255;
+    const b = color & 255;
+    for (const i of this.regions.pixels[region]!) {
+      d[i * 4] = r;
+      d[i * 4 + 1] = g;
+      d[i * 4 + 2] = b;
+    }
+    this.colorOf.set(region, color);
+  }
+
   /** Store screenshots: several of the largest regions (without the background) in different colors. */
   paintDemo(n = 8): void {
-    const bg = this.labels[0]!;
-    const regions = this.sizes.map((size, r) => ({ size, r })).filter((x) => x.r !== bg && x.r > 0 && x.size > 0).sort((a, b) => b.size - a.size).slice(0, n);
+    const bg = this.regions.background;
+    const regions = this.sizes.map((size, r) => ({ size, r })).filter((x) => x.r !== bg && x.r > 0 && x.size > 0 && !this.regions.detail[x.r]).sort((a, b) => b.size - a.size).slice(0, n);
     const k = SIZE / this.picture.texture.width;
     regions.forEach(({ r }, i) => {
-      const at = this.labels.indexOf(r);
-      const x = (at % SIZE) / k - this.picture.texture.width / 2;
-      const y = Math.floor(at / SIZE) / k - this.picture.texture.height / 2;
+      const [cx, cy] = this.regions.center[r]!;
       this.choose(PAINTS[(i * 3 + 2) % 9]!);
-      this.tap({ global: this.picture.toGlobal({ x, y }) } as FederatedPointerEvent);
+      this.lastRegion = -1;
+      this.tap({ global: this.picture.toGlobal({ x: cx / k - this.picture.texture.width / 2, y: cy / k - this.picture.texture.height / 2 }) } as FederatedPointerEvent);
     });
   }
 
@@ -242,7 +285,7 @@ export class ColoringScene extends RoundScene {
 
   /** Point inside the largest area of the picture (scene coordinates). */
   private bigSpot(): { x: number; y: number } | null {
-    const bg = this.labels[0]!;
+    const bg = this.regions.background;
     let best = -1;
     for (let r = 1; r < this.sizes.length; r++) if (r !== bg && (best < 0 || this.sizes[r]! > this.sizes[best]!)) best = r;
     if (best < 0 || !this.picture.texture.width) return null;

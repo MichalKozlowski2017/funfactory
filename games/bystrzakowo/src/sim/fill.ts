@@ -147,3 +147,148 @@ export function mergeThin(labels: Int32Array, sizes: number[], w: number, h: num
   for (let l = 1; l <= count; l++) if (thin(l) && target[l] === l) outSizes[l] = 0;
   return { labels: out, sizes: outSizes };
 }
+
+/**
+ * Coloring page regions without merging (each part of the drawing is its own region):
+ * - specks smaller than `speck` pixels become part of the line;
+ * - `detail`: a region both narrow (inscribed radius < `detailRadius`) and small (< `detailArea` pixels; a long tail stays a
+ *   touch target) that is not the background and lies on another part of the drawing (not only on the background);
+ *   details colour themselves ("magic details") when their `parent` (the neighbour across the line they share
+ *   the longest border with, preferably not the background) is painted;
+ * - `keepWhite`: tiny details (under `highlight` pixels, e.g. glints in the eyes) stay white;
+ * - `pixels[l]`: pixel indices of region l (filling without scanning the whole picture);
+ * - `center[l]`: a pixel of the region nearest to its centroid (sparkles).
+ */
+export interface PageRegions {
+  labels: Int32Array;
+  sizes: number[];
+  background: number;
+  detail: boolean[];
+  keepWhite: boolean[];
+  parent: Int32Array;
+  pixels: Int32Array[];
+  center: [number, number][];
+}
+
+export function buildRegions(w: number, h: number, dark: (i: number) => boolean, o: { speck?: number; detailRadius?: number; detailArea?: number; highlight?: number; reach?: number } = {}): PageRegions {
+  const speck = o.speck ?? 40;
+  const detailRadius = o.detailRadius ?? 22;
+  const highlight = o.highlight ?? 260;
+  const reach = o.reach ?? 22;
+  const detailArea = o.detailArea ?? 2500;
+  const raw = labelRegions(w, h, dark);
+  // Specks join the line; the rest is renumbered 1..n.
+  const map = new Int32Array(raw.count + 1);
+  let n = 0;
+  for (let l = 1; l <= raw.count; l++) map[l] = raw.sizes[l]! >= speck ? ++n : 0;
+  const labels = new Int32Array(w * h);
+  const sizes = new Array<number>(n + 1).fill(0);
+  for (let i = 0; i < w * h; i++) {
+    const l = map[raw.labels[i]!]!;
+    labels[i] = l;
+    if (l) sizes[l]!++;
+  }
+  const outside = new Set<number>();
+  for (let x = 0; x < w; x++) outside.add(labels[x]!).add(labels[(h - 1) * w + x]!);
+  for (let y = 0; y < h; y++) outside.add(labels[y * w]!).add(labels[y * w + w - 1]!);
+  outside.delete(0);
+  let background = 0;
+  for (const l of outside) if (!background || sizes[l]! > sizes[background]!) background = l;
+  const thick = regionThickness(labels, w, h, n);
+  const detail = sizes.map((s, l) => l > 0 && !outside.has(l) && thick[l]! < detailRadius && s < detailArea);
+  // Parent of a detail: votes across the line, from the detail's pixels in four directions.
+  const votes = new Map<number, Map<number, number>>();
+  for (let y = 0; y < h; y++)
+    for (let x = 0; x < w; x++) {
+      const l = labels[y * w + x]!;
+      if (!detail[l]) continue;
+      for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]] as const) {
+        for (let k = 1; k <= reach; k++) {
+          const px = x + dx * k;
+          const py = y + dy * k;
+          if (px < 0 || py < 0 || px >= w || py >= h) break;
+          const m = labels[py * w + px]!;
+          if (m === l) break;
+          if (m === 0) continue;
+          if (!detail[m]) {
+            const v = votes.get(l) ?? new Map<number, number>();
+            // The background counts less: a detail on the edge of the figure belongs to the figure.
+            v.set(m, (v.get(m) ?? 0) + (outside.has(m) ? 0.25 : 1));
+            votes.set(l, v);
+          }
+          break;
+        }
+      }
+    }
+  const parent = new Int32Array(n + 1);
+  for (const [l, v] of votes) parent[l] = [...v.entries()].sort((a, b) => b[1] - a[1])[0]![0];
+  // A narrow part that touches only the background (a wheel, a fin) has no part to belong to: it stays a touch target.
+  for (let l = 1; l <= n; l++) if (detail[l] && (!parent[l] || outside.has(parent[l]!))) (detail[l] = false), (parent[l] = 0);
+  const keepWhite = sizes.map((s, l) => detail[l]! && s < highlight);
+  // Pixel lists and centres.
+  const counts = new Int32Array(n + 1);
+  const pixels = sizes.map((s) => new Int32Array(s));
+  const sx = new Float64Array(n + 1);
+  const sy = new Float64Array(n + 1);
+  for (let i = 0; i < w * h; i++) {
+    const l = labels[i]!;
+    if (!l) continue;
+    pixels[l]![counts[l]!++] = i;
+    sx[l] = sx[l]! + (i % w);
+    sy[l] = sy[l]! + (i - (i % w)) / w;
+  }
+  const center: [number, number][] = sizes.map((s, l) => {
+    if (!l || !s) return [0, 0];
+    const cx = sx[l]! / s;
+    const cy = sy[l]! / s;
+    let best = pixels[l]![0]!;
+    let bd = Infinity;
+    for (const i of pixels[l]!) {
+      const d = ((i % w) - cx) ** 2 + ((i - (i % w)) / w - cy) ** 2;
+      if (d < bd) (bd = d), (best = i);
+    }
+    return [best % w, (best - (best % w)) / w];
+  });
+  return { labels, sizes, background, detail, keepWhite, parent, pixels, center };
+}
+
+/**
+ * The region a fingertip means: every pixel within `r` of the touch votes for its region, weighted by closeness
+ * (Gaussian, sigma r/2). Touching a line between two parts picks the one more under the finger; a precise touch
+ * on a small part still picks it (its pixels are the closest). Returns 0 when nothing is under the finger.
+ * `share` = the winner's part of all votes (a smeared finger only paints when it is clearly inside one region).
+ */
+export function pickRegion(labels: Int32Array, w: number, h: number, x: number, y: number, r: number): { region: number; share: number } {
+  const votes = new Map<number, number>();
+  const s2 = 2 * (r / 2) ** 2;
+  let total = 0;
+  const cx = Math.round(x);
+  const cy = Math.round(y);
+  for (let dy = -r; dy <= r; dy++)
+    for (let dx = -r; dx <= r; dx++) {
+      const d2 = dx * dx + dy * dy;
+      if (d2 > r * r) continue;
+      const px = cx + dx;
+      const py = cy + dy;
+      if (px < 0 || py < 0 || px >= w || py >= h) continue;
+      const l = labels[py * w + px]!;
+      if (!l) continue;
+      const wgt = Math.exp(-d2 / s2);
+      votes.set(l, (votes.get(l) ?? 0) + wgt);
+      total += wgt;
+    }
+  let region = 0;
+  let best = 0;
+  for (const [l, v] of votes) if (v > best) (best = v), (region = l);
+  return { region, share: total ? best / total : 0 };
+}
+
+/** Colour for a magic detail: a lighter shade of the parent's colour (a darker one for very light colours). */
+export function detailShade(color: number): number {
+  const r = (color >> 16) & 255;
+  const g = (color >> 8) & 255;
+  const b = color & 255;
+  const lum = (0.3 * r + 0.59 * g + 0.11 * b) / 255;
+  const mix = (c: number) => (lum > 0.78 ? Math.round(c * 0.82) : Math.round(c + (255 - c) * 0.45));
+  return (mix(r) << 16) | (mix(g) << 8) | mix(b);
+}

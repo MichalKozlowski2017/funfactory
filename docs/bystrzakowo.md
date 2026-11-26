@@ -170,6 +170,14 @@ Prośba właściciela: w „Pisze litery” trzy razy z rzędu wypadło S; liter
 - Pamięć w zapisie: `Progress.rotation` (klucze `letters:<język>`, `digits`, `syllables:<język>`). Działa dla liter, cyfr i sylab.
 - Cyfry na poziomie 0 to 4 elementy przy rundzie 3: w każdej rundzie odpoczywa jedna, po kolei.
 
+## Kolorowanka: mądry dotyk i magiczne detale (2026-11-26)
+
+Uwaga od testerów: małych pól nie da się trafić, a dotknięcie koloruje też sąsiednie części. Przyczyny: łączenie wąskich pól sklejało osobne części (uszy z głową, ogon z kadłubem), przesunięcie palca o kilka milimetrów kolorowało sąsiada, a dotknięcie linii wybierało „najbliższe” pole. Teraz (`sim/fill.ts`: `buildRegions`, `pickRegion`, `detailShade`, testy w `fill.test.ts`):
+- każda część rysunku to osobne pole (tylko drobinki poniżej 40 px łączą się z linią);
+- **mądry dotyk**: każdy piksel pod opuszkiem palca (promień 30 jednostek) głosuje na swoje pole, bliższe środka mocniej; dotknięcie linii wybiera część, której jest więcej pod palcem, a celne dotknięcie małego pola nadal je koloruje;
+- **magiczne detale**: pola za małe dla palca (wąskie i małe, leżące na innej części) same dostają jaśniejszy odcień części, na której leżą (ciemniejszy dla jasnych kolorów), z iskierkami; najmniejsze (np. błyski w oczach) zostają białe; detal pokolorowany ręcznie zachowuje swój kolor;
+- przesuwanie palca koloruje dalsze części dopiero po wyraźnym ruchu (28 jednostek) i tylko tam, gdzie palec jest wyraźnie w jednej części.
+
 ## Lektor z ElevenLabs (2026-11-26)
 
 Niemieckie kwestie czytały wcześniej polskie głosy (klon „alt” i „prezenter” w VoxCPM/Chatterbox), co dawało polski akcent („Bazyl jak menel z dworca”, uwaga od rodzimej użytkowniczki). Teraz czytają je rodzimi lektorzy z biblioteki ElevenLabs, wybrani przez właściciela w castingu: **Lusia: Julia – Cheerful and Fun**, **Basil: Ben Smile – Friendly Storyteller** (model Eleven v4).
