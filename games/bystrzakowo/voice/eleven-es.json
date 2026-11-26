@@ -1,0 +1,5024 @@
+{
+ "lang": "es",
+ "model": "eleven_v4",
+ "voices": {
+  "lusia": {
+   "id": "yqTu7PvIL2rV3ubtjNlx",
+   "name": "Gaby - Warm, Tender and Inviting"
+  },
+  "bazyl": {
+   "id": "YKUjKbMlejgvkOZlnnvt",
+   "name": "Alejandro Ballesteros - Warm and Joyful"
+  }
+ },
+ "lines": {
+  "lusia-bravo-1": {
+   "text": "Bravo.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.4,
+   "cer": 0
+  },
+  "lusia-bravo-2": {
+   "text": "Muy bien.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.429,
+   "cer": 0
+  },
+  "lusia-bravo-3": {
+   "text": "Súper, sigue así.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.25,
+   "cer": 0
+  },
+  "lusia-bravo-4": {
+   "text": "Maravilloso.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.273,
+   "cer": 0
+  },
+  "lusia-bravo-5": {
+   "text": "Qué listo eres.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-oops-1": {
+   "text": "Uy, inténtalo otra vez.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.278,
+   "cer": 0
+  },
+  "lusia-oops-2": {
+   "text": "Mmm, no es ese. Inténtalo de nuevo.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.375,
+   "cer": 0.154
+  },
+  "lusia-reward": {
+   "text": "Bravo. Ganas una calcomanía nueva.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.071,
+   "cer": 0
+  },
+  "lusia-hello": {
+   "text": "Hola. Soy Lusia, y este es mi amigo Basil. Elige una casita y juguemos juntos.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.103,
+   "cer": 0.017
+  },
+  "lusia-help": {
+   "text": "Mira con atención. Tú puedes.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.043
+  },
+  "lusia-item-cat": {
+   "text": "Gato.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 3,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-dog": {
+   "text": "Perro.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "lusia-item-cow": {
+   "text": "Vaca.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "lusia-item-elephant": {
+   "text": "Elefante.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-chick": {
+   "text": "Pollito.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.286,
+   "cer": 0
+  },
+  "lusia-item-fish": {
+   "text": "Pez.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-frog": {
+   "text": "Rana.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-duck": {
+   "text": "Pato.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-hen": {
+   "text": "Gallina.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.286,
+   "cer": 0
+  },
+  "lusia-item-calf": {
+   "text": "Ternero.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.143,
+   "cer": 0
+  },
+  "lusia-item-kitten": {
+   "text": "Gatito.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-sheep": {
+   "text": "Oveja.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.2,
+   "cer": 0
+  },
+  "lusia-item-lamb": {
+   "text": "Corderito.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.111,
+   "cer": 0
+  },
+  "lusia-item-pig": {
+   "text": "Cerdo.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0
+  },
+  "lusia-item-piglet": {
+   "text": "Cerdito.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.143,
+   "cer": 0
+  },
+  "lusia-item-horse": {
+   "text": "Caballo.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.429,
+   "cer": 0
+  },
+  "lusia-item-foal": {
+   "text": "Potrillo.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "lusia-item-duckling": {
+   "text": "Patito.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-tadpole": {
+   "text": "Renacuajo.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-fox-cub": {
+   "text": "Zorrito.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-bear-cub": {
+   "text": "Osezno.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.167
+  },
+  "lusia-item-penguin-chick": {
+   "text": "Pingüinito.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0
+  },
+  "lusia-item-lion-cub": {
+   "text": "Leoncito.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-kid-goat": {
+   "text": "Cabrito.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.286,
+   "cer": 0
+  },
+  "lusia-item-baby-giraffe": {
+   "text": "Jirafita.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.125
+  },
+  "lusia-item-seal-pup": {
+   "text": "Foquita.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.286
+  },
+  "lusia-item-owlet": {
+   "text": "Búho bebé.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.286,
+   "cer": 0.375
+  },
+  "lusia-item-puppy": {
+   "text": "Cachorrito.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-bunny": {
+   "text": "Conejito.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.125
+  },
+  "lusia-item-elephant-calf": {
+   "text": "Elefantito.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-baby-turtle": {
+   "text": "Tortuguita.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.222,
+   "cer": 0
+  },
+  "lusia-item-lion": {
+   "text": "León.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-giraffe": {
+   "text": "Jirafa.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.167,
+   "cer": 0.167
+  },
+  "lusia-item-monkey": {
+   "text": "Mono.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-zebra": {
+   "text": "Cebra.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.2,
+   "cer": 0.2
+  },
+  "lusia-item-bear": {
+   "text": "Oso.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-hedgehog": {
+   "text": "Erizo.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-squirrel": {
+   "text": "Ardilla.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.429,
+   "cer": 0
+  },
+  "lusia-item-owl": {
+   "text": "Búho.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.333,
+   "cer": 0.5
+  },
+  "lusia-item-butterfly": {
+   "text": "Mariposa.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-ladybug": {
+   "text": "Mariquita.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-bee": {
+   "text": "Abeja.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0
+  },
+  "lusia-item-snail": {
+   "text": "Caracol.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-rabbit": {
+   "text": "Conejo.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.167,
+   "cer": 0
+  },
+  "lusia-item-mouse": {
+   "text": "Ratón.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.2,
+   "cer": 0
+  },
+  "lusia-item-penguin": {
+   "text": "Pingüino.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.125,
+   "cer": 0.125
+  },
+  "lusia-item-turtle": {
+   "text": "Tortuga.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.286,
+   "cer": 0
+  },
+  "lusia-item-crab": {
+   "text": "Cangrejo.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.125,
+   "cer": 0
+  },
+  "lusia-item-octopus": {
+   "text": "Pulpo.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0
+  },
+  "lusia-item-bird": {
+   "text": "Pájaro.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-dinosaur": {
+   "text": "Dinosaurio.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.1,
+   "cer": 0
+  },
+  "lusia-item-fox": {
+   "text": "Zorro.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-hare": {
+   "text": "Liebre.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 3,
+   "per": 0.5,
+   "cer": 0
+  },
+  "lusia-item-boar": {
+   "text": "Jabalí.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.167,
+   "cer": 0.167
+  },
+  "lusia-item-deer": {
+   "text": "Ciervo.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.333,
+   "cer": 0.167
+  },
+  "lusia-item-woodpecker": {
+   "text": "Pájaro carpintero.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.062,
+   "cer": 0
+  },
+  "lusia-item-whale": {
+   "text": "Ballena.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.286,
+   "cer": 0.143
+  },
+  "lusia-item-dolphin": {
+   "text": "Delfín.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.167,
+   "cer": 0.167
+  },
+  "lusia-item-jellyfish": {
+   "text": "Medusa.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-seahorse": {
+   "text": "Caballito de mar.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.357,
+   "cer": 0
+  },
+  "lusia-item-goat": {
+   "text": "Cabra.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0
+  },
+  "lusia-item-donkey": {
+   "text": "Burro.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.5,
+   "cer": 0
+  },
+  "lusia-item-turkey": {
+   "text": "Pavo.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0.25
+  },
+  "lusia-item-goose": {
+   "text": "Ganso.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-seal": {
+   "text": "Foca.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-walrus": {
+   "text": "Morsa.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0.2
+  },
+  "lusia-item-polar-bear": {
+   "text": "Oso polar.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.125,
+   "cer": 0
+  },
+  "lusia-item-hippo": {
+   "text": "Hipopótamo.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-rhino": {
+   "text": "Rinoceronte.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.182,
+   "cer": 0
+  },
+  "lusia-item-swan": {
+   "text": "Cisne.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.2,
+   "cer": 0.2
+  },
+  "lusia-item-heron": {
+   "text": "Garza.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0
+  },
+  "lusia-item-apple": {
+   "text": "Manzana.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-banana": {
+   "text": "Plátano.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.143,
+   "cer": 0.143
+  },
+  "lusia-item-pear": {
+   "text": "Pera.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-strawberry": {
+   "text": "Fresa.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 5,
+   "per": 0.2,
+   "cer": 0
+  },
+  "lusia-item-plum": {
+   "text": "Ciruela.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.286,
+   "cer": 0
+  },
+  "lusia-item-cherry": {
+   "text": "Cerezas.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.143
+  },
+  "lusia-item-orange-fruit": {
+   "text": "Naranja.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 3,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-lemon": {
+   "text": "Limón.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-grapes": {
+   "text": "Uvas.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "lusia-item-watermelon": {
+   "text": "Sandía.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-pineapple": {
+   "text": "Piña.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-raspberry": {
+   "text": "Frambuesa.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.333,
+   "cer": 0
+  },
+  "lusia-item-carrot": {
+   "text": "Zanahoria.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.125,
+   "cer": 0.111
+  },
+  "lusia-item-tomato": {
+   "text": "Tomate.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.167,
+   "cer": 0
+  },
+  "lusia-item-cucumber": {
+   "text": "Pepino.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-potato": {
+   "text": "Papa.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-corn": {
+   "text": "Maíz.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-pepper": {
+   "text": "Pimiento.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.125,
+   "cer": 0
+  },
+  "lusia-item-broccoli": {
+   "text": "Brócoli.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.143,
+   "cer": 0.286
+  },
+  "lusia-item-pumpkin": {
+   "text": "Calabaza.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.125,
+   "cer": 0
+  },
+  "lusia-item-peas": {
+   "text": "Chícharos.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.111,
+   "cer": 0
+  },
+  "lusia-item-radish": {
+   "text": "Rábano.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.167,
+   "cer": 0
+  },
+  "lusia-item-mushroom": {
+   "text": "Hongo.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-onion": {
+   "text": "Cebolla.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.429,
+   "cer": 0.143
+  },
+  "lusia-item-car": {
+   "text": "Carro.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "lusia-item-bike": {
+   "text": "Bicicleta.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-airplane": {
+   "text": "Avión.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.4,
+   "cer": 0
+  },
+  "lusia-item-boat": {
+   "text": "Barco.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0
+  },
+  "lusia-item-bus": {
+   "text": "Autobús.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.143,
+   "cer": 0
+  },
+  "lusia-item-train": {
+   "text": "Tren.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "lusia-item-tractor": {
+   "text": "Tractor.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.429,
+   "cer": 0
+  },
+  "lusia-item-helicopter": {
+   "text": "Helicóptero.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-rocket": {
+   "text": "Cohete.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0
+  },
+  "lusia-item-scooter": {
+   "text": "Monopatín.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.111,
+   "cer": 0
+  },
+  "lusia-item-moped": {
+   "text": "Moto.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-fire-station": {
+   "text": "Camión de bomberos.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-truck": {
+   "text": "Camión.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-ball": {
+   "text": "Pelota.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-teddy": {
+   "text": "Osito de peluche.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.071,
+   "cer": 0.071
+  },
+  "lusia-item-block": {
+   "text": "Bloque.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0
+  },
+  "lusia-item-doll": {
+   "text": "Muñeca.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-kite": {
+   "text": "Cometa.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-drum": {
+   "text": "Tambor.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.167,
+   "cer": 0
+  },
+  "lusia-item-pony": {
+   "text": "Caballito de madera.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.176,
+   "cer": 0
+  },
+  "lusia-item-spinning-top": {
+   "text": "Trompo.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.167,
+   "cer": 0
+  },
+  "lusia-item-robot": {
+   "text": "Robot.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.8,
+   "cer": 0.2
+  },
+  "lusia-item-small-balloon": {
+   "text": "Globo.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0
+  },
+  "lusia-item-trumpet": {
+   "text": "Trompeta.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-bucket": {
+   "text": "Cubeta.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.167,
+   "cer": 0
+  },
+  "lusia-item-sled": {
+   "text": "Trineo.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.333,
+   "cer": 0
+  },
+  "lusia-item-skis": {
+   "text": "Esquís.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 4,
+   "per": 0,
+   "cer": 0.333
+  },
+  "lusia-item-tent": {
+   "text": "Tienda.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.167,
+   "cer": 0
+  },
+  "lusia-item-ukulele": {
+   "text": "Ukelele.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-castle": {
+   "text": "Castillo de arena.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0
+  },
+  "lusia-item-spade": {
+   "text": "Pala.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-mug": {
+   "text": "Taza.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0.25
+  },
+  "lusia-item-plate": {
+   "text": "Plato.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-spoon": {
+   "text": "Cuchara.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-fork": {
+   "text": "Tenedor.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.143,
+   "cer": 0
+  },
+  "lusia-item-pot": {
+   "text": "Olla.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.5,
+   "cer": 0
+  },
+  "lusia-item-kettle": {
+   "text": "Tetera.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-bowl": {
+   "text": "Tazón.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0
+  },
+  "lusia-item-pan": {
+   "text": "Sartén.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 3,
+   "per": 0.333,
+   "cer": 0.167
+  },
+  "lusia-item-bottle": {
+   "text": "Biberón.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.143,
+   "cer": 0.286
+  },
+  "lusia-item-glass": {
+   "text": "Vaso de leche.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.091,
+   "cer": 0
+  },
+  "lusia-item-egg": {
+   "text": "Huevo.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.5,
+   "cer": 0.4
+  },
+  "lusia-item-hat": {
+   "text": "Gorro.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-scarf": {
+   "text": "Bufanda.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-shoe": {
+   "text": "Zapato.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-sock": {
+   "text": "Calcetín.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-t-shirt": {
+   "text": "Camiseta.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-trousers": {
+   "text": "Pantalones.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.1,
+   "cer": 0
+  },
+  "lusia-item-dress": {
+   "text": "Vestido.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.143,
+   "cer": 0
+  },
+  "lusia-item-mittens": {
+   "text": "Manoplas.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.125,
+   "cer": 0
+  },
+  "lusia-item-rain-boots": {
+   "text": "Botas de lluvia.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "lusia-item-umbrella": {
+   "text": "Paraguas.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.125,
+   "cer": 0
+  },
+  "lusia-item-glasses": {
+   "text": "Lentes de sol.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.091,
+   "cer": 0
+  },
+  "lusia-item-sun-hat": {
+   "text": "Sombrero.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-sandals": {
+   "text": "Sandalias.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.111,
+   "cer": 0
+  },
+  "lusia-item-outfit": {
+   "text": "Traje de baño.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.364,
+   "cer": 0
+  },
+  "lusia-item-jacket": {
+   "text": "Chaqueta.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-sun": {
+   "text": "Sol.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.667,
+   "cer": 0
+  },
+  "lusia-item-cloud": {
+   "text": "Nube.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.5,
+   "cer": 0
+  },
+  "lusia-item-little-star": {
+   "text": "Estrella.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.125,
+   "cer": 0
+  },
+  "lusia-item-moon": {
+   "text": "Luna.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-little-flower": {
+   "text": "Flor.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "lusia-item-tree": {
+   "text": "Árbol.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.6,
+   "cer": 0
+  },
+  "lusia-item-leaf": {
+   "text": "Hoja.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-rainbow": {
+   "text": "Arcoíris.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0.125
+  },
+  "lusia-item-shell": {
+   "text": "Concha.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 3,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-pine-cone": {
+   "text": "Piña.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.25,
+   "cer": 0
+  },
+  "lusia-item-beehive": {
+   "text": "Colmena.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-snowflake": {
+   "text": "Copo de nieve.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.182,
+   "cer": 0
+  },
+  "lusia-realm-meadow": {
+   "text": "Esta es la Pradera de Acertijos. Elige una casita.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.05,
+   "cer": 0
+  },
+  "lusia-realm-asleep": {
+   "text": "Este mundo todavía duerme. Juguemos en la Pradera de Acertijos.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.098,
+   "cer": 0
+  },
+  "lusia-realm-path": {
+   "text": "Este es mi Sendero. Aquí dibujamos con el dedo.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.028,
+   "cer": 0.027
+  },
+  "lusia-dots": {
+   "text": "Une los puntos en orden. Empieza por el uno.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.118,
+   "cer": 0
+  },
+  "lusia-memory": {
+   "text": "Encuentra las parejas de imágenes iguales.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.028,
+   "cer": 0
+  },
+  "lusia-realm-studio": {
+   "text": "Este es el Pequeño Estudio. Aquí puedes pintar y crear.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.071,
+   "cer": 0.023
+  },
+  "lusia-good-night": {
+   "text": "Por hoy ya jugamos bastante. Lusia y Basil se van a dormir. Hasta mañana.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.127,
+   "cer": 0.018
+  },
+  "lusia-melody": {
+   "text": "Escucha mi melodía y tócala igual.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.036
+  },
+  "lusia-syllables": {
+   "text": "Ordena las sílabas y luego leemos juntos.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.029,
+   "cer": 0
+  },
+  "lusia-read-cat": {
+   "text": "Ga... to... ... Gato.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-read-cow": {
+   "text": "Va... ca... ... Vaca.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-read-duck": {
+   "text": "Pa... to... ... Pato.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-read-frog": {
+   "text": "Ra... na... ... Rana.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.125,
+   "cer": 0
+  },
+  "lusia-read-bear": {
+   "text": "O... so... ... Oso.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.333,
+   "cer": 0.333
+  },
+  "lusia-read-moon": {
+   "text": "Lu... na... ... Luna.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.125,
+   "cer": 0
+  },
+  "lusia-read-monkey": {
+   "text": "Mo... no... ... Mono.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-read-dog": {
+   "text": "Pe... rro... ... Perro.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.462,
+   "cer": 0.2
+  },
+  "lusia-read-tree": {
+   "text": "Ár... bol... ... Árbol.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.6,
+   "cer": 0.1
+  },
+  "lusia-read-octopus": {
+   "text": "Pul... po... ... Pulpo.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.3,
+   "cer": 0.2
+  },
+  "lusia-read-pig": {
+   "text": "Cer... do... ... Cerdo.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.2,
+   "cer": 0
+  },
+  "lusia-read-goat": {
+   "text": "Ca... bra... ... Cabra.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.3,
+   "cer": 0
+  },
+  "lusia-read-mug": {
+   "text": "Ta... za... ... Taza.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.125,
+   "cer": 0
+  },
+  "lusia-read-horse": {
+   "text": "Ca... ba... llo... ... Caballo.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.308,
+   "cer": 0.214
+  },
+  "lusia-read-rabbit": {
+   "text": "Co... ne... jo... ... Conejo.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.167,
+   "cer": 0.083
+  },
+  "lusia-read-tomato": {
+   "text": "To... ma... te... ... Tomate.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.083,
+   "cer": 0
+  },
+  "lusia-read-ball": {
+   "text": "Pe... lo... ta... ... Pelota.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-read-giraffe": {
+   "text": "Ji... ra... fa... ... Jirafa.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.167,
+   "cer": 0.083
+  },
+  "lusia-read-bird": {
+   "text": "Pá... ja... ro... ... Pájaro.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0.083
+  },
+  "lusia-read-butterfly": {
+   "text": "Ma... ri... po... sa... ... Mariposa.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0.062
+  },
+  "lusia-read-seal": {
+   "text": "Fo... ca... ... Foca.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-read-cloud": {
+   "text": "Nu... be... ... Nube.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.125,
+   "cer": 0.25
+  },
+  "lusia-read-pear": {
+   "text": "Pe... ra... ... Pera.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.125,
+   "cer": 0.125
+  },
+  "lusia-read-potato": {
+   "text": "Pa... pa... ... Papa.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-coloring": {
+   "text": "Elige un color y toca el dibujo. Píntalo como quieras.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.048,
+   "cer": 0
+  },
+  "lusia-coloring-done": {
+   "text": "Qué bonito. Cuando termines, toca la flecha verde.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.103,
+   "cer": 0
+  },
+  "lusia-stickers": {
+   "text": "Haz tu propio dibujo con calcomanías. Arrastra una calcomanía a la pradera.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.017,
+   "cer": 0
+  },
+  "lusia-letters": {
+   "text": "Dibuja la letra con el dedo. Empieza en el punto verde.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.07,
+   "cer": 0
+  },
+  "lusia-digits": {
+   "text": "Dibuja el número con el dedo. Empieza en el punto verde.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.091,
+   "cer": 0
+  },
+  "lusia-number-0": {
+   "text": "Cero. No hay nada.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.083,
+   "cer": 0
+  },
+  "lusia-maze-chick": {
+   "text": "Lleva al pollito con su mamá.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.227,
+   "cer": 0.043
+  },
+  "lusia-maze-kitten": {
+   "text": "Lleva al gatito con su mamá.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.143,
+   "cer": 0
+  },
+  "lusia-maze-piglet": {
+   "text": "Lleva al cerdito con su mamá.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.182,
+   "cer": 0.087
+  },
+  "lusia-maze-calf": {
+   "text": "Lleva al ternero con su mamá.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.136,
+   "cer": 0
+  },
+  "lusia-maze-duckling": {
+   "text": "Lleva al patito con su mamá.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.143,
+   "cer": 0.045
+  },
+  "lusia-maze-bee": {
+   "text": "Lleva a la abeja a la flor.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.211,
+   "cer": 0
+  },
+  "lusia-maze-butterfly": {
+   "text": "Lleva a la mariposa a la flor.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.182,
+   "cer": 0
+  },
+  "lusia-maze-rabbit": {
+   "text": "Lleva al conejo a la zanahoria.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.174,
+   "cer": 0.04
+  },
+  "lusia-maze-monkey": {
+   "text": "Lleva al mono al plátano.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.158,
+   "cer": 0
+  },
+  "lusia-maze-squirrel": {
+   "text": "Lleva a la ardilla al árbol.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.381,
+   "cer": 0
+  },
+  "lusia-maze-fox-cub": {
+   "text": "Lleva al zorrito con su mamá.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.143,
+   "cer": 0.043
+  },
+  "lusia-maze-bear-cub": {
+   "text": "Lleva al osezno con su mamá.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.095,
+   "cer": 0.091
+  },
+  "lusia-maze-penguin-chick": {
+   "text": "Lleva al pingüinito con su mamá.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.16,
+   "cer": 0
+  },
+  "lusia-maze-lion-cub": {
+   "text": "Lleva al leoncito con su mamá.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.13,
+   "cer": 0
+  },
+  "lusia-maze-kid-goat": {
+   "text": "Lleva al cabrito con su mamá.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.091,
+   "cer": 0
+  },
+  "lusia-maze-baby-giraffe": {
+   "text": "Lleva a la jirafita con su mamá.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.125,
+   "cer": 0.04
+  },
+  "lusia-maze-seal-pup": {
+   "text": "Lleva a la foquita con su mamá.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.136,
+   "cer": 0
+  },
+  "lusia-maze-owlet": {
+   "text": "Lleva al búho bebé con su mamá.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.182,
+   "cer": 0.083
+  },
+  "lusia-maze-puppy": {
+   "text": "Lleva al cachorrito con su mamá.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.125,
+   "cer": 0
+  },
+  "lusia-maze-bunny": {
+   "text": "Lleva al conejito con su mamá.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.13,
+   "cer": 0
+  },
+  "lusia-maze-elephant-calf": {
+   "text": "Lleva al elefantito con su mamá.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.12,
+   "cer": 0
+  },
+  "lusia-maze-baby-turtle": {
+   "text": "Lleva a la tortuguita con su mamá.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.12,
+   "cer": 0
+  },
+  "lusia-shadows": {
+   "text": "¿De quién es esta sombra? Toca la imagen correcta.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.054,
+   "cer": 0
+  },
+  "lusia-counting": {
+   "text": "Cuenta cuántos hay.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.067,
+   "cer": 0
+  },
+  "lusia-counting-touch": {
+   "text": "Tócalos uno por uno y cuenta conmigo.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.033,
+   "cer": 0
+  },
+  "lusia-album": {
+   "text": "Este es tu álbum de calcomanías. Colecciónalas todas.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.045,
+   "cer": 0.045
+  },
+  "lusia-number-1": {
+   "text": "Uno.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-number-2": {
+   "text": "Dos.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-number-3": {
+   "text": "Tres.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-number-4": {
+   "text": "Cuatro.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-number-5": {
+   "text": "Cinco.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0
+  },
+  "lusia-number-6": {
+   "text": "Seis.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-number-7": {
+   "text": "Siete.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.4,
+   "cer": 0
+  },
+  "lusia-number-8": {
+   "text": "Ocho.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-number-9": {
+   "text": "Nueve.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.4,
+   "cer": 0
+  },
+  "lusia-number-10": {
+   "text": "Diez.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-phoneme-a": {
+   "text": "¿Qué empieza con.. A?",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.308,
+   "cer": 0
+  },
+  "lusia-phoneme-b": {
+   "text": "¿Qué empieza con.. B?",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.143,
+   "cer": 0.143
+  },
+  "lusia-phoneme-c": {
+   "text": "¿Qué empieza con.. C?",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.214,
+   "cer": 0.143
+  },
+  "lusia-phoneme-d": {
+   "text": "¿Qué empieza con.. D?",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.214,
+   "cer": 0.071
+  },
+  "lusia-phoneme-e": {
+   "text": "¿Qué empieza con.. E?",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.231,
+   "cer": 0.071
+  },
+  "lusia-phoneme-f": {
+   "text": "¿Qué empieza con.. F?",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.267,
+   "cer": 0
+  },
+  "lusia-phoneme-g": {
+   "text": "¿Qué empieza con.. G?",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.214,
+   "cer": 0.071
+  },
+  "lusia-phoneme-l": {
+   "text": "¿Qué empieza con.. L?",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.267,
+   "cer": 0.071
+  },
+  "lusia-phoneme-m": {
+   "text": "¿Qué empieza con.. M?",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.267,
+   "cer": 0
+  },
+  "lusia-phoneme-o": {
+   "text": "¿Qué empieza con.. O?",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.231,
+   "cer": 0.071
+  },
+  "lusia-phoneme-p": {
+   "text": "¿Qué empieza con.. P?",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.214,
+   "cer": 0
+  },
+  "lusia-phoneme-r": {
+   "text": "¿Qué empieza con.. R?",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.267,
+   "cer": 0
+  },
+  "lusia-phoneme-s": {
+   "text": "¿Qué empieza con.. S?",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.267,
+   "cer": 0.143
+  },
+  "lusia-phoneme-t": {
+   "text": "¿Qué empieza con.. T?",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.214,
+   "cer": 0.071
+  },
+  "bazyl-bravo-1": {
+   "text": "Bravo.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.4,
+   "cer": 0
+  },
+  "bazyl-bravo-2": {
+   "text": "Muy bien.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.429,
+   "cer": 0
+  },
+  "bazyl-bravo-3": {
+   "text": "Súper, sigue así.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0.077
+  },
+  "bazyl-bravo-4": {
+   "text": "Maravilloso.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.182,
+   "cer": 0
+  },
+  "bazyl-bravo-5": {
+   "text": "Qué listo eres.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.091,
+   "cer": 0
+  },
+  "bazyl-oops-1": {
+   "text": "Uy, inténtalo otra vez.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.278,
+   "cer": 0
+  },
+  "bazyl-oops-2": {
+   "text": "Mmm, no es ese. Inténtalo de nuevo.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.406,
+   "cer": 0.115
+  },
+  "bazyl-reward": {
+   "text": "Bravo. Ganas una calcomanía nueva.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.107,
+   "cer": 0
+  },
+  "bazyl-hello": {
+   "text": "Hola. Soy Basil. Ven, va a ser divertido.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.207,
+   "cer": 0.1
+  },
+  "bazyl-help": {
+   "text": "Anda, toca una imagen.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.118,
+   "cer": 0
+  },
+  "bazyl-item-cat": {
+   "text": "Gato.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-dog": {
+   "text": "Perro.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.25,
+   "cer": 0
+  },
+  "bazyl-item-cow": {
+   "text": "Vaca.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "bazyl-item-elephant": {
+   "text": "Elefante.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-chick": {
+   "text": "Pollito.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.286,
+   "cer": 0
+  },
+  "bazyl-item-fish": {
+   "text": "Pez.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-frog": {
+   "text": "Rana.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.5,
+   "cer": 0
+  },
+  "bazyl-item-duck": {
+   "text": "Pato.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-hen": {
+   "text": "Gallina.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.286,
+   "cer": 0
+  },
+  "bazyl-item-calf": {
+   "text": "Ternero.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.143,
+   "cer": 0
+  },
+  "bazyl-item-kitten": {
+   "text": "Gatito.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-sheep": {
+   "text": "Oveja.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0
+  },
+  "bazyl-item-lamb": {
+   "text": "Corderito.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.222,
+   "cer": 0
+  },
+  "bazyl-item-pig": {
+   "text": "Cerdo.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0
+  },
+  "bazyl-item-piglet": {
+   "text": "Cerdito.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.286,
+   "cer": 0
+  },
+  "bazyl-item-horse": {
+   "text": "Caballo.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.429,
+   "cer": 0
+  },
+  "bazyl-item-foal": {
+   "text": "Potrillo.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "bazyl-item-duckling": {
+   "text": "Patito.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-tadpole": {
+   "text": "Renacuajo.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-fox-cub": {
+   "text": "Zorrito.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-bear-cub": {
+   "text": "Osezno.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.167
+  },
+  "bazyl-item-penguin-chick": {
+   "text": "Pingüinito.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.1,
+   "cer": 0
+  },
+  "bazyl-item-lion-cub": {
+   "text": "Leoncito.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-kid-goat": {
+   "text": "Cabrito.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.286,
+   "cer": 0
+  },
+  "bazyl-item-baby-giraffe": {
+   "text": "Jirafita.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0.125
+  },
+  "bazyl-item-seal-pup": {
+   "text": "Foquita.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.286
+  },
+  "bazyl-item-owlet": {
+   "text": "Búho bebé.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.286,
+   "cer": 0.375
+  },
+  "bazyl-item-puppy": {
+   "text": "Cachorrito.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-bunny": {
+   "text": "Conejito.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.125
+  },
+  "bazyl-item-elephant-calf": {
+   "text": "Elefantito.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-baby-turtle": {
+   "text": "Tortuguita.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.222,
+   "cer": 0
+  },
+  "bazyl-item-lion": {
+   "text": "León.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-giraffe": {
+   "text": "Jirafa.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.167
+  },
+  "bazyl-item-monkey": {
+   "text": "Mono.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-zebra": {
+   "text": "Cebra.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.4,
+   "cer": 0.4
+  },
+  "bazyl-item-bear": {
+   "text": "Oso.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-hedgehog": {
+   "text": "Erizo.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.2
+  },
+  "bazyl-item-squirrel": {
+   "text": "Ardilla.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.429,
+   "cer": 0
+  },
+  "bazyl-item-owl": {
+   "text": "Búho.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.333,
+   "cer": 0.5
+  },
+  "bazyl-item-butterfly": {
+   "text": "Mariposa.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-ladybug": {
+   "text": "Mariquita.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-bee": {
+   "text": "Abeja.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0
+  },
+  "bazyl-item-snail": {
+   "text": "Caracol.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-rabbit": {
+   "text": "Conejo.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-mouse": {
+   "text": "Ratón.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-penguin": {
+   "text": "Pingüino.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.125,
+   "cer": 0.125
+  },
+  "bazyl-item-turtle": {
+   "text": "Tortuga.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.286,
+   "cer": 0
+  },
+  "bazyl-item-crab": {
+   "text": "Cangrejo.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "bazyl-item-octopus": {
+   "text": "Pulpo.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-bird": {
+   "text": "Pájaro.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.333,
+   "cer": 0
+  },
+  "bazyl-item-dinosaur": {
+   "text": "Dinosaurio.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0
+  },
+  "bazyl-item-fox": {
+   "text": "Zorro.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "bazyl-item-hare": {
+   "text": "Liebre.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.5,
+   "cer": 0
+  },
+  "bazyl-item-boar": {
+   "text": "Jabalí.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.167,
+   "cer": 0.167
+  },
+  "bazyl-item-deer": {
+   "text": "Ciervo.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.333,
+   "cer": 0.167
+  },
+  "bazyl-item-woodpecker": {
+   "text": "Pájaro carpintero.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.125,
+   "cer": 0
+  },
+  "bazyl-item-whale": {
+   "text": "Ballena.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.286,
+   "cer": 0.143
+  },
+  "bazyl-item-dolphin": {
+   "text": "Delfín.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0.167
+  },
+  "bazyl-item-jellyfish": {
+   "text": "Medusa.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-seahorse": {
+   "text": "Caballito de mar.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.357,
+   "cer": 0
+  },
+  "bazyl-item-goat": {
+   "text": "Cabra.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.4,
+   "cer": 0
+  },
+  "bazyl-item-donkey": {
+   "text": "Burro.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-turkey": {
+   "text": "Pavo.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0.25
+  },
+  "bazyl-item-goose": {
+   "text": "Ganso.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-seal": {
+   "text": "Foca.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-walrus": {
+   "text": "Morsa.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.4,
+   "cer": 0.2
+  },
+  "bazyl-item-polar-bear": {
+   "text": "Oso polar.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.25,
+   "cer": 0
+  },
+  "bazyl-item-hippo": {
+   "text": "Hipopótamo.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-rhino": {
+   "text": "Rinoceronte.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.091,
+   "cer": 0
+  },
+  "bazyl-item-swan": {
+   "text": "Cisne.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.4,
+   "cer": 0
+  },
+  "bazyl-item-heron": {
+   "text": "Garza.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0
+  },
+  "bazyl-item-apple": {
+   "text": "Manzana.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.143,
+   "cer": 0
+  },
+  "bazyl-item-banana": {
+   "text": "Plátano.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-pear": {
+   "text": "Pera.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-strawberry": {
+   "text": "Fresa.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.2,
+   "cer": 0
+  },
+  "bazyl-item-plum": {
+   "text": "Ciruela.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.143,
+   "cer": 0
+  },
+  "bazyl-item-cherry": {
+   "text": "Cerezas.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0.143
+  },
+  "bazyl-item-orange-fruit": {
+   "text": "Naranja.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.143,
+   "cer": 0
+  },
+  "bazyl-item-lemon": {
+   "text": "Limón.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-grapes": {
+   "text": "Uvas.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "bazyl-item-watermelon": {
+   "text": "Sandía.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.167,
+   "cer": 0
+  },
+  "bazyl-item-pineapple": {
+   "text": "Piña.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-raspberry": {
+   "text": "Frambuesa.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.333,
+   "cer": 0
+  },
+  "bazyl-item-carrot": {
+   "text": "Zanahoria.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.125,
+   "cer": 0.111
+  },
+  "bazyl-item-tomato": {
+   "text": "Tomate.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-cucumber": {
+   "text": "Pepino.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-potato": {
+   "text": "Papa.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-corn": {
+   "text": "Maíz.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "bazyl-item-pepper": {
+   "text": "Pimiento.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "bazyl-item-broccoli": {
+   "text": "Brócoli.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.143,
+   "cer": 0.286
+  },
+  "bazyl-item-pumpkin": {
+   "text": "Calabaza.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-peas": {
+   "text": "Chícharos.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.222,
+   "cer": 0
+  },
+  "bazyl-item-radish": {
+   "text": "Rábano.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.167,
+   "cer": 0
+  },
+  "bazyl-item-mushroom": {
+   "text": "Hongo.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-onion": {
+   "text": "Cebolla.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.571,
+   "cer": 0
+  },
+  "bazyl-item-car": {
+   "text": "Carro.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 4,
+   "per": 0.25,
+   "cer": 0
+  },
+  "bazyl-item-bike": {
+   "text": "Bicicleta.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-airplane": {
+   "text": "Avión.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.4,
+   "cer": 0
+  },
+  "bazyl-item-boat": {
+   "text": "Barco.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0
+  },
+  "bazyl-item-bus": {
+   "text": "Autobús.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.143,
+   "cer": 0
+  },
+  "bazyl-item-train": {
+   "text": "Tren.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "bazyl-item-tractor": {
+   "text": "Tractor.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.571,
+   "cer": 0
+  },
+  "bazyl-item-helicopter": {
+   "text": "Helicóptero.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-rocket": {
+   "text": "Cohete.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-scooter": {
+   "text": "Monopatín.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.111,
+   "cer": 0
+  },
+  "bazyl-item-moped": {
+   "text": "Moto.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-fire-station": {
+   "text": "Camión de bomberos.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-truck": {
+   "text": "Camión.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-ball": {
+   "text": "Pelota.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-teddy": {
+   "text": "Osito de peluche.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.071,
+   "cer": 0.071
+  },
+  "bazyl-item-block": {
+   "text": "Bloque.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-doll": {
+   "text": "Muñeca.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-kite": {
+   "text": "Cometa.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-drum": {
+   "text": "Tambor.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.167,
+   "cer": 0
+  },
+  "bazyl-item-pony": {
+   "text": "Caballito de madera.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.176,
+   "cer": 0
+  },
+  "bazyl-item-spinning-top": {
+   "text": "Trompo.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.167,
+   "cer": 0
+  },
+  "bazyl-item-robot": {
+   "text": "Robot.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.8,
+   "cer": 0.2
+  },
+  "bazyl-item-small-balloon": {
+   "text": "Globo.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.4,
+   "cer": 0
+  },
+  "bazyl-item-trumpet": {
+   "text": "Trompeta.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "bazyl-item-bucket": {
+   "text": "Cubeta.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-sled": {
+   "text": "Trineo.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.167,
+   "cer": 0
+  },
+  "bazyl-item-skis": {
+   "text": "Esquís.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.5
+  },
+  "bazyl-item-tent": {
+   "text": "Tienda.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.167,
+   "cer": 0
+  },
+  "bazyl-item-ukulele": {
+   "text": "Ukelele.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.143,
+   "cer": 0
+  },
+  "bazyl-item-castle": {
+   "text": "Castillo de arena.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.133,
+   "cer": 0
+  },
+  "bazyl-item-spade": {
+   "text": "Pala.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-mug": {
+   "text": "Taza.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-plate": {
+   "text": "Plato.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-spoon": {
+   "text": "Cuchara.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-fork": {
+   "text": "Tenedor.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.143,
+   "cer": 0
+  },
+  "bazyl-item-pot": {
+   "text": "Olla.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.5,
+   "cer": 0
+  },
+  "bazyl-item-kettle": {
+   "text": "Tetera.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-bowl": {
+   "text": "Tazón.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 4,
+   "per": 0.2,
+   "cer": 0
+  },
+  "bazyl-item-pan": {
+   "text": "Sartén.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.167,
+   "cer": 0.167
+  },
+  "bazyl-item-bottle": {
+   "text": "Biberón.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.143,
+   "cer": 0.286
+  },
+  "bazyl-item-glass": {
+   "text": "Vaso de leche.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.091,
+   "cer": 0
+  },
+  "bazyl-item-egg": {
+   "text": "Huevo.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.5,
+   "cer": 0.2
+  },
+  "bazyl-item-hat": {
+   "text": "Gorro.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-scarf": {
+   "text": "Bufanda.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-shoe": {
+   "text": "Zapato.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-sock": {
+   "text": "Calcetín.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.125,
+   "cer": 0
+  },
+  "bazyl-item-t-shirt": {
+   "text": "Camiseta.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-trousers": {
+   "text": "Pantalones.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-dress": {
+   "text": "Vestido.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.143,
+   "cer": 0
+  },
+  "bazyl-item-mittens": {
+   "text": "Manoplas.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-rain-boots": {
+   "text": "Botas de lluvia.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.417,
+   "cer": 0
+  },
+  "bazyl-item-umbrella": {
+   "text": "Paraguas.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "bazyl-item-glasses": {
+   "text": "Lentes de sol.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.182,
+   "cer": 0
+  },
+  "bazyl-item-sun-hat": {
+   "text": "Sombrero.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-sandals": {
+   "text": "Sandalias.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.111,
+   "cer": 0
+  },
+  "bazyl-item-outfit": {
+   "text": "Traje de baño.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.273,
+   "cer": 0
+  },
+  "bazyl-item-jacket": {
+   "text": "Chaqueta.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-sun": {
+   "text": "Sol.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.333,
+   "cer": 0
+  },
+  "bazyl-item-cloud": {
+   "text": "Nube.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "bazyl-item-little-star": {
+   "text": "Estrella.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "bazyl-item-moon": {
+   "text": "Luna.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-little-flower": {
+   "text": "Flor.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.5,
+   "cer": 0
+  },
+  "bazyl-item-tree": {
+   "text": "Árbol.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.4,
+   "cer": 0
+  },
+  "bazyl-item-leaf": {
+   "text": "Hoja.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-rainbow": {
+   "text": "Arcoíris.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0.125
+  },
+  "bazyl-item-shell": {
+   "text": "Concha.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-pine-cone": {
+   "text": "Piña.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "bazyl-item-beehive": {
+   "text": "Colmena.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-snowflake": {
+   "text": "Copo de nieve.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.182,
+   "cer": 0
+  },
+  "bazyl-realms": {
+   "text": "Toca los círculos de colores de arriba para visitar otros mundos.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.113,
+   "cer": 0
+  },
+  "bazyl-stories": {
+   "text": "¿Qué pasó primero? Ordena las imágenes.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.033,
+   "cer": 0.032
+  },
+  "bazyl-history-flower": {
+   "text": "Primero una semilla, luego un brote, y al final una flor.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.159,
+   "cer": 0
+  },
+  "bazyl-history-chick": {
+   "text": "Primero un huevo, luego se rompe el cascarón, y al final hay un pollito.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.093,
+   "cer": 0
+  },
+  "bazyl-history-butterfly": {
+   "text": "Primero una oruga, luego un capullo, y al final una mariposa.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.146,
+   "cer": 0
+  },
+  "bazyl-history-snowman": {
+   "text": "Primero una bola de nieve, luego otra, y al final un muñeco de nieve.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.094,
+   "cer": 0
+  },
+  "bazyl-history-apple": {
+   "text": "Primero una manzana entera, luego una mordida, y al final el corazón de la manzana.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.015,
+   "cer": 0
+  },
+  "bazyl-history-ice-cream": {
+   "text": "Primero un helado lleno, luego cada vez menos, y al final un cono vacío.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.13,
+   "cer": 0
+  },
+  "bazyl-history-froglet": {
+   "text": "Primero unos huevitos, luego un renacuajo, y al final una rana.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.041,
+   "cer": 0.06
+  },
+  "bazyl-history-sandwich": {
+   "text": "Primero el pan, luego la mantequilla, y al final un rico sándwich.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.059,
+   "cer": 0.019
+  },
+  "bazyl-history-tower": {
+   "text": "Primero un bloque, luego dos, y al final una torre alta.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.098,
+   "cer": 0
+  },
+  "bazyl-history-balloon": {
+   "text": "Primero un globo vacío, luego un poco de aire, y al final un globo grande.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.14,
+   "cer": 0
+  },
+  "bazyl-history-cake": {
+   "text": "Primero mezclamos la masa, luego horneamos, y al final hay un pastel.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.132,
+   "cer": 0
+  },
+  "bazyl-history-castle": {
+   "text": "Primero una cubeta de arena, luego una torre de arena, y al final un castillo de arena.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.09,
+   "cer": 0
+  },
+  "bazyl-history-egg": {
+   "text": "Primero un huevo, luego lo rompemos en el sartén, y al final un huevo estrellado.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.097,
+   "cer": 0
+  },
+  "bazyl-history-pizza": {
+   "text": "Primero una bola de masa, luego la salsa, y al final una rica pizza.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.077,
+   "cer": 0
+  },
+  "bazyl-history-cocoa": {
+   "text": "Primero una taza vacía, luego leche, y al final un chocolate calientito.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.034,
+   "cer": 0.017
+  },
+  "bazyl-history-nest": {
+   "text": "Primero unas ramitas, luego un nido, y al final un pájaro en el nido.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.075,
+   "cer": 0
+  },
+  "bazyl-history-small-tree": {
+   "text": "Primero un arbolito chiquito, luego un árbol, y al final un manzano con manzanas.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.094,
+   "cer": 0
+  },
+  "bazyl-history-day": {
+   "text": "Primero sale el sol en la mañana, luego es de día, y al final es de noche.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.109,
+   "cer": 0
+  },
+  "bazyl-history-banana": {
+   "text": "Primero un plátano entero, luego lo pelamos, y al final solo queda la cáscara.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.066,
+   "cer": 0.016
+  },
+  "bazyl-history-watermelon": {
+   "text": "Primero una sandía entera, luego la partimos, y al final ricas rebanadas.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.034,
+   "cer": 0.017
+  },
+  "bazyl-history-aquarium": {
+   "text": "Primero una pecera vacía, luego agua, y al final un pececito.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.083,
+   "cer": 0
+  },
+  "bazyl-history-gift": {
+   "text": "Primero un regalo envuelto, luego lo abrimos, y adentro hay un osito.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.13,
+   "cer": 0.036
+  },
+  "bazyl-history-car-wash": {
+   "text": "Primero un carrito sucio, luego espuma, y al final brilla de limpio.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.094,
+   "cer": 0
+  },
+  "bazyl-history-cupcake": {
+   "text": "Primero masa en un molde de papel, luego lo horneamos, y al final crema y una cereza.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.092,
+   "cer": 0
+  },
+  "bazyl-emotions-happy": {
+   "text": "Muéstrame una carita feliz.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.174,
+   "cer": 0
+  },
+  "bazyl-face-happy": {
+   "text": "Una carita feliz.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.214,
+   "cer": 0
+  },
+  "bazyl-emotions-sad": {
+   "text": "Muéstrame una carita triste.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.083,
+   "cer": 0
+  },
+  "bazyl-face-sad": {
+   "text": "Una carita triste.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.067,
+   "cer": 0
+  },
+  "bazyl-emotions-angry": {
+   "text": "Muéstrame una carita enojada.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.04,
+   "cer": 0
+  },
+  "bazyl-face-angry": {
+   "text": "Una carita enojada.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-emotions-surprised": {
+   "text": "Muéstrame una carita sorprendida.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.069,
+   "cer": 0
+  },
+  "bazyl-face-surprised": {
+   "text": "Una carita sorprendida.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.05,
+   "cer": 0
+  },
+  "bazyl-emotions-scared": {
+   "text": "Muéstrame una carita asustada.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.077,
+   "cer": 0
+  },
+  "bazyl-face-scared": {
+   "text": "Una carita asustada.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.059,
+   "cer": 0
+  },
+  "bazyl-emotions-sleepy": {
+   "text": "Muéstrame una carita con sueño.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.077,
+   "cer": 0
+  },
+  "bazyl-face-sleepy": {
+   "text": "Una carita con sueño.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0.059
+  },
+  "bazyl-realm-workshop": {
+   "text": "Bienvenido a mi taller. Aquí arrastramos y ordenamos.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.143,
+   "cer": 0
+  },
+  "bazyl-patterns": {
+   "text": "¿Qué sigue? Arrastra la imagen que falta.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.071,
+   "cer": 0
+  },
+  "bazyl-shapes": {
+   "text": "Mete cada bloque en su agujero.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.042,
+   "cer": 0
+  },
+  "bazyl-shape-circle": {
+   "text": "Círculo.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.143,
+   "cer": 0
+  },
+  "bazyl-shape-square": {
+   "text": "Cuadrado.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-shape-triangle": {
+   "text": "Triángulo.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.111,
+   "cer": 0
+  },
+  "bazyl-shape-rectangle": {
+   "text": "Rectángulo.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-shape-star": {
+   "text": "Estrella.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "bazyl-shape-heart": {
+   "text": "Corazón.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-shape-oval": {
+   "text": "Óvalo.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0
+  },
+  "bazyl-shape-rhombus": {
+   "text": "Rombo.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-shape-moon": {
+   "text": "Luna.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-shape-drop": {
+   "text": "Gota.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-matching": {
+   "text": "¿Cuál sobra? Toca esa imagen.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.091,
+   "cer": 0
+  },
+  "bazyl-jigsaw": {
+   "text": "Arma la imagen. Arrastra las piezas a su lugar.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.111,
+   "cer": 0
+  },
+  "bazyl-drag": {
+   "text": "Sujeta una imagen con el dedo y arrástrala a la caja.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.024,
+   "cer": 0.024
+  },
+  "bazyl-sort-categories": {
+   "text": "Clasifica. Cada cosa va en su caja.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-sort-colors": {
+   "text": "Pon cada cosa en la cubeta del mismo color.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.088,
+   "cer": 0
+  },
+  "bazyl-sort-houses": {
+   "text": "¿Dónde viven estos animales? Lleva a cada uno a su casa.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.143,
+   "cer": 0
+  },
+  "bazyl-sort-seasons": {
+   "text": "¿Qué usamos en verano y qué en invierno?",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.138,
+   "cer": 0.097
+  },
+  "bazyl-sort-size": {
+   "text": "¿Qué animales son grandes y cuáles son pequeños?",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.081,
+   "cer": 0.026
+  },
+  "bazyl-sort-motion": {
+   "text": "¿Cómo se mueven estas cosas? Clasifícalas.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.088,
+   "cer": 0.029
+  },
+  "bazyl-category-fruit": {
+   "text": "Aquí van las frutas.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.2,
+   "cer": 0
+  },
+  "bazyl-category-vegetables": {
+   "text": "Aquí van las verduras.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.235,
+   "cer": 0
+  },
+  "bazyl-category-animals": {
+   "text": "Aquí van los animales.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.059,
+   "cer": 0
+  },
+  "bazyl-category-vehicles": {
+   "text": "Aquí van los vehículos.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.118,
+   "cer": 0
+  },
+  "bazyl-category-clothes": {
+   "text": "Aquí va la ropa.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.091,
+   "cer": 0
+  },
+  "bazyl-category-kitchen": {
+   "text": "Aquí van las cosas de la cocina.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.083,
+   "cer": 0
+  },
+  "bazyl-category-toys": {
+   "text": "Aquí van los juguetes.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.25,
+   "cer": 0
+  },
+  "bazyl-hue-red": {
+   "text": "Cubeta roja.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-hue-yellow": {
+   "text": "Cubeta amarilla.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.143,
+   "cer": 0
+  },
+  "bazyl-hue-green": {
+   "text": "Cubeta verde.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.182,
+   "cer": 0
+  },
+  "bazyl-hue-blue": {
+   "text": "Cubeta azul.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-hue-orange": {
+   "text": "Cubeta naranja.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.077,
+   "cer": 0
+  },
+  "bazyl-hue-pink": {
+   "text": "Cubeta rosa.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-hue-purple": {
+   "text": "Cubeta morada.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.083,
+   "cer": 0
+  },
+  "bazyl-hue-brown": {
+   "text": "Cubeta café.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0.1
+  },
+  "bazyl-hue-white": {
+   "text": "Cubeta blanca.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.083,
+   "cer": 0
+  },
+  "bazyl-house-village": {
+   "text": "En la granja.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.2,
+   "cer": 0
+  },
+  "bazyl-house-forest": {
+   "text": "En el bosque.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-house-water": {
+   "text": "En el agua.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.25,
+   "cer": 0
+  },
+  "bazyl-house-africa": {
+   "text": "En África.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-house-ice": {
+   "text": "Donde hay hielo y nieve.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.059,
+   "cer": 0
+  },
+  "bazyl-season-summer": {
+   "text": "Para el verano.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.083,
+   "cer": 0
+  },
+  "bazyl-season-winter": {
+   "text": "Para el invierno.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.143,
+   "cer": 0
+  },
+  "bazyl-size-big": {
+   "text": "Animales grandes.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.067,
+   "cer": 0
+  },
+  "bazyl-size-small": {
+   "text": "Animales pequeños.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-motion-flies": {
+   "text": "Lo que vuela.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.111,
+   "cer": 0
+  },
+  "bazyl-motion-swims": {
+   "text": "Lo que nada.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-motion-drives": {
+   "text": "Lo que rueda.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.111,
+   "cer": 0
+  },
+  "bazyl-color-red": {
+   "text": "Muéstrame algo rojo.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.176,
+   "cer": 0
+  },
+  "bazyl-color-yellow": {
+   "text": "Muéstrame algo amarillo.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.286,
+   "cer": 0
+  },
+  "bazyl-color-green": {
+   "text": "Muéstrame algo verde.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.278,
+   "cer": 0
+  },
+  "bazyl-color-blue": {
+   "text": "Muéstrame algo azul.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.294,
+   "cer": 0
+  },
+  "bazyl-color-orange": {
+   "text": "Muéstrame algo naranja.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.15,
+   "cer": 0
+  },
+  "bazyl-color-pink": {
+   "text": "Muéstrame algo rosa.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.235,
+   "cer": 0
+  },
+  "bazyl-color-purple": {
+   "text": "Muéstrame algo morado.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.211,
+   "cer": 0
+  },
+  "bazyl-color-brown": {
+   "text": "Muéstrame algo café.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.176,
+   "cer": 0.059
+  },
+  "bazyl-color-white": {
+   "text": "Muéstrame algo blanco.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.105,
+   "cer": 0
+  },
+  "bazyl-mother-chick": {
+   "text": "¿Dónde está la mamá del pollito?",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.12,
+   "cer": 0
+  },
+  "bazyl-mother-calf": {
+   "text": "¿Dónde está la mamá del ternero?",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.08,
+   "cer": 0
+  },
+  "bazyl-mother-kitten": {
+   "text": "¿Dónde está la mamá del gatito?",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.083,
+   "cer": 0
+  },
+  "bazyl-mother-lamb": {
+   "text": "¿Dónde está la mamá del corderito?",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.037,
+   "cer": 0
+  },
+  "bazyl-mother-piglet": {
+   "text": "¿Dónde está la mamá del cerdito?",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.08,
+   "cer": 0
+  },
+  "bazyl-mother-foal": {
+   "text": "¿Dónde está la mamá del potrillo?",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.077,
+   "cer": 0
+  },
+  "bazyl-mother-duckling": {
+   "text": "¿Dónde está la mamá del patito?",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.042,
+   "cer": 0
+  },
+  "bazyl-mother-tadpole": {
+   "text": "¿Dónde está la mamá del renacuajo?",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.037,
+   "cer": 0
+  },
+  "bazyl-mother-fox-cub": {
+   "text": "¿Dónde está la mamá del zorrito?",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.042,
+   "cer": 0
+  },
+  "bazyl-mother-bear-cub": {
+   "text": "¿Dónde está la mamá del osezno?",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.083,
+   "cer": 0.083
+  },
+  "bazyl-mother-penguin-chick": {
+   "text": "¿Dónde está la mamá del pingüinito?",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.071,
+   "cer": 0
+  },
+  "bazyl-mother-lion-cub": {
+   "text": "¿Dónde está la mamá del leoncito?",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.038,
+   "cer": 0
+  },
+  "bazyl-mother-kid-goat": {
+   "text": "¿Dónde está la mamá del cabrito?",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.04,
+   "cer": 0
+  },
+  "bazyl-mother-baby-giraffe": {
+   "text": "¿Dónde está la mamá de la jirafita?",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.037,
+   "cer": 0.037
+  },
+  "bazyl-mother-seal-pup": {
+   "text": "¿Dónde está la mamá de la foquita?",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.08,
+   "cer": 0
+  },
+  "bazyl-mother-owlet": {
+   "text": "¿Dónde está la mamá del búho bebé?",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.12,
+   "cer": 0.115
+  },
+  "bazyl-mother-puppy": {
+   "text": "¿Dónde está la mamá del cachorrito?",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.037,
+   "cer": 0
+  },
+  "bazyl-mother-bunny": {
+   "text": "¿Dónde está la mamá del conejito?",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.038,
+   "cer": 0
+  },
+  "bazyl-mother-elephant-calf": {
+   "text": "¿Dónde está la mamá del elefantito?",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.036,
+   "cer": 0
+  },
+  "bazyl-mother-baby-turtle": {
+   "text": "¿Dónde está la mamá de la tortuguita?",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.071,
+   "cer": 0
+  },
+  "bazyl-history-candle": {
+   "text": "Primero una vela larga, luego cada vez más corta, y al final un cabito chiquito.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.113,
+   "cer": 0
+  },
+  "bazyl-history-airplane": {
+   "text": "Primero una hoja de papel, luego la doblamos, y al final un avión de papel.",
+   "voice": "Alejandro Ballesteros - Warm and Joyful",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.123,
+   "cer": 0
+  },
+  "lusia-letter-a-bee": {
+   "text": "A... de abeja.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.125,
+   "cer": 0
+  },
+  "lusia-letter-a-airplane": {
+   "text": "A... de avión.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "lusia-letter-a-squirrel": {
+   "text": "A... de ardilla.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.4,
+   "cer": 0
+  },
+  "lusia-letter-b-whale": {
+   "text": "Be... de ballena.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.273,
+   "cer": 0.091
+  },
+  "lusia-letter-b-boat": {
+   "text": "Be... de barco.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.222,
+   "cer": 0
+  },
+  "lusia-letter-b-bike": {
+   "text": "Be... de bicicleta.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.077,
+   "cer": 0
+  },
+  "lusia-letter-c-horse": {
+   "text": "Ce... de caballo.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.273,
+   "cer": 0.091
+  },
+  "lusia-letter-c-snail": {
+   "text": "Ce... de caracol.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.091
+  },
+  "lusia-letter-c-rabbit": {
+   "text": "Ce... de conejo.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.1
+  },
+  "lusia-letter-d-dinosaur": {
+   "text": "De... de dinosaurio.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.071,
+   "cer": 0.071
+  },
+  "lusia-letter-d-dolphin": {
+   "text": "De... de delfín.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.1,
+   "cer": 0.1
+  },
+  "lusia-letter-d-dice": {
+   "text": "De... de dado.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "lusia-letter-e-elephant": {
+   "text": "E... de elefante.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-letter-e-hedgehog": {
+   "text": "E... de erizo.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.125
+  },
+  "lusia-letter-e-little-star": {
+   "text": "E... de estrella.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.182,
+   "cer": 0
+  },
+  "lusia-letter-f-strawberry": {
+   "text": "Efe... de fresa.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.1
+  },
+  "lusia-letter-f-seal": {
+   "text": "Efe... de foca.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.222
+  },
+  "lusia-letter-f-little-flower": {
+   "text": "Efe... de flor.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.111,
+   "cer": 0.222
+  },
+  "lusia-letter-g-cat": {
+   "text": "Ge... de gato.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-letter-g-hen": {
+   "text": "Ge... de gallina.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.182,
+   "cer": 0
+  },
+  "lusia-letter-g-ukulele": {
+   "text": "Ge... de guitarra.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.1,
+   "cer": 0
+  },
+  "lusia-letter-h-egg": {
+   "text": "Hache... de huevo.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.1,
+   "cer": 0.417
+  },
+  "lusia-letter-h-leaf": {
+   "text": "Hache... de hoja.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.364
+  },
+  "lusia-letter-h-helicopter": {
+   "text": "Hache... de helicóptero.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.222
+  },
+  "lusia-letter-i-igloo": {
+   "text": "I... de iglú.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.286,
+   "cer": 0.286
+  },
+  "lusia-letter-i-iguana": {
+   "text": "I... de iguana.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.333,
+   "cer": 0.222
+  },
+  "lusia-letter-i-magnet": {
+   "text": "I... de imán.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.143,
+   "cer": 0.143
+  },
+  "lusia-letter-j-giraffe": {
+   "text": "Jota... de jirafa.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0.333
+  },
+  "lusia-letter-j-boar": {
+   "text": "Jota... de jabalí.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.25
+  },
+  "lusia-letter-j-soap": {
+   "text": "Jota... de jabón.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.182,
+   "cer": 0.182
+  },
+  "lusia-letter-k-koala": {
+   "text": "Ka... de koala.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.222
+  },
+  "lusia-letter-k-kiwi": {
+   "text": "Ka... de kiwi.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.25
+  },
+  "lusia-letter-k-kayak": {
+   "text": "Ka... de kayak.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 3,
+   "per": 0.111,
+   "cer": 0.333
+  },
+  "lusia-letter-l-lion": {
+   "text": "Ele... de león.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.111,
+   "cer": 0.111
+  },
+  "lusia-letter-l-lemon": {
+   "text": "Ele... de limón.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.1,
+   "cer": 0.1
+  },
+  "lusia-letter-l-moon": {
+   "text": "Ele... de luna.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.111,
+   "cer": 0.111
+  },
+  "lusia-letter-m-monkey": {
+   "text": "Eme... de mono.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-letter-m-butterfly": {
+   "text": "Eme... de mariposa.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-letter-m-apple": {
+   "text": "Eme... de manzana.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.083,
+   "cer": 0.083
+  },
+  "lusia-letter-n-orange-fruit": {
+   "text": "Ene... de naranja.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.083,
+   "cer": 0.083
+  },
+  "lusia-letter-n-cloud": {
+   "text": "Ene... de nube.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 5,
+   "per": 0.222,
+   "cer": 0.111
+  },
+  "lusia-letter-n-nest": {
+   "text": "Ene... de nido.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.111,
+   "cer": 0.111
+  },
+  "lusia-letter-ny-nandu": {
+   "text": "Eñe... de ñandú.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.1
+  },
+  "lusia-letter-ny-gnu": {
+   "text": "Eñe... de ñu.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.143,
+   "cer": 0.571
+  },
+  "lusia-letter-o-sheep": {
+   "text": "O... de oveja.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0.125
+  },
+  "lusia-letter-o-bear": {
+   "text": "O... de oso.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.167,
+   "cer": 0.167
+  },
+  "lusia-letter-o-pot": {
+   "text": "O... de olla.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.143,
+   "cer": 0.143
+  },
+  "lusia-letter-p-dog": {
+   "text": "Pe... de perro.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.111
+  },
+  "lusia-letter-p-duck": {
+   "text": "Pe... de pato.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.125
+  },
+  "lusia-letter-p-fish": {
+   "text": "Pe... de pez.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 3,
+   "per": 0,
+   "cer": 0.286
+  },
+  "lusia-letter-r-frog": {
+   "text": "Erre... de rana.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.222,
+   "cer": 0.3
+  },
+  "lusia-letter-r-mouse": {
+   "text": "Erre... de ratón.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.1,
+   "cer": 0.182
+  },
+  "lusia-letter-r-robot": {
+   "text": "Erre... de robot.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.2,
+   "cer": 0.182
+  },
+  "lusia-letter-s-sun": {
+   "text": "Ese... de sol.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-letter-s-watermelon": {
+   "text": "Ese... de sandía.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-letter-s-sun-hat": {
+   "text": "Ese... de sombrero.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.077,
+   "cer": 0
+  },
+  "lusia-letter-t-turtle": {
+   "text": "Te... de tortuga.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.182,
+   "cer": 0
+  },
+  "lusia-letter-t-train": {
+   "text": "Te... de tren.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.125,
+   "cer": 0.125
+  },
+  "lusia-letter-t-tomato": {
+   "text": "Te... de tomate.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0.1
+  },
+  "lusia-letter-u-grapes": {
+   "text": "U... de uvas.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.143,
+   "cer": 0
+  },
+  "lusia-letter-u-unicorn": {
+   "text": "U... de unicornio.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.167,
+   "cer": 0.083
+  },
+  "lusia-letter-v-cow": {
+   "text": "Uve... de vaca.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.111,
+   "cer": 0.111
+  },
+  "lusia-letter-v-dress": {
+   "text": "Uve... de vestido.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.167,
+   "cer": 0.083
+  },
+  "lusia-letter-v-glass": {
+   "text": "Uve... de vaso de leche.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.188,
+   "cer": 0.125
+  },
+  "lusia-letter-y-yo-yo": {
+   "text": "Ye... de yoyó.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.625,
+   "cer": 0.125
+  },
+  "lusia-letter-y-yacht": {
+   "text": "Ye... de yate.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.625,
+   "cer": 0
+  },
+  "lusia-letter-y-yogurt": {
+   "text": "Ye... de yogur.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.667,
+   "cer": 0.111
+  },
+  "lusia-letter-z-fox": {
+   "text": "Zeta... de zorro.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.091
+  },
+  "lusia-letter-z-carrot": {
+   "text": "Zeta... de zanahoria.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.071,
+   "cer": 0.133
+  },
+  "lusia-letter-z-shoe": {
+   "text": "Zeta... de zapato.",
+   "voice": "Gaby - Warm, Tender and Inviting",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.083
+  }
+ }
+}

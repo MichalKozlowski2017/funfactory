@@ -18,6 +18,7 @@ const lang = positionals[0]!;
 /** ElevenLabs library voice ids per language and guide (the ids in the owner's "My voices" are looked up at run time). */
 const VOICES: Record<string, Record<string, { id: string; name: string }>> = {
   de: { lusia: { id: 'qAVuy3NdMTW0CZ8uA7M9', name: 'Julia - Cheerful and Fun' }, bazyl: { id: 'tqsaTjde7edL1GHtFchL', name: 'Ben Smile - Friendly Storyteller' } },
+  es: { lusia: { id: 'yqTu7PvIL2rV3ubtjNlx', name: 'Gaby - Warm, Tender and Inviting' }, bazyl: { id: 'YKUjKbMlejgvkOZlnnvt', name: 'Alejandro Ballesteros - Warm and Joyful' } },
 };
 const MODEL = 'eleven_v4';
 const game = join(import.meta.dirname, '..');

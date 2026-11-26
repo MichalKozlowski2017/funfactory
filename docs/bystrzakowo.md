@@ -177,6 +177,8 @@ Niemieckie kwestie czytały wcześniej polskie głosy (klon „alt” i „preze
 - Słabe pojedyncze słowa: `--seeds 1,2,3,4,5 --only ...` (warianty już nagrane się nie powtarzają).
 - Klucz API: `~/.funfactory-keys/elevenlabs.key` (plan Creator, 131 tys. kredytów/mies.; niemiecki ×2 to ok. 23 tys.).
 - Wynik dla niemieckiego: mediana błędu głosek i liter 0,14 (wcześniej 0,29).
+- Hiszpański (2026-11-26): **Lusia: Gaby – Warm, Tender and Inviting**, **Basil: Alejandro Ballesteros – Warm and Joyful** (akcent latynoamerykański/meksykański, jak wariant gry), 626 kwestii.
+- Do poprawy w DE i ES: sylabowanie i nazwy liter przed pauzą („Ene… de nube” brzmi jak „en”); porównanie sposobów nagrania sylab czeka na decyzję właściciela.
 - **Polski zostaje bez zmian** (decyzja właściciela 2026-11-26): casting polskich głosów ElevenLabs i próba zamiany głosu (Voice Changer) na sylabach nie dały wyraźnej poprawy; sylabowanie z ElevenLabs brzmiało gorzej niż obecne nagrania z Chatterboxa.
 
 ## Sprawdzanie nagrań lektora (2026-11-24)
