@@ -104,8 +104,17 @@ const choiceFile = join(game, `voice/eleven-${lang}.json`);
 const choice: Record<string, unknown> = existsSync(choiceFile) ? JSON.parse(readFileSync(choiceFile, 'utf8')).lines : {};
 const weak: string[] = [];
 const score = (c: Check | undefined) => (c ? c.per + c.cer : 9);
+// Letter lines ("Ene... de nube."): the voice sometimes clips the letter's name ("en"). Prefer takes where the
+// recogniser hears the name in full; when no take has it (the recogniser writes some names as a single letter), the plain score decides.
+const plain = (s: string) => s.normalize('NFD').replace(/\p{M}/gu, '').toLowerCase();
+const letterScore = (name: string, text: string, c: Check | undefined) => {
+  if (!c || !name.includes('-letter-')) return score(c);
+  const want = plain(text.split(/\.\.\.|\s/)[0]!.replace(/\./g, ''));
+  const heard = plain((c.heard_text ?? '').split(' ')[0] ?? '');
+  return score(c) + (heard === want ? 0 : 1);
+};
 for (const l of lines) {
-  const best = seeds.map((s) => ({ s, c: rep.get(`${l.name}__${s}`) })).sort((a, b) => score(a.c) - score(b.c))[0]!;
+  const best = seeds.map((s) => ({ s, c: rep.get(`${l.name}__${s}`) })).sort((a, b) => letterScore(l.name, l.text, a.c) - letterScore(l.name, l.text, b.c))[0]!;
   const g = guideOf(l.name);
   const out = join(game, 'public/audio', lang, g, `${l.name.slice(g.length + 1)}.m4a`);
   // Trim silence (40 ms kept before, 120 ms after, as in the tts skill), normalise loudness, AAC mono like the other recordings.
@@ -117,6 +126,9 @@ for (const l of lines) {
 }
 writeFileSync(choiceFile, JSON.stringify({ lang, model: MODEL, voices: VOICES[lang], lines: choice }, null, 1));
 writeFileSync(join(raw, 'weak.txt'), weak.join('\n'));
+// Syllable reading: even out loudness and tempo of the syllables (scripts/voice-syllables.ts).
+const reads = lines.filter((l) => l.name.includes('-read-')).map((l) => l.name);
+if (reads.length) execFileSync('node', [join(import.meta.dirname, 'voice-syllables.ts'), lang, '--only', reads.join(',')], { stdio: 'inherit' });
 const s = (await (await fetch('https://api.elevenlabs.io/v1/user/subscription', { headers: H })).json()) as any;
 console.log(`${lang}: written ${lines.length}, weak ${weak.length} (assets-raw/bystrzakowo/eleven/${lang}/weak.txt); credits ${s.character_count}/${s.character_limit}`);
 console.log('KONIEC');
