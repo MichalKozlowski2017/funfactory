@@ -170,6 +170,14 @@ Prośba właściciela: w „Pisze litery” trzy razy z rzędu wypadło S; liter
 - Pamięć w zapisie: `Progress.rotation` (klucze `letters:<język>`, `digits`, `syllables:<język>`). Działa dla liter, cyfr i sylab.
 - Cyfry na poziomie 0 to 4 elementy przy rundzie 3: w każdej rundzie odpoczywa jedna, po kolei.
 
+## Lektor z ElevenLabs (2026-11-26)
+
+Niemieckie kwestie czytały wcześniej polskie głosy (klon „alt” i „prezenter” w VoxCPM/Chatterbox), co dawało polski akcent („Bazyl jak menel z dworca”, uwaga od rodzimej użytkowniczki). Teraz czytają je rodzimi lektorzy z biblioteki ElevenLabs, wybrani przez właściciela w castingu: **Lusia: Julia – Cheerful and Fun**, **Basil: Ben Smile – Friendly Storyteller** (model Eleven v4).
+- Skrypt: `scripts/voice-eleven.ts <język>`: po 2 warianty każdej kwestii, kontrola wymowy na Legionie (`check.py`), wybór lepszego, przycięcie ciszy, normalizacja głośności, AAC. Wybór (głos, model, seed) zapisany w `voice/eleven-<język>.json`, surowe nagrania w `assets-raw/bystrzakowo/eleven/`.
+- Słabe pojedyncze słowa: `--seeds 1,2,3,4,5 --only ...` (warianty już nagrane się nie powtarzają).
+- Klucz API: `~/.funfactory-keys/elevenlabs.key` (plan Creator, 131 tys. kredytów/mies.; niemiecki ×2 to ok. 23 tys.).
+- Wynik dla niemieckiego: mediana błędu głosek i liter 0,14 (wcześniej 0,29).
+
 ## Sprawdzanie nagrań lektora (2026-11-24)
 
 Strona odsłuchu: https://claude.ai/artifact/Q5E8oLERasRL9weZYReRmK (wszystkie ~2530 nagrań, skala podejrzeń 0–100, przycisk „Wzór”, oceny Dobrze/Źle zapisywane w bazie strony; Claude je odczytuje).

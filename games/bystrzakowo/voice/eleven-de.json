@@ -1,0 +1,5048 @@
+{
+ "lang": "de",
+ "model": "eleven_v4",
+ "voices": {
+  "lusia": {
+   "id": "qAVuy3NdMTW0CZ8uA7M9",
+   "name": "Julia - Cheerful and Fun"
+  },
+  "bazyl": {
+   "id": "tqsaTjde7edL1GHtFchL",
+   "name": "Ben Smile - Friendly Storyteller"
+  }
+ },
+ "lines": {
+  "lusia-read-tomato": {
+   "text": "To. ma. te. ... Tomate.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.6,
+   "cer": 0.083
+  },
+  "bazyl-bravo-2": {
+   "text": "Toll gemacht.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-seal": {
+   "text": "Robbe.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-letter-q-jellyfish": {
+   "text": "Ku... wie Qualle.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-bravo-1": {
+   "text": "Bravo.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.4,
+   "cer": 0
+  },
+  "lusia-bravo-2": {
+   "text": "Toll gemacht.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.111,
+   "cer": 0
+  },
+  "lusia-bravo-3": {
+   "text": "Super, weiter so.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.091,
+   "cer": 0
+  },
+  "lusia-bravo-4": {
+   "text": "Wunderbar.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.375,
+   "cer": 0
+  },
+  "lusia-bravo-5": {
+   "text": "Du bist ja ein kluger Kopf.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.15,
+   "cer": 0.048
+  },
+  "lusia-oops-1": {
+   "text": "Hoppla, versuch es noch mal.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.158,
+   "cer": 0.136
+  },
+  "lusia-oops-2": {
+   "text": "Hmm, das ist es nicht. Versuch es noch einmal.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.171,
+   "cer": 0.086
+  },
+  "lusia-reward": {
+   "text": "Bravo. Du bekommst einen neuen Sticker.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.172,
+   "cer": 0
+  },
+  "lusia-hello": {
+   "text": "Hallo. Ich bin Lusia, und das ist mein Freund Basil. Such dir ein Häuschen aus und lass uns zusammen spielen.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.113,
+   "cer": 0.012
+  },
+  "lusia-help": {
+   "text": "Schau genau hin. Du schaffst das.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.095,
+   "cer": 0
+  },
+  "lusia-item-cat": {
+   "text": "Katze.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-dog": {
+   "text": "Hund.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-cow": {
+   "text": "Kuh.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0.333
+  },
+  "lusia-item-elephant": {
+   "text": "Elefant.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.143,
+   "cer": 0
+  },
+  "lusia-item-chick": {
+   "text": "Küken.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.4,
+   "cer": 0
+  },
+  "lusia-item-fish": {
+   "text": "Fisch.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-frog": {
+   "text": "Frosch.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-duck": {
+   "text": "Ente.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-hen": {
+   "text": "Huhn.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.333,
+   "cer": 0.25
+  },
+  "lusia-item-calf": {
+   "text": "Kälbchen.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.143,
+   "cer": 0
+  },
+  "lusia-item-kitten": {
+   "text": "Kätzchen.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-sheep": {
+   "text": "Schaf.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-lamb": {
+   "text": "Lämmchen.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.167,
+   "cer": 0
+  },
+  "lusia-item-pig": {
+   "text": "Schwein.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-piglet": {
+   "text": "Ferkel.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.167
+  },
+  "lusia-item-horse": {
+   "text": "Pferd.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.2,
+   "cer": 0.2
+  },
+  "lusia-item-foal": {
+   "text": "Fohlen.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-duckling": {
+   "text": "Entenküken.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.1,
+   "cer": 0
+  },
+  "lusia-item-tadpole": {
+   "text": "Kaulquappe.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-fox-cub": {
+   "text": "Fuchsjunges.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-bear-cub": {
+   "text": "Bärenjunges.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.1,
+   "cer": 0.091
+  },
+  "lusia-item-penguin-chick": {
+   "text": "Pinguinküken.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.273,
+   "cer": 0.083
+  },
+  "lusia-item-lion-cub": {
+   "text": "Löwenjunges.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-kid-goat": {
+   "text": "Zicklein.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-baby-giraffe": {
+   "text": "Giraffenbaby.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.714,
+   "cer": 0
+  },
+  "lusia-item-seal-pup": {
+   "text": "Robbenbaby.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.667,
+   "cer": 0
+  },
+  "lusia-item-owlet": {
+   "text": "Eulenküken.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.3,
+   "cer": 0
+  },
+  "lusia-item-puppy": {
+   "text": "Welpe.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.4,
+   "cer": 0
+  },
+  "lusia-item-bunny": {
+   "text": "Häschen.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.143
+  },
+  "lusia-item-elephant-calf": {
+   "text": "Elefantenbaby.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.5,
+   "cer": 0
+  },
+  "lusia-item-baby-turtle": {
+   "text": "Schildkrötenbaby.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.625,
+   "cer": 0
+  },
+  "lusia-item-lion": {
+   "text": "Löwe.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-giraffe": {
+   "text": "Giraffe.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-monkey": {
+   "text": "Affe.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-zebra": {
+   "text": "Zebra.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.5,
+   "cer": 0.2
+  },
+  "lusia-item-bear": {
+   "text": "Bär.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.667,
+   "cer": 0.667
+  },
+  "lusia-item-hedgehog": {
+   "text": "Igel.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "lusia-item-squirrel": {
+   "text": "Eichhörnchen.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.1,
+   "cer": 0
+  },
+  "lusia-item-owl": {
+   "text": "Eule.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "lusia-item-butterfly": {
+   "text": "Schmetterling.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-ladybug": {
+   "text": "Marienkäfer.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.4,
+   "cer": 0
+  },
+  "lusia-item-bee": {
+   "text": "Biene.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-snail": {
+   "text": "Schnecke.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-rabbit": {
+   "text": "Kaninchen.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.375,
+   "cer": 0
+  },
+  "lusia-item-mouse": {
+   "text": "Maus.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-penguin": {
+   "text": "Pinguin.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.333,
+   "cer": 0
+  },
+  "lusia-item-turtle": {
+   "text": "Schildkröte.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.111,
+   "cer": 0
+  },
+  "lusia-item-crab": {
+   "text": "Krebs.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0
+  },
+  "lusia-item-octopus": {
+   "text": "Krake.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0
+  },
+  "lusia-item-bird": {
+   "text": "Vogel.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.4,
+   "cer": 0
+  },
+  "lusia-item-dinosaur": {
+   "text": "Dinosaurier.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.1,
+   "cer": 0
+  },
+  "lusia-item-fox": {
+   "text": "Fuchs.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "lusia-item-hare": {
+   "text": "Hase.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "lusia-item-boar": {
+   "text": "Wildschwein.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-deer": {
+   "text": "Reh.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.5,
+   "cer": 0
+  },
+  "lusia-item-woodpecker": {
+   "text": "Specht.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-whale": {
+   "text": "Wal.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.333,
+   "cer": 0.333
+  },
+  "lusia-item-dolphin": {
+   "text": "Delfin.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.167,
+   "cer": 0
+  },
+  "lusia-item-jellyfish": {
+   "text": "Qualle.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-seahorse": {
+   "text": "Seepferdchen.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.333,
+   "cer": 0
+  },
+  "lusia-item-goat": {
+   "text": "Ziege.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-donkey": {
+   "text": "Esel.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.5,
+   "cer": 0
+  },
+  "lusia-item-turkey": {
+   "text": "Truthahn.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.5,
+   "cer": 0.125
+  },
+  "lusia-item-goose": {
+   "text": "Gans.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.25,
+   "cer": 0.25
+  },
+  "lusia-item-seal": {
+   "text": "Robbe.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-walrus": {
+   "text": "Walross.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.167,
+   "cer": 0.286
+  },
+  "lusia-item-polar-bear": {
+   "text": "Eisbär.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.167,
+   "cer": 0
+  },
+  "lusia-item-hippo": {
+   "text": "Nilpferd.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.429,
+   "cer": 0.125
+  },
+  "lusia-item-rhino": {
+   "text": "Nashorn.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.143,
+   "cer": 0
+  },
+  "lusia-item-swan": {
+   "text": "Schwan.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "lusia-item-heron": {
+   "text": "Reiher.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.5,
+   "cer": 0.333
+  },
+  "lusia-item-apple": {
+   "text": "Apfel.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0
+  },
+  "lusia-item-banana": {
+   "text": "Banane.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.167,
+   "cer": 0
+  },
+  "lusia-item-pear": {
+   "text": "Birne.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0
+  },
+  "lusia-item-strawberry": {
+   "text": "Erdbeere.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.143,
+   "cer": 0
+  },
+  "lusia-item-plum": {
+   "text": "Pflaume.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.429,
+   "cer": 0
+  },
+  "lusia-item-cherry": {
+   "text": "Kirschen.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-orange-fruit": {
+   "text": "Orange.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.6,
+   "cer": 0
+  },
+  "lusia-item-lemon": {
+   "text": "Zitrone.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "lusia-item-grapes": {
+   "text": "Trauben.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.143,
+   "cer": 0
+  },
+  "lusia-item-watermelon": {
+   "text": "Wassermelone.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-pineapple": {
+   "text": "Ananas.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.333,
+   "cer": 0
+  },
+  "lusia-item-raspberry": {
+   "text": "Himbeere.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-carrot": {
+   "text": "Karotte.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.167,
+   "cer": 0
+  },
+  "lusia-item-tomato": {
+   "text": "Tomate.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-cucumber": {
+   "text": "Gurke.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.6,
+   "cer": 0
+  },
+  "lusia-item-potato": {
+   "text": "Kartoffel.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-corn": {
+   "text": "Mais.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.5
+  },
+  "lusia-item-pepper": {
+   "text": "Paprika.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.286,
+   "cer": 0.143
+  },
+  "lusia-item-broccoli": {
+   "text": "Brokkoli.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.286,
+   "cer": 0.25
+  },
+  "lusia-item-pumpkin": {
+   "text": "Kürbis.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.333,
+   "cer": 0
+  },
+  "lusia-item-peas": {
+   "text": "Erbsen.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.167,
+   "cer": 0
+  },
+  "lusia-item-radish": {
+   "text": "Radieschen.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0.1
+  },
+  "lusia-item-mushroom": {
+   "text": "Pilz.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0.25
+  },
+  "lusia-item-onion": {
+   "text": "Zwiebel.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.286,
+   "cer": 0
+  },
+  "lusia-item-car": {
+   "text": "Auto.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-bike": {
+   "text": "Fahrrad.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.4,
+   "cer": 0
+  },
+  "lusia-item-airplane": {
+   "text": "Flugzeug.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.333,
+   "cer": 0.125
+  },
+  "lusia-item-boat": {
+   "text": "Boot.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.333,
+   "cer": 0
+  },
+  "lusia-item-bus": {
+   "text": "Bus.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-train": {
+   "text": "Zug.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-tractor": {
+   "text": "Traktor.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.286,
+   "cer": 0
+  },
+  "lusia-item-helicopter": {
+   "text": "Hubschrauber.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.111,
+   "cer": 0
+  },
+  "lusia-item-rocket": {
+   "text": "Rakete.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.333,
+   "cer": 0
+  },
+  "lusia-item-scooter": {
+   "text": "Roller.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.5,
+   "cer": 0
+  },
+  "lusia-item-moped": {
+   "text": "Motorroller.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.333,
+   "cer": 0
+  },
+  "lusia-item-fire-station": {
+   "text": "Feuerwehrauto.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.273,
+   "cer": 0
+  },
+  "lusia-item-truck": {
+   "text": "Lastwagen.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-ball": {
+   "text": "Ball.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.333,
+   "cer": 0
+  },
+  "lusia-item-teddy": {
+   "text": "Teddybär.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.286,
+   "cer": 0.25
+  },
+  "lusia-item-block": {
+   "text": "Bauklotz.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.125
+  },
+  "lusia-item-doll": {
+   "text": "Puppe.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0.2
+  },
+  "lusia-item-kite": {
+   "text": "Drachen.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.167,
+   "cer": 0
+  },
+  "lusia-item-drum": {
+   "text": "Trommel.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.167,
+   "cer": 0
+  },
+  "lusia-item-pony": {
+   "text": "Schaukelpferd.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.3,
+   "cer": 0
+  },
+  "lusia-item-spinning-top": {
+   "text": "Kreisel.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.286,
+   "cer": 0
+  },
+  "lusia-item-robot": {
+   "text": "Roboter.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.333,
+   "cer": 0
+  },
+  "lusia-item-small-balloon": {
+   "text": "Luftballon.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.222,
+   "cer": 0
+  },
+  "lusia-item-trumpet": {
+   "text": "Trompete.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "lusia-item-bucket": {
+   "text": "Eimer.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "lusia-item-sled": {
+   "text": "Schlitten.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-skis": {
+   "text": "Ski.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-tent": {
+   "text": "Zelt.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0.5
+  },
+  "lusia-item-ukulele": {
+   "text": "Gitarre.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-castle": {
+   "text": "Sandburg.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.625,
+   "cer": 0
+  },
+  "lusia-item-spade": {
+   "text": "Schaufel.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.333,
+   "cer": 0
+  },
+  "lusia-item-mug": {
+   "text": "Tasse.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-plate": {
+   "text": "Teller.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "lusia-item-spoon": {
+   "text": "Löffel.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.2,
+   "cer": 0
+  },
+  "lusia-item-fork": {
+   "text": "Gabel.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.6,
+   "cer": 0
+  },
+  "lusia-item-pot": {
+   "text": "Topf.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "lusia-item-kettle": {
+   "text": "Wasserkocher.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.125,
+   "cer": 0
+  },
+  "lusia-item-bowl": {
+   "text": "Schüssel.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.4,
+   "cer": 0
+  },
+  "lusia-item-pan": {
+   "text": "Pfanne.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0
+  },
+  "lusia-item-bottle": {
+   "text": "Fläschchen.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-glass": {
+   "text": "Glas Milch.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-egg": {
+   "text": "Ei.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-hat": {
+   "text": "Mütze.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.2,
+   "cer": 0
+  },
+  "lusia-item-scarf": {
+   "text": "Schal.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.667,
+   "cer": 0
+  },
+  "lusia-item-shoe": {
+   "text": "Schuh.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-sock": {
+   "text": "Socke.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.25,
+   "cer": 0
+  },
+  "lusia-item-t-shirt": {
+   "text": "T-Shirt.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.769,
+   "cer": 0
+  },
+  "lusia-item-trousers": {
+   "text": "Hose.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-dress": {
+   "text": "Kleid.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-mittens": {
+   "text": "Fäustlinge.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.222,
+   "cer": 0
+  },
+  "lusia-item-rain-boots": {
+   "text": "Gummistiefel.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.2,
+   "cer": 0
+  },
+  "lusia-item-umbrella": {
+   "text": "Regenschirm.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.091
+  },
+  "lusia-item-glasses": {
+   "text": "Sonnenbrille.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.1,
+   "cer": 0
+  },
+  "lusia-item-sun-hat": {
+   "text": "Sonnenhut.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-sandals": {
+   "text": "Sandalen.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.125,
+   "cer": 0
+  },
+  "lusia-item-outfit": {
+   "text": "Badeanzug.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.1,
+   "cer": 0
+  },
+  "lusia-item-jacket": {
+   "text": "Jacke.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-sun": {
+   "text": "Sonne.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-cloud": {
+   "text": "Wolke.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0
+  },
+  "lusia-item-little-star": {
+   "text": "Stern.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-moon": {
+   "text": "Mond.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-little-flower": {
+   "text": "Blume.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.4,
+   "cer": 0
+  },
+  "lusia-item-tree": {
+   "text": "Baum.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "lusia-item-leaf": {
+   "text": "Blatt.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-rainbow": {
+   "text": "Regenbogen.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-shell": {
+   "text": "Muschel.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.6,
+   "cer": 0
+  },
+  "lusia-item-pine-cone": {
+   "text": "Tannenzapfen.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-item-beehive": {
+   "text": "Bienenstock.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.111,
+   "cer": 0
+  },
+  "lusia-item-snowflake": {
+   "text": "Schneeflocke.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-realm-meadow": {
+   "text": "Das ist die Rätselwiese. Such dir ein Häuschen aus.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.135,
+   "cer": 0
+  },
+  "lusia-realm-asleep": {
+   "text": "Dieses Land schläft noch. Spielen wir auf der Rätselwiese.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.024,
+   "cer": 0
+  },
+  "lusia-realm-path": {
+   "text": "Das ist mein Pfad. Hier malen wir mit dem Finger.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.029,
+   "cer": 0
+  },
+  "lusia-dots": {
+   "text": "Verbinde die Punkte der Reihe nach. Fang bei der Eins an.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.024,
+   "cer": 0
+  },
+  "lusia-memory": {
+   "text": "Finde Paare mit gleichen Bildern.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.04,
+   "cer": 0
+  },
+  "lusia-realm-studio": {
+   "text": "Das ist das kleine Atelier. Hier kannst du malen und basteln.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.174,
+   "cer": 0
+  },
+  "lusia-good-night": {
+   "text": "Für heute ist genug gespielt. Lusia und Basil gehen schlafen. Bis morgen.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.091,
+   "cer": 0.051
+  },
+  "lusia-melody": {
+   "text": "Hör dir meine Melodie an und spiel sie genauso nach.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.105,
+   "cer": 0
+  },
+  "lusia-syllables": {
+   "text": "Leg die Silben in die richtige Reihenfolge, dann lesen wir zusammen.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.058,
+   "cer": 0
+  },
+  "lusia-read-duck": {
+   "text": "En... te... ... Ente.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.375,
+   "cer": 0.25
+  },
+  "lusia-read-bee": {
+   "text": "Bie... ne... ... Biene.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.125,
+   "cer": 0.1
+  },
+  "lusia-read-bucket": {
+   "text": "Ei... mer... ... Eimer.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.222,
+   "cer": 0.1
+  },
+  "lusia-read-pear": {
+   "text": "Bir... ne... ... Birne.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.3,
+   "cer": 0.3
+  },
+  "lusia-read-fork": {
+   "text": "Ga... bel... ... Gabel.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.5,
+   "cer": 0.2
+  },
+  "lusia-read-doll": {
+   "text": "Pup... pe... ... Puppe.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.222,
+   "cer": 0.2
+  },
+  "lusia-read-cat": {
+   "text": "Kat... ze... ... Katze.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.273,
+   "cer": 0.2
+  },
+  "lusia-read-mug": {
+   "text": "Tas... se... ... Tasse.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.222,
+   "cer": 0.1
+  },
+  "lusia-read-monkey": {
+   "text": "Af... fe... ... Affe.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.286,
+   "cer": 0.125
+  },
+  "lusia-read-sun": {
+   "text": "Son... ne... ... Sonne.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.333,
+   "cer": 0.2
+  },
+  "lusia-read-cloud": {
+   "text": "Wol... ke... ... Wolke.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.4,
+   "cer": 0.3
+  },
+  "lusia-read-little-flower": {
+   "text": "Blu... me... ... Blume.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0.1
+  },
+  "lusia-read-scooter": {
+   "text": "Rol... ler... ... Roller.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.5,
+   "cer": 0.083
+  },
+  "lusia-read-banana": {
+   "text": "Ba. na. ne. ... Banane.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0.083
+  },
+  "lusia-read-rocket": {
+   "text": "Ra. ke. te. ... Rakete.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.417,
+   "cer": 0
+  },
+  "lusia-read-lemon": {
+   "text": "Zi... tro... ne... ... Zitrone.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.188,
+   "cer": 0.143
+  },
+  "lusia-read-elephant": {
+   "text": "E... le... fant... ... Elefant.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.071,
+   "cer": 0.071
+  },
+  "lusia-read-pineapple": {
+   "text": "A. na. nas. ... Ananas.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.417,
+   "cer": 0.083
+  },
+  "lusia-read-pepper": {
+   "text": "Pa... pri... ka... ... Paprika.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.429,
+   "cer": 0.143
+  },
+  "lusia-read-trumpet": {
+   "text": "Trom... pe... te... ... Trompete.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.312,
+   "cer": 0.062
+  },
+  "lusia-read-trousers": {
+   "text": "Ho. se. ... Hose.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.125,
+   "cer": 0.125
+  },
+  "lusia-read-hat": {
+   "text": "Müt... ze... ... Mütze.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.273,
+   "cer": 0.1
+  },
+  "lusia-read-cucumber": {
+   "text": "Gur... ke... ... Gurke.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.5,
+   "cer": 0
+  },
+  "lusia-read-hare": {
+   "text": "Ha... se... ... Hase.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.5,
+   "cer": 0.125
+  },
+  "lusia-coloring": {
+   "text": "Such dir eine Farbe aus und tipp auf das Bild. Mal es an, wie du willst.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-coloring-done": {
+   "text": "Wunderschön. Wenn du fertig bist, tipp auf den grünen Pfeil.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.047,
+   "cer": 0
+  },
+  "lusia-stickers": {
+   "text": "Mach dein eigenes Stickerbild. Zieh einen Sticker auf die Wiese.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.067,
+   "cer": 0
+  },
+  "lusia-letters": {
+   "text": "Schreib den Buchstaben mit dem Finger. Fang beim grünen Punkt an.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.043,
+   "cer": 0
+  },
+  "lusia-digits": {
+   "text": "Schreib die Zahl mit dem Finger. Fang beim grünen Punkt an.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.049,
+   "cer": 0
+  },
+  "lusia-number-0": {
+   "text": "Null. Da ist nichts.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.077,
+   "cer": 0
+  },
+  "lusia-maze-chick": {
+   "text": "Bring das Küken zu seiner Mama.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.125,
+   "cer": 0
+  },
+  "lusia-maze-kitten": {
+   "text": "Bring das Kätzchen zu seiner Mama.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.192,
+   "cer": 0
+  },
+  "lusia-maze-piglet": {
+   "text": "Bring das Ferkel zu seiner Mama.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.08,
+   "cer": 0
+  },
+  "lusia-maze-calf": {
+   "text": "Bring das Kälbchen zu seiner Mama.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.115,
+   "cer": 0.036
+  },
+  "lusia-maze-duckling": {
+   "text": "Bring das Entenküken zu seiner Mama.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.172,
+   "cer": 0.033
+  },
+  "lusia-maze-bee": {
+   "text": "Bring die Biene zur Blume.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.105,
+   "cer": 0
+  },
+  "lusia-maze-butterfly": {
+   "text": "Bring den Schmetterling zur Blume.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.042,
+   "cer": 0
+  },
+  "lusia-maze-rabbit": {
+   "text": "Bring das Kaninchen zur Karotte.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.16,
+   "cer": 0.037
+  },
+  "lusia-maze-monkey": {
+   "text": "Bring den Affen zur Banane.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.048,
+   "cer": 0
+  },
+  "lusia-maze-squirrel": {
+   "text": "Bring das Eichhörnchen zum Baum.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.04,
+   "cer": 0
+  },
+  "lusia-maze-fox-cub": {
+   "text": "Bring das Fuchsjunge zu seiner Mama.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.074,
+   "cer": 0
+  },
+  "lusia-maze-bear-cub": {
+   "text": "Bring das Bärenjunge zu seiner Mama.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.143,
+   "cer": 0
+  },
+  "lusia-maze-penguin-chick": {
+   "text": "Bring das Pinguinküken zu seiner Mama.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.133,
+   "cer": 0
+  },
+  "lusia-maze-lion-cub": {
+   "text": "Bring das Löwenjunge zu seiner Mama.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.107,
+   "cer": 0
+  },
+  "lusia-maze-kid-goat": {
+   "text": "Bring das Zicklein zu seiner Mama.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.111,
+   "cer": 0
+  },
+  "lusia-maze-baby-giraffe": {
+   "text": "Bring das Giraffenbaby zu seiner Mama.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.45,
+   "cer": 0
+  },
+  "lusia-maze-seal-pup": {
+   "text": "Bring das Robbenbaby zu seiner Mama.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.378,
+   "cer": 0
+  },
+  "lusia-maze-owlet": {
+   "text": "Bring das Eulenküken zu seiner Mama.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.241,
+   "cer": 0
+  },
+  "lusia-maze-puppy": {
+   "text": "Bring den Welpen zu seiner Mama.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.16,
+   "cer": 0.038
+  },
+  "lusia-maze-bunny": {
+   "text": "Bring das Häschen zu seiner Mama.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.12,
+   "cer": 0.037
+  },
+  "lusia-maze-elephant-calf": {
+   "text": "Bring das Elefantenbaby zu seiner Mama.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.317,
+   "cer": 0
+  },
+  "lusia-maze-baby-turtle": {
+   "text": "Bring das Schildkrötenbaby zu seiner Mama.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.395,
+   "cer": 0
+  },
+  "lusia-shadows": {
+   "text": "Wessen Schatten ist das? Tipp auf das richtige Bild.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-counting": {
+   "text": "Zähl mal, wie viele es sind.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.053,
+   "cer": 0
+  },
+  "lusia-counting-touch": {
+   "text": "Tipp sie der Reihe nach an und zähl mit mir.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.033,
+   "cer": 0
+  },
+  "lusia-album": {
+   "text": "Das ist dein Stickeralbum. Sammle sie alle.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.129,
+   "cer": 0
+  },
+  "lusia-number-1": {
+   "text": "Eins.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-number-2": {
+   "text": "Zwei.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-number-3": {
+   "text": "Drei.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "lusia-number-4": {
+   "text": "Vier.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.333,
+   "cer": 0
+  },
+  "lusia-number-5": {
+   "text": "Fünf.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "lusia-number-6": {
+   "text": "Sechs.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-number-7": {
+   "text": "Sieben.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-number-8": {
+   "text": "Acht.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-number-9": {
+   "text": "Neun.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.5,
+   "cer": 0
+  },
+  "lusia-number-10": {
+   "text": "Zehn.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-phoneme-a": {
+   "text": "Was fängt mit.. A an?",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.077,
+   "cer": 0
+  },
+  "lusia-phoneme-b": {
+   "text": "Was fängt mit.. B an?",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-phoneme-e": {
+   "text": "Was fängt mit.. E an?",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-phoneme-f": {
+   "text": "Was fängt mit.. F an?",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-phoneme-g": {
+   "text": "Was fängt mit.. G an?",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-phoneme-h": {
+   "text": "Was fängt mit.. H an?",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.071
+  },
+  "lusia-phoneme-k": {
+   "text": "Was fängt mit.. K an?",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.071,
+   "cer": 0
+  },
+  "lusia-phoneme-l": {
+   "text": "Was fängt mit.. L an?",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-phoneme-m": {
+   "text": "Was fängt mit.. M an?",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-phoneme-p": {
+   "text": "Was fängt mit.. P an?",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-phoneme-r": {
+   "text": "Was fängt mit.. R an?",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.071,
+   "cer": 0
+  },
+  "lusia-phoneme-s": {
+   "text": "Was fängt mit.. S an?",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-phoneme-t": {
+   "text": "Was fängt mit.. T an?",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.071,
+   "cer": 0
+  },
+  "lusia-phoneme-w": {
+   "text": "Was fängt mit.. W an?",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-phoneme-z": {
+   "text": "Was fängt mit.. Z an?",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.062,
+   "cer": 0
+  },
+  "bazyl-bravo-1": {
+   "text": "Bravo.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.4,
+   "cer": 0
+  },
+  "bazyl-bravo-3": {
+   "text": "Super, weiter so.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.091,
+   "cer": 0
+  },
+  "bazyl-bravo-4": {
+   "text": "Wunderbar.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.375,
+   "cer": 0
+  },
+  "bazyl-bravo-5": {
+   "text": "Du bist ja ein kluger Kopf.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.048
+  },
+  "bazyl-oops-1": {
+   "text": "Hoppla, versuch es noch mal.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.158,
+   "cer": 0.136
+  },
+  "bazyl-oops-2": {
+   "text": "Hmm, das ist es nicht. Versuch es noch einmal.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.143,
+   "cer": 0.086
+  },
+  "bazyl-reward": {
+   "text": "Bravo. Du bekommst einen neuen Sticker.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.138,
+   "cer": 0
+  },
+  "bazyl-hello": {
+   "text": "Hey. Ich bin Basil. Komm, das wird lustig.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.103,
+   "cer": 0.065
+  },
+  "bazyl-help": {
+   "text": "Na los, tipp auf ein Bild.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.111,
+   "cer": 0
+  },
+  "bazyl-item-cat": {
+   "text": "Katze.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-dog": {
+   "text": "Hund.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-cow": {
+   "text": "Kuh.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 3,
+   "per": 0,
+   "cer": 0.667
+  },
+  "bazyl-item-elephant": {
+   "text": "Elefant.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.143,
+   "cer": 0
+  },
+  "bazyl-item-chick": {
+   "text": "Küken.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 4,
+   "per": 0.2,
+   "cer": 0
+  },
+  "bazyl-item-fish": {
+   "text": "Fisch.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 4,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-frog": {
+   "text": "Frosch.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-duck": {
+   "text": "Ente.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-hen": {
+   "text": "Huhn.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.333,
+   "cer": 0.25
+  },
+  "bazyl-item-calf": {
+   "text": "Kälbchen.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.429,
+   "cer": 0
+  },
+  "bazyl-item-kitten": {
+   "text": "Kätzchen.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-sheep": {
+   "text": "Schaf.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-lamb": {
+   "text": "Lämmchen.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.167,
+   "cer": 0
+  },
+  "bazyl-item-pig": {
+   "text": "Schwein.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-piglet": {
+   "text": "Ferkel.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 3,
+   "per": 0.333,
+   "cer": 0
+  },
+  "bazyl-item-horse": {
+   "text": "Pferd.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0
+  },
+  "bazyl-item-foal": {
+   "text": "Fohlen.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-duckling": {
+   "text": "Entenküken.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.1,
+   "cer": 0
+  },
+  "bazyl-item-tadpole": {
+   "text": "Kaulquappe.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.333,
+   "cer": 0
+  },
+  "bazyl-item-fox-cub": {
+   "text": "Fuchsjunges.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-bear-cub": {
+   "text": "Bärenjunges.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0.182
+  },
+  "bazyl-item-penguin-chick": {
+   "text": "Pinguinküken.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.273,
+   "cer": 0.083
+  },
+  "bazyl-item-lion-cub": {
+   "text": "Löwenjunges.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.2,
+   "cer": 0
+  },
+  "bazyl-item-kid-goat": {
+   "text": "Zicklein.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-baby-giraffe": {
+   "text": "Giraffenbaby.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.714,
+   "cer": 0
+  },
+  "bazyl-item-seal-pup": {
+   "text": "Robbenbaby.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.667,
+   "cer": 0.1
+  },
+  "bazyl-item-owlet": {
+   "text": "Eulenküken.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.3,
+   "cer": 0
+  },
+  "bazyl-item-puppy": {
+   "text": "Welpe.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-bunny": {
+   "text": "Häschen.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-elephant-calf": {
+   "text": "Elefantenbaby.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.5,
+   "cer": 0
+  },
+  "bazyl-item-baby-turtle": {
+   "text": "Schildkrötenbaby.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.583,
+   "cer": 0
+  },
+  "bazyl-item-lion": {
+   "text": "Löwe.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-giraffe": {
+   "text": "Giraffe.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-monkey": {
+   "text": "Affe.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-zebra": {
+   "text": "Zebra.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.5,
+   "cer": 0.2
+  },
+  "bazyl-item-bear": {
+   "text": "Bär.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.667,
+   "cer": 0.667
+  },
+  "bazyl-item-hedgehog": {
+   "text": "Igel.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 3,
+   "per": 0.25,
+   "cer": 0
+  },
+  "bazyl-item-squirrel": {
+   "text": "Eichhörnchen.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.8,
+   "cer": 0
+  },
+  "bazyl-item-owl": {
+   "text": "Eule.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.5,
+   "cer": 0
+  },
+  "bazyl-item-butterfly": {
+   "text": "Schmetterling.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-ladybug": {
+   "text": "Marienkäfer.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.5,
+   "cer": 0
+  },
+  "bazyl-item-bee": {
+   "text": "Biene.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-snail": {
+   "text": "Schnecke.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-rabbit": {
+   "text": "Kaninchen.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.375,
+   "cer": 0
+  },
+  "bazyl-item-mouse": {
+   "text": "Maus.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-penguin": {
+   "text": "Pinguin.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.333,
+   "cer": 0
+  },
+  "bazyl-item-turtle": {
+   "text": "Schildkröte.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.333,
+   "cer": 0
+  },
+  "bazyl-item-crab": {
+   "text": "Krebs.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.4,
+   "cer": 0
+  },
+  "bazyl-item-octopus": {
+   "text": "Krake.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0
+  },
+  "bazyl-item-bird": {
+   "text": "Vogel.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.2,
+   "cer": 0
+  },
+  "bazyl-item-dinosaur": {
+   "text": "Dinosaurier.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.1,
+   "cer": 0
+  },
+  "bazyl-item-fox": {
+   "text": "Fuchs.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "bazyl-item-hare": {
+   "text": "Hase.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.25,
+   "cer": 0
+  },
+  "bazyl-item-boar": {
+   "text": "Wildschwein.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.111,
+   "cer": 0
+  },
+  "bazyl-item-deer": {
+   "text": "Reh.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.5,
+   "cer": 0
+  },
+  "bazyl-item-woodpecker": {
+   "text": "Specht.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-whale": {
+   "text": "Wal.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.333,
+   "cer": 0.333
+  },
+  "bazyl-item-dolphin": {
+   "text": "Delfin.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.167,
+   "cer": 0
+  },
+  "bazyl-item-jellyfish": {
+   "text": "Qualle.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-seahorse": {
+   "text": "Seepferdchen.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.333,
+   "cer": 0
+  },
+  "bazyl-item-goat": {
+   "text": "Ziege.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-donkey": {
+   "text": "Esel.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.5,
+   "cer": 0
+  },
+  "bazyl-item-turkey": {
+   "text": "Truthahn.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.5,
+   "cer": 0.125
+  },
+  "bazyl-item-goose": {
+   "text": "Gans.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0.25
+  },
+  "bazyl-item-walrus": {
+   "text": "Walross.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.167,
+   "cer": 0.143
+  },
+  "bazyl-item-polar-bear": {
+   "text": "Eisbär.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.333,
+   "cer": 0
+  },
+  "bazyl-item-hippo": {
+   "text": "Nilpferd.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.429,
+   "cer": 0.125
+  },
+  "bazyl-item-rhino": {
+   "text": "Nashorn.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.143,
+   "cer": 0
+  },
+  "bazyl-item-swan": {
+   "text": "Schwan.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "bazyl-item-heron": {
+   "text": "Reiher.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.5,
+   "cer": 0.5
+  },
+  "bazyl-item-apple": {
+   "text": "Apfel.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0
+  },
+  "bazyl-item-banana": {
+   "text": "Banane.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.167,
+   "cer": 0
+  },
+  "bazyl-item-pear": {
+   "text": "Birne.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.4,
+   "cer": 0
+  },
+  "bazyl-item-strawberry": {
+   "text": "Erdbeere.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.286,
+   "cer": 0
+  },
+  "bazyl-item-plum": {
+   "text": "Pflaume.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.143,
+   "cer": 0
+  },
+  "bazyl-item-cherry": {
+   "text": "Kirschen.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.167,
+   "cer": 0
+  },
+  "bazyl-item-orange-fruit": {
+   "text": "Orange.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 1,
+   "cer": 0
+  },
+  "bazyl-item-lemon": {
+   "text": "Zitrone.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "bazyl-item-grapes": {
+   "text": "Trauben.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.143,
+   "cer": 0
+  },
+  "bazyl-item-watermelon": {
+   "text": "Wassermelone.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0
+  },
+  "bazyl-item-pineapple": {
+   "text": "Ananas.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.333,
+   "cer": 0
+  },
+  "bazyl-item-raspberry": {
+   "text": "Himbeere.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.143,
+   "cer": 0
+  },
+  "bazyl-item-carrot": {
+   "text": "Karotte.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.167,
+   "cer": 0
+  },
+  "bazyl-item-tomato": {
+   "text": "Tomate.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.167,
+   "cer": 0
+  },
+  "bazyl-item-cucumber": {
+   "text": "Gurke.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.4,
+   "cer": 0.2
+  },
+  "bazyl-item-potato": {
+   "text": "Kartoffel.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-corn": {
+   "text": "Mais.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-pepper": {
+   "text": "Paprika.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.286,
+   "cer": 0.143
+  },
+  "bazyl-item-broccoli": {
+   "text": "Brokkoli.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.286,
+   "cer": 0.125
+  },
+  "bazyl-item-pumpkin": {
+   "text": "Kürbis.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.167,
+   "cer": 0
+  },
+  "bazyl-item-peas": {
+   "text": "Erbsen.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.167,
+   "cer": 0
+  },
+  "bazyl-item-radish": {
+   "text": "Radieschen.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.125,
+   "cer": 0.1
+  },
+  "bazyl-item-mushroom": {
+   "text": "Pilz.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0.25
+  },
+  "bazyl-item-onion": {
+   "text": "Zwiebel.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.143,
+   "cer": 0
+  },
+  "bazyl-item-car": {
+   "text": "Auto.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-bike": {
+   "text": "Fahrrad.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-airplane": {
+   "text": "Flugzeug.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.333,
+   "cer": 0
+  },
+  "bazyl-item-boat": {
+   "text": "Boot.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-bus": {
+   "text": "Bus.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-train": {
+   "text": "Zug.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-tractor": {
+   "text": "Traktor.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.286,
+   "cer": 0
+  },
+  "bazyl-item-helicopter": {
+   "text": "Hubschrauber.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.111,
+   "cer": 0
+  },
+  "bazyl-item-rocket": {
+   "text": "Rakete.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.333,
+   "cer": 0
+  },
+  "bazyl-item-scooter": {
+   "text": "Roller.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 1,
+   "cer": 0
+  },
+  "bazyl-item-moped": {
+   "text": "Motorroller.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.333,
+   "cer": 0
+  },
+  "bazyl-item-fire-station": {
+   "text": "Feuerwehrauto.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.182,
+   "cer": 0
+  },
+  "bazyl-item-truck": {
+   "text": "Lastwagen.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-ball": {
+   "text": "Ball.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.333,
+   "cer": 0
+  },
+  "bazyl-item-teddy": {
+   "text": "Teddybär.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 4,
+   "per": 0.429,
+   "cer": 0.25
+  },
+  "bazyl-item-block": {
+   "text": "Bauklotz.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.125
+  },
+  "bazyl-item-doll": {
+   "text": "Puppe.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "bazyl-item-kite": {
+   "text": "Drachen.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.167,
+   "cer": 0
+  },
+  "bazyl-item-drum": {
+   "text": "Trommel.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.333,
+   "cer": 0
+  },
+  "bazyl-item-pony": {
+   "text": "Schaukelpferd.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.3,
+   "cer": 0
+  },
+  "bazyl-item-spinning-top": {
+   "text": "Kreisel.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.286,
+   "cer": 0
+  },
+  "bazyl-item-robot": {
+   "text": "Roboter.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.333,
+   "cer": 0
+  },
+  "bazyl-item-small-balloon": {
+   "text": "Luftballon.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.111,
+   "cer": 0
+  },
+  "bazyl-item-trumpet": {
+   "text": "Trompete.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "bazyl-item-bucket": {
+   "text": "Eimer.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "bazyl-item-sled": {
+   "text": "Schlitten.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-skis": {
+   "text": "Ski.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-tent": {
+   "text": "Zelt.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.2,
+   "cer": 0.25
+  },
+  "bazyl-item-ukulele": {
+   "text": "Ukulele.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.143,
+   "cer": 0
+  },
+  "bazyl-item-castle": {
+   "text": "Sandburg.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.5,
+   "cer": 0.125
+  },
+  "bazyl-item-spade": {
+   "text": "Schaufel.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 4,
+   "per": 0.167,
+   "cer": 0
+  },
+  "bazyl-item-mug": {
+   "text": "Tasse.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-plate": {
+   "text": "Teller.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "bazyl-item-spoon": {
+   "text": "Löffel.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.6,
+   "cer": 0
+  },
+  "bazyl-item-fork": {
+   "text": "Gabel.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.4,
+   "cer": 0
+  },
+  "bazyl-item-pot": {
+   "text": "Topf.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-kettle": {
+   "text": "Wasserkocher.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "bazyl-item-bowl": {
+   "text": "Schüssel.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.4,
+   "cer": 0
+  },
+  "bazyl-item-pan": {
+   "text": "Pfanne.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0
+  },
+  "bazyl-item-bottle": {
+   "text": "Fläschchen.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-glass": {
+   "text": "Glas Milch.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.125,
+   "cer": 0
+  },
+  "bazyl-item-egg": {
+   "text": "Ei.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.5
+  },
+  "bazyl-item-hat": {
+   "text": "Mütze.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0
+  },
+  "bazyl-item-scarf": {
+   "text": "Schal.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.333,
+   "cer": 0
+  },
+  "bazyl-item-shoe": {
+   "text": "Schuh.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-sock": {
+   "text": "Socke.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-t-shirt": {
+   "text": "T-Shirt.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.692,
+   "cer": 0
+  },
+  "bazyl-item-trousers": {
+   "text": "Hose.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-dress": {
+   "text": "Kleid.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-mittens": {
+   "text": "Fäustlinge.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.222,
+   "cer": 0
+  },
+  "bazyl-item-rain-boots": {
+   "text": "Gummistiefel.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.2,
+   "cer": 0
+  },
+  "bazyl-item-umbrella": {
+   "text": "Regenschirm.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.222,
+   "cer": 0
+  },
+  "bazyl-item-glasses": {
+   "text": "Sonnenbrille.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.1,
+   "cer": 0
+  },
+  "bazyl-item-sun-hat": {
+   "text": "Sonnenhut.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-sandals": {
+   "text": "Sandalen.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.125,
+   "cer": 0
+  },
+  "bazyl-item-outfit": {
+   "text": "Badeanzug.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.1,
+   "cer": 0
+  },
+  "bazyl-item-jacket": {
+   "text": "Jacke.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-sun": {
+   "text": "Sonne.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-cloud": {
+   "text": "Wolke.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-little-star": {
+   "text": "Stern.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0
+  },
+  "bazyl-item-moon": {
+   "text": "Mond.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-little-flower": {
+   "text": "Blume.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0
+  },
+  "bazyl-item-tree": {
+   "text": "Baum.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-leaf": {
+   "text": "Blatt.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-rainbow": {
+   "text": "Regenbogen.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-shell": {
+   "text": "Muschel.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0
+  },
+  "bazyl-item-pine-cone": {
+   "text": "Tannenzapfen.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-item-beehive": {
+   "text": "Bienenstock.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.111,
+   "cer": 0
+  },
+  "bazyl-item-snowflake": {
+   "text": "Schneeflocke.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.125,
+   "cer": 0
+  },
+  "bazyl-realms": {
+   "text": "Tipp oben auf die bunten Kreise, um andere Länder zu besuchen.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.021,
+   "cer": 0
+  },
+  "bazyl-stories": {
+   "text": "Was war zuerst? Leg die Bilder der Reihe nach.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.03,
+   "cer": 0.028
+  },
+  "bazyl-history-flower": {
+   "text": "Zuerst ein Samen, dann ein Keimling, und am Ende eine Blume.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.022,
+   "cer": 0
+  },
+  "bazyl-history-chick": {
+   "text": "Zuerst ein Ei, dann bricht die Schale, und am Ende ist da ein kleines Küken.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.055,
+   "cer": 0
+  },
+  "bazyl-history-butterfly": {
+   "text": "Zuerst eine Raupe, dann ein Kokon, und am Ende ein Schmetterling.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.043,
+   "cer": 0
+  },
+  "bazyl-history-snowman": {
+   "text": "Zuerst eine Schneekugel, dann noch eine, und am Ende ein Schneemann.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-history-apple": {
+   "text": "Zuerst ein ganzer Apfel, dann ein Biss, und am Ende ein Apfelgriebs.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.038,
+   "cer": 0.019
+  },
+  "bazyl-history-ice-cream": {
+   "text": "Zuerst ein volles Eis, dann immer weniger, und am Ende eine leere Waffel.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.019,
+   "cer": 0
+  },
+  "bazyl-history-froglet": {
+   "text": "Zuerst kleine Eier, dann eine Kaulquappe, und am Ende ein Frosch.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-history-sandwich": {
+   "text": "Zuerst das Brot, dann die Butter, und am Ende ein leckeres Butterbrot.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.04,
+   "cer": 0
+  },
+  "bazyl-history-tower": {
+   "text": "Zuerst ein Klotz, dann zwei, und am Ende ein hoher Turm.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.024,
+   "cer": 0
+  },
+  "bazyl-history-balloon": {
+   "text": "Zuerst ein leerer Ballon, dann ein bisschen Luft, und am Ende ein großer Ballon.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.088,
+   "cer": 0.047
+  },
+  "bazyl-history-cake": {
+   "text": "Zuerst rühren wir den Teig, dann backen wir, und am Ende gibt es eine Torte.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-history-castle": {
+   "text": "Zuerst ein Eimer Sand, dann ein Sandturm, und am Ende eine Sandburg.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.058,
+   "cer": 0
+  },
+  "bazyl-history-egg": {
+   "text": "Zuerst ein Ei, dann schlagen wir es in die Pfanne, und am Ende ein Spiegelei.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-history-pizza": {
+   "text": "Zuerst eine Teigkugel, dann die Soße, und am Ende eine leckere Pizza.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.094,
+   "cer": 0.091
+  },
+  "bazyl-history-cocoa": {
+   "text": "Zuerst eine leere Tasse, dann Milch, und am Ende warmer Kakao.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.067,
+   "cer": 0
+  },
+  "bazyl-history-nest": {
+   "text": "Zuerst ein paar Zweige, dann ein Nest, und am Ende ein Vogel im Nest.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.019,
+   "cer": 0
+  },
+  "bazyl-history-small-tree": {
+   "text": "Zuerst ein kleiner Setzling, dann ein Bäumchen, und am Ende ein Apfelbaum mit Äpfeln.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.045,
+   "cer": 0.014
+  },
+  "bazyl-history-day": {
+   "text": "Zuerst geht morgens die Sonne auf, dann ist Tag, und am Ende ist Nacht.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-history-banana": {
+   "text": "Zuerst eine ganze Banane, dann schälen wir sie, und am Ende bleibt nur die Schale.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.017,
+   "cer": 0
+  },
+  "bazyl-history-watermelon": {
+   "text": "Zuerst eine ganze Wassermelone, dann schneiden wir sie auf, und am Ende leckere Stücke.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.031,
+   "cer": 0
+  },
+  "bazyl-history-aquarium": {
+   "text": "Zuerst ein leeres Fischglas, dann Wasser, und am Ende ein kleiner Fisch.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-history-gift": {
+   "text": "Zuerst ein eingepacktes Geschenk, dann packen wir es aus, und drin ist ein Teddy.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.05,
+   "cer": 0
+  },
+  "bazyl-history-car-wash": {
+   "text": "Zuerst ein schmutziges Auto, dann Schaum, und am Ende glänzt es sauber.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-history-cupcake": {
+   "text": "Zuerst Teig im Förmchen, dann backen wir ihn, und am Ende Sahne und eine Kirsche.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.017,
+   "cer": 0
+  },
+  "bazyl-emotions-happy": {
+   "text": "Zeig mir ein fröhliches Gesicht.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.04,
+   "cer": 0
+  },
+  "bazyl-face-happy": {
+   "text": "Ein fröhliches Gesicht.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.059,
+   "cer": 0
+  },
+  "bazyl-emotions-sad": {
+   "text": "Zeig mir ein trauriges Gesicht.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.038,
+   "cer": 0
+  },
+  "bazyl-face-sad": {
+   "text": "Ein trauriges Gesicht.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.056,
+   "cer": 0
+  },
+  "bazyl-emotions-angry": {
+   "text": "Zeig mir ein wütendes Gesicht.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-face-angry": {
+   "text": "Ein wütendes Gesicht.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.059,
+   "cer": 0
+  },
+  "bazyl-emotions-surprised": {
+   "text": "Zeig mir ein überraschtes Gesicht.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.038,
+   "cer": 0
+  },
+  "bazyl-face-surprised": {
+   "text": "Ein überraschtes Gesicht.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-emotions-scared": {
+   "text": "Zeig mir ein ängstliches Gesicht.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-face-scared": {
+   "text": "Ein ängstliches Gesicht.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-emotions-sleepy": {
+   "text": "Zeig mir ein müdes Gesicht.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.045,
+   "cer": 0
+  },
+  "bazyl-face-sleepy": {
+   "text": "Ein müdes Gesicht.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.071,
+   "cer": 0
+  },
+  "bazyl-realm-workshop": {
+   "text": "Willkommen in meiner Werkstatt. Hier ziehen und sortieren wir.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.022,
+   "cer": 0
+  },
+  "bazyl-patterns": {
+   "text": "Was kommt als Nächstes? Zieh das fehlende Bild hin.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-shapes": {
+   "text": "Steck jeden Klotz in sein Loch.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-shape-circle": {
+   "text": "Kreis.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0
+  },
+  "bazyl-shape-square": {
+   "text": "Quadrat.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.143,
+   "cer": 0
+  },
+  "bazyl-shape-triangle": {
+   "text": "Dreieck.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.167,
+   "cer": 0
+  },
+  "bazyl-shape-rectangle": {
+   "text": "Rechteck.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-shape-star": {
+   "text": "Stern.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0
+  },
+  "bazyl-shape-heart": {
+   "text": "Herz.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0
+  },
+  "bazyl-shape-oval": {
+   "text": "Oval.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "bazyl-shape-rhombus": {
+   "text": "Raute.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0.2
+  },
+  "bazyl-shape-moon": {
+   "text": "Mond.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-shape-drop": {
+   "text": "Tropfen.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-matching": {
+   "text": "Was passt hier nicht? Tipp auf dieses Bild.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-jigsaw": {
+   "text": "Setz das Bild zusammen. Zieh die Teile an ihren Platz.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-drag": {
+   "text": "Halte ein Bild mit dem Finger fest und zieh es in die Kiste.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.023,
+   "cer": 0
+  },
+  "bazyl-sort-categories": {
+   "text": "Sortier mal. Jedes Ding kommt in seine Kiste.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-sort-colors": {
+   "text": "Leg jedes Ding in den Eimer mit der gleichen Farbe.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.053,
+   "cer": 0
+  },
+  "bazyl-sort-houses": {
+   "text": "Wo wohnen diese Tiere? Bring jedes nach Hause.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.094,
+   "cer": 0
+  },
+  "bazyl-sort-seasons": {
+   "text": "Was tragen wir im Sommer, und was im Winter?",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-sort-size": {
+   "text": "Welche Tiere sind groß, und welche sind klein?",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.054
+  },
+  "bazyl-sort-motion": {
+   "text": "Wie bewegen sich diese Dinge? Sortier sie.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-category-fruit": {
+   "text": "Hier kommt das Obst hin.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.059,
+   "cer": 0
+  },
+  "bazyl-category-vegetables": {
+   "text": "Hier kommt das Gemüse hin.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.105,
+   "cer": 0
+  },
+  "bazyl-category-animals": {
+   "text": "Hier kommen die Tiere hin.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-category-vehicles": {
+   "text": "Hier kommen die Fahrzeuge hin.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-category-clothes": {
+   "text": "Hier kommt die Kleidung hin.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.053,
+   "cer": 0
+  },
+  "bazyl-category-kitchen": {
+   "text": "Hier kommen Küchensachen hin.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.048,
+   "cer": 0
+  },
+  "bazyl-category-toys": {
+   "text": "Hier kommt das Spielzeug hin.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.091,
+   "cer": 0
+  },
+  "bazyl-hue-red": {
+   "text": "Roter Eimer.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "bazyl-hue-yellow": {
+   "text": "Gelber Eimer.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.222,
+   "cer": 0
+  },
+  "bazyl-hue-green": {
+   "text": "Grüner Eimer.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.444,
+   "cer": 0
+  },
+  "bazyl-hue-blue": {
+   "text": "Blauer Eimer.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.222,
+   "cer": 0
+  },
+  "bazyl-hue-orange": {
+   "text": "Oranger Eimer.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.333,
+   "cer": 0.167
+  },
+  "bazyl-hue-pink": {
+   "text": "Rosa Eimer.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "bazyl-hue-purple": {
+   "text": "Lila Eimer.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0
+  },
+  "bazyl-hue-brown": {
+   "text": "Brauner Eimer.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.3,
+   "cer": 0
+  },
+  "bazyl-hue-white": {
+   "text": "Weißer Eimer.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.222,
+   "cer": 0.182
+  },
+  "bazyl-house-village": {
+   "text": "Auf dem Bauernhof.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-house-forest": {
+   "text": "Im Wald.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.167,
+   "cer": 0
+  },
+  "bazyl-house-water": {
+   "text": "Im Wasser.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.333,
+   "cer": 0
+  },
+  "bazyl-house-africa": {
+   "text": "In Afrika.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.125,
+   "cer": 0
+  },
+  "bazyl-house-ice": {
+   "text": "Wo es Eis und Schnee gibt.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-season-summer": {
+   "text": "Für den Sommer.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-season-winter": {
+   "text": "Für den Winter.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-size-big": {
+   "text": "Große Tiere.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.111,
+   "cer": 0.2
+  },
+  "bazyl-size-small": {
+   "text": "Kleine Tiere.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-motion-flies": {
+   "text": "Was fliegt.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-motion-swims": {
+   "text": "Was schwimmt.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.125,
+   "cer": 0.182
+  },
+  "bazyl-motion-drives": {
+   "text": "Was fährt.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "bazyl-color-red": {
+   "text": "Zeig mir etwas Rotes.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.056,
+   "cer": 0
+  },
+  "bazyl-color-yellow": {
+   "text": "Zeig mir etwas Gelbes.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.053,
+   "cer": 0
+  },
+  "bazyl-color-green": {
+   "text": "Zeig mir etwas Grünes.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.158,
+   "cer": 0
+  },
+  "bazyl-color-blue": {
+   "text": "Zeig mir etwas Blaues.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.053,
+   "cer": 0
+  },
+  "bazyl-color-orange": {
+   "text": "Zeig mir etwas Oranges.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.158,
+   "cer": 0
+  },
+  "bazyl-color-pink": {
+   "text": "Zeig mir etwas Rosanes.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.1,
+   "cer": 0
+  },
+  "bazyl-color-purple": {
+   "text": "Zeig mir etwas Lilanes.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.1,
+   "cer": 0
+  },
+  "bazyl-color-brown": {
+   "text": "Zeig mir etwas Braunes.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.1,
+   "cer": 0
+  },
+  "bazyl-color-white": {
+   "text": "Zeig mir etwas Weißes.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.053,
+   "cer": 0.111
+  },
+  "bazyl-mother-chick": {
+   "text": "Wo ist die Mama vom Küken?",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.105,
+   "cer": 0
+  },
+  "bazyl-mother-calf": {
+   "text": "Wo ist die Mama vom Kälbchen?",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.19,
+   "cer": 0.043
+  },
+  "bazyl-mother-kitten": {
+   "text": "Wo ist die Mama vom Kätzchen?",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.143,
+   "cer": 0
+  },
+  "bazyl-mother-lamb": {
+   "text": "Wo ist die Mama vom Lämmchen?",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.1,
+   "cer": 0
+  },
+  "bazyl-mother-piglet": {
+   "text": "Wo ist die Mama vom Ferkel?",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.05,
+   "cer": 0.095
+  },
+  "bazyl-mother-foal": {
+   "text": "Wo ist die Mama vom Fohlen?",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.105,
+   "cer": 0.095
+  },
+  "bazyl-mother-duckling": {
+   "text": "Wo ist die Mama vom Entenküken?",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.125,
+   "cer": 0.04
+  },
+  "bazyl-mother-tadpole": {
+   "text": "Wo ist die Mama von der Kaulquappe?",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.077,
+   "cer": 0
+  },
+  "bazyl-mother-fox-cub": {
+   "text": "Wo ist die Mama vom Fuchsjungen?",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.087,
+   "cer": 0.038
+  },
+  "bazyl-mother-bear-cub": {
+   "text": "Wo ist die Mama vom Bärenjungen?",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.125,
+   "cer": 0
+  },
+  "bazyl-mother-penguin-chick": {
+   "text": "Wo ist die Mama vom Pinguinküken?",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.16,
+   "cer": 0.074
+  },
+  "bazyl-mother-lion-cub": {
+   "text": "Wo ist die Mama vom Löwenjungen?",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.083,
+   "cer": 0
+  },
+  "bazyl-mother-kid-goat": {
+   "text": "Wo ist die Mama vom Zicklein?",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.091,
+   "cer": 0.087
+  },
+  "bazyl-mother-baby-giraffe": {
+   "text": "Wo ist die Mama vom Giraffenbaby?",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.486,
+   "cer": 0
+  },
+  "bazyl-mother-seal-pup": {
+   "text": "Wo ist die Mama vom Robbenbaby?",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.438,
+   "cer": 0
+  },
+  "bazyl-mother-owlet": {
+   "text": "Wo ist die Mama vom Eulenküken?",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.167,
+   "cer": 0.04
+  },
+  "bazyl-mother-puppy": {
+   "text": "Wo ist die Mama vom Welpen?",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.1,
+   "cer": 0
+  },
+  "bazyl-mother-bunny": {
+   "text": "Wo ist die Mama vom Häschen?",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.15,
+   "cer": 0
+  },
+  "bazyl-mother-elephant-calf": {
+   "text": "Wo ist die Mama vom Elefantenbaby?",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.361,
+   "cer": 0
+  },
+  "bazyl-mother-baby-turtle": {
+   "text": "Wo ist die Mama vom Schildkrötenbaby?",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.421,
+   "cer": 0
+  },
+  "bazyl-history-candle": {
+   "text": "Zuerst eine lange Kerze, dann immer kürzer, und am Ende ein kleiner Stummel.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.053,
+   "cer": 0
+  },
+  "bazyl-history-airplane": {
+   "text": "Zuerst ein Blatt Papier, dann falten wir es, und am Ende ein Papierflieger.",
+   "voice": "Ben Smile - Friendly Storyteller",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-letter-a-monkey": {
+   "text": "A... wie Affe.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.167,
+   "cer": 0
+  },
+  "lusia-letter-a-apple": {
+   "text": "A... wie Apfel.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.125,
+   "cer": 0.111
+  },
+  "lusia-letter-a-car": {
+   "text": "A... wie Auto.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.143,
+   "cer": 0
+  },
+  "lusia-letter-b-banana": {
+   "text": "Be... wie Banane.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.1,
+   "cer": 0.182
+  },
+  "lusia-letter-b-bee": {
+   "text": "Be... wie Biene.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.1
+  },
+  "lusia-letter-b-ball": {
+   "text": "Be... wie Ball.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.111
+  },
+  "lusia-letter-c-clown": {
+   "text": "Ce... wie Clown.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.444,
+   "cer": 0.1
+  },
+  "lusia-letter-c-computer": {
+   "text": "Ce... wie Computer.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.167,
+   "cer": 0.077
+  },
+  "lusia-letter-c-cello": {
+   "text": "Ce... wie Cello.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.333,
+   "cer": 0.2
+  },
+  "lusia-letter-d-dinosaur": {
+   "text": "De... wie Dinosaurier.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.143,
+   "cer": 0.062
+  },
+  "lusia-letter-d-dolphin": {
+   "text": "De... wie Delfin.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0.091
+  },
+  "lusia-letter-d-kite": {
+   "text": "De... wie Drachen.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.1,
+   "cer": 0.083
+  },
+  "lusia-letter-e-elephant": {
+   "text": "E... wie Elefant.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.1,
+   "cer": 0
+  },
+  "lusia-letter-e-duck": {
+   "text": "E... wie Ente.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0.125
+  },
+  "lusia-letter-e-owl": {
+   "text": "E... wie Eule.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.286,
+   "cer": 0
+  },
+  "lusia-letter-f-fish": {
+   "text": "Eff... wie Fisch.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.182
+  },
+  "lusia-letter-f-frog": {
+   "text": "Eff... wie Frosch.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.167
+  },
+  "lusia-letter-f-fox": {
+   "text": "Eff... wie Fuchs.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.125,
+   "cer": 0.182
+  },
+  "lusia-letter-g-goose": {
+   "text": "Ge... wie Gans.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.125,
+   "cer": 0.222
+  },
+  "lusia-letter-g-ukulele": {
+   "text": "Ge... wie Gitarre.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.083
+  },
+  "lusia-letter-h-dog": {
+   "text": "Ha... wie Hund.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.125,
+   "cer": 0
+  },
+  "lusia-letter-h-hare": {
+   "text": "Ha... wie Hase.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.25,
+   "cer": 0
+  },
+  "lusia-letter-h-helicopter": {
+   "text": "Ha... wie Hubschrauber.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.154,
+   "cer": 0
+  },
+  "lusia-letter-i-hedgehog": {
+   "text": "I... wie Igel.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-letter-i-igloo": {
+   "text": "I... wie Iglu.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.143,
+   "cer": 0.125
+  },
+  "lusia-letter-i-island": {
+   "text": "I... wie Insel.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-letter-j-jacket": {
+   "text": "Jott... wie Jacke.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-letter-j-yogurt": {
+   "text": "Jott... wie Joghurt.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.417,
+   "cer": 0.071
+  },
+  "lusia-letter-j-yo-yo": {
+   "text": "Jott... wie Jojo.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.091
+  },
+  "lusia-letter-k-cat": {
+   "text": "Ka... wie Katze.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.111,
+   "cer": 0
+  },
+  "lusia-letter-k-cow": {
+   "text": "Ka... wie Kuh.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.167,
+   "cer": 0.25
+  },
+  "lusia-letter-k-octopus": {
+   "text": "Ka... wie Krake.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.222,
+   "cer": 0
+  },
+  "lusia-letter-l-lion": {
+   "text": "El... wie Löwe.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.125,
+   "cer": 0.111
+  },
+  "lusia-letter-l-spoon": {
+   "text": "El... wie Löffel.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.222,
+   "cer": 0.091
+  },
+  "lusia-letter-l-small-balloon": {
+   "text": "El... wie Luftballon.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.231,
+   "cer": 0
+  },
+  "lusia-letter-m-mouse": {
+   "text": "Em... wie Maus.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.125,
+   "cer": 0.111
+  },
+  "lusia-letter-m-moon": {
+   "text": "Em... wie Mond.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.125,
+   "cer": 0.111
+  },
+  "lusia-letter-m-ladybug": {
+   "text": "Em... wie Marienkäfer.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.357,
+   "cer": 0.062
+  },
+  "lusia-letter-n-rhino": {
+   "text": "En... wie Nashorn.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.182,
+   "cer": 0.083
+  },
+  "lusia-letter-n-hippo": {
+   "text": "En... wie Nilpferd.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.364,
+   "cer": 0.154
+  },
+  "lusia-letter-n-nest": {
+   "text": "En... wie Nest.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.125,
+   "cer": 0.111
+  },
+  "lusia-letter-o-orange-fruit": {
+   "text": "O... wie Orange.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0.1
+  },
+  "lusia-letter-o-ear": {
+   "text": "O... wie Ohr.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.2,
+   "cer": 0.143
+  },
+  "lusia-letter-o-oven": {
+   "text": "O... wie Ofen.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0.25
+  },
+  "lusia-letter-p-horse": {
+   "text": "Pe... wie Pferd.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.111,
+   "cer": 0.1
+  },
+  "lusia-letter-p-penguin": {
+   "text": "Pe... wie Pinguin.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.2,
+   "cer": 0.083
+  },
+  "lusia-letter-p-mushroom": {
+   "text": "Pe... wie Pilz.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.111,
+   "cer": 0.111
+  },
+  "lusia-letter-r-rocket": {
+   "text": "Er... wie Rakete.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.3,
+   "cer": 0
+  },
+  "lusia-letter-r-robot": {
+   "text": "Er... wie Roboter.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.3,
+   "cer": 0
+  },
+  "lusia-letter-s-sun": {
+   "text": "Es... wie Sonne.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-letter-s-sock": {
+   "text": "Es... wie Socke.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.1
+  },
+  "lusia-letter-s-seahorse": {
+   "text": "Es... wie Seepferdchen.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.231,
+   "cer": 0.059
+  },
+  "lusia-letter-t-tomato": {
+   "text": "Te... wie Tomate.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.1,
+   "cer": 0.273
+  },
+  "lusia-letter-t-tractor": {
+   "text": "Te... wie Traktor.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.182,
+   "cer": 0.083
+  },
+  "lusia-letter-t-drum": {
+   "text": "Te... wie Trommel.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.1,
+   "cer": 0
+  },
+  "lusia-letter-u-clock": {
+   "text": "U... wie Uhr.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.2,
+   "cer": 0
+  },
+  "lusia-letter-u-submarine": {
+   "text": "U... wie U-Boot.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-letter-u-ufo": {
+   "text": "U... wie Ufo.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-letter-v-bird": {
+   "text": "Fau... wie Vogel.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0.182
+  },
+  "lusia-letter-v-vase": {
+   "text": "Fau... wie Vase.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.111,
+   "cer": 0.2
+  },
+  "lusia-letter-v-volcano": {
+   "text": "Fau... wie Vulkan.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.182,
+   "cer": 0.167
+  },
+  "lusia-letter-w-whale": {
+   "text": "We... wie Wal.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.143,
+   "cer": 0.25
+  },
+  "lusia-letter-w-cloud": {
+   "text": "We... wie Wolke.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0.1
+  },
+  "lusia-letter-w-watermelon": {
+   "text": "We... wie Wassermelone.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0,
+   "cer": 0.059
+  },
+  "lusia-letter-y-yacht": {
+   "text": "Ypsilon... wie Yacht.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.154,
+   "cer": 0.133
+  },
+  "lusia-letter-y-yak": {
+   "text": "Ypsilon... wie Yak.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.25,
+   "cer": 0.231
+  },
+  "lusia-letter-z-zebra": {
+   "text": "Zett... wie Zebra.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 2,
+   "per": 0.25,
+   "cer": 0.083
+  },
+  "lusia-letter-z-lemon": {
+   "text": "Zett... wie Zitrone.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.143,
+   "cer": 0.143
+  },
+  "lusia-letter-z-train": {
+   "text": "Zett... wie Zug.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0,
+   "cer": 0
+  },
+  "lusia-letter-q-rubber-duck": {
+   "text": "Ku wie Quietscheente.",
+   "voice": "Julia - Cheerful and Fun",
+   "model": "eleven_v4",
+   "seed": 1,
+   "per": 0.154,
+   "cer": 0
+  }
+ }
+}
