@@ -1,0 +1,17 @@
+{
+  "workflow": "flux2.json",
+  "IMAGE": "",
+  "PROMPT": "very simple toddler coloring book page of a small scene: a big chubby snowman with a hat next to one big pine tree, only 8 to 12 big closed areas in total, every area big enough for a child's finger, extremely thick bold black outlines, big chunky rounded shapes, no small details, no windows panes, no spokes, no stripes, no patterns, no texture lines, no grass strokes, no tiny eyes details, pure white background, no shading, no gray, no color, cute and friendly, the scene fills the whole square page",
+  "NEGATIVE": "",
+  "SEED": 303,
+  "WIDTH": 1024,
+  "HEIGHT": 1024,
+  "PREFIX": "scene2-winter",
+  "STEPS": 20,
+  "GUIDANCE": 4,
+  "BPM": 100,
+  "DURATION": 60,
+  "KEY": "A minor",
+  "LYRICS": "[Instrumental]",
+  "created": "2026-11-26T14:54:48.395Z"
+}

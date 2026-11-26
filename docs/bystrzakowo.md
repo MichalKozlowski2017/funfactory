@@ -189,7 +189,7 @@ Kolorowanki dla przedszkolaków (Bimi Boo, „Tap & Fill”, Disney Coloring Wor
 - **kredka**: ruch palcem (od 18 jednostek) rysuje kredką tylko w części, w której zaczął się dotyk (maska z pikseli części, `stamp` w `sim/fill.ts`); bazgranie nie psuje sąsiadów; gdy kredka pokryje 60% części, reszta wypełnia się sama (iskierki); po oderwaniu palca kreska zostaje na obrazku;
 - **obrazek ożywa**: po „gotowe” największe pokolorowane części (z konturem i detalami, `cutout`) po kolei podskakują i się kiwają, z dźwiękiem i iskierkami, potem pochwała;
 - **strony na miarę ekranu**: `scripts/coloring-sizes.ts` mierzy każdą stronę (jak w grze: przycięcie, 640 px, `buildRegions`) i zapisuje w `src/sim/coloring-sizes.ts` najmniejszą szerokość obrazka (pt), przy której części mają co najmniej 14 pt średnicy (2 najmniejsze mogą być mniejsze, szczeliny < 4 px pomijane). Gra pokazuje tylko strony mieszczące się na danym ekranie (`pagesFor`): iPhone ok. 325 pt, iPad ok. 670 pt. Pojedyncze obrazki wymagają 87–374 pt, stare sceny 300–1120 pt (las, ogród, plac zabaw, staw, kosmos, pociąg, zima nie nadają się nawet na iPada);
-- **proste sceny** dla maluchów: `gen-art.ts --coloring-scenes2` (2–3 duże obiekty, 8–12 dużych pól).
+- **proste sceny** dla maluchów: `gen-art.ts --coloring-scenes2` (2–3 duże obiekty, 8–12 dużych pól). Z 47 wariantów (12 tematów) wybrane po pomiarze i obejrzeniu: zamek z piasku, krowa, jeż, ślimak, rakieta z planetą, bałwan, rybka z rozgwiazdą, kaczka (na telefon, 160–320 pt) oraz auto z domkiem, piknik i pociąg (tylko tablet, 374–560 pt). Plac zabaw odpadł (wszystkie warianty ≥ 896 pt). Ze starych scen zostały plaża i podwodny świat; las, ogród, plac zabaw, staw, kosmos, pociąg i zima usunięte. Razem 25 stron: iPhone pokazuje 20, iPad wszystkie.
 
 ## Lektor z ElevenLabs (2026-11-26)
 
@@ -274,7 +274,7 @@ Kod: `src/sim/realms.ts` (krainy i zabawy), `src/scenes/world.ts` (świat), `src
 | Polana Zagadek | cienie, co nie pasuje, liczenie, kolory, głoski, mamy i dzieci, memory (pary; na końcu obrazek i cień), emocje (minki) |
 | Warsztat Bazyla | segregowanie (6 reguł), układanka, co dalej (wzory), sorter kształtów, sylaby (21 słów), historyjki obrazkowe (6 × 3 kadry) |
 | Ścieżka Lusi | łączenie kropek, labirynt, litery po śladzie (12), cyfry po śladzie (0–9, potem liczenie) |
-| Pracownia Malucha | kolorowanka (12 obrazków i 9 scen, lupa), naklejanka (scena z zebranych naklejek), melodia (cymbałki, powtórz) |
+| Pracownia Malucha | kolorowanka (12 obrazków, 11 prostych scen, 2 bogatsze; strony na miarę ekranu), naklejanka (scena z zebranych naklejek), melodia (cymbałki, powtórz) |
 
 Strefa rodzica: muzyka, limit czasu zabawy (15/30/45 min, potem „Dobranoc”, odblokowanie zębatką), zerowanie postępów. Przy pierwszym uruchomieniu Bazyl pokazuje zakładki krain.
 

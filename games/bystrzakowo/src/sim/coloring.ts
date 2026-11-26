@@ -1,8 +1,10 @@
 /** Coloring pages: public/art/coloring-pages/<id>.png (line art from Flux). */
 export const PAGES = [
   'cat', 'dog', 'elephant', 'fish', 'butterfly', 'car', 'little-flower', 'dinosaur', 'turtle', 'rocket', 'owl', 'little-house',
-  // Whole scenes (more parts; small details colour themselves).
-  'scene-beach', 'scene-forest', 'scene-garden', 'scene-playground', 'scene-pond', 'scene-sea', 'scene-space', 'scene-train', 'scene-winter',
+  // Simple scenes: 2-3 big objects (car-house, picnic and train fit only a tablet).
+  'sandcastle', 'cow', 'hedgehog', 'snail', 'space-rocket', 'snowman', 'fish-starfish', 'duck', 'car-house', 'picnic', 'train',
+  // Busier scenes (small details colour themselves).
+  'scene-beach', 'scene-sea',
 ];
 
 import { MIN_WIDTH } from './coloring-sizes.ts';
