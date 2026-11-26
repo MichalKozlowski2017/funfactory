@@ -108,6 +108,8 @@ mkdir -p $OUT/coloring-pages
 for f in $RAW/coloring-pages/*-21.png; do
   [ -f "$f" ] || continue
   id=$(basename "$f" -21.png)
+  # Too many small parts for a toddler's finger (replaced by simpler pages below).
+  case $id in dog|dinosaur|rocket|cat|car) continue;; esac
   magick "$f" -colorspace gray -resize 640x640 -threshold 55% -morphology Erode Disk:1.5 -strip "$OUT/coloring-pages/$id.png"
   cp "${f%.png}.json" "$OUT/coloring-pages/$id.json"
 done
@@ -117,16 +119,12 @@ for x in little-house-32 little-flower-31 butterfly-31 fish-31 elephant-31 owl-3
   magick "$f" -colorspace gray -resize 640x640 -threshold 55% -morphology Erode Disk:1.5 -strip "$OUT/coloring-pages/${x%-*}.png"
   cp "${f%.png}.json" "$OUT/coloring-pages/${x%-*}.json"
 done
-# Whole scenes to color (--coloring-scenes), picked by region counts and a simulated coloring.
-for x in scene-beach-202 scene-sea-203; do
-  f=$RAW/coloring-pages/$x.png
-  magick "$f" -colorspace gray -resize 640x640 -threshold 55% -morphology Erode Disk:1.5 -strip "$OUT/coloring-pages/${x%-*}.png"
-  cp "${f%.png}.json" "$OUT/coloring-pages/${x%-*}.json"
-done
-# Simple scenes for toddlers (--coloring-scenes2): 2-3 big objects, picked by coloring-sizes.ts (fit a phone unless noted).
-for pair in scene2-beach-302:sandcastle scene2-farm-304:cow scene2-forest-302:hedgehog scene2-garden-304:snail \
-  scene2-space-301:space-rocket scene2-winter-303:snowman scene2-sea-301:fish-starfish scene2-pond-303:duck \
-  scene2-city-303:car-house scene2-picnic-303:picnic scene2-train-304:train; do  # last three: tablets only
+# Simple scenes (--coloring-scenes2) and simplest pages (--coloring-scenes3): only big parts, picked with
+# coloring-sizes.ts (all fit a phone; the busier scenes left out: small parts turned to ink on a phone).
+for pair in scene2-garden-304:snail scene2-winter-303:snowman \
+  simple-apple-pear-402:apple-pear simple-ball-duck-403:duck-ball simple-sun-cloud-402:sun-cloud simple-balloons-404:balloons \
+  simple-boat-404:sailboat simple-ice-cream-401:ice-cream simple-mushroom-snail-404:mushroom-snail simple-rocket-moon-402:rocket-moon \
+  simple-cat-402:cat simple-car-402:car; do
   x=${pair%%:*}; id=${pair##*:}; f=$RAW/coloring-pages/$x.png
   magick "$f" -colorspace gray -resize 640x640 -threshold 55% -morphology Erode Disk:1.5 -strip "$OUT/coloring-pages/$id.png"
   cp "${f%.png}.json" "$OUT/coloring-pages/$id.json"

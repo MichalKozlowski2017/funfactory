@@ -1,16 +1,17 @@
 {
   "workflow": "flux2.json",
-  "PROMPT": "children coloring book page of a cute small car, very thick clean black outlines, closed shapes, large simple areas, pure white background, no shading, no gray, no color, no texture, cute and friendly, centered, whole object visible",
+  "IMAGE": "",
+  "PROMPT": "very simple coloring page for a 3 year old toddler: a big chubby toy car with two big round wheels, only 5 to 8 big closed areas in total, every closed area at least as big as a thumb, extremely thick bold black outlines, big simple rounded shapes like a sticker, eyes are small solid black dots, no small details, no sun rays, no spots, no dots, no stripes, no patterns, no texture, no grass, no windows panes, no spokes, no tiny parts, pure white background, no shading, no gray, no color, the drawing fills the whole square page",
   "NEGATIVE": "",
-  "SEED": 21,
+  "SEED": 402,
   "WIDTH": 1024,
   "HEIGHT": 1024,
-  "PREFIX": "auto",
+  "PREFIX": "simple-car",
   "STEPS": 20,
   "GUIDANCE": 4,
   "BPM": 100,
   "DURATION": 60,
   "KEY": "A minor",
   "LYRICS": "[Instrumental]",
-  "created": "2026-11-21T11:23:45.401Z"
+  "created": "2026-11-26T18:29:44.236Z"
 }
