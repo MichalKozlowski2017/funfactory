@@ -179,8 +179,17 @@ Uwaga od testerów: małych pól nie da się trafić, a dotknięcie koloruje te�
 - przesuwanie palca koloruje dalsze części dopiero po wyraźnym ruchu (28 jednostek) i tylko tam, gdzie palec jest wyraźnie w jednej części.
 - **odcienie**: pod paletą 12 kolorów rząd trzech odcieni wybranego koloru (jasny, zwykły, ciemny; `shadesOf`), razem 36; przycisk „gotowe” w prawym górnym rogu;
 - **sceny** (2026-11-26): 9 całych scen do kolorowania obok 12 pojedynczych obrazków (plaża, las, ogród, plac zabaw, staw, podwodny świat, kosmos, pociąg, zima), `gen-art.ts --coloring-scenes`; z 30 wariantów wybrane po liczbie pól do dotknięcia i drobiazgów oraz symulacji pokolorowania (farma odpadła: stodoła zamalowana na czarno).
-- **sama lupa** (2026-11-26, uwaga właściciela: drobnych części scen nie da się kliknąć; na iPhonie okienko ma 15–20 pt, palec ok. 45 pt): dotknięcie, pod którym jest wyraźnie (≥ 20% głosów palca) część węższa niż 24 pt na ekranie, nie maluje, tylko płynnie powiększa obrazek wokół palca (2–3,5×, tak żeby ta część miała ok. 40 pt). Po powiększeniu dotknięcie maluje; przycisk lupy z minusem w rogu ramki oddala. Szczypanie i przesuwanie dwoma palcami działa zawsze (1–4×), a farba z pierwszego palca szczypnięcia jest cofana. Próg 12 pt (promień) wybrany symulacją: powiększenie przy 0–36% dotknięć na pojedynczych obrazkach i 17–65% na scenach (`fingerVotes`, `tinyUnderFinger`, `clampFocus`);
-- **gładkie linie**: obrazek pracuje w 640 px, ale wyświetla się w 1280 px z wygładzonymi konturami (`smoothLines`, `composeSmooth`), więc po powiększeniu linie nie są schodkowe.
+- **sama lupa** (2026-11-26): była krótko (dotknięcie w gąszczu drobnych części powiększało fragment, szczypanie), ale właściciel uznał ją za niewygodną dla dziecka. Usunięta po analizie konkurencji (niżej).
+- **gładkie linie**: obrazek pracuje w 640 px, ale wyświetla się w 1280 px z wygładzonymi konturami (`smoothLines`, `composeSmooth`).
+
+### Po analizie konkurencji (2026-11-26)
+
+Kolorowanki dla przedszkolaków (Bimi Boo, „Tap & Fill”, Disney Coloring World, TegTap, PaintyPix, Baba Scribbles) nie powiększają obrazka (to pomysł z kolorowanek „według numerów” dla dorosłych). Mają duże, proste rysunki, wypełnianie jednym dotknięciem i „magiczną kredkę”, która nie wychodzi za linie. Nielsen Norman Group zaleca dla małych dzieci pola co najmniej 2 × 2 cm. Zmiany:
+- **dotknięcie** wypełnia część pod palcem po oderwaniu palca (mądry dotyk wybiera część przy przyłożeniu);
+- **kredka**: ruch palcem (od 18 jednostek) rysuje kredką tylko w części, w której zaczął się dotyk (maska z pikseli części, `stamp` w `sim/fill.ts`); bazgranie nie psuje sąsiadów; gdy kredka pokryje 60% części, reszta wypełnia się sama (iskierki); po oderwaniu palca kreska zostaje na obrazku;
+- **obrazek ożywa**: po „gotowe” największe pokolorowane części (z konturem i detalami, `cutout`) po kolei podskakują i się kiwają, z dźwiękiem i iskierkami, potem pochwała;
+- **strony na miarę ekranu**: `scripts/coloring-sizes.ts` mierzy każdą stronę (jak w grze: przycięcie, 640 px, `buildRegions`) i zapisuje w `src/sim/coloring-sizes.ts` najmniejszą szerokość obrazka (pt), przy której części mają co najmniej 14 pt średnicy (2 najmniejsze mogą być mniejsze, szczeliny < 4 px pomijane). Gra pokazuje tylko strony mieszczące się na danym ekranie (`pagesFor`): iPhone ok. 325 pt, iPad ok. 670 pt. Pojedyncze obrazki wymagają 87–374 pt, stare sceny 300–1120 pt (las, ogród, plac zabaw, staw, kosmos, pociąg, zima nie nadają się nawet na iPada);
+- **proste sceny** dla maluchów: `gen-art.ts --coloring-scenes2` (2–3 duże obiekty, 8–12 dużych pól).
 
 ## Lektor z ElevenLabs (2026-11-26)
 

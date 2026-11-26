@@ -2,7 +2,7 @@ import { Assets, Container, Graphics, Rectangle, Sprite, type FederatedPointerEv
 import { haptics } from '@funfactory/core';
 import { pixelsToTexture, popIn, pulse, squash } from '@funfactory/kit2d';
 import { say } from '../assets.ts';
-import { buildRegions, clampFocus, composeSmooth, detailShade, fingerVotes, shadesOf, smoothLines, tinyUnderFinger, type PageRegions } from '../sim/fill.ts';
+import { buildRegions, composeSmooth, cutout, detailShade, fingerVotes, shadesOf, smoothLines, stamp, type PageRegions } from '../sim/fill.ts';
 import { today } from '../log.ts';
 import { addPainting, pixelsToJpeg } from '../picture.ts';
 import { state } from '../state.ts';
@@ -11,7 +11,7 @@ import { RoundScene } from './round.ts';
 import type { Gesture } from '../hand.ts';
 
 export { PAGES } from '../sim/coloring.ts';
-import { PAGES } from '../sim/coloring.ts';
+import { PAGES, pagesFor } from '../sim/coloring.ts';
 /** Working size of the picture (pixels). */
 const SIZE = 640;
 /** Paints: saturated but soft (like plasticine). Each has three shades (sim/fill.ts shadesOf), shown under the palette. */
@@ -19,21 +19,21 @@ const PAINTS = [0xe8413c, 0xff8a2b, 0xffd23f, 0x7ad35a, 0x2f9e5b, 0x5cb3ff, 0x3d
 const URL_BASE = import.meta.env.BASE_URL;
 /** Fingertip radius (game units): every pixel under it votes for the area the child means (sim/fill.ts pickRegion). */
 const FINGER = 30;
-/** Moving the finger farther than this (game units) starts "smearing": further areas under the finger get painted. */
-const SMEAR_START = 28;
-/** A part narrower than this (inscribed radius, screen points: 24 pt across) is too small for a child's finger: a touch on it
- * zooms in. Measured on the pages (iPhone): 12 pt zooms on 0-36% of touches on single pictures and 17-65% on scenes. */
-const TINY = 12;
-const MAX_ZOOM = 4;
+/** Moving the finger farther than this (game units) turns the touch into a crayon (instead of filling the part on release). */
+const CRAYON_START = 18;
+/** Crayon tip radius (game units). */
+const CRAYON = 20;
+/** Share of a part covered by the crayon at which the rest fills itself (sparkles). */
+const CRAYON_DONE = 0.6;
 
 /**
  * Coloring (Little Studio): picking a paint from the palette and touching an area of the picture fills the whole region
  * between the outlines. No wrong answers; the green arrow finishes the picture (sticker).
  * Small details (too small for a finger: the inside of an ear, spots, buttons) are "magic": they colour themselves with a
  * lighter shade when the part they lie on is painted (sparkles). A precise touch can still paint a detail on its own.
- * A touch in a crowd of parts too small for a finger (a whole scene on a phone) does not guess: the picture zooms in around
- * the finger, so the child can paint the small part itself. A magnifier button zooms out; two fingers pinch and move the
- * picture (a pinch takes back what the first finger painted).
+ * Moving the finger is a crayon that stays inside the part where the touch started (like "magic colour" in coloring apps
+ * for toddlers): scribbling never spoils the neighbours, and once most of the part is covered the rest fills itself.
+ * The finished picture comes alive: its biggest painted parts jump one after another.
  */
 export class ColoringScene extends RoundScene {
   readonly id = 'coloring';
@@ -45,7 +45,15 @@ export class ColoringScene extends RoundScene {
   /** Colour of each painted region; details painted by the child keep their own colour. */
   private readonly colorOf = new Map<number, number>();
   private readonly manual = new Set<number>();
-  private downAt: { x: number; y: number } | null = null;
+  /** The current touch: where it started, the part it means, and whether it became a crayon. */
+  private touch: { id: number; x: number; y: number; region: number; crayon: boolean; last: { x: number; y: number }; covered: number } | null = null;
+  /** Crayon pixels of the current part (counted once). */
+  private marks!: Uint8Array;
+  /** Live crayon line (above the picture, clipped to the part by a mask), baked into the pixels on release. */
+  private strokes!: Graphics;
+  private strokeMask!: Sprite;
+  private maskData!: ImageData;
+  private maskVersion = 0;
   private dark!: Uint8Array;
   /** Display image at twice the working size with smooth outlines (sim/fill.ts smoothLines): zoomed in, lines stay round. */
   private display!: ImageData;
@@ -59,20 +67,9 @@ export class ColoringScene extends RoundScene {
   private paint = PAINTS[0]!;
   private done!: IconButton;
   private fills = 0;
-  private smearing = false;
-  private lastRegion = -1;
   private version = 0;
   private box = { x: 0, y: 0, s: 400 };
-  /** Zoom and the picture point (pixels from its centre) shown in the middle of the frame. */
-  private readonly view = { zoom: 1, x: 0, y: 0 };
-  private readonly pointers = new Map<number, { x: number; y: number }>();
-  private pinch: { dist: number; zoom: number; lx: number; ly: number } | null = null;
-  /** What the current touch painted (region, previous colour, was it painted by hand): a pinch takes it back. */
-  private undo: [number, number | undefined, boolean][] = [];
-  private undoFills = 0;
   private pad!: Container;
-  private clip!: Graphics;
-  private zoomOut!: IconButton;
 
   constructor() {
     super('coloring', 'lusia');
@@ -81,8 +78,10 @@ export class ColoringScene extends RoundScene {
   protected async prepare(): Promise<void> {
     this.length = 1;
     const seen = state.progress.colored ?? [];
+    // Only pages whose parts fit a child's finger at this screen's picture size (a phone gets fewer scenes than a tablet).
+    const pages = pagesFor(this.layout().s / this.unitsPerPx());
     // Pages not colored yet come first; a page that fails to load is skipped.
-    const order = [...this.game.rng.shuffle(PAGES.filter((p) => !seen.includes(p))), ...this.game.rng.shuffle(PAGES.filter((p) => seen.includes(p)))];
+    const order = [...this.game.rng.shuffle(pages.filter((p) => !seen.includes(p))), ...this.game.rng.shuffle(pages.filter((p) => seen.includes(p)))];
     // Playtest: ?page=<id> forces a page.
     const forced = new URLSearchParams(location.search).get('page');
     if (forced && PAGES.includes(forced)) order.unshift(forced);
@@ -126,6 +125,8 @@ export class ColoringScene extends RoundScene {
     this.regions = buildRegions(SIZE, SIZE, (i) => this.dark[i] === 1);
     this.ink = smoothLines(SIZE, SIZE, (i) => this.dark[i] === 1);
     this.display = new ImageData(SIZE * 2, SIZE * 2);
+    this.marks = new Uint8Array(SIZE * SIZE);
+    this.maskData = new ImageData(SIZE, SIZE);
     this.labels = this.regions.labels;
     this.sizes = this.regions.sizes;
     this.colorOf.clear();
@@ -141,9 +142,8 @@ export class ColoringScene extends RoundScene {
     this.picture = new Sprite({ anchor: 0.5 });
     this.refresh();
     this.picture.eventMode = 'none';
-    // Touches land on a pad over the frame (the zoomed picture reaches beyond it, under the palette).
-    // A tap fills an area; moving the finger ("smearing", as toddlers do) fills further areas under the finger.
-    // A small wobble of the finger during a tap must not paint the neighbouring part: smearing starts after a clear move.
+    // Touches land on a pad over the frame. A tap fills the part under the finger on release; moving the finger draws
+    // with a crayon inside the part where the touch started.
     this.pad = new Container();
     this.pad.eventMode = 'static';
     this.pad.cursor = 'pointer';
@@ -151,16 +151,15 @@ export class ColoringScene extends RoundScene {
     this.pad.on('globalpointermove', (e) => this.move(e));
     this.pad.on('pointerup', (e) => this.up(e));
     this.pad.on('pointerupoutside', (e) => this.up(e));
-    this.clip = new Graphics();
-    this.picture.mask = this.clip;
-    this.view.zoom = 1;
-    this.view.x = this.view.y = 0;
-    this.pointers.clear();
-    this.pinch = null;
+    this.touch = null;
+    this.strokes = new Graphics();
+    this.strokes.eventMode = 'none';
+    this.strokeMask = new Sprite({ anchor: 0.5 });
+    this.strokes.mask = this.strokeMask;
     const frame = new Graphics();
     frame.label = 'frame';
     frame.eventMode = 'none';
-    this.layer.addChild(frame, this.picture, this.clip, this.pad, this.palette, this.shades);
+    this.layer.addChild(frame, this.picture, this.strokes, this.strokeMask, this.pad, this.palette, this.shades);
     this.shades.removeChildren();
     for (let i = 0; i < 3; i++) {
       const blob = new Container();
@@ -183,13 +182,7 @@ export class ColoringScene extends RoundScene {
     this.done = new IconButton('next', 52);
     this.done.onTap = () => this.finishPicture();
     this.done.visible = false;
-    this.zoomOut = new IconButton('zoom-out', 40);
-    this.zoomOut.onTap = () => {
-      sfx.pop(this.game.sound, 0.8);
-      this.zoomTo(1, 0, 0);
-    };
-    this.zoomOut.visible = false;
-    this.layer.addChild(this.done, this.zoomOut);
+    this.layer.addChild(this.done);
     this.drawPalette();
     this.timers.after(0.4, () => say(this.game, this.guide, 'coloring'));
   }
@@ -226,39 +219,6 @@ export class ColoringScene extends RoundScene {
 
   protected override step(dt: number): void {
     this.done?.tick(dt);
-    this.zoomOut?.tick(dt);
-  }
-
-  private down(e: FederatedPointerEvent): void {
-    this.pointers.set(e.pointerId, { x: e.global.x, y: e.global.y });
-    if (this.pointers.size === 2) return this.startPinch();
-    if (this.pointers.size > 2) return;
-    this.smearing = false;
-    this.downAt = { x: e.global.x, y: e.global.y };
-    this.lastRegion = -1;
-    this.undo = [];
-    this.undoFills = 0;
-    this.tap(e, false, true);
-  }
-
-  private move(e: FederatedPointerEvent): void {
-    const p = this.pointers.get(e.pointerId);
-    if (!p) return;
-    p.x = e.global.x;
-    p.y = e.global.y;
-    if (this.pinch) return this.pinchMove();
-    if (!this.downAt) return;
-    if (!this.smearing) this.smearing = Math.hypot(e.global.x - this.downAt.x, e.global.y - this.downAt.y) * this.unitsPerPx() > SMEAR_START;
-    if (this.smearing) this.tap(e, true);
-  }
-
-  private up(e: FederatedPointerEvent): void {
-    this.pointers.delete(e.pointerId);
-    if (this.pointers.size < 2) this.pinch = null;
-    if (!this.pointers.size) {
-      this.smearing = false;
-      this.downAt = null;
-    }
   }
 
   /** Game units per screen point. */
@@ -266,69 +226,93 @@ export class ColoringScene extends RoundScene {
     return this.game.view.width / this.game.app.screen.width;
   }
 
-  /** Two fingers: zoom and move. The first finger already painted, but it meant a pinch: take that back. */
-  private startPinch(): void {
-    if (this.busy) return;
-    this.revert();
-    this.downAt = null;
-    this.smearing = false;
-    this.tweens.killOf(this.view);
-    const [a, b] = [...this.pointers.values()] as [{ x: number; y: number }, { x: number; y: number }];
-    const at = this.picture.toLocal({ x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 });
-    this.pinch = { dist: Math.max(1, Math.hypot(a.x - b.x, a.y - b.y)), zoom: this.view.zoom, lx: at.x, ly: at.y };
+  /** Working-pixel position of a screen point. */
+  private pixelAt(global: { x: number; y: number }): { x: number; y: number } {
+    const p = this.picture.toLocal(global);
+    return { x: p.x + SIZE / 2, y: p.y + SIZE / 2 };
   }
 
-  private pinchMove(): void {
-    const [a, b] = [...this.pointers.values()] as [{ x: number; y: number }, { x: number; y: number }];
-    const pinch = this.pinch!;
-    this.view.zoom = Math.max(1, Math.min(MAX_ZOOM, (pinch.zoom * Math.hypot(a.x - b.x, a.y - b.y)) / pinch.dist));
-    // The picture point first under the fingers stays under them.
-    const mid = this.layer.toLocal({ x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 });
-    const scale = (this.box.s / SIZE) * this.view.zoom;
-    this.view.x = pinch.lx - (mid.x - this.box.x - this.box.s / 2) / scale;
-    this.view.y = pinch.ly - (mid.y - this.box.y - this.box.s / 2) / scale;
-    this.applyView();
+  /** The part a fingertip at this screen point means (smart touch: every pixel under the finger votes). */
+  private regionAt(global: { x: number; y: number }): number {
+    const { x, y } = this.pixelAt(global);
+    const reach = Math.max(6, Math.round(FINGER / Math.max(0.1, this.picture.scale.x)));
+    let region = 0;
+    let best = 0;
+    for (const [l, v] of fingerVotes(this.labels, SIZE, SIZE, x, y, reach)) if (v > best) (best = v), (region = l);
+    return region;
+  }
+
+  private down(e: FederatedPointerEvent): void {
+    if (this.busy || this.touch) return;
     this.idle = 0;
+    const region = this.regionAt(e.global);
+    this.touch = { id: e.pointerId, x: e.global.x, y: e.global.y, region, crayon: false, last: this.pixelAt(e.global), covered: 0 };
   }
 
-  /** Smooth zoom to `zoom` with the picture point (x, y) in the middle of the frame. */
-  private zoomTo(zoom: number, x: number, y: number): void {
-    this.tweens.killOf(this.view);
-    const to = { zoom, x: clampFocus(x, SIZE / 2, zoom), y: clampFocus(y, SIZE / 2, zoom) };
-    this.tweens.to(this.view, to, { duration: 0.35, ease: 'cubicOut', onUpdate: () => this.applyView() });
-  }
-
-  /** Picture scale and position for the current zoom; the magnifier (zoom out) shows only when zoomed in. */
-  private applyView(): void {
-    const v = this.view;
-    v.x = clampFocus(v.x, SIZE / 2, v.zoom);
-    v.y = clampFocus(v.y, SIZE / 2, v.zoom);
-    const scale = (this.box.s / SIZE) * v.zoom;
-    this.picture.scale.set(scale);
-    this.picture.position.set(this.box.x + this.box.s / 2 - v.x * scale, this.box.y + this.box.s / 2 - v.y * scale);
-    const zoomed = v.zoom > 1.05;
-    if (this.zoomOut && zoomed !== this.zoomOut.visible) {
-      this.zoomOut.visible = zoomed;
-      if (zoomed) void popIn(this.tweens, this.zoomOut, 0.3);
+  private move(e: FederatedPointerEvent): void {
+    const t = this.touch;
+    if (!t || e.pointerId !== t.id || this.busy || !t.region) return;
+    if (!t.crayon) {
+      if (Math.hypot(e.global.x - t.x, e.global.y - t.y) * this.unitsPerPx() < CRAYON_START) return;
+      // An area already in this colour: nothing to draw.
+      if (this.colorOf.get(t.region) === this.paint) return void (t.region = 0);
+      t.crayon = true;
+      this.startCrayon(t.region);
+    }
+    this.idle = 0;
+    const p = this.pixelAt(e.global);
+    const r = Math.max(4, CRAYON / this.picture.scale.x);
+    // Live line on screen, and the same line into the pixels of this part (shown when the finger lifts).
+    this.strokes.moveTo(t.last.x - SIZE / 2, t.last.y - SIZE / 2).lineTo(p.x - SIZE / 2, p.y - SIZE / 2).stroke({ color: this.paint, width: r * 2, cap: 'round', join: 'round' });
+    t.covered += stamp(this.pixels.data, this.labels, this.marks, SIZE, t.last.x, t.last.y, p.x, p.y, r, t.region, this.paint);
+    t.last = p;
+    if (t.covered >= this.regions.sizes[t.region]! * CRAYON_DONE) {
+      // Most of the part is covered: the rest fills itself.
+      this.fillPart(t.region, e.global, true);
+      t.region = 0;
     }
   }
 
-  /** Take back what the current touch painted. */
-  private revert(): void {
-    if (!this.undo.length) return;
-    for (const [region, color, wasManual] of this.undo.reverse()) {
-      this.fillPixels(region, color ?? 0xffffff);
-      if (color === undefined) this.colorOf.delete(region);
-      else this.colorOf.set(region, color);
-      if (!wasManual) this.manual.delete(region);
+  private up(e: FederatedPointerEvent): void {
+    const t = this.touch;
+    if (!t || e.pointerId !== t.id) return;
+    this.touch = null;
+    if (this.busy) return;
+    if (t.crayon) {
+      if (t.region) this.endCrayon();
+      return;
     }
-    this.undo = [];
-    this.fills -= this.undoFills;
-    this.undoFills = 0;
-    this.refresh();
+    // A tap: the part under the finger (where it touched down) fills.
+    if (t.region) this.fillPart(t.region, { x: t.x, y: t.y });
   }
 
-  private refresh(): void {
+  /** The crayon draws only inside `region`: a mask of its pixels clips the live line. */
+  private startCrayon(region: number): void {
+    this.marks.fill(0);
+    const m = this.maskData.data;
+    m.fill(0);
+    for (const i of this.regions.pixels[region]!) m[i * 4] = m[i * 4 + 1] = m[i * 4 + 2] = m[i * 4 + 3] = 255;
+    const v = ++this.maskVersion;
+    this.strokes.clear();
+    this.strokes.visible = false;
+    void pixelsToTexture(this.maskData).then((t) => {
+      if (v !== this.maskVersion || this.strokeMask.destroyed) return t.destroy(true);
+      const old = this.strokeMask.texture;
+      this.strokeMask.texture = t;
+      if (old !== t) old.destroy(true);
+      this.strokes.visible = true;
+    });
+    haptics.tap();
+  }
+
+  /** Finger lifted mid-crayon: the drawn line becomes part of the picture. */
+  private endCrayon(): void {
+    this.fills++;
+    this.afterFill();
+    this.refresh(() => this.strokes.clear());
+  }
+
+  private refresh(then?: () => void): void {
     const v = ++this.version;
     composeSmooth(this.pixels.data, this.ink.alpha, this.ink.src, this.display.data, 0x282828);
     void pixelsToTexture(this.display, 2).then((t) => {
@@ -336,44 +320,15 @@ export class ColoringScene extends RoundScene {
       const old = this.picture.texture;
       this.picture.texture = t;
       if (old !== t) old.destroy(true);
+      then?.();
     });
   }
 
-  private tap(e: FederatedPointerEvent, smear = false, zoomable = false): void {
+  /** Fill a whole part (a tap, or a crayon that covered most of it), with magic details, sparkles and sound. */
+  private fillPart(region: number, global: { x: number; y: number }, byCrayon = false): void {
     if (this.busy) return;
     this.idle = 0;
-    const p = this.picture.toLocal(e.global);
-    const k = SIZE / this.picture.texture.width;
-    const x = (p.x + this.picture.texture.width / 2) * k;
-    const y = (p.y + this.picture.texture.height / 2) * k;
-    // Fingertip in picture pixels (the picture is scaled to the screen).
-    const reach = Math.max(6, Math.round(FINGER / Math.max(0.1, this.picture.scale.x)));
-    const votes = fingerVotes(this.labels, SIZE, SIZE, x, y, smear ? Math.round(reach * 0.6) : reach);
-    if (zoomable && this.view.zoom < 1.8) {
-      // Parts narrower than TINY points on screen, clearly under the finger: zoom in so that they become finger-sized.
-      const minRadius = (TINY * this.unitsPerPx()) / this.picture.scale.x;
-      const tiny = tinyUnderFinger(votes, this.regions.radius, minRadius, (l) => this.regions.keepWhite[l]!);
-      if (tiny) {
-        // The narrowest part grows to ~20 pt radius (40 pt across, a fingertip).
-        const zoom = Math.max(2, Math.min(3.5, ((1.6 * minRadius) / tiny) * this.view.zoom));
-        // Zoom around the finger: the touched point stays under it.
-        const r = this.view.zoom / zoom;
-        this.zoomTo(zoom, p.x - (p.x - this.view.x) * r, p.y - (p.y - this.view.y) * r);
-        this.downAt = null;
-        haptics.tap();
-        sfx.pop(this.game.sound, 0.7);
-        return;
-      }
-    }
-    let pick = { region: 0, share: 0 };
-    for (const [l, v] of votes) if (v > pick.share) pick = { region: l, share: v };
-    // Smearing paints only where the finger is clearly inside one part (not along a line between two).
-    if (!pick.region || (smear && pick.share < 0.75)) return;
-    const region = pick.region;
-    if (region === this.lastRegion) return;
-    this.lastRegion = region;
-    // Area already in this color: nothing to do (when smearing, the finger returns to the same areas).
-    if (this.colorOf.get(region) === this.paint) return;
+    if (!byCrayon && this.colorOf.get(region) === this.paint) return;
     this.paintRegion(region, this.paint);
     if (this.regions.detail[region]) this.manual.add(region);
     // Magic details: parts too small for a finger take a shade of the part they lie on (unless painted by hand).
@@ -384,22 +339,26 @@ export class ColoringScene extends RoundScene {
           this.paintRegion(d, detailShade(this.paint));
           magic.push(d);
         }
-    this.refresh();
+    this.refresh(() => this.strokes.clear());
     magic.forEach((d, i) =>
       this.timers.after(0.08 + i * 0.06, () => {
         const [cx, cy] = this.regions.center[d]!;
-        const at = this.layer.toLocal(this.picture.toGlobal({ x: cx / k - this.picture.texture.width / 2, y: cy / k - this.picture.texture.height / 2 }));
+        const at = this.layer.toLocal(this.picture.toGlobal({ x: cx - SIZE / 2, y: cy - SIZE / 2 }));
         this.particles.burst(at.x, at.y, { count: 6, speed: [40, 120], life: [0.25, 0.5], gravity: 0, scale: [0.4, 0.8], colors: [0xffffff, 0xfff3b0] });
       }),
     );
     if (magic.length) this.timers.after(0.1, () => sfx.pop(this.game.sound, 1.6));
     this.fills++;
-    this.undoFills++;
     haptics.tap();
-    sfx.plop(this.game.sound);
-    const local = this.layer.toLocal(e.global);
-    this.particles.burst(local.x, local.y, { count: 14, speed: [120, 320], life: [0.3, 0.6], gravity: 500, scale: [0.6, 1.2], colors: [this.paint, this.paint, 0xffffff] });
-    // The "done" button only after a few areas: no sticker for tapping "next" without coloring.
+    if (byCrayon) sfx.pop(this.game.sound, 1.3);
+    else sfx.plop(this.game.sound);
+    const local = this.layer.toLocal(global);
+    this.particles.burst(local.x, local.y, { count: byCrayon ? 22 : 14, speed: [120, 320], life: [0.3, 0.6], gravity: 500, scale: [0.6, 1.2], colors: [this.paint, this.paint, 0xffffff] });
+    this.afterFill();
+  }
+
+  /** The "done" button only after a few areas: no sticker for tapping "next" without coloring. */
+  private afterFill(): void {
     if (this.fills === 3) {
       this.done.visible = true;
       void popIn(this.tweens, this.done, 0.4);
@@ -417,20 +376,73 @@ export class ColoringScene extends RoundScene {
     if (!seen.includes(this.page)) state.progress.colored = [...seen, this.page];
     // To the parent's album (only when something was colored).
     if (this.fills > 0) void addPainting({ id: `k${Date.now()}`, page: this.page, date: today(), img: pixelsToJpeg(this.pixels, 480) });
-    // The whole picture for the finish.
-    this.tweens.killOf(this.view);
-    this.view.zoom = 1;
-    this.view.x = this.view.y = 0;
-    this.applyView();
-    void pulse(this.tweens, this.picture, 0.08, 0.4);
-    this.burst(this.picture.x, this.picture.y, 50);
+    this.comeAlive();
     this.done.visible = false;
-    this.solved();
+    this.solved(1.3);
+  }
+
+  /**
+   * The finished picture comes alive: its biggest painted parts (with their outline and details) jump one after another,
+   * then the whole picture wobbles.
+   */
+  private comeAlive(): void {
+    const bg = this.regions.background;
+    const parts = [...this.colorOf.keys()].filter((r) => r !== bg && !this.regions.detail[r]).sort((a, b) => this.sizes[b]! - this.sizes[a]!).slice(0, 6);
+    const scale = this.picture.scale.x;
+    parts.forEach((r, i) => {
+      const cut = cutout(this.pixels.data, this.labels, this.regions.parent, this.dark, SIZE, r, 6);
+      if (!cut) return;
+      // At display resolution (smooth lines); a white patch of the same shape hides the part's place while it jumps.
+      const W = cut.w * 2;
+      const H = cut.h * 2;
+      const part = new ImageData(W, H);
+      const patch = new ImageData(W, H);
+      const disp = this.display.data;
+      for (let y = 0; y < H; y++)
+        for (let x = 0; x < W; x++) {
+          if (!cut.rgba[((y >> 1) * cut.w + (x >> 1)) * 4 + 3]) continue;
+          const o = (y * W + x) * 4;
+          const q = ((cut.y * 2 + y) * SIZE * 2 + cut.x * 2 + x) * 4;
+          part.data[o] = disp[q]!;
+          part.data[o + 1] = disp[q + 1]!;
+          part.data[o + 2] = disp[q + 2]!;
+          part.data[o + 3] = 255;
+          patch.data[o] = patch.data[o + 1] = patch.data[o + 2] = patch.data[o + 3] = 255;
+        }
+      const at = this.layer.toLocal(this.picture.toGlobal({ x: cut.x + cut.w / 2 - SIZE / 2, y: cut.y + cut.h / 2 - SIZE / 2 }));
+      void Promise.all([pixelsToTexture(part, 2), pixelsToTexture(patch, 2)]).then(([tPart, tPatch]) => {
+        if (this.picture.destroyed) return void (tPart.destroy(true), tPatch.destroy(true));
+        const under = new Sprite({ texture: tPatch, anchor: 0.5 });
+        const s = new Sprite({ texture: tPart, anchor: 0.5 });
+        for (const o of [under, s]) {
+          o.scale.set(scale);
+          o.position.copyFrom(at);
+          o.visible = false;
+        }
+        const index = this.layer.getChildIndex(this.picture) + 1;
+        this.layer.addChildAt(s, index);
+        this.layer.addChildAt(under, index);
+        this.timers.after(0.1 + i * 0.22, () => {
+          under.visible = s.visible = true;
+          sfx.pop(this.game.sound, 0.9 + i * 0.12);
+          haptics.tap();
+          void this.tweens.to(s.scale, { x: scale * 1.15, y: scale * 1.15 }, { duration: 0.15, ease: 'quadOut', yoyo: true, repeat: 1 });
+          void this.tweens.to(s, { rotation: i % 2 ? 0.07 : -0.07 }, { duration: 0.075, yoyo: true, repeat: 3 });
+          this.particles.burst(at.x, at.y, { count: 10, speed: [80, 220], life: [0.3, 0.6], gravity: 200, scale: [0.5, 1], colors: [0xffffff, 0xfff3b0, this.colorOf.get(r) ?? 0xffffff] });
+          this.timers.after(0.34, () => {
+            s.destroy();
+            under.destroy();
+            tPart.destroy(true);
+            tPatch.destroy(true);
+          });
+        });
+      });
+    });
+    this.burst(this.picture.x, this.picture.y, 50);
   }
 
   /** Fill one region with a colour (pixels only; the texture is refreshed by the caller). */
   private paintRegion(region: number, color: number): void {
-    this.undo.push([region, this.colorOf.get(region), this.manual.has(region)]);
     this.fillPixels(region, color);
     this.colorOf.set(region, color);
   }
@@ -451,12 +463,10 @@ export class ColoringScene extends RoundScene {
   paintDemo(n = 8): void {
     const bg = this.regions.background;
     const regions = this.sizes.map((size, r) => ({ size, r })).filter((x) => x.r !== bg && x.r > 0 && x.size > 0 && !this.regions.detail[x.r]).sort((a, b) => b.size - a.size).slice(0, n);
-    const k = SIZE / this.picture.texture.width;
     regions.forEach(({ r }, i) => {
       const [cx, cy] = this.regions.center[r]!;
       this.choose(PAINTS[(i * 3 + 2) % 9]!);
-      this.lastRegion = -1;
-      this.tap({ global: this.picture.toGlobal({ x: cx / k - this.picture.texture.width / 2, y: cy / k - this.picture.texture.height / 2 }) } as FederatedPointerEvent);
+      this.fillPart(r, this.picture.toGlobal({ x: cx - SIZE / 2, y: cy - SIZE / 2 }));
     });
   }
 
@@ -531,21 +541,29 @@ export class ColoringScene extends RoundScene {
     });
   }
 
-  protected place(): void {
-    if (!this.pixels) return;
+  /** Picture box (palette on the right in two columns, picture in the middle). */
+  private layout(): { box: { x: number; y: number; s: number }; s: number; right: number; top: number; palW: number } {
     const { width: w, height: h, safe } = this.stage;
     const left = safe.left + 300;
     const right = w - safe.right - 30;
     const top = safe.top + 105;
     const bottom = h - 25;
-    // Palette on the right in two columns, picture in the middle.
     const palW = 170;
     const s = Math.min(bottom - top, right - left - palW - 30);
-    this.box = { x: left + (right - left - palW - 30 - s) / 2, y: top + (bottom - top - s) / 2, s };
-    this.applyView();
-    this.clip.clear().rect(this.box.x, this.box.y, s, s).fill({ color: 0xffffff });
+    return { box: { x: left + (right - left - palW - 30 - s) / 2, y: top + (bottom - top - s) / 2, s }, s, right, top, palW };
+  }
+
+  protected place(): void {
+    if (!this.pixels) return;
+    const { box, right, top, palW } = this.layout();
+    const { safe } = this.stage;
+    this.box = box;
+    const s = this.box.s;
+    for (const o of [this.picture, this.strokes, this.strokeMask]) {
+      o.position.set(this.box.x + s / 2, this.box.y + s / 2);
+      o.scale.set(s / SIZE);
+    }
     this.pad.hitArea = new Rectangle(this.box.x, this.box.y, s, s);
-    this.zoomOut.position.set(this.box.x + 26, this.box.y + 26);
     const frame = this.layer.children.find((c) => c.label === 'frame') as Graphics;
     frame
       .clear()

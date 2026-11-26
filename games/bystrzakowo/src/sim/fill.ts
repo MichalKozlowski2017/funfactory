@@ -291,28 +291,6 @@ export function fingerVotes(labels: Int32Array, w: number, h: number, x: number,
   return votes;
 }
 
-/**
- * A touch in a crowd of small parts: the finger covers a clear share (`minShare`) of a part narrower than `minRadius`
- * pixels (an inscribed radius), so it cannot tell which part the child means. Returns the radius of the narrowest such part
- * (to pick the zoom that makes it finger-sized), or 0 when the touch is clear. `skip`: parts that never count (glints).
- */
-export function tinyUnderFinger(votes: Map<number, number>, radius: number[], minRadius: number, skip: (l: number) => boolean = () => false, minShare = 0.2): number {
-  let tiny = 0;
-  for (const [l, v] of votes) {
-    const r = radius[l] ?? 0;
-    if (v < minShare || skip(l) || r >= minRadius) continue;
-    if (!tiny || r < tiny) tiny = Math.max(1, r);
-  }
-  return tiny;
-}
-
-/** Zoom-view focus (point of the picture at the centre of the frame, picture coordinates from its centre) kept so the
- * zoomed picture always covers the frame: |focus| <= half * (1 - 1/zoom). */
-export function clampFocus(focus: number, half: number, zoom: number): number {
-  const m = half * (1 - 1 / Math.max(1, zoom));
-  return Math.max(-m, Math.min(m, focus));
-}
-
 /** Colour for a magic detail: a lighter shade of the parent's colour (a darker one for very light colours). */
 export function detailShade(color: number): number {
   const r = (color >> 16) & 255;
@@ -404,4 +382,92 @@ export function composeSmooth(pixels: Uint8ClampedArray, alpha: Uint8Array, src:
     }
     out[q + 3] = 255;
   }
+}
+
+/**
+ * Crayon: a round tip of radius `r` moved from (x0, y0) to (x1, y1) paints `color` into the pixels of `region` only
+ * (the neighbours and the lines stay untouched). `marks` remembers painted pixels; returns how many were new.
+ */
+export function stamp(data: Uint8ClampedArray, labels: Int32Array, marks: Uint8Array, w: number, x0: number, y0: number, x1: number, y1: number, r: number, region: number, color: number): number {
+  const h = labels.length / w;
+  const cr = (color >> 16) & 255;
+  const cg = (color >> 8) & 255;
+  const cb = color & 255;
+  const len = Math.hypot(x1 - x0, y1 - y0);
+  const steps = Math.max(1, Math.ceil(len / Math.max(1, r / 3)));
+  let added = 0;
+  const rr = r * r;
+  for (let s = 0; s <= steps; s++) {
+    const cx = x0 + ((x1 - x0) * s) / steps;
+    const cy = y0 + ((y1 - y0) * s) / steps;
+    const ya = Math.max(0, Math.floor(cy - r));
+    const yb = Math.min(h - 1, Math.ceil(cy + r));
+    const xa = Math.max(0, Math.floor(cx - r));
+    const xb = Math.min(w - 1, Math.ceil(cx + r));
+    for (let y = ya; y <= yb; y++)
+      for (let x = xa; x <= xb; x++) {
+        if ((x - cx) ** 2 + (y - cy) ** 2 > rr) continue;
+        const i = y * w + x;
+        if (labels[i] !== region || marks[i]) continue;
+        marks[i] = 1;
+        data[i * 4] = cr;
+        data[i * 4 + 1] = cg;
+        data[i * 4 + 2] = cb;
+        added++;
+      }
+  }
+  return added;
+}
+
+/**
+ * A painted part cut out of the picture with its details and the outline around it (line pixels within `pad`):
+ * the finished picture comes alive by making such parts jump. Transparent outside; null for an empty part.
+ */
+export function cutout(data: Uint8ClampedArray, labels: Int32Array, parent: Int32Array, dark: Uint8Array, w: number, region: number, pad: number): { x: number; y: number; w: number; h: number; rgba: Uint8ClampedArray<ArrayBuffer> } | null {
+  const h = labels.length / w;
+  const inPart = (l: number) => l === region || (l > 0 && parent[l] === region);
+  let x0 = w;
+  let y0 = h;
+  let x1 = -1;
+  let y1 = -1;
+  for (let i = 0; i < labels.length; i++)
+    if (inPart(labels[i]!)) {
+      const x = i % w;
+      const y = (i - x) / w;
+      if (x < x0) x0 = x;
+      if (x > x1) x1 = x;
+      if (y < y0) y0 = y;
+      if (y > y1) y1 = y;
+    }
+  if (x1 < 0) return null;
+  x0 = Math.max(0, x0 - pad);
+  y0 = Math.max(0, y0 - pad);
+  x1 = Math.min(w - 1, x1 + pad);
+  y1 = Math.min(h - 1, y1 + pad);
+  const cw = x1 - x0 + 1;
+  const ch = y1 - y0 + 1;
+  // Square dilation of the part by `pad` (separable max), to take the outline around it.
+  const part = new Uint8Array(cw * ch);
+  for (let y = 0; y < ch; y++) for (let x = 0; x < cw; x++) part[y * cw + x] = inPart(labels[(y + y0) * w + x + x0]!) ? 1 : 0;
+  const rows = new Uint8Array(cw * ch);
+  for (let y = 0; y < ch; y++)
+    for (let x = 0; x < cw; x++) {
+      let m = 0;
+      for (let k = Math.max(0, x - pad); k <= Math.min(cw - 1, x + pad) && !m; k++) m = part[y * cw + k]!;
+      rows[y * cw + x] = m;
+    }
+  const rgba = new Uint8ClampedArray(cw * ch * 4);
+  for (let y = 0; y < ch; y++)
+    for (let x = 0; x < cw; x++) {
+      const o = y * cw + x;
+      let near = part[o]!;
+      for (let k = Math.max(0, y - pad); k <= Math.min(ch - 1, y + pad) && !near; k++) near = rows[k * cw + x]!;
+      const i = (y + y0) * w + x + x0;
+      if (!part[o] && !(near && dark[i])) continue;
+      rgba[o * 4] = data[i * 4]!;
+      rgba[o * 4 + 1] = data[i * 4 + 1]!;
+      rgba[o * 4 + 2] = data[i * 4 + 2]!;
+      rgba[o * 4 + 3] = 255;
+    }
+  return { x: x0, y: y0, w: cw, h: ch, rgba };
 }

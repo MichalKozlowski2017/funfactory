@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { buildRegions, clampFocus, detailShade, fingerVotes, labelRegions, mergeThin, pickRegion, regionAt, smoothLines, tinyUnderFinger } from './fill.ts';
+import { buildRegions, cutout, detailShade, labelRegions, mergeThin, pickRegion, regionAt, smoothLines, stamp } from './fill.ts';
 
 /** Picture from text: '#' is a line, the rest is background. */
 function grid(rows: string[]) {
@@ -74,15 +74,16 @@ describe('coloring regions (magic details)', () => {
     expect(pickRegion(p.labels, W, W, 12, 12, 3).region).toBe(at(12, 12));
   });
 
-  it('a finger over a small part asks for a zoom, a touch in the middle of a big part does not', () => {
-    const big = fingerVotes(p.labels, W, W, 5, 5, 3);
-    expect(tinyUnderFinger(big, p.radius, 5)).toBe(0);
-    const crowd = fingerVotes(p.labels, W, W, 12, 12, 6);
-    expect(tinyUnderFinger(crowd, p.radius, 5)).toBeGreaterThan(0);
-    // Skipped parts (glints) never count.
-    expect(tinyUnderFinger(crowd, p.radius, 5, () => true)).toBe(0);
-    const sum = [...crowd.values()].reduce((a, b) => a + b, 0);
-    expect(sum).toBeCloseTo(1, 6);
+  it('the crayon paints only inside its part and counts new pixels once', () => {
+    const data = new Uint8ClampedArray(W * W * 4).fill(255);
+    const marks = new Uint8Array(W * W);
+    const body = at(5, 5);
+    // A line across the body border: only body pixels get the paint.
+    const n = stamp(data, p.labels, marks, W, 0, 6, 8, 6, 2, body, 0xff0000);
+    expect(n).toBeGreaterThan(0);
+    expect(data[(6 * W + 6) * 4 + 1]).toBe(0);
+    expect(data[(6 * W + 1) * 4 + 1]).toBe(255);
+    expect(stamp(data, p.labels, marks, W, 0, 6, 8, 6, 2, body, 0xff0000)).toBe(0);
   });
 
   it('smooth display lines: ink inside the line, paint of the part outside', () => {
@@ -93,10 +94,15 @@ describe('coloring regions (magic details)', () => {
     expect(p.labels[s.src[at2(6, 6)]!]).toBe(at(6, 6));
   });
 
-  it('the zoomed picture always covers the frame', () => {
-    expect(clampFocus(500, 320, 1)).toBe(0);
-    expect(clampFocus(500, 320, 2)).toBe(160);
-    expect(clampFocus(-50, 320, 2)).toBe(-50);
+  it('a cut-out part takes its details and the outline around it, not the neighbours', () => {
+    const darkArr = Uint8Array.from({ length: W * W }, (_, i) => (dark(i) ? 1 : 0));
+    const data = new Uint8ClampedArray(W * W * 4).fill(200);
+    const c = cutout(data, p.labels, p.parent, darkArr, W, at(5, 5), 1)!;
+    const alphaAt = (x: number, y: number) => c.rgba[((y - c.y) * c.w + x - c.x) * 4 + 3];
+    expect(alphaAt(3, 10)).toBe(255); // outline
+    expect(alphaAt(12, 12)).toBe(255); // detail
+    expect(c.x).toBe(3); // the box ends at the outline (pad 1)
+    expect(alphaAt(12, 9)).toBe(255); // the detail's ring (a line inside the part)
   });
 
   it('detail shade is lighter for dark colours and darker for light ones', () => {
