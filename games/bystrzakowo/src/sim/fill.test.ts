@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { buildRegions, cutout, detailShade, labelRegions, mergeThin, pickRegion, regionAt, smoothLines, stamp } from './fill.ts';
+import { buildRegions, cutout, detailShade, inkSmallParts, labelRegions, mergeThin, pickRegion, regionAt, smoothLines, stamp } from './fill.ts';
 
 /** Picture from text: '#' is a line, the rest is background. */
 function grid(rows: string[]) {
@@ -108,5 +108,16 @@ describe('coloring regions (magic details)', () => {
   it('detail shade is lighter for dark colours and darker for light ones', () => {
     expect(detailShade(0x2f9e5b)).toBeGreaterThan(0x2f9e5b);
     expect(detailShade(0xffffff)).toBeLessThan(0xffffff);
+  });
+
+  it('turns parts too small for a finger into ink, keeping the background and big parts', () => {
+    // Background touching the frame, a big box (radius 3) and a 1 px slot beside it.
+    const rows = ['..........', '.#######..', '.#.....#..', '.#.....###', '.#.....#.#', '.#.....###', '.#######..', '..........'];
+    const w = rows[0]!.length;
+    const dark = Uint8Array.from({ length: w * rows.length }, (_, i) => (rows[Math.floor(i / w)]![i % w] === '#' ? 1 : 0));
+    expect(inkSmallParts(w, rows.length, dark, 2)).toBe(1); // the slot (big box: 20 px > fingertip circle 12.6 px)
+    expect(dark[4 * w + 8]).toBe(1);
+    expect(dark[3 * w + 4]).toBe(0); // big box
+    expect(dark[0]).toBe(0); // background
   });
 });

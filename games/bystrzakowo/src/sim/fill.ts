@@ -149,6 +149,36 @@ export function mergeThin(labels: Int32Array, sizes: number[], w: number, h: num
 }
 
 /**
+ * Whether a part is too small for a finger (`minRadius` = fingertip radius in pixels): smaller in area than a fingertip
+ * circle, or a sliver narrower than a third of it. Area rather than width: a starfish full of dots is narrow between the
+ * dots but still big under the finger (the dots turn to ink and don't vote).
+ */
+export function tooSmall(size: number, radius: number, minRadius: number): boolean {
+  return size < Math.PI * minRadius * minRadius || radius < minRadius / 3;
+}
+
+/**
+ * Parts too small for a finger (`tooSmall`) become ink (part of the outline): sun rays, dots on a starfish, glints in the
+ * eyes turn solid black, so the picture never has a white bit the child can't colour. `dark` (1 = line) is updated in
+ * place; the part touching the frame with the most pixels (the background) always stays. Returns the number of inked pixels.
+ */
+export function inkSmallParts(w: number, h: number, dark: Uint8Array, minRadius: number): number {
+  const { labels, count, sizes } = labelRegions(w, h, (i) => dark[i] === 1);
+  const radius = regionThickness(labels, w, h, count);
+  let background = 0;
+  const edge = (i: number) => {
+    const l = labels[i]!;
+    if (l && (!background || sizes[l]! > sizes[background]!)) background = l;
+  };
+  for (let x = 0; x < w; x++) edge(x), edge((h - 1) * w + x);
+  for (let y = 0; y < h; y++) edge(y * w), edge(y * w + w - 1);
+  const ink = sizes.map((s, l) => l > 0 && l !== background && tooSmall(s, radius[l]!, minRadius));
+  let inked = 0;
+  for (let i = 0; i < w * h; i++) if (ink[labels[i]!]) (dark[i] = 1), inked++;
+  return inked;
+}
+
+/**
  * Coloring page regions without merging (each part of the drawing is its own region):
  * - specks smaller than `speck` pixels become part of the line;
  * - `detail`: a region both narrow (inscribed radius < `detailRadius`) and small (< `detailArea` pixels; a long tail stays a

@@ -10,6 +10,12 @@ export const PAGES = [
 import { MIN_WIDTH } from './coloring-sizes.ts';
 
 /**
+ * Narrowest part a child colours (inscribed radius, points: 24 pt across, about 4 mm on a phone). Narrower parts become
+ * ink in the game (sim/fill.ts inkSmallParts), and scripts/coloring-sizes.ts picks pages that lose little to ink.
+ */
+export const FINGER_RADIUS_PT = 12;
+
+/**
  * Pages that fit a picture `width` points wide (scripts/coloring-sizes.ts measured how big each must be for a finger).
  * A tiny screen where nothing fits gets the easiest half of the pages.
  */

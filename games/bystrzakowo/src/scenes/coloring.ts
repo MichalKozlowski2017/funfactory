@@ -2,7 +2,7 @@ import { Assets, Container, Graphics, Rectangle, Sprite, type FederatedPointerEv
 import { haptics } from '@funfactory/core';
 import { pixelsToTexture, popIn, pulse, squash } from '@funfactory/kit2d';
 import { say } from '../assets.ts';
-import { buildRegions, composeSmooth, cutout, detailShade, fingerVotes, shadesOf, smoothLines, stamp, type PageRegions } from '../sim/fill.ts';
+import { buildRegions, composeSmooth, cutout, detailShade, fingerVotes, inkSmallParts, shadesOf, smoothLines, stamp, type PageRegions } from '../sim/fill.ts';
 import { today } from '../log.ts';
 import { addPainting, pixelsToJpeg } from '../picture.ts';
 import { state } from '../state.ts';
@@ -11,7 +11,7 @@ import { RoundScene } from './round.ts';
 import type { Gesture } from '../hand.ts';
 
 export { PAGES } from '../sim/coloring.ts';
-import { PAGES, pagesFor } from '../sim/coloring.ts';
+import { FINGER_RADIUS_PT, PAGES, pagesFor } from '../sim/coloring.ts';
 /** Working size of the picture (pixels). */
 const SIZE = 640;
 /** Paints: saturated but soft (like plasticine). Each has three shades (sim/fill.ts shadesOf), shown under the palette. */
@@ -29,8 +29,9 @@ const CRAYON_DONE = 0.6;
 /**
  * Coloring (Little Studio): picking a paint from the palette and touching an area of the picture fills the whole region
  * between the outlines. No wrong answers; the green arrow finishes the picture (sticker).
- * Small details (too small for a finger: the inside of an ear, spots, buttons) are "magic": they colour themselves with a
- * lighter shade when the part they lie on is painted (sparkles). A precise touch can still paint a detail on its own.
+ * Parts too small for a finger on this screen (sun rays, dots, glints) become ink: no white bit is left that can't be
+ * coloured. Small details that remain (the inside of an ear, spots, buttons) are "magic": they colour themselves with a
+ * lighter shade when the part they lie on is painted (sparkles). A touch can still paint a detail on its own.
  * Moving the finger is a crayon that stays inside the part where the touch started (like "magic colour" in coloring apps
  * for toddlers): scribbling never spoils the neighbours, and once most of the part is covered the rest fills itself.
  * The finished picture comes alive: its biggest painted parts jump one after another.
@@ -79,7 +80,8 @@ export class ColoringScene extends RoundScene {
     this.length = 1;
     const seen = state.progress.colored ?? [];
     // Only pages whose parts fit a child's finger at this screen's picture size (a phone gets fewer scenes than a tablet).
-    const pages = pagesFor(this.layout().s / this.unitsPerPx());
+    const width = this.layout().s / this.unitsPerPx();
+    const pages = pagesFor(width);
     // Pages not colored yet come first; a page that fails to load is skipped.
     const order = [...this.game.rng.shuffle(pages.filter((p) => !seen.includes(p))), ...this.game.rng.shuffle(pages.filter((p) => seen.includes(p)))];
     // Playtest: ?page=<id> forces a page.
@@ -117,6 +119,10 @@ export class ColoringScene extends RoundScene {
     for (let i = 0; i < SIZE * SIZE; i++) {
       const lum = 0.3 * d[i * 4]! + 0.59 * d[i * 4 + 1]! + 0.11 * d[i * 4 + 2]!;
       this.dark[i] = lum < 150 ? 1 : 0;
+    }
+    // Parts narrower than a fingertip on this screen join the outline (`width` points across SIZE pixels).
+    inkSmallParts(SIZE, SIZE, this.dark, (FINGER_RADIUS_PT * SIZE) / width);
+    for (let i = 0; i < SIZE * SIZE; i++) {
       // Clean starting image: black lines, everything else white (no gray shades from antialiasing).
       const v = this.dark[i] ? 40 : 255;
       d[i * 4] = d[i * 4 + 1] = d[i * 4 + 2] = v;

@@ -382,6 +382,27 @@ if (process.argv.includes('--coloring-scenes2')) {
     tasks.push({ out: 'coloring-pages', prefix: id!, args: ['--workflow', 'flux2', '--count', '4', '--prompt', scene(what!)] });
 }
 
+if (process.argv.includes('--coloring-scenes3')) {
+  // Even simpler pages (owner's note on scenes2: sun rays and starfish dots stayed white, too small to color): 1-2 objects,
+  // 5-8 big areas, nothing decorative. Whatever small part Flux still adds becomes ink in the game (inkSmallParts).
+  const page = (what: string) => `very simple coloring page for a 3 year old toddler: ${what}, only 5 to 8 big closed areas in total, every closed area at least as big as a thumb, extremely thick bold black outlines, big simple rounded shapes like a sticker, eyes are small solid black dots, no small details, no sun rays, no spots, no dots, no stripes, no patterns, no texture, no grass, no windows panes, no spokes, no tiny parts, pure white background, no shading, no gray, no color, the drawing fills the whole square page`;
+  for (const [id, what] of [
+    ['simple-sun-cloud', 'a big round smiling sun without rays and one big fluffy cloud'],
+    ['simple-fish', 'one big round fish with a big tail fin and one big bubble'],
+    ['simple-apple-pear', 'a big apple with one leaf next to a big pear'],
+    ['simple-car', 'a big chubby toy car with two big round wheels'],
+    ['simple-house', 'a big simple house with a triangle roof, one big door and one big round window'],
+    ['simple-ball-duck', 'a big rubber duck next to a big beach ball with three wide sections'],
+    ['simple-cat', 'a big chubby sitting cat with a big round head'],
+    ['simple-balloons', 'three big balloons on strings'],
+    ['simple-ice-cream', 'a big ice cream cone with two big scoops'],
+    ['simple-boat', 'a big simple sailboat with one big sail on one big wave'],
+    ['simple-mushroom-snail', 'a big mushroom with a plain cap next to a big snail'],
+    ['simple-rocket-moon', 'a big chubby rocket with one round window next to a big crescent moon'],
+  ])
+    tasks.push({ out: 'coloring-pages', prefix: id!, args: ['--workflow', 'flux2', '--count', '4', '--prompt', page(what!)] });
+}
+
 if (process.argv.includes('--meadow')) {
   // Puzzle Meadow stations: the picture tells what the activity is about (instead of identical houses).
   const sprite = (what: string, face = false) => `${what}, single object, centered, ${STYLE}${face ? '' : ', no face on objects'}, plain light gray background`;
@@ -447,7 +468,7 @@ if (process.argv.includes('--hand2')) {
 }
 
 for (const item of ITEMS) {
-  if ((process.argv.includes('--workshop') || process.argv.includes('--gear') || process.argv.includes('--path') || process.argv.includes('--signs') || process.argv.includes('--studio') || process.argv.includes('--extras') || process.argv.includes('--stories') || process.argv.includes('--meadow') || process.argv.includes('--coloring-pages2') || process.argv.includes('--coloring-scenes') || process.argv.includes('--coloring-scenes2') || process.argv.includes('--landscapes') || process.argv.includes('--snowman') || process.argv.includes('--stories2') || process.argv.includes('--stories3') || process.argv.includes('--stories4') || process.argv.includes('--stories5') || process.argv.includes('--stories6') || process.argv.includes('--stories7') || process.argv.includes('--emotions2') || process.argv.includes('--hand') || process.argv.includes('--hand2') || process.argv.includes('--letters')) && !only) break;
+  if ((process.argv.includes('--workshop') || process.argv.includes('--gear') || process.argv.includes('--path') || process.argv.includes('--signs') || process.argv.includes('--studio') || process.argv.includes('--extras') || process.argv.includes('--stories') || process.argv.includes('--meadow') || process.argv.includes('--coloring-pages2') || process.argv.includes('--coloring-scenes') || process.argv.includes('--coloring-scenes2') || process.argv.includes('--coloring-scenes3') || process.argv.includes('--landscapes') || process.argv.includes('--snowman') || process.argv.includes('--stories2') || process.argv.includes('--stories3') || process.argv.includes('--stories4') || process.argv.includes('--stories5') || process.argv.includes('--stories6') || process.argv.includes('--stories7') || process.argv.includes('--emotions2') || process.argv.includes('--hand') || process.argv.includes('--hand2') || process.argv.includes('--letters')) && !only) break;
   if (only && !only.has(item.id)) continue;
   if (!only && existsSync(join(repo, 'games/bystrzakowo/public/art/items', `${item.id}.webp`))) continue;
   if (existsSync(join(raw, 'items', `${item.id}-${SEED}.png`))) continue;
