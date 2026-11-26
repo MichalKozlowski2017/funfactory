@@ -357,6 +357,8 @@ export abstract class RoundScene extends Scene {
 
   protected drawDots(): void {
     const g = this.dots.clear();
+    // A single-task round (coloring) has nothing to count: a lone dot only puzzles the child.
+    if (this.length <= 1) return;
     const gap = 54;
     for (let i = 0; i < this.length; i++) {
       const x = (i - (this.length - 1) / 2) * gap;
