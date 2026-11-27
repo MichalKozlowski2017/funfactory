@@ -1,7 +1,7 @@
 import { Container, Graphics, Sprite, type Text, type Texture } from 'pixi.js';
 import { haptics } from '@funfactory/core';
 import { dotTexture, idleBreath, Particles, popIn, Scene, squash, type View } from '@funfactory/kit2d';
-import { loadArt, say, shadowOf, startMusic, stopMusic, type Art } from '../assets.ts';
+import { loadArt, say, shadowOf, soundAtLaunch, startMusic, stopMusic, type Art } from '../assets.ts';
 import { playable, type PuzzleKind } from '../sim/puzzles.ts';
 import { ACTIVITY_NAMES, isPuzzle, realmOf, REALMS, type Activity } from '../sim/realms.ts';
 import { saveState, state } from '../state.ts';
@@ -157,10 +157,8 @@ export class WorldScene extends Scene {
     this.gate.setBadge(playDaysAfter(journal(), state.progress.parentSeen ?? '') >= 3);
     this.addChild(this.gate);
 
-    // A sideways swipe switches the realm. First touch: music and welcome.
-    this.eventMode = 'static';
-    this.on('pointerdown', (e) => {
-      this.swipeX = e.global.x;
+    // Music and welcome: at launch in the app (sound needs no touch there), otherwise on the first touch.
+    const greet = () => {
       startMusic(this.game);
       if (state.greeted) return;
       state.greeted = true;
@@ -170,6 +168,15 @@ export class WorldScene extends Scene {
         if (state.progress.rounds === 0) this.pointFirst();
         else this.timers.after(len + 0.4, () => this.introRealms());
       });
+    };
+    void soundAtLaunch.then((ok) => {
+      if (ok && !this.leaving && !this.destroyed && !timeIsUp()) greet();
+    });
+    // A sideways swipe switches the realm.
+    this.eventMode = 'static';
+    this.on('pointerdown', (e) => {
+      this.swipeX = e.global.x;
+      greet();
     });
     this.hand = new Hand(this.art.hand);
     this.addChild(this.hand);

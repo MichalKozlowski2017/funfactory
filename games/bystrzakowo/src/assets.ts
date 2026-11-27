@@ -1,4 +1,5 @@
 import { Assets, type Texture } from 'pixi.js';
+import { isNative } from '@funfactory/core';
 import { pixelsToTexture, type Game } from '@funfactory/kit2d';
 import { ITEMS, keepOnly } from './sim/catalog.ts';
 import { SIGN_ART } from './sim/sorting.ts';
@@ -133,6 +134,12 @@ export const storyFrame = (story: string, i: number): Texture | null => art?.sto
 
 export type { Guide } from './voice-lines.ts';
 
+/**
+ * Native app: sound starts at launch, so the world plays music and Lusia's greeting without waiting for a touch.
+ * Resolves true once the context runs and both are decoded; false in a browser (there they start on the first touch).
+ */
+export let soundAtLaunch: Promise<boolean> = Promise.resolve(false);
+
 export function registerVoice(game: Game): void {
   // The game makes no sense without the narrator, so it also plays in silent mode (parents often have the phone muted).
   game.sound.playThroughSilentMode();
@@ -147,6 +154,12 @@ export function registerVoice(game: Game): void {
   for (const guide of ['lusia', 'bazyl'] as const)
     for (const line of VOICE[guide]) game.sound.add(`${guide}-${line}`, url(`${dir}/${guide}/${line}.m4a`));
   game.sound.add('music', url('audio/music.m4a'));
+  if (isNative()) {
+    // The context exists before `load` below, so everything decodes right away; music and the greeting come first.
+    const running = game.sound.startWithoutGesture();
+    const first = game.sound.load(['music', 'lusia-hello']);
+    soundAtLaunch = running.then((ok) => (ok ? first.then(() => true) : false));
+  }
   // At startup only instructions and reactions; object names and letter sentences ("A as in apple", several hundred recordings)
   // are decoded by the round that needs them.
   void game.sound.load([...VOICE.lusia.map((l) => `lusia-${l}`), ...VOICE.bazyl.map((l) => `bazyl-${l}`), 'music'].filter((n) => !n.includes('-item-') && !n.includes('-letter-')));
@@ -160,7 +173,7 @@ export function say(game: Game, guide: Guide, line: string): number {
   return game.sound.play(`${guide}-${line}`, { channel: 'voice', volume: 1 });
 }
 
-/** Background music: a quiet loop, started once (after the first touch, when audio is unlocked). */
+/** Background music: a quiet loop, started once (at launch in the app, after the first touch in a browser). */
 let musicOn = false;
 export function startMusic(game: Game): void {
   if (musicOn || !state.progress.music) return;

@@ -143,6 +143,18 @@ export class Sound {
     if (session) session.type = 'playback';
   }
 
+  /**
+   * Starts audio without waiting for a touch, where the WebView allows it (Capacitor apps: iOS and Android allow
+   * playback without a gesture). Resolves true when the context runs (sound can start at launch); false in an ordinary
+   * browser, which keeps it suspended until the first touch (the unlock above still handles that).
+   */
+  async startWithoutGesture(timeoutMs = 400): Promise<boolean> {
+    const ctx = this.context();
+    if (!ctx) return false;
+    if (ctx.state !== 'running') await Promise.race([ctx.resume().catch(() => {}), new Promise((r) => setTimeout(r, timeoutMs))]);
+    return ctx.state === 'running';
+  }
+
   /** Stan kontekstu audio (do diagnostyki): 'none' przed pierwszym dotknięciem. */
   get state(): string {
     return this.ctx?.state ?? 'none';
