@@ -222,7 +222,11 @@ Strona odsłuchu: https://claude.ai/artifact/Q5E8oLERasRL9weZYReRmK (wszystkie ~
 
 ## Model biznesowy
 
-Darmowe: 3 domki w pełni (np. cienie, co nie pasuje, liczenie). Reszta po **jednorazowym zakupie „Otwórz całe Bystrzakowo”** (ok. 29–39 zł), za bramką rodzica. Później dodajemy kolejne domki i obiekty w aktualizacjach, bez abonamentu.
+Stan na 2026-11-27 (szczegóły i kroki w sklepach: `docs/bystrzakowo-zakupy.md`):
+- **Jednorazowy zakup pełnej wersji** (`bystrzakowo.full`) za bramką rodzica, bez abonamentu i reklam. Abonament rozważony i odrzucony (decyzja właściciela 2026-11-27): trudniejsza recenzja (3.1.2 wymaga „ciągłej wartości”), rodzice nie lubią subskrypcji (research), gra ma skończoną zawartość.
+- **Za darmo na zawsze:** Polana Zagadek. **Próba:** 3 dni kalendarzowe pełnego dostępu od rozpoczęcia (`sim/trial.ts`).
+- **Później możliwe płatne dodatki** (nowe paczki treści jako osobne produkty jednorazowe). Teksty w grze i w sklepach obiecują tylko to, co pełna wersja otwiera dziś (trzy krainy, raport, pocztówka), a nie przyszłe treści. Przy dodatkach zdecydować, czy dostają je wcześniejsi kupujący.
+- Do decyzji: cena (propozycja 39,99 zł i 9,99 €/$, na start promocja 29,99 zł) i zakres części darmowej (warianty A/B/C z rozmowy 2026-11-27).
 
 ## Wymogi sklepów (Kids / Families)
 
