@@ -63,8 +63,19 @@ Kod jest gotowy (`games/glut/src/game-services-config.ts`, wtyczka natywna `Game
 
 ## Wysyłka
 
-- **iOS:** Xcode → Window → Organizer → `Glut.xcarchive` → Distribute App → App Store Connect → Upload. Potem w App Store Connect: TestFlight (testy wewnętrzne, najpierw Ty), a gdy wszystko gra: wersja 1.0.0 → wybór builda → zrzuty → wysłanie do recenzji. Wysyłkę mogę zrobić z wiersza poleceń, gdy dasz zgodę i klucz API App Store Connect.
-- **Android:** Play Console → Testowanie → Test wewnętrzny (albo zamknięty, wymóg 12 testerów) → nowa wersja → wgraj `glut-1.0.0-1.aab`. Przy pierwszym wgraniu zaakceptuj Play App Signing (Google trzyma klucz podpisu, nasz klucz to tylko klucz uploadu).
+Od 2026-11-27 wysyłkę robi Claude przez API sklepów (skill `app-stores`, klucze w `~/.store-keys/`, wspólne dla wszystkich projektów). Bez pytania: TestFlight i test wewnętrzny Google Play. Wydanie produkcyjne, wysłanie do recenzji Apple oraz zmiany ceny i opisu tylko po zgodzie właściciela.
+
+```sh
+S=~/.claude/skills/app-stores
+# Android: podpisany AAB (nowy versionCode w android/app/build.gradle) na test wewnętrzny
+node $S/play.ts upload com.mkdev.<slug> release/<slug>/<slug>-<wersja>-<versionCode>.aab --notes "Co nowego"
+# iOS: archiwum (nowy CURRENT_PROJECT_VERSION) do App Store Connect, potem TestFlight
+node $S/asc.ts upload release/<slug>/<Nazwa>.xcarchive
+node $S/asc.ts testflight com.mkdev.<slug> <build> --group "Ja" --whats-new "Co nowego"
+node $S/asc.ts status com.mkdev.<slug>   |   node $S/play.ts status com.mkdev.<slug>
+```
+
+Ręcznie (właściciel) zostaje: nowa aplikacja w obu sklepach, **pierwszy plik nowej aplikacji w Google Play**, listy testerów e-mail i testowanie licencji w Play Console, wiadomości od recenzentów Apple, deklaracje w formularzach sklepów. Przy pierwszym wgraniu do Google Play zaakceptuj Play App Signing (Google trzyma klucz podpisu, nasz klucz to tylko klucz uploadu).
 
 ## Budowanie (dla mnie i dla Ciebie)
 
