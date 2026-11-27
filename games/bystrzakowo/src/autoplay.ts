@@ -135,7 +135,7 @@ function playHistory(game: Game, span: number): void {
   void status.load().then((st) => {
     if (st.done) return console.log('HISTORY already played');
     const p = state.progress;
-    const keep = { music: p.music, childName: p.childName, lang: p.lang, age: p.age, trialDays: p.trialDays, trialStarted: p.trialStarted, full: p.full };
+    const keep = { music: p.music, childName: p.childName, lang: p.lang, age: p.age, trialDays: p.trialDays, trialStarted: p.trialStarted, trialStart: p.trialStart, trialOver: p.trialOver, full: p.full };
     state.progress = { ...newProgress(), ...keep, onboarded: true };
     if (keep.age) applyAge(state.progress, keep.age);
     void saveState();

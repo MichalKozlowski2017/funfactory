@@ -40,6 +40,19 @@ export async function owns(id: string): Promise<boolean> {
   }
 }
 
+/** Purchase date (ISO 8601) of an owned product, or null when not owned (e.g. when a free trial product was claimed). */
+export async function ownedSince(id: string): Promise<string | null> {
+  if (!isNative()) return null;
+  try {
+    const { purchases } = await NativePurchases.getPurchases({ productType: PURCHASE_TYPE.INAPP, onlyCurrentEntitlements: true });
+    const ios = platformName() === 'ios';
+    const t = purchases.find((x) => x.productIdentifier === id && (ios ? !x.revocationDate : x.purchaseState === '1'));
+    return t ? (t.originalPurchaseDate ?? t.purchaseDate) : null;
+  } catch {
+    return null;
+  }
+}
+
 /** Wynik zakupu: kupione, czeka (zgoda rodzica „Poproś o zakup”, płatność gotówką) albo nie doszło do skutku. */
 export type BuyResult = 'bought' | 'pending' | 'failed';
 

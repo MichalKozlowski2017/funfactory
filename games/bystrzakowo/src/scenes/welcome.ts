@@ -237,7 +237,7 @@ export class WelcomeScene extends Scene {
         else g.fill({ color: 0xffffff }).stroke({ color: 0xc9b8a6, width: 5, join: 'round' });
       });
     draw(0);
-    const days = this.text(tr('daysPlay', { n }), 30, { weight: '800', color: '#3f8a4a' });
+    const days = this.text(tr('trialDaysCount', { n }), 30, { weight: '800', color: '#3f8a4a' });
     days.anchor.set(0.5);
     days.position.set(x, y + 90);
     this.content.addChild(days);

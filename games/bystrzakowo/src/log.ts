@@ -23,7 +23,7 @@ export function journal(): Journal {
 
 export function logTask(kind: Activity, misses: number): void {
   addTask(journal(), today(), kind, misses, state.progress.levels[kind]);
-  // The first task of the day uses up a full-version trial day (lazy import: premium imports log).
+  // A task fixes the full-version trial start and notices its end (lazy import: premium imports log).
   // The autopilot playing past days doesn't use up the trial.
   if (!dayShift) void import('./premium.ts').then((m) => m.countPlayDay());
 }

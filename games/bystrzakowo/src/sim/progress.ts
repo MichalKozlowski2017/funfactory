@@ -43,7 +43,11 @@ export interface Progress {
   full?: boolean;
   /** The parent started the full-version trial (sim/trial.ts). */
   trialStarted?: boolean;
-  /** Play days during the full-version trial (sim/trial.ts). */
+  /** Day the full-version trial started (sim/trial.ts). */
+  trialStart?: string;
+  /** The full-version trial has ended (sim/trial.ts). */
+  trialOver?: boolean;
+  /** Play days of the old trial in play days (sim/trial.ts, saves from before 2026-11-27). */
   trialDays?: string[];
   /** Settings from the parent zone. */
   music: boolean;

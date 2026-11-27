@@ -1,54 +1,59 @@
 import { describe, expect, it } from 'vitest';
-import { markPlayDay, realmOpen, startTrial, trialState, TRIAL_DAYS, type TrialSave } from './trial.ts';
+import { addDays, markPlayDay, realmOpen, startTrial, trialState, TRIAL_DAYS, type TrialSave } from './trial.ts';
 
 const day = (n: number) => `2026-12-${String(n).padStart(2, '0')}`;
 
 describe('full version trial', () => {
-  it('before the parent starts it, only the meadow is open and play does not use the trial', () => {
+  it('before the parent starts it, only the meadow is open and play does not start the trial', () => {
     const s: TrialSave = {};
-    expect(trialState(s, day(1))).toMatchObject({ started: false, active: false, left: TRIAL_DAYS, used: 0 });
+    expect(trialState(s, day(1))).toMatchObject({ started: false, active: false, left: TRIAL_DAYS, lastDay: null });
     expect(realmOpen(s, day(1), 'workshop')).toBe(false);
     expect(realmOpen(s, day(1), 'meadow')).toBe(true);
-    markPlayDay(s, day(1));
-    expect(s.trialDays ?? []).toHaveLength(0);
-    startTrial(s);
+    expect(markPlayDay(s, day(1))).toBe(false);
+    startTrial(s, day(1));
     expect(realmOpen(s, day(1), 'workshop')).toBe(true);
   });
 
-  it('old saves with trial days count as started', () => {
-    expect(trialState({ trialDays: [day(1)] }, day(2))).toMatchObject({ started: true, active: true, used: 1 });
+  it('runs for 3 calendar days after the start day, whether the child plays or not', () => {
+    const s: TrialSave = {};
+    startTrial(s, day(1));
+    expect(trialState(s, day(1))).toMatchObject({ active: true, left: 3, lastDay: day(4) });
+    expect(trialState(s, day(3))).toMatchObject({ active: true, left: 1 });
+    expect(trialState(s, day(4))).toMatchObject({ active: true, left: 0 });
+    expect(realmOpen(s, day(5), 'workshop')).toBe(false);
+    expect(realmOpen(s, day(5), 'meadow')).toBe(true);
+    expect(trialState(s, day(5))).toMatchObject({ started: true, active: false, left: 0 });
   });
 
-  it('counts play days, not calendar days', () => {
-    const s: TrialSave = { trialStarted: true };
-    // Plays on days 1, 10, 20: three play days over three weeks.
-    for (const d of [1, 10]) {
-      markPlayDay(s, day(d));
-      markPlayDay(s, day(d)); // a second task on the same day changes nothing
-      expect(realmOpen(s, day(d), 'workshop')).toBe(true);
-    }
-    expect(trialState(s, day(15))).toMatchObject({ active: true, left: 0, used: 2 });
-    markPlayDay(s, day(20));
-    expect(trialState(s, day(20))).toMatchObject({ active: true, left: 0, used: TRIAL_DAYS });
-    // Fourth play day: only the meadow remains.
-    expect(realmOpen(s, day(21), 'workshop')).toBe(false);
-    expect(realmOpen(s, day(21), 'meadow')).toBe(true);
-    markPlayDay(s, day(21));
-    expect(s.trialDays).toHaveLength(TRIAL_DAYS);
+  it('a clock turned back does not reopen a trial the game saw ending', () => {
+    const s: TrialSave = {};
+    startTrial(s, day(1));
+    expect(markPlayDay(s, day(9))).toBe(true);
+    expect(s.trialOver).toBe(true);
+    expect(realmOpen(s, day(2), 'studio')).toBe(false);
+    // A date before the start is not inside the trial either.
+    expect(realmOpen({ trialStarted: true, trialStart: day(5) }, day(3), 'studio')).toBe(false);
   });
 
-  it('days left: a day does not count before the first play of the day', () => {
-    const s: TrialSave = { trialStarted: true };
-    expect(trialState(s, day(1))).toMatchObject({ active: true, left: 2, used: 0 });
-    markPlayDay(s, day(1));
-    expect(trialState(s, day(1))).toMatchObject({ left: 2, used: 1 });
-    expect(trialState(s, day(2))).toMatchObject({ left: 1, used: 1 });
+  it('old saves (trial in play days) start at their first play day', () => {
+    const s: TrialSave = { trialStarted: true, trialDays: [day(2), day(9)] };
+    expect(trialState(s, day(3))).toMatchObject({ active: true, lastDay: day(5) });
+    expect(markPlayDay(s, day(3))).toBe(true);
+    expect(s.trialStart).toBe(day(2));
+    // Started without play days: the trial starts on the first day the game is used.
+    const t: TrialSave = { trialStarted: true };
+    markPlayDay(t, day(7));
+    expect(trialState(t, day(10))).toMatchObject({ active: true, left: 0 });
   });
 
-  it('full version opens everything and does not consume the trial', () => {
-    const s: TrialSave = { full: true, trialDays: [1, 2, 3].map(day) };
+  it('full version opens everything', () => {
+    const s: TrialSave = { full: true, trialStarted: true, trialStart: day(1), trialOver: true };
     expect(realmOpen(s, day(30), 'studio')).toBe(true);
-    markPlayDay(s, day(30));
-    expect(s.trialDays).toHaveLength(3);
+    expect(markPlayDay(s, day(30))).toBe(false);
+  });
+
+  it('adds days across months and years', () => {
+    expect(addDays('2026-12-30', 3)).toBe('2027-01-02');
+    expect(addDays('2028-02-27', 3)).toBe('2028-03-01');
   });
 });

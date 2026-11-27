@@ -410,7 +410,7 @@ export class ParentPanel extends Container {
     const body = !t.started
       ? tr('trialOfferBody', { n: TRIAL_DAYS })
       : t.active
-      ? tr('onlyDaysWhenChild')
+      ? tr('trialEndsBody', { date: longDate(t.lastDay!) })
       : tr(platformName() === 'android' ? 'fullVersionUnlocksAndroid' : 'fullVersionUnlocksBasils');
     return this.card({ x, y }, cw, (c, iw) => {
       const tt = this.text(title, 29, { weight: '800', wrap: iw });
@@ -1064,10 +1064,10 @@ export class ParentPanel extends Container {
         reset.setLabel(tr('sureTouchAgain'));
         return;
       }
-      const { music: m, childName, age, lang: l, limit, full, trialStarted, trialDays } = state.progress;
+      const { music: m, childName, age, lang: l, limit, full, trialStarted, trialStart, trialOver, trialDays } = state.progress;
       // Reset the activities, but not the parent's settings (name, age = starting level, language, music, play time limit),
       // the purchase, the trial state (a reset must not restart the trial) and the fact that onboarding is done.
-      state.progress = { ...newProgress(), music: m, childName, lang: l, limit, full, trialStarted, trialDays, onboarded: true };
+      state.progress = { ...newProgress(), music: m, childName, lang: l, limit, full, trialStarted, trialStart, trialOver, trialDays, onboarded: true };
       if (age) applyAge(state.progress, age);
       void saveState();
       reset.setLabel(tr('progressReset'));
@@ -1180,4 +1180,10 @@ async function dataUrlTexture(url: string): Promise<Texture> {
   img.src = url;
   await img.decode();
   return Texture.from(await createImageBitmap(img));
+}
+
+/** A day (YYYY-MM-DD) as "30 listopada" / "November 30" in the game language. */
+function longDate(day: string): string {
+  const [y, m, d] = day.split('-').map(Number);
+  return new Date(y!, m! - 1, d!).toLocaleDateString(lang(), { day: 'numeric', month: 'long' });
 }

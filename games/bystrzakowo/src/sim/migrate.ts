@@ -19,7 +19,7 @@ export const legacyId = (id: string): string => WHOLE.get(id) ?? id.split('-').m
 /** Every id inside a composite key such as "color:green" or "color@1". */
 const mapIds = (s: string): string => s.replace(/[a-z][a-z0-9-]*/g, legacyId);
 
-const KEEP = new Set<string>(['childName', 'lang', 'parentSeen', 'trialDays', 'trialStarted']);
+const KEEP = new Set<string>(['childName', 'lang', 'parentSeen', 'trialDays', 'trialStarted', 'trialStart', 'trialOver']);
 
 function walk(v: unknown): unknown {
   if (typeof v === 'string') return mapIds(v);

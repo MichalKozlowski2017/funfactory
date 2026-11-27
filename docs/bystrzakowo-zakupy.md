@@ -1,7 +1,7 @@
 # Bystrzakowo: pełna wersja (zakup w aplikacji)
 
 Model (decyzja właściciela, 21.11.2026, skrócone do 3 dni 24.11.2026, próba włączana przez rodzica od 25.11.2026):
-Polana Zagadek za darmo na zawsze. Rodzic może włączyć próbę (za pytaniem dla rodzica): 3 dni zabawy z pełnym dostępem, potem znów tylko Polana Zagadek.
+Polana Zagadek za darmo na zawsze. Rodzic może włączyć próbę (za pytaniem dla rodzica): 3 dni z pełnym dostępem (kalendarzowe, od dnia rozpoczęcia; dzień startu w bonusie), potem znów tylko Polana Zagadek.
 Na iOS próba to darmowy produkt „3-day Trial” (wytyczna App Store 3.1.1), na Androidzie włącza się w aplikacji (Google Play nie ma darmowych produktów w aplikacji).
 Pełna wersja: jednorazowo **24,99 zł**, bez subskrypcji i reklam, bez zewnętrznych serwisów
 (wtyczka `@capgo/native-purchases`: StoreKit 2 i Google Play Billing). Kod: `games/bystrzakowo/src/premium.ts`,
@@ -22,7 +22,7 @@ Identyfikator produktu w obu sklepach: **`bystrzakowo.full`**. Tylko na iOS drug
 7. Do testów: Użytkownicy i dostęp → Sandbox → konto testowe; na iPhonie Ustawienia → App Store → Konto sandbox.
 8. **Drugi produkt: próba.** „+” → Bez możliwości ponownego użycia (Non-Consumable). Nazwa referencyjna i nazwa wyświetlana: **„3-day Trial”**
    (Apple wymaga takiego wzoru nazwy; po polsku „3 dni próby”, niemiecku „3 Tage Test”, hiszpańsku „Prueba de 3 días”).
-   Identyfikator: `bystrzakowo.trial`. Cena: **bezpłatna (0)**. Opis PL: „Pełna wersja za darmo przez 3 dni zabawy. Potem zostaje Polana Zagadek.”
+   Identyfikator: `bystrzakowo.trial`. Cena: **bezpłatna (0)**. Opis PL: „Pełna wersja za darmo przez 3 dni. Potem zostaje Polana Zagadek.”
    Zrzut do recenzji: karta próby z powitania. Dołącz go do wersji 1.0.0 razem z `bystrzakowo.full`.
 
 ### Google (Play Console)
@@ -32,7 +32,7 @@ Identyfikator produktu w obu sklepach: **`bystrzakowo.full`**. Tylko na iOS drug
    Produkt jest widoczny w aplikacji dopiero, gdy jakikolwiek build jest na ścieżce testów (test wewnętrzny).
 
 ## Zachowanie w grze
-- Dzień próby liczy się przy pierwszym rozwiązanym zadaniu dnia (dni zabawy, nie kalendarzowe).
+- Próba trwa 3 dni kalendarzowe po dniu rozpoczęcia (start 27-go: dostęp do końca 30-go). Od 2026-11-27, wcześniej liczyły się dni zabawy (zmiana dla prostszej recenzji Apple, wytyczna 3.1.1). Cofnięcie zegara nie przywraca próby. Po ponownej instalacji na iOS próba liczy się od daty pobrania produktu „3-day Trial”.
 - Po próbie krainy poza Polaną „śpią” (księżyc, Zzz); dotknięcie: Lusia „Ta kraina jeszcze śpi. Pobawmy się na Polanie Zagadek.” (neutralnie: bez namawiania dziecka, by poprosiło dorosłego o zakup; dyrektywa UE o nieuczciwych praktykach, zał. I pkt 28; zmiana 2026-11-24).
 - Zakup i „Przywróć zakup” tylko w strefie rodzica (za bramką): zakładki Postępy i Ustawienia.
 - Przy starcie gra po cichu sprawdza zakup (np. po reinstalacji albo zakup przez Chmurę rodzinną).

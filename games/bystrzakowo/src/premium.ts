@@ -1,5 +1,5 @@
 /**
- * Full version: the Riddle Meadow (meadow) is free. The parent can start a trial (3 play days with full access, sim/trial.ts):
+ * Full version: the Riddle Meadow (meadow) is free. The parent can start a trial (3 days with full access, sim/trial.ts):
  * on iOS as a free non-consumable product "3-day Trial" (App Store 3.1.1), on Android locally (Google Play has no free
  * in-app products). After that only the Riddle Meadow until the parent buys the full version (one-time purchase, no external services). The full report and the postcard in the parent
  * zone work the same way: during the trial and after purchase.
@@ -7,9 +7,10 @@
  * Playtests: `?free` (or a build with `VITE_PREVIEW=free`) fakes the end of the trial without a purchase, `?full` fakes a bought full version.
  */
 import { platformName } from '@funfactory/core';
-import { buy, getProduct, owns, restore, type BuyResult } from '@funfactory/core/purchases';
+import { buy, getProduct, owns, ownedSince, restore, type BuyResult } from '@funfactory/core/purchases';
 import { today } from './log.ts';
-import { markPlayDay, realmOpen, startTrial as startTrialSave, trialState, TRIAL_DAYS, type TrialSave, type TrialState } from './sim/trial.ts';
+import { dayKey } from './sim/journal.ts';
+import { markPlayDay, realmOpen, startTrial as startTrialSave, trialState, type TrialSave, type TrialState } from './sim/trial.ts';
 import type { RealmId } from './sim/realms.ts';
 import { saveState, state } from './state.ts';
 
@@ -26,7 +27,7 @@ const PREVIEW_FULL = query.has('full') || import.meta.env.VITE_PREVIEW === 'full
 /** Trial save (in the `?free` preview: trial used up). */
 function save(): TrialSave {
   if (PREVIEW_FULL) return { full: true };
-  if (PREVIEW_FREE) return { trialStarted: true, trialDays: Array.from({ length: TRIAL_DAYS }, (_, i) => `2000-01-0${i + 1}`) };
+  if (PREVIEW_FREE) return { trialStarted: true, trialStart: '2000-01-01', trialOver: true };
   return state.progress;
 }
 
@@ -42,12 +43,10 @@ export const isBought = (): boolean => trial().full;
 
 export const realmIsOpen = (realm: RealmId): boolean => realmOpen(save(), today(), realm);
 
-/** The first task of the day uses up a trial day. */
+/** First task of the day: fixes the trial start day and remembers when the trial has ended (sim/trial.ts). */
 export function countPlayDay(): void {
   if (PREVIEW_FREE || PREVIEW_FULL) return;
-  const before = state.progress.trialDays?.length ?? 0;
-  markPlayDay(state.progress, today());
-  if ((state.progress.trialDays?.length ?? 0) !== before) void saveState();
+  if (markPlayDay(state.progress, today())) void saveState();
 }
 
 /** At startup: a purchase made on another device or restored (silently, no dialogs). */
@@ -57,8 +56,9 @@ export async function syncPurchase(): Promise<void> {
     state.progress.full = true;
     await saveState();
   } else if (!trial().started && platformName() === 'ios' && (await owns(TRIAL_ID))) {
-    // The trial product was claimed earlier (e.g. before reinstalling the app).
-    startTrialSave(state.progress);
+    // The trial product was claimed earlier (e.g. before reinstalling the app): the trial runs from that day.
+    const since = await ownedSince(TRIAL_ID);
+    startTrialSave(state.progress, since ? dayKey(new Date(since)) : today());
     await saveState();
   }
 }
@@ -71,7 +71,7 @@ export async function startTrial(): Promise<BuyResult> {
   const viaStore = platformName() === 'ios' && (await getProduct(TRIAL_ID)) !== null;
   const r = viaStore ? await buy(TRIAL_ID) : 'bought';
   if (r === 'bought') {
-    startTrialSave(state.progress);
+    startTrialSave(state.progress, today());
     await saveState();
   }
   return r;
