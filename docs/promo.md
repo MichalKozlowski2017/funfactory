@@ -42,3 +42,13 @@ Nagranie: `?promo=<zabawa>:<ile gestów>,...` (tylko w dev, `games/bystrzakowo/s
 pnpm shot games/bystrzakowo --gpu --size 1280x720@1.5 --query "full&nohand&lang=pl&page=cat&letters=A&promo=letters:3,shadows:2,sorting:2,coloring:4,jigsaw:2,stats:4" --steps "wait:1000,rec:start,wait:85000,rec:save:promo-pl"
 ```
 `BystrzakowoPromoPL` (15 s): litera A, cienie, kolorowanka, układanka, postępy dla rodzica; zakończenie „Bez reklam · offline” i „Wkrótce w sklepach” (zmienić na sklep po wydaniu). Gotowe pliki: `release/bystrzakowo/promo/`.
+
+## Bystrzakowo: film 60 s (poziomy, sama muzyka)
+
+`ShowcasePromo` (`tools/promo/src/ShowcasePromo.tsx`), 1920×1080, na YouTube i jako film promocyjny w Google Play: plansza tytułowa (key art, logo, Lusia i Bazyl), rozdziały według krain (każdy z kolorem i etykietą, ujęcie na każdą zabawę z napisem pod obrazem), plansza zalet (wyjeżdżające „pigułki”), zakończenie. Rozgrywka bez dźwięku gry, muzyka `film-music-922` (ACE-Step, ok. 61 s bez przerw; zapas `921`).
+
+Nagranie całości (ok. 190 s):
+```sh
+pnpm shot games/bystrzakowo --gpu --size 1280x720@1.5 --query "full&nohand&lang=pl&page=cat&letters=A&promo=realms:6,shadows:2,mothers:2,counting:2,memory:3,sorting:3,jigsaw:3,patterns:2,stories:2,letters:3,digits:2,dots:1,maze:1,coloring:5,stickers:3,melody:2,parent-skill-colors:4,parent-album:3,parent-postcard:3" --steps "wait:1000,rec:start,wait:200000,rec:save:film-pl"
+```
+Uwaga: `solve()` kolorowanki pomija ożywanie obrazka i od razu daje nagrodę (naklejkę), więc w filmie jest „Naklejka w nagrodę!”. `BystrzakowoFilmPL`, gotowy plik: `release/bystrzakowo/promo/bystrzakowo-film-pl.mp4`.

@@ -3,8 +3,8 @@
  * child. It enters each activity from the world, waits for the guide's prompt, then performs the task's own gesture
  * (the one the tutorial hand shows) with real touch events, so the game reacts exactly as to a child (voice, praise,
  * stars). A plasticine child's hand follows the touch. The number after the colon is how many gestures to perform;
- * coloring then finishes the picture so it comes alive; `stats:<s>` shows the parent zone charts for that many
- * seconds. Game music is off (the trailer adds one continuous track).
+ * coloring then finishes the picture so it comes alive. Special steps take seconds instead: `realms:<s>` (world tour),
+ * `parent-progress|parent-album|parent-postcard|parent-skill-<id>:<s>` (parent zone), `stickers:<s>`, `stats:<s>`. Game music is off (the trailer adds one continuous track).
  * Record with `pnpm shot games/bystrzakowo --gpu ... --steps "rec:start,wait:...,rec:save:x"` (docs/promo.md).
  */
 import { Container, Sprite, type Texture } from 'pixi.js';
@@ -49,13 +49,40 @@ export function startPromo(game: Game, plan: string): void {
         await until(() => scene().id === 'world');
         await sleep(0.8);
       }
+      if (kind === 'realms') {
+        // World tour: the realms slide by one after another, back to the first.
+        for (const i of [1, 2, 3, 0]) {
+          scene().goRealm(i);
+          await sleep(n / 4);
+        }
+        continue;
+      }
+      if (kind.startsWith('parent')) {
+        // Parent zone with demo data (10 weeks of play): `parent-progress`, `parent-album`, `parent-postcard`,
+        // or `parent-skill-colors` (chart of one skill).
+        const what = kind.slice('parent-'.length);
+        const w = scene();
+        w.demoStats(what.startsWith('skill-') ? what.slice(6) : '');
+        if (!what.startsWith('skill-') && what !== 'progress') w.parentPanel?.setTab(what);
+        await sleep(n);
+        w.parentPanel?.onClose?.();
+        await sleep(0.4);
+        continue;
+      }
       if (kind === 'stats') {
-        // Parent zone: progress charts with demo data (as on the store screenshots).
         scene().demoStats('');
         await sleep(n);
         continue;
       }
       scene().play(kind);
+      if (kind === 'stickers') {
+        // Sticker book: a few stickers appear in the landscape.
+        await until(() => scene().id === 'stickers', 8);
+        await sleep(1.2);
+        scene().demo();
+        await sleep(n);
+        continue;
+      }
       await until(() => scene().id !== 'world' && !scene().busy && scene().layer?.children?.length > 0);
       finger.use(scene().art?.hand ?? null);
       // Let the guide say the task first.

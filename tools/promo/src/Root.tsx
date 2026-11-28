@@ -1,11 +1,13 @@
 import { Composition, Folder, type CalculateMetadataFunction } from 'remotion';
 import { GamePromo } from './GamePromo';
+import { ShowcasePromo, showcaseFrames, type ShowcaseProps } from './ShowcasePromo';
 import { TabletPromo, tabletPromoFrames, type TabletPromoProps } from './TabletPromo';
 import { FPS, promoFrames, type PromoProps } from './types';
 
 /** Length follows the scenes in the props (edit shots in Studio, the clip adjusts). */
 const calculateMetadata: CalculateMetadataFunction<PromoProps> = ({ props }) => ({ durationInFrames: promoFrames(props) });
 const tabletMetadata: CalculateMetadataFunction<TabletPromoProps> = ({ props }) => ({ durationInFrames: tabletPromoFrames(props, FPS) });
+const showcaseMetadata: CalculateMetadataFunction<ShowcaseProps> = ({ props }) => ({ durationInFrames: showcaseFrames(props, FPS) });
 
 /**
  * One composition per game and language. Media live in release/<slug>/promo/src (linked into public/<slug>/):
@@ -106,6 +108,102 @@ export const RemotionRoot = () => {
           captionTop: 1115,
           colors: { ink: '#ffffff', text: '#7a3fb0', headline: '#ff7a1c', logo: '#ff7a1c', cta: '#4fb34a', bezel: '#2b2f3a' },
           fadeFrames: 6,
+        }}
+      />
+      <Composition
+        id="BystrzakowoFilmPL"
+        component={ShowcasePromo}
+        durationInFrames={1800}
+        fps={FPS}
+        width={1920}
+        height={1080}
+        calculateMetadata={showcaseMetadata}
+        defaultProps={{
+          recording: 'bystrzakowo/film-pl.mp4',
+          backdrop: 'bystrzakowo/keyart-village-31.jpg',
+          intro: {
+            image: 'bystrzakowo/keyart-village-31.jpg',
+            logo: 'Bystrzakowo',
+            subtitle: 'Mądra zabawa dla dzieci 3–6 lat',
+            durationSec: 3.4,
+            characters: [
+              { src: 'bystrzakowo/lusia-teacher.png', x: 40, y: 450, width: 600, delaySec: 0.4 },
+              { src: 'bystrzakowo/bazyl-point.png', x: 560, y: 500, width: 560, delaySec: 0.6 },
+            ],
+          },
+          chapters: [
+            { name: '4 krainy, 21 zabaw', color: '#ff7a1c', shots: [{ fromSec: 0.0, durationSec: 3.6, caption: 'Wybierz krainę i graj' }] },
+            {
+              name: 'Polana Zagadek',
+              color: '#4fb34a',
+              shots: [
+                { fromSec: 8.4, durationSec: 2.6, caption: 'Czyj to cień?' },
+                { fromSec: 23.0, durationSec: 2.6, caption: 'Mamy i dzieci' },
+                { fromSec: 30.3, durationSec: 2.6, caption: 'Liczenie' },
+                { fromSec: 41.4, durationSec: 3.2, caption: 'Memory' },
+              ],
+            },
+            {
+              name: 'Warsztat Bazyla',
+              color: '#e0873a',
+              shots: [
+                { fromSec: 55.0, durationSec: 2.6, caption: 'Segregowanie' },
+                { fromSec: 67.6, durationSec: 3.2, caption: 'Układanki' },
+                { fromSec: 82.4, durationSec: 2.6, caption: 'Co dalej?' },
+                { fromSec: 95.4, durationSec: 2.6, caption: 'Historyjki obrazkowe' },
+              ],
+            },
+            {
+              name: 'Ścieżka Lusi',
+              color: '#8e5bd6',
+              shots: [
+                { fromSec: 105.6, durationSec: 3.6, caption: 'Litery palcem' },
+                { fromSec: 118.6, durationSec: 2.8, caption: 'Cyfry' },
+                { fromSec: 132.4, durationSec: 2.6, caption: 'Łączenie kropek' },
+                { fromSec: 141.6, durationSec: 2.6, caption: 'Labirynty' },
+              ],
+            },
+            {
+              name: 'Pracownia Malucha',
+              color: '#ff5fa2',
+              shots: [
+                { fromSec: 152.6, durationSec: 3.4, caption: 'Kolorowanki' },
+                { fromSec: 159.1, durationSec: 2.1, caption: 'Naklejka w nagrodę!' },
+                { fromSec: 162.8, durationSec: 2.6, caption: 'Naklejanki' },
+                { fromSec: 169.2, durationSec: 2.8, caption: 'Melodie' },
+              ],
+            },
+            {
+              name: 'Dla rodzica',
+              color: '#3d8fd6',
+              shots: [
+                { fromSec: 174.2, durationSec: 3.0, caption: 'Postępy dziecka' },
+                { fromSec: 179.2, durationSec: 2.2, caption: 'Album prac' },
+                { fromSec: 182.2, durationSec: 2.4, caption: 'Pocztówka tygodnia' },
+              ],
+            },
+          ],
+          features: {
+            image: 'bystrzakowo/keyart-book-21.jpg',
+            title: 'Spokojna głowa rodzica',
+            durationSec: 4.6,
+            items: ['Bez reklam', 'Działa bez internetu', 'Lektor czyta polecenia', 'Trudność rośnie z dzieckiem', '4 języki'],
+            characters: [{ src: 'bystrzakowo/bazyl-thumbs.png', x: 1240, y: 520, width: 560, delaySec: 0.5 }],
+          },
+          end: {
+            image: 'bystrzakowo/keyart-blocks-11.jpg',
+            logo: 'Bystrzakowo',
+            subtitle: 'Zagadki malucha',
+            cta: 'Wkrótce w sklepach',
+            durationSec: 3.8,
+            characters: [
+              { src: 'bystrzakowo/lusia-wow.png', x: 160, y: 540, width: 520, delaySec: 0.4 },
+              { src: 'bystrzakowo/bazyl-wink.png', x: 560, y: 560, width: 500, delaySec: 0.6 },
+            ],
+          },
+          music: { src: 'bystrzakowo/film-music-922.flac', volume: 0.85 },
+          colors: { ink: '#ff7a1c', logo: '#ff7a1c', cta: '#4fb34a' },
+          fadeFrames: 7,
         }}
       />
     </Folder>
