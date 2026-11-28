@@ -24,12 +24,12 @@ export const RemotionRoot = () => {
         calculateMetadata={calculateMetadata}
         defaultProps={{
           shots: [
-            { src: 'glut/chase-4.mp4', fromSec: 22.2, durationSec: 4.6, caption: 'Syrop cię goni!', danger: true },
-            { src: 'glut/chase-4.mp4', fromSec: 28.6, durationSec: 2.8, caption: 'Skacz w rytm!' },
-            { src: 'glut/chase-4.mp4', fromSec: 31.4, durationSec: 2.6, caption: 'Co 100 m nowy świat', cut: 'hard' },
-            { src: 'glut/chase-3.mp4', fromSec: 15.0, durationSec: 2.8, caption: 'Ile wytrzymasz?', captionTop: 1440, danger: true },
+            { src: 'glut/chase2-45a.mp4', fromSec: 19.4, durationSec: 3.2, caption: 'Syrop cię goni!', danger: true },
+            { src: 'glut/chase2-45a.mp4', fromSec: 22.6, durationSec: 2.6, caption: 'W ostatniej chwili!', cut: 'hard', danger: true },
+            { src: 'glut/chase2-45a.mp4', fromSec: 28.6, durationSec: 2.8, caption: 'Co 100 m nowy świat' },
+            { src: 'glut/chase2-45a.mp4', fromSec: 34.6, durationSec: 4.0, caption: 'Ile wytrzymasz?', captionTop: 1440, danger: true },
           ],
-          end: { image: 'glut/end-602.png', logo: 'Glut', tagline: 'Za darmo w Google Play', cta: 'Pobierz teraz', durationSec: 2.6 },
+          end: { image: 'glut/end-602.png', logo: 'Glut', tagline: 'Za darmo w Google Play', cta: 'Pobierz teraz', durationSec: 2.8 },
           music: { src: 'glut/music-813.flac', volume: 0.9 },
           gameVolume: 0,
           captionTop: 1330,

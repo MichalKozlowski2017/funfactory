@@ -768,7 +768,8 @@ export class PlayScene extends Scene {
       // (wtedy syrop może na chwilę wyjechać z kadru; ostrzeżenie „▼ syrop” zostaje).
       const rising = s.state === 'flying' ? Math.min(1, Math.max(0, -s.vy / 1500)) : 0;
       this.lookAhead += (rising - this.lookAhead) * (1 - Math.exp(-(rising > this.lookAhead ? 10 : 2.5) * dt));
-      const la = this.lookAhead;
+      // Trailer recordings (`?chase`): no look-ahead, so the syrup chasing the slime never leaves the frame.
+      const la = CHASE_M ? 0 : this.lookAhead;
       const sy = this.shown.y;
       // W pokazie slime niżej na ekranie: pod przyciskami ekranu startowego, nie za nimi.
       const base = this.demoRun && this.mode === 'title' ? 0.84 : 0.6;

@@ -10,7 +10,7 @@ Pionowe klipy 1080×1920 na TikToka, Reels i Shorts. Jeden szablon `GamePromo` (
 4. **Zakończenie** (ok. 2,6 s): grafika z powolnym zoomem, logo, „Za darmo w Google Play”, pulsujący przycisk.
 5. **Muzyka**: jedna ścieżka z wyciszeniem na końcu; dźwięk gry domyślnie wyłączony (`gameVolume: 0`).
 
-Emocje: zagrożenie ma być stale w kadrze. W Glucie służy do tego `?chase=<m>` (tylko do nagrań): syrop trzyma się ok. tylu metrów pod slime'em (`Run` opcja `chase`, mocniejsze doganianie), więc zawsze jest widoczny, a przy zawahaniu bota podchodzi tuż pod niego („Drugi oddech!”). 4 m daje długi bieg z ratunkami, 3 m szybką porażkę na puentę.
+Emocje: zagrożenie ma być stale w kadrze. W Glucie służy do tego `?chase=<m>` (tylko do nagrań): syrop trzyma się ok. tylu metrów pod slime'em (`Run` opcja `chase`, mocniejsze doganianie), a kamera nie wyprzedza slime'a w locie, więc syrop zawsze jest w kadrze (także w kolejnych światach), a przy zawahaniu bota podchodzi tuż pod niego („Drugi oddech!”). 4,5 m: bieg do 115 m z ratunkami i Czekoladową kopalnią; mniej metrów daje szybszą porażkę.
 
 Czcionki: napisy Baloo 2 (polskie znaki), logo Lilita One (czcionka Gluta, bez polskich znaków). Napisy w strefie bezpiecznej: nad dolnym paskiem TikToka (`captionTop` ok. 1330), dla ujęcia z panelem gry niżej (`captionTop` w ujęciu).
 
@@ -29,4 +29,4 @@ Pliki gier są duże, więc nie trafiają do repo: leżą w `release/<slug>/prom
 
 ## Glut (2026-11-28)
 
-`GlutPromoPL` (15 s): ujęcia z `chase-4.mp4` (22,2 s syrop i „Drugi oddech!”, 28,6 s „Super rytm ×10”, 31,4 s „100 m! Czekoladowa kopalnia”) i `chase-3.mp4` (15,0 s syrop łapie Gluta na 48 m), zakończenie `end-602`, muzyka `music-813` (alternatywa `music-812`). Gotowe pliki: `release/glut/promo/`. Wcześniejsza wersja 20 s z animowanym otwarciem (`intro-701`, rekord 172 m z `bot-pl-7.mp4`) jest w historii repo.
+`GlutPromoPL` (15 s): jeden bieg `chase2-45a.mp4` (`chase=4.5`): 19,4 s syrop tuż pod Glutem, 22,6 s „Drugi oddech!”, 28,6 s „Rytm ×5” i „100 m! Czekoladowa kopalnia”, 34,6 s ratunki w kopalni i porażka na 115 m; zakończenie `end-602`, muzyka `music-813` (alternatywa `music-812`). Gotowe pliki: `release/glut/promo/`. Wcześniejsza wersja 20 s z animowanym otwarciem (`intro-701`, rekord 172 m z `bot-pl-7.mp4`) jest w historii repo.
