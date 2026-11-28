@@ -489,11 +489,12 @@ export class ColoringScene extends RoundScene {
     return blob && spot ? { kind: 'tap', at: [this.spot(blob), spot] } : null;
   }
 
-  /** Point inside the largest area of the picture (scene coordinates). */
+  /** Point inside the largest area of the picture not painted yet (scene coordinates). */
   private bigSpot(): { x: number; y: number } | null {
     const bg = this.regions.background;
     let best = -1;
-    for (let r = 1; r < this.sizes.length; r++) if (r !== bg && (best < 0 || this.sizes[r]! > this.sizes[best]!)) best = r;
+    for (let r = 1; r < this.sizes.length; r++)
+      if (r !== bg && !this.colorOf.has(r) && (best < 0 || this.sizes[r]! > this.sizes[best]!)) best = r;
     if (best < 0 || !this.picture.texture.width) return null;
     let sx = 0;
     let sy = 0;

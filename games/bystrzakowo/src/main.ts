@@ -33,5 +33,8 @@ await game.scenes.go(welcome ? new WelcomeScene() : new WorldScene(), { fade: 0 
 // Autopilot for testing the parent zone (build with VITE_AUTOPLAY=1 or ?autoplay).
 if (import.meta.env.VITE_AUTOPLAY || new URLSearchParams(location.search).has('autoplay')) void import('./autoplay.ts').then((m) => m.startAutoplay(game));
 
+// Trailer recordings: plays activities like a child, with real touches and a plasticine hand (dev only, src/promo.ts).
+if (import.meta.env.DEV && params.get('promo')) void import('./promo.ts').then((m) => m.startPromo(game, params.get('promo')!));
+
 // Tour of the screens for simulator screenshots (build with VITE_TOUR=1 or ?tour).
 if (tour) void import('./tour.ts').then((m) => m.startTour(game));

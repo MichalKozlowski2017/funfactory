@@ -1,9 +1,10 @@
 import { AbsoluteFill, Easing, Img, interpolate, staticFile, useCurrentFrame, useVideoConfig } from 'remotion';
 import { Caption } from './Caption';
 import { captionFont, logoFont } from './fonts';
-import type { PromoProps } from './types';
+import { Cutout } from './Cutout';
+import type { EndProps, PromoProps } from './types';
 
-type Props = { readonly end: PromoProps['end']; readonly colors: PromoProps['colors'] };
+type Props = { readonly end: EndProps; readonly colors: Pick<PromoProps['colors'], 'ink' | 'text' | 'logo' | 'cta'> };
 
 /** Last scene: art with a slow zoom, the logo pops in, then the tagline and a pulsing call-to-action pill. */
 export const EndCard = ({ end, colors }: Props) => {
@@ -28,8 +29,9 @@ export const EndCard = ({ end, colors }: Props) => {
           top: 110,
           width: '100%',
           textAlign: 'center',
-          fontFamily: logoFont,
-          fontSize: 260,
+          fontFamily: end.logoFont === 'round' ? captionFont : logoFont,
+          fontWeight: end.logoFont === 'round' ? 800 : 400,
+          fontSize: end.logo.length > 6 ? 170 : 260,
           lineHeight: 1,
           color: colors.logo,
           WebkitTextStroke: `34px ${colors.ink}`,
@@ -75,6 +77,7 @@ export const EndCard = ({ end, colors }: Props) => {
           {end.cta}
         </div>
       </div>
+      {end.characters?.map((c, i) => <Cutout key={i} c={c} />)}
     </AbsoluteFill>
   );
 };
