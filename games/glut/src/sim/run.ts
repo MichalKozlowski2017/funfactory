@@ -130,7 +130,14 @@ export class Run {
   private launchY = 0;
   private flightCandies = 0;
 
-  constructor(seed: number) {
+  /** How far below the slime the syrup may lag before it speeds up, and how hard it catches up. */
+  private readonly leash: number;
+  private readonly catchUp: number;
+
+  /** `chase`: trailer recordings only, syrup kept this close (units) so it is always in frame. */
+  constructor(seed: number, opts: { chase?: number } = {}) {
+    this.leash = opts.chase ?? SYRUP.leash;
+    this.catchUp = opts.chase ? 3 : SYRUP.catchUp;
     this.shaft = new Shaft(seed);
     this.shaft.update(START.y, START.y);
     this.world = new World(this.shaft.blocks, START);
@@ -213,7 +220,7 @@ export class Run {
       this.time += dt;
       let speed = syrupSpeed((START.y - this.syrupY) / 100);
       const gap = this.syrupY - s.y;
-      if (gap > SYRUP.leash) speed += (gap - SYRUP.leash) * SYRUP.catchUp;
+      if (gap > this.leash) speed += (gap - this.leash) * this.catchUp;
       if (this.timers.frost <= 0) this.syrupY -= speed * dt;
       if (s.state !== 'dead' && s.y + PHYS.radius * 0.3 > this.syrupY) {
         this.world.kill();

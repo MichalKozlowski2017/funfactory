@@ -69,6 +69,8 @@ const BIOME_SFX: SynthLayer[] = [
 /** Autopilot (?bot): tempo „ludzkiego” bota do nagrań i pokazów. */
 const PILOT = { reaction: 0.35, aimTime: 0.32, hold: 0.12, start: 1.2, restart: 1.6 };
 const PILOT_MODE = new URLSearchParams(location.search).has('bot');
+/** Trailer recordings: `?chase=4` keeps the syrup about 4 m under the slime (always in frame, tense). */
+const CHASE_M = Number(new URLSearchParams(location.search).get('chase')) || 0;
 
 const ART = `${import.meta.env.BASE_URL}art/`;
 
@@ -1461,7 +1463,7 @@ export class PlayScene extends Scene {
     this.runs++;
     this.dailyDay = dayKey(new Date());
     const seed = this.dailyMode ? dailySeed(this.dailyDay) : this.game.rng.int(1, 2 ** 31 - 1);
-    this.run = new Run(seed);
+    this.run = new Run(seed, CHASE_M ? { chase: CHASE_M * 100 } : {});
     this.recorder = new ReplayRecorder(seed);
     this.bestAtStart = this.best;
     this.fpsFrames = 0;

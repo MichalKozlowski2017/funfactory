@@ -2,12 +2,15 @@
 
 Pionowe klipy 1080×1920 na TikToka, Reels i Shorts. Jeden szablon `GamePromo` (`tools/promo/src/`) dla wszystkich gier i języków; klip opisują dane (props) w `tools/promo/src/Root.tsx`, jedna kompozycja na grę i język (np. `GlutPromoPL`).
 
-## Budowa klipu
+## Budowa klipu (15 s)
 
-1. **Otwarcie** (ok. 2,5 s): animacja z Legiona, hasło na górze.
-2. **Ujęcia z gry** (3–5 s każde): fragmenty nagrania z napisami; przejście „wjazd od góry” (kamera jedzie w górę).
-3. **Zakończenie** (ok. 4 s): grafika z powolnym zoomem, logo, hasło („Za darmo w Google Play”), pulsujący przycisk.
-4. **Muzyka**: jedna ścieżka z wyciszeniem na końcu; dźwięk gry domyślnie wyłączony (`gameVolume: 0`), bo muzyka gry gryzie się ze ścieżką.
+1. **Od razu gra** (bez otwarcia): pierwsza klatka pokazuje zagrożenie, hasło wskakuje od razu. Animowane otwarcie (`intro`) jest opcjonalne.
+2. **Ujęcia z gry** (2,5–4,5 s): najbardziej nerwowe momenty, napisy wskakują; między ujęciami „wjazd od góry” (kamera jedzie w górę), a ujęcie z tego samego ciągłego fragmentu nagrania doklejone twardym cięciem (`cut: 'hard'`). `danger: true`: pulsująca poświata od dołu (zagrożenie tuż za bohaterem).
+3. **Puenta**: porażka na krawędzi + pytanie do widza (Glut: „Syrop cię dopadł!” + „Ile wytrzymasz?”).
+4. **Zakończenie** (ok. 2,6 s): grafika z powolnym zoomem, logo, „Za darmo w Google Play”, pulsujący przycisk.
+5. **Muzyka**: jedna ścieżka z wyciszeniem na końcu; dźwięk gry domyślnie wyłączony (`gameVolume: 0`).
+
+Emocje: zagrożenie ma być stale w kadrze. W Glucie służy do tego `?chase=<m>` (tylko do nagrań): syrop trzyma się ok. tylu metrów pod slime'em (`Run` opcja `chase`, mocniejsze doganianie), więc zawsze jest widoczny, a przy zawahaniu bota podchodzi tuż pod niego („Drugi oddech!”). 4 m daje długi bieg z ratunkami, 3 m szybką porażkę na puentę.
 
 Czcionki: napisy Baloo 2 (polskie znaki), logo Lilita One (czcionka Gluta, bez polskich znaków). Napisy w strefie bezpiecznej: nad dolnym paskiem TikToka (`captionTop` ok. 1330), dla ujęcia z panelem gry niżej (`captionTop` w ujęciu).
 
@@ -17,7 +20,7 @@ Pliki gier są duże, więc nie trafiają do repo: leżą w `release/<slug>/prom
 
 - **Rozgrywka**: bot w grze (Glut: `?bot`), nagranie z playtestu, pionowo w rozmiarze telefonu. Każdy `pnpm shot` czyści `.shots/<slug>/`, więc nagranie od razu kopiuj.
   ```sh
-  pnpm shot games/glut --gpu --size 360x640@3 --query "bot&seed=7&lang=pl" --steps "wait:1500,rec:start,wait:75000,rec:save:bot-pl-7"
+  pnpm shot games/glut --gpu --size 360x640@3 --query "bot&seed=7&lang=pl&chase=4" --steps "wait:1500,rec:start,wait:50000,rec:save:chase-4"
   ```
   Momenty do ujęć wybieraj z klatek co sekundę (`ffmpeg -ss <t> -frames:v 1`).
 - **Grafiki** (Legion, skill `comfyui`): `flux2-ref` z wycinkiem postaci z grafiki sklepowej jako referencją, pion 768×1344.
@@ -26,4 +29,4 @@ Pliki gier są duże, więc nie trafiają do repo: leżą w `release/<slug>/prom
 
 ## Glut (2026-11-28)
 
-`GlutPromoPL`: otwarcie `intro-701` (z `hook-502`), ujęcia z `bot-pl-7.mp4` (4,0 s skoki, 31,8 s „100 m! Czekoladowa kopalnia”, 45,6 s „Super rytm ×10”, 55,0 s rekord 172 m), zakończenie `end-602`, muzyka `music-813` (alternatywa `music-812`). Gotowe pliki: `release/glut/promo/`.
+`GlutPromoPL` (15 s): ujęcia z `chase-4.mp4` (22,2 s syrop i „Drugi oddech!”, 28,6 s „Super rytm ×10”, 31,4 s „100 m! Czekoladowa kopalnia”) i `chase-3.mp4` (15,0 s syrop łapie Gluta na 48 m), zakończenie `end-602`, muzyka `music-813` (alternatywa `music-812`). Gotowe pliki: `release/glut/promo/`. Wcześniejsza wersja 20 s z animowanym otwarciem (`intro-701`, rekord 172 m z `bot-pl-7.mp4`) jest w historii repo.
