@@ -103,6 +103,8 @@ export function startPromo(game: Game, plan: string): void {
         await finger.perform(s.layer as Container, g);
         await sleep(0.5);
       }
+      // The hand lifts off after the last gesture (it would otherwise hang over the praise or the reward).
+      finger.fadeOut();
       if (kind === 'coloring') {
         scene().solve();
         await sleep(4.5);
@@ -142,6 +144,15 @@ class Finger {
     this.view.visible = false;
   }
 
+  /** Fades out in the background (does not delay the plan); the next gesture brings the hand back. */
+  fadeOut(): void {
+    if (!this.view.visible) return;
+    void this.animate(0.35, (t) => {
+      this.view.alpha = 1 - t;
+      if (t >= 1) this.view.visible = false;
+    });
+  }
+
   async perform(layer: Container, g: Gesture): Promise<void> {
     const toStage = (p: P) => layer.toGlobal(p);
     const size = 150 * this.game.root.scale.x;
@@ -150,6 +161,7 @@ class Finger {
     const first = toStage(g.kind === 'tap' ? g.at[0]! : g.kind === 'drag' ? g.from : g.path[0]!);
     if (!this.view.visible) {
       this.pos = { x: first.x + size * 0.6, y: first.y + size * 0.8 };
+      this.view.alpha = 1;
       this.view.visible = true;
     }
     if (g.kind === 'tap') {
