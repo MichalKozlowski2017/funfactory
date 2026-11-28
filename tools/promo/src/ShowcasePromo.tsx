@@ -13,7 +13,8 @@ import type { Character } from './types';
  * (each with its own colour and label, a shot per feature with a caption under the framed gameplay), a card with
  * the selling points and an end card. Every scene crossfades into the next.
  */
-export type ShowcaseShot = { fromSec: number; durationSec: number; caption: string };
+/** `src` overrides the main recording for this shot (e.g. a separate recording of the world tour). */
+export type ShowcaseShot = { fromSec: number; durationSec: number; caption: string; src?: string };
 export type Chapter = { name: string; color: string; shots: ShowcaseShot[] };
 export type Card = { image: string; logo?: string; title?: string; subtitle?: string; cta?: string; durationSec: number; characters: Character[] };
 
@@ -103,7 +104,7 @@ const Framed = ({ recording, backdrop, chapter, shot, first }: { readonly record
           boxShadow: '0 24px 50px rgba(60,40,20,0.3)',
         }}
       >
-        <Video src={staticFile(recording)} trimBefore={Math.round(shot.fromSec * fps)} muted objectFit="cover" style={{ width: '100%', height: '100%' }} />
+        <Video src={staticFile(shot.src ?? recording)} trimBefore={Math.round(shot.fromSec * fps)} muted objectFit="cover" style={{ width: '100%', height: '100%' }} />
       </div>
       <div
         style={{

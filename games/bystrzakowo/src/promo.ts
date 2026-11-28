@@ -50,9 +50,12 @@ export function startPromo(game: Game, plan: string): void {
         await sleep(0.8);
       }
       if (kind === 'realms') {
-        // World tour: the realms slide by one after another, back to the first.
-        for (const i of [1, 2, 3, 0]) {
+        // World tour: every realm stays on screen for the same time (n / 4 s), the first one too.
+        console.log('PROMO realm 0');
+        await sleep(n / 4);
+        for (const i of [1, 2, 3]) {
           scene().goRealm(i);
+          console.log(`PROMO realm ${i}`);
           await sleep(n / 4);
         }
         continue;

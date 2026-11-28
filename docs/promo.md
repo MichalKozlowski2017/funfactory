@@ -51,4 +51,8 @@ Nagranie całości (ok. 190 s):
 ```sh
 pnpm shot games/bystrzakowo --gpu --size 1280x720@1.5 --query "full&nohand&lang=pl&page=cat&letters=A&promo=realms:6,shadows:2,mothers:2,counting:2,memory:3,sorting:3,jigsaw:3,patterns:2,stories:2,letters:3,digits:2,dots:1,maze:1,coloring:5,stickers:3,melody:2,parent-skill-colors:4,parent-album:3,parent-postcard:3" --steps "wait:1000,rec:start,wait:200000,rec:save:film-pl"
 ```
+Przejazd przez krainy nagrany osobno (`promo=realms:12`: każda kraina, także pierwsza, stoi po 3 s), w filmie 4 ujęcia z nazwą krainy i liczbą zabaw (`src` w ujęciu):
+```sh
+pnpm shot games/bystrzakowo --gpu --size 1280x720@1.5 --query "full&nohand&lang=pl&promo=realms:12" --steps "wait:200,rec:start,wait:16000,rec:save:realms-pl"
+```
 Uwaga: `solve()` kolorowanki pomija ożywanie obrazka i od razu daje nagrodę (naklejkę), więc w filmie jest „Naklejka w nagrodę!”. `BystrzakowoFilmPL`, gotowy plik: `release/bystrzakowo/promo/bystrzakowo-film-pl.mp4`.
