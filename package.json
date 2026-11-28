@@ -14,7 +14,8 @@
     "shot": "node tools/playtest/shot.ts",
     "new-game": "node tools/new-game/new-game.ts",
     "comfy": "node $HOME/.claude/skills/comfyui/comfy.ts",
-    "legion": "node $HOME/.claude/skills/comfyui/legion-watch.ts"
+    "legion": "node $HOME/.claude/skills/comfyui/legion-watch.ts",
+    "promo": "pnpm --filter @funfactory/promo studio"
   },
   "devDependencies": {
     "@playwright/test": "^1.65.1",

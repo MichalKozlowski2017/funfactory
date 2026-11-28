@@ -1,7 +1,16 @@
 {
   "extends": "../tsconfig.base.json",
   "compilerOptions": {
-    "types": ["node", "vite/client"]
+    "types": [
+      "node",
+      "vite/client"
+    ]
   },
-  "include": ["**/*.ts", "../packages/kit2d/src/app.ts"]
+  "include": [
+    "**/*.ts",
+    "../packages/kit2d/src/app.ts"
+  ],
+  "exclude": [
+    "promo"
+  ]
 }

@@ -1,0 +1,30 @@
+{
+  "name": "@funfactory/promo",
+  "version": "1.0.0",
+  "description": "Promo clips for games (Remotion): gameplay cuts, captions, end card, music",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": "^20.19.0 || ^22.13.0 || >=24"
+  },
+  "private": true,
+  "dependencies": {
+    "@remotion/cli": "4.0.547",
+    "@remotion/fonts": "4.0.547",
+    "@remotion/google-fonts": "4.0.547",
+    "@remotion/media": "4.0.547",
+    "@remotion/transitions": "4.0.547",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "remotion": "4.0.547"
+  },
+  "devDependencies": {
+    "@types/react": "19.3.0",
+    "@types/web": "0.0.166",
+    "typescript": "5.9.3"
+  },
+  "scripts": {
+    "studio": "remotion studio",
+    "render": "remotion render",
+    "typecheck": "tsc -p ."
+  }
+}
