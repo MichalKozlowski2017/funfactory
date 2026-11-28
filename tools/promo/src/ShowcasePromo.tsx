@@ -16,7 +16,8 @@ import type { Character } from './types';
 /** `src` overrides the main recording for this shot (e.g. a separate recording of the world tour). */
 export type ShowcaseShot = { fromSec: number; durationSec: number; caption: string; src?: string };
 export type Chapter = { name: string; color: string; shots: ShowcaseShot[] };
-export type Card = { image: string; logo?: string; title?: string; subtitle?: string; cta?: string; durationSec: number; characters: Character[] };
+/** `badges`: official store badges (PNG, same height), shown in a row under the call to action. */
+export type Card = { image: string; logo?: string; title?: string; subtitle?: string; cta?: string; badges?: string[]; durationSec: number; characters: Character[] };
 
 export type ShowcaseProps = {
   /** Gameplay recording (landscape, same aspect as the video). */
@@ -193,6 +194,25 @@ const TitleCard = ({ card, colors }: { readonly card: Card; readonly colors: Sho
           >
             {card.cta}
           </div>
+        </div>
+      )}
+      {card.badges && (
+        <div
+          style={{
+            position: 'absolute',
+            left: 90,
+            top: 575,
+            width: 960,
+            display: 'flex',
+            justifyContent: 'center',
+            gap: 36,
+            opacity: interpolate(frame, [1.1 * fps, 1.1 * fps + 6], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' }),
+            translate: `0px ${interpolate(frame, [1.1 * fps, 1.1 * fps + 10], [30, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.out(Easing.quad) })}px`,
+          }}
+        >
+          {card.badges.map((b) => (
+            <Img key={b} src={staticFile(b)} style={{ height: 104 }} />
+          ))}
         </div>
       )}
       {card.characters.map((c, i) => (
