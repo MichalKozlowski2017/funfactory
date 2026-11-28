@@ -10,9 +10,12 @@ Gra jest po polsku i angielsku (język z telefonu: polski dla polskiego, angiels
 
 | Pole | PL | EN |
 |---|---|---|
-| Nazwa (App Store ≤ 30, Google Play ≤ 30) | Glut: Słodka wspinaczka | Glut: Sweet Climb |
+| Nazwa (App Store ≤ 30) | Glut: Słodka wspinaczka | Glut: Sweet Climb |
+| Nazwa (Google Play ≤ 30, od 2026-11-28) | Glut: Slime – gra w skakanie | Glut: Slime Jump – Tower Climb |
 | Podtytuł (App Store ≤ 30) | Ucieczka z cukrowej studni | Outjump the rising syrup! |
-| Krótki opis (Google Play ≤ 80) | Wystrzel slime'a w górę cukrowej wieży, łap serie i uciekaj przed syropem! | Fling a jelly slime up a candy tower, chain combos and outrun the syrup! |
+| Krótki opis (Google Play ≤ 80, od 2026-11-28) | Darmowa gra zręcznościowa bez internetu: wystrzel slime'a na szczyt wieży! | Free offline jumping game: fling a jelly slime up the candy tower and climb! |
+
+Google Play (2026-11-28): tytuł i krótki opis pod frazy z podpowiedzi Sklepu Play (PL: „gra slime”, „gra w skakanie”, „gry zręcznościowe za darmo”, „gry bez internetu”, „gry na nudę”; EN: „slime jump”, „slime jump tower”, „tower climb game”, „jumping game offline”). Bez „bez reklam / no ads” (decyzja właściciela: reklamy mogą dojść później).
 
 Sama nazwa „Glut” może być zajęta w sklepach. Dlatego proponuję wersję z podtytułem; ikona i ekran pokazują „Glut”.
 
@@ -23,7 +26,7 @@ Sama nazwa „Glut” może być zajęta w sklepach. Dlatego proponuję wersję 
 
 ## Opis (PL)
 
-Glut to mały, lepki slime, który utknął na dnie Cukrowej Wieży. Od dołu podnosi się różowy syrop, a jedyna droga prowadzi w górę!
+Glut to gra zręcznościowa o małym, lepkim slime, który utknął na dnie Cukrowej Wieży. Od dołu podnosi się różowy syrop, a jedyna droga prowadzi w górę! Skacz, wspinaj się i uciekaj. Gra działa bez internetu i jest za darmo.
 
 Naciągnij palcem i wystrzel Gluta jak z procy. Przykleja się do lukrowanych półek i ścian, ślizga po lodzie, a w locie może odbić się jeszcze raz. Uważaj na karmelowe kolce i nie daj się dogonić syropowi.
 
@@ -45,11 +48,11 @@ Wszyscy grają na tych samych zasadach: za cukierki kupujesz tylko wygląd (czap
 - sterowanie jednym palcem, jak z procy
 - światowy ranking i wyzwanie dnia w Game Center / Google Play Games
 - krótkie, dynamiczne podejścia
-- gra offline, bez konta, bez reklam
+- gra bez internetu (offline), bez konta i za darmo, idealna na nudę
 
 ## Description (EN)
 
-Glut is a small, sticky slime stuck at the bottom of the Sugar Tower. Pink syrup is rising from below, and the only way out is up!
+Glut is a one-finger jumping game about a small, sticky slime stuck at the bottom of the Sugar Tower. Pink syrup is rising from below, and the only way out is up! Jump, climb the tower and outrun the syrup. It plays offline and it's free.
 
 Pull back and fling Glut like a slingshot. It sticks to frosted ledges and walls, slides on ice, and can jump again mid-air. Watch out for caramel spikes and don't let the syrup catch you.
 
@@ -71,7 +74,7 @@ Everyone plays by the same rules: candies only buy looks (hats, colors, trails, 
 - one-finger slingshot controls
 - global leaderboards and daily challenge on Game Center / Google Play Games
 - short, fast-paced runs
-- plays offline, no account, no ads
+- plays offline (no wifi needed), no account, free to play
 
 ## Słowa kluczowe (App Store ≤ 100 znaków)
 
