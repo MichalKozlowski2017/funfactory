@@ -37,6 +37,29 @@ export const RemotionRoot = () => {
           transitionFrames: 5,
         }}
       />
+      <Composition
+        id="GlutPromoEN"
+        component={GamePromo}
+        durationInFrames={450}
+        fps={FPS}
+        width={1080}
+        height={1920}
+        calculateMetadata={calculateMetadata}
+        defaultProps={{
+          shots: [
+            { src: 'glut/chase2-45-en.mp4', fromSec: 19.4, durationSec: 3.2, caption: 'The syrup is coming!', danger: true },
+            { src: 'glut/chase2-45-en.mp4', fromSec: 22.6, durationSec: 2.6, caption: 'Just in time!', cut: 'hard', danger: true },
+            { src: 'glut/chase2-45-en.mp4', fromSec: 28.6, durationSec: 2.8, caption: 'Reach new worlds!' },
+            { src: 'glut/chase2-45-en.mp4', fromSec: 34.6, durationSec: 4.0, caption: 'How far can you go?', captionTop: 1440, danger: true },
+          ],
+          end: { image: 'glut/end-602.png', logo: 'Glut', tagline: 'Free on Google Play', cta: 'Get it now', durationSec: 2.8 },
+          music: { src: 'glut/music-813.flac', volume: 0.9 },
+          gameVolume: 0,
+          captionTop: 1330,
+          colors: { ink: '#2a1238', text: '#ffffff', highlight: '#ffd23f', logo: '#ff6fb5', cta: '#ff5fa2', danger: '#ff2d6f' },
+          transitionFrames: 5,
+        }}
+      />
     </Folder>
   );
 };

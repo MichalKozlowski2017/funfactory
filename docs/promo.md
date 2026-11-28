@@ -29,4 +29,6 @@ Pliki gier są duże, więc nie trafiają do repo: leżą w `release/<slug>/prom
 
 ## Glut (2026-11-28)
 
-`GlutPromoPL` (15 s): jeden bieg `chase2-45a.mp4` (`chase=4.5`): 19,4 s syrop tuż pod Glutem, 22,6 s „Drugi oddech!”, 28,6 s „Rytm ×5” i „100 m! Czekoladowa kopalnia”, 34,6 s ratunki w kopalni i porażka na 115 m; zakończenie `end-602`, muzyka `music-813` (alternatywa `music-812`). Gotowe pliki: `release/glut/promo/`. Wcześniejsza wersja 20 s z animowanym otwarciem (`intro-701`, rekord 172 m z `bot-pl-7.mp4`) jest w historii repo.
+`GlutPromoPL` (15 s): jeden bieg `chase2-45a.mp4` (`chase=4.5`): 19,4 s syrop tuż pod Glutem, 22,6 s „Drugi oddech!”, 28,6 s „Rytm ×5” i „100 m! Czekoladowa kopalnia”, 34,6 s ratunki w kopalni i porażka na 115 m; zakończenie `end-602`, muzyka `music-813` (alternatywa `music-812`). Gotowe pliki: `release/glut/promo/`.
+
+`GlutPromoEN` (15 s): ten sam bieg nagrany z `lang=en` (`chase2-45-en.mp4`, bot gra powtarzalnie, więc momenty wypadają w tych samych sekundach), hasła: „The syrup is coming!”, „Just in time!”, „Reach new worlds!”, „How far can you go?”, zakończenie „Free on Google Play” / „Get it now”. Hasła po angielsku krótkie (do ok. 20 znaków), żeby mieściły się w jednej linii. Wcześniejsza wersja 20 s z animowanym otwarciem (`intro-701`, rekord 172 m z `bot-pl-7.mp4`) jest w historii repo.
