@@ -56,3 +56,5 @@ Przejazd przez krainy nagrany osobno (`promo=realms:12`: każda kraina, także p
 pnpm shot games/bystrzakowo --gpu --size 1280x720@1.5 --query "full&nohand&lang=pl&promo=realms:12" --steps "wait:200,rec:start,wait:16000,rec:save:realms-pl"
 ```
 Uwaga: `solve()` kolorowanki pomija ożywanie obrazka i od razu daje nagrodę (naklejkę), więc w filmie jest „Naklejka w nagrodę!”. `BystrzakowoFilmPL`, gotowy plik: `release/bystrzakowo/promo/bystrzakowo-film-pl.mp4`.
+
+Wersja angielska `BystrzakowoFilmEN` (Smartyville): te same kroki nagrania z `lang=en` (`film-en.mp4`, `realms-en.mp4`); angielski lektor ma inne tempo, więc momenty ujęć wybrane osobno (klatki co sekundę). Odznaki sklepów: oficjalne pliki Google i Apple (pl i en) w `release/bystrzakowo/promo/src/`; z PNG Google obcięty przezroczysty margines, SVG Apple zamieniony na PNG. Gotowy plik: `release/bystrzakowo/promo/smartyville-film-en.mp4`.

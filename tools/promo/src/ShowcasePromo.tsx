@@ -230,7 +230,7 @@ const FeaturesCard = ({ card, colors }: { readonly card: ShowcaseProps['features
   return (
     <AbsoluteFill>
       <Img src={staticFile(card.image)} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-      {card.title && <Caption text={card.title} top={70} ink={colors.ink} color="white" size={84} delay={2} style={{ left: 80, right: 900 }} />}
+      {card.title && <Caption text={card.title} top={70} ink={colors.ink} color="white" size={84} delay={2} style={{ left: 80, right: 560, textAlign: 'left' }} />}
       {card.items.map((t, i) => {
         const start = 0.35 * fps + i * 0.32 * fps;
         return (

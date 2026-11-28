@@ -216,6 +216,112 @@ export const RemotionRoot = () => {
           fadeFrames: 7,
         }}
       />
+      <Composition
+        id="BystrzakowoFilmEN"
+        component={ShowcasePromo}
+        durationInFrames={1800}
+        fps={FPS}
+        width={1920}
+        height={1080}
+        calculateMetadata={showcaseMetadata}
+        defaultProps={{
+          recording: 'bystrzakowo/film-en.mp4',
+          backdrop: 'bystrzakowo/keyart-village-31.jpg',
+          intro: {
+            image: 'bystrzakowo/keyart-village-31.jpg',
+            logo: 'Smartyville',
+            subtitle: 'Smart play for kids aged 3–6',
+            durationSec: 3.0,
+            characters: [
+              { src: 'bystrzakowo/lusia-teacher.png', x: 40, y: 450, width: 600, delaySec: 0.4 },
+              { src: 'bystrzakowo/bazyl-point.png', x: 560, y: 500, width: 560, delaySec: 0.6 },
+            ],
+          },
+          chapters: [
+            {
+              name: '4 lands, 21 games',
+              color: '#ff7a1c',
+              shots: [
+                { src: 'bystrzakowo/realms-en.mp4', fromSec: 1.5, durationSec: 2.5, caption: 'Puzzle Meadow: 8 games' },
+                { src: 'bystrzakowo/realms-en.mp4', fromSec: 4.5, durationSec: 2.5, caption: "Basil's Workshop: 6 games" },
+                { src: 'bystrzakowo/realms-en.mp4', fromSec: 7.6, durationSec: 2.5, caption: "Lusia's Path: 4 games" },
+                { src: 'bystrzakowo/realms-en.mp4', fromSec: 10.6, durationSec: 2.6, caption: 'Little Studio: 3 games' },
+              ],
+            },
+            {
+              name: 'Puzzle Meadow',
+              color: '#4fb34a',
+              shots: [
+                { fromSec: 8.4, durationSec: 2.6, caption: 'Whose shadow is it?' },
+                { fromSec: 20.2, durationSec: 2.4, caption: 'Moms and babies' },
+                { fromSec: 29.3, durationSec: 2.4, caption: 'Counting' },
+                { fromSec: 42.0, durationSec: 2.6, caption: 'Memory' },
+              ],
+            },
+            {
+              name: "Basil's Workshop",
+              color: '#e0873a',
+              shots: [
+                { fromSec: 54.6, durationSec: 2.4, caption: 'Sorting' },
+                { fromSec: 67.6, durationSec: 2.6, caption: 'Jigsaw puzzles' },
+                { fromSec: 82.4, durationSec: 2.4, caption: "What's next?" },
+                { fromSec: 95.4, durationSec: 2.4, caption: 'Picture stories' },
+              ],
+            },
+            {
+              name: "Lusia's Path",
+              color: '#8e5bd6',
+              shots: [
+                { fromSec: 107.2, durationSec: 3.0, caption: 'Trace letters' },
+                { fromSec: 121.4, durationSec: 2.4, caption: 'Numbers' },
+                { fromSec: 139.4, durationSec: 2.4, caption: 'Dot to dot' },
+                { fromSec: 148.4, durationSec: 2.4, caption: 'Mazes' },
+              ],
+            },
+            {
+              name: 'Little Studio',
+              color: '#ff5fa2',
+              shots: [
+                { fromSec: 159.0, durationSec: 2.8, caption: 'Coloring pages' },
+                { fromSec: 165.2, durationSec: 2.0, caption: 'A sticker reward!' },
+                { fromSec: 169.0, durationSec: 2.4, caption: 'Sticker scenes' },
+                { fromSec: 175.8, durationSec: 2.4, caption: 'Melodies' },
+              ],
+            },
+            {
+              name: 'For parents',
+              color: '#3d8fd6',
+              shots: [
+                { fromSec: 180.4, durationSec: 2.6, caption: 'Progress charts' },
+                { fromSec: 185.2, durationSec: 2.2, caption: 'Art album' },
+                { fromSec: 188.2, durationSec: 2.2, caption: 'Weekly postcard' },
+              ],
+            },
+          ],
+          features: {
+            image: 'bystrzakowo/keyart-book-21.jpg',
+            title: 'Peace of mind for parents',
+            durationSec: 4.2,
+            items: ['No ads', 'Works offline', 'Every instruction read aloud', 'Grows with your child', '4 languages'],
+            characters: [{ src: 'bystrzakowo/bazyl-thumbs.png', x: 1240, y: 520, width: 560, delaySec: 0.5 }],
+          },
+          end: {
+            image: 'bystrzakowo/keyart-blocks-11.jpg',
+            logo: 'Smartyville',
+            subtitle: 'Preschool Games',
+            cta: 'Coming soon',
+            badges: ['bystrzakowo/google-play-badge-en.png', 'bystrzakowo/app-store-badge-en.png'],
+            durationSec: 3.8,
+            characters: [
+              { src: 'bystrzakowo/lusia-wow.png', x: 1080, y: 560, width: 470, delaySec: 0.4 },
+              { src: 'bystrzakowo/bazyl-wink.png', x: 1440, y: 600, width: 440, delaySec: 0.6 },
+            ],
+          },
+          music: { src: 'bystrzakowo/film-music-922.flac', volume: 0.85 },
+          colors: { ink: '#ff7a1c', logo: '#ff7a1c', cta: '#4fb34a' },
+          fadeFrames: 7,
+        }}
+      />
     </Folder>
     </>
   );
