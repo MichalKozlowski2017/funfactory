@@ -228,7 +228,9 @@ const FeaturesCard = ({ card, colors }: { readonly card: ShowcaseProps['features
               fontWeight: 800,
               fontSize: 54,
               boxShadow: '0 8px 0 rgba(0,0,0,0.18)',
-              translate: `${interpolate(frame, [start, start + 0.35 * fps], [-700, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.spring({ damping: 13 }) })}px 0px`,
+              // Off screen and hidden until its moment, then slides in from the left edge.
+              translate: `${interpolate(frame, [start, start + 0.35 * fps], [-1400, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.spring({ damping: 13 }) })}px 0px`,
+              opacity: frame < start ? 0 : 1,
             }}
           >
             ✓ {t}
